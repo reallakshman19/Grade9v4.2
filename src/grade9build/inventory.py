@@ -1,189 +1,110 @@
-"""Grade9v4.2 — Automated Byte Inventory Engine (Workpack A02).
-
-Enumerates and verifies migration custody sources and target trees,
-generating deterministic, schema-compliant byte inventories matching
-02-contracts/schemas/inventory.schema.json.
-"""
-
+"""Lossless Git inventory. Full ledgers belong in private custody; public summaries are aggregate."""
 from __future__ import annotations
-
 import argparse
 import hashlib
 import json
 import os
 from pathlib import Path
-import stat
+import re
 import subprocess
-import sys
-from typing import Any, Dict, List, Optional, Tuple
+
+MODES = {"100644": ("FILE", 0o644), "100755": ("FILE", 0o755), "120000": ("SYMLINK", 0o777)}
+PINS = {"v35": ("8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b", "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"), "v41": ("564ad2a07fddc0fdd30d103674b3eca61235a54b", "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149")}
+LFS = b"version https://git-lfs.github.com/spec/v1\n"
 
 
-GIT_MODE_MAP = {
-    "100644": 0o644,  # 420 - Standard regular file
-    "100755": 0o755,  # 493 - Executable file
-    "120000": 0o777,  # 511 - Symbolic link
-}
+def git(repo, *args, input=None):
+    return subprocess.run(["git", "--no-replace-objects", "-C", str(repo), *args], input=input, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
 
 
-def git_mode_to_unix(git_mode_str: str) -> int:
-    """Translate git tree mode string (e.g. '100644') to Unix mode integer."""
-    if git_mode_str in GIT_MODE_MAP:
-        return GIT_MODE_MAP[git_mode_str]
-    try:
-        raw_mode = int(git_mode_str, 8)
-        return stat.S_IMODE(raw_mode)
-    except ValueError:
-        return 0o644
+def git_mode_to_unix(mode):
+    return MODES[mode][1]
 
 
-def git_mode_to_kind(git_mode_str: str) -> str:
-    """Determine KIND from git tree mode ('FILE' or 'SYMLINK')."""
-    if git_mode_str.startswith("12"):
-        return "SYMLINK"
-    return "FILE"
+def git_mode_to_kind(mode):
+    return MODES[mode][0]
 
 
-def enumerate_git_snapshot(
-    repo_path: str | Path,
-    commit: str,
-    snapshot_id: str,
-) -> List[Dict[str, Any]]:
-    """Enumerate all tracked objects in a git repository commit using batch streaming.
-
-    Returns a deterministically sorted list of inventory records matching inventory.schema.json.
-    """
-    repo = Path(repo_path).resolve(strict=True)
-
-    # 1. Run git ls-tree to list all blobs and metadata
-    cmd = ["git", "-C", str(repo), "ls-tree", "-r", "-l", "--full-name", commit]
-    proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
-
-    lines = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
-    if not lines:
-        return []
-
-    parsed_entries: List[Tuple[str, str, str, int, str]] = []
-    for line in lines:
-        # Format: <mode> SP <type> SP <object> SP <object-size> TAB <file>
-        parts = line.split(maxsplit=4)
-        if len(parts) < 5:
-            continue
-        mode_str, obj_type, blob_sha, size_str, path_str = parts
-        size = int(size_str.strip()) if size_str.strip() != "-" else 0
-        parsed_entries.append((mode_str, obj_type, blob_sha, size, path_str))
-
-    # 2. Batch stream blob contents to compute exact SHA-256 digests
-    cat_proc = subprocess.Popen(
-        ["git", "-C", str(repo), "cat-file", "--batch"],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-    )
-
-    stdin_payload = "\n".join(e[2] for e in parsed_entries) + "\n"
-    stdout_data, _ = cat_proc.communicate(stdin_payload.encode("utf-8"))
-
-    # 3. Parse batch stream
-    idx = 0
-    records: List[Dict[str, Any]] = []
-
-    for mode_str, obj_type, blob_sha, expected_size, path_str in parsed_entries:
-        header_end = stdout_data.find(b"\n", idx)
-        if header_end == -1:
-            break
-        header = stdout_data[idx:header_end].decode("utf-8")
-        h_parts = header.split()
-        if len(h_parts) >= 3 and h_parts[1] == "missing":
-            raise ValueError(f"Missing git blob: {blob_sha} for path {path_str}")
-
-        sha, actual_type, size = h_parts[0], h_parts[1], int(h_parts[2])
-        idx = header_end + 1
-        content_bytes = stdout_data[idx:idx + size]
-        idx += size + 1  # git batch adds trailing newline
-
-        sha256_digest = hashlib.sha256(content_bytes).hexdigest()
-        kind = git_mode_to_kind(mode_str)
-        unix_mode = git_mode_to_unix(mode_str)
-
-        # Normalize path to POSIX forward slashes
-        clean_path = Path(path_str).as_posix()
-
-        records.append({
-            "snapshot_id": snapshot_id,
-            "path": clean_path,
-            "kind": kind,
-            "size": size,
-            "sha256": sha256_digest,
-            "mode": unix_mode,
-        })
-
-    # Sort deterministically by (snapshot_id, path)
-    records.sort(key=lambda x: (x["snapshot_id"], x["path"]))
-    return records
+def tree_entries(repo, commit):
+    raw = git(repo, "ls-tree", "-rlz", "--full-tree", commit)
+    if raw and not raw.endswith(b"\0"):
+        raise ValueError("truncated tree listing")
+    result = []
+    seen = set()
+    for entry in raw.split(b"\0")[:-1]:
+        meta, path = entry.split(b"\t", 1)
+        mode, kind, oid, size = meta.decode("ascii").split()
+        name = path.decode("utf-8", "strict")  # non-UTF8 names block; never lossy-decode
+        if name in seen or not name or not re.fullmatch(r"[0-9a-f]{40}", oid):
+            raise ValueError("duplicate path or invalid object identity")
+        seen.add(name)
+        if (mode, kind) == ("160000", "commit") and size == "-":
+            result.append((name, mode, oid, None)); continue
+        if mode not in MODES or kind != "blob" or not size.isdecimal():
+            raise ValueError("unsupported tree entry")
+        result.append((name, mode, oid, int(size)))
+    return result
 
 
-def validate_inventory_data(
-    records: List[Dict[str, Any]],
-    schema_path: Optional[str | Path] = None,
-) -> Tuple[bool, List[str]]:
-    """Validate inventory records against inventory.schema.json and uniqueness constraints."""
-    errors: List[str] = []
+def read_blob(repo, oid, size):
+    # One object per subprocess: bounded memory and unambiguous framing.
+    raw = git(repo, "cat-file", "--batch", input=(oid+"\n").encode("ascii"))
+    header, sep, body = raw.partition(b"\n")
+    if not sep or header != f"{oid} blob {size}".encode("ascii") or len(body) != size+1 or not body.endswith(b"\n"):
+        raise ValueError("missing, malformed or truncated blob response")
+    data = body[:-1]
+    if hashlib.sha1(f"blob {size}\0".encode()+data).hexdigest() != oid:
+        raise ValueError("Git blob identity mismatch")
+    return data
 
-    # 1. Uniqueness check on (snapshot_id, path)
-    seen_keys = set()
-    for i, r in enumerate(records):
-        key = (r.get("snapshot_id"), r.get("path"))
-        if key in seen_keys:
-            errors.append(f"Duplicate entry at index {i}: {key}")
-        seen_keys.add(key)
 
-    # 2. Schema validation if jsonschema is available
+def inspect_snapshot(repo, commit, snapshot_id, expected_tree=None):
+    repo = Path(repo).resolve(strict=True)
+    resolved = git(repo, "rev-parse", "--verify", "--end-of-options", commit+"^{commit}").decode().strip()
+    tree = git(repo, "rev-parse", resolved+"^{tree}").decode().strip()
+    if expected_tree is not None and tree != expected_tree:
+        raise ValueError("wrong source tree")
+    for key,pin in PINS.items():
+        if snapshot_id.startswith(f"grade9{key}:") and (snapshot_id != f"grade9{key}:{pin[0]}" or (resolved,tree) != pin):
+            raise ValueError("wrong source pin")
+    records, objects, gaps = [], [], []
+    for path, mode, oid, size in tree_entries(repo, resolved):
+        if mode == "160000":
+            gaps.append({"path":path,"kind":"GITLINK","commit":oid,"status":"BLOCKED_SUBMODULE_CUSTODY"}); continue
+        data = read_blob(repo, oid, size)
+        row = {"snapshot_id":snapshot_id,"path":path,"kind":git_mode_to_kind(mode),"size":size,"sha256":hashlib.sha256(data).hexdigest(),"mode":git_mode_to_unix(mode)}
+        records.append(row); objects.append({"path":path,"git_blob":oid,"git_mode":mode})
+        if data.startswith(LFS):
+            gaps.append({"path":path,"kind":"LFS_POINTER","status":"BLOCKED_LFS_PAYLOAD_CUSTODY"})
+    return {"commit":resolved,"tree":tree,"records":sorted(records,key=lambda r:r["path"]),"objects":sorted(objects,key=lambda r:r["path"]),"gaps":gaps,"owner_local_scope":"NOT_INSPECTED_SEPARATE_CUSTODY_REQUIRED"}
+
+
+def enumerate_git_snapshot(repo_path, commit, snapshot_id):
+    result=inspect_snapshot(repo_path,commit,snapshot_id)
+    if result["gaps"]: raise ValueError("unresolved non-blob or LFS custody; use inspect_snapshot")
+    return result["records"]
+
+
+def validate_inventory_data(records, schema_path=None):
+    errors=[]; seen=set()
+    for row in records:
+        key=(row.get("snapshot_id"),row.get("path"))
+        if key in seen: errors.append("Duplicate entry: "+repr(key))
+        seen.add(key)
+        if set(row) != {"snapshot_id","path","kind","size","sha256","mode"} or not isinstance(row.get("path"),str) or not row.get("path") or not isinstance(row.get("snapshot_id"),str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9._:-]{2,127}",row["snapshot_id"]) or row.get("kind") not in ("FILE","SYMLINK") or type(row.get("size")) is not int or row["size"]<0 or not re.fullmatch(r"[0-9a-f]{64}",str(row.get("sha256"))) or row.get("mode") not in ({420,493} if row.get("kind")=="FILE" else {511}): errors.append("Invalid record: "+repr(key))
     if schema_path is not None:
-        sp = Path(schema_path).resolve(strict=True)
-        schema_json = json.loads(sp.read_text(encoding="utf-8"))
-        try:
-            from jsonschema import Draft202012Validator
-            validator = Draft202012Validator(schema_json)
-            for err in validator.iter_errors(records):
-                errors.append(f"Schema error at {list(err.path)}: {err.message}")
-        except ImportError:
-            # Fallback basic type checks if jsonschema not installed
-            for i, r in enumerate(records):
-                for req in ["snapshot_id", "path", "kind", "size", "sha256", "mode"]:
-                    if req not in r:
-                        errors.append(f"Missing required field '{req}' at record {i}")
-                if r.get("kind") not in ("FILE", "SYMLINK"):
-                    errors.append(f"Invalid kind '{r.get('kind')}' at record {i}")
-
-    return len(errors) == 0, errors
+        from jsonschema import Draft202012Validator
+        errors.extend(e.message for e in Draft202012Validator(json.loads(Path(schema_path).read_text())).iter_errors(records))
+    return not errors, errors
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Grade9v4.2 Automated Byte Inventory Generator")
-    parser.add_argument("--repo", required=True, help="Path to git repository")
-    parser.add_argument("--commit", default="HEAD", help="Commit SHA or ref (default: HEAD)")
-    parser.add_argument("--snapshot-id", required=True, help="Snapshot identifier string")
-    parser.add_argument("--output", required=True, help="Output JSON path")
-    parser.add_argument("--schema", default=None, help="Path to inventory.schema.json for validation")
+def main():
+    p=argparse.ArgumentParser(); p.add_argument("--repo",required=True); p.add_argument("--commit",required=True); p.add_argument("--snapshot-id",required=True); p.add_argument("--expected-tree",required=True); p.add_argument("--output",required=True,help="private custody output outside target"); p.add_argument("--schema",required=True); p.add_argument("--target-root",required=True)
+    a=p.parse_args(); out=Path(a.output).resolve(); target=Path(a.target_root).resolve(); source=Path(a.repo).resolve()
+    if out.is_relative_to(target) or out.is_relative_to(source): raise ValueError("inventory output must be external to target and source")
+    r=inspect_snapshot(source,a.commit,a.snapshot_id,a.expected_tree); ok,errors=validate_inventory_data(r["records"],a.schema)
+    if not ok: raise ValueError(errors)
+    out.parent.mkdir(parents=True,exist_ok=True); out.write_text(json.dumps(r,indent=2)+"\n",encoding="utf-8")
+    raise SystemExit(1 if r["gaps"] else 0)
 
-    args = parser.parse_args()
-
-    records = enumerate_git_snapshot(args.repo, args.commit, args.snapshot_id)
-    print(f"Enumerated {len(records)} items from {args.repo} at {args.commit}")
-
-    if args.schema:
-        ok, errors = validate_inventory_data(records, args.schema)
-        if not ok:
-            print("Validation FAILED with errors:", file=sys.stderr)
-            for err in errors[:10]:
-                print(f"  - {err}", file=sys.stderr)
-            sys.exit(1)
-        print("Schema validation: PASSED")
-
-    out_p = Path(args.output).resolve()
-    out_p.parent.mkdir(parents=True, exist_ok=True)
-    out_p.write_text(json.dumps(records, indent=2) + "\n", encoding="utf-8")
-    print(f"Successfully wrote inventory to: {out_p}")
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
