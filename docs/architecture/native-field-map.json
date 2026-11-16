@@ -1,426 +1,2681 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "schema_version": "1.0.0",
+  "schema_version": "g9-native-reconciliation/2",
   "workpack_id": "A05",
-  "title": "Native Shared Contract Reconciliation and Field Mapping Register",
-  "status": "PROPOSED",
-  "created_at": "2026-11-16T14:22:00Z",
+  "status": "HOLD",
   "academic_admission": "HOLD",
-  "production_deployment": "DISABLED",
   "ui_implementation_freeze": "LOCKED_UNTIL_A61",
-  "governing_references": {
-    "execution_kit": "Grade9v4.2_Execution_Kit_R4",
-    "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
-    "v35_snapshot": {
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "sources": {
+    "v35": {
       "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
-      "tree": "c00cd1dc90ea6692bb71ca60bcfef36fcb993ae1"
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
     },
-    "v41_snapshot": {
+    "v41": {
       "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
-      "tree": "703ee4d6935ba07bb54c292ae2499d863f689fbf"
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
     }
   },
-  "canonical_invariants": {
-    "six_core_roles": [
-      {
-        "role": "CORE1",
-        "blueprint": "BP-CORE1-ORIENTATION@1.1.0",
-        "native_reference": "Shared/roles/CORE1.md",
-        "authority": "Canonical Subject Truth",
-        "learner_job": "Orientation, objects, conventions, scope, relations, compact anchor, hard transitions"
-      },
-      {
-        "role": "CORE1A",
-        "blueprint": "BP-CORE1A-CONSTRUCTION@1.8.0",
-        "native_reference": "Shared/roles/CORE1A.md",
-        "authority": "Canonical Subject Truth",
-        "learner_job": "Microtopic entry assumptions, inferential jump, constructed reasoning, representations, checks (A1-A9 anchors)"
-      },
-      {
-        "role": "CORE1B",
-        "blueprint": "BP-CORE1B-RECONSTRUCTION@1.1.0",
-        "native_reference": "Shared/roles/CORE1B.md",
-        "authority": "Canonical Microtopic Inference",
-        "learner_job": "Six-stage conceptual reconstruction (PREDICT -> ATTEMPT -> RECONSTRUCT -> DIAGNOSE -> REPAIR -> BOUNDARY_TEST)"
-      },
-      {
-        "role": "CORE2",
-        "blueprint": "BP-CORE2-SOURCE-QUESTION@1.11.0",
-        "native_reference": "Shared/roles/CORE2.md",
-        "authority": "Authorized Source Custody",
-        "learner_job": "Exact question, subparts, options, conditions, figures, source hints, identity"
-      },
-      {
-        "role": "CORE2A",
-        "blueprint": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
-        "native_reference": "Shared/roles/CORE2A.md",
-        "authority": "Canonical Truth + Eligible Reviewed Demand / Authored Practice",
-        "learner_job": "Familiar application family; explicit application crux, reasoning route, and scaffolds"
-      },
-      {
-        "role": "CORE2B",
-        "blueprint": "BP-CORE2B-TRANSFER@1.1.0",
-        "native_reference": "Shared/roles/CORE2B.md",
-        "authority": "Canonical Truth + Prior Exposure / Taught Closure + Changed Demand",
-        "learner_job": "Application transfer with protected learner DECIDE move"
-      },
-      {
-        "role": "EXPLORER",
-        "blueprint": "BP-EXPLORER-GCDR@1.0.0",
-        "native_reference": "Shared/web/interactive-page-blueprints.v1.json",
-        "authority": "Canonical Binding or Honest Unbound Extension",
-        "learner_job": "Guided Conceptual Dynamic Reasoning (GCDR: predict, manipulate, observe, contradict, deconstruct, reconstruct, transfer)"
-      }
+  "native_semantics": {
+    "core_roles": [
+      "CORE1",
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "CORE2A",
+      "CORE2B"
     ],
-    "quality_gates_b1_b7": [
-      {
-        "gate": "B1",
-        "title": "Source Attribution and Custody Rights",
-        "requirement": "Exact source provenance, license verification, read-only immutable snapshot preservation"
+    "explorer": "EXPLORER is separate from the six Core roles",
+    "B1_B7": {
+      "source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "nsejs/physics/curriculum/agent2/ACADEMIC_B1_B7_HOLD_NOTES.md",
+        "git_blob": "8a252bb80f565ed5ed3393e88eb8a412f73cbfd6",
+        "size": 6101,
+        "inventory_reported_sha256": "449ad5e27784155f35111991e130a43d0a488b0073b310b55c5b820bbb47631d"
       },
-      {
-        "gate": "B2",
-        "title": "Canonical Scientific Truth",
-        "requirement": "Physics/Chemistry/Math warrant validity, sign and unit consistency, limiting case bounds"
+      "authoring_contract": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "docs/agent-entry/quality-gate-r2/AUTHORING_QUALITY_CONTRACT_R2.md",
+        "git_blob": "f10f7d2e7edb445be97488b07041bfab0ef57d47",
+        "size": 24711,
+        "inventory_reported_sha256": "ce10d14355c6074c130883ba038d38ae6028ac2ec3d878c0531726f5419e1b6b"
       },
-      {
-        "gate": "B3",
-        "title": "Cognitive Demand and QRT Adjudication",
-        "requirement": "7-factor cognitive demand bounds [0..2], crux identification, non-default demand scoring"
-      },
-      {
-        "gate": "B4",
-        "title": "Educational Route and Progressive Scaffolding",
-        "requirement": "Unbroken inferential sequence, misconception targeting, explicit exit tasks"
-      },
-      {
-        "gate": "B5",
-        "title": "Presentation and Viewport Audit Compliance",
-        "requirement": "W3C SVG typography (>=14px), 6 responsive CSS viewports, no clipped text or overflow"
-      },
-      {
-        "gate": "B6",
-        "title": "Runtime Determinism and State Safety",
-        "requirement": "Deterministic state transitions, offline client execution, protected attempt persistence"
-      },
-      {
-        "gate": "B7",
-        "title": "External Cryptographic Verification",
-        "requirement": "Independent detached Ed25519 signatures, zero self-acceptance, tamper detection"
+      "status": "HOLD",
+      "definitions": {
+        "B1": "Exact intellectual target",
+        "B2": "Construction signature",
+        "B3": "Teaching sufficiency",
+        "B4": "Fresh reconstruction",
+        "B5": "Protected attempt",
+        "B6": "Diagnosis and transfer",
+        "B7": "Physics and provenance"
       }
-    ],
-    "learning_construction_parameters_xyzw": [
-      {
-        "parameter": "X",
-        "title": "Phenomenological Anchor / Concrete Observation",
-        "role": "Empirical phenomenon, sensory anchor, or real-world problem baseline"
+    },
+    "QRT": {
+      "sources": [
+        {
+          "snapshot": "v41",
+          "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+          "path": "src/grade9qa/qrt_binding.py",
+          "git_blob": "9596107943840f4facfda8d0b73dccd357e3ce50",
+          "size": 12279,
+          "inventory_reported_sha256": "d6f2b5a3e97f7d232f155179be82338cedbd1aa4e3ee25a45d4302b67825bde7"
+        },
+        {
+          "snapshot": "v35",
+          "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+          "path": "Shared/vocabularies/cognitive-demand.v1.json",
+          "git_blob": "b19b39586632cabb637a61fd05fdaaef105305ef",
+          "size": 2052,
+          "inventory_reported_sha256": "e3872e9fcd75526156ea3b7deaae1d573c55cc3a7b6247b5cfdf616efe308314"
+        }
+      ],
+      "operations": [
+        "RETRIEVE",
+        "EXPLAIN",
+        "APPLY",
+        "MODEL",
+        "REPRESENT",
+        "SYNTHESIZE",
+        "JUSTIFY"
+      ],
+      "factors": [
+        "concept_model_selection",
+        "representation_translation",
+        "reasoning_chain_length",
+        "algebra_computational_load",
+        "trap_exception_sensitivity"
+      ],
+      "bands": {
+        "D1": [
+          0,
+          2
+        ],
+        "D2": [
+          3,
+          5
+        ],
+        "D3": [
+          6,
+          7
+        ],
+        "D4": [
+          8,
+          10
+        ]
       },
-      {
-        "parameter": "Y",
-        "title": "Physical Mechanism / Inferential Jump",
-        "role": "Underlying micro-mechanism connecting concrete observation to abstract principle"
+      "status": "HOLD"
+    },
+    "XYZW": {
+      "source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "templates/physics-blueprint/physics-blueprint.D3-D4.json",
+        "git_blob": "700dafcbe86d76442637bcf214eeb544497cf4ea",
+        "size": 42675,
+        "inventory_reported_sha256": "e6030a5933a803ddc39708414e6831c89c9565def78c09c99f58f95052c2b45f"
       },
-      {
-        "parameter": "Z",
-        "title": "Formal Law / Mathematical Warrant",
-        "role": "Warranted algebraic derivation, governing equation, and dimensional validity"
-      },
-      {
-        "parameter": "W",
-        "title": "Model Boundary / Counterexample & Synthesis",
-        "role": "Limiting cases, domain of applicability, and unassisted synthesis check"
-      }
-    ]
+      "blueprint_status": "DRAFT_OWNER_REVIEW",
+      "coordinate_formula": "Physics tile(X,Y) = Blueprint(X,Y) + Topic(T). X = column (cognitive demand 1..7), Y = band (D3 or D4).",
+      "operation_slots": [
+        {
+          "column": "1",
+          "operation": "RETRIEVE",
+          "slots": {
+            "X": "the exact property, category or condition asked, including the qualifier that separates near-neighbours",
+            "Y": "a demonstrated anchor that lets her rebuild the fact instead of guessing",
+            "Z": "classify using the defining condition",
+            "W": "the final classification decision for each case"
+          }
+        },
+        {
+          "column": "2",
+          "operation": "EXPLAIN",
+          "slots": {
+            "X": "the phenomenon that needs a causal explanation rather than a restatement",
+            "Y": "a demonstrated principle that can account for it",
+            "Z": "build the chain from principle to outcome",
+            "W": "the linking 'because' statement that completes the explanation"
+          }
+        },
+        {
+          "column": "3",
+          "operation": "APPLY",
+          "slots": {
+            "X": "the requested result and the conditions under which the procedure applies",
+            "Y": "a procedure she has demonstrated",
+            "Z": "map givens to the procedure, then execute",
+            "W": "the decisive substitution or execution step that yields the result"
+          }
+        },
+        {
+          "column": "4",
+          "operation": "MODEL",
+          "slots": {
+            "X": "the situation features that decide which model governs",
+            "Y": "candidate models she has demonstrated",
+            "Z": "test each candidate's assumptions against the situation",
+            "W": "the final model, law or strategy choice"
+          }
+        },
+        {
+          "column": "5",
+          "operation": "REPRESENT",
+          "slots": {
+            "X": "the invariant that must survive the translation",
+            "Y": "a translation she has demonstrated",
+            "Z": "map element by element, preserving the invariant",
+            "W": "the decisive correspondence that fixes the target representation"
+          }
+        },
+        {
+          "column": "6",
+          "operation": "SYNTHESIZE",
+          "slots": {
+            "X": "the stages and how they depend on each other",
+            "Y": "each stage's idea she has demonstrated",
+            "Z": "establish the bridge and carry it through",
+            "W": "the bridge or ordering decision that unlocks the route"
+          }
+        },
+        {
+          "column": "7",
+          "operation": "JUSTIFY",
+          "slots": {
+            "X": "the claim and what would establish it",
+            "Y": "a law or result she has demonstrated",
+            "Z": "chain warrants from givens to claim",
+            "W": "the decisive warrant, inference or proof step"
+          }
+        }
+      ],
+      "status": "HOLD; no generic cross-subject redefinition"
+    }
   },
   "projection_reconciliation": [
     {
       "projection_type": "SOURCE",
-      "legacy_v41_path": "schemas/v1/source.schema.json",
-      "native_v35_reference": "Shared/library/source_custody.py",
-      "field_reconciliation": {
-        "id": "identity.legacy_alias (PRESERVE_EXACT)",
-        "source_repo": "provenance.source_repo (EXACT_PIN)",
-        "commit": "provenance.commit_sha (40_HEX)",
-        "raw_blob": "provenance.git_blob_sha (40_HEX)",
-        "sha256": "provenance.raw_sha256 (64_HEX)"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "schemas/v1/source.schema.json",
+        "git_blob": "6d4d782fafb8467637773e4f0004c4d182a595c1",
+        "size": 1733,
+        "inventory_reported_sha256": "71078a5f34a4ca19dfaebad4004a7595e7b6a410f7761985195b83c49673e3e7"
       },
-      "lifecycle": "IMMUTABLE_CUSTODY",
-      "authority": "ADMINISTRATOR",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/library/source_custody.py",
+        "git_blob": "0e2bcc9ac07270618b3bca7401867cea3b78cc1c",
+        "size": 11800,
+        "inventory_reported_sha256": "17e7dbf616c13941e37b0426c9d06ee24e9228d058f4108c8ec38dc1d86c9ab0"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema_version",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/status",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "APPROVED",
+            "REJECTED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "source_pointer": "/created_at",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/role",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "TEXTBOOK",
+            "SCAN",
+            "FIGURE",
+            "SYLLABUS",
+            "EXAM_PAPER",
+            "ANSWER_KEY",
+            "DERIVATION",
+            "OTHER"
+          ]
+        },
+        {
+          "source_pointer": "/authority",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "OWNER_LOCAL_UNAUTHENTICATED",
+            "CANDIDATE_REFERENCE",
+            "VERIFIED_PRIMARY_SOURCE",
+            "DERIVED_FIGURE",
+            "SYNTHETIC_TEST_FIXTURE"
+          ]
+        },
+        {
+          "source_pointer": "/path",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/sha256",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/locator",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/claim_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/updated_at",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "WARRANT",
-      "legacy_v41_path": "schemas/v1/warrant.schema.json",
-      "native_v35_reference": "Shared/library/package.schema.json",
-      "field_reconciliation": {
-        "warrant_id": "package.warrant_id",
-        "subject": "package.subject (PHYSICS|CHEMISTRY|MATHEMATICS)",
-        "laws": "package.governing_laws",
-        "prerequisites": "package.prerequisites",
-        "dimensional_formula": "package.dimensional_warrant"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "schemas/v1/warrant.schema.json",
+        "git_blob": "d2af67cd044c5e897e4317e233700bc645cc291a",
+        "size": 1815,
+        "inventory_reported_sha256": "2a83cb81ff64185bf2f25aa2d2bd07edaf31e078ec06396c8bed7e3370e38526"
       },
-      "lifecycle": "VERSIONED_ACADEMIC",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/library/package.schema.json",
+        "git_blob": "a9cdf31d6ae46d00ac227791264231f05d453725",
+        "size": 108010,
+        "inventory_reported_sha256": "b645f4b5beb9132d6e38b628b1416846201d44dec16a5f04af9a252e9e891d93"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema_version",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/status",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "APPROVED",
+            "REJECTED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "source_pointer": "/created_at",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/physics_claim",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/law_or_model",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/assumptions",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/validity_domain",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/exceptions",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/sign_convention",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/source_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/review_approval_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/author_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/updated_at",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "CONSTRUCTION",
-      "legacy_v41_path": "schemas/v1/construction.schema.json",
-      "native_v35_reference": "Shared/roles/CORE1A.md",
-      "field_reconciliation": {
-        "construction_id": "core1a.unit_id",
-        "inferential_jump": "microtopic.inferential_jump",
-        "entry_assumptions": "core1a.entry_assumptions",
-        "teaching_anchors": "core1a.anchors_a1_a9",
-        "counterexamples": "core1a.model_boundaries"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "schemas/v1/construction.schema.json",
+        "git_blob": "1df8000900961c40313287450ef6db3dacff8b90",
+        "size": 6792,
+        "inventory_reported_sha256": "60dd9fd3e54fc8a5b4bd4cd91917a00c17ae41a58d8f2d10b46b3d353c75bd72"
       },
-      "lifecycle": "VERSIONED_ACADEMIC",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1A.md",
+        "git_blob": "51743989387265f37a96edf104b6a001e93fcc3a",
+        "size": 5346,
+        "inventory_reported_sha256": "c6fb6b45d3128c9b335d2670eedd3e7d55ca467045de92368436a3d22fd866fa"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema_version",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/status",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "APPROVED",
+            "REJECTED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "source_pointer": "/created_at",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/topic_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/source_node_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/operation",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "RETRIEVE",
+            "EXPLAIN",
+            "APPLY",
+            "MODEL",
+            "REPRESENT",
+            "SYNTHESIZE",
+            "JUSTIFY"
+          ]
+        },
+        {
+          "source_pointer": "/band",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ]
+        },
+        {
+          "source_pointer": "/grade_track",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "G9_FOUNDATION",
+            "G10_STRENGTHENING",
+            "JEE_BRIDGE"
+          ]
+        },
+        {
+          "source_pointer": "/blueprint_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/blueprint_version",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/adapter_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/adapter_version",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature/inputs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature/obstacle",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature/decisive_move",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature/output",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature/independent_check",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature/assumptions",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/signature/direction",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CLASSIFY_FROM_CASE",
+            "EXPLAIN_CAUSE_TO_EFFECT",
+            "APPLY_LAW_TO_RESULT",
+            "MODEL_PHENOMENON_TO_SYSTEM",
+            "FORCE_TO_POTENTIAL",
+            "POTENTIAL_TO_FORCE",
+            "GRAPH_TO_EQUATION",
+            "EQUATION_TO_GRAPH",
+            "SYNTHESIZE_STAGES",
+            "JUSTIFY_CLAIM",
+            "OTHER_EXPLICIT"
+          ]
+        },
+        {
+          "source_pointer": "/signature/direction_description",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/prerequisite_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/warrant_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/source_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/conceptual",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/representation",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/reasoning_chain",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/algebraic",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/misconception_trap",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/conceptual",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/representation",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/reasoning_chain",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/algebraic",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/misconception_trap",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/decisive_move_evidence",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/lesson_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/assessment_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/author_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/updated_at",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "LESSON",
-      "legacy_v41_path": "schemas/v1/lesson.schema.json",
-      "native_v35_reference": "Shared/roles/CORE1A.md",
-      "field_reconciliation": {
-        "lesson_id": "lesson.id",
-        "unit_ref": "lesson.core1a_unit_ref",
-        "interactive_scene": "lesson.representation_ref",
-        "exit_task": "lesson.exit_task"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "schemas/v1/lesson.schema.json",
+        "git_blob": "9c3e97b782de993c4ddb57961de99920ea8a1e62",
+        "size": 4417,
+        "inventory_reported_sha256": "da5481b9f3a06edd9efb127031d941f0f272b2e6a963918aedc5aae37aede6b0"
       },
-      "lifecycle": "VERSIONED_ACADEMIC",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1A.md",
+        "git_blob": "51743989387265f37a96edf104b6a001e93fcc3a",
+        "size": 5346,
+        "inventory_reported_sha256": "c6fb6b45d3128c9b335d2670eedd3e7d55ca467045de92368436a3d22fd866fa"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema_version",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/status",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "APPROVED",
+            "REJECTED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "source_pointer": "/created_at",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/construction_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/kind",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CORE1A",
+            "CORE1B"
+          ]
+        },
+        {
+          "source_pointer": "/grade_track",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "G9_FOUNDATION",
+            "G10_STRENGTHENING",
+            "JEE_BRIDGE"
+          ]
+        },
+        {
+          "source_pointer": "/taught_direction",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/tested_direction",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/evidence_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/content_path",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/physical_demo",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/qualitative_prediction",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/law_and_conditions",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/worked_original_example",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/guided_practice",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/misconception_repair",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/verification_check",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/covered_decisive_moves",
+          "type": "array",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/fresh_task",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/protected_decisive_step",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/attempt_state",
+          "type": "object",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/attempt_state/first_answer_before_hint",
+          "type": "boolean",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/attempt_state/reveal_requires_attempt",
+          "type": "boolean",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/attempt_state/p1_optional",
+          "type": "boolean",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/diagnostic_rules",
+          "type": "array",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/changed_condition_transfer",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/tested_decisive_moves",
+          "type": "array",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/freshness_evidence",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/directional_match_approval_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/author_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/updated_at",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "ASSESSMENT",
-      "legacy_v41_path": "schemas/v1/assessment.schema.json",
-      "native_v35_reference": "Shared/roles/CORE1B.md",
-      "field_reconciliation": {
-        "assessment_id": "core1b.instance_id",
-        "prediction_task": "core1b.stages.predict",
-        "reconstruction_task": "core1b.stages.reconstruct",
-        "diagnostic_rubric": "core1b.rubric_bounds",
-        "repair_route": "core1b.repair_guidance"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "schemas/v1/assessment.schema.json",
+        "git_blob": "1924bf1c1eae7f18b711f1fd0230e20908c07c5f",
+        "size": 4228,
+        "inventory_reported_sha256": "b39246285b38019981995ebd133387f2bc3b1acd1f03620f985e44dbde3b16b1"
       },
-      "lifecycle": "PROTECTED_STUDENT_INTERACTION",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1B.md",
+        "git_blob": "50968c023bce14b44ad4fbbad01022b1e595c322",
+        "size": 4897,
+        "inventory_reported_sha256": "be81c8e403875dd423872c29c254a363178b34f06e429141c038ee80dfacbf6a"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema_version",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/status",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "APPROVED",
+            "REJECTED",
+            "BLOCKED"
+          ]
+        },
+        {
+          "source_pointer": "/created_at",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/construction_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/kind",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "AUTHENTICATED_EXAM",
+            "TEXTBOOK",
+            "SYNTHETIC",
+            "INDEPENDENT_RECONSTRUCTION"
+          ]
+        },
+        {
+          "source_pointer": "/source_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/paper_identity",
+          "type": "object",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/paper_identity/year",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/paper_identity/date",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/paper_identity/session",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/paper_identity/question_number",
+          "type": [
+            "string",
+            "integer"
+          ],
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/key_source_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/solution_source_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/review_approval_ids",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/direction",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/decisive_move",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/conceptual",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/representation",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/reasoning_chain",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/algebraic",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_scores/misconception_trap",
+          "type": "integer",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/conceptual",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/representation",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/reasoning_chain",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/algebraic",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/demand_evidence/misconception_trap",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/author_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/updated_at",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "APPROVAL",
-      "legacy_v41_path": "schemas/v1/approval.schema.json",
-      "native_v35_reference": "Shared/tools/review_authority.py",
-      "field_reconciliation": {
-        "approval_id": "review.receipt_id",
-        "reviewer_id": "review.reviewer_key_id",
-        "candidate_tree": "review.target_tree_sha",
-        "ed25519_signature": "review.signature_base64"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "schemas/v1/approval.schema.json",
+        "git_blob": "440bcb47f96507ebb5fee38be63a9bc98d3b67b7",
+        "size": 1949,
+        "inventory_reported_sha256": "e1e837e7b16ab75b8d24bcfbc55674ac3258e1df35a3078502bffc1dc6abd372"
       },
-      "lifecycle": "CRYPTOGRAPHIC_RECEIPT",
-      "authority": "INDEPENDENT_REVIEWER",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/tools/review_authority.py",
+        "git_blob": "d7345715869d9d23b3222afbedcf64b958781f5a",
+        "size": 22249,
+        "inventory_reported_sha256": "c2607a773059a0cc8cd56aa9af8639e167230b60a4f98380c3c8ce42e2124311"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema_version",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/status",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "APPROVED",
+            "REJECTED"
+          ]
+        },
+        {
+          "source_pointer": "/created_at",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/discipline",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "SOURCE_CUSTODY",
+            "PHYSICS",
+            "COGNITIVE",
+            "PEDAGOGY",
+            "EXAM",
+            "TECHNICAL",
+            "GOVERNANCE"
+          ]
+        },
+        {
+          "source_pointer": "/subject_type",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subject_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subject_sha256",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/reviewer_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/reviewer_role",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/author_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/reviewed_at",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/evidence_refs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/decision_reason",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/independent_of_author",
+          "type": "boolean",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/scope",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/updated_at",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Semantic review record is not detached workpack receipt."
     },
     {
       "projection_type": "QUESTION",
-      "legacy_v41_path": "nsejs/core2/question-map.v1.json",
-      "native_v35_reference": "Shared/roles/CORE2.md",
-      "field_reconciliation": {
-        "question_id": "core2.source_id",
-        "stem": "question.payload.stem (PRESERVE_EXACT)",
-        "options": "question.payload.options (APPROVAL_REQUIRED)",
-        "subparts": "core2.subparts",
-        "raw_answer": "assessment.raw_claim"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "nsejs/core2/question-map.v1.json",
+        "git_blob": "b8d796398737ac8b71d87a1b3ae5f12d1ff39067",
+        "size": 282875,
+        "inventory_reported_sha256": "422148c931c190b939be6e0cd4b1dd5cec6fcecea51e51e41cc36613cd255b07"
       },
-      "lifecycle": "SOURCE_CUSTODY",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2.md",
+        "git_blob": "3a3bcdd4dc3f9ff8ab1af3e33da15e95c40091c5",
+        "size": 5553,
+        "inventory_reported_sha256": "490331afdef62e711f347a763f3cb0b138e87ac67abbaabe2e5791afeeee5542"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/academic_admission",
+          "type": "string",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/archive_sha256",
+          "type": "string",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/candidate_question_count",
+          "type": "number",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/distinct_claimed_external_ids",
+          "type": "number",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/independent_qrt_review",
+          "type": "string",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/mode",
+          "type": "string",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/module_count",
+          "type": "number",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/modules",
+          "type": "array",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions",
+          "type": "array",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/redistribution_rights",
+          "type": "string",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/schema",
+          "type": "string",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/source_custody",
+          "type": "string",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/source_originals_published",
+          "type": "number",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects",
+          "type": "object",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/summary",
+          "type": "object",
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/academic_admission",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/candidate_learning_route",
+          "observed_types": [
+            "null",
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/claimed_external_question_id",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/construction_fit",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/content_published",
+          "observed_types": [
+            "boolean"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/content_revision_sha256",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/external_id_collision",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/figure_byte_custody",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/final_key_custody",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/independent_qrt_review",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/module_slug",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/ordinal",
+          "observed_types": [
+            "number"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/proposed_crux_kind",
+          "observed_types": [
+            "string",
+            "null"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/proposed_crux_ref",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/proposed_qrt_operation",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/question_uid",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/route_evidence",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/source_custody",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/source_return_verified",
+          "observed_types": [
+            "boolean"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/source_rights",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/source_year_claim",
+          "observed_types": [
+            "null",
+            "number"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/subject",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/questions/*/verified_missing_reasoning_step",
+          "observed_types": [
+            "null"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/modules/*/question_count",
+          "observed_types": [
+            "number"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/modules/*/slug",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/modules/*/source_bank_sha256",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/modules/*/subject",
+          "observed_types": [
+            "string"
+          ],
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "QRT",
-      "legacy_v41_path": "src/grade9qa/qrt_binding.py",
-      "native_v35_reference": "Shared/vocabularies/cognitive-demand.v1.json",
-      "field_reconciliation": {
-        "operation": "qrt.operation (REPRESENT|CONNECT|TRANSFORM|DECIDE)",
-        "factors": "qrt.factors_5_vector",
-        "band": "qrt.demand_band",
-        "crux_move": "core2a.crux_move_ref"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "src/grade9qa/qrt_binding.py",
+        "git_blob": "9596107943840f4facfda8d0b73dccd357e3ce50",
+        "size": 12279,
+        "inventory_reported_sha256": "d6f2b5a3e97f7d232f155179be82338cedbd1aa4e3ee25a45d4302b67825bde7"
       },
-      "lifecycle": "CANONICAL_TAXONOMY",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/vocabularies/cognitive-demand.v1.json",
+        "git_blob": "b19b39586632cabb637a61fd05fdaaef105305ef",
+        "size": 2052,
+        "inventory_reported_sha256": "e3872e9fcd75526156ea3b7deaae1d573c55cc3a7b6247b5cfdf616efe308314"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "RELEASE",
-      "legacy_v41_path": "docs/agent-entry/production-control-r3/release.py",
-      "native_v35_reference": "Shared/tools/release_authority.py",
-      "field_reconciliation": {
-        "release_id": "release.manifest_id",
-        "gate_results": "release.b1_b7_status",
-        "owner_approval": "release.owner_decision_ref"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "docs/agent-entry/production-control-r3/release.py",
+        "git_blob": "dc9cdd61cda59000f33866d8f3430826e7d222bd",
+        "size": 6159,
+        "inventory_reported_sha256": "9e9edb6bd4867d8c4bbf460fa83cf8beecd4212b6d569371a76888622078e9fb"
       },
-      "lifecycle": "EXECUTIVE_GATE",
-      "authority": "OWNER",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/tools/release_authority.py",
+        "git_blob": "08cbcf2b1769b507ac2e44c0eae5df141cfa25c8",
+        "size": 15839,
+        "inventory_reported_sha256": "e343e48045525d2175d397fa3f919a8df7e8e04aaca270842c4322de2956db10"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "SUBJECT",
-      "legacy_v41_path": "schemas/v2/subject-intake.schema.json",
-      "native_v35_reference": "docs/product-scope.md",
-      "field_reconciliation": {
-        "subject_name": "product.subject",
-        "admitted_status": "product.admission (PHYSICS:YES|CHEMISTRY:YES|MATH:YES|BIOLOGY:HOLD)",
-        "blueprint_version": "product.blueprint_binding"
+      "legacy_source": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "schemas/v2/subject-intake.schema.json",
+        "git_blob": "e9d1ae2c89fcdeab96f00cc2745dd476b32f44fa",
+        "size": 11478,
+        "inventory_reported_sha256": "7ee94ce30557fbc02a76f559c89c23ef250ba7601ca5db4d0a55a477141ee6ca"
       },
-      "lifecycle": "SCOPE_GOVERNANCE",
-      "authority": "OWNER",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v41",
+        "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "path": "docs/product-scope.md",
+        "git_blob": "c8b4643a224cccef21a9723edbe5985060c3cda8",
+        "size": 8142,
+        "inventory_reported_sha256": "001a875ef276e9df0d963230293198833c8ec6d6e9756da73a34f54cbe4b0b6c"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema_version",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/kind",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/programme_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/status",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/subject_id",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "PHYSICS",
+            "MATHEMATICS",
+            "CHEMISTRY"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/stage",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "PLANNED",
+            "PILOT_CANDIDATE",
+            "EXPANDING_CANDIDATE"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/blueprint_ref",
+          "type": "schema-defined",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/topic_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/unit_id",
+          "type": "string",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/adapter_ref",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/adapter_ref/subject_id",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "PHYSICS",
+            "MATHEMATICS",
+            "CHEMISTRY"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/adapter_ref/topic_id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/adapter_ref/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/adapter_ref/version",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/adapter_ref/sha256",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/adapter_ref/blueprint_sha256",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/sources",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/sources/*/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/sources/*/status",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "BLOCKED",
+            "REJECTED"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/sources/*/origin_ref",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/warrants",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/warrants/*/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/warrants/*/status",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "BLOCKED",
+            "REJECTED"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/warrants/*/discipline",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "PHYSICS",
+            "MATHEMATICS",
+            "CHEMISTRY"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/warrants/*/source_refs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/warrants/*/claim_ref",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/status",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "CANDIDATE",
+            "UNDER_REVIEW",
+            "BLOCKED",
+            "REJECTED"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/operation",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "RETRIEVE",
+            "EXPLAIN",
+            "APPLY",
+            "MODEL",
+            "REPRESENT",
+            "SYNTHESIZE",
+            "JUSTIFY"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/band",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "D1",
+            "D2",
+            "D3",
+            "D4"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/grade_track",
+          "type": "enum",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "G9_FOUNDATION",
+            "G10_STRENGTHENING",
+            "JEE_BRIDGE"
+          ]
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/direction",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/source_refs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/warrant_refs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/subjects/*/topics/*/constructions/*/prerequisite_refs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Both located authorities are v4.1; v3.5 equivalent not established."
     },
     {
       "projection_type": "CORE1",
-      "legacy_v41_path": "Shared/roles/CORE1.md",
-      "native_v35_reference": "Shared/roles/CORE1.md",
-      "field_reconciliation": {
-        "orientation_id": "core1.orientation_id",
-        "subject_objects": "core1.objects",
-        "transitions": "core1.hard_transitions"
+      "legacy_source": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1.md",
+        "git_blob": "5503628044c7eebfd13fa360057e0fb476849d68",
+        "size": 4355,
+        "inventory_reported_sha256": "751dd3729721f34710b1f54e4487daf5583ad556e18f241ca548b1bc2a1ab490"
       },
-      "lifecycle": "NATIVE_ROLE",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1.md",
+        "git_blob": "5503628044c7eebfd13fa360057e0fb476849d68",
+        "size": 4355,
+        "inventory_reported_sha256": "751dd3729721f34710b1f54e4487daf5583ad556e18f241ca548b1bc2a1ab490"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "CORE2A",
-      "legacy_v41_path": "Shared/roles/CORE2A.md",
-      "native_v35_reference": "Shared/roles/CORE2A.md",
-      "field_reconciliation": {
-        "practice_id": "core2a.practice_id",
-        "application_family": "core2a.family",
-        "reasoning_route": "core2a.reasoning_route",
-        "scaffolds": "core2a.scaffolds"
+      "legacy_source": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2A.md",
+        "git_blob": "7ee05a5d8522b468123ced0ab027678f8971a7e4",
+        "size": 5100,
+        "inventory_reported_sha256": "3175fed6d1bb6d680f694a5ca5359d0e822a90ce8f9c1ee781f4e2291e1b3b73"
       },
-      "lifecycle": "NATIVE_ROLE",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2A.md",
+        "git_blob": "7ee05a5d8522b468123ced0ab027678f8971a7e4",
+        "size": 5100,
+        "inventory_reported_sha256": "3175fed6d1bb6d680f694a5ca5359d0e822a90ce8f9c1ee781f4e2291e1b3b73"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "CORE2B",
-      "legacy_v41_path": "Shared/roles/CORE2B.md",
-      "native_v35_reference": "Shared/roles/CORE2B.md",
-      "field_reconciliation": {
-        "transfer_id": "core2b.transfer_id",
-        "changed_demand": "core2b.changed_demand",
-        "protected_move": "core2b.decide_move",
-        "rubric": "core2b.rubric"
+      "legacy_source": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2B.md",
+        "git_blob": "1d6dbeb9ed4119db909a624fd0d96aa6ed098965",
+        "size": 5649,
+        "inventory_reported_sha256": "6b6d6a04ccea69957c4295ed839e70af87144b41830afb99409c66db85b74104"
       },
-      "lifecycle": "NATIVE_ROLE",
-      "authority": "ACADEMIC_AUTHORITY",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2B.md",
+        "git_blob": "1d6dbeb9ed4119db909a624fd0d96aa6ed098965",
+        "size": 5649,
+        "inventory_reported_sha256": "6b6d6a04ccea69957c4295ed839e70af87144b41830afb99409c66db85b74104"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "RESOURCE",
-      "legacy_v41_path": "Shared/resources/resource.schema.json",
-      "native_v35_reference": "Shared/resources/resource.schema.json",
-      "field_reconciliation": {
-        "resource_id": "resource.id",
-        "resource_type": "resource.type",
-        "entrypoint": "resource.entrypoint",
-        "audience": "resource.audience"
+      "legacy_source": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/resources/resource.schema.json",
+        "git_blob": "0de57d4bf438629c22436eee3c5ccdb972f8ce22",
+        "size": 3365,
+        "inventory_reported_sha256": "8824c53a287f1f908b6eed21bca441fe85167a0944357163d436ec911b777442"
       },
-      "lifecycle": "NATIVE_RESOURCE_REGISTER",
-      "authority": "ARCHITECT",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/resources/resource.schema.json",
+        "git_blob": "0de57d4bf438629c22436eee3c5ccdb972f8ce22",
+        "size": 3365,
+        "inventory_reported_sha256": "8824c53a287f1f908b6eed21bca441fe85167a0944357163d436ec911b777442"
+      },
+      "source_fields": [
+        {
+          "source_pointer": "/schema",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/id",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/resource_kind",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "STRUCTURED_PRODUCT",
+            "QUESTION_COLLECTION",
+            "OPAQUE_APP",
+            "GUIDED_SESSION",
+            "CONVERTED_DOCUMENT",
+            "OWNER_TOOL",
+            "RUNTIME_HOST"
+          ]
+        },
+        {
+          "source_pointer": "/learner_role",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "LEARN",
+            "PRACTICE",
+            "EXPLORE",
+            "QUESTION_BANK",
+            "REFERENCE",
+            "NONE"
+          ]
+        },
+        {
+          "source_pointer": "/audience",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "LEARNER",
+            "OWNER",
+            "LAB",
+            "INTERNAL"
+          ]
+        },
+        {
+          "source_pointer": "/presentation",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "FULL_PAGE",
+            "TOPIC_ACTION",
+            "STUDY_SURFACE",
+            "COMPANION",
+            "INLINE",
+            "GUIDED",
+            "INTERNAL_HOST"
+          ]
+        },
+        {
+          "source_pointer": "/classification",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/classification/subject_ref",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/classification/topic_refs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/classification/capability_refs",
+          "type": "array",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/artifact",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/artifact/entrypoint",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/artifact/generated",
+          "type": "boolean",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/platform_capabilities",
+          "type": "array",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/search",
+          "type": "object",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/search/title",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/search/aliases",
+          "type": "array",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/search/visibility",
+          "type": "string",
+          "required": true,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null,
+          "enum": [
+            "LEARNER",
+            "EXCLUDED"
+          ]
+        },
+        {
+          "source_pointer": "/source",
+          "type": "object",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/source/authority_ref",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/source/generator_ref",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/validation",
+          "type": "object",
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/validation/academic_evidence_ref",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/validation/structural_evidence_ref",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/validation/browser_evidence_ref",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        },
+        {
+          "source_pointer": "/validation/publication_evidence_ref",
+          "type": [
+            "string",
+            "null"
+          ],
+          "required": false,
+          "disposition": "PRESERVE_RAW_PENDING_AUTHORITY",
+          "target": null
+        }
+      ],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "PORTABLE_SCENE",
-      "legacy_v41_path": "public/portable-workbench/portable-host.mjs",
-      "native_v35_reference": "public/portable-workbench/portable-host.mjs",
-      "field_reconciliation": {
-        "package_id": "portable.id",
-        "manifest": "portable.manifest",
-        "host_protocol": "portable.protocol_v1"
+      "legacy_source": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/portable-host.mjs",
+        "git_blob": "66d35256de777e8f1c1b450229018048dbb939e5",
+        "size": 10714,
+        "inventory_reported_sha256": "d5be4c857cb9be5590d45080f905c565589011cde43b600f69a40022b88591fe"
       },
-      "lifecycle": "SANDBOXED_CLIENT_RUNTIME",
-      "authority": "PLATFORM_ENGINEER",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/portable-host.mjs",
+        "git_blob": "66d35256de777e8f1c1b450229018048dbb939e5",
+        "size": 10714,
+        "inventory_reported_sha256": "d5be4c857cb9be5590d45080f905c565589011cde43b600f69a40022b88591fe"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "GCDR",
-      "legacy_v41_path": "Shared/web/interactive-page-blueprints.v1.json",
-      "native_v35_reference": "Shared/web/interactive-page-blueprints.v1.json",
-      "field_reconciliation": {
-        "explorer_id": "gcdr.id",
-        "stages": "gcdr.ten_stages",
-        "parameters": "gcdr.parameters",
-        "state_invariants": "gcdr.invariants"
+      "legacy_source": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "inventory_reported_sha256": "75f6bd43b31dfdf555fb26e8b36417e9c830a563898264dbe917d4254828653e"
       },
-      "lifecycle": "DYNAMIC_REASONING_ENGINE",
-      "authority": "ARCHITECT",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "inventory_reported_sha256": "75f6bd43b31dfdf555fb26e8b36417e9c830a563898264dbe917d4254828653e"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     },
     {
       "projection_type": "WEB_BLUEPRINT",
-      "legacy_v41_path": "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md",
-      "native_v35_reference": "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md",
-      "field_reconciliation": {
-        "template_id": "template.id",
-        "layout_grid": "template.grid_system",
-        "viewport_rules": "template.viewport_matrix"
+      "legacy_source": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md",
+        "git_blob": "3f46bdbb5561313b293a94c93347df30d7b17cd3",
+        "size": 16937,
+        "inventory_reported_sha256": "68463ca7a50b1b2e8eea10f1a8bb11542c98ca73de8daf8bbfe7c796261253cc"
       },
-      "lifecycle": "PRESENTATION_TEMPLATE",
-      "authority": "UI_ENGINEER",
-      "status": "HOLD"
+      "native_reference": {
+        "snapshot": "v35",
+        "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md",
+        "git_blob": "3f46bdbb5561313b293a94c93347df30d7b17cd3",
+        "size": 16937,
+        "inventory_reported_sha256": "68463ca7a50b1b2e8eea10f1a8bb11542c98ca73de8daf8bbfe7c796261253cc"
+      },
+      "source_fields": [],
+      "exact_field_map": null,
+      "authority_receipt": null,
+      "status": "HOLD",
+      "reason": "Source identity is established; semantic target equivalence, lifecycle and authority remain unresolved. Raw fields retained; no invented target mapping."
     }
   ],
   "field_mapping_rules": [
     {
       "source_field": "id",
-      "target_field": "identity.legacy_alias",
+      "target": "identity.legacy_alias",
       "transform": "PRESERVE_EXACT",
-      "authority_requirement": "NONE",
-      "notes": "Occurrence-scoped legacy alias; does not define target logical ID"
+      "notes": "Occurrence-scoped, not logical ID"
     },
     {
       "source_field": "stem",
-      "target_field": "question.payload.stem",
+      "target": "question.payload.stem",
       "transform": "PRESERVE_EXACT",
-      "authority_requirement": "SOURCE_RIGHTS_VERIFIED",
-      "notes": "If public distribution rights unavailable, retain strictly in private custody"
+      "notes": "Rights required; private custody otherwise"
     },
     {
       "source_field": "options",
-      "target_field": "question.payload.options",
+      "target": "question.payload.options",
       "transform": "APPROVAL_REQUIRED",
-      "authority_requirement": "ACADEMIC_AUTHORITY",
-      "notes": "Stable option IDs, original option ordering, and raw text must be preserved"
+      "notes": "Preserve IDs, order, raw"
     },
     {
       "source_field": "answer",
-      "target_field": "assessment.raw_claim",
+      "target": "assessment.raw_claim",
       "transform": "PRESERVE_EXACT",
-      "authority_requirement": "ACADEMIC_AUTHORITY",
-      "notes": "Legacy author claim recorded verbatim; never automatically validated by migration importer"
+      "notes": "Importer never verifies"
     },
     {
       "source_field": "op/band/score/crux",
-      "target_field": "qrt.raw_claim",
+      "target": "qrt.raw_claim",
       "transform": "PRESERVE_EXACT",
-      "authority_requirement": "ACADEMIC_AUTHORITY",
-      "notes": "Unknown demand remains unknown; no defaulting to medium or 0"
+      "notes": "Unknown remains unknown"
     },
     {
       "source_field": "source_figures",
-      "target_field": "asset_claims",
+      "target": "asset claims",
       "transform": "APPROVAL_REQUIRED",
-      "authority_requirement": "ACADEMIC_AUTHORITY",
-      "notes": "Explicitly distinguish absent figures from unmigrated or missing figures"
+      "notes": "Distinguish absent, missing, not required"
     },
     {
       "source_field": "*",
-      "target_field": "private_raw_record",
+      "target": "private raw record",
       "transform": "PRESERVE_EXACT",
-      "authority_requirement": "MIGRATION_ENGINEER",
-      "notes": "All unmapped/unrecognized source fields preserved in custody JSON pointer ledger"
+      "notes": "Unknown fields retained with disposition"
     }
-  ]
+  ],
+  "verification": {
+    "source_identity": "Git tree paths and blob IDs checked; SHA-256 labels are prior inventory reported, not new independent hashes",
+    "projection_count": 17,
+    "semantic_approval": "NOT_RECEIVED",
+    "unresolved_target_maps": 17
+  }
 }
