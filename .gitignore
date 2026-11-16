@@ -1,0 +1,77 @@
+# Grade9v4.2 — Git Ignore Rules
+# Convenience exclusions only. Not an access-control or secret-scanning boundary.
+
+# Local Secrets & Credentials
+.env
+.env.*
+!.env.example
+id_ed25519*
+id_rsa*
+id_ecdsa*
+id_dsa*
+*.kdbx
+*.jks
+*.keystore
+*.pkcs8
+*.crt.key
+*.secret
+secrets/
+credentials/
+trust/
+
+# Private Custody Roots (Stored externally; strictly forbidden from Git)
+custody/
+_custody/
+external-custody/
+*.raw.tar*
+*.bundle
+
+# Private Migration Material & Archives
+*.gitbundle
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+
+# Evidence and Logs (Stored outside target; strictly forbidden from Git)
+*-evidence/
+evidence/
+*.log
+*.sig
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Virtual Environments & Python Cache
+.venv/
+.venv-*/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+
+# Node & Browser Runtime
+node_modules/
+npm-debug.log*
+test-results/
+playwright-report/
+.playwright/
+
+# OS and Editor Files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
