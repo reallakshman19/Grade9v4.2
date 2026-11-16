@@ -1,99 +1,47 @@
-"""Unit and invariant tests for Native Six-Core and Blueprint Reconciliation (Workpack A57)."""
-
-import unittest
-import json
+"""Source-backed A57 checks; exact source comparison requires authorized v3.5 Git custody."""
+import json, os, subprocess, unittest
 from pathlib import Path
-
-REPO_ROOT = Path("D:/CodeD/g9v4.2")
-SIX_CORE_MAP_PATH = REPO_ROOT / "docs/architecture/native-six-core-map.json"
-BLUEPRINT_MAP_PATH = REPO_ROOT / "docs/architecture/native-blueprint-map.json"
-
-class TestNativeSixCoreReconciliation(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        with open(SIX_CORE_MAP_PATH, "r", encoding="utf-8") as f:
-            cls.six_core = json.load(f)
-        with open(BLUEPRINT_MAP_PATH, "r", encoding="utf-8") as f:
-            cls.blueprints = json.load(f)
-
-    def test_metadata_and_hold_invariants(self):
-        self.assertEqual(self.six_core["workpack_id"], "A57")
-        self.assertEqual(self.six_core["status"], "PROPOSED")
-        self.assertEqual(self.six_core["academic_admission"], "HOLD")
-        self.assertEqual(self.six_core["ui_implementation_freeze"], "LOCKED_UNTIL_A61")
-        self.assertEqual(self.blueprints["ui_freeze"], "NOT_GRANTED (LOCKED_UNTIL_A61)")
-
-    def test_all_seven_roles_and_blueprints_present(self):
-        roles = {r["role"]: r for r in self.six_core["roles"]}
-        expected_roles = {"CORE1", "CORE1A", "CORE1B", "CORE2", "CORE2A", "CORE2B", "EXPLORER"}
-        self.assertEqual(set(roles.keys()), expected_roles)
-
-        bp_ids = {b["blueprint_id"] for b in self.blueprints["blueprints"]}
-        expected_bps = {
-            "BP-CORE1-ORIENTATION@1.1.0",
-            "BP-CORE1A-CONSTRUCTION@1.8.0",
-            "BP-CORE1B-RECONSTRUCTION@1.1.0",
-            "BP-CORE2-SOURCE-QUESTION@1.11.0",
-            "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
-            "BP-CORE2B-TRANSFER@1.1.0",
-            "BP-EXPLORER-GCDR@1.0.0"
-        }
-        self.assertEqual(bp_ids, expected_bps)
-
-    def test_core1_never_accepts_source_question_as_authority(self):
-        roles = {r["role"]: r for r in self.six_core["roles"]}
-        self.assertEqual(roles["CORE1"]["prohibited_authority"], "SOURCE_QUESTION")
-        self.assertEqual(roles["CORE1A"]["prohibited_authority"], "SOURCE_QUESTION")
-        self.assertEqual(roles["CORE1B"]["prohibited_authority"], "SOURCE_QUESTION")
-        self.assertIn("Canonical", roles["CORE1"]["authority"])
-        self.assertIn("Canonical", roles["CORE1A"]["authority"])
-
-    def test_core1b_coverage_matches_core1a_inferential_jump(self):
-        roles = {r["role"]: r for r in self.six_core["roles"]}
-        c1b_slots = {s["name"]: s for s in roles["CORE1B"]["slots"]}
-        self.assertIn("microtopic_binding", c1b_slots)
-        self.assertEqual(c1b_slots["microtopic_binding"]["target"], "CORE1A.inferential_jump")
-
-    def test_six_stage_reconstruction_sequence(self):
-        roles = {r["role"]: r for r in self.six_core["roles"]}
-        c1b_slot_names = [s["name"] for s in roles["CORE1B"]["slots"]]
-        expected_sequence = [
-            "stage_1_predict",
-            "stage_2_attempt",
-            "stage_3_reconstruct",
-            "stage_4_diagnose",
-            "stage_5_repair",
-            "stage_6_boundary_test"
-        ]
-        for stage in expected_sequence:
-            self.assertIn(stage, c1b_slot_names)
-
-    def test_core2a_vs_core2b_crux_and_decide_differentiation(self):
-        roles = {r["role"]: r for r in self.six_core["roles"]}
-        c2a_slots = {s["name"]: s for s in roles["CORE2A"]["slots"]}
-        c2b_slots = {s["name"]: s for s in roles["CORE2B"]["slots"]}
-
-        self.assertIn("crux_move_ref", c2a_slots)
-        self.assertEqual(
-            set(c2a_slots["crux_move_ref"]["allowed_operations"]),
-            {"REPRESENT", "CONNECT", "TRANSFORM", "DECIDE"}
-        )
-        self.assertIn("protected_decide_move", c2b_slots)
-        self.assertIn("changed_demand_specification", c2b_slots)
-
-    def test_mode_conflict_recorded(self):
-        conflicts = self.six_core.get("governance_conflicts", {})
-        self.assertIn("self_study_vs_protected_attempt", conflicts)
-        c = conflicts["self_study_vs_protected_attempt"]
-        self.assertEqual(c["status"], "UNRESOLVED_PENDING_OWNER_DECISION")
-        self.assertIn("STRICT_R2_PROTECTION", c["default_enforcement_rule"])
-
-    def test_subject_adapters_scope_and_biology_hold(self):
-        adapters = {a["subject"]: a for a in self.blueprints["subject_adapters"]}
-        self.assertEqual(adapters["Physics"]["status"], "ADMITTED_TARGET_SCOPE")
-        self.assertEqual(adapters["Chemistry"]["status"], "ADMITTED_TARGET_SCOPE")
-        self.assertEqual(adapters["Mathematics"]["status"], "ADMITTED_TARGET_SCOPE")
-        self.assertEqual(adapters["Biology"]["status"], "EXTENSION_CAPABLE_HOLD")
-
-if __name__ == "__main__":
-    unittest.main()
+ROOT=Path(__file__).resolve().parents[2]
+PIN='8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b'
+TREE='c00cd1dc4ce65d5e8602de133d07e30a4934ad6a'
+ROLES={'CORE1','CORE1A','CORE1B','CORE2','CORE2A','CORE2B'}
+def read_map(name):return json.loads((ROOT/'docs/architecture'/name).read_text())
+class NativeTests(unittest.TestCase):
+ def setUp(self):
+  self.roles=read_map('native-six-core-map.json');self.bp=read_map('native-blueprint-map.json')
+ def test_role_and_component_coverage(self):
+  self.assertEqual(set(self.roles['roles']),ROLES)
+  self.assertEqual({b['target_role'] for b in self.bp['blueprints']},ROLES|{'EXPLORER'})
+  self.assertEqual(self.roles['governing_pins']['v35_tree'],TREE)
+  self.assertEqual(self.roles['governing_pins']['v41_tree'],'703ee4d6ffcd0021a1dc1f8fda1cec61e149d149')
+  self.assertEqual(self.roles['status'],'HOLD');self.assertEqual(self.bp['status'],'HOLD')
+  by_role={b['target_role']:b for b in self.bp['blueprints']}
+  for role,entry in self.roles['roles'].items():
+   b=by_role[role]; self.assertEqual(entry['template']['web_blueprint_ref'],b['blueprint_id'])
+   self.assertEqual([r['block'] for r in entry['block_bindings']],[x['id'] for x in entry['template']['ordered_blocks']])
+   for r in entry['block_bindings']:
+    self.assertEqual(r['native_slots'],[s['id'] for s in b['native_slots'] if r['block'] in s['accepts_blocks']])
+   self.assertEqual({r['component_id'] for r in b['component_bindings']},{c['id'] for c in b['native_components']})
+  self.assertEqual(len(by_role['CORE1A']['native_components']),17);self.assertEqual(len(by_role['CORE2']['native_components']),15);self.assertEqual(len(by_role['EXPLORER']['native_components']),18)
+ def test_native_source_replay(self):
+  path=os.environ.get('G9_V35_ROOT')
+  if not path:self.skipTest('NOT_RUN: G9_V35_ROOT must identify authorized source Git custody')
+  def git(*args):return subprocess.check_output(['git','-C',path,*args])
+  self.assertEqual(git('rev-parse',PIN+'^{tree}').decode().strip(),TREE)
+  def source(p):return git('show',PIN+':'+p).decode('utf-8')
+  import re
+  def fenced(p,tag):return json.loads(re.search(r'```'+tag+r'\s*\n([\s\S]*?)```',source(p)).group(1))
+  reg=json.loads(source('Shared/web/interactive-page-blueprints.v1.json'))
+  templates=fenced('Shared/roles/LEARNER-PRODUCT-TEMPLATES.md','core-templates');auth=fenced('Shared/roles/CORE-AUTHORITY-CONTRACT.md','core-authority')
+  self.assertEqual(self.roles['native_authority'],auth)
+  self.assertEqual(set(self.roles['roles']),set(templates['roles']))
+  for role,r in self.roles['roles'].items():self.assertEqual(r['template'],templates['roles'][role]);self.assertEqual(r['authority'],auth['roles'][role])
+  self.assertEqual(self.bp['shell_fields'],sorted(reg['shell']))
+  self.assertEqual(self.bp['component_policy_fields'],sorted(reg['component_policy']))
+  self.assertEqual(len(self.bp['blueprints']),len(reg['blueprints']))
+  for i,(r,b) in enumerate(zip(self.bp['blueprints'],reg['blueprints'])):
+   self.assertEqual(r['source_pointer'],'/blueprints/'+str(i));self.assertEqual(r['blueprint_id'],b['id']+'@'+b['version']);self.assertEqual(r['native_slots'],b['slots'])
+   self.assertEqual(r['native_components'],[{k:c[k] for k in ('id','slot','level','compact_order') if k in c} for c in b.get('components',[])])
+   self.assertEqual(r['native_field_names'],sorted(b))
+   for j,c in enumerate(b.get('components',[])):self.assertEqual(r['component_bindings'][j]['native_fields'],sorted(c))
+   for k in ('interaction_policy','responsive_policy','touch_policy','representation_policy'):self.assertEqual(r['native_policies'][k],b[k])

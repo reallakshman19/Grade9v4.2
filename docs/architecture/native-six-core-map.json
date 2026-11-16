@@ -1,169 +1,1729 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "schema_version": "1.0.0",
   "workpack_id": "A57",
-  "title": "Six-Core Native Architecture and Role Slot Mapping Register",
-  "status": "PROPOSED",
-  "created_at": "2026-11-16T16:15:00Z",
+  "status": "HOLD",
   "academic_admission": "HOLD",
-  "production_deployment": "DISABLED",
-  "ui_implementation_freeze": "LOCKED_UNTIL_A61",
+  "production_release": "NONE",
+  "ui_freeze": "NOT_GRANTED",
   "governing_pins": {
     "v35_commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
-    "v35_tree": "c00cd1dc90ea6692bb71ca60bcfef36fcb993ae1",
+    "v35_tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
     "v41_commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
-    "v41_tree": "703ee4d6935ba07bb54c292ae2499d863f689fbf",
-    "native_shell": "G9-TABLET-SHELL-V1@1.3.0",
-    "native_registry": "Shared/web/interactive-page-blueprints.v1.json@1.17.0"
+    "v41_tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
   },
-  "roles": [
-    {
-      "role": "CORE1",
-      "blueprint": "BP-CORE1-ORIENTATION@1.1.0",
-      "layout": "READING_ORIENTATION",
-      "authority": "Canonical Subject Truth",
-      "authority_ref": "Shared/roles/CORE1.md",
-      "disclosure_policy": "COMPACT_CLOSURE",
-      "prohibited_authority": "SOURCE_QUESTION",
-      "description": "Orientation, objects, conventions, scope, relations, compact anchor, hard transitions.",
-      "slots": [
-        {"name": "orientation_anchor", "type": "TEXT", "order": 1, "required": true},
-        {"name": "subject_objects", "type": "OBJECT_LIST", "order": 2, "required": true},
-        {"name": "conventions", "type": "CONVENTION_MAP", "order": 3, "required": true},
-        {"name": "scope_relations", "type": "RELATION_GRAPH", "order": 4, "required": true},
-        {"name": "compact_anchor", "type": "ANCHOR_SUMMARY", "order": 5, "required": true},
-        {"name": "hard_transitions", "type": "TRANSITION_LIST", "order": 6, "required": true}
+  "schema_version": "g9-six-core-map/2",
+  "native_authority_source": {
+    "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+    "path": "Shared/roles/CORE-AUTHORITY-CONTRACT.md",
+    "git_blob": "304ad36a502a81f7174f3b52b9622f6e4a47d21c",
+    "size": 9146
+  },
+  "native_template_source": {
+    "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+    "path": "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md",
+    "git_blob": "3f46bdbb5561313b293a94c93347df30d7b17cd3",
+    "size": 16937
+  },
+  "native_authority": {
+    "version": "1.0",
+    "authority_classes": {
+      "CANONICAL_ACADEMIC_TRUTH": {
+        "description": "Canonical subject package records: bucket/microtopic/capability/relation/representation truth.",
+        "may_authorize": [
+          "CORE1",
+          "CORE1A",
+          "CORE1B",
+          "CORE2A",
+          "CORE2B"
+        ]
+      },
+      "AUTHORIZED_SOURCE_CUSTODY": {
+        "description": "Reviewed source/question custody sufficient for ordinary source-backed Core2.",
+        "may_authorize": [
+          "CORE2"
+        ]
+      },
+      "ELIGIBLE_REVIEWED_DEMAND": {
+        "description": "Demand evidence explicitly eligible for learner application.",
+        "may_authorize": [
+          "CORE2A",
+          "CORE2B"
+        ]
+      },
+      "AUTHORED_PRACTICE": {
+        "description": "Truthfully labelled authored application content grounded in canonical capability truth.",
+        "may_authorize": [
+          "CORE2A",
+          "CORE2B"
+        ]
+      },
+      "LEARNER_SUPPORT_INPUT": {
+        "description": "Scoped learner evidence, owner estimate or waiver used only where role contracts permit routing/support.",
+        "may_authorize": [
+          "CORE2A",
+          "CORE2B"
+        ]
+      },
+      "PRIOR_EXPOSURE": {
+        "description": "Recorded prior exposure/established route needed before transfer claims.",
+        "may_authorize": [
+          "CORE2B"
+        ]
+      }
+    },
+    "roles": {
+      "CORE1": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORIZED_SOURCE_CUSTODY",
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "CORE1A": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORIZED_SOURCE_CUSTODY",
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "CORE1B": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORIZED_SOURCE_CUSTODY",
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "CORE2": {
+        "required_authority": [
+          "AUTHORIZED_SOURCE_CUSTODY"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORED_PRACTICE",
+          "CANONICAL_ACADEMIC_TRUTH"
+        ]
+      },
+      "CORE2A": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "one_of_authority": [
+          "ELIGIBLE_REVIEWED_DEMAND",
+          "AUTHORED_PRACTICE"
+        ],
+        "optional_authority": [
+          "LEARNER_SUPPORT_INPUT"
+        ],
+        "forbidden_authority_substitution": [
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "CORE2B": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH",
+          "PRIOR_EXPOSURE"
+        ],
+        "one_of_authority": [
+          "ELIGIBLE_REVIEWED_DEMAND",
+          "AUTHORED_PRACTICE"
+        ],
+        "optional_authority": [
+          "LEARNER_SUPPORT_INPUT"
+        ],
+        "forbidden_authority_substitution": [
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      }
+    },
+    "invariants": {
+      "execution_order_is_not_authority_order": true,
+      "core2_custody_gap_does_not_rewrite_academic_authority": true,
+      "core2_custody_research_does_not_block_study_roles": true,
+      "preserve_question_primary_capability_ref": true,
+      "set_scope_must_not_overwrite_question_primary": true,
+      "demand_evidence_and_learner_eligibility_are_distinct": true,
+      "source_hints_and_authored_scaffolds_are_distinct": true,
+      "extensions_require_canonical_admission_before_core1_family": true,
+      "learner_estimate_is_not_mastery_evidence": true,
+      "learner_estimate_cannot_change_core1_family_intrinsic_scope": true,
+      "prompt_and_planning_outputs_are_not_academic_authority": true,
+      "unresolved_authority_dependency_becomes_research_duty": true
+    },
+    "canonical_field_rules": {
+      "question_primary": "question.primary_capability_ref",
+      "source_hints": "question.hints[]",
+      "authored_scaffolds": "question.scaffolds[]",
+      "core1_family_crux": "microtopic.inferential_jump"
+    },
+    "planning_distinctions": {
+      "execution_order": "PRODUCTION_CONTROL_ONLY",
+      "set_level_scope": "COMPOSITION_CONTEXT_ONLY",
+      "demand_evidence": "MAY_EXIST_WITHOUT_LEARNER_ELIGIBILITY",
+      "learner_eligibility": "INDEPENDENT_REVIEW_STATE"
+    },
+    "allowed_dependency_states": [
+      "PASS",
+      "RESEARCH_AND_AUTHOR"
+    ]
+  },
+  "template_version": "1.4",
+  "roles": {
+    "CORE1": {
+      "role_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1.md",
+        "git_blob": "5503628044c7eebfd13fa360057e0fb476849d68",
+        "size": 4355
+      },
+      "role_section_headings": [
+        {
+          "heading": "# Core1 — compact basic notes and semantic orientation",
+          "line": 1
+        },
+        {
+          "heading": "## Purpose",
+          "line": 5
+        },
+        {
+          "heading": "## Required content",
+          "line": 9
+        },
+        {
+          "heading": "## Relationship to upstream material",
+          "line": 17
+        },
+        {
+          "heading": "## What Core1 must not do",
+          "line": 25
+        },
+        {
+          "heading": "## What this role requires the library to hold",
+          "line": 31
+        }
+      ],
+      "authority": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORIZED_SOURCE_CUSTODY",
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "template": {
+        "learner_job": "Orient to the bucket without replacing detailed teaching.",
+        "ordered_blocks": [
+          {
+            "id": "identity_scope",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "learner_metadata",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "objects_conventions",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "canonical_representation",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "governing_relations",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "compact_anchor",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "hard_transition_map",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "exclusions_extensions",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "orientation_closure",
+            "visibility": "IMMEDIATE"
+          }
+        ],
+        "required_inputs": [
+          "bucket.title",
+          "bucket.conventions[]",
+          "bucket.primary_representation_ref",
+          "bucket.scope.covers",
+          "bucket.scope.excluded[]",
+          "bucket.scope.extension_refs[]",
+          "relation.expression",
+          "relation.meaning",
+          "relation.conditions[]",
+          "microtopic.intrinsic_badge",
+          "microtopic.badge_reason"
+        ],
+        "withheld_pre_attempt": [],
+        "forbidden": [
+          "FULL_INFERENTIAL_CONSTRUCTION",
+          "FULL_MISCONCEPTION_REPAIR_LESSON",
+          "PERSONALISED_PRACTICE_ROUTING"
+        ],
+        "web_blueprint_ref": "BP-CORE1-ORIENTATION@1.1.0"
+      },
+      "block_bindings": [
+        {
+          "block": "identity_scope",
+          "template_pointer": "/roles/CORE1/ordered_blocks/0",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.identity_scope",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "learner_metadata",
+          "template_pointer": "/roles/CORE1/ordered_blocks/1",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.learner_metadata",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "objects_conventions",
+          "template_pointer": "/roles/CORE1/ordered_blocks/2",
+          "native_slots": [
+            "orientation"
+          ],
+          "proposed_target": "native.blocks.objects_conventions",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "canonical_representation",
+          "template_pointer": "/roles/CORE1/ordered_blocks/3",
+          "native_slots": [
+            "orientation"
+          ],
+          "proposed_target": "native.blocks.canonical_representation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "governing_relations",
+          "template_pointer": "/roles/CORE1/ordered_blocks/4",
+          "native_slots": [
+            "orientation"
+          ],
+          "proposed_target": "native.blocks.governing_relations",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "compact_anchor",
+          "template_pointer": "/roles/CORE1/ordered_blocks/5",
+          "native_slots": [
+            "orientation"
+          ],
+          "proposed_target": "native.blocks.compact_anchor",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "hard_transition_map",
+          "template_pointer": "/roles/CORE1/ordered_blocks/6",
+          "native_slots": [
+            "orientation"
+          ],
+          "proposed_target": "native.blocks.hard_transition_map",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "exclusions_extensions",
+          "template_pointer": "/roles/CORE1/ordered_blocks/7",
+          "native_slots": [
+            "orientation"
+          ],
+          "proposed_target": "native.blocks.exclusions_extensions",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "orientation_closure",
+          "template_pointer": "/roles/CORE1/ordered_blocks/8",
+          "native_slots": [
+            "orientation"
+          ],
+          "proposed_target": "native.blocks.orientation_closure",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "canonical_input_bindings": [
+        {
+          "native_path": "bucket.title",
+          "proposed_target": "bucket.title",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "bucket.conventions[]",
+          "proposed_target": "bucket.conventions[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "bucket.primary_representation_ref",
+          "proposed_target": "bucket.primary_representation_ref",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "bucket.scope.covers",
+          "proposed_target": "bucket.scope.covers",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "bucket.scope.excluded[]",
+          "proposed_target": "bucket.scope.excluded[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "bucket.scope.extension_refs[]",
+          "proposed_target": "bucket.scope.extension_refs[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "relation.expression",
+          "proposed_target": "relation.expression",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "relation.meaning",
+          "proposed_target": "relation.meaning",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "relation.conditions[]",
+          "proposed_target": "relation.conditions[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.intrinsic_badge",
+          "proposed_target": "microtopic.intrinsic_badge",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.badge_reason",
+          "proposed_target": "microtopic.badge_reason",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
       ]
     },
-    {
-      "role": "CORE1A",
-      "blueprint": "BP-CORE1A-CONSTRUCTION@1.8.0",
-      "layout": "READING_CONSTRUCTION",
-      "authority": "Canonical Subject Truth",
-      "authority_ref": "Shared/roles/CORE1A.md",
-      "disclosure_policy": "PROGRESSIVE_CONVENTIONS_FIRST",
-      "prohibited_authority": "SOURCE_QUESTION",
-      "description": "Microtopic entry assumptions, inferential jump, constructed reasoning, progressive anchors A1-A9.",
-      "slots": [
-        {"name": "entry_assumptions", "type": "ASSUMPTION_LIST", "order": 1, "required": true},
-        {"name": "inferential_jump", "type": "INFERENCE_SPEC", "order": 2, "required": true},
-        {"name": "teaching_path", "type": "STEP_SEQUENCE", "order": 3, "required": true},
-        {"name": "representation_refs", "type": "ASSET_REF_LIST", "order": 4, "required": true},
-        {"name": "progressive_anchors_a1_a9", "type": "ANCHOR_ARRAY", "order": 5, "required": true, "elements": [
-          "A1_phenomenon", "A2_prerequisite", "A3_mechanism", "A4_warranted_derivation",
-          "A5_meaningful_figure", "A6_progressive_anchors", "A7_first_wrong_inference_misconception",
-          "A8_counterexample_model_boundary", "A9_synthesis_check"
-        ]},
-        {"name": "elicitation", "type": "PROMPT_SPEC", "order": 6, "required": true},
-        {"name": "misconceptions", "type": "MISCONCEPTION_CATALOG", "order": 7, "required": true},
-        {"name": "exit_task", "type": "TASK_SPEC", "order": 8, "required": true}
+    "CORE1A": {
+      "role_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1A.md",
+        "git_blob": "51743989387265f37a96edf104b6a001e93fcc3a",
+        "size": 5346
+      },
+      "role_section_headings": [
+        {
+          "heading": "# Core1A — declarative detailed teaching",
+          "line": 1
+        },
+        {
+          "heading": "## Purpose",
+          "line": 5
+        },
+        {
+          "heading": "## Required content",
+          "line": 11
+        },
+        {
+          "heading": "## Depth control",
+          "line": 20
+        },
+        {
+          "heading": "## What Core1A must not do",
+          "line": 34
+        },
+        {
+          "heading": "## What this role requires the library to hold",
+          "line": 40
+        }
+      ],
+      "authority": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORIZED_SOURCE_CUSTODY",
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "template": {
+        "learner_job": "Receive a complete conceptual construction of the decisive bridge, with worked/repair/check operators used when they materially support that learning job.",
+        "ordered_blocks": [
+          {
+            "id": "identity_entry_assumptions",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "learner_metadata",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "convention_declaration",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "inferential_jump",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "completed_construction",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "representation_bridge",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "worked_conceptual_anchor",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "plausible_wrong_path",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "diagnose",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "repair",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "independent_checks",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "exit_task_closure",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "practice_navigation",
+            "visibility": "IMMEDIATE"
+          }
+        ],
+        "required_inputs": [
+          "microtopic.entry_assumptions[]",
+          "microtopic.inferential_jump",
+          "microtopic.teaching_path[]",
+          "microtopic.representation_refs[]",
+          "microtopic.exit_task"
+        ],
+        "withheld_pre_attempt": [],
+        "forbidden": [
+          "ATTEMPT_FIRST_AS_PRIMARY_MODE",
+          "RANDOM_BLANK_DELETION",
+          "UNANSWERED_PROMPT",
+          "FABRICATED_MISCONCEPTION_REPAIR",
+          "BAND_AS_PANEL_COUNT"
+        ],
+        "web_blueprint_ref": "BP-CORE1A-CONSTRUCTION@1.8.0"
+      },
+      "block_bindings": [
+        {
+          "block": "identity_entry_assumptions",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/0",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.identity_entry_assumptions",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "learner_metadata",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/1",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.learner_metadata",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "convention_declaration",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/2",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.convention_declaration",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "inferential_jump",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/3",
+          "native_slots": [
+            "construction"
+          ],
+          "proposed_target": "native.blocks.inferential_jump",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "completed_construction",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/4",
+          "native_slots": [
+            "construction"
+          ],
+          "proposed_target": "native.blocks.completed_construction",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "representation_bridge",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/5",
+          "native_slots": [
+            "construction"
+          ],
+          "proposed_target": "native.blocks.representation_bridge",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "worked_conceptual_anchor",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/6",
+          "native_slots": [
+            "construction"
+          ],
+          "proposed_target": "native.blocks.worked_conceptual_anchor",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "plausible_wrong_path",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/7",
+          "native_slots": [
+            "repair_closure"
+          ],
+          "proposed_target": "native.blocks.plausible_wrong_path",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "diagnose",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/8",
+          "native_slots": [
+            "repair_closure"
+          ],
+          "proposed_target": "native.blocks.diagnose",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "repair",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/9",
+          "native_slots": [
+            "repair_closure"
+          ],
+          "proposed_target": "native.blocks.repair",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "independent_checks",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/10",
+          "native_slots": [
+            "repair_closure"
+          ],
+          "proposed_target": "native.blocks.independent_checks",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "exit_task_closure",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/11",
+          "native_slots": [
+            "repair_closure"
+          ],
+          "proposed_target": "native.blocks.exit_task_closure",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "practice_navigation",
+          "template_pointer": "/roles/CORE1A/ordered_blocks/12",
+          "native_slots": [
+            "repair_closure"
+          ],
+          "proposed_target": "native.blocks.practice_navigation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "canonical_input_bindings": [
+        {
+          "native_path": "microtopic.entry_assumptions[]",
+          "proposed_target": "microtopic.entry_assumptions[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.inferential_jump",
+          "proposed_target": "microtopic.inferential_jump",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.teaching_path[]",
+          "proposed_target": "microtopic.teaching_path[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.representation_refs[]",
+          "proposed_target": "microtopic.representation_refs[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.exit_task",
+          "proposed_target": "microtopic.exit_task",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
       ]
     },
-    {
-      "role": "CORE1B",
-      "blueprint": "BP-CORE1B-RECONSTRUCTION@1.1.0",
-      "layout": "GUIDED_RECONSTRUCTION",
-      "authority": "Canonical Microtopic Inference",
-      "authority_ref": "Shared/roles/CORE1B.md",
-      "disclosure_policy": "PROTECTED_ATTEMPT_THEN_REPAIR",
-      "prohibited_authority": "SOURCE_QUESTION",
-      "description": "Six-stage conceptual reconstruction eliciting the same intrinsic microtopic inference.",
-      "slots": [
-        {"name": "microtopic_binding", "type": "EXACT_REF", "order": 1, "required": true, "target": "CORE1A.inferential_jump"},
-        {"name": "stage_1_predict", "type": "PROTECTED_PREDICTION", "order": 2, "required": true},
-        {"name": "stage_2_attempt", "type": "PROTECTED_ATTEMPT", "order": 3, "required": true},
-        {"name": "stage_3_reconstruct", "type": "GUIDED_RECONSTRUCTION", "order": 4, "required": true},
-        {"name": "stage_4_diagnose", "type": "DIAGNOSTIC_EVALUATION", "order": 5, "required": true},
-        {"name": "stage_5_repair", "type": "TARGETED_REPAIR", "order": 6, "required": true},
-        {"name": "stage_6_boundary_test", "type": "MODEL_BOUNDARY_PROBE", "order": 7, "required": true},
-        {"name": "rubric_bounds", "type": "FACTOR_EVALUATION_VECTOR", "order": 8, "required": true}
+    "CORE1B": {
+      "role_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE1B.md",
+        "git_blob": "50968c023bce14b44ad4fbbad01022b1e595c322",
+        "size": 4897
+      },
+      "role_section_headings": [
+        {
+          "heading": "# Core1B — open-ended conceptual reconstruction",
+          "line": 1
+        },
+        {
+          "heading": "## Purpose",
+          "line": 5
+        },
+        {
+          "heading": "## Coverage obligation",
+          "line": 11
+        },
+        {
+          "heading": "## Required shape",
+          "line": 15
+        },
+        {
+          "heading": "## Closure without a tutor",
+          "line": 26
+        },
+        {
+          "heading": "## What Core1B must not do",
+          "line": 30
+        },
+        {
+          "heading": "## What this role requires the library to hold",
+          "line": 37
+        }
+      ],
+      "authority": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORIZED_SOURCE_CUSTODY",
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "template": {
+        "learner_job": "Reconstruct the same inferential truth before seeing the completed route.",
+        "ordered_blocks": [
+          {
+            "id": "identity_concept",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "learner_metadata",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "predict",
+            "visibility": "ATTEMPT_FIRST"
+          },
+          {
+            "id": "attempt",
+            "visibility": "ATTEMPT_FIRST"
+          },
+          {
+            "id": "reconstruct",
+            "visibility": "POST_ATTEMPT"
+          },
+          {
+            "id": "diagnose",
+            "visibility": "POST_ATTEMPT"
+          },
+          {
+            "id": "repair",
+            "visibility": "POST_ATTEMPT"
+          },
+          {
+            "id": "boundary_test",
+            "visibility": "POST_ATTEMPT"
+          },
+          {
+            "id": "model_response_or_rubric",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "rejoin_inferential_jump",
+            "visibility": "ON_REVEAL"
+          }
+        ],
+        "required_inputs": [
+          "microtopic.inferential_jump",
+          "microtopic.elicitation.predict.prompt",
+          "microtopic.elicitation.attempt.produces",
+          "microtopic.elicitation.reconstruct.route[]",
+          "microtopic.misconceptions[]",
+          "microtopic.elicitation.boundary_test"
+        ],
+        "withheld_pre_attempt": [
+          "DEFENSIBLE_ANSWER",
+          "COMPLETED_RECONSTRUCTION",
+          "MODEL_RESPONSE"
+        ],
+        "forbidden": [
+          "CORE1A_WITH_RANDOM_BLANKS",
+          "ANSWER_BEFORE_ATTEMPT",
+          "COVERAGE_REDUCTION_RELATIVE_TO_CORE1A"
+        ],
+        "web_blueprint_ref": "BP-CORE1B-RECONSTRUCTION@1.1.0"
+      },
+      "block_bindings": [
+        {
+          "block": "identity_concept",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/0",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.identity_concept",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "learner_metadata",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/1",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.learner_metadata",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "predict",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/2",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.predict",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "attempt",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/3",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.attempt",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "reconstruct",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/4",
+          "native_slots": [
+            "reconstruction"
+          ],
+          "proposed_target": "native.blocks.reconstruct",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "diagnose",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/5",
+          "native_slots": [
+            "reconstruction"
+          ],
+          "proposed_target": "native.blocks.diagnose",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "repair",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/6",
+          "native_slots": [
+            "reconstruction"
+          ],
+          "proposed_target": "native.blocks.repair",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "boundary_test",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/7",
+          "native_slots": [
+            "reconstruction"
+          ],
+          "proposed_target": "native.blocks.boundary_test",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "model_response_or_rubric",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/8",
+          "native_slots": [
+            "reconstruction"
+          ],
+          "proposed_target": "native.blocks.model_response_or_rubric",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "rejoin_inferential_jump",
+          "template_pointer": "/roles/CORE1B/ordered_blocks/9",
+          "native_slots": [
+            "reconstruction"
+          ],
+          "proposed_target": "native.blocks.rejoin_inferential_jump",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "canonical_input_bindings": [
+        {
+          "native_path": "microtopic.inferential_jump",
+          "proposed_target": "microtopic.inferential_jump",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.elicitation.predict.prompt",
+          "proposed_target": "microtopic.elicitation.predict.prompt",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.elicitation.attempt.produces",
+          "proposed_target": "microtopic.elicitation.attempt.produces",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.elicitation.reconstruct.route[]",
+          "proposed_target": "microtopic.elicitation.reconstruct.route[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.misconceptions[]",
+          "proposed_target": "microtopic.misconceptions[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "microtopic.elicitation.boundary_test",
+          "proposed_target": "microtopic.elicitation.boundary_test",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
       ]
     },
-    {
-      "role": "CORE2",
-      "blueprint": "BP-CORE2-SOURCE-QUESTION@1.11.0",
-      "layout": "QUESTION_READER",
-      "authority": "Authorized Source Custody",
-      "authority_ref": "Shared/roles/CORE2.md",
-      "disclosure_policy": "EXACT_SOURCE_DISCLOSURE",
-      "prohibited_authority": "NONE",
-      "description": "Authorized competition / examination source question with original text, figures, options, and rubric.",
-      "slots": [
-        {"name": "source_id", "type": "EXTERNAL_ID", "order": 1, "required": true},
-        {"name": "stem", "type": "MARKDOWN_PROSE", "order": 2, "required": true},
-        {"name": "options", "type": "STABLE_OPTION_LIST", "order": 3, "required": false},
-        {"name": "conditions", "type": "PHYSICAL_CONDITIONS", "order": 4, "required": true},
-        {"name": "figures", "type": "ASSET_REFERENCE_ARRAY", "order": 5, "required": false},
-        {"name": "subparts", "type": "SUBPART_SPEC", "order": 6, "required": false},
-        {"name": "source_hints", "type": "ORIGINAL_HINT_LIST", "order": 7, "required": false},
-        {"name": "raw_answer", "type": "AUTHOR_CLAIM", "order": 8, "required": true}
+    "CORE2": {
+      "role_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2.md",
+        "git_blob": "3a3bcdd4dc3f9ff8ab1af3e33da15e95c40091c5",
+        "size": 5553
+      },
+      "role_section_headings": [
+        {
+          "heading": "# Core2 — source questions, hints, identity and answers",
+          "line": 1
+        },
+        {
+          "heading": "## Purpose",
+          "line": 5
+        },
+        {
+          "heading": "## Required content",
+          "line": 9
+        },
+        {
+          "heading": "## The custody rule",
+          "line": 18
+        },
+        {
+          "heading": "## Rights-aware preservation",
+          "line": 28
+        },
+        {
+          "heading": "## Downstream consequence",
+          "line": 36
+        },
+        {
+          "heading": "## What this role requires the library to hold",
+          "line": 40
+        }
+      ],
+      "authority": {
+        "required_authority": [
+          "AUTHORIZED_SOURCE_CUSTODY"
+        ],
+        "forbidden_authority_substitution": [
+          "AUTHORED_PRACTICE",
+          "CANONICAL_ACADEMIC_TRUTH"
+        ]
+      },
+      "template": {
+        "learner_job": "Encounter the authentic source assessment demand with custody intact, preserving the learner-owned decision before any assistance that completes or materially narrows it.",
+        "ordered_blocks": [
+          {
+            "id": "source_identity_provenance",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "learner_metadata",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "source_question",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "source_figure",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "source_hint_ladder",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "authored_core2_support",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "concept_navigation",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "source_answer_rubric",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "verified_solution_reasoning",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "custody_status",
+            "visibility": "IMMEDIATE"
+          }
+        ],
+        "required_inputs": [
+          "question.source_refs[]",
+          "question.original_identifier",
+          "question.stem",
+          "question.subparts[]",
+          "question.options[]",
+          "question.conditions[]",
+          "question.figure_refs[]",
+          "question.hints[]",
+          "question.answer",
+          "question.origin"
+        ],
+        "withheld_pre_attempt": [
+          "SOURCE_ANSWER",
+          "ANSWER_REVEALING_SOURCE_HINT",
+          "PROTECTED_MOVE_COMPLETING_SUPPORT"
+        ],
+        "forbidden": [
+          "AUTHORED_SCAFFOLD_PRESENTED_AS_SOURCE_HINT",
+          "GENERATED_OFFICIAL_IDENTITY",
+          "RECONSTRUCTED_WORDING_PRESENTED_AS_ORIGINAL",
+          "CLOSED_DISCLOSURE_AS_SEMANTIC_PROTECTION",
+          "UNTRACKED_PRE_ATTEMPT_ASSISTANCE"
+        ],
+        "web_blueprint_ref": "BP-CORE2-SOURCE-QUESTION@1.11.0"
+      },
+      "block_bindings": [
+        {
+          "block": "source_identity_provenance",
+          "template_pointer": "/roles/CORE2/ordered_blocks/0",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.source_identity_provenance",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "learner_metadata",
+          "template_pointer": "/roles/CORE2/ordered_blocks/1",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.learner_metadata",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "source_question",
+          "template_pointer": "/roles/CORE2/ordered_blocks/2",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.source_question",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "source_figure",
+          "template_pointer": "/roles/CORE2/ordered_blocks/3",
+          "native_slots": [
+            "representation"
+          ],
+          "proposed_target": "native.blocks.source_figure",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "source_hint_ladder",
+          "template_pointer": "/roles/CORE2/ordered_blocks/4",
+          "native_slots": [
+            "support"
+          ],
+          "proposed_target": "native.blocks.source_hint_ladder",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "authored_core2_support",
+          "template_pointer": "/roles/CORE2/ordered_blocks/5",
+          "native_slots": [
+            "support"
+          ],
+          "proposed_target": "native.blocks.authored_core2_support",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "concept_navigation",
+          "template_pointer": "/roles/CORE2/ordered_blocks/6",
+          "native_slots": [
+            "support"
+          ],
+          "proposed_target": "native.blocks.concept_navigation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "source_answer_rubric",
+          "template_pointer": "/roles/CORE2/ordered_blocks/7",
+          "native_slots": [
+            "solution"
+          ],
+          "proposed_target": "native.blocks.source_answer_rubric",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "verified_solution_reasoning",
+          "template_pointer": "/roles/CORE2/ordered_blocks/8",
+          "native_slots": [
+            "solution"
+          ],
+          "proposed_target": "native.blocks.verified_solution_reasoning",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "custody_status",
+          "template_pointer": "/roles/CORE2/ordered_blocks/9",
+          "native_slots": [
+            "solution"
+          ],
+          "proposed_target": "native.blocks.custody_status",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "canonical_input_bindings": [
+        {
+          "native_path": "question.source_refs[]",
+          "proposed_target": "question.source_refs[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.original_identifier",
+          "proposed_target": "question.original_identifier",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.stem",
+          "proposed_target": "question.stem",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.subparts[]",
+          "proposed_target": "question.subparts[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.options[]",
+          "proposed_target": "question.options[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.conditions[]",
+          "proposed_target": "question.conditions[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.figure_refs[]",
+          "proposed_target": "question.figure_refs[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.hints[]",
+          "proposed_target": "question.hints[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.answer",
+          "proposed_target": "question.answer",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.origin",
+          "proposed_target": "question.origin",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
       ]
     },
-    {
-      "role": "CORE2A",
-      "blueprint": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
-      "layout": "QUESTION_STUDY",
-      "authority": "Canonical Truth + Eligible Reviewed Demand / Authored Practice",
-      "authority_ref": "Shared/roles/CORE2A.md",
-      "disclosure_policy": "SCAFFOLDED_TEACHABLE_CLOSURE",
-      "prohibited_authority": "UNVERIFIED_SOURCE_ASSERTION",
-      "description": "Familiar application practice with explicit crux move, step-by-step scaffolds, and reasoning routes.",
-      "slots": [
-        {"name": "application_family", "type": "FAMILY_ID", "order": 1, "required": true},
-        {"name": "crux_move_ref", "type": "OPERATION_CRUX", "order": 2, "required": true, "allowed_operations": [
-          "REPRESENT", "CONNECT", "TRANSFORM", "DECIDE"
-        ]},
-        {"name": "reasoning_route", "type": "STEPWISE_ROUTE", "order": 3, "required": true},
-        {"name": "progressive_scaffolds", "type": "SCAFFOLD_ARRAY", "order": 4, "required": true},
-        {"name": "self_check", "type": "CHECK_ROUTINE", "order": 5, "required": true},
-        {"name": "closure_summary", "type": "CONCEPT_CLOSURE", "order": 6, "required": true}
+    "CORE2A": {
+      "role_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2A.md",
+        "git_blob": "7ee05a5d8522b468123ced0ab027678f8971a7e4",
+        "size": 5100
+      },
+      "role_section_headings": [
+        {
+          "heading": "# Core2A — purpose-adjusted practice with complete solutions",
+          "line": 1
+        },
+        {
+          "heading": "## Purpose",
+          "line": 5
+        },
+        {
+          "heading": "## Required content",
+          "line": 11
+        },
+        {
+          "heading": "## Practice routing",
+          "line": 22
+        },
+        {
+          "heading": "## What Core2A must not do",
+          "line": 32
+        },
+        {
+          "heading": "## What this role requires the library to hold",
+          "line": 38
+        }
+      ],
+      "authority": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH"
+        ],
+        "one_of_authority": [
+          "ELIGIBLE_REVIEWED_DEMAND",
+          "AUTHORED_PRACTICE"
+        ],
+        "optional_authority": [
+          "LEARNER_SUPPORT_INPUT"
+        ],
+        "forbidden_authority_substitution": [
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "template": {
+        "learner_job": "Learn a familiar question-family application route with pedagogical support and complete closure.",
+        "ordered_blocks": [
+          {
+            "id": "family_identity_provenance",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "learner_metadata",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "question",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "initial_representation",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "pedagogical_scaffolds",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "reasoning_route",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "application_crux",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "bound_representation",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "complete_solution",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "independent_check",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "failure_signal_repair",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "exposure_family_closure",
+            "visibility": "IMMEDIATE"
+          }
+        ],
+        "required_inputs": [
+          "question.family_ref",
+          "question.source_refs[]",
+          "question.answer.reasoning_route[]",
+          "question.answer.crux_move_ref",
+          "question.scaffolds[]",
+          "question.figure_refs[]",
+          "question.answer.check",
+          "question.exposure[]"
+        ],
+        "withheld_pre_attempt": [],
+        "forbidden": [
+          "TRANSFER_CLAIM_FROM_NUMBER_CHANGE_ONLY",
+          "SOURCE_HINT_AND_AUTHORED_SCAFFOLD_COLLAPSE",
+          "MASTERY_CLAIM_FROM_SUCCESSFUL_GENERATION"
+        ],
+        "web_blueprint_ref": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0"
+      },
+      "block_bindings": [
+        {
+          "block": "family_identity_provenance",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/0",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.family_identity_provenance",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "learner_metadata",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/1",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.learner_metadata",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "question",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/2",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.question",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "initial_representation",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/3",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.initial_representation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "pedagogical_scaffolds",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/4",
+          "native_slots": [
+            "support"
+          ],
+          "proposed_target": "native.blocks.pedagogical_scaffolds",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "reasoning_route",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/5",
+          "native_slots": [
+            "reasoning"
+          ],
+          "proposed_target": "native.blocks.reasoning_route",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "application_crux",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/6",
+          "native_slots": [
+            "support"
+          ],
+          "proposed_target": "native.blocks.application_crux",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "bound_representation",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/7",
+          "native_slots": [
+            "support"
+          ],
+          "proposed_target": "native.blocks.bound_representation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "complete_solution",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/8",
+          "native_slots": [
+            "reasoning"
+          ],
+          "proposed_target": "native.blocks.complete_solution",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "independent_check",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/9",
+          "native_slots": [
+            "reasoning"
+          ],
+          "proposed_target": "native.blocks.independent_check",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "failure_signal_repair",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/10",
+          "native_slots": [
+            "reasoning"
+          ],
+          "proposed_target": "native.blocks.failure_signal_repair",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "exposure_family_closure",
+          "template_pointer": "/roles/CORE2A/ordered_blocks/11",
+          "native_slots": [
+            "reasoning"
+          ],
+          "proposed_target": "native.blocks.exposure_family_closure",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "canonical_input_bindings": [
+        {
+          "native_path": "question.family_ref",
+          "proposed_target": "question.family_ref",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.source_refs[]",
+          "proposed_target": "question.source_refs[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.answer.reasoning_route[]",
+          "proposed_target": "question.answer.reasoning_route[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.answer.crux_move_ref",
+          "proposed_target": "question.answer.crux_move_ref",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.scaffolds[]",
+          "proposed_target": "question.scaffolds[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.figure_refs[]",
+          "proposed_target": "question.figure_refs[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.answer.check",
+          "proposed_target": "question.answer.check",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.exposure[]",
+          "proposed_target": "question.exposure[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
       ]
     },
-    {
-      "role": "CORE2B",
-      "blueprint": "BP-CORE2B-TRANSFER@1.1.0",
-      "layout": "TRANSFER_ATTEMPT",
-      "authority": "Canonical Truth + Prior Exposure / Taught Closure + Changed Demand",
-      "authority_ref": "Shared/roles/CORE2B.md",
-      "disclosure_policy": "NO_PRE_ATTEMPT_SCAFFOLD_STRICT_DECIDE",
-      "prohibited_authority": "UNSUPPORTED_DEMAND_INVENTION",
-      "description": "Independent transfer challenge with changed cognitive demand; requires protected student DECIDE move.",
-      "slots": [
-        {"name": "transfer_task", "type": "PROBLEM_STATEMENT", "order": 1, "required": true},
-        {"name": "changed_demand_specification", "type": "DEMAND_DELTA", "order": 2, "required": true},
-        {"name": "protected_decide_move", "type": "UNASSISTED_STUDENT_MOVE", "order": 3, "required": true},
-        {"name": "evaluation_rubric", "type": "CRITERIA_MATRIX", "order": 4, "required": true},
-        {"name": "changed_condition_repair", "type": "REPAIR_INSTRUCTION", "order": 5, "required": true},
-        {"name": "lineage_ref", "type": "EXACT_REF", "order": 6, "required": true}
-      ]
-    },
-    {
-      "role": "EXPLORER",
-      "blueprint": "BP-EXPLORER-GCDR@1.0.0",
-      "layout": "STAGE_SUPPORT",
-      "authority": "Canonical Binding or Honest Unbound Extension",
-      "authority_ref": "Shared/web/interactive-page-blueprints.v1.json",
-      "disclosure_policy": "SIMULATION_IS_NOT_ACADEMIC_PROOF",
-      "prohibited_authority": "STANDALONE_SCIENTIFIC_PROOF",
-      "description": "Guided Conceptual Dynamic Reasoning (GCDR) 10-stage cognitive model exploration.",
-      "slots": [
-        {"name": "model_id", "type": "STRING", "order": 1, "required": true},
-        {"name": "gcdr_stages", "type": "STAGE_ARRAY_10", "order": 2, "required": true, "stages": [
-          "1_predict", "2_manipulate", "3_observe", "4_contradict", "5_deconstruct",
-          "6_reconstruct", "7_invariant", "8_boundary", "9_fade", "10_transfer"
-        ]},
-        {"name": "physical_parameters", "type": "PARAMETER_SPEC_MAP", "order": 3, "required": true},
-        {"name": "invariants", "type": "INVARIANT_RULE_LIST", "order": 4, "required": true},
-        {"name": "simulation_boundary", "type": "RANGE_LIMIT_MAP", "order": 5, "required": true}
+    "CORE2B": {
+      "role_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/roles/CORE2B.md",
+        "git_blob": "1d6dbeb9ed4119db909a624fd0d96aa6ed098965",
+        "size": 5649
+      },
+      "role_section_headings": [
+        {
+          "heading": "# Core2B — supported application and transfer",
+          "line": 1
+        },
+        {
+          "heading": "## Purpose",
+          "line": 5
+        },
+        {
+          "heading": "## What makes a Core2B task",
+          "line": 13
+        },
+        {
+          "heading": "## Required content",
+          "line": 26
+        },
+        {
+          "heading": "## Practice routing",
+          "line": 36
+        },
+        {
+          "heading": "## What Core2B must not do",
+          "line": 40
+        },
+        {
+          "heading": "## What this role requires the library to hold",
+          "line": 46
+        }
+      ],
+      "authority": {
+        "required_authority": [
+          "CANONICAL_ACADEMIC_TRUTH",
+          "PRIOR_EXPOSURE"
+        ],
+        "one_of_authority": [
+          "ELIGIBLE_REVIEWED_DEMAND",
+          "AUTHORED_PRACTICE"
+        ],
+        "optional_authority": [
+          "LEARNER_SUPPORT_INPUT"
+        ],
+        "forbidden_authority_substitution": [
+          "LEARNER_SUPPORT_INPUT"
+        ]
+      },
+      "template": {
+        "learner_job": "Carry an established capability into a changed demand while protecting the changed learner decision before commitment.",
+        "ordered_blocks": [
+          {
+            "id": "question_prior_exposure",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "learner_metadata",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "safe_initial_representation",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "safe_pre_attempt_support",
+            "visibility": "IMMEDIATE"
+          },
+          {
+            "id": "attempt_commitment",
+            "visibility": "ATTEMPT_FIRST"
+          },
+          {
+            "id": "post_attempt_support",
+            "visibility": "POST_ATTEMPT"
+          },
+          {
+            "id": "full_answer_rubric",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "changed_demand_review",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "repair_route",
+            "visibility": "ON_REVEAL"
+          },
+          {
+            "id": "lineage_continuity_check",
+            "visibility": "ON_REVEAL"
+          }
+        ],
+        "required_inputs": [
+          "question.transfer.dimension",
+          "question.transfer.statement",
+          "question.transfer.builds_on[]",
+          "question.transfer.protected_move_ref",
+          "question.scaffolds[]",
+          "question.answer.rubric[]",
+          "question.repair_ref"
+        ],
+        "withheld_pre_attempt": [
+          "PROTECTED_MOVE",
+          "CHANGED_DECISION",
+          "METHOD_OR_ANSWER_SUPPORT_THAT_COLLAPSES_TRANSFER"
+        ],
+        "forbidden": [
+          "PROTECTED_MOVE_DISCLOSED_PRE_ATTEMPT",
+          "NEW_UNTAUGHT_CAPABILITY_AS_TRANSFER",
+          "TRANSFER_CLAIM_FROM_COVER_STORY_ONLY"
+        ],
+        "web_blueprint_ref": "BP-CORE2B-TRANSFER@1.1.0"
+      },
+      "block_bindings": [
+        {
+          "block": "question_prior_exposure",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/0",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.question_prior_exposure",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "learner_metadata",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/1",
+          "native_slots": [
+            "identity"
+          ],
+          "proposed_target": "native.blocks.learner_metadata",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "safe_initial_representation",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/2",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.safe_initial_representation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "safe_pre_attempt_support",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/3",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.safe_pre_attempt_support",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "attempt_commitment",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/4",
+          "native_slots": [
+            "attempt"
+          ],
+          "proposed_target": "native.blocks.attempt_commitment",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "post_attempt_support",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/5",
+          "native_slots": [
+            "post_attempt"
+          ],
+          "proposed_target": "native.blocks.post_attempt_support",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "full_answer_rubric",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/6",
+          "native_slots": [
+            "post_attempt"
+          ],
+          "proposed_target": "native.blocks.full_answer_rubric",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "changed_demand_review",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/7",
+          "native_slots": [
+            "post_attempt"
+          ],
+          "proposed_target": "native.blocks.changed_demand_review",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "repair_route",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/8",
+          "native_slots": [
+            "post_attempt"
+          ],
+          "proposed_target": "native.blocks.repair_route",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "block": "lineage_continuity_check",
+          "template_pointer": "/roles/CORE2B/ordered_blocks/9",
+          "native_slots": [
+            "post_attempt"
+          ],
+          "proposed_target": "native.blocks.lineage_continuity_check",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "canonical_input_bindings": [
+        {
+          "native_path": "question.transfer.dimension",
+          "proposed_target": "question.transfer.dimension",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.transfer.statement",
+          "proposed_target": "question.transfer.statement",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.transfer.builds_on[]",
+          "proposed_target": "question.transfer.builds_on[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.transfer.protected_move_ref",
+          "proposed_target": "question.transfer.protected_move_ref",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.scaffolds[]",
+          "proposed_target": "question.scaffolds[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.answer.rubric[]",
+          "proposed_target": "question.answer.rubric[]",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "native_path": "question.repair_ref",
+          "proposed_target": "question.repair_ref",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
       ]
     }
-  ],
-  "governance_conflicts": {
-    "self_study_vs_protected_attempt": {
-      "status": "UNRESOLVED_PENDING_OWNER_DECISION",
-      "conflict_description": "v3.5 native self-study allows learner-openable closures and immediate answer/hint reveals. v4.1 R2/R3 requires durable protected attempt recording before diagnostic reveal.",
-      "default_enforcement_rule": "STRICT_R2_PROTECTION: Pre-attempt scaffold or reveal is strictly blocked for assessed moves; student attempt must commit immutably prior to answer disclosure.",
-      "authority_required": "OWNER"
+  },
+  "explorer": "EXPLORER is not a seventh Core; separate native blueprint",
+  "wpe_authoring_duties": {
+    "source": {
+      "snapshot": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "path": "docs/agent-entry/quality-gate-r2/AUTHORING_QUALITY_CONTRACT_R2.md",
+      "git_blob": "f10f7d2e7edb445be97488b07041bfab0ef57d47"
+    },
+    "status": "HOLD",
+    "duties": [
+      "A1 phenomenon",
+      "A2 prerequisites",
+      "A3 mechanism",
+      "A4 warrant",
+      "A5 meaningful figure",
+      "A6 three progressive anchors",
+      "A7 first wrong inference",
+      "A8 counterexample/model boundary",
+      "A9 synthesis and unassisted challenge"
+    ]
+  },
+  "unresolved": [
+    {
+      "id": "SELF_STUDY_VS_PROTECTED_ATTEMPT",
+      "decision": "OWNER_PENDING",
+      "default": "HOLD affected projection; no assessed precommit disclosure"
+    },
+    {
+      "id": "CORE2_RESEARCH_DUTY_VS_RELEASE_HOLD",
+      "decision": "OWNER_PENDING",
+      "default": "research may continue; no source eligibility or publication inferred"
     }
-  }
+  ]
 }
