@@ -1,0 +1,3085 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "workpack_id": "A56",
+  "title": "Grade9v3.5 Observed Route and Artifact Discovery Summary",
+  "repository": "reallakshman19/Grade9v3.5",
+  "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+  "tree": "c00cd1dc90ea6692bb71ca60bcfef36fcb993ae1",
+  "status": "PROPOSED",
+  "academic_admission": "HOLD",
+  "ui_implementation_freeze": "LOCKED_UNTIL_A61",
+  "summary_counts": {
+    "tracked_files": 2657,
+    "html_paths": 396,
+    "unique_html_blobs": 252,
+    "standalone_suites": 38,
+    "registered_opaque_explorers": 11,
+    "total_explorer_entrypoints": 48,
+    "root_library_packages": 22,
+    "portable_package_ids": 4,
+    "native_blueprints": 7
+  },
+  "discovery_invariants": {
+    "silent_dedup_prohibited": true,
+    "exact_path_equality_enforced": true,
+    "private_evidence_retained": true,
+    "unaccounted_html_paths": 0
+  },
+  "standalone_suites": [
+    {
+      "path": "standalone/chemistry-behaviour-of-gases-master-suite.html",
+      "sha256": "9261030f40d705803de5b1c68d7f0592a35842efff50fe0042ab6b57a21c19e3",
+      "size": 127153,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/chemistry-chemical-bonding-master-suite.html",
+      "sha256": "6bea694257e028e5e207c6fbe5c9204d063efb35eff9f8d8aacf9ced28021865",
+      "size": 198959,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/chemistry-mole-concept-master-suite.html",
+      "sha256": "ced60741293da18c26442716dd1d851bbee890c8f2772db876411d867a6e1cfe",
+      "size": 139082,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/chemistry-redox-adaptive-hard-concept-proof.html",
+      "sha256": "f24b133a2dda354e5e30010b4c3e56aa68a37f796355ad90c4944edca8e48cb9",
+      "size": 22786,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/chemistry-redox-reactions-master-suite.html",
+      "sha256": "f1f3e6d67e3eb51b79508783fd2a846d7d19f41b74c2a76ce08895aa6d561b4e",
+      "size": 255535,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core-learning/index.html",
+      "sha256": "ef05eb99f6d0de16229fe5b205ec0607209e0d01349f2e49e85dc2af08f25957",
+      "size": 12087,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core1a-motion-1d-straight-line-tablet.html",
+      "sha256": "68df31fac6cb0db44d2ce3d5e39c866e651a75102565228dbfd92bfa2ae15cd7",
+      "size": 131136,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core1a-motion-in-a-plane-tablet.html",
+      "sha256": "9a0991bccb56f7a5b3e04cdeaa4f965661f3d8457c72918858fcf8d9d39bd77d",
+      "size": 170109,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core1a-physics-nlm-tablet.html",
+      "sha256": "8ae71412fb6bd7a4086360c83cf6de14a92413164cc19eb27f315fd26198f5ce",
+      "size": 329413,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core1a-vector-add-sub-tablet.html",
+      "sha256": "52f53ba4a200b2be430bd89b4d3a143909de64184327b55ad4b0595cdf91f58d",
+      "size": 97682,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core2-mathematics-circles-grade9-master.html",
+      "sha256": "47c3201c54cdaf5cd9e50fc265f211363a7d181c61518f3c5f65ded48addfbb3",
+      "size": 4381956,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core2-motion-in-a-plane-tablet.html",
+      "sha256": "dad68b308f18cbaf1e670ac1831a961e376120f8ada05e42f482ad9b1c3c07fa",
+      "size": 299770,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core2-physics-thrust-pressure-tablet.html",
+      "sha256": "27df4b51eb1aed1f10e503935c95c4af098ace094c4cf151515fbbac71fcc009",
+      "size": 256205,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/core2a-projectile-study.html",
+      "sha256": "d7927c6f29a107557a5ac44296706831e77bed03be126f10b53f0e8910c4ebf1",
+      "size": 93647,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/mathematics-imo-grade9-master-suite (2).html",
+      "sha256": "cf517ac4aa047c4442d73dfcb1e670162c470fafa203009c8264e0850bb01978",
+      "size": 8964088,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/mathematics-polynomials-and-coordinates-suite.html",
+      "sha256": "ad628b1af65ca58da698e1421930b653367714cab344eb293c42d8199ae67eb6",
+      "size": 66039,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/motion-in-1d-master-suite.html",
+      "sha256": "6a0fdb2cfde12598aa97cdafa77fb6ed595b079ceb77a71bd3b4451e9ae1515a",
+      "size": 183600,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/motion-in-2d-master-suite.html",
+      "sha256": "f6fa6a6b7dbcf149f31141baf526ffa7a674ab08a6bd1e089e4981fcd02bf31c",
+      "size": 419860,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/motion-session/index.html",
+      "sha256": "506efae0eb2541235dcab1b89bad880b5c6554d07f9c1eb3007a4699597ce0d6",
+      "size": 9154,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/physics-motion-in-a-plane-interactive-suite.html",
+      "sha256": "a11a0cc3382dffae2734ac3c82459976ee8a7aec7f785dfb8f638c7924f380e9",
+      "size": 45984,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/portable-workbench/index.html",
+      "sha256": "59c4ec639c15b2eac842ceddae3d9f486c0864a7040f7561ab9816e1d31a5863",
+      "size": 65948,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core1a-physics-motion-2d-ncert-tablet.html",
+      "sha256": "cb3c189025e261be86d03f9bd3010d310e88372a4798aa72a3ac9061a5fb3945",
+      "size": 111895,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core1a-physics-nlm-tablet.html",
+      "sha256": "c848dd29336ccb7191d087a41d8ced4faf301b0792e8b6a1397e4dc45de16a34",
+      "size": 127129,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core1a-physics-vectors-tablet.html",
+      "sha256": "492ac859b6ac98ada383d222df57e180895adbc3ae955b4a59c5dba5ff4f8794",
+      "size": 127924,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core1a-sba-06-07-trajectory-and-height-tablet.html",
+      "sha256": "8646bfdf19b25ba38292fcf29650400f64354db2c1c15ec53f8080664e3d23a5",
+      "size": 55037,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core1a-sba-motion-in-a-plane-master-tablet.html",
+      "sha256": "4eb67553e48bfa0fece142ca56f7db6deea41d42724f3ece359e7b41d1b6b0fe",
+      "size": 103033,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core2-motion-1d-straight-line-tablet.html",
+      "sha256": "983d7e598d0fa16d37cf95e48f9e5d8c0d774ecc306f0f8e94f35a6ef977eaea",
+      "size": 160506,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core2-motion-consolidated-practice-tablet.html",
+      "sha256": "2fb24fd03e7858535060f1551e68f5422883812a2df5fbca932acec3f416074c",
+      "size": 72413,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core2-motion-in-a-plane-tablet.html",
+      "sha256": "f954d145c46bb8d8f8aa7300645f37fa19c716e48eaa46be8ef2aa54879ec37b",
+      "size": 582987,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core2-physics-thrust-pressure-tablet.html",
+      "sha256": "5fa64ae66251608ec047c9a273b404a455b5a50836ef276cb5360432202d5378",
+      "size": 256294,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/core2a-projectile-study.html",
+      "sha256": "1396abc86a4d4cad295d4ce29acecefe5214c9c90987d7368bc0ad561c2498f6",
+      "size": 107780,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/index.html",
+      "sha256": "4e264f6ec3f1966d15fd926ae7b91164ed92866b6330e4f1efcf26432e8aee04",
+      "size": 30815,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/motion-in-1d-master-suite.html",
+      "sha256": "82732fea76ca146ecf5b01970d9846342f72327d59d381f5a42914e61c119c0e",
+      "size": 204475,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/motion-in-2d-master-suite.html",
+      "sha256": "457406833709620483b4ad442d64a1ce8c5b1621d544f687406fe6b22544cf6a",
+      "size": 428565,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+      "sha256": "de5465b5ddab451498bfc07c2cdbb1e58d2e619355927fecae1fe899c6fdf812",
+      "size": 62049,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/products/physics/phy-kin-2d-motion.html",
+      "sha256": "bab9359d7f44ed64d6d9c700f4cfa4e31b7db2598bf5c805475b5f8d410f71b6",
+      "size": 359752,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/products/physics/phy-nlm-first-law.html",
+      "sha256": "e9308f991d5eaa2c2b93349c8a7fcc45f203a370e901256ab8040e01482bf373",
+      "size": 1288010,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    },
+    {
+      "path": "standalone/vector-algebra-3d-master-suite.html",
+      "sha256": "b544022cbee752762ca53800d209124b34831f6bed8f0cdb84f24aac499ccf7d",
+      "size": 125923,
+      "audit_status": "NOT_BROWSER_AUDITED"
+    }
+  ],
+  "registered_opaque_explorer_entrypoints": [
+    "public/chemistry/bonding/explorers/chemical_bonding/index.html",
+    "public/chemistry/gases/explorers/behaviour_of_gases/index.html",
+    "public/chemistry/redox/explorers/redox_reactions/index.html",
+    "public/chemistry/some-basic-concepts/explorers/mole_concept/index.html",
+    "public/mathematics/vectors/explorers/vector_algebra/index.html",
+    "public/physics/motion-1d/explorers/motion_in_1d/index.html",
+    "public/physics/motion-2d/explorers/motion-in-a-plane/index.html",
+    "public/physics/motion-in-2d/explorers/motions_in_2d/index.html",
+    "public/physics/nlm/explorers/atwood-pulleys/index.html",
+    "public/physics/nlm/explorers/connected-blocks/index.html",
+    "public/physics/nlm/explorers/friction-threshold/index.html"
+  ],
+  "root_library_packages": [
+    "Mathematics/library/linear-equations.v1.json",
+    "Mathematics/library/polynomials.v1.json",
+    "Physics/library/phy-elec-current-ohm.v1.json",
+    "Physics/library/phy-fluid-bernoulli-equation.v1.json",
+    "Physics/library/phy-grav-universal-law.v1.json",
+    "Physics/library/phy-kin-1d-motion.v1.json",
+    "Physics/library/phy-kin-2d-motion.v1.json",
+    "Physics/library/phy-mag-field-lorentz.v1.json",
+    "Physics/library/phy-nlm-first-law.v1.json",
+    "Physics/library/phy-nlm-momentum-transfer.v1.json",
+    "Physics/library/phy-optics-reflection-mirrors.v1.json",
+    "Physics/library/phy-optics-refraction-lenses.v1.json",
+    "Physics/library/phy-osc-shm-waves.v1.json",
+    "Physics/library/phy-rot-rigid-body.v1.json",
+    "Physics/library/phy-simple-machines.v1.json",
+    "Physics/library/phy-sound.v1.json",
+    "Physics/library/phy-thermo-first-second-law.v1.json",
+    "Physics/library/phy-vec-add-sub.v1.json",
+    "Physics/library/phy-vector-direction-unit.v1.json",
+    "Physics/library/phy-work-energy-power.v1.json",
+    "Physics/library/relative-motion.v1.json",
+    "Physics/library/vector-representation.v1.json"
+  ],
+  "portable_package_ids": [
+    "portable-long-division",
+    "portable-redox-electron-equivalence",
+    "portable-integration-riemann",
+    "portable-motion-shared-clock"
+  ],
+  "native_blueprints": {
+    "CORE1": "BP-CORE1-ORIENTATION@1.1.0",
+    "CORE1A": "BP-CORE1A-CONSTRUCTION@1.8.0",
+    "CORE1B": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+    "CORE2": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+    "CORE2A": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+    "CORE2B": "BP-CORE2B-TRANSFER@1.1.0",
+    "EXPLORER": "BP-EXPLORER-GCDR@1.0.0"
+  },
+  "html_path_catalog": [
+    {
+      "path": "Physics/content/relative-motion-g9/publication/CORE1A.html",
+      "sha256": "79a3c67278f1f019895f6a26cf4c80d7d4b44b9049473a66c295e516cb0951af",
+      "size": 9240,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-g9/publication/CORE1B.html",
+      "sha256": "48b78503540ea4b59d3a15bfa8a569801490e23de4679842c16d939e75886d11",
+      "size": 8432,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-g9/publication/CORE2A.html",
+      "sha256": "36cc943ec38b230cc4a89300c6fe47678aa1f85b70522e93c7d542c8dfe8e6b5",
+      "size": 10697,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-g9/publication/CORE2B.html",
+      "sha256": "daf39ee36e5fb306b49975597d7810628020c13678a8c06afacfda4d14722e75",
+      "size": 8617,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-g9/publication/OWNER_BOARD.html",
+      "sha256": "f03909c6fbc0d0cfe80fd542a2db7d63bfaff9eab3179711e5a66abf44bf1e6a",
+      "size": 3570,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-library/publication/CORE1.html",
+      "sha256": "c009e27a991ec61ddc36ad841b227f9085e613f2442138e68b76c86e0617bd97",
+      "size": 7763,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-library/publication/CORE1A.html",
+      "sha256": "7bdc2ec9328f3a58d89ce4f43fed7842898b81a8b72c05229adf397e7b79a32d",
+      "size": 12736,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-library/publication/CORE1B.html",
+      "sha256": "8b261000542990983580ff92c7cb2b96eef110301d7b2002a3d71eff9e833c88",
+      "size": 15443,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-library/publication/CORE2.html",
+      "sha256": "85846878849e9f6420254d7d869f743e0a6c73acc33ad20ee0966f621e7ca09c",
+      "size": 3702,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-library/publication/CORE2A.html",
+      "sha256": "ea23d527620262ddf79f48cb1ebd65627de9c68ed87638487b2eae4c379712b8",
+      "size": 3709,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "Physics/content/relative-motion-library/publication/OWNER_BOARD.html",
+      "sha256": "bd29fa9c9aa5d6b75b8798a71dfa8a0c85f280bc2003673335d1bcdb3b77fff9",
+      "size": 3567,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/core1a-motion-in-a-plane-tablet.html",
+      "sha256": "fd15271d6a4d43e9bcbac5d7c2f46501a7ce51468dfe34054f5be3e7118ea984",
+      "size": 359692,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core1.html",
+      "sha256": "1f8782967789f6632dd2459d8ed888f4fd6a505c1b654bca103a0f3123d34c85",
+      "size": 6887,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core1a.html",
+      "sha256": "0d3db9d11403ca20967ec0f54f77adea309037587957736be3872fbd18a7374c",
+      "size": 41068,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core1b.html",
+      "sha256": "2c71c0c32ff113257760ff2d94c9d3b04e5363b6e57400dd0853d2b7a94a7f22",
+      "size": 32226,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core2.html",
+      "sha256": "3e3b6ac86ea0f9e4b6f687574d19021ee9b78643945152772c06bd38f834b780",
+      "size": 15597,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core2a.html",
+      "sha256": "10ffe47a0224f3f1a81b3627527d6d124aa3582a521444ce20b7df79ecc0cd61",
+      "size": 13737,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core2b.html",
+      "sha256": "ff02bd3fe320c34475e575f08fce794e2899bdfd33e1b1ec9df2d253cbf6e162",
+      "size": 24970,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/index.html",
+      "sha256": "78bc87d920866b02f077b4d23986f4d08e7bc522993815acd59304b1c268b1a5",
+      "size": 10481,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S3-projectile-prototype-markdown/preview.html",
+      "sha256": "0ed16d83287ee82ea9b584412c50106e2a0da2d3ef5929da6b60bd7138749866",
+      "size": 20940,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S4-pr288-preview/preview.html",
+      "sha256": "fb790d45acf1a5378c9733f9d8e65b829574253a378b2eebe9fbd6379a7b57f7",
+      "size": 33150,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/atlas/index.html",
+      "sha256": "2ca9503565bee12ac7b319ebac6281ac0dfa0b54bd6798b0a8ed8b285513618c",
+      "size": 5527,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/book/index.html",
+      "sha256": "13c77065437bb2f26c6a833f61bc8b82135bde7c1713e1793602f7e90b359b46",
+      "size": 71543,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/builder/index.html",
+      "sha256": "d2d6ca06d657fc8081e074e9931d9bad564965828d13d9a2e0e832660fe72579",
+      "size": 2238,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/constant-acceleration-in-a-plane.html",
+      "sha256": "8890c3c2c67834705436843078ac34c0c43aaf3c780c9fe5e3dd69785278fce1",
+      "size": 8551,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/horizontal-launch-from-a-height.html",
+      "sha256": "58ac33b5c3e903a2f59cad56c4545d0dc614646a0c9878605298ba71ba9fcea4",
+      "size": 9360,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/perpendicular-components-are-independent.html",
+      "sha256": "34bcf0fdc928223ee70a121e4c6d985a421cd408384c79f2c051f1990f095880",
+      "size": 9706,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/position-and-displacement-in-a-plane.html",
+      "sha256": "608a59d3e5a1d93897cc46125b046ae24376767be1208f4abb9a4e5f96a079e6",
+      "size": 8744,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/projectiles-time-of-flight-height-and-range.html",
+      "sha256": "edbb35a27ec27cf570fb3eb199106962b1bdd812d2617fc2659f25c97376af0d",
+      "size": 11679,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/relative-velocity-in-two-dimensions.html",
+      "sha256": "a6c93b039018dc27459c1f3a6f0dbcf6406ca404b88d174b747d33a3925c62e9",
+      "size": 8780,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/uniform-circular-motion.html",
+      "sha256": "fdbcfe7fdac1684d1d1550ae0b005865d7800bff0abfb2df9b22cbe61ca39eb2",
+      "size": 6280,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/quality-calibration/specimens/S5-research-first-render/pages/velocity-and-acceleration-as-vectors.html",
+      "sha256": "bfa765949a8240702de9e0bbe5add3cfcf03d902b943c884e55d15ac23ca1312",
+      "size": 8661,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "benchmarks/selected_question_bank_TABLET_STUDY.html",
+      "sha256": "c1672e6edcc3fe4be5f0fe3a52f4289842d34d5d54e17e724c859e165ddcd911",
+      "size": 55673,
+      "entry_context": "BENCHMARK_REFERENCE",
+      "mode": 420
+    },
+    {
+      "path": "docs/atlas/index.html",
+      "sha256": "5454c927740a98f0867e5250aab2c825b30a593db16be1ba3f2fd291d5c3a7d1",
+      "size": 22297,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/bonding/atlas.html",
+      "sha256": "e8fd7fbfb9423a5e8750067e9de33bec4e746bf9e5f9d6bf0577edb9da72a6e8",
+      "size": 11743,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/bonding/core1a.html",
+      "sha256": "705e8f8f960de6eb212d3ea9abbf3774dfcd3d0d06fd02fd420ebb8e3e29ac89",
+      "size": 17359,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/bonding/explorers/chemical_bonding/index.html",
+      "sha256": "047e0cc606776a47fff37dffae495597d3f52a7c8cc5d53fbeb3d58ae09e16c4",
+      "size": 124418,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/bonding/index.html",
+      "sha256": "e81deb4f94a1665fda1f2a6669943afc6ef0b45ea99cd528e83b8c585827c69d",
+      "size": 4914,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/gases/atlas.html",
+      "sha256": "1f21c9da7debd55383e448f72fefdc87b807de0f1676b911a039fba6356e4c1a",
+      "size": 11581,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/gases/core1a.html",
+      "sha256": "f4f54071449163862266d801659157703077de1c580d8da28f81e835f33e62d2",
+      "size": 39609,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/gases/explorers/behaviour_of_gases/index.html",
+      "sha256": "50faed3093f881ef76f5d39670c6f83871b13f293101914fb9783f5ad1809ff9",
+      "size": 59428,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/gases/index.html",
+      "sha256": "5c68564f95c1a672145a26c294b7a9577ae7aa141f0b65e8b109a30c8e660ca3",
+      "size": 6169,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/index.html",
+      "sha256": "a26c041c64fbce83a70cdb3e4ac47f2d50a95451fade2773cdb3351ed69b196f",
+      "size": 6814,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/mole/index.html",
+      "sha256": "44428985b9099897c7f282dae7a62337ac80bcb53f8e6538a96d57e243a89ea0",
+      "size": 6233,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/redox/atlas.html",
+      "sha256": "414be4774a047523b3ce2ae01c11bab602380b1e6a5febeff388365374003bec",
+      "size": 11690,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/redox/core1a.html",
+      "sha256": "a65ebd20804aa7df90d285d7ccd59e9556b83cfa5237870b3fe5e96bd40fde20",
+      "size": 24294,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html",
+      "sha256": "56bbd7ec52c30e4b24a79333b02b627f991ebcc4edc1e85ceac40ef54993ba40",
+      "size": 22925,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/redox/explorers/redox_reactions/index.html",
+      "sha256": "fc4e5aeb08bd9d98f8d5144319e1afa93a039805949b89ceff3a30838c6a8a82",
+      "size": 188868,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/redox/index.html",
+      "sha256": "cb8c8bc3ba506284c40fd351ac5c87c6f3d8a071e5df6d4f6d76147053ee6e32",
+      "size": 6100,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/some-basic-concepts/atlas.html",
+      "sha256": "be6191443e3d556c699f5ca6a9ec0877621093683ec479e8e542040e5f8e8dbe",
+      "size": 11671,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/some-basic-concepts/core1a.html",
+      "sha256": "c4c427dff5672c915cd610cda7a9bfb6f3ecdfef5a789de2ad9256402914cacd",
+      "size": 25692,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/some-basic-concepts/explorers/mole_concept/index.html",
+      "sha256": "033f4e016e5e4ae6e1bdc1090242673223fd80958a60bdc9f3ddf5d56fb3e177",
+      "size": 72561,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/chemistry/some-basic-concepts/index.html",
+      "sha256": "44428985b9099897c7f282dae7a62337ac80bcb53f8e6538a96d57e243a89ea0",
+      "size": 6233,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/core-learning/index.html",
+      "sha256": "5f9b3e62b8d0567df58535ab7291a5c6295517de70e4434d20b963e935360e64",
+      "size": 11923,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/core-prompt-composer/index.html",
+      "sha256": "dfb28f238b7fb5e02acfb2e48a29bbb951c9ef2e9a6cfe5fe7fefb5dd5bcc887",
+      "size": 6241,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/index.html",
+      "sha256": "d40933b4c5ff21a244c54f2c0c5510f65e7671332cc2097a9597e2277a654715",
+      "size": 4188,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/coordinate-geometry/atlas.html",
+      "sha256": "7bb5bb14135c61df0dee083feb677b6ff2efe0c321b72b87716a03ea6ddb10e8",
+      "size": 11677,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/coordinate-geometry/core1a.html",
+      "sha256": "da06bf6f4ba0299a0b44ea6947bf1d8c6f86aef7408677525c43c437f2d7e8b4",
+      "size": 24834,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/coordinate-geometry/index.html",
+      "sha256": "e38b8508e93ad9e93918840328517ef06201e99ba21161d4c606a8bf68c18fc2",
+      "size": 3519,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/euclids-geometry/atlas.html",
+      "sha256": "57340784e5be725614d279150c9649ccbb3be24f6b63db13a355945993858bb0",
+      "size": 11674,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/euclids-geometry/core1a.html",
+      "sha256": "4e4c793d27fb142e040f917fa12e200d5aaa0504a703fd113d64222a116ea6fe",
+      "size": 26597,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/euclids-geometry/index.html",
+      "sha256": "c724bab3aaa892ec15c9e10522c4af9ede2d410f643db009182db9d960530126",
+      "size": 6013,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/imo-grade9/index.html",
+      "sha256": "c4fdde7575db9c1bede7b5e5c998359ccdea10251ca642fe3fc49c9439c74993",
+      "size": 81662,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/index.html",
+      "sha256": "cb915135a91d707e069db4406aaa6916f56cf287c564a1fc63b32ef7b1ced838",
+      "size": 7037,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/linear-equations/atlas.html",
+      "sha256": "f0154468801d04acec04078b4955c75a72e80a3846a455dc49ebc1626e8ba80d",
+      "size": 20449,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/linear-equations/index.html",
+      "sha256": "be3be88138216c29d64a8a65267eb49e31fce25404e22025c4ed785c7d862001",
+      "size": 6821,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/polynomials/atlas.html",
+      "sha256": "174df456da56868e6a81b66ff777dad82d0a321c975ff07883073a1597c4f374",
+      "size": 11706,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/polynomials/core1a.html",
+      "sha256": "311946d82e53faa9e67f6365208b0af268b65ecd8e93486076c99a8fa927b814",
+      "size": 29161,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/polynomials/index.html",
+      "sha256": "2290cbfd6abbb5c37ea97dc125868db18393e333f311dc4980deb75d8966c416",
+      "size": 3525,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/theory-of-equations/atlas.html",
+      "sha256": "99813cb6d39a286c05aaa0b8f5fe1efad4aea77cd3c02ae47de743f9a1c0d432",
+      "size": 11700,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/theory-of-equations/core1a.html",
+      "sha256": "e462094a0fc5ba4e76532e425730cd11de70939b199565b795f60befa20e56c3",
+      "size": 30827,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/theory-of-equations/index.html",
+      "sha256": "c10460feb87dc7084f2593b20d8a2245d39b352c9ede9739b227872d1563ee91",
+      "size": 6365,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/vectors/atlas.html",
+      "sha256": "c2c2fe2e21c2ddb42bbb014fda1a63d73d0f79015c8883c996280dbf517eb39e",
+      "size": 11622,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/vectors/core1a.html",
+      "sha256": "448e6db243060c5ea1bf175174650f1b9257b9534125d6b080ed64e48d1fb5b1",
+      "size": 16583,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/vectors/explorers/vector_algebra/index.html",
+      "sha256": "f4727db749f86f0807b3867934cca490e679a05f893ae20d36cfe4788a611d83",
+      "size": 87002,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/mathematics/vectors/index.html",
+      "sha256": "459fd33e621be9eb9574e62874b3690594a10465f55e90812452c971c637550a",
+      "size": 3639,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/motion-session/index.html",
+      "sha256": "9775f6bb34a1bedbd01b7f4ea01a3c8624e1743874900f6fc2a44c37d78c8723",
+      "size": 9677,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/owner/index.html",
+      "sha256": "9fbfb115f7e4c21aa19367eb494d296e02ef5dcbdf5a315618a41e84dfa2f1a5",
+      "size": 5144,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/owner/nlm-topic-atlas.html",
+      "sha256": "813b1e59753d57f8fe10f2f1e3f4d64f715dcfe35e42b0a7a260ca40759020e7",
+      "size": 22525,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/fluids/atlas.html",
+      "sha256": "8fbbe4e5300567fc6965d9c79408ce31bd035a094b378357eb7f69b3a8aea623",
+      "size": 11756,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/fluids/index.html",
+      "sha256": "26de6938a98b1b6ae5b881672c5629a5253069b94deefd1019245e769a996c3c",
+      "size": 3524,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/index.html",
+      "sha256": "3ee7fd0d5acb4de65da0f37eb4ae9d6bcda8ce5b86a7d50d12c4329df406638b",
+      "size": 9745,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-1d/atlas.html",
+      "sha256": "167bc64d1c6b5be0f00a62b3e5e9810129a02b5c9a2f20555c952ac6d3bdaff8",
+      "size": 11620,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-1d/core1a.html",
+      "sha256": "8c890c0f942f33cf91d8e0bfc149f138c0418269c2bb956deef3a8a8669104ac",
+      "size": 25320,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-1d/explorers/circular-dynamics/index.html",
+      "sha256": "e5d9181dc999c476688e6a9136ed8c3e563977ccdbc744aca8923859c330e1f7",
+      "size": 22672,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-1d/explorers/motion_in_1d/index.html",
+      "sha256": "2e6326beff49e039d73df1c966d55ee7aa0593d24eb0f2da4be0028fda1bcbda",
+      "size": 134560,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-1d/index.html",
+      "sha256": "e7fd4e4ace31f9c07fe3bed324408216f9233bafde809f1d4e2dfc6e53d8c1ee",
+      "size": 6871,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/atlas.html",
+      "sha256": "a448c42b4f01fa36add711df99d8f9b2ba8482279d369b962ca44e521e75c8a4",
+      "size": 22833,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/core1a.html",
+      "sha256": "1a7568ba0008b02e7c7a42e70d4b473dfc400153082a2a57f5424bdd68837c64",
+      "size": 19378,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/explorers/apex-fallacy/index.html",
+      "sha256": "833121630a8d25dfce7e170677c17453643c14578fed954cd05f3fb1a69e67b8",
+      "size": 4327,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/explorers/equal-height-state/index.html",
+      "sha256": "6ddab8b4f86b6224f26adfab8f780e122e53eed53750a282db3d21b0808e9998",
+      "size": 4209,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/explorers/event-clock/index.html",
+      "sha256": "87941ec57395277ff38ce8e30db1d1c5c47042d1516b3c79a04073cfcd9683c6",
+      "size": 4589,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/explorers/landing-geometry/index.html",
+      "sha256": "8b5ad9ab15c2091f187348a62362df30752d1e5dd7d4aa7f1c1428cc6946033d",
+      "size": 4750,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/explorers/motion-in-a-plane/index.html",
+      "sha256": "4f8b2fbbf45cb7b5aefa367380f39f1ebdfd5c30a8eeee15bbf121fcc463a795",
+      "size": 45517,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/explorers/projectile-model/index.html",
+      "sha256": "ead469aac8fab9581126577d0d59d1f7f6f742de2dfeb38fa46f0a7862f37b05",
+      "size": 4316,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/explorers/shared-clock/index.html",
+      "sha256": "bef78946c0e24d3efb24d304b81dbbd7fec23e2f3c3a5f76206ee68d56554e4e",
+      "size": 4906,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-2d/index.html",
+      "sha256": "6ff82ed1545a4eb6296892fd307b7632262311afd63e24840b1dbd83edd9e85e",
+      "size": 8220,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-in-2d/explorers/independent_components_shared_clock/index.html",
+      "sha256": "acb9f17d39397f4dc4c164eba7f0cfac308d93b9c3de2297f994a2734a9703ec",
+      "size": 55650,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-in-2d/explorers/is_it_really_a_projectile/index.html",
+      "sha256": "3a048bdebd7bb3bc118a325045b771ed29dc30df217dd6b84b92a0743b7ecd74",
+      "size": 52967,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-in-2d/explorers/motions_in_2d/index.html",
+      "sha256": "588fba33b207ffb5a64614e0530264beff958f1911d56e37939bcbdbc51b8008",
+      "size": 303427,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-in-2d/explorers/same_height_same_speed/index.html",
+      "sha256": "7e711a1716de49dc5b8ba04881125c82c477729270db5aca4e55f029828b81bd",
+      "size": 47219,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-in-2d/explorers/the_apex_fallacy/index.html",
+      "sha256": "887253d034a6cb937ff5754fb309f668376677741fcc6b18dbdde8928dea267b",
+      "size": 58069,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion-in-2d/explorers/the_event_clock/index.html",
+      "sha256": "dffe918a3483baf8d0e219f0a3d733c36bc472bb5ea7ae19052dabd55bee2521",
+      "size": 54950,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/motion/index.html",
+      "sha256": "5bd501a26802f527c5c8676045dc2a8cef80f1d97e1fe9d27c23075f555a7aba",
+      "size": 3133,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/nlm/atlas.html",
+      "sha256": "b20c9e9ced1c640d49e63efec82c0d31a5c30c9888fb97e51ef2749ccdec92ab",
+      "size": 22995,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/nlm/explorers/accelerated-frames/index.html",
+      "sha256": "e8ae86a5f786eb8afaff92faa3b08084e464e23e4aa6f0d94955093134b927f9",
+      "size": 22519,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/nlm/explorers/atwood-pulleys/index.html",
+      "sha256": "c873ac3bf51daa1b89ec3f6fd59d1f474a8af1a7817c15e24bd986da3a67e3c6",
+      "size": 74830,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/nlm/explorers/connected-blocks/index.html",
+      "sha256": "a59131f5d4db6e6532351766137798bbaaa8285e40243797cb01ade43ce493a9",
+      "size": 129776,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/nlm/explorers/friction-threshold/index.html",
+      "sha256": "84362e4c03e90aec68d5381ba4af509a623d10c221489813a1e05d2778dcdb22",
+      "size": 71575,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/nlm/index.html",
+      "sha256": "dc84f4090d117051ec0391aefcea5774edc5e5354ce7b1bd15b70e535695ee5f",
+      "size": 8362,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/physics/vectors/index.html",
+      "sha256": "1c451c7a0e5d65933a7b71b8b6fd79612e79903ee1d0ee2c393299f645ce90d8",
+      "size": 5951,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/portable-workbench/index.html",
+      "sha256": "a979df7fbc1f11c58c73f1faf88e6e1f050c6abc32092969b1c4b50b1c22c95d",
+      "size": 2250,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/question-bank/index.html",
+      "sha256": "e1aa80b0b44cf28aa8f12a72cdb877cea69811fe296d71eece0996bf10b01be3",
+      "size": 6135,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/raw-intake/index.html",
+      "sha256": "4bd29134e750e3fb75d87e45e10c07e5e42eeaf673d33f8c00f89e2528449e40",
+      "size": 5972,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/mathematics-polynomials-and-coordinates-suite.html",
+      "sha256": "fec31d00a4e513ce3902a61fb36cb41ce43538da1c5ba1ddfd8d295406655551",
+      "size": 64354,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/chemistry-behaviour-of-gases-master-suite.html",
+      "sha256": "81d985c0963dfe956c806f9258a2eac0aa38f94a853d8bbbb2d4c2ce490b26fc",
+      "size": 129458,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/chemistry-chemical-bonding-master-suite.html",
+      "sha256": "a99c634dad6e5019430f0a824afe56ebb17e50c7095d469479df92a20a7926a8",
+      "size": 200104,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/chemistry-mole-concept-master-suite.html",
+      "sha256": "4e2759d7b2b47e4d3d082a51aa1ba187e16dae075e3723913daa9a85bdda405e",
+      "size": 141195,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/chemistry-redox-reactions-master-suite.html",
+      "sha256": "5485dd51e9bf2507c539c00737a34c06e4a417a1a50269bad9fe336a2caecf24",
+      "size": 255317,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-chemistry-behaviour-of-gases-tablet.html",
+      "sha256": "615607ae7be516ade752375f8a82fb38c5293ca4f57c6ce44dfdc06db5a4e819",
+      "size": 78118,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-chemistry-chemical-bonding-tablet.html",
+      "sha256": "080b79ab1ad9b4a38173d7c18fdc1b5f3fd62641b6011f34052cee78244b23f8",
+      "size": 64700,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-chemistry-redox-reactions-tablet.html",
+      "sha256": "976a7a10842fdbcf4e665c589f134f762f9ebfb858bb1ee0231bec96c2515b9f",
+      "size": 71139,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-chemistry-some-basic-concepts-tablet.html",
+      "sha256": "8a1eafde97cd29d79ef82ae4904e65d2d6a75d5c900e16a9165642058bafa92d",
+      "size": 56970,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-mathematics-euclids-geometry-tablet.html",
+      "sha256": "28470c3696ae4b1489ce7d797ff30aa991f242737b8013a12b67272fac57e2d3",
+      "size": 48941,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-mathematics-theory-of-equations-tablet.html",
+      "sha256": "6a48f9a7fccdf448496f06a0630a8ad7032e8ddc6dad17b6e87fadc5e974fbc5",
+      "size": 62001,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-motion-1d-straight-line-tablet.html",
+      "sha256": "eb909968f3248959725d70617c0cf8ecefda1677e4dcd4406d65932a83dc9001",
+      "size": 133967,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-motion-in-a-plane-tablet.html",
+      "sha256": "6849007b95243b72a1f0f7c8e3c21139aa1edc763f5cc1924b4ed412fedc51a9",
+      "size": 174244,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-physics-motion-2d-ncert-tablet.html",
+      "sha256": "556f40dd12de0a279fcbe0ae54467a886e6afbeaa85b784fb6e8cfc0dbcf3ca9",
+      "size": 116184,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-physics-nlm-tablet.html",
+      "sha256": "d5d4f82eaa4b79b75ba1d7c73cba65ab78e723844ae852c7ce62251648c14f8f",
+      "size": 131409,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-physics-thrust-pressure-tablet.html",
+      "sha256": "ba25951c1d3014eaec3acd96db3a540c778b1ba3510a5f2b2bbec7903d35990e",
+      "size": 259910,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-physics-vectors-tablet.html",
+      "sha256": "2e979e26e412cadcf606d4d5a0a1abd996dcba2c9d63b4847eed9873fdb3a05f",
+      "size": 132218,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-sba-06-07-trajectory-and-height-tablet.html",
+      "sha256": "2841fbef2b98783f579bed4b7f8fa88f502c46deb7c9f13929d1d3fc80219fdc",
+      "size": 57963,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-sba-motion-in-a-plane-master-tablet.html",
+      "sha256": "1d7e9e3d45094e4d6b79451a18adfea56681f41ed3b46c4a42510d7c547d0369",
+      "size": 107506,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core1a-vector-add-sub-tablet.html",
+      "sha256": "f37ba2ac545eff759c5a566737c6c29b2f71d3d2763681da8c31a719b03185c5",
+      "size": 101860,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-canonical-question-bank-tablet.html",
+      "sha256": "19c703b8f997b75395d33771948696fbb416439b071c8a2ec8b8dfecda9f6919",
+      "size": 392309,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-chemistry-behaviour-of-gases-tablet.html",
+      "sha256": "a1c559f1bf4574d57eef7fa12acb3986f590b5f0f94b120b1484ee3a1ce4b210",
+      "size": 27910,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-chemistry-chemical-bonding-tablet.html",
+      "sha256": "4549df8e88a7456f10e8792922e2e87134f4f8a9b8ecc62579e6a645eefefeb9",
+      "size": 152025,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-chemistry-redox-reactions-tablet.html",
+      "sha256": "bfdaf8a81682b8e3fb1c32a42b84451396e7c1051dc4d047483d8b77815e38fe",
+      "size": 47797,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-chemistry-some-basic-concepts-tablet.html",
+      "sha256": "e61d386d3c77dcc7bdbcc8de4cfbd7e838d7dbb90c356adfbc8c8366ab1e5c57",
+      "size": 221252,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-mathematics-euclids-geometry-tablet.html",
+      "sha256": "fb57c2cae0c3eaeaf24f10d55ceff25ec761ebe5c867482d329d1adf72042436",
+      "size": 27328,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-mathematics-theory-of-equations-tablet.html",
+      "sha256": "982767b613410df3abad7290f0912ea2c32ebe727eeda53fffc606751df24daa",
+      "size": 34675,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-motion-1d-straight-line-tablet.html",
+      "sha256": "a85dca63ac005ba518ef853eb9bb25bfd3eab7caf5ac20f3527a8c51eafa131e",
+      "size": 161514,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-motion-consolidated-practice-tablet.html",
+      "sha256": "e321f1eb54cd66b255667fd08d1c84ebd20de15e9edbb2af0d49ccd008944214",
+      "size": 76488,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-motion-in-a-plane-tablet.html",
+      "sha256": "c0b4e4169caab95914951638b1d193e4e1e1f9dd844adbfba0d835ab007bbeea",
+      "size": 581484,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2-physics-thrust-pressure-tablet.html",
+      "sha256": "5c686e3eacbc5f9466e2df85760bbf8445c6bb11e5b6a1d6aa5a15607d8c6ab3",
+      "size": 259100,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/core2a-projectile-study.html",
+      "sha256": "b18f75ff3eedd268adb8a3c280a1d7e7a54b811237ebd10154ed0246abcc0c5e",
+      "size": 112580,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/friction/core1a.html",
+      "sha256": "9c7a579bc4b281e163e146d7101b32473c02d9a105efa773707c5bbb7591e461",
+      "size": 93783,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/friction/core2.html",
+      "sha256": "0f7556c7a5a47046b30c08723f0279c17fd8dfbe74a7f537fb664767285ab04f",
+      "size": 242476,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/friction/index.html",
+      "sha256": "2be49f9ec76b6527840a2a34b021bbba8696d0982d5e67aacde9b19943022819",
+      "size": 20653,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/index.html",
+      "sha256": "a0b67e891ceaf884172c5a05faf72181f06b06ba96b66ec4d8c2cbb5c23a5d92",
+      "size": 41804,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/motion-in-1d-master-suite.html",
+      "sha256": "7c87b9346d70226c937dc8a8d849780d0ae00815881953a4ae709fc2333761d8",
+      "size": 205215,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/motion-in-2d-master-suite.html",
+      "sha256": "9bd342feba6b1743cc2d1cf032e71f4a645b26393b04fd711cf24b3b985ca573",
+      "size": 427482,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+      "sha256": "30cb8820cac0b3f3dffaced0371135bfe722ac33a52b43e491cc8001dccceb2e",
+      "size": 65957,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/standalone/practice/vector-algebra-3d-master-suite.html",
+      "sha256": "ab8d6884cca005f2acd13da59cc43dc52c64575448e3c9c6de0bead25612fff5",
+      "size": 128068,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/test/atlas/index.html",
+      "sha256": "b72c3bdd902d56d95ea85e85e0a28a03d12e3307cc2cfb1d42883981b9d4383d",
+      "size": 51947,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/test/deployments/index.html",
+      "sha256": "c9ab2c860e509ce460aecba544182de98e84784447380c9292de7f7a17850890",
+      "size": 23777,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/test/imo-grade9/core1a.html",
+      "sha256": "3f94f49759a1f0427497db3f0bda72fb32f4cf25e709226706fd902e4c9cd50c",
+      "size": 17225,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/test/index.html",
+      "sha256": "e5ee2cf5df2a9809dfe3f88869db6b9b9d2938397491b8745cb824c8df7f4bb4",
+      "size": 469322,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/test/question-bank/index.html",
+      "sha256": "4aeffc565a59f4819fbfe21d05f9f4166481f199d1be8f5ce7756938f479f420",
+      "size": 16175,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/test/rungs/index.html",
+      "sha256": "e04d4b0d42aef463b9c89ffef4420bd6858052947e2dfda1b334b4ee3824ac33",
+      "size": 25328,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/tools/index.html",
+      "sha256": "02f61b490899f2828d9337bfb48112e98ab75d39ef74fd1ed021cf85402f4d7f",
+      "size": 3058,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/tools/library/index.html",
+      "sha256": "329cec9f8490314ada611f13fd60fe77693ce63c27a6a6289896181b94d04646",
+      "size": 10707,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/tools/run-builder/index.html",
+      "sha256": "4a15a559844b651878a18ee17102fa601f28d3ded1a5e57d24facb7c5b0b82b9",
+      "size": 7041,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/bonding/index.html",
+      "sha256": "e81deb4f94a1665fda1f2a6669943afc6ef0b45ea99cd528e83b8c585827c69d",
+      "size": 4914,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/coordinate-geometry/index.html",
+      "sha256": "e38b8508e93ad9e93918840328517ef06201e99ba21161d4c606a8bf68c18fc2",
+      "size": 3519,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/euclids-geometry/index.html",
+      "sha256": "c724bab3aaa892ec15c9e10522c4af9ede2d410f643db009182db9d960530126",
+      "size": 6013,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/fluids/index.html",
+      "sha256": "26de6938a98b1b6ae5b881672c5629a5253069b94deefd1019245e769a996c3c",
+      "size": 3524,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/gases/index.html",
+      "sha256": "5c68564f95c1a672145a26c294b7a9577ae7aa141f0b65e8b109a30c8e660ca3",
+      "size": 6169,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/mole/index.html",
+      "sha256": "44428985b9099897c7f282dae7a62337ac80bcb53f8e6538a96d57e243a89ea0",
+      "size": 6233,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/motion-1d/index.html",
+      "sha256": "e7fd4e4ace31f9c07fe3bed324408216f9233bafde809f1d4e2dfc6e53d8c1ee",
+      "size": 6871,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/motion-2d/index.html",
+      "sha256": "a29cebe10a6300d0c2d905098c52178399176981350f4bc62868c397bf8dacb9",
+      "size": 8070,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/motion/index.html",
+      "sha256": "5bd501a26802f527c5c8676045dc2a8cef80f1d97e1fe9d27c23075f555a7aba",
+      "size": 3133,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/nlm/index.html",
+      "sha256": "ad2951fd014de35a86761fcf9e8c8bbf2f95822beadc977bb63fd7998bf9c2df",
+      "size": 8222,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/polynomials/index.html",
+      "sha256": "2290cbfd6abbb5c37ea97dc125868db18393e333f311dc4980deb75d8966c416",
+      "size": 3525,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/redox/index.html",
+      "sha256": "cb8c8bc3ba506284c40fd351ac5c87c6f3d8a071e5df6d4f6d76147053ee6e32",
+      "size": 6100,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/theory-of-equations/index.html",
+      "sha256": "c10460feb87dc7084f2593b20d8a2245d39b352c9ede9739b227872d1563ee91",
+      "size": 6365,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "docs/topics/vectors/index.html",
+      "sha256": "1c451c7a0e5d65933a7b71b8b6fd79612e79903ee1d0ee2c393299f645ce90d8",
+      "size": 5951,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/reviews/pr353/packet-check/rendered/product.html",
+      "sha256": "db4e6eaf0fcbf49d56cf253daea6b1610a9c64ce15dd9cacca7952c6692bd91b",
+      "size": 29367,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/reviews/pr353/packet-check/review/index.html",
+      "sha256": "040e7ac1d7c9de087b660c61c4502044b2ac3d8120f55c7eb8326676d9dd277e",
+      "size": 3515,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/reviews/pr353/packet/core1.html",
+      "sha256": "f27336ead1af40fc1ccf80a2798c23f1b0136bc3135bf8b31acc85de37eef496",
+      "size": 15231,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/reviews/pr353/packet/index.html",
+      "sha256": "ce370724a976d8ca254c0fa1a7fac105ed2ba242c9f794425bf0c1ee679a0522",
+      "size": 10178,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/coordinate-geometry/index.html",
+      "sha256": "4a7fef2538480f0db6f6d0f8e3dee2c5fa97a1e9e1f49544a0891efe9ef6c58a",
+      "size": 28159,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/euclid-geometry/index.html",
+      "sha256": "d6040eacbf8cf472754ce1bafb953b0fbb1774420a1368aad2cb82c7b2368cc5",
+      "size": 16125,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/laws-of-motion/index.html",
+      "sha256": "4bdd4dd61f5a2f80c49aa48df54577c5603ee88ca7197a575df0acefb96be84e",
+      "size": 53848,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/linear-equations/index.html",
+      "sha256": "d3b267d285667a24077de62f98524ef9265dfcb83041558d6ed36c7154adbb96",
+      "size": 23507,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/motion-in-a-plane/index.html",
+      "sha256": "426cf31a8b41e104afb8aa9e3c1c73174863f3be6de3f3f3bfd0aaead0268f6d",
+      "size": 53221,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-agent1/index.html",
+      "sha256": "902b1bbe271f5a649dcb06fc7c25668c24f35cd4d9ea34660011bc63b03915b8",
+      "size": 63743,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/golden-control/core1.html",
+      "sha256": "d42c5c3a7014befbd3fdbac5ab094fc6f37a480a9a53c78055fa794c900b1cd3",
+      "size": 15599,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/golden-control/core1a.html",
+      "sha256": "090e70a526c1197d6f86d8c7aeccf70b7291c3a26388f8a8fb44e1a47a8c2a31",
+      "size": 18240,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/golden-control/core1b.html",
+      "sha256": "5cf37af636bc495df9e158f801b93ff40596933db12556c868ac23af540c56d0",
+      "size": 19107,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/golden-control/core2.html",
+      "sha256": "14c20f03e9770e3808defb15ab700f65a8490841e8b2ce54e85529451b88f379",
+      "size": 16645,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/golden-control/core2a.html",
+      "sha256": "5a1b2758dd5e1c726ed5e3db823f18c6140b601b1b086c1c5fc25971756e58c9",
+      "size": 18080,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/golden-control/core2b.html",
+      "sha256": "a5f6a86b8984108d17a2cc0b457ae8b6f9ed78547c14a18efc78d69814584ad9",
+      "size": 16434,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/golden-control/index.html",
+      "sha256": "9e6af0efc4cc11ba6baa351d03bc4f8a89363dfc296cad0358278037f0f3f955",
+      "size": 10516,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/prototype/rendered/core1.html",
+      "sha256": "bdf9d02175c07913d18e771925819a5824070d975bf8aa8f00ed50160422b453",
+      "size": 14929,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/prototype/rendered/core1a.html",
+      "sha256": "ddf9248b113c17174863c0c70503332ead82a9d5c92d14fcfc5e2d92055f3d06",
+      "size": 16742,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/prototype/rendered/core1b.html",
+      "sha256": "e0c55ff40b0d5998728232cd7b9ac7a8d77341410d2398ce1b3d56df138b8de2",
+      "size": 17549,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/prototype/rendered/core2.html",
+      "sha256": "f97574dcf08ffef1700aa2c2a1c6db8207e2c26c0528b07db403eaf10703459c",
+      "size": 10411,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/prototype/rendered/core2a.html",
+      "sha256": "d46408c981ced6525d1e781463a800c5312752f595676b63bce95e13d61b09c8",
+      "size": 18300,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/prototype/rendered/core2b.html",
+      "sha256": "534808e42645fffa116f6bf81feca55f31827933a9e8eb8efce668c264342198",
+      "size": 18654,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/prototype/rendered/index.html",
+      "sha256": "f9f51ae1925a901ec7ebd052d5edd329175e62f18ee51a63952225bd3bf88294",
+      "size": 10546,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/rendered/core1.html",
+      "sha256": "4c240f32deb486c441e452f91082b632121fe023af4136693aa652e7a0282173",
+      "size": 10381,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/rendered/core1a.html",
+      "sha256": "a01224b86fab9e2543a45f0d0f544fa69b4648f6ad7dc48b0048652b56059039",
+      "size": 10379,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/rendered/core1b.html",
+      "sha256": "336a4bf5b4d0f3411f9bb4b47da1ec6399804feb4ef48a952b06ada51dd90858",
+      "size": 10385,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/rendered/core2.html",
+      "sha256": "7c56b48a1e43a93dc44a1b9cbd379444110c4abeb3fbf0559fce09bedaa72e70",
+      "size": 10387,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/rendered/core2a.html",
+      "sha256": "c4740f23f670328139e6bad446dbd6336ba07d248c816ab1ded2fb7d12e7a83a",
+      "size": 10400,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/rendered/core2b.html",
+      "sha256": "bca3ee044559def3c634c552fafd3d65a6550c89eee64ffe48c2b4292a7f765f",
+      "size": 10367,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "evidence/stress-tests/polynomials-six-core/rendered/index.html",
+      "sha256": "2bf064253bc5041a01e88d70d911d2204ca34f17164cf7f9ab5d17ace8af758f",
+      "size": 10528,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "public/atlas/index.html",
+      "sha256": "5454c927740a98f0867e5250aab2c825b30a593db16be1ba3f2fd291d5c3a7d1",
+      "size": 22297,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/bonding/atlas.html",
+      "sha256": "e8fd7fbfb9423a5e8750067e9de33bec4e746bf9e5f9d6bf0577edb9da72a6e8",
+      "size": 11743,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/bonding/core1a.html",
+      "sha256": "705e8f8f960de6eb212d3ea9abbf3774dfcd3d0d06fd02fd420ebb8e3e29ac89",
+      "size": 17359,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/bonding/explorers/chemical_bonding/index.html",
+      "sha256": "f08b96c61778c4548ccd4f1b935290766232046dc43972ddda0b1efa502abe03",
+      "size": 124394,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/bonding/index.html",
+      "sha256": "e81deb4f94a1665fda1f2a6669943afc6ef0b45ea99cd528e83b8c585827c69d",
+      "size": 4914,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/gases/atlas.html",
+      "sha256": "1f21c9da7debd55383e448f72fefdc87b807de0f1676b911a039fba6356e4c1a",
+      "size": 11581,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/gases/core1a.html",
+      "sha256": "f4f54071449163862266d801659157703077de1c580d8da28f81e835f33e62d2",
+      "size": 39609,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/gases/explorers/behaviour_of_gases/index.html",
+      "sha256": "bb251cdb089c0744fc51dbc2eb04ee5832954176e06f658d47d389178dca41ef",
+      "size": 59404,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/gases/index.html",
+      "sha256": "5c68564f95c1a672145a26c294b7a9577ae7aa141f0b65e8b109a30c8e660ca3",
+      "size": 6169,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/index.html",
+      "sha256": "a26c041c64fbce83a70cdb3e4ac47f2d50a95451fade2773cdb3351ed69b196f",
+      "size": 6814,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/mole/index.html",
+      "sha256": "44428985b9099897c7f282dae7a62337ac80bcb53f8e6538a96d57e243a89ea0",
+      "size": 6233,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/redox/atlas.html",
+      "sha256": "414be4774a047523b3ce2ae01c11bab602380b1e6a5febeff388365374003bec",
+      "size": 11690,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/redox/core1a.html",
+      "sha256": "a65ebd20804aa7df90d285d7ccd59e9556b83cfa5237870b3fe5e96bd40fde20",
+      "size": 24294,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html",
+      "sha256": "56bbd7ec52c30e4b24a79333b02b627f991ebcc4edc1e85ceac40ef54993ba40",
+      "size": 22925,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/redox/explorers/redox_reactions/index.html",
+      "sha256": "f9e3982eed9ddb976e3117493519ce64e852e8d3d78d28e660e4c48742ab3dea",
+      "size": 188844,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/redox/index.html",
+      "sha256": "cb8c8bc3ba506284c40fd351ac5c87c6f3d8a071e5df6d4f6d76147053ee6e32",
+      "size": 6100,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/some-basic-concepts/atlas.html",
+      "sha256": "be6191443e3d556c699f5ca6a9ec0877621093683ec479e8e542040e5f8e8dbe",
+      "size": 11671,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/some-basic-concepts/core1a.html",
+      "sha256": "c4c427dff5672c915cd610cda7a9bfb6f3ecdfef5a789de2ad9256402914cacd",
+      "size": 25692,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/some-basic-concepts/explorers/mole_concept/index.html",
+      "sha256": "0f94235783b7283d62c5ab310d0e96171472ad838ad7625d951aecfdbc62a9de",
+      "size": 72537,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/chemistry/some-basic-concepts/index.html",
+      "sha256": "44428985b9099897c7f282dae7a62337ac80bcb53f8e6538a96d57e243a89ea0",
+      "size": 6233,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/core-learning/index.html",
+      "sha256": "5f9b3e62b8d0567df58535ab7291a5c6295517de70e4434d20b963e935360e64",
+      "size": 11923,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/core-prompt-composer/index.html",
+      "sha256": "33de5a04af0130d5c5315243ffbadaa89a47f9d5084bc6f623d20d9b3488b826",
+      "size": 6244,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/index.html",
+      "sha256": "d40933b4c5ff21a244c54f2c0c5510f65e7671332cc2097a9597e2277a654715",
+      "size": 4188,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/coordinate-geometry/atlas.html",
+      "sha256": "7bb5bb14135c61df0dee083feb677b6ff2efe0c321b72b87716a03ea6ddb10e8",
+      "size": 11677,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/coordinate-geometry/core1a.html",
+      "sha256": "da06bf6f4ba0299a0b44ea6947bf1d8c6f86aef7408677525c43c437f2d7e8b4",
+      "size": 24834,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/coordinate-geometry/index.html",
+      "sha256": "e38b8508e93ad9e93918840328517ef06201e99ba21161d4c606a8bf68c18fc2",
+      "size": 3519,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/euclids-geometry/atlas.html",
+      "sha256": "57340784e5be725614d279150c9649ccbb3be24f6b63db13a355945993858bb0",
+      "size": 11674,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/euclids-geometry/core1a.html",
+      "sha256": "4e4c793d27fb142e040f917fa12e200d5aaa0504a703fd113d64222a116ea6fe",
+      "size": 26597,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/euclids-geometry/index.html",
+      "sha256": "c724bab3aaa892ec15c9e10522c4af9ede2d410f643db009182db9d960530126",
+      "size": 6013,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/imo-grade9/index.html",
+      "sha256": "c4fdde7575db9c1bede7b5e5c998359ccdea10251ca642fe3fc49c9439c74993",
+      "size": 81662,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/index.html",
+      "sha256": "cb915135a91d707e069db4406aaa6916f56cf287c564a1fc63b32ef7b1ced838",
+      "size": 7037,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/linear-equations/atlas.html",
+      "sha256": "f0154468801d04acec04078b4955c75a72e80a3846a455dc49ebc1626e8ba80d",
+      "size": 20449,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/linear-equations/index.html",
+      "sha256": "be3be88138216c29d64a8a65267eb49e31fce25404e22025c4ed785c7d862001",
+      "size": 6821,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/polynomials/atlas.html",
+      "sha256": "174df456da56868e6a81b66ff777dad82d0a321c975ff07883073a1597c4f374",
+      "size": 11706,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/polynomials/core1a.html",
+      "sha256": "311946d82e53faa9e67f6365208b0af268b65ecd8e93486076c99a8fa927b814",
+      "size": 29161,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/polynomials/index.html",
+      "sha256": "2290cbfd6abbb5c37ea97dc125868db18393e333f311dc4980deb75d8966c416",
+      "size": 3525,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/theory-of-equations/atlas.html",
+      "sha256": "99813cb6d39a286c05aaa0b8f5fe1efad4aea77cd3c02ae47de743f9a1c0d432",
+      "size": 11700,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/theory-of-equations/core1a.html",
+      "sha256": "e462094a0fc5ba4e76532e425730cd11de70939b199565b795f60befa20e56c3",
+      "size": 30827,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/theory-of-equations/index.html",
+      "sha256": "c10460feb87dc7084f2593b20d8a2245d39b352c9ede9739b227872d1563ee91",
+      "size": 6365,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/vectors/atlas.html",
+      "sha256": "c2c2fe2e21c2ddb42bbb014fda1a63d73d0f79015c8883c996280dbf517eb39e",
+      "size": 11622,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/vectors/core1a.html",
+      "sha256": "448e6db243060c5ea1bf175174650f1b9257b9534125d6b080ed64e48d1fb5b1",
+      "size": 16583,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/vectors/explorers/vector_algebra/index.html",
+      "sha256": "d803ce6ba46325a73f5b015c584c0976c04459d7142fd77f6ab7ea159514a5f4",
+      "size": 86982,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/mathematics/vectors/index.html",
+      "sha256": "459fd33e621be9eb9574e62874b3690594a10465f55e90812452c971c637550a",
+      "size": 3639,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/motion-session/index.html",
+      "sha256": "9775f6bb34a1bedbd01b7f4ea01a3c8624e1743874900f6fc2a44c37d78c8723",
+      "size": 9677,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/owner/index.html",
+      "sha256": "9fbfb115f7e4c21aa19367eb494d296e02ef5dcbdf5a315618a41e84dfa2f1a5",
+      "size": 5144,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/owner/nlm-topic-atlas.html",
+      "sha256": "813b1e59753d57f8fe10f2f1e3f4d64f715dcfe35e42b0a7a260ca40759020e7",
+      "size": 22525,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/fluids/atlas.html",
+      "sha256": "8fbbe4e5300567fc6965d9c79408ce31bd035a094b378357eb7f69b3a8aea623",
+      "size": 11756,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/fluids/index.html",
+      "sha256": "26de6938a98b1b6ae5b881672c5629a5253069b94deefd1019245e769a996c3c",
+      "size": 3524,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/index.html",
+      "sha256": "3ee7fd0d5acb4de65da0f37eb4ae9d6bcda8ce5b86a7d50d12c4329df406638b",
+      "size": 9745,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-1d/atlas.html",
+      "sha256": "167bc64d1c6b5be0f00a62b3e5e9810129a02b5c9a2f20555c952ac6d3bdaff8",
+      "size": 11620,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-1d/core1a.html",
+      "sha256": "8c890c0f942f33cf91d8e0bfc149f138c0418269c2bb956deef3a8a8669104ac",
+      "size": 25320,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-1d/explorers/circular-dynamics/index.html",
+      "sha256": "e5d9181dc999c476688e6a9136ed8c3e563977ccdbc744aca8923859c330e1f7",
+      "size": 22672,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-1d/explorers/motion_in_1d/index.html",
+      "sha256": "70ebbbe0b8403e6dc2ef4723c72474b4a186145615e828b6af40c884fef8a1df",
+      "size": 134536,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-1d/index.html",
+      "sha256": "e7fd4e4ace31f9c07fe3bed324408216f9233bafde809f1d4e2dfc6e53d8c1ee",
+      "size": 6871,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/atlas.html",
+      "sha256": "a448c42b4f01fa36add711df99d8f9b2ba8482279d369b962ca44e521e75c8a4",
+      "size": 22833,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/core1a.html",
+      "sha256": "1a7568ba0008b02e7c7a42e70d4b473dfc400153082a2a57f5424bdd68837c64",
+      "size": 19378,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/explorers/apex-fallacy/index.html",
+      "sha256": "833121630a8d25dfce7e170677c17453643c14578fed954cd05f3fb1a69e67b8",
+      "size": 4327,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/explorers/equal-height-state/index.html",
+      "sha256": "6ddab8b4f86b6224f26adfab8f780e122e53eed53750a282db3d21b0808e9998",
+      "size": 4209,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/explorers/event-clock/index.html",
+      "sha256": "87941ec57395277ff38ce8e30db1d1c5c47042d1516b3c79a04073cfcd9683c6",
+      "size": 4589,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/explorers/landing-geometry/index.html",
+      "sha256": "8b5ad9ab15c2091f187348a62362df30752d1e5dd7d4aa7f1c1428cc6946033d",
+      "size": 4750,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/explorers/motion-in-a-plane/index.html",
+      "sha256": "4f8b2fbbf45cb7b5aefa367380f39f1ebdfd5c30a8eeee15bbf121fcc463a795",
+      "size": 45517,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/explorers/projectile-model/index.html",
+      "sha256": "ead469aac8fab9581126577d0d59d1f7f6f742de2dfeb38fa46f0a7862f37b05",
+      "size": 4316,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/explorers/shared-clock/index.html",
+      "sha256": "bef78946c0e24d3efb24d304b81dbbd7fec23e2f3c3a5f76206ee68d56554e4e",
+      "size": 4906,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-2d/index.html",
+      "sha256": "6ff82ed1545a4eb6296892fd307b7632262311afd63e24840b1dbd83edd9e85e",
+      "size": 8220,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-in-2d/explorers/independent_components_shared_clock/index.html",
+      "sha256": "b1b0855e5f3695f400dea365713d2efda8e696e42349f80740e1670bbf518565",
+      "size": 55661,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-in-2d/explorers/is_it_really_a_projectile/index.html",
+      "sha256": "38c9ff40cae8572b6a88b42a24895147f5cf6aa106ae6b0b97417ba6021fddd7",
+      "size": 52978,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-in-2d/explorers/motions_in_2d/index.html",
+      "sha256": "96027ec8c49154369bdab156380deaef54571ee16949d052af27956985cf8a22",
+      "size": 303438,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-in-2d/explorers/same_height_same_speed/index.html",
+      "sha256": "d1c1c783e5766f89dd2c2b6b772702925df3af59192760e2d6c97a3898163b7b",
+      "size": 47230,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-in-2d/explorers/the_apex_fallacy/index.html",
+      "sha256": "1ef6dbbdde0d90774cc509965735c082c0e3cd7c12d03e7a5cd4839c9595181a",
+      "size": 58080,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion-in-2d/explorers/the_event_clock/index.html",
+      "sha256": "f6d649e401281e9f94fcfb3d721f6d4d015b020c11eb09d03276faae6d641618",
+      "size": 54961,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/motion/index.html",
+      "sha256": "5bd501a26802f527c5c8676045dc2a8cef80f1d97e1fe9d27c23075f555a7aba",
+      "size": 3133,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/nlm/atlas.html",
+      "sha256": "b20c9e9ced1c640d49e63efec82c0d31a5c30c9888fb97e51ef2749ccdec92ab",
+      "size": 22995,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/nlm/explorers/accelerated-frames/index.html",
+      "sha256": "e8ae86a5f786eb8afaff92faa3b08084e464e23e4aa6f0d94955093134b927f9",
+      "size": 22519,
+      "entry_context": "UNREGISTERED_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/nlm/explorers/atwood-pulleys/index.html",
+      "sha256": "c873ac3bf51daa1b89ec3f6fd59d1f474a8af1a7817c15e24bd986da3a67e3c6",
+      "size": 74830,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/nlm/explorers/connected-blocks/index.html",
+      "sha256": "a59131f5d4db6e6532351766137798bbaaa8285e40243797cb01ade43ce493a9",
+      "size": 129776,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/nlm/explorers/friction-threshold/index.html",
+      "sha256": "84362e4c03e90aec68d5381ba4af509a623d10c221489813a1e05d2778dcdb22",
+      "size": 71575,
+      "entry_context": "REGISTERED_OPAQUE_EXPLORER",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/nlm/index.html",
+      "sha256": "dc84f4090d117051ec0391aefcea5774edc5e5354ce7b1bd15b70e535695ee5f",
+      "size": 8362,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/physics/vectors/index.html",
+      "sha256": "1c451c7a0e5d65933a7b71b8b6fd79612e79903ee1d0ee2c393299f645ce90d8",
+      "size": 5951,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/portable-workbench/index.html",
+      "sha256": "a979df7fbc1f11c58c73f1faf88e6e1f050c6abc32092969b1c4b50b1c22c95d",
+      "size": 2250,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/question-bank/index.html",
+      "sha256": "e1aa80b0b44cf28aa8f12a72cdb877cea69811fe296d71eece0996bf10b01be3",
+      "size": 6135,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/raw-intake/index.html",
+      "sha256": "4bd29134e750e3fb75d87e45e10c07e5e42eeaf673d33f8c00f89e2528449e40",
+      "size": 5972,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/mathematics-polynomials-and-coordinates-suite.html",
+      "sha256": "fec31d00a4e513ce3902a61fb36cb41ce43538da1c5ba1ddfd8d295406655551",
+      "size": 64354,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/chemistry-behaviour-of-gases-master-suite.html",
+      "sha256": "81d985c0963dfe956c806f9258a2eac0aa38f94a853d8bbbb2d4c2ce490b26fc",
+      "size": 129458,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/chemistry-chemical-bonding-master-suite.html",
+      "sha256": "a99c634dad6e5019430f0a824afe56ebb17e50c7095d469479df92a20a7926a8",
+      "size": 200104,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/chemistry-mole-concept-master-suite.html",
+      "sha256": "4e2759d7b2b47e4d3d082a51aa1ba187e16dae075e3723913daa9a85bdda405e",
+      "size": 141195,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/chemistry-redox-reactions-master-suite.html",
+      "sha256": "5485dd51e9bf2507c539c00737a34c06e4a417a1a50269bad9fe336a2caecf24",
+      "size": 255317,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-chemistry-behaviour-of-gases-tablet.html",
+      "sha256": "615607ae7be516ade752375f8a82fb38c5293ca4f57c6ce44dfdc06db5a4e819",
+      "size": 78118,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-chemistry-chemical-bonding-tablet.html",
+      "sha256": "080b79ab1ad9b4a38173d7c18fdc1b5f3fd62641b6011f34052cee78244b23f8",
+      "size": 64700,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-chemistry-redox-reactions-tablet.html",
+      "sha256": "976a7a10842fdbcf4e665c589f134f762f9ebfb858bb1ee0231bec96c2515b9f",
+      "size": 71139,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-chemistry-some-basic-concepts-tablet.html",
+      "sha256": "8a1eafde97cd29d79ef82ae4904e65d2d6a75d5c900e16a9165642058bafa92d",
+      "size": 56970,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-mathematics-euclids-geometry-tablet.html",
+      "sha256": "28470c3696ae4b1489ce7d797ff30aa991f242737b8013a12b67272fac57e2d3",
+      "size": 48941,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-mathematics-theory-of-equations-tablet.html",
+      "sha256": "6a48f9a7fccdf448496f06a0630a8ad7032e8ddc6dad17b6e87fadc5e974fbc5",
+      "size": 62001,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-motion-1d-straight-line-tablet.html",
+      "sha256": "eb909968f3248959725d70617c0cf8ecefda1677e4dcd4406d65932a83dc9001",
+      "size": 133967,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-motion-in-a-plane-tablet.html",
+      "sha256": "6849007b95243b72a1f0f7c8e3c21139aa1edc763f5cc1924b4ed412fedc51a9",
+      "size": 174244,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-physics-motion-2d-ncert-tablet.html",
+      "sha256": "556f40dd12de0a279fcbe0ae54467a886e6afbeaa85b784fb6e8cfc0dbcf3ca9",
+      "size": 116184,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-physics-nlm-tablet.html",
+      "sha256": "d5d4f82eaa4b79b75ba1d7c73cba65ab78e723844ae852c7ce62251648c14f8f",
+      "size": 131409,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-physics-thrust-pressure-tablet.html",
+      "sha256": "ba25951c1d3014eaec3acd96db3a540c778b1ba3510a5f2b2bbec7903d35990e",
+      "size": 259910,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-physics-vectors-tablet.html",
+      "sha256": "2e979e26e412cadcf606d4d5a0a1abd996dcba2c9d63b4847eed9873fdb3a05f",
+      "size": 132218,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-sba-06-07-trajectory-and-height-tablet.html",
+      "sha256": "2841fbef2b98783f579bed4b7f8fa88f502c46deb7c9f13929d1d3fc80219fdc",
+      "size": 57963,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-sba-motion-in-a-plane-master-tablet.html",
+      "sha256": "1d7e9e3d45094e4d6b79451a18adfea56681f41ed3b46c4a42510d7c547d0369",
+      "size": 107506,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core1a-vector-add-sub-tablet.html",
+      "sha256": "f37ba2ac545eff759c5a566737c6c29b2f71d3d2763681da8c31a719b03185c5",
+      "size": 101860,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-canonical-question-bank-tablet.html",
+      "sha256": "19c703b8f997b75395d33771948696fbb416439b071c8a2ec8b8dfecda9f6919",
+      "size": 392309,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-chemistry-behaviour-of-gases-tablet.html",
+      "sha256": "a1c559f1bf4574d57eef7fa12acb3986f590b5f0f94b120b1484ee3a1ce4b210",
+      "size": 27910,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-chemistry-chemical-bonding-tablet.html",
+      "sha256": "4549df8e88a7456f10e8792922e2e87134f4f8a9b8ecc62579e6a645eefefeb9",
+      "size": 152025,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-chemistry-redox-reactions-tablet.html",
+      "sha256": "bfdaf8a81682b8e3fb1c32a42b84451396e7c1051dc4d047483d8b77815e38fe",
+      "size": 47797,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-chemistry-some-basic-concepts-tablet.html",
+      "sha256": "e61d386d3c77dcc7bdbcc8de4cfbd7e838d7dbb90c356adfbc8c8366ab1e5c57",
+      "size": 221252,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-mathematics-euclids-geometry-tablet.html",
+      "sha256": "fb57c2cae0c3eaeaf24f10d55ceff25ec761ebe5c867482d329d1adf72042436",
+      "size": 27328,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-mathematics-theory-of-equations-tablet.html",
+      "sha256": "982767b613410df3abad7290f0912ea2c32ebe727eeda53fffc606751df24daa",
+      "size": 34675,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-motion-1d-straight-line-tablet.html",
+      "sha256": "a85dca63ac005ba518ef853eb9bb25bfd3eab7caf5ac20f3527a8c51eafa131e",
+      "size": 161514,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-motion-consolidated-practice-tablet.html",
+      "sha256": "e321f1eb54cd66b255667fd08d1c84ebd20de15e9edbb2af0d49ccd008944214",
+      "size": 76488,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-motion-in-a-plane-tablet.html",
+      "sha256": "c0b4e4169caab95914951638b1d193e4e1e1f9dd844adbfba0d835ab007bbeea",
+      "size": 581484,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2-physics-thrust-pressure-tablet.html",
+      "sha256": "5c686e3eacbc5f9466e2df85760bbf8445c6bb11e5b6a1d6aa5a15607d8c6ab3",
+      "size": 259100,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/core2a-projectile-study.html",
+      "sha256": "b18f75ff3eedd268adb8a3c280a1d7e7a54b811237ebd10154ed0246abcc0c5e",
+      "size": 112580,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/friction/core1a.html",
+      "sha256": "9c7a579bc4b281e163e146d7101b32473c02d9a105efa773707c5bbb7591e461",
+      "size": 93783,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/friction/core2.html",
+      "sha256": "0f7556c7a5a47046b30c08723f0279c17fd8dfbe74a7f537fb664767285ab04f",
+      "size": 242476,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/friction/index.html",
+      "sha256": "2be49f9ec76b6527840a2a34b021bbba8696d0982d5e67aacde9b19943022819",
+      "size": 20653,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/index.html",
+      "sha256": "a0b67e891ceaf884172c5a05faf72181f06b06ba96b66ec4d8c2cbb5c23a5d92",
+      "size": 41804,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/motion-in-1d-master-suite.html",
+      "sha256": "7c87b9346d70226c937dc8a8d849780d0ae00815881953a4ae709fc2333761d8",
+      "size": 205215,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/motion-in-2d-master-suite.html",
+      "sha256": "9bd342feba6b1743cc2d1cf032e71f4a645b26393b04fd711cf24b3b985ca573",
+      "size": 427482,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+      "sha256": "30cb8820cac0b3f3dffaced0371135bfe722ac33a52b43e491cc8001dccceb2e",
+      "size": 65957,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/standalone/practice/vector-algebra-3d-master-suite.html",
+      "sha256": "ab8d6884cca005f2acd13da59cc43dc52c64575448e3c9c6de0bead25612fff5",
+      "size": 128068,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/test/atlas/index.html",
+      "sha256": "b72c3bdd902d56d95ea85e85e0a28a03d12e3307cc2cfb1d42883981b9d4383d",
+      "size": 51947,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/test/deployments/index.html",
+      "sha256": "c9ab2c860e509ce460aecba544182de98e84784447380c9292de7f7a17850890",
+      "size": 23777,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/test/imo-grade9/core1a.html",
+      "sha256": "3f94f49759a1f0427497db3f0bda72fb32f4cf25e709226706fd902e4c9cd50c",
+      "size": 17225,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/test/index.html",
+      "sha256": "e5ee2cf5df2a9809dfe3f88869db6b9b9d2938397491b8745cb824c8df7f4bb4",
+      "size": 469322,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/test/question-bank/index.html",
+      "sha256": "4aeffc565a59f4819fbfe21d05f9f4166481f199d1be8f5ce7756938f479f420",
+      "size": 16175,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/test/rungs/index.html",
+      "sha256": "e04d4b0d42aef463b9c89ffef4420bd6858052947e2dfda1b334b4ee3824ac33",
+      "size": 25328,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/bonding/index.html",
+      "sha256": "e81deb4f94a1665fda1f2a6669943afc6ef0b45ea99cd528e83b8c585827c69d",
+      "size": 4914,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/coordinate-geometry/index.html",
+      "sha256": "e38b8508e93ad9e93918840328517ef06201e99ba21161d4c606a8bf68c18fc2",
+      "size": 3519,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/euclids-geometry/index.html",
+      "sha256": "c724bab3aaa892ec15c9e10522c4af9ede2d410f643db009182db9d960530126",
+      "size": 6013,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/fluids/index.html",
+      "sha256": "26de6938a98b1b6ae5b881672c5629a5253069b94deefd1019245e769a996c3c",
+      "size": 3524,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/gases/index.html",
+      "sha256": "5c68564f95c1a672145a26c294b7a9577ae7aa141f0b65e8b109a30c8e660ca3",
+      "size": 6169,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/mole/index.html",
+      "sha256": "44428985b9099897c7f282dae7a62337ac80bcb53f8e6538a96d57e243a89ea0",
+      "size": 6233,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/motion-1d/index.html",
+      "sha256": "e7fd4e4ace31f9c07fe3bed324408216f9233bafde809f1d4e2dfc6e53d8c1ee",
+      "size": 6871,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/motion-2d/index.html",
+      "sha256": "a29cebe10a6300d0c2d905098c52178399176981350f4bc62868c397bf8dacb9",
+      "size": 8070,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/motion/index.html",
+      "sha256": "5bd501a26802f527c5c8676045dc2a8cef80f1d97e1fe9d27c23075f555a7aba",
+      "size": 3133,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/nlm/index.html",
+      "sha256": "ad2951fd014de35a86761fcf9e8c8bbf2f95822beadc977bb63fd7998bf9c2df",
+      "size": 8222,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/polynomials/index.html",
+      "sha256": "2290cbfd6abbb5c37ea97dc125868db18393e333f311dc4980deb75d8966c416",
+      "size": 3525,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/redox/index.html",
+      "sha256": "cb8c8bc3ba506284c40fd351ac5c87c6f3d8a071e5df6d4f6d76147053ee6e32",
+      "size": 6100,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/theory-of-equations/index.html",
+      "sha256": "c10460feb87dc7084f2593b20d8a2245d39b352c9ede9739b227872d1563ee91",
+      "size": 6365,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "public/topics/vectors/index.html",
+      "sha256": "1c451c7a0e5d65933a7b71b8b6fd79612e79903ee1d0ee2c393299f645ce90d8",
+      "size": 5951,
+      "entry_context": "PUBLIC_PAGE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/chemistry-behaviour-of-gases-master-suite.html",
+      "sha256": "9261030f40d705803de5b1c68d7f0592a35842efff50fe0042ab6b57a21c19e3",
+      "size": 127153,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/chemistry-chemical-bonding-master-suite.html",
+      "sha256": "6bea694257e028e5e207c6fbe5c9204d063efb35eff9f8d8aacf9ced28021865",
+      "size": 198959,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/chemistry-mole-concept-master-suite.html",
+      "sha256": "ced60741293da18c26442716dd1d851bbee890c8f2772db876411d867a6e1cfe",
+      "size": 139082,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/chemistry-redox-adaptive-hard-concept-proof.html",
+      "sha256": "f24b133a2dda354e5e30010b4c3e56aa68a37f796355ad90c4944edca8e48cb9",
+      "size": 22786,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/chemistry-redox-reactions-master-suite.html",
+      "sha256": "f1f3e6d67e3eb51b79508783fd2a846d7d19f41b74c2a76ce08895aa6d561b4e",
+      "size": 255535,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core-learning/index.html",
+      "sha256": "ef05eb99f6d0de16229fe5b205ec0607209e0d01349f2e49e85dc2af08f25957",
+      "size": 12087,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core1a-motion-1d-straight-line-tablet.html",
+      "sha256": "68df31fac6cb0db44d2ce3d5e39c866e651a75102565228dbfd92bfa2ae15cd7",
+      "size": 131136,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core1a-motion-in-a-plane-tablet.html",
+      "sha256": "9a0991bccb56f7a5b3e04cdeaa4f965661f3d8457c72918858fcf8d9d39bd77d",
+      "size": 170109,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core1a-physics-nlm-tablet.html",
+      "sha256": "8ae71412fb6bd7a4086360c83cf6de14a92413164cc19eb27f315fd26198f5ce",
+      "size": 329413,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core1a-vector-add-sub-tablet.html",
+      "sha256": "52f53ba4a200b2be430bd89b4d3a143909de64184327b55ad4b0595cdf91f58d",
+      "size": 97682,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core2-mathematics-circles-grade9-master.html",
+      "sha256": "47c3201c54cdaf5cd9e50fc265f211363a7d181c61518f3c5f65ded48addfbb3",
+      "size": 4381956,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core2-motion-in-a-plane-tablet.html",
+      "sha256": "dad68b308f18cbaf1e670ac1831a961e376120f8ada05e42f482ad9b1c3c07fa",
+      "size": 299770,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core2-physics-thrust-pressure-tablet.html",
+      "sha256": "27df4b51eb1aed1f10e503935c95c4af098ace094c4cf151515fbbac71fcc009",
+      "size": 256205,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/core2a-projectile-study.html",
+      "sha256": "d7927c6f29a107557a5ac44296706831e77bed03be126f10b53f0e8910c4ebf1",
+      "size": 93647,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/mathematics-imo-grade9-master-suite (2).html",
+      "sha256": "cf517ac4aa047c4442d73dfcb1e670162c470fafa203009c8264e0850bb01978",
+      "size": 8964088,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/mathematics-polynomials-and-coordinates-suite.html",
+      "sha256": "ad628b1af65ca58da698e1421930b653367714cab344eb293c42d8199ae67eb6",
+      "size": 66039,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/motion-in-1d-master-suite.html",
+      "sha256": "6a0fdb2cfde12598aa97cdafa77fb6ed595b079ceb77a71bd3b4451e9ae1515a",
+      "size": 183600,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/motion-in-2d-master-suite.html",
+      "sha256": "f6fa6a6b7dbcf149f31141baf526ffa7a674ab08a6bd1e089e4981fcd02bf31c",
+      "size": 419860,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/motion-session/index.html",
+      "sha256": "506efae0eb2541235dcab1b89bad880b5c6554d07f9c1eb3007a4699597ce0d6",
+      "size": 9154,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/physics-motion-in-a-plane-interactive-suite.html",
+      "sha256": "a11a0cc3382dffae2734ac3c82459976ee8a7aec7f785dfb8f638c7924f380e9",
+      "size": 45984,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/portable-workbench/index.html",
+      "sha256": "59c4ec639c15b2eac842ceddae3d9f486c0864a7040f7561ab9816e1d31a5863",
+      "size": 65948,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core1a-physics-motion-2d-ncert-tablet.html",
+      "sha256": "cb3c189025e261be86d03f9bd3010d310e88372a4798aa72a3ac9061a5fb3945",
+      "size": 111895,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core1a-physics-nlm-tablet.html",
+      "sha256": "c848dd29336ccb7191d087a41d8ced4faf301b0792e8b6a1397e4dc45de16a34",
+      "size": 127129,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core1a-physics-vectors-tablet.html",
+      "sha256": "492ac859b6ac98ada383d222df57e180895adbc3ae955b4a59c5dba5ff4f8794",
+      "size": 127924,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core1a-sba-06-07-trajectory-and-height-tablet.html",
+      "sha256": "8646bfdf19b25ba38292fcf29650400f64354db2c1c15ec53f8080664e3d23a5",
+      "size": 55037,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core1a-sba-motion-in-a-plane-master-tablet.html",
+      "sha256": "4eb67553e48bfa0fece142ca56f7db6deea41d42724f3ece359e7b41d1b6b0fe",
+      "size": 103033,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core2-motion-1d-straight-line-tablet.html",
+      "sha256": "983d7e598d0fa16d37cf95e48f9e5d8c0d774ecc306f0f8e94f35a6ef977eaea",
+      "size": 160506,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core2-motion-consolidated-practice-tablet.html",
+      "sha256": "2fb24fd03e7858535060f1551e68f5422883812a2df5fbca932acec3f416074c",
+      "size": 72413,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core2-motion-in-a-plane-tablet.html",
+      "sha256": "f954d145c46bb8d8f8aa7300645f37fa19c716e48eaa46be8ef2aa54879ec37b",
+      "size": 582987,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core2-physics-thrust-pressure-tablet.html",
+      "sha256": "5fa64ae66251608ec047c9a273b404a455b5a50836ef276cb5360432202d5378",
+      "size": 256294,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/core2a-projectile-study.html",
+      "sha256": "1396abc86a4d4cad295d4ce29acecefe5214c9c90987d7368bc0ad561c2498f6",
+      "size": 107780,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/index.html",
+      "sha256": "4e264f6ec3f1966d15fd926ae7b91164ed92866b6330e4f1efcf26432e8aee04",
+      "size": 30815,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/motion-in-1d-master-suite.html",
+      "sha256": "82732fea76ca146ecf5b01970d9846342f72327d59d381f5a42914e61c119c0e",
+      "size": 204475,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/motion-in-2d-master-suite.html",
+      "sha256": "457406833709620483b4ad442d64a1ce8c5b1621d544f687406fe6b22544cf6a",
+      "size": 428565,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+      "sha256": "de5465b5ddab451498bfc07c2cdbb1e58d2e619355927fecae1fe899c6fdf812",
+      "size": 62049,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/products/physics/phy-kin-2d-motion.html",
+      "sha256": "bab9359d7f44ed64d6d9c700f4cfa4e31b7db2598bf5c805475b5f8d410f71b6",
+      "size": 359752,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/products/physics/phy-nlm-first-law.html",
+      "sha256": "e9308f991d5eaa2c2b93349c8a7fcc45f203a370e901256ab8040e01482bf373",
+      "size": 1288010,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "standalone/vector-algebra-3d-master-suite.html",
+      "sha256": "b544022cbee752762ca53800d209124b34831f6bed8f0cdb84f24aac499ccf7d",
+      "size": 125923,
+      "entry_context": "STANDALONE_SUITE",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/portable-workbench/external-host.html",
+      "sha256": "7e693021a02f62c126d052de542592475a1826ae27a8818a7ad6b6958503bb64",
+      "size": 1955,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/qrt/interactive-smoke.html",
+      "sha256": "4f5d20c6034ba1f77ec8ce8494232355d3285ecd4aca183b66894b8e43cb35f8",
+      "size": 1209,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/research-first/pr288-regression/preview.html",
+      "sha256": "fb790d45acf1a5378c9733f9d8e65b829574253a378b2eebe9fbd6379a7b57f7",
+      "size": 33150,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/workbench/browser-host.html",
+      "sha256": "4d5077c40ed3d550ef3751875d81c42e7635e3cd08ef6ff7b3943137b39f549a",
+      "size": 4668,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/workbench/browser-semantic-identity-host.html",
+      "sha256": "e2277f3ed2a02e02e0cc3ac1b79891b2296d3f3f4413292af4ce857344c847eb",
+      "size": 3325,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tests/fixtures/workbench/core-learning-host.html",
+      "sha256": "3210d189eb1e6d5d1b58d41fa1ebc62eafe40c3d1afffd9d92b76da7fb53fbd1",
+      "size": 5811,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tools/index.html",
+      "sha256": "2a6e27e15b449425810d04bcc3b7f31991263438f5af24e7cecf705f15f8d02d",
+      "size": 3068,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tools/library/index.html",
+      "sha256": "329cec9f8490314ada611f13fd60fe77693ce63c27a6a6289896181b94d04646",
+      "size": 10707,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    },
+    {
+      "path": "tools/run-builder/index.html",
+      "sha256": "4a15a559844b651878a18ee17102fa601f28d3ded1a5e57d24facb7c5b0b82b9",
+      "size": 7041,
+      "entry_context": "OTHER_HTML",
+      "mode": 420
+    }
+  ]
+}
