@@ -246,6 +246,28 @@ class DualSourceMigrationTests(unittest.TestCase):
             [{"route": "/shared", "target": "same"}])
         self.assertEqual(shared["routes"]["/shared"]["route_type"], "shared_route_held")
 
+    def test_source_byte_and_executable_mutations(self):
+        source = {"resource_id": "res:test", "kind": "OPAQUE_APP"}
+        unrelated = json.dumps({"resource_id": "res:other", "kind": "OPAQUE_APP"}).encode()
+        with self.assertRaises(V35MigrationError):
+            self.v35_engine.migrate_registry_entry(
+                snapshot_id="v35:8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+                source_path="registry.json", entry=source, raw_bytes=unrelated)
+        for manifest in (
+            {"package_id": "other"},
+            {"package_id": "portable-long-division", "nested": {"scripts": ["unsafe"]}},
+        ):
+            with self.subTest(manifest=manifest):
+                with self.assertRaises(V35MigrationError):
+                    self.v35_engine.migrate_portable_package(
+                        package_id="portable-long-division", raw_manifest=manifest)
+        duplicate_json = b'{"id":"abc","id":"def"}'
+        with self.assertRaises(V35MigrationError):
+            self.v35_engine.migrate_library_package(
+                snapshot_id="v35:8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+                source_path="pkg.json", raw_bytes=duplicate_json,
+                expected_sha256=hashlib.sha256(duplicate_json).hexdigest())
+
     def test_rule13_invariant_software_validation_not_academic_approval(self):
         disclaimer = "No academic approval inferred from software validation."
         self.assertIn("No academic approval inferred from software validation.", disclaimer)
