@@ -1,0 +1,35 @@
+{
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "workpack_id": "A02",
+  "schema_version": "g9-public-inventory-summary/2",
+  "sources": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657,
+      "tracked_bytes": 96373813
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634,
+      "tracked_bytes": 113853741
+    }
+  },
+  "tracked_paths": 5291,
+  "distinct_git_blobs": 4592,
+  "previous_inventory_blob": "b84908d3b8955b801a13110b4c6c53e66a620343",
+  "prior_candidate": "d0dc1dcc32f0f67fb180689c8430142fa6a89d25",
+  "observed_comparison": {
+    "path_size_mode_kind_mismatches": 0,
+    "previously_verified_raw_hashes_matching": 35,
+    "all_raw_bytes_independently_rehashed": false
+  },
+  "full_inventory": "EXTERNAL_ONLY; original public path-level inventory superseded, historical commit retained",
+  "owner_local_and_ignored_scope": "NOT_INSPECTED",
+  "lfs_payload_and_submodule_custody": "NOT_VERIFIED",
+  "acceptance": "BLOCKED_PENDING_FULL_CUSTODY_REGENERATION_AND_REVIEW"
+}
