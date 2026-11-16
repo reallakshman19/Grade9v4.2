@@ -1,157 +1,198 @@
 {
-  "schema_version": "g9-route-map/1.0",
+  "schema_version": "g9-route-map/2",
   "workpack_id": "A09",
   "status": "HOLD",
   "academic_admission": "HOLD",
   "production_release": "NONE",
-  "ui_implementation_freeze": "LOCKED_UNTIL_A61",
-  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "ui_freeze": "NOT_GRANTED",
   "source_pins": {
-    "v35": {
-      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
-      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
-    },
-    "v41": {
-      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
-      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
-    }
-  },
-  "fail_closed_policy": {
-    "unregistered_routes": "FAIL_CLOSED_REJECT",
-    "missing_figures": "FAIL_CLOSED_BLOCK",
-    "unverified_candidate_claims": "FAIL_CLOSED_HOLD"
+    "v35_commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+    "v35_tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+    "v41_commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+    "v41_tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
   },
   "blueprints": [
     {
-      "route": "/blueprints/core1-orientation",
+      "route": "/blueprints/core1",
       "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
       "role": "CORE1",
       "layout_mode": "READING_ORIENTATION",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "pointer": "/blueprints/0"
+      },
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY",
       "status": "HOLD"
     },
     {
-      "route": "/blueprints/core1a-construction",
+      "route": "/blueprints/core2",
+      "blueprint_id": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+      "role": "CORE2",
+      "layout_mode": "QUESTION_READER",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "pointer": "/blueprints/1"
+      },
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY",
+      "status": "HOLD"
+    },
+    {
+      "route": "/blueprints/core1a",
       "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
       "role": "CORE1A",
       "layout_mode": "READING_CONSTRUCTION",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "pointer": "/blueprints/2"
+      },
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY",
       "status": "HOLD"
     },
     {
-      "route": "/blueprints/core1b-reconstruction",
-      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.8.0",
+      "route": "/blueprints/core1b",
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.1.0",
       "role": "CORE1B",
-      "layout_mode": "READING_CONSTRUCTION",
+      "layout_mode": "GUIDED_RECONSTRUCTION",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "pointer": "/blueprints/3"
+      },
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY",
       "status": "HOLD"
     },
     {
-      "route": "/blueprints/core2a-crux",
-      "blueprint_id": "BP-CORE2A-CRUX@1.1.0",
+      "route": "/blueprints/core2a",
+      "blueprint_id": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
       "role": "CORE2A",
-      "layout_mode": "DECISION_SPLIT",
+      "layout_mode": "QUESTION_STUDY",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "pointer": "/blueprints/4"
+      },
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY",
       "status": "HOLD"
     },
     {
-      "route": "/blueprints/core2b-decide",
-      "blueprint_id": "BP-CORE2B-DECIDE@1.1.0",
+      "route": "/blueprints/core2b",
+      "blueprint_id": "BP-CORE2B-TRANSFER@1.1.0",
       "role": "CORE2B",
-      "layout_mode": "DECISION_SPLIT",
+      "layout_mode": "TRANSFER_ATTEMPT",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "pointer": "/blueprints/5"
+      },
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY",
       "status": "HOLD"
     },
     {
-      "route": "/blueprints/core3-transfers",
-      "blueprint_id": "BP-CORE3-TRANSFERS@1.0.0",
-      "role": "CORE3",
-      "layout_mode": "TRANSFER_MATRIX",
-      "status": "HOLD"
-    },
-    {
-      "route": "/blueprints/explorer-sandbox",
-      "blueprint_id": "BP-EXPLORER-SANDBOX@1.1.0",
+      "route": "/blueprints/explorer",
+      "blueprint_id": "BP-EXPLORER-GCDR@1.0.0",
       "role": "EXPLORER",
-      "layout_mode": "EXPLORER_CANVAS",
+      "layout_mode": "STAGE_SUPPORT",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "Shared/web/interactive-page-blueprints.v1.json",
+        "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "size": 90186,
+        "pointer": "/blueprints/6"
+      },
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY",
       "status": "HOLD"
     }
   ],
   "portable_packages": [
     {
-      "route": "/packages/common-core",
-      "package_id": "PKG-COMMON-CORE@1.0.0",
-      "category": "PORTABLE_ROOT",
-      "status": "HOLD"
+      "route": "/packages/portable-long-division",
+      "package_id": "portable-long-division",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/packages/portable-long-division.json",
+        "git_blob": "cd769aa026ed3d2278097ee04492941de7479a55",
+        "size": 4737
+      },
+      "catalog_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/catalog.json",
+        "git_blob": "5d81a87400c1f884dd0131b003e87621e39e5fbf",
+        "size": 219
+      },
+      "status": "HOLD",
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY"
     },
     {
-      "route": "/packages/tablet-ui",
-      "package_id": "PKG-TABLET-UI@1.0.0",
-      "category": "PORTABLE_ROOT",
-      "status": "HOLD"
+      "route": "/packages/portable-redox-electron-equivalence",
+      "package_id": "portable-redox-electron-equivalence",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/packages/portable-redox-electron-equivalence.json",
+        "git_blob": "30cb6104d193f65596e6db43948334ac7cb9e259",
+        "size": 4529
+      },
+      "catalog_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/catalog.json",
+        "git_blob": "5d81a87400c1f884dd0131b003e87621e39e5fbf",
+        "size": 219
+      },
+      "status": "HOLD",
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY"
     },
     {
-      "route": "/packages/formula-engine",
-      "package_id": "PKG-FORMULA-ENGINE@1.0.0",
-      "category": "PORTABLE_ROOT",
-      "status": "HOLD"
+      "route": "/packages/portable-integration-riemann",
+      "package_id": "portable-integration-riemann",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/packages/portable-integration-riemann.json",
+        "git_blob": "46c00013526dd89e530d2c25d8913a6bb11abf87",
+        "size": 4298
+      },
+      "catalog_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/catalog.json",
+        "git_blob": "5d81a87400c1f884dd0131b003e87621e39e5fbf",
+        "size": 219
+      },
+      "status": "HOLD",
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY"
     },
     {
-      "route": "/packages/canvas-engine",
-      "package_id": "PKG-CANVAS-ENGINE@1.0.0",
-      "category": "PORTABLE_ROOT",
-      "status": "HOLD"
+      "route": "/packages/portable-motion-shared-clock",
+      "package_id": "portable-motion-shared-clock",
+      "source_locator": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/packages/portable-motion-shared-clock.json",
+        "git_blob": "df9eff909bbca06457ce876dff20446a788f16b0",
+        "size": 5758
+      },
+      "catalog_source": {
+        "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "path": "public/portable-workbench/catalog.json",
+        "git_blob": "5d81a87400c1f884dd0131b003e87621e39e5fbf",
+        "size": 219
+      },
+      "status": "HOLD",
+      "route_kind": "PROPOSED_INTERNAL_NOT_LEGACY"
     }
   ],
-  "standalone_tools_summary": {
-    "total_registered": 38,
-    "status": "HOLD",
-    "disposition": "PRESERVED_IN_CUSTODY"
-  },
-  "explorers_summary": {
-    "registered_opaque": 11,
-    "unregistered_entrypoints": 37,
-    "total_observed": 48,
-    "status": "HOLD",
-    "disposition": "PRESERVED_IN_CUSTODY"
-  },
-  "tombstones": [
-    {
-      "route": "/legacy/v35/flash-player.html",
-      "status": "TOMBSTONE",
-      "reason": "OBSOLETE_FLASH_PLUGIN_DEPRECATED",
-      "redirect_or_replacement": null,
-      "quarantine_ref": "custody://v35/flash/player"
-    },
-    {
-      "route": "/legacy/v35/eval-runner.html",
-      "status": "TOMBSTONE",
-      "reason": "UNSAFE_EVAL_REMOVED",
-      "redirect_or_replacement": null,
-      "quarantine_ref": "custody://v35/eval/runner"
-    },
-    {
-      "route": "/v41/scratch/scratch-pad.html",
-      "status": "TOMBSTONE",
-      "reason": "EPHEMERAL_SCRATCH_OMITTED",
-      "redirect_or_replacement": null,
-      "quarantine_ref": "custody://v41/scratch"
-    },
-    {
-      "route": "/v41/draft/unverified-quiz.html",
-      "status": "TOMBSTONE",
-      "reason": "UNVERIFIED_DRAFT_HELD",
-      "redirect_or_replacement": null,
-      "quarantine_ref": "custody://v41/drafts/quiz"
-    },
-    {
-      "route": "/legacy/search-index.json",
-      "status": "TOMBSTONE",
-      "reason": "UNFILTERED_RAW_SEARCH_DEPRECATED_N09",
-      "redirect_or_replacement": "/routes/public-search-index.json",
-      "quarantine_ref": "custody://search/raw-index"
-    },
-    {
-      "route": "/legacy/v35/direct-eval.js",
-      "status": "TOMBSTONE",
-      "reason": "EVALUATOR_POLICY_V1_SUPERSEDED",
-      "redirect_or_replacement": null,
-      "quarantine_ref": "custody://v35/scripts/direct-eval"
-    }
-  ]
+  "tombstones": [],
+  "legacy_route_closure": "NOT_RUN; A56 full authorized custody discovery required",
+  "eligibility": "HOLD"
 }
