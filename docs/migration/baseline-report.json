@@ -1,9 +1,9 @@
 {
   "schema_version": "g9-baseline-report/2",
-  "revision": 2,
+  "revision": 3,
   "generated_at": "2026-11-16T07:48:00Z",
   "workpack_id": "A00",
-  "title": "Read-only authority and baseline audit (Remediation Revision 2)",
+  "title": "Read-only authority and baseline audit (Revision 3 — Owner Authorization Enacted)",
   "remediation_reference": {
     "prior_candidate_commit": "f44ecc78b470a615a1ad33c5d8500fcdcc4d8fca",
     "status": "READY_FOR_REVIEW_NOT_ACCEPTED"
@@ -13,8 +13,9 @@
     "bootstrap_commit": "bd8f568d21466cecb7b53b87f862c565a474c149",
     "bootstrap_tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
     "status": "EMPTY_BOOTSTRAP_LOCAL_ONLY",
-    "remote_configured": false,
-    "authorization": "Owner/dispatcher local repository bootstrap authorization pending formal reference ID"
+    "remote_configured": true,
+    "authorization": "EXPLICIT_OWNER_AUTHORIZATION_20261116",
+    "remote_url": "https://github.com/reallakshman19/Grade9v4.2.git"
   },
   "source_v41": {
     "repository": "https://github.com/reallakshman19/Grade9v4.1",
@@ -261,5 +262,27 @@
     "UI freeze receipt is null (cannot implement learner UI before signed A61)",
     "Academic release and production authority remain disabled (HOLD)"
   ],
-  "audit_disposition": "HOLD_PENDING_INDEPENDENT_RECEIPT"
+  "audit_disposition": "HOLD_PENDING_INDEPENDENT_RECEIPT",
+  "owner_authorization_decision": {
+    "authorized_at": "2026-11-16T08:26:25+04:00",
+    "status": "AUTHORIZED_PRIVATE_DEVELOPMENT_ONLY",
+    "target_repository": "https://github.com/reallakshman19/Grade9v4.2",
+    "visibility": "private",
+    "default_branch": "main",
+    "local_workspace": "D:/CodeD/g9v4.2",
+    "migration_sources_status": "Grade9v3.5 and Grade9v4.1 remain read-only migration sources",
+    "source_snapshot_selections": {
+      "Grade9v3.5": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "Grade9v4.1": "564ad2a07fddc0fdd30d103674b3eca61235a54b"
+    },
+    "security_mandates": [
+      "Preserve existing bootstrap and A00 commit history",
+      "Do not fork or blindly copy either source repository",
+      "Configure new remote origin and appropriate branch protection",
+      "Keep restricted source custody, private evidence and signing credentials outside implementation repository",
+      "Verify only authorized files are included before initial push",
+      "Disable GitHub Pages and production deployment until separately authorized"
+    ],
+    "disclaimer": "Authorizes repository creation and controlled private development only. Does not constitute academic approval, production authorization or permission to bypass workpack acceptance gates."
+  }
 }
