@@ -1,8 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:g9:platform:exact-ref:1",
-  "title": "Grade9v4.2 Exact Reference Contract",
-  "description": "Immutable, cryptographically bound reference to an architectural entity or snapshot artifact.",
+  "$id": "urn:g9:engineering:exact-ref:1",
   "type": "object",
   "additionalProperties": false,
   "required": [
