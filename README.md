@@ -7,7 +7,7 @@ Grade9v4.2 converges the native six-Core curriculum architecture of Grade9v3.5 w
 - **Six Core Roles:**
   - `CORE1`: Canonical subject truth orientation, objects, conventions, relations, and compact transition maps.
   - `CORE1A`: Canonical inferential jumps, completed reasoning paths, bound representations, and checks.
-  - `CORE1B`: Guided six-stage conceptual reconstruction (prediction → attempt → diagnosis → repair → boundary).
+  - `CORE1B`: Guided six-stage conceptual reconstruction (Predict → Attempt → Reconstruct → Diagnose → Repair → Boundary test).
   - `CORE2`: Exact source custody, original questions, conditions, figures, and assistance tracking.
   - `CORE2A`: Familiar application family, explicit application cruxes, and complete reasoning routes.
   - `CORE2B`: Transfer application challenges with protected learner DECIDE moves and prior exposure comparison.
