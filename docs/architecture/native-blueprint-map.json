@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "workpack_id": "A57",
+  "title": "Native Web Blueprint and Shell Layout Register",
+  "status": "PROPOSED",
+  "created_at": "2026-11-16T16:15:00Z",
+  "academic_admission": "HOLD",
+  "ui_freeze": "NOT_GRANTED (LOCKED_UNTIL_A61)",
+  "native_shell": "G9-TABLET-SHELL-V1@1.3.0",
+  "native_registry": "Shared/web/interactive-page-blueprints.v1.json@1.17.0",
+  "blueprints": [
+    {
+      "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
+      "target_role": "CORE1",
+      "layout_mode": "READING_ORIENTATION",
+      "reference_viewport": null,
+      "css_tokens": ["surface", "reading-prose", "anchor-panel"],
+      "allowed_slots": ["orientation_anchor", "subject_objects", "conventions", "scope_relations", "compact_anchor", "hard_transitions"]
+    },
+    {
+      "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "target_role": "CORE1A",
+      "layout_mode": "READING_CONSTRUCTION",
+      "reference_viewport": [1366, 854],
+      "css_tokens": ["surface", "split-view", "warrant-card", "derivation-flow"],
+      "allowed_slots": ["entry_assumptions", "inferential_jump", "teaching_path", "representation_refs", "progressive_anchors_a1_a9", "elicitation", "misconceptions", "exit_task"]
+    },
+    {
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+      "target_role": "CORE1B",
+      "layout_mode": "GUIDED_RECONSTRUCTION",
+      "reference_viewport": null,
+      "css_tokens": ["surface", "stepper", "prediction-box", "diagnostic-feedback"],
+      "allowed_slots": ["microtopic_binding", "stage_1_predict", "stage_2_attempt", "stage_3_reconstruct", "stage_4_diagnose", "stage_5_repair", "stage_6_boundary_test", "rubric_bounds"]
+    },
+    {
+      "blueprint_id": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+      "target_role": "CORE2",
+      "layout_mode": "QUESTION_READER",
+      "reference_viewport": [1366, 854],
+      "css_tokens": ["surface", "source-masthead", "option-grid", "stimulus-view"],
+      "allowed_slots": ["source_id", "stem", "options", "conditions", "figures", "subparts", "source_hints", "raw_answer"]
+    },
+    {
+      "blueprint_id": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+      "target_role": "CORE2A",
+      "layout_mode": "QUESTION_STUDY",
+      "reference_viewport": null,
+      "css_tokens": ["surface", "scaffold-drawer", "crux-badge", "self-check-card"],
+      "allowed_slots": ["application_family", "crux_move_ref", "reasoning_route", "progressive_scaffolds", "self_check", "closure_summary"]
+    },
+    {
+      "blueprint_id": "BP-CORE2B-TRANSFER@1.1.0",
+      "target_role": "CORE2B",
+      "layout_mode": "TRANSFER_ATTEMPT",
+      "reference_viewport": null,
+      "css_tokens": ["surface", "strict-lockout", "transfer-card", "decision-input"],
+      "allowed_slots": ["transfer_task", "changed_demand_specification", "protected_decide_move", "evaluation_rubric", "changed_condition_repair", "lineage_ref"]
+    },
+    {
+      "blueprint_id": "BP-EXPLORER-GCDR@1.0.0",
+      "target_role": "EXPLORER",
+      "layout_mode": "STAGE_SUPPORT",
+      "reference_viewport": [1366, 854],
+      "css_tokens": ["surface", "canvas-host", "parameter-slider-rail", "telemetry-readout"],
+      "allowed_slots": ["model_id", "gcdr_stages", "physical_parameters", "invariants", "simulation_boundary"]
+    }
+  ],
+  "subject_adapters": [
+    {
+      "subject": "Physics",
+      "native_adapter_path": "Physics/adapter/",
+      "status": "ADMITTED_TARGET_SCOPE",
+      "supported_roles": ["CORE1", "CORE1A", "CORE1B", "CORE2", "CORE2A", "CORE2B", "EXPLORER"]
+    },
+    {
+      "subject": "Chemistry",
+      "native_adapter_path": "Chemistry/adapter/",
+      "status": "ADMITTED_TARGET_SCOPE",
+      "supported_roles": ["CORE1", "CORE1A", "CORE1B", "CORE2", "CORE2A", "CORE2B", "EXPLORER"]
+    },
+    {
+      "subject": "Mathematics",
+      "native_adapter_path": "Mathematics/adapter/",
+      "status": "ADMITTED_TARGET_SCOPE",
+      "supported_roles": ["CORE1", "CORE1A", "CORE1B", "CORE2", "CORE2A", "CORE2B", "EXPLORER"]
+    },
+    {
+      "subject": "Biology",
+      "native_adapter_path": "biology/adapter/",
+      "status": "EXTENSION_CAPABLE_HOLD",
+      "supported_roles": []
+    }
+  ]
+}

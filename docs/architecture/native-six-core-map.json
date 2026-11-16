@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "workpack_id": "A57",
+  "title": "Six-Core Native Architecture and Role Slot Mapping Register",
+  "status": "PROPOSED",
+  "created_at": "2026-11-16T16:15:00Z",
+  "academic_admission": "HOLD",
+  "production_deployment": "DISABLED",
+  "ui_implementation_freeze": "LOCKED_UNTIL_A61",
+  "governing_pins": {
+    "v35_commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+    "v35_tree": "c00cd1dc90ea6692bb71ca60bcfef36fcb993ae1",
+    "v41_commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+    "v41_tree": "703ee4d6935ba07bb54c292ae2499d863f689fbf",
+    "native_shell": "G9-TABLET-SHELL-V1@1.3.0",
+    "native_registry": "Shared/web/interactive-page-blueprints.v1.json@1.17.0"
+  },
+  "roles": [
+    {
+      "role": "CORE1",
+      "blueprint": "BP-CORE1-ORIENTATION@1.1.0",
+      "layout": "READING_ORIENTATION",
+      "authority": "Canonical Subject Truth",
+      "authority_ref": "Shared/roles/CORE1.md",
+      "disclosure_policy": "COMPACT_CLOSURE",
+      "prohibited_authority": "SOURCE_QUESTION",
+      "description": "Orientation, objects, conventions, scope, relations, compact anchor, hard transitions.",
+      "slots": [
+        {"name": "orientation_anchor", "type": "TEXT", "order": 1, "required": true},
+        {"name": "subject_objects", "type": "OBJECT_LIST", "order": 2, "required": true},
+        {"name": "conventions", "type": "CONVENTION_MAP", "order": 3, "required": true},
+        {"name": "scope_relations", "type": "RELATION_GRAPH", "order": 4, "required": true},
+        {"name": "compact_anchor", "type": "ANCHOR_SUMMARY", "order": 5, "required": true},
+        {"name": "hard_transitions", "type": "TRANSITION_LIST", "order": 6, "required": true}
+      ]
+    },
+    {
+      "role": "CORE1A",
+      "blueprint": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "layout": "READING_CONSTRUCTION",
+      "authority": "Canonical Subject Truth",
+      "authority_ref": "Shared/roles/CORE1A.md",
+      "disclosure_policy": "PROGRESSIVE_CONVENTIONS_FIRST",
+      "prohibited_authority": "SOURCE_QUESTION",
+      "description": "Microtopic entry assumptions, inferential jump, constructed reasoning, progressive anchors A1-A9.",
+      "slots": [
+        {"name": "entry_assumptions", "type": "ASSUMPTION_LIST", "order": 1, "required": true},
+        {"name": "inferential_jump", "type": "INFERENCE_SPEC", "order": 2, "required": true},
+        {"name": "teaching_path", "type": "STEP_SEQUENCE", "order": 3, "required": true},
+        {"name": "representation_refs", "type": "ASSET_REF_LIST", "order": 4, "required": true},
+        {"name": "progressive_anchors_a1_a9", "type": "ANCHOR_ARRAY", "order": 5, "required": true, "elements": [
+          "A1_phenomenon", "A2_prerequisite", "A3_mechanism", "A4_warranted_derivation",
+          "A5_meaningful_figure", "A6_progressive_anchors", "A7_first_wrong_inference_misconception",
+          "A8_counterexample_model_boundary", "A9_synthesis_check"
+        ]},
+        {"name": "elicitation", "type": "PROMPT_SPEC", "order": 6, "required": true},
+        {"name": "misconceptions", "type": "MISCONCEPTION_CATALOG", "order": 7, "required": true},
+        {"name": "exit_task", "type": "TASK_SPEC", "order": 8, "required": true}
+      ]
+    },
+    {
+      "role": "CORE1B",
+      "blueprint": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+      "layout": "GUIDED_RECONSTRUCTION",
+      "authority": "Canonical Microtopic Inference",
+      "authority_ref": "Shared/roles/CORE1B.md",
+      "disclosure_policy": "PROTECTED_ATTEMPT_THEN_REPAIR",
+      "prohibited_authority": "SOURCE_QUESTION",
+      "description": "Six-stage conceptual reconstruction eliciting the same intrinsic microtopic inference.",
+      "slots": [
+        {"name": "microtopic_binding", "type": "EXACT_REF", "order": 1, "required": true, "target": "CORE1A.inferential_jump"},
+        {"name": "stage_1_predict", "type": "PROTECTED_PREDICTION", "order": 2, "required": true},
+        {"name": "stage_2_attempt", "type": "PROTECTED_ATTEMPT", "order": 3, "required": true},
+        {"name": "stage_3_reconstruct", "type": "GUIDED_RECONSTRUCTION", "order": 4, "required": true},
+        {"name": "stage_4_diagnose", "type": "DIAGNOSTIC_EVALUATION", "order": 5, "required": true},
+        {"name": "stage_5_repair", "type": "TARGETED_REPAIR", "order": 6, "required": true},
+        {"name": "stage_6_boundary_test", "type": "MODEL_BOUNDARY_PROBE", "order": 7, "required": true},
+        {"name": "rubric_bounds", "type": "FACTOR_EVALUATION_VECTOR", "order": 8, "required": true}
+      ]
+    },
+    {
+      "role": "CORE2",
+      "blueprint": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+      "layout": "QUESTION_READER",
+      "authority": "Authorized Source Custody",
+      "authority_ref": "Shared/roles/CORE2.md",
+      "disclosure_policy": "EXACT_SOURCE_DISCLOSURE",
+      "prohibited_authority": "NONE",
+      "description": "Authorized competition / examination source question with original text, figures, options, and rubric.",
+      "slots": [
+        {"name": "source_id", "type": "EXTERNAL_ID", "order": 1, "required": true},
+        {"name": "stem", "type": "MARKDOWN_PROSE", "order": 2, "required": true},
+        {"name": "options", "type": "STABLE_OPTION_LIST", "order": 3, "required": false},
+        {"name": "conditions", "type": "PHYSICAL_CONDITIONS", "order": 4, "required": true},
+        {"name": "figures", "type": "ASSET_REFERENCE_ARRAY", "order": 5, "required": false},
+        {"name": "subparts", "type": "SUBPART_SPEC", "order": 6, "required": false},
+        {"name": "source_hints", "type": "ORIGINAL_HINT_LIST", "order": 7, "required": false},
+        {"name": "raw_answer", "type": "AUTHOR_CLAIM", "order": 8, "required": true}
+      ]
+    },
+    {
+      "role": "CORE2A",
+      "blueprint": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+      "layout": "QUESTION_STUDY",
+      "authority": "Canonical Truth + Eligible Reviewed Demand / Authored Practice",
+      "authority_ref": "Shared/roles/CORE2A.md",
+      "disclosure_policy": "SCAFFOLDED_TEACHABLE_CLOSURE",
+      "prohibited_authority": "UNVERIFIED_SOURCE_ASSERTION",
+      "description": "Familiar application practice with explicit crux move, step-by-step scaffolds, and reasoning routes.",
+      "slots": [
+        {"name": "application_family", "type": "FAMILY_ID", "order": 1, "required": true},
+        {"name": "crux_move_ref", "type": "OPERATION_CRUX", "order": 2, "required": true, "allowed_operations": [
+          "REPRESENT", "CONNECT", "TRANSFORM", "DECIDE"
+        ]},
+        {"name": "reasoning_route", "type": "STEPWISE_ROUTE", "order": 3, "required": true},
+        {"name": "progressive_scaffolds", "type": "SCAFFOLD_ARRAY", "order": 4, "required": true},
+        {"name": "self_check", "type": "CHECK_ROUTINE", "order": 5, "required": true},
+        {"name": "closure_summary", "type": "CONCEPT_CLOSURE", "order": 6, "required": true}
+      ]
+    },
+    {
+      "role": "CORE2B",
+      "blueprint": "BP-CORE2B-TRANSFER@1.1.0",
+      "layout": "TRANSFER_ATTEMPT",
+      "authority": "Canonical Truth + Prior Exposure / Taught Closure + Changed Demand",
+      "authority_ref": "Shared/roles/CORE2B.md",
+      "disclosure_policy": "NO_PRE_ATTEMPT_SCAFFOLD_STRICT_DECIDE",
+      "prohibited_authority": "UNSUPPORTED_DEMAND_INVENTION",
+      "description": "Independent transfer challenge with changed cognitive demand; requires protected student DECIDE move.",
+      "slots": [
+        {"name": "transfer_task", "type": "PROBLEM_STATEMENT", "order": 1, "required": true},
+        {"name": "changed_demand_specification", "type": "DEMAND_DELTA", "order": 2, "required": true},
+        {"name": "protected_decide_move", "type": "UNASSISTED_STUDENT_MOVE", "order": 3, "required": true},
+        {"name": "evaluation_rubric", "type": "CRITERIA_MATRIX", "order": 4, "required": true},
+        {"name": "changed_condition_repair", "type": "REPAIR_INSTRUCTION", "order": 5, "required": true},
+        {"name": "lineage_ref", "type": "EXACT_REF", "order": 6, "required": true}
+      ]
+    },
+    {
+      "role": "EXPLORER",
+      "blueprint": "BP-EXPLORER-GCDR@1.0.0",
+      "layout": "STAGE_SUPPORT",
+      "authority": "Canonical Binding or Honest Unbound Extension",
+      "authority_ref": "Shared/web/interactive-page-blueprints.v1.json",
+      "disclosure_policy": "SIMULATION_IS_NOT_ACADEMIC_PROOF",
+      "prohibited_authority": "STANDALONE_SCIENTIFIC_PROOF",
+      "description": "Guided Conceptual Dynamic Reasoning (GCDR) 10-stage cognitive model exploration.",
+      "slots": [
+        {"name": "model_id", "type": "STRING", "order": 1, "required": true},
+        {"name": "gcdr_stages", "type": "STAGE_ARRAY_10", "order": 2, "required": true, "stages": [
+          "1_predict", "2_manipulate", "3_observe", "4_contradict", "5_deconstruct",
+          "6_reconstruct", "7_invariant", "8_boundary", "9_fade", "10_transfer"
+        ]},
+        {"name": "physical_parameters", "type": "PARAMETER_SPEC_MAP", "order": 3, "required": true},
+        {"name": "invariants", "type": "INVARIANT_RULE_LIST", "order": 4, "required": true},
+        {"name": "simulation_boundary", "type": "RANGE_LIMIT_MAP", "order": 5, "required": true}
+      ]
+    }
+  ],
+  "governance_conflicts": {
+    "self_study_vs_protected_attempt": {
+      "status": "UNRESOLVED_PENDING_OWNER_DECISION",
+      "conflict_description": "v3.5 native self-study allows learner-openable closures and immediate answer/hint reveals. v4.1 R2/R3 requires durable protected attempt recording before diagnostic reveal.",
+      "default_enforcement_rule": "STRICT_R2_PROTECTION: Pre-attempt scaffold or reveal is strictly blocked for assessed moves; student attempt must commit immutably prior to answer disclosure.",
+      "authority_required": "OWNER"
+    }
+  }
+}
