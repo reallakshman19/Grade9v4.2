@@ -12,8 +12,13 @@ class QuestionImporter(BaseImporter):
         if "options" in raw:
             options=raw["options"]
             if not isinstance(options,list):raise ImporterError("options must be an array")
-            ids=[o["id"] for o in options if isinstance(o,dict) and "id" in o]
-            if any(not isinstance(i,str) or not i for i in ids) or len(ids)!=len(set(ids)):raise ImporterError("invalid or duplicate option IDs")
+            # Missing IDs must not silently vanish from a source option inventory.
+            ids=[]
+            for index, option in enumerate(options):
+                if not isinstance(option,dict) or not isinstance(option.get("id"),str) or not option["id"].strip():
+                    raise ImporterError("invalid or missing option ID at index "+str(index))
+                ids.append(option["id"])
+            if len(ids)!=len(set(ids)):raise ImporterError("duplicate option IDs")
         claims={"status":"HOLD","assessment":{"status":"HOLD","raw_claim":raw.get("answer")},"qrt":{"status":"HOLD","raw_claims":{k:raw[k] for k in ("op","band","score","crux") if k in raw}},"figure_claims":[]}
         for field in ("source_figures","figures"):
             if field not in raw:continue
