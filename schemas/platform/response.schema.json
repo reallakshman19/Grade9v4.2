@@ -61,7 +61,8 @@
               "type": "string",
               "minLength": 1
             },
-            "uniqueItems": true
+            "uniqueItems": true,
+            "minItems": 1
           }
         }
       }
@@ -211,7 +212,8 @@
             "items": {
               "type": "string",
               "minLength": 1
-            }
+            },
+            "minItems": 1
           }
         }
       }
@@ -236,7 +238,8 @@
                   "null"
                 ]
               }
-            }
+            },
+            "minItems": 1
           }
         }
       }
@@ -266,7 +269,8 @@
                   "items": {
                     "type": "string"
                   }
-                }
+                },
+                "minItems": 1
               }
             },
             "additionalProperties": false
@@ -296,7 +300,8 @@
                 "items": {
                   "type": "string",
                   "minLength": 1
-                }
+                },
+                "minItems": 1
               },
               "conclusion": {
                 "type": "string",
