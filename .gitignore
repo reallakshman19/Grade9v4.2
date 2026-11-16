@@ -1,0 +1,50 @@
+# Grade9v4.2 — Git Ignore Rules
+# Strictly isolate private custody, build outputs, virtual environments, evidence, and secrets.
+
+# Private Custody Roots (Stored externally; strictly forbidden from Git)
+custody/
+_custody/
+external-custody/
+*.raw.tar*
+*.bundle
+
+# Evidence and Logs (Stored outside target; strictly forbidden from Git)
+*-evidence/
+evidence/
+*.log
+*.sig
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Virtual Environments & Python Cache
+.venv/
+.venv-*/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+
+# Node & Browser Runtime
+node_modules/
+npm-debug.log*
+test-results/
+playwright-report/
+.playwright/
+
+# OS and Editor Files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

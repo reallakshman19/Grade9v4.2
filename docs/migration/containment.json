@@ -1,0 +1,97 @@
+{
+  "schema_version": "g9-containment/1",
+  "workpack_id": "A01",
+  "title": "Isolated target and custody setup",
+  "generated_at": "2026-11-16T05:15:00Z",
+  "target_ancestry_verification": {
+    "bootstrap_commit": "bd8f568d21466cecb7b53b87f862c565a474c149",
+    "bootstrap_tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+    "is_orphan_root": true,
+    "parent_count": 0,
+    "shared_history_with_v35": false,
+    "shared_history_with_v41": false,
+    "independent_ancestry_proven": true
+  },
+  "remote_and_branch_protection": {
+    "repository_url": "https://github.com/reallakshman19/Grade9v4.2.git",
+    "visibility": "private",
+    "default_branch": "main",
+    "pages_enabled": false,
+    "branch_protection_active": true,
+    "branch_protection_settings": {
+      "enforce_admins": true,
+      "allow_force_pushes": false,
+      "allow_deletions": false,
+      "dismiss_stale_reviews": true,
+      "required_status_checks": "NOT_YET_CONFIGURED"
+    }
+  },
+  "source_immutability_and_containment": {
+    "sources": [
+      {
+        "repository": "https://github.com/reallakshman19/Grade9v3.5",
+        "selected_snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+        "custody_location": "D:/CodeD/custody/Grade9v3.5/",
+        "read_only": true,
+        "mutation_detected": false
+      },
+      {
+        "repository": "https://github.com/reallakshman19/Grade9v4.1",
+        "selected_snapshot": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+        "custody_location": "D:/CodeD/custody/Grade9v4.1/",
+        "read_only": true,
+        "mutation_detected": false
+      }
+    ],
+    "preserved_snapshots": [
+      {
+        "ref": "PR71_CHEMISTRY_INTAKE",
+        "commit": "76d60743c7ac51b44b3bf3cd37745db163e6a4bd"
+      },
+      {
+        "ref": "PR52_LEGACY_PREVIEW",
+        "commit": "7a5c425f02d8a365a738bb11df1982cbe38e9f82"
+      },
+      {
+        "ref": "PR72_RECOVERY_CANDIDATE",
+        "commit": "d5260d4e1f1a17ff01c9fbc792b27e1c8f82518f"
+      }
+    ]
+  },
+  "custody_and_secrets_containment": {
+    "custody_root": "D:/CodeD/custody/",
+    "is_outside_target_repo": true,
+    "git_ignored_patterns": [
+      "custody/",
+      "_custody/",
+      "external-custody/",
+      "*.raw.tar*",
+      "*.bundle"
+    ],
+    "secrets_prevention_patterns": [
+      "*.pem",
+      "*.key",
+      "*.sig",
+      "*.p12",
+      "*.pfx",
+      "id_ed25519*",
+      "id_rsa*"
+    ],
+    "dist_and_venv_prevention_patterns": [
+      ".venv/",
+      ".venv-*/",
+      "dist/",
+      "build/",
+      "__pycache__/"
+    ],
+    "no_secrets_tracked": true,
+    "no_custody_data_tracked": true
+  },
+  "acceptance_proof": {
+    "target_git_ancestry_independent": true,
+    "source_mutation_absent": true,
+    "custody_and_dist_ignored": true,
+    "secrets_absent": true,
+    "private_remote_verified": true
+  }
+}
