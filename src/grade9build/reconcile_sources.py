@@ -77,18 +77,22 @@ class DualSourceReconciliationEngine:
             lid = r.get("logical_id") or r.get("id") or r.get("occurrence_id")
             if not lid:
                 raise ReconciliationConflictError("record missing logical/occurrence identifier")
+            if not isinstance(r, dict) or not isinstance(lid, str) or not lid.strip():
+                raise ReconciliationConflictError("invalid v3.5 identity")
             if lid in v35_map:
                 raise ReconciliationConflictError(f"duplicate v3.5 logical ID: {lid}")
-            v35_map[str(lid)] = r
+            v35_map[lid] = copy.deepcopy(r)
 
         v41_map: Dict[str, Dict[str, Any]] = {}
         for r in v41_records:
             lid = r.get("logical_id") or r.get("id") or r.get("occurrence_id")
             if not lid:
                 raise ReconciliationConflictError("record missing logical/occurrence identifier")
+            if not isinstance(r, dict) or not isinstance(lid, str) or not lid.strip():
+                raise ReconciliationConflictError("invalid v4.1 identity")
             if lid in v41_map:
                 raise ReconciliationConflictError(f"duplicate v4.1 logical ID: {lid}")
-            v41_map[str(lid)] = r
+            v41_map[lid] = copy.deepcopy(r)
 
         all_ids = sorted(set(v35_map.keys()) | set(v41_map.keys()))
 
@@ -96,13 +100,10 @@ class DualSourceReconciliationEngine:
             r35 = v35_map.get(lid)
             r41 = v41_map.get(lid)
 
-            path_lid = re.sub(r"[^A-Za-z0-9._-]", "_", lid)
-            if not path_lid:
-                path_lid = f"rec_{canonical_json_digest(lid)[:24]}"
-
-            safe_id = re.sub(r"[^A-Za-z0-9._:-]", "_", lid)
-            if not re.fullmatch(r"^[A-Za-z][A-Za-z0-9._:-]{2,127}$", safe_id):
-                safe_id = f"item_{canonical_json_digest(lid)[:24]}"
+            # Synthetic identifiers cannot use a colliding lossy path slug.
+            fingerprint = canonical_json_digest(lid)
+            path_lid = re.sub(r"[^A-Za-z0-9._-]", "_", lid)[:60] + "-" + fingerprint[:16]
+            safe_id = "item_" + fingerprint[:24]
 
             # Case 1: Record exists only in v3.5
             if r35 and not r41:
@@ -191,127 +192,89 @@ class DualSourceReconciliationEngine:
                 digest35 = canonical_json_digest(r35)
                 digest41 = canonical_json_digest(r41)
 
-                # Subcase 3A: Exact byte match
-                if digest35 == digest41:
-                    occ_id = occurrence_id(V35_SNAPSHOT, src_path_35, "")
-                    identity = validate_identity({
+                # Canonical JSON equality cannot prove original-byte equality.
+                # Retain both synthetic occurrences pending external custody evidence.
+                canonical_equal = digest35 == digest41
+                occ_id_35 = occurrence_id(V35_SNAPSHOT, src_path_35, "")
+                id35 = validate_identity({
+                    "logical_id": None,
+                    "occurrence_id": occ_id_35,
+                    "snapshot_id": V35_SNAPSHOT,
+                    "source_path": src_path_35,
+                    "record_locator": "",
+                    "legacy_aliases": [safe_id],
+                    "source_ref": exact_ref(src35),
+                    "record_digest": digest35,
+                    "merge_decision": {"decision_type": "HOLD_CONFLICT", "authority_ref": None, "related_occurrences": []},
+                    "status": "HOLD",
+                })
+                occ35 = make_envelope(
+                    "OCCURRENCE",
+                    occ_id_35,
+                    {"identity": id35, "snapshot": "v35", "raw_record": r35, "status": "HOLD"},
+                    lineage=[exact_ref(src35)],
+                    status="SYNTHETIC",
+                )
+
+                occ_id_41 = occurrence_id(V41_SNAPSHOT, src_path_41, "")
+                id41 = validate_identity({
+                    "logical_id": None,
+                    "occurrence_id": occ_id_41,
+                    "snapshot_id": V41_SNAPSHOT,
+                    "source_path": src_path_41,
+                    "record_locator": "",
+                    "legacy_aliases": [safe_id],
+                    "source_ref": exact_ref(src41),
+                    "record_digest": digest41,
+                    "merge_decision": {"decision_type": "HOLD_CONFLICT", "authority_ref": None, "related_occurrences": []},
+                    "status": "HOLD",
+                })
+                occ41 = make_envelope(
+                    "OCCURRENCE",
+                    occ_id_41,
+                    {"identity": id41, "snapshot": "v41", "raw_record": r41, "status": "HOLD"},
+                    lineage=[exact_ref(src41)],
+                    status="SYNTHETIC",
+                )
+                objects.extend([occ35, occ41])
+
+                leaves35 = self.extract_leaves(r35)
+                leaves41 = self.extract_leaves(r41)
+                discrepant_keys = sorted(
+                    set(k for k in (set(leaves35.keys()) | set(leaves41.keys()))
+                        if leaves35.get(k) != leaves41.get(k))
+                )
+
+                rel_id = f"rel:conflict:{canonical_json_digest([safe_id, exact_ref(occ35)['sha256'], exact_ref(occ41)['sha256']])[:32]}"
+                conflict_env = make_envelope(
+                    "RELATIONSHIP",
+                    rel_id,
+                    {
+                        "relationship_type": "DUAL_SOURCE_CANONICAL_EQUAL_UNVERIFIED" if canonical_equal else "DUAL_SOURCE_DISCREPANCY",
+                        "from": exact_ref(occ35),
+                        "to": exact_ref(occ41),
                         "logical_id": safe_id,
-                        "occurrence_id": occ_id,
-                        "snapshot_id": V35_SNAPSHOT,
-                        "source_path": src_path_35,
-                        "record_locator": "",
-                        "legacy_aliases": [safe_id],
-                        "source_ref": exact_ref(src35),
-                        "record_digest": digest35,
-                        "merge_decision": {
-                            "decision_type": "UNMERGED",
-                            "authority_ref": None,
-                            "related_occurrences": [],
-                        },
-                        "status": "SYNTHETIC",
-                    })
-                    unified_occ = make_envelope(
-                        "OCCURRENCE",
-                        occ_id,
-                        {
-                            "identity": identity,
-                            "reconciliation": "EXACT_BLOB_MATCH",
-                            "raw_record": r35,
-                            "status": "HOLD",
-                            "academic_admission": "HOLD",
-                            "production_release": "NONE",
-                        },
-                        lineage=[exact_ref(src35), exact_ref(src41)],
-                        status="SYNTHETIC",
-                    )
-                    objects.append(unified_occ)
-                    reconciled_identities.append({
-                        "logical_id": lid,
-                        "status": "IDENTICAL_BYTES_ALIASED",
-                        "ref": exact_ref(unified_occ),
-                    })
-
-                # Subcase 3B: Discrepancy / conflicting fields (NO version priority!)
-                else:
-                    occ_id_35 = occurrence_id(V35_SNAPSHOT, src_path_35, "")
-                    id35 = validate_identity({
-                        "logical_id": None,
-                        "occurrence_id": occ_id_35,
-                        "snapshot_id": V35_SNAPSHOT,
-                        "source_path": src_path_35,
-                        "record_locator": "",
-                        "legacy_aliases": [safe_id],
-                        "source_ref": exact_ref(src35),
-                        "record_digest": digest35,
-                        "merge_decision": {"decision_type": "HOLD_CONFLICT", "authority_ref": None, "related_occurrences": []},
+                        "discrepant_pointers": discrepant_keys,
+                        "resolution": "HOLD_ORIGINAL_BYTES_UNVERIFIED" if canonical_equal else "HOLD_PENDING_INDEPENDENT_REVIEW",
+                        "version_priority_applied": False,
                         "status": "HOLD",
-                    })
-                    occ35 = make_envelope(
-                        "OCCURRENCE",
-                        occ_id_35,
-                        {"identity": id35, "snapshot": "v35", "raw_record": r35, "status": "HOLD"},
-                        lineage=[exact_ref(src35)],
-                        status="SYNTHETIC",
-                    )
-
-                    occ_id_41 = occurrence_id(V41_SNAPSHOT, src_path_41, "")
-                    id41 = validate_identity({
-                        "logical_id": None,
-                        "occurrence_id": occ_id_41,
-                        "snapshot_id": V41_SNAPSHOT,
-                        "source_path": src_path_41,
-                        "record_locator": "",
-                        "legacy_aliases": [safe_id],
-                        "source_ref": exact_ref(src41),
-                        "record_digest": digest41,
-                        "merge_decision": {"decision_type": "HOLD_CONFLICT", "authority_ref": None, "related_occurrences": []},
-                        "status": "HOLD",
-                    })
-                    occ41 = make_envelope(
-                        "OCCURRENCE",
-                        occ_id_41,
-                        {"identity": id41, "snapshot": "v41", "raw_record": r41, "status": "HOLD"},
-                        lineage=[exact_ref(src41)],
-                        status="SYNTHETIC",
-                    )
-                    objects.extend([occ35, occ41])
-
-                    leaves35 = self.extract_leaves(r35)
-                    leaves41 = self.extract_leaves(r41)
-                    discrepant_keys = sorted(
-                        set(k for k in (set(leaves35.keys()) | set(leaves41.keys()))
-                            if leaves35.get(k) != leaves41.get(k))
-                    )
-
-                    rel_id = f"rel:conflict:{canonical_json_digest([safe_id, exact_ref(occ35)['sha256'], exact_ref(occ41)['sha256']])[:32]}"
-                    conflict_env = make_envelope(
-                        "RELATIONSHIP",
-                        rel_id,
-                        {
-                            "relationship_type": "DUAL_SOURCE_DISCREPANCY",
-                            "from": exact_ref(occ35),
-                            "to": exact_ref(occ41),
-                            "logical_id": safe_id,
-                            "discrepant_pointers": discrepant_keys,
-                            "resolution": "HOLD_PENDING_INDEPENDENT_REVIEW",
-                            "version_priority_applied": False,
-                            "status": "HOLD",
-                        },
-                        dependencies=[exact_ref(occ35), exact_ref(occ41)],
-                        lineage=[exact_ref(src35), exact_ref(src41)],
-                        status="SYNTHETIC",
-                    )
-                    objects.append(conflict_env)
+                    },
+                    dependencies=[exact_ref(occ35), exact_ref(occ41)],
+                    lineage=[exact_ref(src35), exact_ref(src41)],
+                    status="SYNTHETIC",
+                )
+                objects.append(conflict_env)
+                if not canonical_equal:
                     conflicts.append({
                         "logical_id": lid,
                         "discrepant_pointers": discrepant_keys,
                         "relationship_ref": exact_ref(conflict_env),
                     })
-                    reconciled_identities.append({
-                        "logical_id": lid,
-                        "status": "CONFLICT_HELD",
-                        "conflict_ref": exact_ref(conflict_env),
-                    })
+                reconciled_identities.append({
+                    "logical_id": lid,
+                    "status": "CANONICAL_EQUAL_HELD" if canonical_equal else "CONFLICT_HELD",
+                    "conflict_ref": exact_ref(conflict_env),
+                })
 
         self.graph_validator.validate_graph(objects)
 
@@ -320,72 +283,54 @@ class DualSourceReconciliationEngine:
             "academic_admission": "HOLD",
             "production_release": "NONE",
             "total_records_processed": len(all_ids),
-            "identical_matches": sum(1 for r in reconciled_identities if r["status"] == "IDENTICAL_BYTES_ALIASED"),
+            "identical_matches": 0,
+            "canonical_equal_held": sum(1 for r in reconciled_identities if r["status"] == "CANONICAL_EQUAL_HELD"),
             "conflicts_held": len(conflicts),
             "objects": objects,
             "conflicts": conflicts,
             "reconciled_identities": reconciled_identities,
         }
 
-    def reconcile_routes(
-        self,
-        v35_routes: List[Dict[str, Any]],
-        v41_routes: List[Dict[str, Any]],
-    ) -> Dict[str, Any]:
-        """Reconciles legacy routes preserving context disambiguation without silent overwrite."""
-        resolved_routes: Dict[str, Dict[str, Any]] = {}
-        collisions: List[Dict[str, Any]] = []
-
-        for r in v35_routes:
-            path = r.get("route")
-            if not path:
-                raise ReconciliationConflictError("missing route path in v3.5")
-            resolved_routes[path] = {
-                **copy.deepcopy(r),
-                "context_origin": "v35",
-                "status": "HOLD",
-            }
-
-        for r in v41_routes:
-            path = r.get("route")
-            if not path:
-                raise ReconciliationConflictError("missing route path in v4.1")
-
-            if path in resolved_routes:
-                existing = resolved_routes[path]
-                if existing.get("blueprint_id") != r.get("blueprint_id") or existing.get("target") != r.get("target"):
-                    collision_record = {
-                        "route": path,
-                        "v35_binding": existing,
-                        "v41_binding": copy.deepcopy(r),
-                        "resolution": "CONTEXT_DISAMBIGUATION_REQUIRED",
-                        "status": "HOLD",
-                    }
-                    collisions.append(collision_record)
-                    resolved_routes[f"/v35{path}"] = existing
-                    resolved_routes[f"/v41{path}"] = {
-                        **copy.deepcopy(r),
-                        "context_origin": "v41",
-                        "status": "HOLD",
-                    }
-                    resolved_routes[path] = {
-                        "route": path,
-                        "route_type": "collision_tombstone",
-                        "collision_status": "HOLD",
-                        "disambiguated_routes": [f"/v35{path}", f"/v41{path}"],
-                        "status": "HOLD",
-                    }
+    def reconcile_routes(self, v35_routes, v41_routes):
+        """Retain both provenance contexts; reject duplicate and reserved paths."""
+        if not isinstance(v35_routes, list) or not isinstance(v41_routes, list):
+            raise ReconciliationConflictError("route collections must be arrays")
+        for origin, rows in (("v35", v35_routes), ("v41", v41_routes)):
+            seen = set()
+            for row in rows:
+                if not isinstance(row, dict):
+                    raise ReconciliationConflictError(origin + " route must be an object")
+                path = row.get("route")
+                if (not isinstance(path, str) or not path.startswith("/") or path == "/"
+                    or "//" in path or ".." in path.split("/")
+                    or path.startswith("/v35/") or path.startswith("/v41/")):
+                    raise ReconciliationConflictError("invalid or reserved route")
+                if path in seen:
+                    raise ReconciliationConflictError("duplicate route in " + origin + ": " + path)
+                seen.add(path)
+        left = {x["route"]: copy.deepcopy(x) for x in v35_routes}
+        right = {x["route"]: copy.deepcopy(x) for x in v41_routes}
+        routes, collisions = {}, []
+        for path in sorted(set(left) | set(right)):
+            a, b = left.get(path), right.get(path)
+            if a is None:
+                routes[path] = {**b, "context_origin": "v41", "status": "HOLD"}
+            elif b is None:
+                routes[path] = {**a, "context_origin": "v35", "status": "HOLD"}
+            elif a == b:
+                routes[path] = {"route": path, "route_type": "shared_route_held",
+                                "source_variants": {"v35": a, "v41": b}, "status": "HOLD"}
             else:
-                resolved_routes[path] = {
-                    **copy.deepcopy(r),
-                    "context_origin": "v41",
-                    "status": "HOLD",
-                }
-
-        return {
-            "status": "HOLD",
-            "total_routes": len(resolved_routes),
-            "collisions_disambiguated": len(collisions),
-            "routes": resolved_routes,
-            "collisions": collisions,
-        }
+                dst35, dst41 = "/v35" + path, "/v41" + path
+                routes[dst35] = {**a, "route": dst35, "legacy_route": path,
+                                 "context_origin": "v35", "status": "HOLD"}
+                routes[dst41] = {**b, "route": dst41, "legacy_route": path,
+                                 "context_origin": "v41", "status": "HOLD"}
+                routes[path] = {"route": path, "route_type": "collision_tombstone",
+                                "collision_status": "HOLD",
+                                "disambiguated_routes": [dst35, dst41], "status": "HOLD"}
+                collisions.append({"route": path, "v35_binding": a, "v41_binding": b,
+                                   "resolution": "CONTEXT_DISAMBIGUATION_REQUIRED", "status": "HOLD"})
+        return {"status": "HOLD", "total_routes": len(routes),
+                "collisions_disambiguated": len(collisions), "routes": routes,
+                "collisions": collisions}
