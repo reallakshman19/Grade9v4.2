@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:g9:platform:identity:1",
+  "title": "Grade9v4.2 Identity and Occurrence Contract",
+  "description": "Distinguishes stable logical entities from source occurrences, preserves legacy aliases, and records explicit split/merge decisions.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "logical_id",
+    "occurrence_id",
+    "snapshot_id",
+    "legacy_aliases",
+    "source_ref",
+    "occurrence_digest",
+    "merge_decision",
+    "status"
+  ],
+  "properties": {
+    "logical_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$",
+      "description": "Stable canonical entity identifier across editions and platforms."
+    },
+    "occurrence_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}#[0-9]+$",
+      "description": "Occurrence-scoped identifier binding a specific source instance or appearance."
+    },
+    "snapshot_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+:[a-f0-9]{40}$",
+      "description": "Source repository snapshot binding (e.g. grade9v35:8a02a8eb... or grade9v41:564ad2a0...)."
+    },
+    "legacy_aliases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true,
+      "description": "Preserved historical identifiers, competition problem codes, or legacy file references."
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "occurrence_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 digest of the raw source record occurrence."
+    },
+    "merge_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_type",
+        "authorizer",
+        "justification",
+        "related_occurrences"
+      ],
+      "properties": {
+        "decision_type": {
+          "enum": [
+            "UNMERGED",
+            "APPROVED_MERGE",
+            "APPROVED_SPLIT",
+            "HOLD_CONFLICT"
+          ]
+        },
+        "authorizer": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "justification": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "related_occurrences": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "CANDIDATE",
+        "HOLD",
+        "ACTIVE",
+        "WITHDRAWN"
+      ]
+    }
+  }
+}
