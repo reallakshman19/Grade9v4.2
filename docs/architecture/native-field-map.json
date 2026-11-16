@@ -1,0 +1,426 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "workpack_id": "A05",
+  "title": "Native Shared Contract Reconciliation and Field Mapping Register",
+  "status": "PROPOSED",
+  "created_at": "2026-11-16T14:22:00Z",
+  "academic_admission": "HOLD",
+  "production_deployment": "DISABLED",
+  "ui_implementation_freeze": "LOCKED_UNTIL_A61",
+  "governing_references": {
+    "execution_kit": "Grade9v4.2_Execution_Kit_R4",
+    "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+    "v35_snapshot": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc90ea6692bb71ca60bcfef36fcb993ae1"
+    },
+    "v41_snapshot": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6935ba07bb54c292ae2499d863f689fbf"
+    }
+  },
+  "canonical_invariants": {
+    "six_core_roles": [
+      {
+        "role": "CORE1",
+        "blueprint": "BP-CORE1-ORIENTATION@1.1.0",
+        "native_reference": "Shared/roles/CORE1.md",
+        "authority": "Canonical Subject Truth",
+        "learner_job": "Orientation, objects, conventions, scope, relations, compact anchor, hard transitions"
+      },
+      {
+        "role": "CORE1A",
+        "blueprint": "BP-CORE1A-CONSTRUCTION@1.8.0",
+        "native_reference": "Shared/roles/CORE1A.md",
+        "authority": "Canonical Subject Truth",
+        "learner_job": "Microtopic entry assumptions, inferential jump, constructed reasoning, representations, checks (A1-A9 anchors)"
+      },
+      {
+        "role": "CORE1B",
+        "blueprint": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+        "native_reference": "Shared/roles/CORE1B.md",
+        "authority": "Canonical Microtopic Inference",
+        "learner_job": "Six-stage conceptual reconstruction (PREDICT -> ATTEMPT -> RECONSTRUCT -> DIAGNOSE -> REPAIR -> BOUNDARY_TEST)"
+      },
+      {
+        "role": "CORE2",
+        "blueprint": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+        "native_reference": "Shared/roles/CORE2.md",
+        "authority": "Authorized Source Custody",
+        "learner_job": "Exact question, subparts, options, conditions, figures, source hints, identity"
+      },
+      {
+        "role": "CORE2A",
+        "blueprint": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+        "native_reference": "Shared/roles/CORE2A.md",
+        "authority": "Canonical Truth + Eligible Reviewed Demand / Authored Practice",
+        "learner_job": "Familiar application family; explicit application crux, reasoning route, and scaffolds"
+      },
+      {
+        "role": "CORE2B",
+        "blueprint": "BP-CORE2B-TRANSFER@1.1.0",
+        "native_reference": "Shared/roles/CORE2B.md",
+        "authority": "Canonical Truth + Prior Exposure / Taught Closure + Changed Demand",
+        "learner_job": "Application transfer with protected learner DECIDE move"
+      },
+      {
+        "role": "EXPLORER",
+        "blueprint": "BP-EXPLORER-GCDR@1.0.0",
+        "native_reference": "Shared/web/interactive-page-blueprints.v1.json",
+        "authority": "Canonical Binding or Honest Unbound Extension",
+        "learner_job": "Guided Conceptual Dynamic Reasoning (GCDR: predict, manipulate, observe, contradict, deconstruct, reconstruct, transfer)"
+      }
+    ],
+    "quality_gates_b1_b7": [
+      {
+        "gate": "B1",
+        "title": "Source Attribution and Custody Rights",
+        "requirement": "Exact source provenance, license verification, read-only immutable snapshot preservation"
+      },
+      {
+        "gate": "B2",
+        "title": "Canonical Scientific Truth",
+        "requirement": "Physics/Chemistry/Math warrant validity, sign and unit consistency, limiting case bounds"
+      },
+      {
+        "gate": "B3",
+        "title": "Cognitive Demand and QRT Adjudication",
+        "requirement": "7-factor cognitive demand bounds [0..2], crux identification, non-default demand scoring"
+      },
+      {
+        "gate": "B4",
+        "title": "Educational Route and Progressive Scaffolding",
+        "requirement": "Unbroken inferential sequence, misconception targeting, explicit exit tasks"
+      },
+      {
+        "gate": "B5",
+        "title": "Presentation and Viewport Audit Compliance",
+        "requirement": "W3C SVG typography (>=14px), 6 responsive CSS viewports, no clipped text or overflow"
+      },
+      {
+        "gate": "B6",
+        "title": "Runtime Determinism and State Safety",
+        "requirement": "Deterministic state transitions, offline client execution, protected attempt persistence"
+      },
+      {
+        "gate": "B7",
+        "title": "External Cryptographic Verification",
+        "requirement": "Independent detached Ed25519 signatures, zero self-acceptance, tamper detection"
+      }
+    ],
+    "learning_construction_parameters_xyzw": [
+      {
+        "parameter": "X",
+        "title": "Phenomenological Anchor / Concrete Observation",
+        "role": "Empirical phenomenon, sensory anchor, or real-world problem baseline"
+      },
+      {
+        "parameter": "Y",
+        "title": "Physical Mechanism / Inferential Jump",
+        "role": "Underlying micro-mechanism connecting concrete observation to abstract principle"
+      },
+      {
+        "parameter": "Z",
+        "title": "Formal Law / Mathematical Warrant",
+        "role": "Warranted algebraic derivation, governing equation, and dimensional validity"
+      },
+      {
+        "parameter": "W",
+        "title": "Model Boundary / Counterexample & Synthesis",
+        "role": "Limiting cases, domain of applicability, and unassisted synthesis check"
+      }
+    ]
+  },
+  "projection_reconciliation": [
+    {
+      "projection_type": "SOURCE",
+      "legacy_v41_path": "schemas/v1/source.schema.json",
+      "native_v35_reference": "Shared/library/source_custody.py",
+      "field_reconciliation": {
+        "id": "identity.legacy_alias (PRESERVE_EXACT)",
+        "source_repo": "provenance.source_repo (EXACT_PIN)",
+        "commit": "provenance.commit_sha (40_HEX)",
+        "raw_blob": "provenance.git_blob_sha (40_HEX)",
+        "sha256": "provenance.raw_sha256 (64_HEX)"
+      },
+      "lifecycle": "IMMUTABLE_CUSTODY",
+      "authority": "ADMINISTRATOR",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "WARRANT",
+      "legacy_v41_path": "schemas/v1/warrant.schema.json",
+      "native_v35_reference": "Shared/library/package.schema.json",
+      "field_reconciliation": {
+        "warrant_id": "package.warrant_id",
+        "subject": "package.subject (PHYSICS|CHEMISTRY|MATHEMATICS)",
+        "laws": "package.governing_laws",
+        "prerequisites": "package.prerequisites",
+        "dimensional_formula": "package.dimensional_warrant"
+      },
+      "lifecycle": "VERSIONED_ACADEMIC",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "CONSTRUCTION",
+      "legacy_v41_path": "schemas/v1/construction.schema.json",
+      "native_v35_reference": "Shared/roles/CORE1A.md",
+      "field_reconciliation": {
+        "construction_id": "core1a.unit_id",
+        "inferential_jump": "microtopic.inferential_jump",
+        "entry_assumptions": "core1a.entry_assumptions",
+        "teaching_anchors": "core1a.anchors_a1_a9",
+        "counterexamples": "core1a.model_boundaries"
+      },
+      "lifecycle": "VERSIONED_ACADEMIC",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "LESSON",
+      "legacy_v41_path": "schemas/v1/lesson.schema.json",
+      "native_v35_reference": "Shared/roles/CORE1A.md",
+      "field_reconciliation": {
+        "lesson_id": "lesson.id",
+        "unit_ref": "lesson.core1a_unit_ref",
+        "interactive_scene": "lesson.representation_ref",
+        "exit_task": "lesson.exit_task"
+      },
+      "lifecycle": "VERSIONED_ACADEMIC",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "ASSESSMENT",
+      "legacy_v41_path": "schemas/v1/assessment.schema.json",
+      "native_v35_reference": "Shared/roles/CORE1B.md",
+      "field_reconciliation": {
+        "assessment_id": "core1b.instance_id",
+        "prediction_task": "core1b.stages.predict",
+        "reconstruction_task": "core1b.stages.reconstruct",
+        "diagnostic_rubric": "core1b.rubric_bounds",
+        "repair_route": "core1b.repair_guidance"
+      },
+      "lifecycle": "PROTECTED_STUDENT_INTERACTION",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "APPROVAL",
+      "legacy_v41_path": "schemas/v1/approval.schema.json",
+      "native_v35_reference": "Shared/tools/review_authority.py",
+      "field_reconciliation": {
+        "approval_id": "review.receipt_id",
+        "reviewer_id": "review.reviewer_key_id",
+        "candidate_tree": "review.target_tree_sha",
+        "ed25519_signature": "review.signature_base64"
+      },
+      "lifecycle": "CRYPTOGRAPHIC_RECEIPT",
+      "authority": "INDEPENDENT_REVIEWER",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "QUESTION",
+      "legacy_v41_path": "nsejs/core2/question-map.v1.json",
+      "native_v35_reference": "Shared/roles/CORE2.md",
+      "field_reconciliation": {
+        "question_id": "core2.source_id",
+        "stem": "question.payload.stem (PRESERVE_EXACT)",
+        "options": "question.payload.options (APPROVAL_REQUIRED)",
+        "subparts": "core2.subparts",
+        "raw_answer": "assessment.raw_claim"
+      },
+      "lifecycle": "SOURCE_CUSTODY",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "QRT",
+      "legacy_v41_path": "src/grade9qa/qrt_binding.py",
+      "native_v35_reference": "Shared/vocabularies/cognitive-demand.v1.json",
+      "field_reconciliation": {
+        "operation": "qrt.operation (REPRESENT|CONNECT|TRANSFORM|DECIDE)",
+        "factors": "qrt.factors_5_vector",
+        "band": "qrt.demand_band",
+        "crux_move": "core2a.crux_move_ref"
+      },
+      "lifecycle": "CANONICAL_TAXONOMY",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "RELEASE",
+      "legacy_v41_path": "docs/agent-entry/production-control-r3/release.py",
+      "native_v35_reference": "Shared/tools/release_authority.py",
+      "field_reconciliation": {
+        "release_id": "release.manifest_id",
+        "gate_results": "release.b1_b7_status",
+        "owner_approval": "release.owner_decision_ref"
+      },
+      "lifecycle": "EXECUTIVE_GATE",
+      "authority": "OWNER",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "SUBJECT",
+      "legacy_v41_path": "schemas/v2/subject-intake.schema.json",
+      "native_v35_reference": "docs/product-scope.md",
+      "field_reconciliation": {
+        "subject_name": "product.subject",
+        "admitted_status": "product.admission (PHYSICS:YES|CHEMISTRY:YES|MATH:YES|BIOLOGY:HOLD)",
+        "blueprint_version": "product.blueprint_binding"
+      },
+      "lifecycle": "SCOPE_GOVERNANCE",
+      "authority": "OWNER",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "CORE1",
+      "legacy_v41_path": "Shared/roles/CORE1.md",
+      "native_v35_reference": "Shared/roles/CORE1.md",
+      "field_reconciliation": {
+        "orientation_id": "core1.orientation_id",
+        "subject_objects": "core1.objects",
+        "transitions": "core1.hard_transitions"
+      },
+      "lifecycle": "NATIVE_ROLE",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "CORE2A",
+      "legacy_v41_path": "Shared/roles/CORE2A.md",
+      "native_v35_reference": "Shared/roles/CORE2A.md",
+      "field_reconciliation": {
+        "practice_id": "core2a.practice_id",
+        "application_family": "core2a.family",
+        "reasoning_route": "core2a.reasoning_route",
+        "scaffolds": "core2a.scaffolds"
+      },
+      "lifecycle": "NATIVE_ROLE",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "CORE2B",
+      "legacy_v41_path": "Shared/roles/CORE2B.md",
+      "native_v35_reference": "Shared/roles/CORE2B.md",
+      "field_reconciliation": {
+        "transfer_id": "core2b.transfer_id",
+        "changed_demand": "core2b.changed_demand",
+        "protected_move": "core2b.decide_move",
+        "rubric": "core2b.rubric"
+      },
+      "lifecycle": "NATIVE_ROLE",
+      "authority": "ACADEMIC_AUTHORITY",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "RESOURCE",
+      "legacy_v41_path": "Shared/resources/resource.schema.json",
+      "native_v35_reference": "Shared/resources/resource.schema.json",
+      "field_reconciliation": {
+        "resource_id": "resource.id",
+        "resource_type": "resource.type",
+        "entrypoint": "resource.entrypoint",
+        "audience": "resource.audience"
+      },
+      "lifecycle": "NATIVE_RESOURCE_REGISTER",
+      "authority": "ARCHITECT",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "PORTABLE_SCENE",
+      "legacy_v41_path": "public/portable-workbench/portable-host.mjs",
+      "native_v35_reference": "public/portable-workbench/portable-host.mjs",
+      "field_reconciliation": {
+        "package_id": "portable.id",
+        "manifest": "portable.manifest",
+        "host_protocol": "portable.protocol_v1"
+      },
+      "lifecycle": "SANDBOXED_CLIENT_RUNTIME",
+      "authority": "PLATFORM_ENGINEER",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "GCDR",
+      "legacy_v41_path": "Shared/web/interactive-page-blueprints.v1.json",
+      "native_v35_reference": "Shared/web/interactive-page-blueprints.v1.json",
+      "field_reconciliation": {
+        "explorer_id": "gcdr.id",
+        "stages": "gcdr.ten_stages",
+        "parameters": "gcdr.parameters",
+        "state_invariants": "gcdr.invariants"
+      },
+      "lifecycle": "DYNAMIC_REASONING_ENGINE",
+      "authority": "ARCHITECT",
+      "status": "HOLD"
+    },
+    {
+      "projection_type": "WEB_BLUEPRINT",
+      "legacy_v41_path": "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md",
+      "native_v35_reference": "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md",
+      "field_reconciliation": {
+        "template_id": "template.id",
+        "layout_grid": "template.grid_system",
+        "viewport_rules": "template.viewport_matrix"
+      },
+      "lifecycle": "PRESENTATION_TEMPLATE",
+      "authority": "UI_ENGINEER",
+      "status": "HOLD"
+    }
+  ],
+  "field_mapping_rules": [
+    {
+      "source_field": "id",
+      "target_field": "identity.legacy_alias",
+      "transform": "PRESERVE_EXACT",
+      "authority_requirement": "NONE",
+      "notes": "Occurrence-scoped legacy alias; does not define target logical ID"
+    },
+    {
+      "source_field": "stem",
+      "target_field": "question.payload.stem",
+      "transform": "PRESERVE_EXACT",
+      "authority_requirement": "SOURCE_RIGHTS_VERIFIED",
+      "notes": "If public distribution rights unavailable, retain strictly in private custody"
+    },
+    {
+      "source_field": "options",
+      "target_field": "question.payload.options",
+      "transform": "APPROVAL_REQUIRED",
+      "authority_requirement": "ACADEMIC_AUTHORITY",
+      "notes": "Stable option IDs, original option ordering, and raw text must be preserved"
+    },
+    {
+      "source_field": "answer",
+      "target_field": "assessment.raw_claim",
+      "transform": "PRESERVE_EXACT",
+      "authority_requirement": "ACADEMIC_AUTHORITY",
+      "notes": "Legacy author claim recorded verbatim; never automatically validated by migration importer"
+    },
+    {
+      "source_field": "op/band/score/crux",
+      "target_field": "qrt.raw_claim",
+      "transform": "PRESERVE_EXACT",
+      "authority_requirement": "ACADEMIC_AUTHORITY",
+      "notes": "Unknown demand remains unknown; no defaulting to medium or 0"
+    },
+    {
+      "source_field": "source_figures",
+      "target_field": "asset_claims",
+      "transform": "APPROVAL_REQUIRED",
+      "authority_requirement": "ACADEMIC_AUTHORITY",
+      "notes": "Explicitly distinguish absent figures from unmigrated or missing figures"
+    },
+    {
+      "source_field": "*",
+      "target_field": "private_raw_record",
+      "transform": "PRESERVE_EXACT",
+      "authority_requirement": "MIGRATION_ENGINEER",
+      "notes": "All unmapped/unrecognized source fields preserved in custody JSON pointer ledger"
+    }
+  ]
+}
