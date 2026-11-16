@@ -1,0 +1,446 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "workpack_id": "A04",
+  "title": "Repository Ownership and Governance Architecture Register",
+  "status": "PROPOSED",
+  "created_at": "2026-11-16T14:10:00Z",
+  "academic_admission": "HOLD",
+  "production_deployment": "DISABLED",
+  "github_pages": "DISABLED",
+  "ui_implementation_freeze": "LOCKED_UNTIL_A61",
+  "governing_rules": {
+    "authority": "External R4 Execution Kit (Grade9v4.2_Execution_Kit_R4)",
+    "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+    "plan_dependency": "05-workpacks/plan.json (75 workpacks in strict DAG order)",
+    "immutability_pins": {
+      "Grade9v3.5": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "Grade9v4.1": "564ad2a07fddc0fdd30d103674b3eca61235a54b"
+    },
+    "core_stop_rules": [
+      "Single Workpack Boundary: Touch only allowed_write_paths specified in plan.json",
+      "Missing Input Returns BLOCKED: No invented authorities, receipts, or mock approvals",
+      "Never Self-Accept & Never Self-Merge: Author PRs must remain OPEN awaiting detached Ed25519 signatures",
+      "No History Overwrite or Deletion: Preserve root commits and all historical nodes; forward recovery only",
+      "Dual-Source Immutability: Read-only source snapshots in external custody; never clone legacy history into target",
+      "Custody & Secrets Isolation: Signing keys, credentials, and private learner logs stored strictly outside target repo",
+      "Strict UI Freeze: Zero learner UI, views, or renderers authored prior to signed A61 acceptance",
+      "Zero Unapproved Public Classification: All repository material default to internal or restricted classification"
+    ]
+  },
+  "roles_and_authorities": {
+    "OWNER": {
+      "title": "Project Owner / Executive Governance",
+      "authority_scope": "Full executive authority; project charter, release approvals, authority delegation, policy overrides",
+      "approval_rights": [
+        "RELEASE",
+        "PRODUCTION",
+        "OVERRIDE",
+        "FINAL_ACCEPTANCE"
+      ],
+      "write_domains": [
+        "00-authority/OWNER_DECISIONS.json"
+      ],
+      "must_remain_detached": false
+    },
+    "ADMINISTRATOR": {
+      "title": "Repository Administrator / Custody Guardian",
+      "authority_scope": "Infrastructure security, trust roster maintenance, secret custody, CI guard runner, branch protection, history-preserving merge enforcement",
+      "approval_rights": [
+        "TRUST_ROSTER",
+        "BRANCH_PROTECTION",
+        "MERGE_GATEWAY"
+      ],
+      "write_domains": [
+        "00-authority/",
+        ".github/"
+      ],
+      "must_remain_detached": true
+    },
+    "INDEPENDENT_REVIEWER": {
+      "title": "Independent Reviewer / External Verifier",
+      "authority_scope": "Cryptographic detached verification, candidate PR audit, receipt issuance with Ed25519 signing, test oracle execution",
+      "approval_rights": [
+        "ACCEPTANCE_RECEIPT",
+        "ORACLE_SIGN_OFF"
+      ],
+      "write_domains": [
+        "08-review/"
+      ],
+      "must_remain_detached": true
+    },
+    "ACADEMIC_AUTHORITY": {
+      "title": "Academic Domain Authority",
+      "authority_scope": "Canonical subject truth, 6-core role contracts, cognitive demand boundaries (Physics, Mathematics, Chemistry; Biology pending)",
+      "approval_rights": [
+        "CANONICAL_TRUTH",
+        "SUBJECT_BLUEPRINT",
+        "RUBRIC_BOUNDS"
+      ],
+      "write_domains": [
+        "src/grade9core/academic/",
+        "docs/curriculum/"
+      ],
+      "must_remain_detached": false
+    },
+    "ARCHITECT": {
+      "title": "System & Domain Architect",
+      "authority_scope": "Contract specifications, JSON schemas, 6-core blueprint mapping, architectural registers, dependency topology",
+      "approval_rights": [
+        "SCHEMA_CHANGE",
+        "ARCHITECTURE_DECISION"
+      ],
+      "write_domains": [
+        "01-architecture/",
+        "02-contracts/",
+        "docs/architecture/"
+      ],
+      "must_remain_detached": false
+    },
+    "MIGRATION_ENGINEER": {
+      "title": "Lossless Migration Engineer",
+      "authority_scope": "Byte inventory, bitwise restore, safe relative path traversal guards, legacy mapping, count conservation",
+      "approval_rights": [
+        "INVENTORY_CERTIFICATION",
+        "RESTORE_CERTIFICATION"
+      ],
+      "write_domains": [
+        "src/grade9build/inventory.py",
+        "src/grade9build/restore.py",
+        "docs/migration/"
+      ],
+      "must_remain_detached": false
+    },
+    "PLATFORM_ENGINEER": {
+      "title": "Platform & Tooling Engineer",
+      "authority_scope": "Build harnesses, test suites, CLI runners, namespace packaging, synthetic test fixtures",
+      "approval_rights": [
+        "TOOLING_VALIDATION"
+      ],
+      "write_domains": [
+        "src/grade9build/",
+        "tests/"
+      ],
+      "must_remain_detached": false
+    },
+    "UI_ENGINEER": {
+      "title": "UI & Presentation Engineer (FROZEN)",
+      "authority_scope": "Presentation templates, tablet viewports, DOM renderers. STRICTLY INACTIVE / FROZEN until A61 signed acceptance",
+      "approval_rights": [
+        "NONE_UNTIL_A61"
+      ],
+      "write_domains": [
+        "03-ui/ (LOCKED)"
+      ],
+      "must_remain_detached": false
+    }
+  },
+  "classification_levels": {
+    "RESTRICTED_CUSTODY": {
+      "description": "Private signing keys, authentication credentials, raw source snapshots, private learner telemetry, proprietary benchmark items",
+      "storage_location": "External custody directory strictly outside target repository",
+      "access_policy": "Administrator and authorized reviewer only; never checked into target repository",
+      "public_export_permitted": false
+    },
+    "INTERNAL_GOVERNANCE": {
+      "description": "Authority baselines, trust rosters, audit evidence, handoff packets, signed receipts, baseline audits, containment reports",
+      "storage_location": "Target repository docs/ or external trust directory",
+      "access_policy": "Project stakeholders and independent reviewers; internal use only",
+      "public_export_permitted": false
+    },
+    "INTERNAL_ENGINEERING": {
+      "description": "Target source code, unit and integration tests, JSON schemas, architectural specifications, build tools",
+      "storage_location": "Target repository (src/, tests/, docs/architecture/, 01-architecture/, 02-contracts/)",
+      "access_policy": "Engineering team and automated CI verification runners",
+      "public_export_permitted": false
+    },
+    "CANDIDATE_REVIEW": {
+      "description": "Candidate pull request trees, draft workpack deliverables, staged integration branches awaiting review",
+      "storage_location": "Open candidate branches and PRs on GitHub",
+      "access_policy": "Author and independent reviewer; merge strictly gated on detached cryptographic receipt",
+      "public_export_permitted": false
+    },
+    "PUBLIC_PROJECTION": {
+      "description": "Public documentation, sanitized client assets, or released educational packages",
+      "storage_location": "Public branch or distribution directory (CURRENTLY NONE)",
+      "access_policy": "Requires separate, explicit, independently signed Owner authorization (release_enabled: True)",
+      "public_export_permitted": true,
+      "current_admitted_count": 0
+    }
+  },
+  "allowed_dispositions": {
+    "MIGRATED": {
+      "description": "Legacy content actively transformed and incorporated into target architecture with verified lineage",
+      "target_scope": "src/, docs/architecture/, schemas/"
+    },
+    "PRESERVED_IN_CUSTODY": {
+      "description": "Raw source bytes preserved immutably in authorized external custody outside target repo",
+      "target_scope": "External custody directory (custody/snapshots/)"
+    },
+    "LEGACY_COMPATIBILITY": {
+      "description": "Legacy compatibility shims, routes, or historical adapters required for migration continuity",
+      "target_scope": "src/grade9build/compat/ or custody/"
+    },
+    "REGENERATED_WITH_LINEAGE": {
+      "description": "Cleanly regenerated from verified source with deterministic hash and transformation lineage",
+      "target_scope": "docs/migration/ or generated build outputs"
+    },
+    "QUARANTINED": {
+      "description": "Ambiguous, unreviewed, conflicting, or unadmitted items isolated pending explicit Owner decision",
+      "target_scope": "External custody quarantine/"
+    },
+    "HISTORICAL_PRESERVED": {
+      "description": "Historical records, prior commit trees, and review records preserved for provenance without modification",
+      "target_scope": "docs/migration/ or custody/"
+    },
+    "BLOCKED_MISSING_BYTES": {
+      "description": "Declared or referenced items with missing raw payloads or broken source pointers",
+      "target_scope": "Identified in migration ledger as blocking gaps"
+    }
+  },
+  "target_repository_domain_map": [
+    {
+      "path_prefix": "00-authority/",
+      "owner": "ADMINISTRATOR",
+      "classification": "INTERNAL_GOVERNANCE",
+      "allowed_write_workpacks": [
+        "A00",
+        "A01"
+      ],
+      "policy": "External execution kit authority definitions; immutable during standard execution"
+    },
+    {
+      "path_prefix": "01-architecture/",
+      "owner": "ARCHITECT",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A04",
+        "A05",
+        "A06",
+        "A08"
+      ],
+      "policy": "Architectural blueprints and contract definitions"
+    },
+    {
+      "path_prefix": "02-contracts/",
+      "owner": "ARCHITECT",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A05",
+        "A06"
+      ],
+      "policy": "JSON schemas and formal type contracts"
+    },
+    {
+      "path_prefix": "03-ui/",
+      "owner": "UI_ENGINEER",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A61",
+        "A62",
+        "A63",
+        "A64",
+        "A65"
+      ],
+      "policy": "STRICTLY FROZEN until independent signed acceptance of Workpack A61"
+    },
+    {
+      "path_prefix": "04-migration/",
+      "owner": "MIGRATION_ENGINEER",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A02",
+        "A03",
+        "A07",
+        "A09"
+      ],
+      "policy": "Migration protocols, registries, and observed inventories"
+    },
+    {
+      "path_prefix": "05-workpacks/",
+      "owner": "ADMINISTRATOR",
+      "classification": "INTERNAL_GOVERNANCE",
+      "allowed_write_workpacks": [],
+      "policy": "Immutable workpack definitions from R4 Execution Kit"
+    },
+    {
+      "path_prefix": "06-acceptance/",
+      "owner": "INDEPENDENT_REVIEWER",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [],
+      "policy": "Acceptance test suites and verification oracles"
+    },
+    {
+      "path_prefix": "07-orchestration/",
+      "owner": "PLATFORM_ENGINEER",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [],
+      "policy": "Orchestration checkers and scope validation guards"
+    },
+    {
+      "path_prefix": "08-review/",
+      "owner": "INDEPENDENT_REVIEWER",
+      "classification": "INTERNAL_GOVERNANCE",
+      "allowed_write_workpacks": [],
+      "policy": "Reviewer checklists and receipt protocols"
+    },
+    {
+      "path_prefix": "docs/architecture/",
+      "owner": "ARCHITECT",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A04"
+      ],
+      "policy": "Repository ownership registers and legacy disposition mappings"
+    },
+    {
+      "path_prefix": "docs/migration/",
+      "owner": "MIGRATION_ENGINEER",
+      "classification": "INTERNAL_GOVERNANCE",
+      "allowed_write_workpacks": [
+        "A00",
+        "A01",
+        "A02",
+        "A03",
+        "A07"
+      ],
+      "policy": "Audit reports, inventories, restore certifications, containment records"
+    },
+    {
+      "path_prefix": "src/grade9build/",
+      "owner": "PLATFORM_ENGINEER",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A02",
+        "A03",
+        "A07",
+        "A08",
+        "A09"
+      ],
+      "policy": "Core build tooling, inventory streaming, safe restore engines"
+    },
+    {
+      "path_prefix": "src/grade9core/",
+      "owner": "ARCHITECT",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A05",
+        "A06",
+        "A10",
+        "A11",
+        "A12"
+      ],
+      "policy": "Core 1 / Core 2 6-core domain modules and projections"
+    },
+    {
+      "path_prefix": "tests/migration/",
+      "owner": "PLATFORM_ENGINEER",
+      "classification": "INTERNAL_ENGINEERING",
+      "allowed_write_workpacks": [
+        "A02",
+        "A03",
+        "A07",
+        "A09"
+      ],
+      "policy": "Automated unit tests for migration engines and safe restore guards"
+    }
+  ],
+  "dependency_boundary_rules": [
+    {
+      "id": "DEP-01",
+      "from": "web",
+      "deny": [
+        "custody",
+        "review",
+        "workspace",
+        "candidate",
+        "src/grade9qa"
+      ],
+      "rationale": "Client web runtimes must never import custody, unreviewed candidates, or internal QA tools"
+    },
+    {
+      "id": "DEP-02",
+      "from": "web/adapters",
+      "deny": [
+        "web/runtime/progress-internals",
+        "governance"
+      ],
+      "rationale": "Web presentation adapters cannot access raw student progress internals or governance policy"
+    },
+    {
+      "id": "DEP-03",
+      "from": "data",
+      "deny": [
+        "executable-code"
+      ],
+      "rationale": "Data payloads must remain pure declarative JSON without executable code or script injection"
+    },
+    {
+      "id": "DEP-04",
+      "from": "dist",
+      "generated_only": true,
+      "rationale": "Distribution packages must be strictly reproducibly generated from source"
+    },
+    {
+      "id": "DEP-05",
+      "from": "importers",
+      "deny": [
+        "approval-writing",
+        "release-authority"
+      ],
+      "rationale": "Migration importers have no authority to grant approvals or trigger releases"
+    },
+    {
+      "id": "DEP-06",
+      "from": "search",
+      "allow": [
+        "released-public-projection"
+      ],
+      "rationale": "Search indexes may only index released public projections, never internal custody"
+    },
+    {
+      "id": "DEP-07",
+      "from": "legacy-app",
+      "deny": [
+        "parent-dom",
+        "protected-attempt-store",
+        "governance",
+        "arbitrary-navigation",
+        "private-custody",
+        "unreviewed-network"
+      ],
+      "rationale": "Sandboxed legacy apps must not access parent DOM, protected student attempts, or network"
+    },
+    {
+      "id": "DEP-08",
+      "from": "portable-data",
+      "deny": [
+        "executable-code",
+        "arbitrary-pixel-placement"
+      ],
+      "rationale": "Portable packages cannot embed executable scripts or fixed pixel presentation hacks"
+    },
+    {
+      "id": "DEP-09",
+      "from": "core2a/core2b",
+      "allow": [
+        "canonical-truth",
+        "eligible-demand-or-authored-practice",
+        "authorized-support-input"
+      ],
+      "deny": [
+        "invented-mastery"
+      ],
+      "rationale": "Core 2 transfer practice must bind to reviewed crux and demand, never invent mastery"
+    },
+    {
+      "id": "DEP-10",
+      "from": "core1/core1a/core1b",
+      "deny": [
+        "source-question-as-academic-truth",
+        "learner-estimate-as-scope"
+      ],
+      "rationale": "Core 1 canonical inference must not depend on source question text or estimated learner level"
+    }
+  ]
+}
