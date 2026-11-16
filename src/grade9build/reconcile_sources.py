@@ -74,10 +74,12 @@ class DualSourceReconciliationEngine:
 
         v35_map: Dict[str, Dict[str, Any]] = {}
         for r in v35_records:
+            if not isinstance(r, dict):
+                raise ReconciliationConflictError("record must be object: v35")
             lid = r.get("logical_id") or r.get("id") or r.get("occurrence_id")
             if not lid:
                 raise ReconciliationConflictError("record missing logical/occurrence identifier")
-            if not isinstance(r, dict) or not isinstance(lid, str) or not lid.strip():
+            if not isinstance(lid, str) or not lid.strip():
                 raise ReconciliationConflictError("invalid v3.5 identity")
             if lid in v35_map:
                 raise ReconciliationConflictError(f"duplicate v3.5 logical ID: {lid}")
@@ -85,10 +87,12 @@ class DualSourceReconciliationEngine:
 
         v41_map: Dict[str, Dict[str, Any]] = {}
         for r in v41_records:
+            if not isinstance(r, dict):
+                raise ReconciliationConflictError("record must be object: v41")
             lid = r.get("logical_id") or r.get("id") or r.get("occurrence_id")
             if not lid:
                 raise ReconciliationConflictError("record missing logical/occurrence identifier")
-            if not isinstance(r, dict) or not isinstance(lid, str) or not lid.strip():
+            if not isinstance(lid, str) or not lid.strip():
                 raise ReconciliationConflictError("invalid v4.1 identity")
             if lid in v41_map:
                 raise ReconciliationConflictError(f"duplicate v4.1 logical ID: {lid}")

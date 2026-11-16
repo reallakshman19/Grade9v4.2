@@ -226,6 +226,11 @@ class DualSourceMigrationTests(unittest.TestCase):
         self.assertIn("/explore/kinematics", routes)
         self.assertIn("/explore/gravitation", routes)
 
+    def test_malformed_non_object_record_rejected(self):
+        for left, right in (([[]], []), ([], [False])):
+            with self.assertRaises(ReconciliationConflictError):
+                self.reconcile_engine.reconcile_records(left, right)
+
     def test_missing_identifier_rejection(self):
         bad_record = {"stem": "No ID at all"}
         with self.assertRaises(ReconciliationConflictError):
