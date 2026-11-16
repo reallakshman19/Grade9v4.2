@@ -1,0 +1,40 @@
+{
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "workpack_id": "A04",
+  "schema_version": "g9-public-ownership-summary/2",
+  "sources": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657,
+      "tracked_bytes": 96373813
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634,
+      "tracked_bytes": 113853741
+    }
+  },
+  "prior_map_blob": "7b91d37696fb562aaf195366677110335947e388",
+  "inventory_keys": 5291,
+  "mapped_keys": 5291,
+  "missing_keys": 0,
+  "extra_keys": 0,
+  "identity_mismatches": 0,
+  "previous_disposition_proposals": {
+    "HISTORICAL_PRESERVED": 892,
+    "MIGRATED": 190,
+    "PRESERVED_IN_CUSTODY": 4209
+  },
+  "migration_destination_files_present": 0,
+  "actual_verified_migrations": 0,
+  "actual_disposition": "UNVERIFIED_FOR_ALL",
+  "restricted_classifications": 474,
+  "public_eligibility": "HOLD",
+  "full_ledger": "EXTERNAL_ONLY; regenerate from historical inventory and map using supplied external reconciliation utility; keep raw occurrence data in custody",
+  "acceptance": "BLOCKED_PENDING_CLASSIFICATION_AND_CUSTODY_APPROVAL"
+}
