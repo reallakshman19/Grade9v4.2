@@ -1,0 +1,157 @@
+{
+  "schema_version": "g9-route-map/1.0",
+  "workpack_id": "A09",
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "ui_implementation_freeze": "LOCKED_UNTIL_A61",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "source_pins": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
+    }
+  },
+  "fail_closed_policy": {
+    "unregistered_routes": "FAIL_CLOSED_REJECT",
+    "missing_figures": "FAIL_CLOSED_BLOCK",
+    "unverified_candidate_claims": "FAIL_CLOSED_HOLD"
+  },
+  "blueprints": [
+    {
+      "route": "/blueprints/core1-orientation",
+      "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
+      "role": "CORE1",
+      "layout_mode": "READING_ORIENTATION",
+      "status": "HOLD"
+    },
+    {
+      "route": "/blueprints/core1a-construction",
+      "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "role": "CORE1A",
+      "layout_mode": "READING_CONSTRUCTION",
+      "status": "HOLD"
+    },
+    {
+      "route": "/blueprints/core1b-reconstruction",
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.8.0",
+      "role": "CORE1B",
+      "layout_mode": "READING_CONSTRUCTION",
+      "status": "HOLD"
+    },
+    {
+      "route": "/blueprints/core2a-crux",
+      "blueprint_id": "BP-CORE2A-CRUX@1.1.0",
+      "role": "CORE2A",
+      "layout_mode": "DECISION_SPLIT",
+      "status": "HOLD"
+    },
+    {
+      "route": "/blueprints/core2b-decide",
+      "blueprint_id": "BP-CORE2B-DECIDE@1.1.0",
+      "role": "CORE2B",
+      "layout_mode": "DECISION_SPLIT",
+      "status": "HOLD"
+    },
+    {
+      "route": "/blueprints/core3-transfers",
+      "blueprint_id": "BP-CORE3-TRANSFERS@1.0.0",
+      "role": "CORE3",
+      "layout_mode": "TRANSFER_MATRIX",
+      "status": "HOLD"
+    },
+    {
+      "route": "/blueprints/explorer-sandbox",
+      "blueprint_id": "BP-EXPLORER-SANDBOX@1.1.0",
+      "role": "EXPLORER",
+      "layout_mode": "EXPLORER_CANVAS",
+      "status": "HOLD"
+    }
+  ],
+  "portable_packages": [
+    {
+      "route": "/packages/common-core",
+      "package_id": "PKG-COMMON-CORE@1.0.0",
+      "category": "PORTABLE_ROOT",
+      "status": "HOLD"
+    },
+    {
+      "route": "/packages/tablet-ui",
+      "package_id": "PKG-TABLET-UI@1.0.0",
+      "category": "PORTABLE_ROOT",
+      "status": "HOLD"
+    },
+    {
+      "route": "/packages/formula-engine",
+      "package_id": "PKG-FORMULA-ENGINE@1.0.0",
+      "category": "PORTABLE_ROOT",
+      "status": "HOLD"
+    },
+    {
+      "route": "/packages/canvas-engine",
+      "package_id": "PKG-CANVAS-ENGINE@1.0.0",
+      "category": "PORTABLE_ROOT",
+      "status": "HOLD"
+    }
+  ],
+  "standalone_tools_summary": {
+    "total_registered": 38,
+    "status": "HOLD",
+    "disposition": "PRESERVED_IN_CUSTODY"
+  },
+  "explorers_summary": {
+    "registered_opaque": 11,
+    "unregistered_entrypoints": 37,
+    "total_observed": 48,
+    "status": "HOLD",
+    "disposition": "PRESERVED_IN_CUSTODY"
+  },
+  "tombstones": [
+    {
+      "route": "/legacy/v35/flash-player.html",
+      "status": "TOMBSTONE",
+      "reason": "OBSOLETE_FLASH_PLUGIN_DEPRECATED",
+      "redirect_or_replacement": null,
+      "quarantine_ref": "custody://v35/flash/player"
+    },
+    {
+      "route": "/legacy/v35/eval-runner.html",
+      "status": "TOMBSTONE",
+      "reason": "UNSAFE_EVAL_REMOVED",
+      "redirect_or_replacement": null,
+      "quarantine_ref": "custody://v35/eval/runner"
+    },
+    {
+      "route": "/v41/scratch/scratch-pad.html",
+      "status": "TOMBSTONE",
+      "reason": "EPHEMERAL_SCRATCH_OMITTED",
+      "redirect_or_replacement": null,
+      "quarantine_ref": "custody://v41/scratch"
+    },
+    {
+      "route": "/v41/draft/unverified-quiz.html",
+      "status": "TOMBSTONE",
+      "reason": "UNVERIFIED_DRAFT_HELD",
+      "redirect_or_replacement": null,
+      "quarantine_ref": "custody://v41/drafts/quiz"
+    },
+    {
+      "route": "/legacy/search-index.json",
+      "status": "TOMBSTONE",
+      "reason": "UNFILTERED_RAW_SEARCH_DEPRECATED_N09",
+      "redirect_or_replacement": "/routes/public-search-index.json",
+      "quarantine_ref": "custody://search/raw-index"
+    },
+    {
+      "route": "/legacy/v35/direct-eval.js",
+      "status": "TOMBSTONE",
+      "reason": "EVALUATOR_POLICY_V1_SUPERSEDED",
+      "redirect_or_replacement": null,
+      "quarantine_ref": "custody://v35/scripts/direct-eval"
+    }
+  ]
+}
