@@ -1,56 +1,31 @@
 {
-  "schema_version": "g9-restore-summary/1",
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
   "workpack_id": "A03",
-  "title": "Backup and restore verification",
-  "generated_at": "2026-11-16T13:55:00Z",
-  "engine": "src/grade9build/restore.py",
-  "test_suite": "tests/migration/test_restore.py",
-  "verified_snapshots": [
-    {
-      "snapshot_id": "grade9v35:8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
-      "repository": "https://github.com/reallakshman19/Grade9v3.5",
-      "custody_location": "D:/CodeD/custody/Grade9v3.5/",
-      "total_files": 2657,
-      "restored_and_verified": 2657,
-      "tampered_files": 0,
-      "missing_files": 0,
-      "size_mismatches": 0,
-      "sha256_verified": true,
-      "status": "VERIFIED"
+  "schema_version": "g9-restore-summary/2",
+  "sources": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657,
+      "tracked_bytes": 96373813
     },
-    {
-      "snapshot_id": "grade9v41:564ad2a07fddc0fdd30d103674b3eca61235a54b",
-      "repository": "https://github.com/reallakshman19/Grade9v4.1",
-      "custody_location": "D:/CodeD/custody/Grade9v4.1/",
-      "total_files": 2634,
-      "restored_and_verified": 2634,
-      "tampered_files": 0,
-      "missing_files": 0,
-      "size_mismatches": 0,
-      "sha256_verified": true,
-      "status": "VERIFIED"
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634,
+      "tracked_bytes": 113853741
     }
-  ],
-  "security_and_containment_checks": {
-    "path_traversal_guards_active": true,
-    "path_traversal_test_patterns": [
-      "/etc/passwd",
-      "\\Windows\\System32",
-      "C:/Users/file.txt",
-      "../escaped.txt",
-      "dir/../../evil.sh"
-    ],
-    "tamper_detection_active": true,
-    "size_mismatch_rejection_active": true,
-    "missing_file_rejection_active": true,
-    "unaccounted_file_rejection_active": true,
-    "custody_isolation_enforced": true
   },
-  "acceptance_proof": {
-    "tampered_path_rejects": true,
-    "missing_path_rejects": true,
-    "unsafe_path_rejects": true,
-    "independent_restore_all_scoped_bytes": true,
-    "no_publishable_private_paths": true
-  }
+  "prior_candidate": "796d07fa27c834ca584b61f0c56d8d26020010cb",
+  "historical_claimed_restore_count": 5291,
+  "historical_claim_status": "NOT_INDEPENDENTLY_VERIFIED",
+  "new_synthetic_tests": 9,
+  "synthetic_backup_restore": "PASS_ON_DISPOSABLE_LINUX_FIXTURES",
+  "actual_full_source_backup_restore": "NOT_RUN",
+  "actual_custody_acl": "NOT_VERIFIED",
+  "verification": "strict no-follow type/mode/hash/path equality, exact snapshot and independent backup replay; isolated exclusive roots required",
+  "acceptance": "BLOCKED_PENDING_ACTUAL_CUSTODY_BACKUP_RESTORE"
 }
