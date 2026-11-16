@@ -1,0 +1,46 @@
+{
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "workpack_id": "A04",
+  "schema_version": "g9-ownership/2",
+  "source_pins": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657,
+      "tracked_bytes": 96373813
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634,
+      "tracked_bytes": 113853741
+    }
+  },
+  "role_authority_status": "PROPOSED_PENDING_OWNER_AND_INDEPENDENT_REVIEW",
+  "roles": [
+    "OWNER",
+    "ADMINISTRATOR",
+    "INDEPENDENT_REVIEWER",
+    "ACADEMIC_AUTHORITY",
+    "ARCHITECT",
+    "MIGRATION_ENGINEER",
+    "PLATFORM_ENGINEER",
+    "UI_ENGINEER"
+  ],
+  "policy": {
+    "owner": "authorizes scope and adoption; no implicit academic acceptance",
+    "administrator": "enforces trusted controls and external custody",
+    "independent_reviewer": "separate identity and acceptance scope",
+    "academic_authority": "native field/science/assessment authorization",
+    "implementation_roles": "bounded workpack paths only",
+    "public_target": "synthetic implementation and explicitly authorized public-safe metadata only; no restricted/internal raw evidence",
+    "disposition": "planned action is not completed migration; unresolved eligibility remains HOLD",
+    "ui_freeze": "LOCKED_UNTIL_A61",
+    "release": "NONE"
+  },
+  "old_ownership_blob": "683e208fccab198e50dd8ea8603416f5469e2731",
+  "status_detail": "Directory-prefix proposals do not establish rights or actual migration."
+}
