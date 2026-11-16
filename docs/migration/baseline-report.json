@@ -1,0 +1,210 @@
+{
+  "schema_version": "g9-baseline-report/1",
+  "generated_at": "2026-11-16T07:31:00Z",
+  "workpack_id": "A00",
+  "title": "Read-only authority and baseline audit",
+  "target_repository": {
+    "local_path": "D:/CodeD/g9v4.2",
+    "bootstrap_commit": "bd8f568d21466cecb7b53b87f862c565a474c149",
+    "status": "EMPTY_BOOTSTRAP_LOCAL_ONLY",
+    "remote_configured": false
+  },
+  "source_v41": {
+    "repository": "https://github.com/reallakshman19/Grade9v4.1",
+    "observed_main": {
+      "commit": "308a8cef0d0b7d4ce5f1b79b21f01f76acc81acc",
+      "tree": "7ec39792e38e8cb6305d2c368741136df0b1369d",
+      "timestamp": "2026-11-16T05:51:51+04:00",
+      "subject": "Merge pull request #75 from reallakshman19/draft/sitewide-skip-mandatory-responses-r1"
+    },
+    "latest_origin_main": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "timestamp": "2026-11-16T06:09:42+04:00",
+      "subject": "Merge pull request #76 from reallakshman19/fix/pages-r3-release-preflight-diagnostics-r1"
+    },
+    "review_commit": {
+      "commit": "76d60743c7ac51b44b3bf3cd37745db163e6a4bd",
+      "tree": "f840ed25ddaa994d2d32a50efaa27ddce7f12f42",
+      "timestamp": "2026-11-16T06:44:58+05:30",
+      "subject": "Merge pull request #71 from reallakshman19/review/chemistry-r3-authority-golden-intake-r0-20261115"
+    },
+    "r3_legacy_preview": {
+      "commit": "7a5c425f02d8a365a738bb11df1982cbe38e9f82",
+      "tree": "7b386c5f485871645d5a65ab280ef22a5275c5ff",
+      "timestamp": "2026-11-15T18:04:31+05:30",
+      "subject": "Merge pull request #52 from reallakshman19/draft/ph06-fluids-golden-r1"
+    },
+    "pr_states": {
+      "PR69": "MERGED",
+      "PR71": "MERGED",
+      "PR72": "OPEN",
+      "PR75": "MERGED",
+      "PR76": "MERGED"
+    },
+    "owner_selected_commit": null
+  },
+  "source_v35": {
+    "repository": "https://github.com/reallakshman19/Grade9v3.5",
+    "observed_commit": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "timestamp": "2026-10-29T18:28:45+04:00",
+      "subject": "Add files via upload"
+    },
+    "tracked_paths_count": 2657,
+    "pinned_blobs_verified_count": 21,
+    "pinned_blobs": {
+      "Shared/library/package.schema.json": {
+        "git_blob_sha1": "a9cdf31d6ae46d00ac227791264231f05d453725",
+        "raw_sha256": "b645f4b5beb9132d6e38b628b1416846201d44dec16a5f04af9a252e9e891d93",
+        "size": 108010
+      },
+      "Shared/resources/resource.schema.json": {
+        "git_blob_sha1": "0de57d4bf438629c22436eee3c5ccdb972f8ce22",
+        "raw_sha256": "8824c53a287f1f908b6eed21bca441fe85167a0944357163d436ec911b777442",
+        "size": 3365
+      },
+      "Shared/roles/CORE-AUTHORITY-CONTRACT.md": {
+        "git_blob_sha1": "304ad36a502a81f7174f3b52b9622f6e4a47d21c",
+        "raw_sha256": "3cbf70c177ddaa4914776dca52a40224e0e4dbe24d259b61af3e95ab8ea1bda0",
+        "size": 9146
+      },
+      "Shared/roles/CORE1.md": {
+        "git_blob_sha1": "5503628044c7eebfd13fa360057e0fb476849d68",
+        "raw_sha256": "751dd3729721f34710b1f54e4487daf5583ad556e18f241ca548b1bc2a1ab490",
+        "size": 4355
+      },
+      "Shared/roles/CORE1A.md": {
+        "git_blob_sha1": "51743989387265f37a96edf104b6a001e93fcc3a",
+        "raw_sha256": "c6fb6b45d3128c9b335d2670eedd3e7d55ca467045de92368436a3d22fd866fa",
+        "size": 5346
+      },
+      "Shared/roles/CORE1B.md": {
+        "git_blob_sha1": "50968c023bce14b44ad4fbbad01022b1e595c322",
+        "raw_sha256": "be81c8e403875dd423872c29c254a363178b34f06e429141c038ee80dfacbf6a",
+        "size": 4897
+      },
+      "Shared/roles/CORE2.md": {
+        "git_blob_sha1": "3a3bcdd4dc3f9ff8ab1af3e33da15e95c40091c5",
+        "raw_sha256": "490331afdef62e711f347a763f3cb0b138e87ac67abbaabe2e5791afeeee5542",
+        "size": 5553
+      },
+      "Shared/roles/CORE2A.md": {
+        "git_blob_sha1": "7ee05a5d8522b468123ced0ab027678f8971a7e4",
+        "raw_sha256": "3175fed6d1bb6d680f694a5ca5359d0e822a90ce8f9c1ee781f4e2291e1b3b73",
+        "size": 5100
+      },
+      "Shared/roles/CORE2B.md": {
+        "git_blob_sha1": "1d6dbeb9ed4119db909a624fd0d96aa6ed098965",
+        "raw_sha256": "6b6d6a04ccea69957c4295ed839e70af87144b41830afb99409c66db85b74104",
+        "size": 5649
+      },
+      "Shared/roles/LEARNER-PRODUCT-TEMPLATES.md": {
+        "git_blob_sha1": "3f46bdbb5561313b293a94c93347df30d7b17cd3",
+        "raw_sha256": "68463ca7a50b1b2e8eea10f1a8bb11542c98ca73de8daf8bbfe7c796261253cc",
+        "size": 16937
+      },
+      "Shared/roles/README.md": {
+        "git_blob_sha1": "0fdc1d12b44207bd89d8223a97e9538bf6bfa64c",
+        "raw_sha256": "95593bcfe45534dc0a62c308a8814dbbffb7a129d912f3f854b3a97bf4a0d0b5",
+        "size": 9259
+      },
+      "Shared/search/search-document.schema.json": {
+        "git_blob_sha1": "df07f583787474b9271f9d8edc33efac7609ac0a",
+        "raw_sha256": "7db1462e04b69099adb7c52de082019de1d347b0b04214af2161ce3b67dd46e8",
+        "size": 945
+      },
+      "Shared/tools/build_resource_registry.py": {
+        "git_blob_sha1": "f5a444bdefc4bcb29b39df8950b1b6310770511d",
+        "raw_sha256": "bf391928fa1ff8f57922d6c1c74578b0714efb136cc6a4c4c6aaa9d4d4ba1f61",
+        "size": 35824
+      },
+      "Shared/tools/build_learner_search_index.py": {
+        "git_blob_sha1": "7e01d1d5c3edda1b040835cf28ced676794e2f72",
+        "raw_sha256": "fe8040aac95686095bf2aec5662f5d68d447e36570efdf396b918920646d0b11",
+        "size": 16236
+      },
+      "Shared/tools/topic_independence_guard.py": {
+        "git_blob_sha1": "b10696647c25e98d7affc114833ad148ae967e34",
+        "raw_sha256": "5ad883e1e299fc6a50535ea89c596690137eb4ab2953ec9d1a1a3a23e3d5cbd7",
+        "size": 12838
+      },
+      "public/portable-workbench/portable-host.mjs": {
+        "git_blob_sha1": "66d35256de777e8f1c1b450229018048dbb939e5",
+        "raw_sha256": "d5be4c857cb9be5590d45080f905c565589011cde43b600f69a40022b88591fe",
+        "size": 10714
+      },
+      "public/portable-workbench/runtime.mjs": {
+        "git_blob_sha1": "acc009580e76d092d3b92a7e34b1f576310049f4",
+        "raw_sha256": "bb3432ee687e5deb9665bf399d5b04948c278b708ab0cccc1c749909014ab245",
+        "size": 21365
+      },
+      "public/portable-workbench/semantic-workbench.mjs": {
+        "git_blob_sha1": "66d0bef590a49eedd5f87f03f647ef1a55cf38fe",
+        "raw_sha256": "831eafce184ca9b17a14f57a5f4a9d246a9c05aca8d6f57834c54289ce703b9f",
+        "size": 19627
+      },
+      "Shared/web/interactive-page-blueprints.v1.json": {
+        "git_blob_sha1": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+        "raw_sha256": "75f6bd43b31dfdf555fb26e8b36417e9c830a563898264dbe917d4254828653e",
+        "size": 90186
+      },
+      "Shared/web/standalone-ledger.v1.json": {
+        "git_blob_sha1": "c4a51ba39872487f18746b1978f96b6d5dc7f8ef",
+        "raw_sha256": "a3b75570cdeb1e49189cadf95f083fcc561d651afb8ed6cd1141fc2898240c25",
+        "size": 4216
+      },
+      "Shared/tools/standalone_conformance.py": {
+        "git_blob_sha1": "00e40f2a8f462227e300a29ffeee9dccd611aacf",
+        "raw_sha256": "f739305e50bd064e5d8fa73780a8e038a7a4f9c9680411539e767b3191aa589b",
+        "size": 22524
+      }
+    },
+    "owner_selected_commit": null
+  },
+  "policy_and_governance": {
+    "academic_admission": "HOLD",
+    "release_authority": "NONE",
+    "remote_mutation": "NONE",
+    "source_mutation": "NONE",
+    "r3_phase": "FREEZE_PENDING_GOLDEN",
+    "accepted_golden": null,
+    "production_enabled": false,
+    "academic_release_enabled": false,
+    "d31_status": "PAUSED",
+    "synthetic_only": true
+  },
+  "owner_decisions_status": {
+    "status": "UNRESOLVED",
+    "target_repo": "reallakshman19/Grade9v4.2",
+    "visibility_required": "private",
+    "owner_authorization_ref": null,
+    "trusted_migration_baseline": null,
+    "authorized_custody_root": null,
+    "external_trust_roster_ref": null,
+    "native_mapping_approval_ref": null,
+    "ui_freeze_receipt_ref": null,
+    "approved_legacy_audit_scope_ref": null,
+    "legacy_app_origin_policy_ref": null,
+    "self_study_reveal_policy_ref": null,
+    "device_model": null,
+    "allowed_subjects": [
+      "PHYSICS",
+      "CHEMISTRY",
+      "MATHEMATICS"
+    ],
+    "biology_scope": "PENDING"
+  },
+  "blockers": [
+    "Missing Owner selection for trusted v3.5 snapshot baseline",
+    "Missing Owner selection for trusted v4.1 snapshot baseline",
+    "Missing Owner authorization reference (owner_authorization_ref is null)",
+    "Missing authorized custody root (authorized_custody_root is null)",
+    "Missing external trust roster reference (external_trust_roster_ref is null)",
+    "Missing native UI blueprint mapping approval reference",
+    "UI freeze receipt is null (cannot implement learner UI before signed A61)",
+    "Academic release and production authority remain disabled (HOLD)"
+  ],
+  "audit_disposition": "HOLD_PENDING_OWNER_SELECTION"
+}
