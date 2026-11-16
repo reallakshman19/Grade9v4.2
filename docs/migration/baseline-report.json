@@ -1,39 +1,59 @@
 {
-  "schema_version": "g9-baseline-report/1",
-  "generated_at": "2026-11-16T07:31:00Z",
+  "schema_version": "g9-baseline-report/2",
+  "revision": 2,
+  "generated_at": "2026-11-16T07:48:00Z",
   "workpack_id": "A00",
-  "title": "Read-only authority and baseline audit",
+  "title": "Read-only authority and baseline audit (Remediation Revision 2)",
+  "remediation_reference": {
+    "prior_candidate_commit": "f44ecc78b470a615a1ad33c5d8500fcdcc4d8fca",
+    "status": "READY_FOR_REVIEW_NOT_ACCEPTED"
+  },
   "target_repository": {
     "local_path": "D:/CodeD/g9v4.2",
     "bootstrap_commit": "bd8f568d21466cecb7b53b87f862c565a474c149",
+    "bootstrap_tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
     "status": "EMPTY_BOOTSTRAP_LOCAL_ONLY",
-    "remote_configured": false
+    "remote_configured": false,
+    "authorization": "Owner/dispatcher local repository bootstrap authorization pending formal reference ID"
   },
   "source_v41": {
     "repository": "https://github.com/reallakshman19/Grade9v4.1",
-    "observed_main": {
-      "commit": "308a8cef0d0b7d4ce5f1b79b21f01f76acc81acc",
-      "tree": "7ec39792e38e8cb6305d2c368741136df0b1369d",
-      "timestamp": "2026-11-16T05:51:51+04:00",
-      "subject": "Merge pull request #75 from reallakshman19/draft/sitewide-skip-mandatory-responses-r1"
-    },
-    "latest_origin_main": {
+    "selected_custody_snapshot": {
       "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
       "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
       "timestamp": "2026-11-16T06:09:42+04:00",
-      "subject": "Merge pull request #76 from reallakshman19/fix/pages-r3-release-preflight-diagnostics-r1"
+      "subject": "Merge pull request #76 from reallakshman19/fix/pages-r3-release-preflight-diagnostics-r1",
+      "disposition": "PROPOSED_FOR_MIGRATION_CUSTODY_ONLY",
+      "academic_admission": "NONE",
+      "production_authorization": "NONE"
     },
-    "review_commit": {
-      "commit": "76d60743c7ac51b44b3bf3cd37745db163e6a4bd",
-      "tree": "f840ed25ddaa994d2d32a50efaa27ddce7f12f42",
-      "timestamp": "2026-11-16T06:44:58+05:30",
-      "subject": "Merge pull request #71 from reallakshman19/review/chemistry-r3-authority-golden-intake-r0-20261115"
-    },
-    "r3_legacy_preview": {
-      "commit": "7a5c425f02d8a365a738bb11df1982cbe38e9f82",
-      "tree": "7b386c5f485871645d5a65ab280ef22a5275c5ff",
-      "timestamp": "2026-11-15T18:04:31+05:30",
-      "subject": "Merge pull request #52 from reallakshman19/draft/ph06-fluids-golden-r1"
+    "preserved_review_and_frozen_snapshots": {
+      "observed_main_pr75": {
+        "commit": "308a8cef0d0b7d4ce5f1b79b21f01f76acc81acc",
+        "tree": "7ec39792e38e8cb6305d2c368741136df0b1369d",
+        "timestamp": "2026-11-16T05:51:51+04:00",
+        "subject": "Merge pull request #75 from reallakshman19/draft/sitewide-skip-mandatory-responses-r1"
+      },
+      "review_commit_pr71": {
+        "commit": "76d60743c7ac51b44b3bf3cd37745db163e6a4bd",
+        "tree": "f840ed25ddaa994d2d32a50efaa27ddce7f12f42",
+        "timestamp": "2026-11-16T06:44:58+05:30",
+        "subject": "Merge pull request #71 from reallakshman19/review/chemistry-r3-authority-golden-intake-r0-20261115"
+      },
+      "legacy_preview_baseline_pr52": {
+        "commit": "7a5c425f02d8a365a738bb11df1982cbe38e9f82",
+        "tree": "7b386c5f485871645d5a65ab280ef22a5275c5ff",
+        "timestamp": "2026-11-15T18:04:31+05:30",
+        "subject": "Merge pull request #52 from reallakshman19/draft/ph06-fluids-golden-r1"
+      },
+      "pr72_recovery_candidate": {
+        "branch": "recovery/r3-c0-c1-baseline-reconciliation",
+        "commit": "d5260d4e1f1a17ff01c9fbc792b27e1c8f82518f",
+        "tree": "5d47457009af271821ca1765d50d7402645a7680",
+        "timestamp": "2026-11-16T06:59:33+05:30",
+        "subject": "R3-C0/C1 proposed recovery: restore exact frozen tree, retain intake and incident evidence (HOLD)",
+        "pr_state": "OPEN"
+      }
     },
     "pr_states": {
       "PR69": "MERGED",
@@ -41,16 +61,19 @@
       "PR72": "OPEN",
       "PR75": "MERGED",
       "PR76": "MERGED"
-    },
-    "owner_selected_commit": null
+    }
   },
   "source_v35": {
     "repository": "https://github.com/reallakshman19/Grade9v3.5",
-    "observed_commit": {
+    "selected_custody_snapshot": {
       "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
       "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
       "timestamp": "2026-10-29T18:28:45+04:00",
-      "subject": "Add files via upload"
+      "subject": "Add files via upload",
+      "disposition": "PROPOSED_FOR_MIGRATION_CUSTODY_ONLY",
+      "academic_admission": "NONE",
+      "source_authenticity": "UNRESOLVED_PENDING_EXTERNAL_RATIFICATION",
+      "production_authorization": "NONE"
     },
     "tracked_paths_count": 2657,
     "pinned_blobs_verified_count": 21,
@@ -160,51 +183,83 @@
         "raw_sha256": "f739305e50bd064e5d8fa73780a8e038a7a4f9c9680411539e767b3191aa589b",
         "size": 22524
       }
+    }
+  },
+  "r3_policy_and_administrator_evidence": {
+    "policy_v1_json": {
+      "path": "docs/agent-entry/production-control-r3/policy.v1.json",
+      "size": 1707,
+      "sha256": "5082db911e78a8a48e258bf0539912fdc0f25ac21eb9f5589ed64c6a5343dab0",
+      "schema": "g9-production-control/v1",
+      "phase": "FREEZE_PENDING_GOLDEN",
+      "legacy_preview_baseline": "7a5c425f02d8a365a738bb11df1982cbe38e9f82",
+      "accepted_golden": null,
+      "production_enabled": false,
+      "academic_release_enabled": false,
+      "d31": "PAUSED",
+      "trust_source": "G9_R3_TRUST_JSON"
     },
-    "owner_selected_commit": null
+    "quality_policy_v1_json": {
+      "path": "docs/agent-entry/quality-gate-r2/quality-policy.v1.json",
+      "size": 1303,
+      "sha256": "2bd14b5824704b1e8df606fd6781955c99a3348f9a2191f1b7697902757fc6d1",
+      "schema_version": "g9v41-physics-quality-policy/v1",
+      "activation": "PILOT_AWAITING_OWNER_GOLDEN",
+      "owner_accepted_golden_head": null,
+      "owner_golden_receipt_path": null,
+      "production_enabled": false
+    },
+    "admin_setup_md": {
+      "path": "docs/agent-entry/production-control-r3/ADMIN_SETUP.md",
+      "size": 5909,
+      "sha256": "c163340cc1ae89677dd43e3d74d7ff979ec30b02eed9791384e228502350c84c",
+      "observed_deployment_failure": "Run 43789426180 (commit 308a8cef0d0b7d4ce5f1b79b21f01f76acc81acc)",
+      "rca_findings": [
+        "CONTROL_SHA empty (G9_R3_CONTROL_SHA not configured in Actions variables)",
+        "G9_R3_TRUST_JSON not configured in Actions variables",
+        "Missing publication-manifest.json and release-receipt.json",
+        "Release gates fail-closed under FREEZE_PENDING_GOLDEN"
+      ]
+    }
   },
-  "policy_and_governance": {
-    "academic_admission": "HOLD",
-    "release_authority": "NONE",
-    "remote_mutation": "NONE",
-    "source_mutation": "NONE",
-    "r3_phase": "FREEZE_PENDING_GOLDEN",
-    "accepted_golden": null,
-    "production_enabled": false,
-    "academic_release_enabled": false,
-    "d31_status": "PAUSED",
-    "synthetic_only": true
+  "windows_portability_remediation_record": {
+    "sitecustomize_py": {
+      "path": "D:/CodeD/.venv-grade9/Lib/site-packages/sitecustomize.py",
+      "size": 778,
+      "sha256": "737a9de66f366641bed6108393e8e78c20446aea9072422f15faec3140eca23b",
+      "purpose": "Environment-level POSIX and tooling shim for Windows local test execution"
+    },
+    "portability_defects_identified": [
+      "07-orchestration/check.py:79: Uses str(f.relative_to(ROOT)) producing backslashes on Windows; fails against MANIFEST.sha256.json",
+      "07-orchestration/check.py:20: safe_rel forbids backslashes, rejecting WindowsPath strings",
+      "07-orchestration/check.py:60: Expects POSIX permission bits (mode==420); NTFS returns 438 for read-write files",
+      "06-acceptance/tests/test_kit.py:29: test_tamper invokes chmod(0o644) which does not set Unix mode on Windows NTFS",
+      "06-acceptance/tests/test_kit.py:63-66 and check.py:115: Assumes openssl is on default PATH; on Windows it resides in Git usr/bin",
+      "07-orchestration/check.py:97: Compares git rev-parse --show-toplevel (forward slashes) with str(repo) (backslashes on Windows)"
+    ]
   },
-  "owner_decisions_status": {
-    "status": "UNRESOLVED",
-    "target_repo": "reallakshman19/Grade9v4.2",
-    "visibility_required": "private",
-    "owner_authorization_ref": null,
-    "trusted_migration_baseline": null,
-    "authorized_custody_root": null,
-    "external_trust_roster_ref": null,
-    "native_mapping_approval_ref": null,
-    "ui_freeze_receipt_ref": null,
-    "approved_legacy_audit_scope_ref": null,
-    "legacy_app_origin_policy_ref": null,
-    "self_study_reveal_policy_ref": null,
-    "device_model": null,
-    "allowed_subjects": [
-      "PHYSICS",
-      "CHEMISTRY",
-      "MATHEMATICS"
-    ],
-    "biology_scope": "PENDING"
+  "proposed_custody_and_trust_architecture": {
+    "proposed_custody_directory": "D:/CodeD/custody/",
+    "layout": {
+      "v35_source": "D:/CodeD/custody/Grade9v3.5/",
+      "v41_source": "D:/CodeD/custody/Grade9v4.1/",
+      "snapshots": "D:/CodeD/custody/snapshots/",
+      "manifests": "D:/CodeD/custody/manifests/"
+    },
+    "proposed_trust_roster": {
+      "roster_path": "D:/CodeD/trust/trust-roster.json",
+      "schema": "g9-r3-trust/v1",
+      "key_type": "Ed25519 (public keys only)"
+    }
   },
   "blockers": [
-    "Missing Owner selection for trusted v3.5 snapshot baseline",
-    "Missing Owner selection for trusted v4.1 snapshot baseline",
-    "Missing Owner authorization reference (owner_authorization_ref is null)",
-    "Missing authorized custody root (authorized_custody_root is null)",
-    "Missing external trust roster reference (external_trust_roster_ref is null)",
-    "Missing native UI blueprint mapping approval reference",
+    "A00 receipt unsigned by independent reviewer (status remains READY_FOR_REVIEW)",
+    "Owner authorization reference ID pending (owner_authorization_ref is null)",
+    "Formal external trust roster ratification pending (external_trust_roster_ref is null)",
+    "Formal custody root approval pending (authorized_custody_root is null)",
+    "Native UI blueprint mapping approval reference is null",
     "UI freeze receipt is null (cannot implement learner UI before signed A61)",
     "Academic release and production authority remain disabled (HOLD)"
   ],
-  "audit_disposition": "HOLD_PENDING_OWNER_SELECTION"
+  "audit_disposition": "HOLD_PENDING_INDEPENDENT_RECEIPT"
 }
