@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:g9:engineering:edition:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "programme_id",
+    "subject_id",
+    "stage",
+    "paper_code",
+    "synthetic",
+    "task_refs",
+    "policy",
+    "status",
+    "revision"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+    },
+    "programme_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+    },
+    "subject_id": {
+      "enum": [
+        "PHYSICS",
+        "CHEMISTRY",
+        "MATHEMATICS",
+        "BIOLOGY"
+      ]
+    },
+    "stage": {
+      "enum": [
+        "E1",
+        "E2",
+        "E3",
+        "FOUNDATION"
+      ]
+    },
+    "paper_code": {
+      "type": "string",
+      "minLength": 1
+    },
+    "year": {
+      "type": [
+        "integer",
+        "string",
+        "null"
+      ]
+    },
+    "synthetic": {
+      "type": "boolean"
+    },
+    "task_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "id",
+          "revision",
+          "sha256"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "QUESTION",
+              "FRESH_TASK",
+              "STIMULUS"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "max_points",
+        "duration_seconds"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "PRACTICE",
+            "SIMULATED_EXAM"
+          ]
+        },
+        "max_points": {
+          "type": "number",
+          "minimum": 0
+        },
+        "duration_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "HOLD",
+        "PROPOSED"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}
