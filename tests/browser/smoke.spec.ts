@@ -53,14 +53,14 @@ async function assertDiagnosticDist(dir: string): Promise<void> {
 }
 
 const expectedBody = [
-  '[DEMO ONLY] Rule 7: UI freeze NOT GRANTED. Learner UI implementation remains locked pending independent A61 acceptance.',
+  '[DEMO ONLY] Review not completed. Engineering implementation and deployment are owner-authorized; learner content is not academically reviewed.',
   'Grade9v4.2 Build Shell',
   'Local static toolchain diagnostics. This is not a learner application or an approved release.',
   'UI: NOT_FROZEN', 'ADMISSION: HOLD', 'RELEASE: NONE',
   'Diagnostic script: INITIALIZED',
   'Build shell version: 4.2.0',
   'UI freeze: NOT_FROZEN',
-  'Learner UI: NOT_PERMITTED',
+  'Learner UI: IMPLEMENTATION_AUTHORIZED',
   'Academic admission: HOLD',
   'Production release: NONE',
   'Runtime interfaces: compile-time only; not verified by this page.'
@@ -105,7 +105,7 @@ for (const prefix of ['/', subpath]) {
           assert.equal(response?.status(), 200);
           await page.locator('#diagnostics[data-initialized="true"]').waitFor();
           assert.match(await page.title(), /Diagnostic Only/);
-          assert.match(await page.locator('#freeze-banner').innerText(), /freeze NOT GRANTED/);
+          assert.match(await page.locator('#freeze-banner').innerText(), /Review not completed/);
           assert.equal(await page.locator('#badge-ui-freeze').innerText(),'UI: NOT_FROZEN');
           assert.equal(await page.locator('#badge-admission').innerText(),'ADMISSION: HOLD');
           assert.equal(await page.locator('#badge-release').innerText(),'RELEASE: NONE');

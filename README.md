@@ -23,8 +23,8 @@ Grade9v4.2 converges the native six-Core curriculum architecture of Grade9v3.5 w
   - Grade9v3.5: `8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b`
   - Grade9v4.1: `564ad2a07fddc0fdd30d103674b3eca61235a54b`
 - **Private Custody:** Owner-designated external storage; ignore patterns are convenience only. Independent read-only ACL and custody verification remain mandatory.
-- **Release Status:** Academic admission `HOLD`, production deployment `DISABLED`, GitHub Pages intended `DISABLED`; live configuration requires administrator verification.
+- **Release Status:** Academic admission `HOLD`, engineering implementation and deployment are Owner-authorized with `review-not-completed` status. This does not certify academic content or authorize publishing restricted source/solutions. The current build is a diagnostic shell; a learner application is not yet implemented.
 
 ## Recovery status
 
-`SEQ-INCIDENT-A01-01` remains open. Original premature integration is preserved. A00 revision 5 and this A01 remediation are proposed candidates, not accepted workpacks. The Owner authorized recovery preparation and public draft publication before A00 acceptance; ordinary prerequisite gates remain mandatory. No A02, learner UI, deployment or release is authorized.
+`SEQ-INCIDENT-A01-01` remains open. Original premature integration is preserved. A00 revision 5 and this A01 remediation are proposed candidates, not accepted workpacks. Historical recovery and outstanding checks remain recorded. On 2026-11-17 the Owner superseded the independent-review merge/deployment gate: proceed with engineering, merge and deployment; label unreviewed work `review-not-completed`. Retain truthful test and academic status.
