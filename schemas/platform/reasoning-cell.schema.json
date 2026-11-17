@@ -149,27 +149,9 @@
         "properties": {
           "type": {
             "enum": [
-              "SOURCE",
-              "OCCURRENCE",
               "QUESTION",
-              "ASSESSMENT",
-              "WARRANT",
-              "QRT",
-              "CONSTRUCTION",
-              "LESSON",
               "FRESH_TASK",
-              "SOLUTION",
-              "RELATIONSHIP",
-              "PRESENTATION",
-              "CONCEPT",
-              "ASSET",
-              "PROGRAMME",
-              "EXAM_EDITION",
-              "PAPER",
-              "STIMULUS",
-              "APPROVAL",
-              "RELEASE",
-              "SUBJECT_PROFILE"
+              "CONSTRUCTION"
             ]
           },
           "id": {
@@ -186,7 +168,8 @@
           }
         }
       },
-      "minItems": 0
+      "minItems": 0,
+      "uniqueItems": true
     },
     "main": {
       "anyOf": [
@@ -202,27 +185,9 @@
           "properties": {
             "type": {
               "enum": [
-                "SOURCE",
-                "OCCURRENCE",
                 "QUESTION",
-                "ASSESSMENT",
-                "WARRANT",
-                "QRT",
-                "CONSTRUCTION",
-                "LESSON",
                 "FRESH_TASK",
-                "SOLUTION",
-                "RELATIONSHIP",
-                "PRESENTATION",
-                "CONCEPT",
-                "ASSET",
-                "PROGRAMME",
-                "EXAM_EDITION",
-                "PAPER",
-                "STIMULUS",
-                "APPROVAL",
-                "RELEASE",
-                "SUBJECT_PROFILE"
+                "CONSTRUCTION"
               ]
             },
             "id": {
@@ -267,5 +232,29 @@
     "main",
     "status",
     "c06_v11"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "c06_v11": {
+            "const": true
+          }
+        },
+        "required": [
+          "c06_v11"
+        ]
+      },
+      "then": {
+        "properties": {
+          "main": {
+            "type": "object"
+          },
+          "instances": {
+            "minItems": 2
+          }
+        }
+      }
+    }
   ]
 }

@@ -100,7 +100,12 @@
     },
     "at": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "pattern": "(?:Z|\\+00:00)$"
+    },
+    "task_instance_id": {
+      "type": "string",
+      "minLength": 1
     }
   },
   "required": [
@@ -113,7 +118,8 @@
     "previous_sha256",
     "event_type",
     "payload",
-    "at"
+    "at",
+    "task_instance_id"
   ],
   "allOf": [
     {
@@ -685,6 +691,45 @@
               "origin_ref",
               "cursor"
             ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "sequence": {
+            "const": 1
+          }
+        },
+        "required": [
+          "sequence"
+        ]
+      },
+      "then": {
+        "properties": {
+          "previous_sha256": {
+            "type": "null"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "sequence": {
+            "minimum": 2
+          }
+        },
+        "required": [
+          "sequence"
+        ]
+      },
+      "then": {
+        "properties": {
+          "previous_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
           }
         }
       }
