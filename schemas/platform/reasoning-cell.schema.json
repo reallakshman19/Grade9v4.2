@@ -1,0 +1,271 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "g9-reasoning-cell/1"
+    },
+    "cell_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subject_id": {
+      "enum": [
+        "PHYSICS",
+        "CHEMISTRY",
+        "MATHEMATICS",
+        "BIOLOGY"
+      ]
+    },
+    "topic_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "operation": {
+      "enum": [
+        "RETRIEVE",
+        "EXPLAIN",
+        "APPLY",
+        "MODEL",
+        "REPRESENT",
+        "SYNTHESIZE",
+        "JUSTIFY"
+      ]
+    },
+    "demand_band": {
+      "enum": [
+        "D1",
+        "D2",
+        "D3",
+        "D4"
+      ]
+    },
+    "native_contract_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "instances": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "id",
+          "revision",
+          "sha256"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "SOURCE",
+              "OCCURRENCE",
+              "QUESTION",
+              "ASSESSMENT",
+              "WARRANT",
+              "QRT",
+              "CONSTRUCTION",
+              "LESSON",
+              "FRESH_TASK",
+              "SOLUTION",
+              "RELATIONSHIP",
+              "PRESENTATION",
+              "CONCEPT",
+              "ASSET",
+              "PROGRAMME",
+              "EXAM_EDITION",
+              "PAPER",
+              "STIMULUS",
+              "APPROVAL",
+              "RELEASE",
+              "SUBJECT_PROFILE"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "minItems": 0
+    },
+    "main": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "id",
+            "revision",
+            "sha256"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "SOURCE",
+                "OCCURRENCE",
+                "QUESTION",
+                "ASSESSMENT",
+                "WARRANT",
+                "QRT",
+                "CONSTRUCTION",
+                "LESSON",
+                "FRESH_TASK",
+                "SOLUTION",
+                "RELATIONSHIP",
+                "PRESENTATION",
+                "CONCEPT",
+                "ASSET",
+                "PROGRAMME",
+                "EXAM_EDITION",
+                "PAPER",
+                "STIMULUS",
+                "APPROVAL",
+                "RELEASE",
+                "SUBJECT_PROFILE"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "HOLD",
+        "CANDIDATE"
+      ]
+    },
+    "c06_v11": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema_version",
+    "cell_id",
+    "subject_id",
+    "topic_ref",
+    "operation",
+    "demand_band",
+    "native_contract_ref",
+    "instances",
+    "main",
+    "status",
+    "c06_v11"
+  ]
+}

@@ -1,0 +1,693 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "g9-cognitive-event/1"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "journey_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "release_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "previous_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "event_type": {
+      "enum": [
+        "PREDICTION_COMMITTED",
+        "HELP_EXPOSED",
+        "FIRST_COMMITTED",
+        "RECONSTRUCTION_COMMITTED",
+        "DIAGNOSIS_COMMITTED",
+        "REPAIR_COMMITTED",
+        "BOUNDARY_COMMITTED",
+        "BOUNDARY_FEEDBACK_VIEWED",
+        "SOURCE_RETURNED"
+      ]
+    },
+    "payload": {
+      "type": "object"
+    },
+    "at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "schema_version",
+    "event_id",
+    "journey_id",
+    "release_id",
+    "task_ref",
+    "sequence",
+    "previous_sha256",
+    "event_type",
+    "payload",
+    "at"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "PREDICTION_COMMITTED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "prediction": {
+                "type": "string",
+                "minLength": 1
+              },
+              "artifact_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "prediction",
+              "artifact_ids"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "HELP_EXPOSED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "capability": {
+                "enum": [
+                  "H1",
+                  "H2",
+                  "H3",
+                  "READ_ANCHOR",
+                  "MODEL_AUTO_CALCULATE",
+                  "MODEL_MANIPULATE"
+                ]
+              },
+              "asset_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "id",
+                  "revision",
+                  "sha256"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "SOURCE",
+                      "OCCURRENCE",
+                      "QUESTION",
+                      "ASSESSMENT",
+                      "WARRANT",
+                      "QRT",
+                      "CONSTRUCTION",
+                      "LESSON",
+                      "FRESH_TASK",
+                      "SOLUTION",
+                      "RELATIONSHIP",
+                      "PRESENTATION",
+                      "CONCEPT",
+                      "ASSET",
+                      "PROGRAMME",
+                      "EXAM_EDITION",
+                      "PAPER",
+                      "STIMULUS",
+                      "APPROVAL",
+                      "RELEASE",
+                      "SUBJECT_PROFILE"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "ordinal": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "capability",
+              "asset_ref",
+              "ordinal"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "FIRST_COMMITTED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "responses": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "work": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "help_event_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "responses",
+              "work",
+              "help_event_ids"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "RECONSTRUCTION_COMMITTED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "first_event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "comparison": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "reference_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "id",
+                  "revision",
+                  "sha256"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "SOURCE",
+                      "OCCURRENCE",
+                      "QUESTION",
+                      "ASSESSMENT",
+                      "WARRANT",
+                      "QRT",
+                      "CONSTRUCTION",
+                      "LESSON",
+                      "FRESH_TASK",
+                      "SOLUTION",
+                      "RELATIONSHIP",
+                      "PRESENTATION",
+                      "CONCEPT",
+                      "ASSET",
+                      "PROGRAMME",
+                      "EXAM_EDITION",
+                      "PAPER",
+                      "STIMULUS",
+                      "APPROVAL",
+                      "RELEASE",
+                      "SUBJECT_PROFILE"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "required": [
+              "first_event_id",
+              "comparison",
+              "reference_ref"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "DIAGNOSIS_COMMITTED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "move_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "why": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "move_id",
+              "why"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "REPAIR_COMMITTED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "first_event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "work": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1
+              },
+              "why": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "first_event_id",
+              "work",
+              "why"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "BOUNDARY_COMMITTED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "boundary_task_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "id",
+                  "revision",
+                  "sha256"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "SOURCE",
+                      "OCCURRENCE",
+                      "QUESTION",
+                      "ASSESSMENT",
+                      "WARRANT",
+                      "QRT",
+                      "CONSTRUCTION",
+                      "LESSON",
+                      "FRESH_TASK",
+                      "SOLUTION",
+                      "RELATIONSHIP",
+                      "PRESENTATION",
+                      "CONCEPT",
+                      "ASSET",
+                      "PROGRAMME",
+                      "EXAM_EDITION",
+                      "PAPER",
+                      "STIMULUS",
+                      "APPROVAL",
+                      "RELEASE",
+                      "SUBJECT_PROFILE"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "responses": {
+                "type": "object",
+                "minProperties": 1,
+                "additionalProperties": {
+                  "type": "object"
+                }
+              },
+              "work": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "help_event_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "boundary_task_ref",
+              "responses",
+              "work",
+              "help_event_ids"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "BOUNDARY_FEEDBACK_VIEWED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "boundary_event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reference_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "id",
+                  "revision",
+                  "sha256"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "SOURCE",
+                      "OCCURRENCE",
+                      "QUESTION",
+                      "ASSESSMENT",
+                      "WARRANT",
+                      "QRT",
+                      "CONSTRUCTION",
+                      "LESSON",
+                      "FRESH_TASK",
+                      "SOLUTION",
+                      "RELATIONSHIP",
+                      "PRESENTATION",
+                      "CONCEPT",
+                      "ASSET",
+                      "PROGRAMME",
+                      "EXAM_EDITION",
+                      "PAPER",
+                      "STIMULUS",
+                      "APPROVAL",
+                      "RELEASE",
+                      "SUBJECT_PROFILE"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "required": [
+              "boundary_event_id",
+              "reference_ref"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "event_type": {
+            "const": "SOURCE_RETURNED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "payload": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "origin_session_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "id",
+                  "revision",
+                  "sha256"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "SOURCE",
+                      "OCCURRENCE",
+                      "QUESTION",
+                      "ASSESSMENT",
+                      "WARRANT",
+                      "QRT",
+                      "CONSTRUCTION",
+                      "LESSON",
+                      "FRESH_TASK",
+                      "SOLUTION",
+                      "RELATIONSHIP",
+                      "PRESENTATION",
+                      "CONCEPT",
+                      "ASSET",
+                      "PROGRAMME",
+                      "EXAM_EDITION",
+                      "PAPER",
+                      "STIMULUS",
+                      "APPROVAL",
+                      "RELEASE",
+                      "SUBJECT_PROFILE"
+                    ]
+                  },
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                  },
+                  "revision": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              },
+              "cursor": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "origin_session_id",
+              "origin_ref",
+              "cursor"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
