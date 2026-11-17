@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "g9-model-projection/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adapter_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "adapter_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": "string",
+            "minLength": 1
+          },
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "step": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "initial": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "unit",
+          "min",
+          "max",
+          "step",
+          "initial"
+        ]
+      },
+      "minItems": 1
+    },
+    "output_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "representation_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "warrant_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "id",
+          "revision",
+          "sha256"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "SOURCE",
+              "OCCURRENCE",
+              "QUESTION",
+              "ASSESSMENT",
+              "WARRANT",
+              "QRT",
+              "CONSTRUCTION",
+              "LESSON",
+              "FRESH_TASK",
+              "SOLUTION",
+              "RELATIONSHIP",
+              "PRESENTATION",
+              "CONCEPT",
+              "ASSET",
+              "PROGRAMME",
+              "EXAM_EDITION",
+              "PAPER",
+              "STIMULUS",
+              "APPROVAL",
+              "RELEASE",
+              "SUBJECT_PROFILE"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "alt_text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "HOLD",
+        "CANDIDATE"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "adapter_id",
+    "adapter_version",
+    "parameters",
+    "output_ids",
+    "representation_ids",
+    "warrant_refs",
+    "alt_text",
+    "status"
+  ]
+}

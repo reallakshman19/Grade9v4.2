@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "g9-disclosure/1"
+    },
+    "task_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "stage": {
+      "enum": [
+        "PREDICT",
+        "ATTEMPT",
+        "RECONSTRUCT",
+        "DIAGNOSE",
+        "REPAIR",
+        "BOUNDARY_TEST",
+        "COMPLETE"
+      ]
+    },
+    "capability": {
+      "enum": [
+        "VIEW_STIMULUS",
+        "EDIT_WORK",
+        "MODEL_MANIPULATE",
+        "MODEL_AUTO_CALCULATE",
+        "H1",
+        "H2",
+        "H3",
+        "REFERENCE_SOLUTION",
+        "BOUNDARY_REFERENCE",
+        "SOURCE_RETURN",
+        "READ_ANCHOR",
+        "SHOW_REASONING_CRUX"
+      ]
+    },
+    "allowed": {
+      "type": "boolean"
+    },
+    "review_ref": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "id",
+            "revision",
+            "sha256"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "SOURCE",
+                "OCCURRENCE",
+                "QUESTION",
+                "ASSESSMENT",
+                "WARRANT",
+                "QRT",
+                "CONSTRUCTION",
+                "LESSON",
+                "FRESH_TASK",
+                "SOLUTION",
+                "RELATIONSHIP",
+                "PRESENTATION",
+                "CONCEPT",
+                "ASSET",
+                "PROGRAMME",
+                "EXAM_EDITION",
+                "PAPER",
+                "STIMULUS",
+                "APPROVAL",
+                "RELEASE",
+                "SUBJECT_PROFILE"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "task_ref",
+    "stage",
+    "capability",
+    "allowed",
+    "review_ref",
+    "reason_code"
+  ]
+}
