@@ -35,8 +35,50 @@ jobs:
           npm ci --no-audit --no-fund
           python -m pip install -e '.[dev]'
           python -m pip check
+      # Source repository is already public. Retrieve the pinned files into
+      # the ephemeral runner only; do not commit or upload source bytes.
+      - name: Checkout immutable public v3.5 source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: reallakshman19/Grade9v3.5
+          ref: 8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b
+          path: .source-v35
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /Shared/web/interactive-page-blueprints.v1.json
+            /Shared/roles/CORE-AUTHORITY-CONTRACT.md
+            /Shared/roles/LEARNER-PRODUCT-TEMPLATES.md
+            /docs/portable-workbench/packages/
+      - name: Verify pinned v3.5 source and packages
+        run: |
+          test "$(git -C .source-v35 rev-parse HEAD)" = "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b"
+          test "$(git -C .source-v35 rev-parse HEAD^{tree})" = "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
+          git -C .source-v35 diff --exit-code HEAD
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('.source-v35/docs/portable-workbench/packages')
+          data = json.loads(Path('docs/architecture/portable-compatibility.json').read_text())
+          for item in data['audited_packages']:
+              path = root / (item['id'] + '.json')
+              assert path.is_file() and not path.is_symlink()
+              raw = path.read_bytes()
+              assert len(raw) == item['byte_count']
+              assert hashlib.sha256(raw).hexdigest() == item['sha256']
+          print('All four pinned portable packages verified')
+          PY
+      - name: Run source-backed v3.5 compatibility and native checks
+        env:
+          G9_V35_ROOT: ${{ github.workspace }}/.source-v35
+          G9_V35_PORTABLE_PACKAGES: ${{ github.workspace }}/.source-v35/docs/portable-workbench/packages
+        run: python -m pytest -ra --tb=short tests/contracts/test_portable_compatibility.py tests/contracts/test_native_six_core.py
       - name: Run full Python suite
-        run: python -m pytest -ra
+        if: always() && !cancelled()
+        env:
+          G9_V35_ROOT: ${{ github.workspace }}/.source-v35
+          G9_V35_PORTABLE_PACKAGES: ${{ github.workspace }}/.source-v35/docs/portable-workbench/packages
+        run: python -m pytest -ra --tb=short
   browser:
     if: github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated'
     runs-on: ubuntu-24.04
