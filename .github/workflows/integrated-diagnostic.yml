@@ -1,0 +1,66 @@
+name: Integrated engineering diagnostic (not release)
+on:
+  pull_request:
+    branches:
+      - feat/a13-build-shell-and-local-toolchain
+    paths:
+      - '.github/workflows/integrated-diagnostic.yml'
+permissions:
+  contents: read
+jobs:
+  python:
+    if: github.head_ref == 'validation/a13-a14-a62-integrated'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: d03f18857b0c5cbff92903dcae4f690687ee4a95
+          persist-credentials: false
+      - name: Verify exact candidate
+        run: |
+          test "$(git rev-parse HEAD)" = "d03f18857b0c5cbff92903dcae4f690687ee4a95"
+          test "$(git rev-parse HEAD^{tree})" = "dc802c87bfbe0cae82ca2b9190f3c7731783430d"
+          git diff --exit-code HEAD
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.13.5'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+      - name: Install pinned dependencies
+        run: |
+          test "$(node --version)" = "v22.16.0"
+          test "$(npm --version)" = "10.9.2"
+          npm ci --no-audit --no-fund
+          python -m pip install -e '.[dev]'
+          python -m pip check
+      - name: Run full Python suite
+        run: python -m pytest -ra
+  browser:
+    if: github.head_ref == 'validation/a13-a14-a62-integrated'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: d03f18857b0c5cbff92903dcae4f690687ee4a95
+          persist-credentials: false
+      - name: Verify exact candidate
+        run: |
+          test "$(git rev-parse HEAD)" = "d03f18857b0c5cbff92903dcae4f690687ee4a95"
+          test "$(git rev-parse HEAD^{tree})" = "dc802c87bfbe0cae82ca2b9190f3c7731783430d"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+      - name: Install locked JavaScript dependencies
+        run: |
+          test "$(node --version)" = "v22.16.0"
+          test "$(npm --version)" = "10.9.2"
+          npm ci --no-audit --no-fund
+      - name: Strict typecheck and Vite build
+        run: npm run build
+      - name: Install Chromium for diagnostic smoke
+        run: npm exec --no -- playwright-core install --with-deps chromium
+      - name: Run diagnostic browser smoke
+        run: npm run test:smoke
