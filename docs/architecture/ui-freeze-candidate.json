@@ -293,14 +293,15 @@
       "schema_blob": "a100aa9f808a4bfbf73084e65c581b37fba428b5"
     },
     "a11": {
-      "commit": "aa87048dc9e396ecfdbb4a9df4ed9a7bbda58b65",
-      "tree": "d018974aa8e7a97dafd1a133867af9334259e743",
-      "family_graph_blob": "fd3d9366fd10ec4c919a5bdae13b3a41d8488497",
-      "coverage_blob": "28063597a6c31ecb79c752cd0cb9707f703c835c"
+      "commit": "7d8ff7878a1d5868e9ce550fe532a8aa448da599",
+      "tree": "f9726210d477bb861ffb697bd79ba75086457428",
+      "family_graph_blob": "44ffa7a3a157cdef9e8ec1521b4c2118bead40bb",
+      "coverage_blob": "511ae8c776815dc65ce617fb203717b970b1d31d",
+      "graph_validator_status": "13/13 EXACT_RECONSTRUCTED_GRAPHS_PASS; NOT_RATIFIED"
     },
     "a12_compatibility": {
-      "commit": "ecb6b5ea876a902d6201f9200dc90f58e32670d4",
-      "tree": "3aa9ff7bbe3b31af45292f770a1e9fe18f58f2da",
+      "commit": "9dcd2d09ba125b3a184839caba957c96a0ff17be",
+      "tree": "04c02915c48bf651710cd70137a4cd3000da1eb1",
       "status": "CONTRIBUTOR_CORRECTION_NOT_INDEPENDENT_ACCEPTANCE"
     }
   },
