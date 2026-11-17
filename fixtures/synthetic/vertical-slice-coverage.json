@@ -1,19 +1,10 @@
 {
   "schema_version": "g9-vertical-slice-coverage/1.0",
   "workpack_id": "A11",
-  "status": "PARTIAL_FAMILY_COVERAGE_AWAITING_DISPATCHER",
+  "status": "BLOCKED_AWAITING_INDEPENDENT_RATIFICATION_AND_12_DISPATCHER_GRAPHS",
   "families_total_required": 13,
-  "families_ratified_count": 1,
-  "ratified_families": [
-    {
-      "family_id": 1,
-      "domain": "PHYSICS",
-      "topic": "Hooke's Law and Unilateral Contact Work-Energy Theorem",
-      "source_fixture": "fixtures/synthetic/wpe-vertical-slice.json",
-      "objects_count": 33,
-      "status": "RATIFIED_DEMO_FIXTURE"
-    }
-  ],
+  "families_ratified_count": 0,
+  "ratified_families": [],
   "pending_families": [
     {
       "family_id": 2,
@@ -88,5 +79,17 @@
       "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
     }
   ],
-  "policy_note": "A11 explicitly documents 1 ratified vertical slice engineering example; twelve further full graphs must be obtained from independent dispatcher before claiming full family coverage. Academic approval: NONE. Release: NONE."
+  "policy_note": "Only one complete R4 synthetic WPE engineering example is supplied, and it is NOT independently ratified. The other twelve full A1–A9/anchor/fresh/response/boundary graphs remain AWAITING_INDEPENDENT_DISPATCHER_GRAPH. Thirteen numerical model vectors are not full-family graphs. Academic admission HOLD; release NONE.",
+  "families_supplied_count": 1,
+  "supplied_unratified_families": [
+    {
+      "family_id": 1,
+      "domain": "PHYSICS",
+      "topic": "Hooke's Law and Unilateral Contact Work-Energy Theorem",
+      "source_fixture": "fixtures/synthetic/wpe-vertical-slice.json",
+      "objects_count": 33,
+      "status": "SYNTHETIC_ENGINEERING_EXAMPLE_NOT_INDEPENDENTLY_RATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    }
+  ]
 }
