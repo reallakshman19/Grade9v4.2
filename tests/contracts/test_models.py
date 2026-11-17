@@ -127,66 +127,48 @@ def validate_model_domain_invariants(model: dict[str, Any], validator: jsonschem
 
 
 def evaluate_disclosure_policy(
-    stage: str, capability: str, task_ref: dict[str, Any], review_ref: dict[str, Any] | None = None
+    stage: str, capability: str, task_ref: dict[str, Any],
+    review_ref: dict[str, Any] | None = None, *,
+    first_committed: bool = False,
+    boundary_committed: bool = False,
+    authorized_capabilities: frozenset[str] = frozenset(),
+    verified_review_refs: frozenset[tuple] = frozenset(),
+    exam_mode: bool = False,
 ) -> dict[str, Any]:
-    """Implements default-deny cognitive disclosure engine."""
-    # Pre-commitment disclosure invariant: solutions and hints strictly denied during PREDICT
-    if stage == "PREDICT" and capability in {"REFERENCE_SOLUTION", "H1", "H2", "H3", "SHOW_REASONING_CRUX"}:
-        return {
-            "schema_version": "g9-disclosure/1",
-            "task_ref": task_ref,
-            "stage": stage,
-            "capability": capability,
-            "allowed": False,
-            "review_ref": review_ref,
-            "reason_code": "PRECOMMIT_DISCLOSURE_WITHHELD",
-        }
-
-    # Reference solution permitted only in RECONSTRUCT or COMPLETE with verified review_ref
-    if capability == "REFERENCE_SOLUTION":
-        if stage in {"RECONSTRUCT", "COMPLETE"}:
-            if not review_ref:
-                raise ModelContractError("MISSING_REVIEW_RECEIPT", "Unreviewed solution disclosure prohibited")
-            return {
-                "schema_version": "g9-disclosure/1",
-                "task_ref": task_ref,
-                "stage": stage,
-                "capability": capability,
-                "allowed": True,
-                "review_ref": review_ref,
-                "reason_code": "POST_COMMIT_SOLUTION_PERMITTED",
-            }
-        return {
-            "schema_version": "g9-disclosure/1",
-            "task_ref": task_ref,
-            "stage": stage,
-            "capability": capability,
-            "allowed": False,
-            "review_ref": review_ref,
-            "reason_code": "SOLUTION_FORBIDDEN_IN_STAGE",
-        }
-
-    # Default allowed for standard engagement capabilities
-    if capability in {"VIEW_STIMULUS", "EDIT_WORK", "MODEL_MANIPULATE"}:
-        return {
-            "schema_version": "g9-disclosure/1",
-            "task_ref": task_ref,
-            "stage": stage,
-            "capability": capability,
-            "allowed": True,
-            "review_ref": review_ref,
-            "reason_code": "STANDARD_STAGE_CAPABILITY_ALLOWED",
-        }
-
-    # Default deny for everything else
+    """Synthetic policy oracle, NOT a signed review verifier or production runtime."""
+    help_caps = {"H1", "H2", "H3", "READ_ANCHOR", "MODEL_AUTO_CALCULATE", "MODEL_MANIPULATE"}
+    if capability in {"VIEW_STIMULUS", "EDIT_WORK"}:
+        permitted, reason = True, "STANDARD_STAGE_CAPABILITY_ALLOWED"
+    elif exam_mode or stage == "PREDICT":
+        permitted, reason = False, "PRECOMMIT_DISCLOSURE_WITHHELD"
+    elif capability in help_caps:
+        permitted = stage == "ATTEMPT" and capability in authorized_capabilities
+        reason = "HELP_PERMITTED_BY_EXTERNAL_POLICY" if permitted else "DEFAULT_DENY_UNAUTHORIZED_HELP"
+    elif capability == "SOURCE_RETURN":
+        permitted = stage == "COMPLETE" and capability in authorized_capabilities
+        reason = "SOURCE_RETURN_ELIGIBLE" if permitted else "SOURCE_RETURN_WITHHELD"
+    elif capability in {"REFERENCE_SOLUTION", "SHOW_REASONING_CRUX", "BOUNDARY_REFERENCE"}:
+        valid_stage = (stage in {"RECONSTRUCT", "DIAGNOSE", "REPAIR", "BOUNDARY_TEST", "COMPLETE"}
+                       if capability != "BOUNDARY_REFERENCE" else stage in {"BOUNDARY_TEST", "COMPLETE"})
+        if capability == "REFERENCE_SOLUTION" and valid_stage and not review_ref:
+            raise ModelContractError("MISSING_REVIEW_RECEIPT", "Reference solution requires independent review")
+        ref_tuple = (review_ref.get("type"), review_ref.get("id"),
+                     review_ref.get("revision"), review_ref.get("sha256")) if isinstance(review_ref, dict) else None
+        review_verified = (ref_tuple in verified_review_refs and
+                           isinstance(review_ref, dict) and review_ref.get("type") == "APPROVAL")
+        if capability == "REFERENCE_SOLUTION" and valid_stage and review_ref and not review_verified:
+            raise ModelContractError("UNVERIFIED_REVIEW_RECEIPT", "No trusted external acceptance evidence")
+        committed = boundary_committed if capability == "BOUNDARY_REFERENCE" else first_committed
+        permitted = (valid_stage and committed and capability in authorized_capabilities
+                     and review_verified)
+        reason = "POST_COMMIT_SOLUTION_PERMITTED" if permitted and capability == "REFERENCE_SOLUTION" else (
+            "REVIEWED_DISCLOSURE_PERMITTED" if permitted else "DEFAULT_DENY_UNAUTHORIZED_DISCLOSURE")
+    else:
+        permitted, reason = False, "DEFAULT_DENY_UNREGISTERED_CAPABILITY"
     return {
-        "schema_version": "g9-disclosure/1",
-        "task_ref": task_ref,
-        "stage": stage,
-        "capability": capability,
-        "allowed": False,
-        "review_ref": review_ref,
-        "reason_code": "DEFAULT_DENY_UNREGISTERED_CAPABILITY",
+        "schema_version": "g9-disclosure/1", "task_ref": task_ref,
+        "stage": stage, "capability": capability, "allowed": permitted,
+        "review_ref": review_ref, "reason_code": reason,
     }
 
 
@@ -273,7 +255,11 @@ def test_precommit_solution_withheld_in_predict(disclosure_validator):
 def test_postcommit_solution_permitted_in_reconstruct(disclosure_validator):
     task = make_exact_ref("QUESTION", "que:physics:wpe:01")
     rev = make_exact_ref("APPROVAL", "app:ir:001")
-    outcome = evaluate_disclosure_policy("RECONSTRUCT", "REFERENCE_SOLUTION", task, rev)
+    # Synthetic signed-receipt registry is supplied by the test, not manufactured by the schema.
+    checked = frozenset({(rev["type"], rev["id"], rev["revision"], rev["sha256"])})
+    outcome = evaluate_disclosure_policy("RECONSTRUCT", "REFERENCE_SOLUTION", task, rev,
+                                         first_committed=True, authorized_capabilities=frozenset({"REFERENCE_SOLUTION"}),
+                                         verified_review_refs=checked)
     disclosure_validator.validate(outcome)
     assert outcome["allowed"] is True
     assert outcome["reason_code"] == "POST_COMMIT_SOLUTION_PERMITTED"
@@ -291,6 +277,70 @@ def test_default_deny_unregistered_capability(disclosure_validator):
     outcome = evaluate_disclosure_policy("ATTEMPT", "UNKNOWN_CHEAT_TOOL", task)
     assert outcome["allowed"] is False
     assert outcome["reason_code"] == "DEFAULT_DENY_UNREGISTERED_CAPABILITY"
+
+
+
+def test_direct_disclosure_schema_rejects_precommit_leaks(disclosure_validator):
+    """Schema validation itself must reject unsafe policy decisions."""
+    task = make_exact_ref("QUESTION", "que:physics:wpe:01")
+    for stage, cap in (
+        ("PREDICT", "REFERENCE_SOLUTION"), ("ATTEMPT", "REFERENCE_SOLUTION"),
+        ("PREDICT", "H1"), ("PREDICT", "READ_ANCHOR"),
+        ("ATTEMPT", "SHOW_REASONING_CRUX"), ("ATTEMPT", "BOUNDARY_REFERENCE"),
+        ("RECONSTRUCT", "BOUNDARY_REFERENCE"), ("ATTEMPT", "SOURCE_RETURN"),
+    ):
+        bad = {"schema_version": "g9-disclosure/1", "task_ref": task,
+               "stage": stage, "capability": cap, "allowed": True,
+               "review_ref": make_exact_ref("APPROVAL", "app:ir:001"),
+               "reason_code": "POST_COMMIT_SOLUTION_PERMITTED"}
+        with pytest.raises(jsonschema.ValidationError):
+            disclosure_validator.validate(bad)
+
+
+def test_attempt_hint_is_allowed_only_when_externally_authorized(disclosure_validator):
+    """R4 oracle permits authorized non-exam H1 help during ATTEMPT, not PREDICT."""
+    task = make_exact_ref("QUESTION", "que:physics:wpe:01")
+    approval = make_exact_ref("APPROVAL", "app:ir:help")
+    denied = evaluate_disclosure_policy("ATTEMPT", "H1", task, approval)
+    assert denied["allowed"] is False
+    permitted = evaluate_disclosure_policy("ATTEMPT", "H1", task, approval,
+                    authorized_capabilities=frozenset({"H1"}))
+    disclosure_validator.validate(permitted)
+    assert permitted["allowed"] is True
+    assert evaluate_disclosure_policy("ATTEMPT", "H1", task, approval,
+                    authorized_capabilities=frozenset({"H1"}), exam_mode=True)["allowed"] is False
+
+
+def test_postcommit_requires_verified_exact_receipt_not_merely_claim(disclosure_validator):
+    task = make_exact_ref("QUESTION", "que:physics:wpe:01")
+    alleged = make_exact_ref("APPROVAL", "app:unverified")
+    with pytest.raises(ModelContractError) as exc:
+        evaluate_disclosure_policy("RECONSTRUCT", "REFERENCE_SOLUTION", task, alleged,
+            first_committed=True, authorized_capabilities=frozenset({"REFERENCE_SOLUTION"}))
+    assert exc.value.code == "UNVERIFIED_REVIEW_RECEIPT"
+    forged = make_exact_ref("WARRANT", "war:fake")
+    schema_only = {"schema_version": "g9-disclosure/1", "task_ref": task,
+                   "stage": "RECONSTRUCT", "capability": "REFERENCE_SOLUTION",
+                   "allowed": True, "review_ref": forged,
+                   "reason_code": "POST_COMMIT_SOLUTION_PERMITTED"}
+    with pytest.raises(jsonschema.ValidationError):
+        disclosure_validator.validate(schema_only)
+
+
+def test_model_schema_rejects_duplicate_outputs_and_bad_adapter_version(model_validator):
+    for field in ("output_ids", "representation_ids"):
+        bad = make_valid_model()
+        bad[field] = [bad[field][0], bad[field][0]]
+        with pytest.raises(jsonschema.ValidationError):
+            model_validator.validate(bad)
+    bad = make_valid_model()
+    bad["adapter_version"] = "invented-version"
+    with pytest.raises(jsonschema.ValidationError):
+        model_validator.validate(bad)
+    wrong = make_valid_model()
+    wrong["warrant_refs"][0]["type"] = "QUESTION"
+    with pytest.raises(jsonschema.ValidationError):
+        model_validator.validate(wrong)
 
 
 def test_rule_13_invariant():
