@@ -146,7 +146,7 @@ class DualSourceMigrationTests(unittest.TestCase):
         with self.assertRaises(ReconciliationConflictError):
             self.reconcile_engine.reconcile_records([], [], synthetic=False)
 
-    def test_dual_source_identical_bytes_aliased(self):
+    def test_dual_source_canonical_equality_stays_unmerged(self):
         shared_record = {
             "logical_id": "item:wpe-01",
             "stem": "Calculate work done when 10 N moves 5 m.",
@@ -156,13 +156,16 @@ class DualSourceMigrationTests(unittest.TestCase):
 
         result = self.reconcile_engine.reconcile_records([shared_record], [shared_record], synthetic=True)
         self.assertEqual(result["total_records_processed"], 1)
-        self.assertEqual(result["identical_matches"], 1)
+        self.assertEqual(result["identical_matches"], 0)
+        self.assertEqual(result["canonical_equal_held"], 1)
         self.assertEqual(result["conflicts_held"], 0)
-
-        # Verify unified occurrence has both source lineages
-        unified_occ = [o for o in result["objects"] if o["type"] == "OCCURRENCE"][0]
-        self.assertEqual(len(unified_occ["source_lineage_refs"]), 2)
-        self.assertEqual(unified_occ["payload"]["reconciliation"], "EXACT_BLOB_MATCH")
+        occurrences = [o for o in result["objects"] if o["type"] == "OCCURRENCE"]
+        self.assertEqual(len(occurrences), 2)
+        self.assertEqual(len({o["id"] for o in occurrences}), 2)
+        relation = [o for o in result["objects"] if o["type"] == "RELATIONSHIP"]
+        self.assertEqual(len(relation), 1)
+        self.assertEqual(relation[0]["payload"]["relationship_type"],
+                         "DUAL_SOURCE_CANONICAL_EQUAL_UNVERIFIED")
 
     def test_dual_source_conflicting_bytes_preserves_both_no_version_priority(self):
         rec_v35 = {
@@ -223,10 +226,52 @@ class DualSourceMigrationTests(unittest.TestCase):
         self.assertIn("/explore/kinematics", routes)
         self.assertIn("/explore/gravitation", routes)
 
+    def test_malformed_non_object_record_rejected(self):
+        for left, right in (([[]], []), ([], [False])):
+            with self.assertRaises(ReconciliationConflictError):
+                self.reconcile_engine.reconcile_records(left, right)
+
     def test_missing_identifier_rejection(self):
         bad_record = {"stem": "No ID at all"}
         with self.assertRaises(ReconciliationConflictError):
             self.reconcile_engine.reconcile_records([bad_record], [], synthetic=True)
+
+    def test_duplicate_routes_and_synthetic_slug_collisions(self):
+        for rows in ([{"route": "/x"}, {"route": "/x"}],
+                     [{"route": "/v35/conflict"}], [{"route": "../bad"}]):
+            with self.subTest(rows=rows):
+                with self.assertRaises(ReconciliationConflictError):
+                    self.reconcile_engine.reconcile_routes(rows, [])
+        result = self.reconcile_engine.reconcile_records(
+            [{"id": "a/b", "value": 1}, {"id": "a_b", "value": 2}], [])
+        occs = [o["id"] for o in result["objects"] if o["type"] == "OCCURRENCE"]
+        self.assertEqual(len(occs), len(set(occs)))
+        shared = self.reconcile_engine.reconcile_routes(
+            [{"route": "/shared", "target": "same"}],
+            [{"route": "/shared", "target": "same"}])
+        self.assertEqual(shared["routes"]["/shared"]["route_type"], "shared_route_held")
+
+    def test_source_byte_and_executable_mutations(self):
+        source = {"resource_id": "res:test", "kind": "OPAQUE_APP"}
+        unrelated = json.dumps({"resource_id": "res:other", "kind": "OPAQUE_APP"}).encode()
+        with self.assertRaises(V35MigrationError):
+            self.v35_engine.migrate_registry_entry(
+                snapshot_id="v35:8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+                source_path="registry.json", entry=source, raw_bytes=unrelated)
+        for manifest in (
+            {"package_id": "other"},
+            {"package_id": "portable-long-division", "nested": {"scripts": ["unsafe"]}},
+        ):
+            with self.subTest(manifest=manifest):
+                with self.assertRaises(V35MigrationError):
+                    self.v35_engine.migrate_portable_package(
+                        package_id="portable-long-division", raw_manifest=manifest)
+        duplicate_json = b'{"id":"abc","id":"def"}'
+        with self.assertRaises(V35MigrationError):
+            self.v35_engine.migrate_library_package(
+                snapshot_id="v35:8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+                source_path="pkg.json", raw_bytes=duplicate_json,
+                expected_sha256=hashlib.sha256(duplicate_json).hexdigest())
 
     def test_rule13_invariant_software_validation_not_academic_approval(self):
         disclaimer = "No academic approval inferred from software validation."

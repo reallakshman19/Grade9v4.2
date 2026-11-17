@@ -1,60 +1,13 @@
 {
   "schema_version": "g9-ui-capability-map/1",
   "workpack_id": "A58",
-  "status": "HOLD",
+  "status": "BLOCKED",
   "academic_admission": "HOLD",
   "ui_implementation_freeze": "NOT_FROZEN",
   "production_release": "NONE",
-  "core_roles_covered": [
-    "CORE1",
-    "CORE1A",
-    "CORE1B",
-    "CORE2",
-    "CORE2A",
-    "CORE2B",
-    "EXPLORER"
-  ],
-  "capabilities": [
-    {
-      "context": [
-        "synthetic-v35",
-        "standalone/demo.html",
-        "local-http-demo"
-      ],
-      "capability_id": "demo.slider",
-      "description": "synthetic parameter slider for interactive observation",
-      "native_slot": "PARAMETERS",
-      "disposition": "SUPPORTED"
-    }
-  ],
-  "blueprint_slots_reference": {
-    "CORE1": {
-      "family": "READING_ORIENTATION",
-      "slots": ["IDENTITY_SCOPE", "OBJECTS_CONVENTIONS", "REPRESENTATION", "RELATIONS", "ANCHOR", "HARD_TRANSITION_MAP", "EXCLUSIONS", "CLOSURE"]
-    },
-    "CORE1A": {
-      "family": "READING_CONSTRUCTION",
-      "slots": ["COMPLETED_CONSTRUCTION", "BOUND_STAGED_VISUALS", "MODEL_SCOPE_PROBES", "EQUATIONS", "WORKED_STEPS", "TRAP_REPAIR", "QUICK_CHECK", "EXIT_LINKS"]
-    },
-    "CORE1B": {
-      "family": "GUIDED_RECONSTRUCTION",
-      "slots": ["PREDICT_STAGE", "ATTEMPT_STAGE", "RECONSTRUCT_STAGE", "DIAGNOSE_STAGE", "REPAIR_STAGE", "BOUNDARY_TRANSFER"]
-    },
-    "CORE2": {
-      "family": "QUESTION_READER",
-      "slots": ["IDENTITY_ATTEMPT", "SOURCE_REPRESENTATION", "SOLUTION_PANE", "CANONICAL_STEPS"]
-    },
-    "CORE2A": {
-      "family": "QUESTION_STUDY",
-      "slots": ["QUESTION_REPRESENTATION", "SCAFFOLDS", "FAMILIAR_CRUX", "FULL_REASONING_REPAIR"]
-    },
-    "CORE2B": {
-      "family": "TRANSFER_ATTEMPT",
-      "slots": ["PRIOR_EXPOSURE", "PROTECTED_DECISION", "SAFE_REPRESENTATION", "DURABLE_COMMIT", "RUBRIC_REPAIR"]
-    },
-    "EXPLORER": {
-      "family": "STAGE_SUPPORT",
-      "slots": ["SCENE", "PARAMETERS", "COGNITIVE_ROUTE", "STAGE_CONTROLS", "SUPPORT_PANE"]
-    }
-  }
+  "core_roles_covered": [],
+  "capabilities": [],
+  "native_blueprint_registry": "docs/architecture/native-blueprint-map.json",
+  "mapping_status": "NOT_VERIFIED_AGAINST_ACTUAL_LEGACY_UI",
+  "notes": "A57 has seven proposed native role definitions. No actual legacy UI capability is independently observed/mapped. The synthetic demo.slider fixture is limited to tests."
 }

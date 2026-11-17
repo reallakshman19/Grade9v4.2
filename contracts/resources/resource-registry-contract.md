@@ -56,8 +56,9 @@ Any resource failing any of these conditions fails closed to non-routable (`HOLD
 ---
 
 ## 4. Search Semantics and Public Filtering
-1. **Search Visibility:** Only resources with `search_visibility == "LEARNER"` are emitted into the search catalog.
-2. **Metadata Sanitization:** Hidden question answers, step-by-step master keys, evaluation rubrics, and internal move annotations are stripped prior to search indexing.
+1. **Search Visibility:** `search_visibility == "LEARNER"` is only a *candidate declaration*. The schema rejects it unless the resource has learner audience, permitted kind, and declared cleared rights/academic/technical/release/receipt fields. Publishing additionally requires an independent trusted receipt verifier and route eligibility check. Never index on this field alone.
+2. **Fail-closed exclusions:** OWNER/LAB/INTERNAL and OWNER_TOOL resources must declare `EXCLUDED`. `HOLD`, `UNTESTED`, missing receipt declarations, or ineligible governance never yields a learner search result. `receipt_refs` are references, not proof of cryptographic validity.
+3. **Metadata Sanitization:** Hidden question answers, step-by-step master keys, evaluation rubrics, and internal move annotations are stripped prior to search indexing.
 3. **Route Integrity:** Every indexed record must resolve to an exact, verified registered route ID.
 
 ---
