@@ -14,6 +14,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -21,7 +22,30 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 DOCS_PATH = ROOT / "docs" / "architecture" / "portable-compatibility.json"
-CUSTODY_PWB_PACKAGES = Path("d:/CodeD/custody/Grade9v3.5/public/portable-workbench/packages")
+def read_pinned_custody_package(pkg_id: str, expected: dict[str, Any]) -> dict[str, Any]:
+    """Fail closed without all four original, immutable source packages."""
+    raw_root = os.environ.get("G9_V35_PORTABLE_PACKAGES")
+    if not raw_root:
+        pytest.fail("MISSING_CUSTODY: G9_V35_PORTABLE_PACKAGES is required for A59 acceptance")
+    root = Path(raw_root).resolve(strict=True)
+    if not root.is_dir():
+        pytest.fail("MISSING_CUSTODY: portable package custody directory does not exist")
+    filepath = root / (pkg_id + ".json")
+    if filepath.is_symlink() or not filepath.is_file() or not filepath.resolve().is_relative_to(root):
+        pytest.fail("MISSING_CUSTODY: immutable package missing or unsafe: " + pkg_id)
+    original = filepath.read_bytes()
+    assert hashlib.sha256(original).hexdigest() == expected["sha256"], "SHA-256 mismatch: " + pkg_id
+    assert len(original) == expected["byte_count"], "byte count mismatch: " + pkg_id
+
+    def unique_pairs(pairs):
+        obj = {}
+        for key, value in pairs:
+            if key in obj:
+                raise ValueError("duplicate original JSON key: " + key)
+            obj[key] = value
+        return obj
+    return json.loads(original.decode("utf-8"), object_pairs_hook=unique_pairs)
+
 
 # Native contract version constants
 PACKAGE_SCHEMA = "portable-workbench-package"
@@ -297,23 +321,15 @@ def test_four_package_shapes_and_version_seams():
     }
     assert set(audited.keys()) == expected_ids
 
-    # If custody packages are available on disk, verify exact byte hashes
+    # Never silently pass by skipping unavailable private source bytes.
     for pkg_id, entry in audited.items():
-        custody_file = CUSTODY_PWB_PACKAGES / f"{pkg_id}.json"
-        if custody_file.exists():
-            raw_bytes = custody_file.read_bytes()
-            computed_sha = hashlib.sha256(raw_bytes).hexdigest()
-            assert computed_sha == entry["sha256"], f"Digest mismatch on {pkg_id}"
-            assert len(raw_bytes) == entry["byte_count"], f"Byte count mismatch on {pkg_id}"
-
-            pkg_json = json.loads(raw_bytes.decode("utf-8"))
-            # Validate under fail-closed validator
-            validated = validate_portable_package(pkg_json)
-            assert validated["packageVersion"] == "1.0.0"
-            assert validated["componentApiVersion"] == "0.1.0"
-            assert validated["transformationIrVersion"] == "0.1.0"
-            assert validated["adapterApiVersion"] == "0.2.0"
-            assert validated["scenePackageVersion"] == "1.0.0"
+        pkg_json = read_pinned_custody_package(pkg_id, entry)
+        validated = validate_portable_package(pkg_json)
+        assert validated["packageVersion"] == "1.0.0"
+        assert validated["componentApiVersion"] == "0.1.0"
+        assert validated["transformationIrVersion"] == "0.1.0"
+        assert validated["adapterApiVersion"] == "0.2.0"
+        assert validated["scenePackageVersion"] == "1.0.0"
 
 
 def test_proof_vs_canonical_authority_distinction():
@@ -339,51 +355,9 @@ def test_proof_vs_canonical_authority_distinction():
 
 def test_kinematics_same_time_vs_mixed_time_rules():
     """Verifies physical invariants in portable-motion-shared-clock adapter rules."""
-    custody_file = CUSTODY_PWB_PACKAGES / "portable-motion-shared-clock.json"
-    if custody_file.exists():
-        pkg = json.loads(custody_file.read_text(encoding="utf-8"))
-    else:
-        # Synthetic mock from decision record
-        pkg = {
-            "schemaVersion": PACKAGE_SCHEMA,
-            "packageVersion": PACKAGE_VERSION,
-            "componentApiVersion": COMPONENT_API_VERSION,
-            "transformationIrVersion": TRANSFORMATION_IR_VERSION,
-            "adapterApiVersion": ADAPTER_API_VERSION,
-            "scenePackageVersion": SCENE_PACKAGE_VERSION,
-            "id": "portable-motion-shared-clock",
-            "title": "Two-Body Kinematics — Shared-Clock Independent Trajectories",
-            "sourceRefs": ["SRC-AUTHOR-KIN-2D-EXAMSIDE-ADAPTATION"],
-            "sceneRefs": ["portable-motion-shared-clock-scene"],
-            "representationRefs": ["REP-KIN-2D-SHARED-CLOCK"],
-            "assetRefs": [],
-            "accessibilityRefs": [],
-            "questionBindings": [],
-            "resourceRef": "ACT-KIN-2D-SHARED-CLOCK",
-            "provenance": {
-                "authority": "CANONICAL_COMPILED_RESOURCE",
-                "sourceKind": "CANONICAL_RESOURCE",
-                "sourceRefs": ["SRC-AUTHOR-KIN-2D-EXAMSIDE-ADAPTATION"],
-                "resourceRef": "ACT-KIN-2D-SHARED-CLOCK",
-                "representationRef": "REP-KIN-2D-SHARED-CLOCK",
-            },
-            "scene": {
-                "apiVersion": "0.1.0",
-                "sceneVersion": "1.0.0",
-                "id": "portable-motion-shared-clock-scene",
-                "grids": [{"id": "grid1", "rows": ["r1"], "columns": ["c1"]}],
-                "projections": [{"id": "p1", "placement": {"grid": "grid1", "row": "r1", "column": "c1"}}],
-            },
-            "adapter": {
-                "id": DECLARATIVE_ADAPTER_ID,
-                "apiVersion": ADAPTER_API_VERSION,
-                "rules": [
-                    {"id": "same-time", "outcome": "ACCEPT"},
-                    {"id": "mixed-time", "outcome": "REJECT", "reason": "Evaluated kinematics requires shared time coordinate; mixed-time state violates single physical state invariant."},
-                ],
-            },
-            "injections": [],
-        }
+    data = json.loads(DOCS_PATH.read_text(encoding="utf-8"))
+    expected = next(p for p in data["audited_packages"] if p["id"] == "portable-motion-shared-clock")
+    pkg = read_pinned_custody_package("portable-motion-shared-clock", expected)
 
     rules = {r["id"]: r for r in pkg["adapter"]["rules"]}
     assert "same-time" in rules

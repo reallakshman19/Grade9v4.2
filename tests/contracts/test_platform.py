@@ -274,6 +274,47 @@ class PlatformContractTests(unittest.TestCase):
         with self.assertRaises(ValidationError):
             self.assessment_validator.validate(bad_points)
 
+    def test_assessment_evaluator_mode_is_bound_to_response_kind(self):
+        base = {
+            "id": "assess:phy-01",
+            "task_ref": {"type": "QUESTION", "id": "question:phy-01", "revision": 1, "sha256": "b" * 64},
+            "response_kind": "SINGLE_CHOICE",
+            "evaluator": {"mode": "AUTOMATIC", "canonical_value": "A", "numeric_tolerance": None},
+            "max_points": 3, "penalty_points": 0, "dropped_policy": "NOT_DROPPED",
+            "status": "SYNTHETIC", "revision": 1
+        }
+        self.assessment_validator.validate(base)
+        complex_kinds = ("SYMBOLIC_EXPRESSION", "MATHEMATICAL_PROOF",
+                         "CHEMICAL_STRUCTURE", "REACTION_MECHANISM",
+                         "DATA_TABLE", "GRAPH", "EXPERIMENT_ANALYSIS",
+                         "CONSTRUCTED_RESPONSE", "MULTIPART")
+        for kind in complex_kinds:
+            with self.subTest(kind=kind):
+                bad = dict(base, response_kind=kind)
+                with self.assertRaises(ValidationError):
+                    self.assessment_validator.validate(bad)
+                good = dict(bad, evaluator={"mode": "REVIEW_PENDING"})
+                self.assessment_validator.validate(good)
+        for bad_evaluator in (
+            {"mode": "AUTOMATIC"},
+            {"mode": "AUTOMATIC", "canonical_value": ["A"]},
+            {"mode": "AUTOMATIC", "canonical_value": "A", "numeric_tolerance": 1},
+        ):
+            with self.subTest(bad_evaluator=bad_evaluator):
+                with self.assertRaises(ValidationError):
+                    self.assessment_validator.validate(dict(base, evaluator=bad_evaluator))
+        self.assessment_validator.validate(dict(base, evaluator={"mode": "REVIEW_PENDING"}))
+
+    def test_response_empty_structures_fail_closed(self):
+        for kind, value in (
+            ("MULTIPLE_CHOICE", []), ("REACTION_MECHANISM", []),
+            ("DATA_TABLE", []), ("GRAPH", {"points": []}),
+            ("EXPERIMENT_ANALYSIS", {"observations": [], "conclusion": "test"})
+        ):
+            with self.subTest(kind=kind):
+                with self.assertRaises(ValidationError):
+                    self.response_validator.validate({"kind": kind, "value": value})
+
     def test_rule13_invariant_software_validation_not_academic_approval(self):
         """Rule 13 invariant: Software validation never constitutes academic admission or release authorization."""
         disclaimer = "No academic approval inferred from software validation."

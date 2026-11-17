@@ -47,145 +47,148 @@ class UIAuditError(ValueError):
 class UIAuditEngine:
     """Engine for processing and verifying legacy UI capability audits against R4 specifications."""
 
-    def __init__(self, kit_schemas_dir: Optional[str | Path] = None):
-        schema_path = None
-        candidates = [
-            Path(kit_schemas_dir or "") if kit_schemas_dir else None,
-            Path("d:/CodeD/grade9-r4-kit/Grade9v4.2_Execution_Kit_R4/02-contracts/schemas"),
-            ROOT.parents[0] / "grade9-r4-kit/Grade9v4.2_Execution_Kit_R4/02-contracts/schemas",
-        ]
-        for c in candidates:
-            if c and (c / "legacy-ui-audit.schema.json").is_file():
-                schema_path = c / "legacy-ui-audit.schema.json"
-                break
-
-        if schema_path and schema_path.is_file():
-            self.audit_schema = json.loads(schema_path.read_text(encoding="utf-8"))
-        else:
-            # Fallback inline schema matching R4 specification
-            self.audit_schema = {
-                "type": "object",
-                "additionalProperties": False,
-                "required": [
-                    "snapshot_id",
-                    "path",
-                    "source_sha256",
-                    "entry_context",
-                    "audience",
-                    "disposition",
-                    "dependencies_complete",
-                    "viewports",
-                    "screenshot_evidence",
-                    "interaction_log_sha256",
-                    "capabilities",
-                    "blockers",
-                    "decision_ref",
-                ],
-            }
+    def __init__(self, kit_schemas_dir=None, blueprint_registry_path=None):
+        import os
+        location = kit_schemas_dir or os.environ.get("G9_R4_KIT")
+        if not location:
+            raise UIAuditError("external R4 schema location required")
+        path = Path(location) / "legacy-ui-audit.schema.json"
+        if not path.is_file():
+            path = Path(location) / "02-contracts/schemas/legacy-ui-audit.schema.json"
+        if not path.is_file():
+            raise UIAuditError("R4 schema missing; no inline fallback")
+        raw = path.read_bytes()
+        if hashlib.sha256(raw).hexdigest() != "fe934a5da0b4736b1d2e938a49615ad6df0bcfcb7cfa8b9e5272c5f12fc3f8d7":
+            raise UIAuditError("R4 schema hash mismatch")
+        self.audit_schema = json.loads(raw)
+        Draft202012Validator.check_schema(self.audit_schema)
         self.validator = Draft202012Validator(self.audit_schema)
+        native_path = Path(blueprint_registry_path or ROOT / "docs/architecture/native-blueprint-map.json")
+        if not native_path.is_file():
+            raise UIAuditError("A57 native blueprint map missing")
+        native = json.loads(native_path.read_text(encoding="utf-8"))
+        rows = native.get("blueprints", [])
+        if native.get("registry_version") != "1.17.0" or native.get("workpack_id") != "A57" or len(rows) != 7:
+            raise UIAuditError("unrecognized native blueprint registry")
+        self.native = {}
+        for row in rows:
+            role = row.get("target_role")
+            if role not in CORE_ROLES or role in self.native:
+                raise UIAuditError("invalid native role")
+            slots = {v["id"] for v in row.get("native_slots", [])}
+            if not slots or not row.get("blueprint_id"):
+                raise UIAuditError("invalid native slots")
+            self.native[role] = (row["blueprint_id"], slots)
+        if set(self.native) != CORE_ROLES:
+            raise UIAuditError("missing native roles")
+
+    @staticmethod
+    def unique(rows, name):
+        result = {}
+        for row in rows:
+            if not isinstance(row, dict):
+                raise UIAuditError("non-object " + name)
+            try:
+                key = UIAuditEngine.context_key(row)
+                hash(key)
+            except (KeyError, TypeError) as exc:
+                raise UIAuditError("invalid context key") from exc
+            if key in result:
+                raise UIAuditError("duplicate " + name + " context")
+            result[key] = row
+        return result
+
+    @staticmethod
+    def verify_bytes(root, name, digest):
+        if root is None:
+            raise UIAuditError("external source/evidence root required")
+        if not isinstance(digest, str) or not HEX64.fullmatch(digest):
+            raise UIAuditError("invalid evidence/source hash")
+        try:
+            base = Path(root).resolve(strict=True)
+            relative = Path(name)
+            if relative.is_absolute() or not relative.parts or ".." in relative.parts:
+                raise UIAuditError("unsafe source/evidence path")
+            target = base.joinpath(*relative.parts)
+            if any(p.is_symlink() for p in (target, *target.parents) if p != base and base in p.parents):
+                raise UIAuditError("symlink source/evidence")
+            if not target.is_file() or not target.resolve().is_relative_to(base):
+                raise UIAuditError("missing or unsafe source/evidence")
+            if hashlib.sha256(target.read_bytes()).hexdigest() != digest:
+                raise UIAuditError("source/evidence bytes do not match SHA256")
+        except OSError as exc:
+            raise UIAuditError("source/evidence inaccessible") from exc
 
     @staticmethod
     def context_key(row: Dict[str, Any]) -> Tuple[str, str, str]:
         return (row["snapshot_id"], row["path"], row["entry_context"])
 
     def validate_audit_row(
-        self,
-        audit_row: Dict[str, Any],
-        expected_scope: Dict[str, Any],
-        evidence_root: Optional[Path] = None,
-        approved_exclusions: Set[str] = frozenset(),
-    ) -> Dict[str, Any]:
-        """Validates a single observed UI audit row against an independently enumerated scope record."""
+        self, audit_row, expected_scope, evidence_root=None,
+        approved_exclusions=frozenset(), source_root=None,
+    ):
+        """Mechanical validation only; external scope authenticity is not established."""
         try:
             self.validator.validate(audit_row)
-        except ValidationError as e:
-            raise UIAuditError(f"UI audit schema validation failed: {e.message}") from e
-
-        # Match key fields with expected scope
-        for k in ("source_sha256", "audience"):
-            if audit_row.get(k) != expected_scope.get(k):
-                raise UIAuditError(f"scope mismatch for {k}: expected {expected_scope.get(k)}, got {audit_row.get(k)}")
-
-        if audit_row.get("audience") == "UNKNOWN":
-            raise UIAuditError("audience cannot be UNKNOWN")
-
-        disposition = audit_row.get("disposition")
-
-        # Case 1: Approved exclusion
-        if disposition == "EXCLUDED_APPROVED":
-            d_ref = audit_row.get("decision_ref")
-            if not d_ref or d_ref not in approved_exclusions:
-                raise UIAuditError(f"unapproved exclusion decision_ref: {d_ref}")
-            return {
-                "status": "EXCLUDED",
-                "disposition": disposition,
-                "decision_ref": d_ref,
-            }
-
-        # Case 2: Audited
-        if disposition != "AUDITED":
-            raise UIAuditError(f"invalid disposition: {disposition}")
-
-        if not audit_row.get("dependencies_complete"):
-            raise UIAuditError("incomplete dependencies in audited UI")
-
-        if audit_row.get("blockers"):
-            raise UIAuditError(f"unresolved UI audit blockers: {audit_row['blockers']}")
-
-        # Verify viewports: must contain all 7 mandatory viewports
-        row_viewports = {tuple(v) for v in audit_row.get("viewports", [])}
-        missing_vps = VIEWPORTS - row_viewports
-        if missing_vps:
-            raise UIAuditError(f"missing required viewports: {sorted(missing_vps)}")
-
-        # Verify screenshot evidence matches viewports exactly
-        screenshots = audit_row.get("screenshot_evidence", [])
-        sc_vps = {tuple(s["viewport"]): s["sha256"] for s in screenshots}
-        if len(sc_vps) != len(screenshots):
-            raise UIAuditError("duplicate viewport in screenshot evidence")
-        if not VIEWPORTS.issubset(set(sc_vps.keys())):
-            raise UIAuditError("screenshot evidence does not cover all required viewports")
-
-        # Verify evidence files on disk if evidence_root is provided
-        if evidence_root:
-            all_digests = list(sc_vps.values())
-            if audit_row.get("interaction_log_sha256"):
-                all_digests.append(audit_row["interaction_log_sha256"])
-            for d in all_digests:
-                if not HEX64.fullmatch(d):
-                    raise UIAuditError(f"invalid evidence digest: {d}")
-                fpath = evidence_root / d
-                if not fpath.is_file():
-                    raise UIAuditError(f"evidence file missing: {d}")
-
-        # Verify capabilities
-        caps = audit_row.get("capabilities", [])
-        if not caps:
-            raise UIAuditError("empty capability inventory in audited row")
-
-        cap_ids = [c["capability_id"] for c in caps]
-        if len(cap_ids) != len(set(cap_ids)):
-            raise UIAuditError("duplicate capability_id in capabilities")
-
-        expected_cap_ids = expected_scope.get("capability_ids", [])
-        if set(cap_ids) != set(expected_cap_ids):
-            raise UIAuditError(f"capability mismatch: expected {expected_cap_ids}, got {cap_ids}")
-
-        permitted_slots = set(expected_scope.get("permitted_slots", []))
-        for c in caps:
-            if c.get("native_slot") not in permitted_slots:
-                raise UIAuditError(f"unmapped native slot: {c.get('native_slot')} not in {permitted_slots}")
-            if c.get("disposition") not in ("SUPPORTED", "EXCLUDED_APPROVED"):
-                raise UIAuditError(f"unsupported capability disposition: {c.get('disposition')}")
-            if c.get("disposition") == "EXCLUDED_APPROVED":
-                if c.get("decision_ref") not in approved_exclusions:
-                    raise UIAuditError(f"unapproved capability exclusion: {c.get('decision_ref')}")
-
-        return {
-            "status": "AUDITED",
-            "capabilities_count": len(caps),
-            "viewports_verified": len(row_viewports),
-        }
+        except ValidationError as exc:
+            raise UIAuditError("R4 schema violation: " + exc.message) from exc
+        if self.context_key(audit_row) != self.context_key(expected_scope):
+            raise UIAuditError("context mismatch")
+        for field in ("source_sha256", "audience"):
+            if audit_row[field] != expected_scope.get(field):
+                raise UIAuditError("scope mismatch for " + field)
+        if audit_row["audience"] == "UNKNOWN":
+            raise UIAuditError("unknown audience")
+        if audit_row["disposition"] == "EXCLUDED_APPROVED":
+            decision = audit_row["decision_ref"]
+            if not decision or decision not in approved_exclusions:
+                raise UIAuditError("exclusion lacks verified external decision")
+            return {"status": "EXCLUDED", "decision_ref": decision}
+        if audit_row["disposition"] != "AUDITED":
+            raise UIAuditError("blocked or invalid disposition")
+        if not audit_row["dependencies_complete"] or audit_row["blockers"]:
+            raise UIAuditError("incomplete dependencies or outstanding blockers")
+        snapshot = audit_row["snapshot_id"]
+        if not isinstance(snapshot, str) or "/" in snapshot or "\\" in snapshot or snapshot in (".", ".."):
+            raise UIAuditError("invalid source snapshot")
+        self.verify_bytes(source_root, snapshot + "/" + audit_row["path"],
+                          audit_row["source_sha256"])
+        viewports = [tuple(v) for v in audit_row["viewports"]]
+        if not VIEWPORTS.issubset(set(viewports)):
+            raise UIAuditError("missing mandatory viewport")
+        screenshots = audit_row["screenshot_evidence"]
+        shot_viewports = [tuple(v["viewport"]) for v in screenshots]
+        if len(set(shot_viewports)) != len(shot_viewports) or set(shot_viewports) != set(viewports):
+            raise UIAuditError("missing/duplicate viewport screenshot")
+        for item in screenshots:
+            self.verify_bytes(evidence_root, item["sha256"], item["sha256"])
+        self.verify_bytes(evidence_root, audit_row["interaction_log_sha256"],
+                          audit_row["interaction_log_sha256"])
+        capabilities = audit_row["capabilities"]
+        ids = [c["capability_id"] for c in capabilities]
+        expected = expected_scope.get("capability_ids")
+        if (not capabilities or not isinstance(expected, list) or
+            len(expected) != len(set(expected)) or len(ids) != len(set(ids)) or
+            set(ids) != set(expected)):
+            raise UIAuditError("incomplete/duplicate independent capability enumeration")
+        roles = expected_scope.get("target_roles")
+        if (not isinstance(roles, list) or not roles or
+            len(roles) != len(set(roles)) or not set(roles) <= CORE_ROLES):
+            raise UIAuditError("missing native target roles in independent scope")
+        allowed = set(expected_scope.get("permitted_slots", []))
+        native_slots = set().union(*(self.native[r][1] for r in roles))
+        if not allowed or not allowed <= native_slots:
+            raise UIAuditError("unregistered native target slots")
+        for cap in capabilities:
+            self.verify_bytes(evidence_root, cap["evidence_sha256"],
+                              cap["evidence_sha256"])
+            if cap["native_slot"] not in allowed:
+                raise UIAuditError("unmapped native slot")
+            if cap["disposition"] != "SUPPORTED":
+                if cap["disposition"] != "EXCLUDED_APPROVED" or cap["decision_ref"] not in approved_exclusions:
+                    raise UIAuditError("unreviewed remediation/exclusion")
+        return {"status": "AUDITED", "capabilities_count": len(capabilities),
+                "viewports_verified": len(viewports), "authority": "NONE"}
 
     def generate_audit_summary(
         self,
@@ -194,19 +197,21 @@ class UIAuditEngine:
         blueprint_map: Dict[str, str],
         approved_exclusions: Set[str] = frozenset(),
         evidence_root: Optional[Path] = None,
+        source_root: Optional[Path] = None,
     ) -> Dict[str, Any]:
-        """Validates all scope rows and produces the public-safe summary and capability map."""
-        scope_map = {self.context_key(r): r for r in scope_rows}
-        audit_map = {self.context_key(r): r for r in audit_rows}
+        """Mechanical check; summary does not certify real source/browser authority."""
+        scope_map = self.unique(scope_rows, "scope")
+        audit_map = self.unique(audit_rows, "audit")
+        if not scope_map:
+            raise UIAuditError("empty UI audit scope")
 
         if scope_map.keys() != audit_map.keys():
             missing = set(scope_map.keys()) - set(audit_map.keys())
             extra = set(audit_map.keys()) - set(scope_map.keys())
             raise UIAuditError(f"audit context mismatch: missing={missing}, extra={extra}")
 
-        missing_roles = CORE_ROLES - set(blueprint_map.keys())
-        if missing_roles:
-            raise UIAuditError(f"missing native blueprint mapping for roles: {missing_roles}")
+        if set(blueprint_map) != CORE_ROLES or any(blueprint_map[r] != self.native[r][0] for r in CORE_ROLES):
+            raise UIAuditError("blueprint IDs differ from pinned A57 registry")
 
         total_audited = 0
         total_excluded = 0
@@ -219,6 +224,7 @@ class UIAuditEngine:
                 expected,
                 evidence_root=evidence_root,
                 approved_exclusions=approved_exclusions,
+                source_root=source_root,
             )
             if res["status"] == "EXCLUDED":
                 total_excluded += 1
@@ -246,6 +252,7 @@ class UIAuditEngine:
             "contexts_excluded": total_excluded,
             "required_viewports": sorted([[w, h] for w, h in VIEWPORTS]),
             "native_blueprints_bound": len(blueprint_map),
+            "evidence_scope": "CALLER_SUPPLIED_NOT_INDEPENDENTLY_AUTHENTICATED",
             "limitations": "Private browser traces, dynamic event logs, and screenshots remain in external hash-addressed storage. Public repository retains mechanical audit invariants and schema-conformant summary only. UI freeze requires independent review under Workpack A61.",
         }
 
