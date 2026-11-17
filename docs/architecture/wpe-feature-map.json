@@ -1,0 +1,420 @@
+{
+  "workpack_id": "A44",
+  "title": "WPE feature and artifact parity inventory",
+  "decision_id": "DEC-A44-WPE-PARITY-01",
+  "status": "BLOCKED",
+  "academic_admission": "HOLD",
+  "release_authority": "NONE",
+  "ui_implementation_freeze": "NOT_FROZEN",
+  "rule_13_invariant": "No academic approval inferred from software validation.",
+  "observed_snapshot": "308a8cef0d0b7d4ce5f1b79b21f01f76acc81acc",
+  "wpe_scope_disposition": {
+    "role": "TECHNICAL_AND_ACADEMIC_REFERENCE_EXEMPLAR",
+    "subject": "physics",
+    "topic_id": "PHYS-TOPIC-WPE",
+    "subject_limitation": "WPE is a Physics-only pilot; its contracts do not automatically apply to Mathematics or Chemistry without independent Blueprints and warrants."
+  },
+  "five_pairs": [
+    {
+      "pair_id": "WPE-PAIR-01",
+      "topic_code": "WPE-01",
+      "title": "Work-Kinetic Energy Theorem & Constant Forces",
+      "core1a_concept": {
+        "title": "Continuous Teaching Construction: Constant Force Work and Kinetic Energy Coupling",
+        "anchors": [
+          "FOUNDATION",
+          "CONNECTED",
+          "ADVANCED"
+        ],
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "interaction_model": "STEPPED_DERIVATION_EXPLORATION"
+      },
+      "core1b_challenge": {
+        "title": "Six-Stage Practice Journey: Constant Force Trajectory",
+        "stages": [
+          "PREDICT",
+          "ATTEMPT",
+          "RECONSTRUCT",
+          "DIAGNOSE",
+          "REPAIR",
+          "BOUNDARY_TEST"
+        ],
+        "target_contract": "A47:schemas/platform/reasoning-cell.schema.json",
+        "interaction_model": "INDEPENDENT_RESPONSE_COMMITMENT"
+      },
+      "source_locator": "physics/wpe/learn-challenge.html#wpe-01",
+      "academic_status": "HOLD",
+      "test_reference": null,
+      "proposed_test_reference": "tests/test_wpe_d3d4_learning_bridge.py::test_wpe01_parity",
+      "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT"
+    },
+    {
+      "pair_id": "WPE-PAIR-02",
+      "topic_code": "WPE-02",
+      "title": "Spring Force & Elastic Potential Energy",
+      "core1a_concept": {
+        "title": "Hooke's Law and Work Integral of Linear Restoring Force",
+        "anchors": [
+          "FOUNDATION",
+          "CONNECTED",
+          "ADVANCED"
+        ],
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "interaction_model": "SPRING_COMPRESSION_SCRUBBER"
+      },
+      "core1b_challenge": {
+        "title": "Six-Stage Practice Journey: Spring-Mass Conservative Oscillation",
+        "stages": [
+          "PREDICT",
+          "ATTEMPT",
+          "RECONSTRUCT",
+          "DIAGNOSE",
+          "REPAIR",
+          "BOUNDARY_TEST"
+        ],
+        "target_contract": "A47:schemas/platform/reasoning-cell.schema.json",
+        "interaction_model": "INDEPENDENT_RESPONSE_COMMITMENT"
+      },
+      "source_locator": "physics/wpe/learn-challenge.html#wpe-02",
+      "academic_status": "HOLD",
+      "test_reference": null,
+      "proposed_test_reference": "tests/test_wpe_d3d4_learning_bridge.py::test_wpe02_parity",
+      "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT"
+    },
+    {
+      "pair_id": "WPE-PAIR-03",
+      "topic_code": "WPE-03",
+      "title": "Variable Force & One-Dimensional Potential Energy Curves",
+      "core1a_concept": {
+        "title": "Conservative Force as Negative Gradient of Potential Energy",
+        "anchors": [
+          "FOUNDATION",
+          "CONNECTED",
+          "ADVANCED"
+        ],
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "interaction_model": "POTENTIAL_CURVE_TANGENT_ANALYSIS"
+      },
+      "core1b_challenge": {
+        "title": "Six-Stage Practice Journey: Turning Points and Bound Trajectories",
+        "stages": [
+          "PREDICT",
+          "ATTEMPT",
+          "RECONSTRUCT",
+          "DIAGNOSE",
+          "REPAIR",
+          "BOUNDARY_TEST"
+        ],
+        "target_contract": "A47:schemas/platform/reasoning-cell.schema.json",
+        "interaction_model": "INDEPENDENT_RESPONSE_COMMITMENT"
+      },
+      "source_locator": "physics/wpe/learn-challenge.html#wpe-03",
+      "academic_status": "HOLD",
+      "test_reference": null,
+      "proposed_test_reference": "tests/test_wpe_d3d4_learning_bridge.py::test_wpe03_parity",
+      "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT"
+    },
+    {
+      "pair_id": "WPE-PAIR-04",
+      "topic_code": "WPE-04",
+      "title": "Non-Conservative Forces & Mechanical Energy Dissipation",
+      "core1a_concept": {
+        "title": "Thermal Energy Generation and Friction Work Accounting",
+        "anchors": [
+          "FOUNDATION",
+          "CONNECTED",
+          "ADVANCED"
+        ],
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "interaction_model": "DISSIPATION_LEDGER_EXPLORER"
+      },
+      "core1b_challenge": {
+        "title": "Six-Stage Practice Journey: Incline with Sliding Friction",
+        "stages": [
+          "PREDICT",
+          "ATTEMPT",
+          "RECONSTRUCT",
+          "DIAGNOSE",
+          "REPAIR",
+          "BOUNDARY_TEST"
+        ],
+        "target_contract": "A47:schemas/platform/reasoning-cell.schema.json",
+        "interaction_model": "INDEPENDENT_RESPONSE_COMMITMENT"
+      },
+      "source_locator": "physics/wpe/learn-challenge.html#wpe-04",
+      "academic_status": "HOLD",
+      "test_reference": null,
+      "proposed_test_reference": "tests/test_wpe_d3d4_learning_bridge.py::test_wpe04_parity",
+      "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT"
+    },
+    {
+      "pair_id": "WPE-PAIR-05",
+      "topic_code": "WPE-05",
+      "title": "Conservative Fields, Equilibrium Points & Stability",
+      "core1a_concept": {
+        "title": "First and Second Derivative Tests for Stable/Unstable Equilibrium",
+        "anchors": [
+          "FOUNDATION",
+          "CONNECTED",
+          "ADVANCED"
+        ],
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "interaction_model": "EQUILIBRIUM_PERTURBATION_SIMULATOR"
+      },
+      "core1b_challenge": {
+        "title": "Six-Stage Practice Journey: Multi-Well Potential Landscape",
+        "stages": [
+          "PREDICT",
+          "ATTEMPT",
+          "RECONSTRUCT",
+          "DIAGNOSE",
+          "REPAIR",
+          "BOUNDARY_TEST"
+        ],
+        "target_contract": "A47:schemas/platform/reasoning-cell.schema.json",
+        "interaction_model": "INDEPENDENT_RESPONSE_COMMITMENT"
+      },
+      "source_locator": "physics/wpe/learn-challenge.html#wpe-05",
+      "academic_status": "HOLD",
+      "test_reference": null,
+      "proposed_test_reference": "tests/test_wpe_d3d4_learning_bridge.py::test_wpe05_parity",
+      "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT"
+    }
+  ],
+  "eight_plus_five_pack": {
+    "primary_eight": [
+      {
+        "pack_id": "LP-WPE-01-SPRING-CONTACT",
+        "filename": "SPRING_CONTACT_LEARNING_PACK.md",
+        "sha256": "669fed94e4e4adca7ee62ad3a4a1a9e8c775d49b112efda71a79f7885515d9b0",
+        "byte_count": 4858,
+        "topic": "Spring contact and equilibrium boundary conditions",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_spring_contact_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "8564996a013d40449c398b76b833a65394b829048ebf395bd1875b367cfe775e",
+        "reported_custody_byte_count": 4909,
+        "git_blob_sha1": "56ac029f37bc805acbdc296b2f3d55ebdc53b0ca",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-02-SPRING-PROJECTILE",
+        "filename": "SPRING_PROJECTILE_TRANSITION_LEARNING_PACK.md",
+        "sha256": "4f270f34eac9698ed9a4668089cdd8a86b69520c9df09affa5b9736e099b80d5",
+        "byte_count": 6179,
+        "topic": "Spring projectile launch and multi-stage energy partitioning",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_spring_projectile_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "1a5f97262a145a0ee8a4df78123d4b4837200466102d6383584fe6f4e3f538af",
+        "reported_custody_byte_count": 6236,
+        "git_blob_sha1": "866de59ca3ffec38a854c77a91a6fe95053dd4fa",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-03-RADIAL-FORCE",
+        "filename": "RADIAL_FORCE_POTENTIAL_LEARNING_PACK.md",
+        "sha256": "4fe85e98e7810441fd27ff892b31de333ffdf8b39c3fd0a3097e2eb57a663efc",
+        "byte_count": 9196,
+        "topic": "Radial central forces, inverse-square law, and effective potential",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_radial_force_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "40b40dc3266a39abafd9c1111a06c9df2d045a61e5f28e05b1310e7a9ba82104",
+        "reported_custody_byte_count": 9256,
+        "git_blob_sha1": "546c4a9078cb639097acfdea019c5d098054bc52",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-04-VERTICAL-CIRCLE",
+        "filename": "VERTICAL_CIRCLE_LEARNING_PACK.md",
+        "sha256": "124977baa12ec476fcfd350eda73704b2c6bdbc47f2e5ea075efa46a5d817ce7",
+        "byte_count": 7532,
+        "topic": "Vertical circular motion: critical velocity and string tension constraints",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_vertical_circle_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "67cb1dd682e17e7adb3ad3e00116945f0a0330359858662d240ffecf054f57db",
+        "reported_custody_byte_count": 7587,
+        "git_blob_sha1": "33e5bd5a7111c95e01c33dc38eee930e9739a3e2",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-05-POTENTIAL-WELLS",
+        "filename": "POTENTIAL_WELLS_LEARNING_PACK.md",
+        "sha256": "d07b8eb9873078046c1d862125d7f530e7ac3b81cf53f52015e50bfbcade6077",
+        "byte_count": 5990,
+        "topic": "Potential wells, turning points, bound vs unbound states",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_potential_wells_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "9d6aa32352cf4941d3955ae58cffc3ebcebb60df72702b54f24c516c4e8d353e",
+        "reported_custody_byte_count": 6048,
+        "git_blob_sha1": "09c390ae63ae2679668981a948a80d04e8f0a698",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-06-CONSTANT-POWER",
+        "filename": "CONSTANT_POWER_LEARNING_PACK.md",
+        "sha256": "f36d1a668b974f189506e120204a05c414dfbd94afb8009ea9ff1e4085ce3404",
+        "byte_count": 6783,
+        "topic": "Constant power acceleration, non-uniform acceleration, and terminal bounds",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_constant_power_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "ca4a87b92ef70e7aa88298daa9454a2cf192976c262c0d093a4b1300aaa2c984",
+        "reported_custody_byte_count": 6849,
+        "git_blob_sha1": "46794134580e69654318325b9e8247cb1fc24d18",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-07-MULTIFORCE-LEDGER",
+        "filename": "MULTIFORCE_LEDGER_LEARNING_PACK.md",
+        "sha256": "e92c0c9e436a231279fbd2c26b5c395467d514814cb4828d47d14bee2ebc6867",
+        "byte_count": 5072,
+        "topic": "Multi-force work ledger: concurrent conservative and non-conservative forces",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_multiforce_ledger_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "a1fabc9a5115b38a52ee498631b51dd7d87d1deec7510fc22bdfdeb5428729e4",
+        "reported_custody_byte_count": 5122,
+        "git_blob_sha1": "ee4fb95f4528e8fc2bd2c43719406f414f315be2",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-08-DISTRIBUTED-MASS",
+        "filename": "DISTRIBUTED_MASS_LEARNING_PACK.md",
+        "sha256": "46793ad744ba620057dd4249c008e288db1c11700b3b174b8c2f43ff3564d4ef",
+        "byte_count": 6172,
+        "topic": "Distributed mass systems: hanging chains, ropes, and variable-mass work integrals",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": null,
+        "proposed_test_id": "tests/test_wpe_d3d4_learning_bridge.py::test_distributed_mass_pack",
+        "test_reference_status": "NOT_FOUND_AT_PINNED_SOURCE_COMMIT",
+        "reported_custody_sha256": "016bfc680b3c550157a26271ea6f333cf159a57f94cdd2c68e5bee9d8a0a8135",
+        "reported_custody_byte_count": 6230,
+        "git_blob_sha1": "78097c0c64319a0dcc949da445fb67e6add1afcc",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      }
+    ],
+    "extension_five": [
+      {
+        "pack_id": "LP-WPE-09-GRAPH-OPERATION",
+        "filename": "GRAPH_OPERATION_LEARNING_PACK.md",
+        "sha256": "06809ae0cd810d559cc4642265b828b8027795a9557389e1904b4b41e570f334",
+        "byte_count": 6863,
+        "topic": "Graphical calculus operations: slope (F=-dU/dx) and area (W=\\int F dx)",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A46:schemas/platform/model-projection.schema.json",
+        "test_id": "tests/test_wpe_d3d4_extensions.py::test_graph_operation_pack",
+        "reported_custody_sha256": "d4f4d2b7721856ed77a6f245ae1220a3886ea66ea9d203ed2d08422baff9b8da",
+        "reported_custody_byte_count": 6919,
+        "git_blob_sha1": "0649efda3c2cef0c77b258d8a8ac15421cdfb7ed",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-10-INSTANTANEOUS-POWER",
+        "filename": "INSTANTANEOUS_POWER_LEARNING_PACK.md",
+        "sha256": "671d4f5dc4731c13877f6d9591fec9daf0fbc773d353ff987605e228b2d4d3b6",
+        "byte_count": 6559,
+        "topic": "Instantaneous power: scalar product of force and velocity vectors P=F·v",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": "tests/test_wpe_d3d4_extensions.py::test_instantaneous_power_pack",
+        "reported_custody_sha256": "2f2b88288aae267610bebfa62968984d194259400ae09e14f6adde39f9ac9e58",
+        "reported_custody_byte_count": 6617,
+        "git_blob_sha1": "774ae362a4f7f255c7231fe0398e38884041878f",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-11-CONVEYOR-MOMENTUM",
+        "filename": "CONVEYOR_MOMENTUM_POWER_LEARNING_PACK.md",
+        "sha256": "b4a3e5be9fb3474800b366efee77b8d352b5de7b6dd8d175b8fd9f258c60000c",
+        "byte_count": 9022,
+        "topic": "Conveyor belt continuous mass deposition: power and friction dissipation balance",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": "tests/test_wpe_d3d4_extensions.py::test_conveyor_momentum_pack",
+        "reported_custody_sha256": "baeb8477532495ed517e6230f59e3fdeab9b753d730a630150324723261711f2",
+        "reported_custody_byte_count": 9088,
+        "git_blob_sha1": "5e967434d72f3222efe9ba2675980720f94eff1d",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-12-DISSIPATIVE-BOUNCES",
+        "filename": "DISSIPATIVE_BOUNCES_LEARNING_PACK.md",
+        "sha256": "cc743653fe9cdc79e69854bae3c9a6615b97b1a0a896eb9f9f2ea86d597397c6",
+        "byte_count": 6386,
+        "topic": "Inelastic collisions and coefficient of restitution: infinite geometric bounce sum",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A45:schemas/platform/teaching-projection.schema.json",
+        "test_id": "tests/test_wpe_d3d4_extensions.py::test_dissipative_bounces_pack",
+        "reported_custody_sha256": "29a80f0006e15553f61c6c52a72b584a39c912bee3b631e8ff5f6ea888be5ae5",
+        "reported_custody_byte_count": 6448,
+        "git_blob_sha1": "be3f103a058c9fb504bc7beeb49fa4df2396ab18",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      },
+      {
+        "pack_id": "LP-WPE-13-SPRING-CONTROLLED-VARIABLE",
+        "filename": "SPRING_CONTROLLED_VARIABLE_LEARNING_PACK.md",
+        "sha256": "522ff40e801f49a4979b7b32e0641a883ffdf0a2a3b56e38d725ffd1dee364c2",
+        "byte_count": 7933,
+        "topic": "Controlled variable analysis: non-linear restoring force F(x)=-kx^3 parameter sweeps",
+        "disposition": "PRESERVE_AND_PROJECT",
+        "target_contract": "A46:schemas/platform/model-projection.schema.json",
+        "test_id": "tests/test_wpe_d3d4_extensions.py::test_spring_controlled_variable_pack",
+        "reported_custody_sha256": "ce0b0aab79d2ce6f66e9fdbd157594d299c32ffd90c3fa3687ac26120570e741",
+        "reported_custody_byte_count": 7997,
+        "git_blob_sha1": "d90dda5d33fe90f09d1b567f4ae605546d882d0b",
+        "source_integrity_basis": "PINNED_GIT_BLOB_VERIFIED"
+      }
+    ]
+  },
+  "legacy_defects_and_remediations": [
+    {
+      "defect_id": "DEF-WPE-01-FIRST-ATTEMPT-OVERWRITE",
+      "description": "Legacy gap-six-stage-engine.js deleted student's initial attempt record upon submitting a revision, destroying learning telemetry.",
+      "remediation": "Enforce immutable response event store (A10:schemas/platform/response.schema.json); every attempt must retain distinct timestamped event.",
+      "status": "REMEDIATED_IN_SPEC"
+    },
+    {
+      "defect_id": "DEF-WPE-02-ADJACENT-SOLUTION-LEAK",
+      "description": "Legacy learn-challenge.html embedded unredacted worked solution steps directly into DOM nodes adjacent to input fields.",
+      "remediation": "Enforce policy-governed cognitive disclosure contract (A46:schemas/platform/cognitive-disclosure.schema.json); solution hints are withheld until commitment event.",
+      "status": "REMEDIATED_IN_SPEC"
+    },
+    {
+      "defect_id": "DEF-WPE-03-MISSING-NATIVE-ROLES",
+      "description": "Shared role documents (CORE1A.md, CORE1B.md, CORE2.md) missing at observed workspace paths in v3.5 custody.",
+      "remediation": "Block promotion of real student-facing curriculum until Owner-signed native mapping is accepted; synthetic fixtures only.",
+      "status": "BLOCKED_PENDING_OWNER_SIGNATURE"
+    },
+    {
+      "defect_id": "DEF-WPE-04-DEVTOOLS-KEY-EXTRACTION",
+      "description": "Client-side static HTML bundle exposes question answers via developer tools inspection in exam contexts.",
+      "remediation": "Protected exams require separately authorized backend verification; static single-file client delivery certified for self-study and practice only.",
+      "status": "ARCHITECTURALLY_BOUNDED"
+    }
+  ],
+  "source_integrity_status": "RECONCILED_TO_PINNED_GIT_BLOBS_PENDING_INDEPENDENT_REVIEW",
+  "native_role_acceptance": "HOLD",
+  "test_id_acceptance": "HOLD",
+  "missing_or_unimplemented_test_references": 13,
+  "corrected_pack_digests": 13,
+  "author_original_source_claims_differ_from_pinned_git": "YES_25_OF_25"
+}
