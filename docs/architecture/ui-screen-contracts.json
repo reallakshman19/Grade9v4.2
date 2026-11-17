@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-ui-screen-contracts/1.0",
+  "workpack_id": "A61",
+  "title": "Platform UI Screen Trees, Action Contracts, and Responsive Interaction Specifications",
+  "status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "created_at": "2026-11-17T08:35:00Z",
+  "routing_policy": "Static base-aware generated entrypoints or hash router with stable legacy query mapping. No reliance on SPA server fallback.",
+  "required_common_states": [
+    "loading",
+    "error",
+    "populated",
+    "keyboard",
+    "touch",
+    "portrait",
+    "landscape",
+    "refresh"
+  ],
+  "screens": [
+    {
+      "id": "home",
+      "route": "/",
+      "data_dependencies": ["summary", "actual_released_counts", "last_session"],
+      "actions": ["resume", "subject", "programme", "search"],
+      "states": ["empty no sessions", "no release", "storage error", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-HOME-ACTION", "UI-HOME-STATES", "UI-HOME-TABLET"]
+    },
+    {
+      "id": "subject",
+      "route": "/subject/:id",
+      "data_dependencies": ["subject_profile", "topic_tree"],
+      "actions": ["topic", "learn", "practice"],
+      "states": ["scope pending", "unknown subject", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-SUBJECT-ACTION", "UI-SUBJECT-STATES", "UI-SUBJECT-TABLET"]
+    },
+    {
+      "id": "topic",
+      "route": "/topic/:id",
+      "data_dependencies": ["concepts", "eligible_core1_core2_routes"],
+      "actions": ["learn", "challenge", "bank", "reasoning-matrix"],
+      "states": ["no eligible content", "unresolved QRT cell", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-TOPIC-ACTION", "UI-TOPIC-STATES", "UI-TOPIC-TABLET"]
+    },
+    {
+      "id": "programme",
+      "route": "/programme/:id",
+      "data_dependencies": ["exam_editions", "syllabus", "allowed_subjects"],
+      "actions": ["edition", "paper", "practice"],
+      "states": ["unsupported capability", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-PROGRAMME-ACTION", "UI-PROGRAMME-STATES", "UI-PROGRAMME-TABLET"]
+    },
+    {
+      "id": "bank",
+      "route": "/bank",
+      "data_dependencies": ["catalogue_facets", "count", "attempt_state"],
+      "actions": ["filter", "search", "sort", "clear", "attempt"],
+      "states": ["zero matches", "withdrawn", "fetch error", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-BANK-ACTION", "UI-BANK-STATES", "UI-BANK-TABLET"]
+    },
+    {
+      "id": "question",
+      "route": "/question/:id",
+      "data_dependencies": ["exact_item_revision", "assets", "session", "capability"],
+      "actions": ["respond", "save", "submit", "hint", "recovery", "next"],
+      "states": ["unavailable", "unsupported", "save failure", "review pending", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-QUESTION-ACTION", "UI-QUESTION-STATES", "UI-QUESTION-TABLET"]
+    },
+    {
+      "id": "lesson",
+      "route": "/learn/:id",
+      "data_dependencies": ["a1_a9_typed_units", "progressive_anchors", "reviewed_model_presentation"],
+      "actions": ["section", "example", "fresh task", "return", "predict-model", "observe-model", "depth", "model-fit"],
+      "states": ["no fresh task", "stale lesson", "missing unit", "invalid model domain", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-LESSON-ACTION", "UI-LESSON-STATES", "UI-LESSON-TABLET"]
+    },
+    {
+      "id": "orientation",
+      "route": "/orientation/:id",
+      "data_dependencies": ["core1_canonical_scope", "conventions", "relations", "closure"],
+      "actions": ["jump-concept", "open-lesson", "print-if-eligible"],
+      "states": ["missing scope", "unavailable", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-ORIENTATION-ACTION", "UI-ORIENTATION-STATES", "UI-ORIENTATION-TABLET"]
+    },
+    {
+      "id": "guided-practice",
+      "route": "/guided/:id",
+      "data_dependencies": ["core2a_family", "crux", "authored_scaffolds", "complete_solution_and_check"],
+      "actions": ["select-support", "reveal-familiar-crux", "self-check", "repair"],
+      "states": ["unknown learner", "no eligible route", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-GUIDED-PRACTICE-ACTION", "UI-GUIDED-PRACTICE-STATES", "UI-GUIDED-PRACTICE-TABLET"]
+    },
+    {
+      "id": "application-transfer",
+      "route": "/application-transfer/:id",
+      "data_dependencies": ["core2b_prior_exposure", "protected_move", "safe_representation", "rubric"],
+      "actions": ["attempt", "commit", "compare", "repair", "return"],
+      "states": ["no prior exposure", "save failure", "protected", "postcommit", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-APPLICATION-TRANSFER-ACTION", "UI-APPLICATION-TRANSFER-STATES", "UI-APPLICATION-TRANSFER-TABLET"]
+    },
+    {
+      "id": "explorer",
+      "route": "/explore/:id",
+      "data_dependencies": ["gcdr_stage", "model_controls", "live_quantities", "safe_help", "representation", "fidelity"],
+      "actions": ["predict", "manipulate", "observe", "advance", "boundary", "transfer"],
+      "states": ["unbound extension", "invalid model domain", "storage error", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-EXPLORER-ACTION", "UI-EXPLORER-STATES", "UI-EXPLORER-TABLET"]
+    },
+    {
+      "id": "legacy-app",
+      "route": "/app/:id",
+      "data_dependencies": ["eligible_revision_and_isolated_host", "return_context", "state_capability"],
+      "actions": ["launch", "fullscreen", "restore", "exit"],
+      "states": ["blocked dependency", "handshake failure", "resume unavailable", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-LEGACY-APP-ACTION", "UI-LEGACY-APP-STATES", "UI-LEGACY-APP-TABLET"]
+    },
+    {
+      "id": "resource-catalogue",
+      "route": "/resources",
+      "data_dependencies": ["eligible_registry", "role", "audience_and_topic_filter"],
+      "actions": ["filter", "open", "bookmark"],
+      "states": ["no eligible resource", "loading", "populated"],
+      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "touch_min_hitbox_px": 48,
+      "test_ids": ["UI-RESOURCE-CATALOGUE-ACTION", "UI-RESOURCE-CATALOGUE-STATES", "UI-RESOURCE-CATALOGUE-TABLET"]
+    }
+  ],
+  "interaction_and_device_contracts": {
+    "touchscreen_12_7_inch": {
+      "reference_viewports": [
+        [1000, 1600],
+        [1600, 1000],
+        [800, 1280],
+        [1280, 800],
+        [854, 1366],
+        [1366, 854],
+        [390, 844]
+      ],
+      "touch_hitbox_min_px": 48,
+      "primary_action_height_min_px": 56,
+      "control_gap_min_px": 8,
+      "pointer_events": {
+        "pointer_types": ["touch", "pen", "mouse"],
+        "pointer_capture": "REQUIRED_DURING_DRAWING",
+        "pointer_cancel": "HANDLED_PRESERVE_COMPLETED_STROKES",
+        "pressure_sensitivity": "OPTIONAL_FALLBACK_TO_FIXED_WIDTH"
+      },
+      "viewport_handling": {
+        "unit": "dvh_with_fallback",
+        "software_keyboard": "MUST_NOT_OBSCURE_FOCUSED_INPUT_OR_SUBMIT",
+        "scrolling": "ALWAYS_PERMITTED_OUTSIDE_CANVAS",
+        "horizontal_page_scroll": "PROHIBITED"
+      },
+      "layout_adaptations": {
+        "portrait": "SINGLE_COLUMN_BOTTOM_NAV_SUPPORT_DRAWER",
+        "landscape_gte_1100": "TWO_PANE_SPLIT_44_56_COLLAPSIBLE_NAV",
+        "split_resizing": "KEYBOARD_ACCESSIBLE_BUTTONS_NOT_DRAG_ONLY"
+      }
+    },
+    "child_friendly_text_and_search": {
+      "text_invariants": {
+        "official_content": "PRESERVED_VERBATIM_NO_SILENT_PARAPHRASE",
+        "child_friendly_prose": "SEPARATELY_VERSIONED_LOCALE_DICTIONARY",
+        "cognitive_vocabulary": "EXPLAINED_NOT_REMOVED",
+        "unsupported_feedback": "NO_FAKE_PRAISE_OR_BLAME",
+        "answer_leakage": "STRICTLY_PROHIBITED_BEFORE_SUBMISSION"
+      },
+      "search_invariants": {
+        "index_source": "RELEASED_GRAPH_ONLY",
+        "withholding": "NO_SOLUTIONS_HINTS_ANSWERS_OR_PRIVATE_NOTES",
+        "scoring": "EXACT_ID_BOOST_TITLE_WEIGHT_5_CONCEPT_3_SUMMARY_1",
+        "normalization": "UNICODE_NFKC_CASEFOLD"
+      }
+    }
+  }
+}

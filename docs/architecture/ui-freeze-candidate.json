@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-ui-freeze-candidate/1.0",
+  "workpack_id": "A61",
+  "title": "Independent Legacy UI Freeze Candidate and Design Gate",
+  "status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "created_at": "2026-11-17T08:35:00Z",
+  "academic_admission": "HOLD",
+  "ui_implementation_freeze": "NOT_FROZEN (LOCKED_UNTIL_INDEPENDENT_A61_ACCEPTANCE)",
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "receipt_digest_pinned": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "source_pins": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634
+    }
+  },
+  "native_shell_and_registry": {
+    "native_shell": "G9-TABLET-SHELL-V1@1.3.0",
+    "presentation_registry": "Shared/web/interactive-page-blueprints.v1.json@1.17.0"
+  },
+  "native_baseline_crosswalk": [
+    {
+      "role": "CORE1",
+      "native_family": "READING_ORIENTATION",
+      "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
+      "layout_mode": "READING_ORIENTATION",
+      "starting_point": "single reading pane at all widths; identity/scope, objects/conventions, representation, relations, anchor, hard-transition map, exclusions, closure",
+      "native_reference_viewport": [1366, 854],
+      "min_text_floor_px": 14,
+      "max_reading_measure_ch": 72
+    },
+    {
+      "role": "CORE1A",
+      "native_family": "READING_CONSTRUCTION",
+      "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "layout_mode": "READING_CONSTRUCTION",
+      "starting_point": "single reading flow; completed construction, bound staged visuals, model scope probes, equations, all worked steps, trap repair, quick check, exit and links; secondary reference collapsed",
+      "native_reference_viewport": [1366, 854],
+      "identity_cap_px": 190,
+      "sticky_support": "PROHIBITED"
+    },
+    {
+      "role": "CORE1B",
+      "native_family": "GUIDED_RECONSTRUCTION",
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.8.0",
+      "layout_mode": "GUIDED_RECONSTRUCTION",
+      "starting_point": "primary learner workspace; optional support; six stages, compare/repair; 68:32 native expanded reference",
+      "native_reference_viewport": [1366, 854],
+      "split_ratio": "68:32",
+      "stages_count": 6
+    },
+    {
+      "role": "CORE2",
+      "native_family": "QUESTION_READER",
+      "blueprint_id": "BP-CORE2-READER@1.0.0",
+      "layout_mode": "QUESTION_READER",
+      "starting_point": "identity + attempt primary, source representation/support; native expanded 42:58 from 980px, solution full width; candidate split adjustable only after review",
+      "native_reference_viewport": [1366, 854],
+      "split_ratio": "42:58",
+      "breakpoint_min_px": 980,
+      "identity_cap_px": 190,
+      "sticky_support": "PROHIBITED"
+    },
+    {
+      "role": "CORE2A",
+      "native_family": "QUESTION_STUDY",
+      "blueprint_id": "BP-CORE2A-CRUX@1.1.0",
+      "layout_mode": "DECISION_SPLIT",
+      "starting_point": "question/representation, scaffolds, familiar application crux, full reasoning/check/repair; native 68:32",
+      "native_reference_viewport": [1366, 854],
+      "split_ratio": "68:32"
+    },
+    {
+      "role": "CORE2B",
+      "native_family": "TRANSFER_ATTEMPT",
+      "blueprint_id": "BP-CORE2B-DECIDE@1.1.0",
+      "layout_mode": "DECISION_SPLIT",
+      "starting_point": "prior exposure, protected decision, safe representation, durable commit, rubric/repair; native 68:32",
+      "native_reference_viewport": [1366, 854],
+      "split_ratio": "68:32"
+    },
+    {
+      "role": "CORE3",
+      "native_family": "TRANSFER_MATRIX",
+      "blueprint_id": "BP-CORE3-TRANSFERS@1.0.0",
+      "layout_mode": "TRANSFER_MATRIX",
+      "starting_point": "cross-domain transfer matrix, multi-stage rubric, diagnosis and repair",
+      "native_reference_viewport": [1366, 854]
+    },
+    {
+      "role": "EXPLORER",
+      "native_family": "STAGE_SUPPORT",
+      "blueprint_id": "BP-EXPLORER-SANDBOX@1.1.0",
+      "layout_mode": "EXPLORER_CANVAS",
+      "starting_point": "large model stage + cognitive route and controls, native 66:34 from 1100px, support scroll inside",
+      "native_reference_viewport": [1366, 854],
+      "split_ratio": "66:34",
+      "breakpoint_min_px": 1100,
+      "identity_cap_px": 110,
+      "sticky_support": "CONDITIONAL_REVIEWED"
+    }
+  ],
+  "required_viewports": [
+    [390, 844],
+    [800, 1280],
+    [854, 1366],
+    [1000, 1600],
+    [1280, 800],
+    [1366, 854],
+    [1600, 1000]
+  ],
+  "design_invariants": {
+    "grid_base_px": 8,
+    "touch_min_hitbox_px": 48,
+    "primary_button_min_height_px": 56,
+    "min_control_gap_px": 8,
+    "body_font_size_px": 18,
+    "question_font_size_px": 20,
+    "native_learner_text_floor_px": 14,
+    "line_height": 1.55,
+    "reading_measure_ch": 72,
+    "font_stack": "system-ui, sans-serif",
+    "hover_only_controls": "PROHIBITED",
+    "browser_zoom_max": 5.0,
+    "user_zoom_disabled": "PROHIBITED",
+    "reduced_motion": "RESPECT_PREFERS_REDUCED_MOTION",
+    "dynamic_viewport_height": "dvh_with_fallback",
+    "horizontal_page_overflow": "PROHIBITED",
+    "software_keyboard_obscuration": "PROHIBITED",
+    "sticky_footer_overlap": "PROHIBITED"
+  },
+  "wpe_and_exam_capability_matrix": {
+    "wpe_features_mapped": 28,
+    "exam_editions_mapped": ["NSEJS-P1", "NSEJS-P2", "FOUNDATION-DIAGNOSTIC", "SIMULATED-PAPER"],
+    "supported_input_modes": ["TOUCH", "STYLUS", "KEYBOARD", "MOUSE"],
+    "formula_rendering": "LOCAL_KATEX_OR_MATHML",
+    "no_remote_runtime_dependencies": true
+  },
+  "gate_determination": {
+    "freeze_status": "PROPOSED_NOT_FROZEN",
+    "reason": "Authentic physical device traces and independent external acceptance receipts required before freeze grant.",
+    "unresolved_blockers": [
+      "Physical 12.7-inch tablet touchscreen and stylus trace verification pending external review.",
+      "Independent detached Ed25519 signature from external reviewer required.",
+      "Owner design and academic admission decisions remain HOLD."
+    ],
+    "target_scenarios_count": 252,
+    "learner_ui_implementation_permitted": false
+  }
+}
