@@ -1,0 +1,537 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "g9-teaching-projection/1"
+    },
+    "lesson_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "construction_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "units": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "role": {
+            "enum": [
+              "A1",
+              "A2",
+              "A3",
+              "A4",
+              "A5",
+              "A6",
+              "A7",
+              "A8",
+              "A9"
+            ]
+          },
+          "block_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "id",
+                "revision",
+                "sha256"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "SOURCE",
+                    "OCCURRENCE",
+                    "QUESTION",
+                    "ASSESSMENT",
+                    "WARRANT",
+                    "QRT",
+                    "CONSTRUCTION",
+                    "LESSON",
+                    "FRESH_TASK",
+                    "SOLUTION",
+                    "RELATIONSHIP",
+                    "PRESENTATION",
+                    "CONCEPT",
+                    "ASSET",
+                    "PROGRAMME",
+                    "EXAM_EDITION",
+                    "PAPER",
+                    "STIMULUS",
+                    "APPROVAL",
+                    "RELEASE",
+                    "SUBJECT_PROFILE"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "minItems": 1
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "id",
+                "revision",
+                "sha256"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "SOURCE",
+                    "OCCURRENCE",
+                    "QUESTION",
+                    "ASSESSMENT",
+                    "WARRANT",
+                    "QRT",
+                    "CONSTRUCTION",
+                    "LESSON",
+                    "FRESH_TASK",
+                    "SOLUTION",
+                    "RELATIONSHIP",
+                    "PRESENTATION",
+                    "CONCEPT",
+                    "ASSET",
+                    "PROGRAMME",
+                    "EXAM_EDITION",
+                    "PAPER",
+                    "STIMULUS",
+                    "APPROVAL",
+                    "RELEASE",
+                    "SUBJECT_PROFILE"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "role",
+          "block_refs",
+          "evidence_refs"
+        ]
+      }
+    },
+    "anchors": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "level": {
+            "enum": [
+              "FOUNDATION",
+              "CONNECTED",
+              "ADVANCED"
+            ]
+          },
+          "task_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "id",
+              "revision",
+              "sha256"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "SOURCE",
+                  "OCCURRENCE",
+                  "QUESTION",
+                  "ASSESSMENT",
+                  "WARRANT",
+                  "QRT",
+                  "CONSTRUCTION",
+                  "LESSON",
+                  "FRESH_TASK",
+                  "SOLUTION",
+                  "RELATIONSHIP",
+                  "PRESENTATION",
+                  "CONCEPT",
+                  "ASSET",
+                  "PROGRAMME",
+                  "EXAM_EDITION",
+                  "PAPER",
+                  "STIMULUS",
+                  "APPROVAL",
+                  "RELEASE",
+                  "SUBJECT_PROFILE"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "solution_ref": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "id",
+              "revision",
+              "sha256"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "SOURCE",
+                  "OCCURRENCE",
+                  "QUESTION",
+                  "ASSESSMENT",
+                  "WARRANT",
+                  "QRT",
+                  "CONSTRUCTION",
+                  "LESSON",
+                  "FRESH_TASK",
+                  "SOLUTION",
+                  "RELATIONSHIP",
+                  "PRESENTATION",
+                  "CONCEPT",
+                  "ASSET",
+                  "PROGRAMME",
+                  "EXAM_EDITION",
+                  "PAPER",
+                  "STIMULUS",
+                  "APPROVAL",
+                  "RELEASE",
+                  "SUBJECT_PROFILE"
+                ]
+              },
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "warrant_refs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "type",
+                "id",
+                "revision",
+                "sha256"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "SOURCE",
+                    "OCCURRENCE",
+                    "QUESTION",
+                    "ASSESSMENT",
+                    "WARRANT",
+                    "QRT",
+                    "CONSTRUCTION",
+                    "LESSON",
+                    "FRESH_TASK",
+                    "SOLUTION",
+                    "RELATIONSHIP",
+                    "PRESENTATION",
+                    "CONCEPT",
+                    "ASSET",
+                    "PROGRAMME",
+                    "EXAM_EDITION",
+                    "PAPER",
+                    "STIMULUS",
+                    "APPROVAL",
+                    "RELEASE",
+                    "SUBJECT_PROFILE"
+                  ]
+                },
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+                },
+                "revision": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "level",
+          "task_ref",
+          "solution_ref",
+          "warrant_refs"
+        ]
+      }
+    },
+    "model_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "id",
+          "revision",
+          "sha256"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "SOURCE",
+              "OCCURRENCE",
+              "QUESTION",
+              "ASSESSMENT",
+              "WARRANT",
+              "QRT",
+              "CONSTRUCTION",
+              "LESSON",
+              "FRESH_TASK",
+              "SOLUTION",
+              "RELATIONSHIP",
+              "PRESENTATION",
+              "CONCEPT",
+              "ASSET",
+              "PROGRAMME",
+              "EXAM_EDITION",
+              "PAPER",
+              "STIMULUS",
+              "APPROVAL",
+              "RELEASE",
+              "SUBJECT_PROFILE"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "minItems": 0
+    },
+    "synthesis_task_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "SOURCE",
+            "OCCURRENCE",
+            "QUESTION",
+            "ASSESSMENT",
+            "WARRANT",
+            "QRT",
+            "CONSTRUCTION",
+            "LESSON",
+            "FRESH_TASK",
+            "SOLUTION",
+            "RELATIONSHIP",
+            "PRESENTATION",
+            "CONCEPT",
+            "ASSET",
+            "PROGRAMME",
+            "EXAM_EDITION",
+            "PAPER",
+            "STIMULUS",
+            "APPROVAL",
+            "RELEASE",
+            "SUBJECT_PROFILE"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "HOLD",
+        "CANDIDATE"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "lesson_ref",
+    "construction_ref",
+    "units",
+    "anchors",
+    "model_refs",
+    "synthesis_task_ref",
+    "status"
+  ]
+}
