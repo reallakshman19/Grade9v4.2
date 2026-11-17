@@ -22,6 +22,8 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 MODEL_SCHEMA_PATH = ROOT / "schemas" / "platform" / "model-projection.schema.json"
+# Synthetic-only test fixture. Production adapter trust must be external.
+SYNTHETIC_TEST_ADAPTERS = frozenset({("adapter:physics:spring-simulation", "1.0.0")})
 DISCLOSURE_SCHEMA_PATH = ROOT / "schemas" / "platform" / "cognitive-disclosure.schema.json"
 
 
@@ -102,13 +104,24 @@ def make_valid_disclosure() -> dict[str, Any]:
     }
 
 
-def validate_model_domain_invariants(model: dict[str, Any], validator: jsonschema.Draft202012Validator) -> None:
+def validate_model_domain_invariants(
+    model: dict[str, Any], validator: jsonschema.Draft202012Validator,
+    *, registered_adapters: frozenset[tuple[str, str]] | None = None,
+) -> None:
     """Validates model schema compliance plus semantic domain bounds and finiteness."""
     try:
         validator.validate(model)
     except jsonschema.ValidationError as err:
         raise ModelContractError("SCHEMA_VALIDATION_FAILED", err.message) from err
 
+    if registered_adapters is None:
+        raise ModelContractError("MISSING_TRUSTED_ADAPTER_REGISTRY",
+                                 "Adapter registration must be independently sourced")
+    if (model["adapter_id"], model["adapter_version"]) not in registered_adapters:
+        raise ModelContractError("UNREGISTERED_ADAPTER", "Adapter/version not in trusted registry")
+    param_ids = [p["id"] for p in model["parameters"]]
+    if len(param_ids) != len(set(param_ids)):
+        raise ModelContractError("DUPLICATE_PARAMETER_ID", "Model parameter ID reused")
     for param in model["parameters"]:
         # Finite check
         for fld in ("min", "max", "step", "initial"):
@@ -182,7 +195,7 @@ def test_model_schema_is_valid_draft202012(model_validator):
 
 def test_valid_model_projection(model_validator):
     model = make_valid_model()
-    validate_model_domain_invariants(model, model_validator)
+    validate_model_domain_invariants(model, model_validator, registered_adapters=SYNTHETIC_TEST_ADAPTERS)
 
 
 def test_reject_inverted_parameter_bounds(model_validator):
@@ -190,7 +203,7 @@ def test_reject_inverted_parameter_bounds(model_validator):
     bad_model["parameters"][0]["min"] = 100.0
     bad_model["parameters"][0]["max"] = 10.0  # min > max
     with pytest.raises(ModelContractError) as exc:
-        validate_model_domain_invariants(bad_model, model_validator)
+        validate_model_domain_invariants(bad_model, model_validator, registered_adapters=SYNTHETIC_TEST_ADAPTERS)
     assert exc.value.code == "INVALID_PARAMETER_DOMAIN"
 
 
@@ -198,13 +211,13 @@ def test_reject_initial_value_out_of_bounds(model_validator):
     bad_model = make_valid_model()
     bad_model["parameters"][0]["initial"] = 999.0  # > max
     with pytest.raises(ModelContractError) as exc:
-        validate_model_domain_invariants(bad_model, model_validator)
+        validate_model_domain_invariants(bad_model, model_validator, registered_adapters=SYNTHETIC_TEST_ADAPTERS)
     assert exc.value.code == "INITIAL_OUT_OF_BOUNDS"
 
     bad_model2 = make_valid_model()
     bad_model2["parameters"][0]["initial"] = -5.0  # < min
     with pytest.raises(ModelContractError) as exc:
-        validate_model_domain_invariants(bad_model2, model_validator)
+        validate_model_domain_invariants(bad_model2, model_validator, registered_adapters=SYNTHETIC_TEST_ADAPTERS)
     assert exc.value.code == "INITIAL_OUT_OF_BOUNDS"
 
 
@@ -212,13 +225,13 @@ def test_reject_zero_or_negative_step(model_validator):
     bad_model = make_valid_model()
     bad_model["parameters"][0]["step"] = 0.0  # exclusiveMinimum: 0
     with pytest.raises(ModelContractError) as exc:
-        validate_model_domain_invariants(bad_model, model_validator)
+        validate_model_domain_invariants(bad_model, model_validator, registered_adapters=SYNTHETIC_TEST_ADAPTERS)
     assert exc.value.code in {"SCHEMA_VALIDATION_FAILED", "INVALID_STEP_VALUE"}
 
     bad_model2 = make_valid_model()
     bad_model2["parameters"][0]["step"] = -1.0
     with pytest.raises(ModelContractError) as exc:
-        validate_model_domain_invariants(bad_model2, model_validator)
+        validate_model_domain_invariants(bad_model2, model_validator, registered_adapters=SYNTHETIC_TEST_ADAPTERS)
     assert exc.value.code in {"SCHEMA_VALIDATION_FAILED", "INVALID_STEP_VALUE"}
 
 
@@ -226,7 +239,7 @@ def test_reject_missing_required_model_fields(model_validator):
     bad_model = make_valid_model()
     del bad_model["alt_text"]
     with pytest.raises(ModelContractError) as exc:
-        validate_model_domain_invariants(bad_model, model_validator)
+        validate_model_domain_invariants(bad_model, model_validator, registered_adapters=SYNTHETIC_TEST_ADAPTERS)
     assert exc.value.code == "SCHEMA_VALIDATION_FAILED"
 
 
@@ -341,6 +354,29 @@ def test_model_schema_rejects_duplicate_outputs_and_bad_adapter_version(model_va
     wrong["warrant_refs"][0]["type"] = "QUESTION"
     with pytest.raises(jsonschema.ValidationError):
         model_validator.validate(wrong)
+
+
+
+def test_adapter_registration_fail_closed_and_duplicate_parameter_ids(model_validator):
+    instance = make_valid_model()
+    with pytest.raises(ModelContractError) as exc:
+        validate_model_domain_invariants(instance, model_validator)
+    assert exc.value.code == "MISSING_TRUSTED_ADAPTER_REGISTRY"
+
+    unregistered = make_valid_model()
+    unregistered["adapter_id"] = "adapter:unreviewed:unknown"
+    with pytest.raises(ModelContractError) as exc:
+        validate_model_domain_invariants(unregistered, model_validator,
+                                        registered_adapters=SYNTHETIC_TEST_ADAPTERS)
+    assert exc.value.code == "UNREGISTERED_ADAPTER"
+
+    duplicate = make_valid_model()
+    duplicate["parameters"].append(copy.deepcopy(duplicate["parameters"][0]))
+    duplicate["parameters"][-1]["initial"] = 25.0
+    with pytest.raises(ModelContractError) as exc:
+        validate_model_domain_invariants(duplicate, model_validator,
+                                        registered_adapters=SYNTHETIC_TEST_ADAPTERS)
+    assert exc.value.code == "DUPLICATE_PARAMETER_ID"
 
 
 def test_rule_13_invariant():
