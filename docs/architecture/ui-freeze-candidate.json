@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "schema_version": "g9-ui-freeze-candidate/1.0",
+  "schema_version": "g9-ui-freeze-candidate/1.1",
   "workpack_id": "A61",
   "title": "Independent Legacy UI Freeze Candidate and Design Gate",
-  "status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "status": "PROPOSED_ENGINEERING_CONTRACT_RECONCILED_NOT_FROZEN",
   "created_at": "2026-11-17T08:35:00Z",
   "academic_admission": "HOLD",
   "ui_implementation_freeze": "NOT_FROZEN (LOCKED_UNTIL_INDEPENDENT_A61_ACCEPTANCE)",
@@ -193,13 +193,8 @@
     "sticky_footer_overlap": "PROHIBITED"
   },
   "wpe_and_exam_capability_matrix": {
-    "wpe_features_mapped": 28,
-    "exam_editions_mapped": [
-      "NSEJS-P1",
-      "NSEJS-P2",
-      "FOUNDATION-DIAGNOSTIC",
-      "SIMULATED-PAPER"
-    ],
+    "wpe_features_mapped": 0,
+    "exam_editions_mapped": [],
     "supported_input_modes": [
       "TOUCH",
       "STYLUS",
@@ -207,18 +202,34 @@
       "MOUSE"
     ],
     "formula_rendering": "LOCAL_KATEX_OR_MATHML",
-    "no_remote_runtime_dependencies": true
+    "no_remote_runtime_dependencies": true,
+    "wpe_feature_count_status": "ACTUAL_LEGACY_CAPABILITIES_NOT_MAPPED; PRIOR_28_CLAIM_UNVERIFIED",
+    "wpe_contributor_family_drafts": 13,
+    "wpe_independently_ratified_families": 0,
+    "exam_archetypes_specified": [
+      "PHY-E1",
+      "PHY-E2",
+      "PHY-E3",
+      "CHEM-E1",
+      "CHEM-E2",
+      "CHEM-E3",
+      "MATH-E1",
+      "MATH-E2",
+      "MATH-E3"
+    ],
+    "exam_archetypes_executed": 0,
+    "scope": "Synthetic design only; no real exam edition or observed legacy coverage."
   },
   "gate_determination": {
     "freeze_status": "PROPOSED_NOT_FROZEN",
-    "reason": "Authentic physical device traces and independent external acceptance receipts required before freeze grant.",
+    "reason": "Structural reconciliation only; actual legacy evidence, target execution and independent design acceptance absent.",
     "unresolved_blockers": [
-      "External R4 prerequisite acceptance receipts and authenticated independent review missing.",
-      "Native baseline IDs restored from R4 but design variants require independent reconciliation.",
-      "Physical 12.7-inch tablet/touch/stylus evidence missing (252 scenarios and 11 flows still unexecuted).",
-      "Twelve additional full independently supplied WPE family fixtures missing.",
-      "Independent A61 detached Ed25519 signature and actual acceptance receipt not supplied.",
-      "Owner academic admission, production and design authority remain HOLD."
+      "A58 actual audit: 0 contexts and 0 mapped capabilities; no authentic screenshots/traces or signed exclusions.",
+      "A59/A60 actual integration and interaction evidence unverified.",
+      "A47/A10 independent acceptance not established.",
+      "13 WPE contributor drafts unratified; executable model adapters absent.",
+      "252 scenarios and 11 flows unexecuted; physical device evidence missing.",
+      "Independent design decision and A61 receipt missing."
     ],
     "target_scenarios_count": 252,
     "learner_ui_implementation_permitted": false
@@ -262,7 +273,7 @@
     }
   ],
   "native_blueprint_reconciliation": {
-    "status": "R4_BASELINE_IDS_RESTORED_NOT_INDEPENDENTLY_RATIFIED",
+    "status": "EXACT_SOURCE_SLOT_AND_POLICY_STRUCTURE_VERIFIED_TARGET_SEMANTICS_PENDING",
     "baseline_role_count": 7,
     "proposed_variant_count": 6,
     "source_reference": "01-architecture/six-core-blueprint-map.json",
@@ -274,5 +285,49 @@
     "reviewer_authority_verified": false,
     "receipt_digest": null,
     "warning": "Kit manifest SHA-256 is not a signed A61 reviewer receipt"
+  },
+  "correction_date": "2026-11-17",
+  "corrected_dependency_pins": {
+    "a47": {
+      "commit": "c4258e734b3a8dc38abc4a34703b1eb180a5ee11",
+      "schema_blob": "a100aa9f808a4bfbf73084e65c581b37fba428b5"
+    },
+    "a11": {
+      "commit": "aa87048dc9e396ecfdbb4a9df4ed9a7bbda58b65",
+      "tree": "d018974aa8e7a97dafd1a133867af9334259e743",
+      "family_graph_blob": "fd3d9366fd10ec4c919a5bdae13b3a41d8488497",
+      "coverage_blob": "28063597a6c31ecb79c752cd0cb9707f703c835c"
+    },
+    "a12_compatibility": {
+      "commit": "ecb6b5ea876a902d6201f9200dc90f58e32670d4",
+      "tree": "3aa9ff7bbe3b31af45292f770a1e9fe18f58f2da",
+      "status": "CONTRIBUTOR_CORRECTION_NOT_INDEPENDENT_ACCEPTANCE"
+    }
+  },
+  "native_baseline_evidence": {
+    "registry_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "registry_raw_sha256": "75f6bd43b31dfdf555fb26e8b36417e9c830a563898264dbe917d4254828653e",
+    "native_blueprint_map_blob": "62e21ac2732047fc210666dcecca9b6a827c5474",
+    "native_blueprint_map_raw_sha256": "30fa8e2a44628c5254c8559275ff8ccf89b8fb2ac5d8036af908c05ce7dd5ef2",
+    "verified_role_count": 7,
+    "verified_slot_count": 23,
+    "verified_block_bindings": 73,
+    "assurance": "Exact source structure, not browser observation or semantic acceptance."
+  },
+  "audit_evidence": {
+    "summary_blob": "1212ae141d6413533a33c2885cc0b0b449b6aa4d",
+    "summary_raw_sha256": "aeb43314ac97ebe1e09083f75af3f6968e4840ff2b343cc88f3a78c8e4a6cb3d",
+    "capability_map_blob": "b896a5506385ff093af75eef831b76dfa13e8360",
+    "capability_map_raw_sha256": "573963a3560e78369dea8c7930123c486e3e1a49b6682af084c54db87aa9a5f0",
+    "contexts_total": 0,
+    "contexts_audited": 0,
+    "capabilities_mapped": 0,
+    "actual_baseline_evidence_hashes": [],
+    "status": "A58_ACTUAL_AUDIT_MISSING",
+    "note": "Hashes bind blocked reports, not screenshots/traces."
+  },
+  "corrected_contract_digests": {
+    "screen_contracts_sha256": "7b90cbcdeed8598d5392b51521b58d84145f6a950f361d8eb7c04546b9559865",
+    "acceptance_manifest_sha256": "7f513fd5c898ddc63c4eca950c6ffbbe1c28d6626bbcb271a4d4e8fa2ea58669"
   }
 }
