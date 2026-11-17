@@ -40,7 +40,10 @@
         "no release",
         "storage error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:home",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "HOME-1600x1000",
@@ -70,7 +73,10 @@
         "no release",
         "storage error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:home",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "HOME-800x1280",
@@ -100,7 +106,10 @@
         "no release",
         "storage error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:home",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "HOME-1280x800",
@@ -130,7 +139,10 @@
         "no release",
         "storage error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:home",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SUBJECT-1000x1600",
@@ -158,7 +170,10 @@
         "scope pending",
         "unknown subject"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:subject",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SUBJECT-1600x1000",
@@ -186,7 +201,10 @@
         "scope pending",
         "unknown subject"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:subject",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SUBJECT-800x1280",
@@ -214,7 +232,10 @@
         "scope pending",
         "unknown subject"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:subject",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SUBJECT-1280x800",
@@ -242,7 +263,10 @@
         "scope pending",
         "unknown subject"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:subject",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TOPIC-1000x1600",
@@ -271,7 +295,10 @@
         "no eligible content",
         "unresolved QRT cell"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:topic",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TOPIC-1600x1000",
@@ -300,7 +327,10 @@
         "no eligible content",
         "unresolved QRT cell"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:topic",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TOPIC-800x1280",
@@ -329,7 +359,10 @@
         "no eligible content",
         "unresolved QRT cell"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:topic",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TOPIC-1280x800",
@@ -358,7 +391,10 @@
         "no eligible content",
         "unresolved QRT cell"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:topic",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRAMME-1000x1600",
@@ -385,7 +421,10 @@
       "states": [
         "unsupported capability"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:programme",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRAMME-1600x1000",
@@ -412,7 +451,10 @@
       "states": [
         "unsupported capability"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:programme",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRAMME-800x1280",
@@ -439,7 +481,10 @@
       "states": [
         "unsupported capability"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:programme",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRAMME-1280x800",
@@ -466,7 +511,10 @@
       "states": [
         "unsupported capability"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:programme",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BANK-1000x1600",
@@ -497,7 +545,10 @@
         "withdrawn",
         "fetch error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bank",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BANK-1600x1000",
@@ -528,7 +579,10 @@
         "withdrawn",
         "fetch error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bank",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BANK-800x1280",
@@ -559,7 +613,10 @@
         "withdrawn",
         "fetch error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bank",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BANK-1280x800",
@@ -590,7 +647,10 @@
         "withdrawn",
         "fetch error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bank",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "QUESTION-1000x1600",
@@ -620,7 +680,10 @@
       "states": [
         "unavailable, unsupported, save failure, review pending"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:question",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "QUESTION-1600x1000",
@@ -650,7 +713,10 @@
       "states": [
         "unavailable, unsupported, save failure, review pending"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:question",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "QUESTION-800x1280",
@@ -680,7 +746,10 @@
       "states": [
         "unavailable, unsupported, save failure, review pending"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:question",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "QUESTION-1280x800",
@@ -710,7 +779,10 @@
       "states": [
         "unavailable, unsupported, save failure, review pending"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:question",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LESSON-1000x1600",
@@ -746,7 +818,10 @@
         "invalid model domain",
         "no eligible fresh task"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:lesson",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LESSON-1600x1000",
@@ -782,7 +857,10 @@
         "invalid model domain",
         "no eligible fresh task"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:lesson",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LESSON-800x1280",
@@ -818,7 +896,10 @@
         "invalid model domain",
         "no eligible fresh task"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:lesson",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LESSON-1280x800",
@@ -854,7 +935,10 @@
         "invalid model domain",
         "no eligible fresh task"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:lesson",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TRANSFER-1000x1600",
@@ -894,7 +978,10 @@
         "assisted",
         "boundary locked"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TRANSFER-1600x1000",
@@ -934,7 +1021,10 @@
         "assisted",
         "boundary locked"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TRANSFER-800x1280",
@@ -974,7 +1064,10 @@
         "assisted",
         "boundary locked"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TRANSFER-1280x800",
@@ -1014,7 +1107,10 @@
         "assisted",
         "boundary locked"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PAPER-1000x1600",
@@ -1042,7 +1138,10 @@
         "missing tasks",
         "unsupported, timeout"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:paper",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PAPER-1600x1000",
@@ -1070,7 +1169,10 @@
         "missing tasks",
         "unsupported, timeout"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:paper",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PAPER-800x1280",
@@ -1098,7 +1200,10 @@
         "missing tasks",
         "unsupported, timeout"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:paper",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PAPER-1280x800",
@@ -1126,7 +1231,10 @@
         "missing tasks",
         "unsupported, timeout"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:paper",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SEARCH-1000x1600",
@@ -1154,7 +1262,10 @@
       "states": [
         "no results, failed shard"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:search",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SEARCH-1600x1000",
@@ -1182,7 +1293,10 @@
       "states": [
         "no results, failed shard"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:search",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SEARCH-800x1280",
@@ -1210,7 +1324,10 @@
       "states": [
         "no results, failed shard"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:search",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SEARCH-1280x800",
@@ -1238,7 +1355,10 @@
       "states": [
         "no results, failed shard"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:search",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRESS-1000x1600",
@@ -1266,7 +1386,10 @@
         "storage denied",
         "no attempts"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:progress",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRESS-1600x1000",
@@ -1294,7 +1417,10 @@
         "storage denied",
         "no attempts"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:progress",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRESS-800x1280",
@@ -1322,7 +1448,10 @@
         "storage denied",
         "no attempts"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:progress",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRESS-1280x800",
@@ -1350,7 +1479,10 @@
         "storage denied",
         "no attempts"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:progress",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "MISTAKES-1000x1600",
@@ -1378,7 +1510,10 @@
         "no mistakes",
         "withdrawn"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:mistakes",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "MISTAKES-1600x1000",
@@ -1406,7 +1541,10 @@
         "no mistakes",
         "withdrawn"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:mistakes",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "MISTAKES-800x1280",
@@ -1434,7 +1572,10 @@
         "no mistakes",
         "withdrawn"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:mistakes",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "MISTAKES-1280x800",
@@ -1462,7 +1603,10 @@
         "no mistakes",
         "withdrawn"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:mistakes",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BOOKMARKS-1000x1600",
@@ -1489,7 +1633,10 @@
         "withdrawn",
         "empty"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bookmarks",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BOOKMARKS-1600x1000",
@@ -1516,7 +1663,10 @@
         "withdrawn",
         "empty"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bookmarks",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BOOKMARKS-800x1280",
@@ -1543,7 +1693,10 @@
         "withdrawn",
         "empty"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bookmarks",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BOOKMARKS-1280x800",
@@ -1570,7 +1723,10 @@
         "withdrawn",
         "empty"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:bookmarks",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SETTINGS-1000x1600",
@@ -1599,7 +1755,10 @@
         "storage denied",
         "import conflict"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:settings",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SETTINGS-1600x1000",
@@ -1628,7 +1787,10 @@
         "storage denied",
         "import conflict"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:settings",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SETTINGS-800x1280",
@@ -1657,7 +1819,10 @@
         "storage denied",
         "import conflict"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:settings",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SETTINGS-1280x800",
@@ -1686,7 +1851,10 @@
         "storage denied",
         "import conflict"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:settings",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "UNAVAILABLE-1000x1600",
@@ -1712,7 +1880,10 @@
       "states": [
         "no redirect to wrong question"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:unavailable",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "UNAVAILABLE-1600x1000",
@@ -1738,7 +1909,10 @@
       "states": [
         "no redirect to wrong question"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:unavailable",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "UNAVAILABLE-800x1280",
@@ -1764,7 +1938,10 @@
       "states": [
         "no redirect to wrong question"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:unavailable",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "UNAVAILABLE-1280x800",
@@ -1790,7 +1967,10 @@
       "states": [
         "no redirect to wrong question"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:unavailable",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-01-1600x1000",
@@ -1801,7 +1981,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -1828,7 +2008,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-01",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-01-1000x1600",
@@ -1839,7 +2022,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -1866,7 +2049,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-01",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-01-1280x800",
@@ -1877,7 +2063,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -1904,7 +2090,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-01",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-01-800x1280",
@@ -1915,7 +2104,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -1942,7 +2131,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-01",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-02-1600x1000",
@@ -1953,7 +2145,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -1980,7 +2172,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-02",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-02-1000x1600",
@@ -1991,7 +2186,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2018,7 +2213,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-02",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-02-1280x800",
@@ -2029,7 +2227,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2056,7 +2254,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-02",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-02-800x1280",
@@ -2067,7 +2268,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2094,7 +2295,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-02",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-03-1600x1000",
@@ -2105,7 +2309,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2132,7 +2336,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-03",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-03-1000x1600",
@@ -2143,7 +2350,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2170,7 +2377,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-03",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-03-1280x800",
@@ -2181,7 +2391,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2208,7 +2418,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-03",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-03-800x1280",
@@ -2219,7 +2432,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2246,7 +2459,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-03",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-04-1600x1000",
@@ -2257,7 +2473,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2284,7 +2500,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-04",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-04-1000x1600",
@@ -2295,7 +2514,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2322,7 +2541,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-04",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-04-1280x800",
@@ -2333,7 +2555,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2360,7 +2582,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-04",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-04-800x1280",
@@ -2371,7 +2596,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2398,7 +2623,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-04",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-05-1600x1000",
@@ -2409,7 +2637,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2436,7 +2664,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-05",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-05-1000x1600",
@@ -2447,7 +2678,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2474,7 +2705,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-05",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-05-1280x800",
@@ -2485,7 +2719,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2512,7 +2746,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-05",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-05-800x1280",
@@ -2523,7 +2760,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2550,7 +2787,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-05",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-06-1600x1000",
@@ -2561,7 +2801,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2588,7 +2828,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-06",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-06-1000x1600",
@@ -2599,7 +2842,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2626,7 +2869,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-06",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-06-1280x800",
@@ -2637,7 +2883,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2664,7 +2910,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-06",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-06-800x1280",
@@ -2675,7 +2924,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2702,7 +2951,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-06",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-07-1600x1000",
@@ -2713,7 +2965,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2740,7 +2992,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-07",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-07-1000x1600",
@@ -2751,7 +3006,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2778,7 +3033,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-07",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-07-1280x800",
@@ -2789,7 +3047,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2816,7 +3074,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-07",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-07-800x1280",
@@ -2827,7 +3088,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2854,7 +3115,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-07",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-08-1600x1000",
@@ -2865,7 +3129,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2892,7 +3156,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-08",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-08-1000x1600",
@@ -2903,7 +3170,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2930,7 +3197,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-08",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-08-1280x800",
@@ -2941,7 +3211,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -2968,7 +3238,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-08",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-08-800x1280",
@@ -2979,7 +3252,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3006,7 +3279,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-08",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-09-1600x1000",
@@ -3017,7 +3293,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3044,7 +3320,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-09",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-09-1000x1600",
@@ -3055,7 +3334,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3082,7 +3361,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-09",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-09-1280x800",
@@ -3093,7 +3375,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3120,7 +3402,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-09",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-09-800x1280",
@@ -3131,7 +3416,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3158,7 +3443,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-09",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-10-1600x1000",
@@ -3169,7 +3457,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3196,7 +3484,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-10",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-10-1000x1600",
@@ -3207,7 +3498,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3234,7 +3525,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-10",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-10-1280x800",
@@ -3245,7 +3539,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3272,7 +3566,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-10",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-10-800x1280",
@@ -3283,7 +3580,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3310,7 +3607,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-10",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-11-1600x1000",
@@ -3321,7 +3621,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3348,7 +3648,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-11",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-11-1000x1600",
@@ -3359,7 +3662,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3386,7 +3689,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-11",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-11-1280x800",
@@ -3397,7 +3703,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3424,7 +3730,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-11",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-11-800x1280",
@@ -3435,7 +3744,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3462,7 +3771,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-11",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-12-1600x1000",
@@ -3473,7 +3785,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3500,7 +3812,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-12",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-12-1000x1600",
@@ -3511,7 +3826,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3538,7 +3853,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-12",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-12-1280x800",
@@ -3549,7 +3867,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3576,7 +3894,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-12",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-12-800x1280",
@@ -3587,7 +3908,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3614,7 +3935,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-12",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-13-1600x1000",
@@ -3625,7 +3949,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3652,7 +3976,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-13",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-13-1000x1600",
@@ -3663,7 +3990,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3690,7 +4017,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-13",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-13-1280x800",
@@ -3701,7 +4031,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3728,7 +4058,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-13",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-13-800x1280",
@@ -3739,7 +4072,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -3766,7 +4099,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-13",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REFLECTION-1600x1000",
@@ -3793,7 +4129,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reflection",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REFLECTION-1000x1600",
@@ -3820,7 +4159,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reflection",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REFLECTION-1280x800",
@@ -3847,7 +4189,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reflection",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REFLECTION-800x1280",
@@ -3874,7 +4219,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reflection",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REASONING-1600x1000",
@@ -3901,7 +4249,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reasoning",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REASONING-1000x1600",
@@ -3928,7 +4279,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reasoning",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REASONING-1280x800",
@@ -3955,7 +4309,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reasoning",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REASONING-800x1280",
@@ -3982,7 +4339,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with exact refs",
+      "screen_contract_ref": "screen:reasoning",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "HOME-1366x854",
@@ -4010,7 +4370,10 @@
         "no release",
         "storage error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:home",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "HOME-854x1366",
@@ -4038,7 +4401,10 @@
         "no release",
         "storage error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:home",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "HOME-390x844",
@@ -4066,7 +4432,10 @@
         "no release",
         "storage error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:home",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SUBJECT-1366x854",
@@ -4092,7 +4461,10 @@
         "scope pending",
         "unknown subject"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:subject",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SUBJECT-854x1366",
@@ -4118,7 +4490,10 @@
         "scope pending",
         "unknown subject"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:subject",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SUBJECT-390x844",
@@ -4144,7 +4519,10 @@
         "scope pending",
         "unknown subject"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:subject",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TOPIC-1366x854",
@@ -4171,7 +4549,10 @@
         "no eligible content",
         "unresolved QRT cell"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:topic",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TOPIC-854x1366",
@@ -4198,7 +4579,10 @@
         "no eligible content",
         "unresolved QRT cell"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:topic",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TOPIC-390x844",
@@ -4225,7 +4609,10 @@
         "no eligible content",
         "unresolved QRT cell"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:topic",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRAMME-1366x854",
@@ -4250,7 +4637,10 @@
       "states": [
         "unsupported capability"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:programme",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRAMME-854x1366",
@@ -4275,7 +4665,10 @@
       "states": [
         "unsupported capability"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:programme",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRAMME-390x844",
@@ -4300,7 +4693,10 @@
       "states": [
         "unsupported capability"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:programme",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BANK-1366x854",
@@ -4329,7 +4725,10 @@
         "withdrawn",
         "fetch error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:bank",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BANK-854x1366",
@@ -4358,7 +4757,10 @@
         "withdrawn",
         "fetch error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:bank",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BANK-390x844",
@@ -4387,7 +4789,10 @@
         "withdrawn",
         "fetch error"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:bank",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "QUESTION-1366x854",
@@ -4415,7 +4820,10 @@
       "states": [
         "unavailable, unsupported, save failure, review pending"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:question",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "QUESTION-854x1366",
@@ -4443,7 +4851,10 @@
       "states": [
         "unavailable, unsupported, save failure, review pending"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:question",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "QUESTION-390x844",
@@ -4471,7 +4882,10 @@
       "states": [
         "unavailable, unsupported, save failure, review pending"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:question",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LESSON-1366x854",
@@ -4505,7 +4919,10 @@
         "invalid model domain",
         "no eligible fresh task"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:lesson",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LESSON-854x1366",
@@ -4539,7 +4956,10 @@
         "invalid model domain",
         "no eligible fresh task"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:lesson",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LESSON-390x844",
@@ -4573,7 +4993,10 @@
         "invalid model domain",
         "no eligible fresh task"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:lesson",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TRANSFER-1366x854",
@@ -4611,7 +5034,10 @@
         "assisted",
         "boundary locked"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TRANSFER-854x1366",
@@ -4649,7 +5075,10 @@
         "assisted",
         "boundary locked"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "TRANSFER-390x844",
@@ -4687,7 +5116,10 @@
         "assisted",
         "boundary locked"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PAPER-1366x854",
@@ -4713,7 +5145,10 @@
         "missing tasks",
         "unsupported, timeout"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:paper",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PAPER-854x1366",
@@ -4739,7 +5174,10 @@
         "missing tasks",
         "unsupported, timeout"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:paper",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PAPER-390x844",
@@ -4765,7 +5203,10 @@
         "missing tasks",
         "unsupported, timeout"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:paper",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SEARCH-1366x854",
@@ -4791,7 +5232,10 @@
       "states": [
         "no results, failed shard"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:search",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SEARCH-854x1366",
@@ -4817,7 +5261,10 @@
       "states": [
         "no results, failed shard"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:search",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SEARCH-390x844",
@@ -4843,7 +5290,10 @@
       "states": [
         "no results, failed shard"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:search",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRESS-1366x854",
@@ -4869,7 +5319,10 @@
         "storage denied",
         "no attempts"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:progress",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRESS-854x1366",
@@ -4895,7 +5348,10 @@
         "storage denied",
         "no attempts"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:progress",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "PROGRESS-390x844",
@@ -4921,7 +5377,10 @@
         "storage denied",
         "no attempts"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:progress",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "MISTAKES-1366x854",
@@ -4947,7 +5406,10 @@
         "no mistakes",
         "withdrawn"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:mistakes",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "MISTAKES-854x1366",
@@ -4973,7 +5435,10 @@
         "no mistakes",
         "withdrawn"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:mistakes",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "MISTAKES-390x844",
@@ -4999,7 +5464,10 @@
         "no mistakes",
         "withdrawn"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:mistakes",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BOOKMARKS-1366x854",
@@ -5024,7 +5492,10 @@
         "withdrawn",
         "empty"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:bookmarks",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BOOKMARKS-854x1366",
@@ -5049,7 +5520,10 @@
         "withdrawn",
         "empty"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:bookmarks",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "BOOKMARKS-390x844",
@@ -5074,7 +5548,10 @@
         "withdrawn",
         "empty"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:bookmarks",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SETTINGS-1366x854",
@@ -5101,7 +5578,10 @@
         "storage denied",
         "import conflict"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:settings",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SETTINGS-854x1366",
@@ -5128,7 +5608,10 @@
         "storage denied",
         "import conflict"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:settings",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "SETTINGS-390x844",
@@ -5155,7 +5638,10 @@
         "storage denied",
         "import conflict"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:settings",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "UNAVAILABLE-1366x854",
@@ -5179,7 +5665,10 @@
       "states": [
         "no redirect to wrong question"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:unavailable",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "UNAVAILABLE-854x1366",
@@ -5203,7 +5692,10 @@
       "states": [
         "no redirect to wrong question"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:unavailable",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "UNAVAILABLE-390x844",
@@ -5227,7 +5719,10 @@
       "states": [
         "no redirect to wrong question"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:unavailable",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REFLECTION-1366x854",
@@ -5255,7 +5750,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:reflection",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REFLECTION-854x1366",
@@ -5283,7 +5781,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:reflection",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REFLECTION-390x844",
@@ -5311,7 +5812,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:reflection",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REASONING-1366x854",
@@ -5339,7 +5843,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:reasoning",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REASONING-854x1366",
@@ -5367,7 +5874,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:reasoning",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "REASONING-390x844",
@@ -5395,7 +5905,10 @@
         "pending",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:reasoning",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "ORIENTATION-1366x854",
@@ -5422,7 +5935,10 @@
         "unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:orientation",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "ORIENTATION-854x1366",
@@ -5449,7 +5965,10 @@
         "unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:orientation",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "ORIENTATION-1000x1600",
@@ -5476,7 +5995,10 @@
         "unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:orientation",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "ORIENTATION-1600x1000",
@@ -5503,7 +6025,10 @@
         "unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:orientation",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "ORIENTATION-800x1280",
@@ -5530,7 +6055,10 @@
         "unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:orientation",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "ORIENTATION-1280x800",
@@ -5557,7 +6085,10 @@
         "unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:orientation",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "ORIENTATION-390x844",
@@ -5584,7 +6115,10 @@
         "unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:orientation",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "GUIDED-PRACTICE-1366x854",
@@ -5612,7 +6146,10 @@
         "no eligible route",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:guided-practice",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "GUIDED-PRACTICE-854x1366",
@@ -5640,7 +6177,10 @@
         "no eligible route",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:guided-practice",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "GUIDED-PRACTICE-1000x1600",
@@ -5668,7 +6208,10 @@
         "no eligible route",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:guided-practice",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "GUIDED-PRACTICE-1600x1000",
@@ -5696,7 +6239,10 @@
         "no eligible route",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:guided-practice",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "GUIDED-PRACTICE-800x1280",
@@ -5724,7 +6270,10 @@
         "no eligible route",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:guided-practice",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "GUIDED-PRACTICE-1280x800",
@@ -5752,7 +6301,10 @@
         "no eligible route",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:guided-practice",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "GUIDED-PRACTICE-390x844",
@@ -5780,7 +6332,10 @@
         "no eligible route",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:guided-practice",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "APPLICATION-TRANSFER-1366x854",
@@ -5810,7 +6365,10 @@
         "protected",
         "postcommit"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:application-transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "APPLICATION-TRANSFER-854x1366",
@@ -5840,7 +6398,10 @@
         "protected",
         "postcommit"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:application-transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "APPLICATION-TRANSFER-1000x1600",
@@ -5870,7 +6431,10 @@
         "protected",
         "postcommit"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:application-transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "APPLICATION-TRANSFER-1600x1000",
@@ -5900,7 +6464,10 @@
         "protected",
         "postcommit"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:application-transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "APPLICATION-TRANSFER-800x1280",
@@ -5930,7 +6497,10 @@
         "protected",
         "postcommit"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:application-transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "APPLICATION-TRANSFER-1280x800",
@@ -5960,7 +6530,10 @@
         "protected",
         "postcommit"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:application-transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "APPLICATION-TRANSFER-390x844",
@@ -5990,7 +6563,10 @@
         "protected",
         "postcommit"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:application-transfer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "EXPLORER-1366x854",
@@ -6021,7 +6597,10 @@
         "storage error",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:explorer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "EXPLORER-854x1366",
@@ -6052,7 +6631,10 @@
         "storage error",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:explorer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "EXPLORER-1000x1600",
@@ -6083,7 +6665,10 @@
         "storage error",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:explorer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "EXPLORER-1600x1000",
@@ -6114,7 +6699,10 @@
         "storage error",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:explorer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "EXPLORER-800x1280",
@@ -6145,7 +6733,10 @@
         "storage error",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:explorer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "EXPLORER-1280x800",
@@ -6176,7 +6767,10 @@
         "storage error",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:explorer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "EXPLORER-390x844",
@@ -6207,7 +6801,10 @@
         "storage error",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:explorer",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LEGACY-APP-1366x854",
@@ -6236,7 +6833,10 @@
         "resume unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:legacy-app",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LEGACY-APP-854x1366",
@@ -6265,7 +6865,10 @@
         "resume unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:legacy-app",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LEGACY-APP-1000x1600",
@@ -6294,7 +6897,10 @@
         "resume unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:legacy-app",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LEGACY-APP-1600x1000",
@@ -6323,7 +6929,10 @@
         "resume unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:legacy-app",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LEGACY-APP-800x1280",
@@ -6352,7 +6961,10 @@
         "resume unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:legacy-app",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LEGACY-APP-1280x800",
@@ -6381,7 +6993,10 @@
         "resume unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:legacy-app",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "LEGACY-APP-390x844",
@@ -6410,7 +7025,10 @@
         "resume unavailable",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:legacy-app",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "RESOURCE-CATALOGUE-1366x854",
@@ -6437,7 +7055,10 @@
         "loading",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:resource-catalogue",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "RESOURCE-CATALOGUE-854x1366",
@@ -6464,7 +7085,10 @@
         "loading",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:resource-catalogue",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "RESOURCE-CATALOGUE-1000x1600",
@@ -6491,7 +7115,10 @@
         "loading",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:resource-catalogue",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "RESOURCE-CATALOGUE-1600x1000",
@@ -6518,7 +7145,10 @@
         "loading",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:resource-catalogue",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "RESOURCE-CATALOGUE-800x1280",
@@ -6545,7 +7175,10 @@
         "loading",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:resource-catalogue",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "RESOURCE-CATALOGUE-1280x800",
@@ -6572,7 +7205,10 @@
         "loading",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "screen_contract_ref": "screen:resource-catalogue",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "RESOURCE-CATALOGUE-390x844",
@@ -6599,7 +7235,10 @@
         "loading",
         "populated"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
+      "screen_contract_ref": "screen:resource-catalogue",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-01-1366x854",
@@ -6610,7 +7249,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6637,7 +7276,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-01",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-01-854x1366",
@@ -6648,7 +7290,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6675,7 +7317,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-01",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-01-390x844",
@@ -6686,7 +7331,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6713,7 +7358,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-01",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-02-1366x854",
@@ -6724,7 +7372,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6751,7 +7399,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-02",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-02-854x1366",
@@ -6762,7 +7413,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6789,7 +7440,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-02",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-02-390x844",
@@ -6800,7 +7454,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6827,7 +7481,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-02",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-03-1366x854",
@@ -6838,7 +7495,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6865,7 +7522,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-03",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-03-854x1366",
@@ -6876,7 +7536,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6903,7 +7563,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-03",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-03-390x844",
@@ -6914,7 +7577,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6941,7 +7604,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-03",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-04-1366x854",
@@ -6952,7 +7618,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -6979,7 +7645,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-04",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-04-854x1366",
@@ -6990,7 +7659,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7017,7 +7686,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-04",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-04-390x844",
@@ -7028,7 +7700,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7055,7 +7727,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-04",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-05-1366x854",
@@ -7066,7 +7741,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7093,7 +7768,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-05",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-05-854x1366",
@@ -7104,7 +7782,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7131,7 +7809,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-05",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-05-390x844",
@@ -7142,7 +7823,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7169,7 +7850,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-05",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-06-1366x854",
@@ -7180,7 +7864,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7207,7 +7891,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-06",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-06-854x1366",
@@ -7218,7 +7905,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7245,7 +7932,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-06",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-06-390x844",
@@ -7256,7 +7946,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7283,7 +7973,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-06",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-07-1366x854",
@@ -7294,7 +7987,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7321,7 +8014,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-07",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-07-854x1366",
@@ -7332,7 +8028,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7359,7 +8055,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-07",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-07-390x844",
@@ -7370,7 +8069,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7397,7 +8096,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-07",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-08-1366x854",
@@ -7408,7 +8110,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7435,7 +8137,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-08",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-08-854x1366",
@@ -7446,7 +8151,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7473,7 +8178,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-08",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-08-390x844",
@@ -7484,7 +8192,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7511,7 +8219,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-08",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-09-1366x854",
@@ -7522,7 +8233,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7549,7 +8260,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-09",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-09-854x1366",
@@ -7560,7 +8274,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7587,7 +8301,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-09",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-09-390x844",
@@ -7598,7 +8315,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7625,7 +8342,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-09",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-10-1366x854",
@@ -7636,7 +8356,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7663,7 +8383,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-10",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-10-854x1366",
@@ -7674,7 +8397,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7701,7 +8424,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-10",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-10-390x844",
@@ -7712,7 +8438,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7739,7 +8465,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-10",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-11-1366x854",
@@ -7750,7 +8479,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7777,7 +8506,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-11",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-11-854x1366",
@@ -7788,7 +8520,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7815,7 +8547,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-11",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-11-390x844",
@@ -7826,7 +8561,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7853,7 +8588,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-11",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-12-1366x854",
@@ -7864,7 +8602,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7891,7 +8629,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-12",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-12-854x1366",
@@ -7902,7 +8643,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7929,7 +8670,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-12",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-12-390x844",
@@ -7940,7 +8684,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -7967,7 +8711,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-12",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-13-1366x854",
@@ -7978,7 +8725,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -8005,7 +8752,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-13",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-13-854x1366",
@@ -8016,7 +8766,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -8043,7 +8793,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-13",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
     {
       "id": "WPE-SYN-13-390x844",
@@ -8054,7 +8807,7 @@
       ],
       "touch": true,
       "assertions": [
-        "A1\u2013A9 and distinct anchors accessible",
+        "A1–A9 and distinct anchors accessible",
         "model adapter synchronized and permission-projected",
         "six-stage transition and immutable first/boundary",
         "save failure no disclosure",
@@ -8081,7 +8834,10 @@
         "stale revision",
         "unavailable"
       ],
-      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE"
+      "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
+      "precondition": "full independently supplied synthetic fixture WPE-SYN-13",
+      "screen_contract_ref": "screen:wpe-cognitive-journey",
+      "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     }
   ],
   "integration_flows": [
@@ -8270,8 +9026,21 @@
   ],
   "acceptance_gate": {
     "status": "BLOCKED",
-    "reason": "Awaiting independent physical device trace verification and detached Ed25519 acceptance signature.",
+    "reason": "A61 physical-device evidence, independently supplied 13 WPE full-family synthetic fixtures, external signed prerequisite receipts, and approved native design reconciliation remain missing.",
     "freeze_decision": "NOT_GRANTED",
-    "author_authority": "NONE"
+    "author_authority": "NONE",
+    "source_contracts_restored": true
+  },
+  "total_specified_entries": 263,
+  "matrix_count_definition": "252 separate target scenarios + 11 additional integration flows (263 total specified entries)",
+  "screen_contracts_coverage": {
+    "manifest_screen_families": 24,
+    "defined_screen_contracts": 24,
+    "bound_scenario_count": 252,
+    "source_preconditions_restored": 252,
+    "executed_scenarios": 0,
+    "executed_integration_flows": 0,
+    "source": "R4/03-ui/screens.json + R4/06-acceptance/browser-matrix.json",
+    "status": "STRUCTURAL_PROPOSAL_ONLY_NOT_DEVICE_ACCEPTANCE"
   }
 }
