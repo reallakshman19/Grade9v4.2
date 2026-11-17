@@ -1,7 +1,7 @@
 {
   "schema_version": "g9-vertical-slice-coverage/1.1",
   "workpack_id": "A11",
-  "status": "13_CONTRIBUTOR_DRAFT_GRAPHS_INDEPENDENT_RATIFICATION_PENDING",
+  "status": "13_CONTRIBUTOR_DRAFT_GRAPHS_TYPED_DEPENDENCIES_REPAIRED_INDEPENDENT_RATIFICATION_PENDING",
   "families_total_required": 13,
   "families_supplied_count": 13,
   "families_ratified_count": 0,
@@ -14,7 +14,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-02",
@@ -23,7 +24,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-03",
@@ -32,7 +34,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-04",
@@ -41,7 +44,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-05",
@@ -50,7 +54,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-06",
@@ -59,7 +64,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-07",
@@ -68,7 +74,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-08",
@@ -77,7 +84,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-09",
@@ -86,7 +94,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-10",
@@ -95,7 +104,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-11",
@@ -104,7 +114,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-12",
@@ -113,7 +124,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     },
     {
       "family_id": "WPE-SYN-13",
@@ -122,7 +134,8 @@
       "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
       "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
-      "reviewer_receipt": "NOT_SUPPLIED"
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
     }
   ],
   "pending_families": [
@@ -210,5 +223,16 @@
     "path": "fixtures/synthetic/wpe-vertical-slice.json",
     "status": "ORIGINAL_UNRATIFIED_ENGINEERING_EXAMPLE_PRESERVED"
   },
-  "policy_note": "All 13 R4 WPE family identities now have contributor-authored full graph drafts; zero independent ratifications. No authentic exam source, executable model, learner readiness, academic admission or release is asserted."
+  "policy_note": "All 13 R4 WPE family identities now have contributor-authored full graph drafts; zero independent ratifications. No authentic exam source, executable model, learner readiness, academic admission or release is asserted. Revision 2 repairs the missing typed edges; independent ratification and A14 admission remain absent.",
+  "graph_validation": {
+    "validator_blob": "10bb517e45021429bc058c0b3fe67459e24b55c3",
+    "family_graph_blob": "44ffa7a3a157cdef9e8ec1521b4c2118bead40bb",
+    "family_graphs_passed": 13,
+    "objects_passed": 429,
+    "combined_graph_passed": true,
+    "session_chains_passed": 13,
+    "events_passed": 117,
+    "negative_cases_rejected": 26,
+    "method": "Exact canonical graph and chain digests matched via independent local reconstruction; actual A08 and A47 Python validators. Not full checkout or independent acceptance."
+  }
 }
