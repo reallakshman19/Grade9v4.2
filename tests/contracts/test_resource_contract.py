@@ -85,7 +85,7 @@ def is_learner_routable(resource: dict[str, Any]) -> bool:
         and resource.get("kind") not in ("OWNER_TOOL", "RUNTIME_HOST")
         and len(gov.get("receipt_refs", [])) > 0
         and gov.get("rights") == "CLEARED"
-        and gov.get("academic") in ("ADMITTED", "NOT_APPLICABLE_REVIEWED")
+        and gov.get("academic") == "ADMITTED"
         and gov.get("technical") == "PASS"
         and gov.get("release") == "ELIGIBLE"
     )
@@ -344,7 +344,7 @@ def test_learner_search_status_requires_full_declared_eligibility(resource_valid
         with pytest.raises(jsonschema.ValidationError):
             resource_validator.validate(instance)
     for key, value in (
-        ("rights", "HOLD"), ("academic", "HOLD"), ("technical", "UNTESTED"),
+        ("rights", "HOLD"), ("academic", "HOLD"), ("academic", "NOT_APPLICABLE_REVIEWED"), ("technical", "UNTESTED"),
         ("release", "HOLD"), ("receipt_refs", []),
     ):
         instance = make_valid_resource()

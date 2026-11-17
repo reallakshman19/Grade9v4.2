@@ -248,10 +248,7 @@
                 "const": "CLEARED"
               },
               "academic": {
-                "enum": [
-                  "ADMITTED",
-                  "NOT_APPLICABLE_REVIEWED"
-                ]
+                "const": "ADMITTED"
               },
               "technical": {
                 "const": "PASS"
