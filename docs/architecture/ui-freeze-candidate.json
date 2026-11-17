@@ -1,12 +1,12 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "schema_version": "g9-ui-freeze-candidate/1.0",
+  "schema_version": "g9-ui-freeze-candidate/1.1",
   "workpack_id": "A61",
   "title": "Independent Legacy UI Freeze Candidate and Design Gate",
-  "status": "PROPOSED_PENDING_INDEPENDENT_REVIEW",
+  "status": "PROPOSED_ENGINEERING_CONTRACT_RECONCILED_NOT_FROZEN",
   "created_at": "2026-11-17T08:35:00Z",
   "academic_admission": "HOLD",
-  "ui_implementation_freeze": "NOT_FROZEN (LOCKED_UNTIL_INDEPENDENT_A61_ACCEPTANCE)",
+  "ui_implementation_freeze": "NOT_FROZEN (NONBLOCKING_REVIEW_STATUS)",
   "production_release": "NONE",
   "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
   "receipt_digest_pinned": null,
@@ -193,13 +193,8 @@
     "sticky_footer_overlap": "PROHIBITED"
   },
   "wpe_and_exam_capability_matrix": {
-    "wpe_features_mapped": 28,
-    "exam_editions_mapped": [
-      "NSEJS-P1",
-      "NSEJS-P2",
-      "FOUNDATION-DIAGNOSTIC",
-      "SIMULATED-PAPER"
-    ],
+    "wpe_features_mapped": 0,
+    "exam_editions_mapped": [],
     "supported_input_modes": [
       "TOUCH",
       "STYLUS",
@@ -207,21 +202,39 @@
       "MOUSE"
     ],
     "formula_rendering": "LOCAL_KATEX_OR_MATHML",
-    "no_remote_runtime_dependencies": true
+    "no_remote_runtime_dependencies": true,
+    "wpe_feature_count_status": "ACTUAL_LEGACY_CAPABILITIES_NOT_MAPPED; PRIOR_28_CLAIM_UNVERIFIED",
+    "wpe_contributor_family_drafts": 13,
+    "wpe_independently_ratified_families": 0,
+    "exam_archetypes_specified": [
+      "PHY-E1",
+      "PHY-E2",
+      "PHY-E3",
+      "CHEM-E1",
+      "CHEM-E2",
+      "CHEM-E3",
+      "MATH-E1",
+      "MATH-E2",
+      "MATH-E3"
+    ],
+    "exam_archetypes_executed": 0,
+    "scope": "Synthetic design only; no real exam edition or observed legacy coverage."
   },
   "gate_determination": {
     "freeze_status": "PROPOSED_NOT_FROZEN",
-    "reason": "Authentic physical device traces and independent external acceptance receipts required before freeze grant.",
+    "reason": "Structural reconciliation; Owner authorizes implementation and deployment with review-not-completed label. Actual freeze and academic review remain unverified.",
     "unresolved_blockers": [
-      "External R4 prerequisite acceptance receipts and authenticated independent review missing.",
-      "Native baseline IDs restored from R4 but design variants require independent reconciliation.",
-      "Physical 12.7-inch tablet/touch/stylus evidence missing (252 scenarios and 11 flows still unexecuted).",
-      "Twelve additional full independently supplied WPE family fixtures missing.",
-      "Independent A61 detached Ed25519 signature and actual acceptance receipt not supplied.",
-      "Owner academic admission, production and design authority remain HOLD."
+      "A58 actual audit: 0 contexts and 0 mapped capabilities; no authentic screenshots/traces or signed exclusions.",
+      "A59/A60 actual integration and interaction evidence unverified.",
+      "A47/A10 independent acceptance not established.",
+      "13 WPE contributor drafts unratified; executable model adapters absent.",
+      "252 scenarios and 11 flows unexecuted; physical device evidence missing.",
+      "Independent design decision and A61 receipt missing."
     ],
     "target_scenarios_count": 252,
-    "learner_ui_implementation_permitted": false
+    "learner_ui_implementation_permitted": true,
+    "blocks_merge": false,
+    "blocks_deployment": false
   },
   "unratified_blueprint_variants": [
     {
@@ -262,7 +275,7 @@
     }
   ],
   "native_blueprint_reconciliation": {
-    "status": "R4_BASELINE_IDS_RESTORED_NOT_INDEPENDENTLY_RATIFIED",
+    "status": "EXACT_SOURCE_COMPONENTS_AND_POLICIES_PRESERVED_TARGET_SEMANTICS_NOT_EXECUTED",
     "baseline_role_count": 7,
     "proposed_variant_count": 6,
     "source_reference": "01-architecture/six-core-blueprint-map.json",
@@ -274,5 +287,60 @@
     "reviewer_authority_verified": false,
     "receipt_digest": null,
     "warning": "Kit manifest SHA-256 is not a signed A61 reviewer receipt"
+  },
+  "correction_date": "2026-11-17",
+  "corrected_dependency_pins": {
+    "a47": {
+      "commit": "c4258e734b3a8dc38abc4a34703b1eb180a5ee11",
+      "schema_blob": "a100aa9f808a4bfbf73084e65c581b37fba428b5"
+    },
+    "a11": {
+      "commit": "7d8ff7878a1d5868e9ce550fe532a8aa448da599",
+      "tree": "f9726210d477bb861ffb697bd79ba75086457428",
+      "family_graph_blob": "44ffa7a3a157cdef9e8ec1521b4c2118bead40bb",
+      "coverage_blob": "511ae8c776815dc65ce617fb203717b970b1d31d",
+      "graph_validator_status": "13/13 EXACT_RECONSTRUCTED_GRAPHS_PASS; NOT_RATIFIED"
+    },
+    "a12_compatibility": {
+      "commit": "9dcd2d09ba125b3a184839caba957c96a0ff17be",
+      "tree": "04c02915c48bf651710cd70137a4cd3000da1eb1",
+      "status": "CONTRIBUTOR_CORRECTION_NOT_INDEPENDENT_ACCEPTANCE"
+    }
+  },
+  "native_baseline_evidence": {
+    "registry_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "registry_raw_sha256": "75f6bd43b31dfdf555fb26e8b36417e9c830a563898264dbe917d4254828653e",
+    "native_blueprint_map_blob": "62e21ac2732047fc210666dcecca9b6a827c5474",
+    "native_blueprint_map_raw_sha256": "30fa8e2a44628c5254c8559275ff8ccf89b8fb2ac5d8036af908c05ce7dd5ef2",
+    "verified_role_count": 7,
+    "verified_slot_count": 23,
+    "verified_block_bindings": 73,
+    "assurance": "Exact source structure, not browser observation or semantic acceptance.",
+    "verified_component_count": 50
+  },
+  "audit_evidence": {
+    "summary_blob": "1212ae141d6413533a33c2885cc0b0b449b6aa4d",
+    "summary_raw_sha256": "aeb43314ac97ebe1e09083f75af3f6968e4840ff2b343cc88f3a78c8e4a6cb3d",
+    "capability_map_blob": "b896a5506385ff093af75eef831b76dfa13e8360",
+    "capability_map_raw_sha256": "573963a3560e78369dea8c7930123c486e3e1a49b6682af084c54db87aa9a5f0",
+    "contexts_total": 0,
+    "contexts_audited": 0,
+    "capabilities_mapped": 0,
+    "actual_baseline_evidence_hashes": [],
+    "status": "A58_ACTUAL_AUDIT_MISSING",
+    "note": "Hashes bind blocked reports, not screenshots/traces."
+  },
+  "corrected_contract_digests": {
+    "screen_contracts_sha256": "8ac3a3a1402a4f3b4182da1b5d0b692e285fdefcb5b7f4cd8f4021bd7d36fde9",
+    "acceptance_manifest_sha256": "d1744e487c8747cb92b3091116de930c1ae776ed9cc5da09dc0655884a67e66b"
+  },
+  "owner_delivery_policy": {
+    "decision": "OWNER_DIRECTED_NONBLOCKING_REVIEW",
+    "date": "2026-11-17",
+    "independent_review_required_for_merge_or_deployment": false,
+    "learner_ui_implementation_permitted": true,
+    "deployment_permitted": true,
+    "review_status_label": "review-not-completed",
+    "scope": "Engineering merge and deployment may proceed; report academic and UI review status accurately. Do not disclose restricted source or operator-only data. No completed review or learner-content approval implied."
   }
 }
