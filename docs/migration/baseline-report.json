@@ -1,9 +1,9 @@
 {
   "schema_version": "g9-baseline-report/4",
-  "revision": 5,
-  "generated_at": "2026-11-16T07:48:14Z",
+  "revision": 6,
+  "generated_at": "2026-11-17",
   "workpack_id": "A00",
-  "title": "Read-only authority and baseline audit (Revision 5 — history-preserving evidence correction)",
+  "title": "Read-only authority and baseline audit (Revision 6 — full listed remote-byte rehash, HOLD)",
   "remediation_reference": {
     "prior_candidate_commit": "b6615b92c4ef744107d336bf1460d0ffb6736e1e",
     "prior_candidate_tree": "61db9d814580073930fc968f445a16362f9ffc9d",
@@ -359,7 +359,13 @@
       "verification_method": "GitHub recursive tree (not truncated); fetch each exact commit path as base64 and compute raw SHA-256 on decoded bytes; compare reported blob ID and size with tree entry. Git SHA-1 was not independently recomputed for these 11 files.",
       "status": "OBSERVED_REMOTE_BYTES_VERIFIED; NOT_ACADEMIC_ADMISSION_OR_LOCAL_CUSTODY_PROOF"
     },
-    "total_listed_source_file_bindings": 32
+    "total_listed_source_file_bindings": 32,
+    "revision_6_remote_rehash": {
+      "listed_bindings_verified": 32,
+      "raw_sha256_matches": 32,
+      "git_blob_sha1_recomputed_matches": 32,
+      "scope": "ALL_LISTED_BINDINGS_ONLY; LOCAL_CUSTODY_NOT_VERIFIED"
+    }
   },
   "r3_policy_and_administrator_evidence": {
     "policy_v1_json": {
@@ -373,7 +379,8 @@
       "production_enabled": false,
       "academic_release_enabled": false,
       "d31": "PAUSED",
-      "trust_source": "G9_R3_TRUST_JSON"
+      "trust_source": "G9_R3_TRUST_JSON",
+      "revision_6_verified_git_blob_sha1": "0a1823944449fb6fa1b7a5f10949b18c6ef2ab11"
     },
     "quality_policy_v1_json": {
       "path": "docs/agent-entry/quality-gate-r2/quality-policy.v1.json",
@@ -383,7 +390,8 @@
       "activation": "PILOT_AWAITING_OWNER_GOLDEN",
       "owner_accepted_golden_head": null,
       "owner_golden_receipt_path": null,
-      "production_enabled": false
+      "production_enabled": false,
+      "revision_6_verified_git_blob_sha1": "ac8ed9bd65519ddfd5a881c2a505000090996452"
     },
     "admin_setup_md": {
       "path": "docs/agent-entry/production-control-r3/ADMIN_SETUP.md",
@@ -395,7 +403,8 @@
         "G9_R3_TRUST_JSON not configured in Actions variables",
         "Missing publication-manifest.json and release-receipt.json",
         "Release gates fail-closed under FREEZE_PENDING_GOLDEN"
-      ]
+      ],
+      "revision_6_verified_git_blob_sha1": "894a206f92d38ae05b7ace9ee5aae0b2a4eba3aa"
     }
   },
   "approved_custody_and_trust_architecture": {
@@ -448,7 +457,9 @@
     "Original historical authorization chronology and actual local source custody/ACL require independently controlled verification.",
     "Administrator-required status checks and independent review enforcement absent; external guard proposal must be independently reviewed and installed.",
     "A01 premature integration incident remains open; reconcile exact new A00 base and accepted final state without rewriting history.",
-    "Academic admission HOLD; production release NONE; UI freeze not authorized."
+    "Academic admission HOLD; production release NONE; UI freeze not authorized.",
+    "Current live public visibility conflicts with R4 private target; explicit authenticated policy exception or restored private containment required.",
+    "Exact local checkout scope checker and target regression not executed; remote file-scope evidence is not a substitute."
   ],
   "audit_disposition": "BLOCKED_PENDING_INDEPENDENT_REVIEW_AND_AUTHORITY",
   "sequence_incident": {
@@ -463,5 +474,73 @@
     "source_local_commit": "c14465e62c7bf2cdf804d501be2e1354fc87e1a9",
     "source_local_tree": "ee68f58180aeac0608e71481d64e130a9b793364",
     "status": "PUBLIC_DRAFT_REPRODUCTION; private local locators withheld; prior execution evidence belongs to original local candidate; fresh independent review required."
+  },
+  "revision_6_prior": {
+    "revision": 5,
+    "generated_at": "2026-11-16T07:48:14Z",
+    "title": "Read-only authority and baseline audit (Revision 5 — history-preserving evidence correction)",
+    "candidate_commit": "f492e720f9ab302e976f0b3c3a4df59bbde572e3",
+    "candidate_tree": "a231ff44d1c6e0848cf0a68148f22050387a0306",
+    "baseline_report_git_blob": "ef36a6a4c588c7763275de835c14c78b61635da6"
+  },
+  "current_recovery_verification": {
+    "date": "2026-11-17",
+    "role": "CONTRIBUTOR_SELF_ASSESSMENT_NOT_INDEPENDENT_ACCEPTANCE",
+    "reviewed_candidate": "f492e720f9ab302e976f0b3c3a4df59bbde572e3",
+    "reviewed_tree": "a231ff44d1c6e0848cf0a68148f22050387a0306",
+    "observed_main": "1489d0ad7f671fcc979ef27090b599cbbdd9e740",
+    "observed_main_tree": "93a15caa288cab79da0c5d5325e2bc1d6fac5a7d",
+    "source_scope": {
+      "v35_listed_files": 32,
+      "v35_raw_sha256_matches": 32,
+      "v35_recomputed_git_blob_sha1_matches": 32,
+      "v35_size_matches": 32,
+      "v41_policy_admin_files": 3,
+      "v41_raw_sha256_matches": 3,
+      "v41_recomputed_git_blob_sha1_matches": 3,
+      "v41_size_matches": 3,
+      "snapshot_commit_tree_pairs_verified": 6,
+      "method": "Fetch exact commit paths as base64, decode raw bytes, compute SHA-256 and Git blob SHA-1 over blob header and bytes, compare file length and exact recursive source tree entries. SHA algorithms self-tested against published abc digests. No source repositories modified.",
+      "scope_limit": "Listed authority file bindings only; does not verify all 2657 v3.5 paths or complete v4.1 bytes, local custody, ACL, original exam rights, source admission or A02 completion."
+    },
+    "reference_replay": {
+      "archive_sha256": "c9c7b194a2627a1faf730b0cf1894a8bd722e18cefd80bc8dbb37678c7c3442f",
+      "manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+      "python": "3.13.5",
+      "git": "2.47.3",
+      "openssl": "3.5.5",
+      "kit_workpacks": 75,
+      "examples": 9,
+      "tests_passed": 80,
+      "tests_failed": 0,
+      "tests_skipped": 0,
+      "elapsed_seconds": 0.287,
+      "log_name": "A00_R4_reference_replay.log",
+      "log_raw_sha256": "c42490ef1c5d8799afeb424aaadddca99e8695ccd3d2c4bdf8427cb76c518e62",
+      "log_custody": "Captured externally; not committed; independent reviewer receipt not demonstrated.",
+      "scope": "Unmodified reference kit only."
+    },
+    "scope": {
+      "original_candidate_parent": "b6615b92c4ef744107d336bf1460d0ffb6736e1e",
+      "api_changed_paths": [
+        "docs/migration/baseline-report.json"
+      ],
+      "api_scope_result": "PASS_1_OF_1",
+      "exact_checkout_scope_checker": "NOT_RUN_DNS_RESOLUTION_BLOCKED",
+      "target_full_regression": "NOT_RUN"
+    },
+    "authority": {
+      "owner_instruction": "Review, fix and merge requested; bounded recovery rehearsal only, not an R4 signed acceptance or public-target exception.",
+      "external_owner_authorization": "NOT_VERIFIED",
+      "visibility": "PUBLIC_CONTRARY_TO_PRIVATE_R4_TARGET",
+      "required_status_checks": "OFF_EMPTY",
+      "independent_trust_roster": "NOT_VERIFIED",
+      "independent_acceptance_receipt": "NOT_RECEIVED",
+      "custody_acl": "NOT_VERIFIED",
+      "main_integration": "BLOCKED",
+      "academic_admission": "HOLD",
+      "ui_freeze": "NOT_GRANTED",
+      "production_release": "NONE"
+    }
   }
 }
