@@ -1,0 +1,19 @@
+{
+  "name": "grade9v4-build-shell",
+  "version": "4.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Grade9v4.2 static build shell, toolchain, and browser smoke test suite",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test:smoke": "playwright test tests/browser/smoke.spec.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^22.7.5",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.9"
+  }
+}
