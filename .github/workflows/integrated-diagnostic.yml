@@ -9,18 +9,18 @@ permissions:
   contents: read
 jobs:
   python:
-    if: github.head_ref == 'validation/a13-a14-a62-integrated'
+    if: github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated'
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: d03f18857b0c5cbff92903dcae4f690687ee4a95
+          ref: f5e2bea369891318481691b1b4d7e5dbd0f15059
           persist-credentials: false
       - name: Verify exact candidate
         run: |
-          test "$(git rev-parse HEAD)" = "d03f18857b0c5cbff92903dcae4f690687ee4a95"
-          test "$(git rev-parse HEAD^{tree})" = "dc802c87bfbe0cae82ca2b9190f3c7731783430d"
+          test "$(git rev-parse HEAD)" = "f5e2bea369891318481691b1b4d7e5dbd0f15059"
+          test "$(git rev-parse HEAD^{tree})" = "4d65a0d725af745cb21a4302f9fc1fa79801f994"
           git diff --exit-code HEAD
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
@@ -38,18 +38,18 @@ jobs:
       - name: Run full Python suite
         run: python -m pytest -ra
   browser:
-    if: github.head_ref == 'validation/a13-a14-a62-integrated'
+    if: github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated'
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: d03f18857b0c5cbff92903dcae4f690687ee4a95
+          ref: f5e2bea369891318481691b1b4d7e5dbd0f15059
           persist-credentials: false
       - name: Verify exact candidate
         run: |
-          test "$(git rev-parse HEAD)" = "d03f18857b0c5cbff92903dcae4f690687ee4a95"
-          test "$(git rev-parse HEAD^{tree})" = "dc802c87bfbe0cae82ca2b9190f3c7731783430d"
+          test "$(git rev-parse HEAD)" = "f5e2bea369891318481691b1b4d7e5dbd0f15059"
+          test "$(git rev-parse HEAD^{tree})" = "4d65a0d725af745cb21a4302f9fc1fa79801f994"
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.16.0'
