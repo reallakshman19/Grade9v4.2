@@ -6,16 +6,16 @@
   "user_pseudonym": "DEMO_LEARNER_01",
   "source_graph": "fixtures/synthetic/wpe-vertical-slice.json",
   "task_ref": {
-    "type": "QUESTION",
-    "id": "demo:wpe:source",
+    "type": "FRESH_TASK",
+    "id": "demo:wpe:fresh",
     "revision": 1,
-    "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+    "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
   },
   "journey_id": "jrn:demo:wpe:01",
   "release_id": "rel:synthetic:demo:01",
   "task_instance_id": "inst:synthetic:wpe:01",
   "event_count": 9,
-  "chain_head_sha256": "4031a20025ecef4dda49ea07e3584c6c052b3dafa1a44ca82ebd92a3fe4e7069",
+  "chain_head_sha256": "8b44c04a8e2a08caba13094db8c2dee4d49be5a831593e1003ee1e3767d57f02",
   "history": [
     {
       "schema_version": "g9-cognitive-event/1",
@@ -23,17 +23,17 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 1,
       "previous_sha256": null,
       "event_type": "PREDICTION_COMMITTED",
       "payload": {
-        "prediction": "The cart will separate at the natural spring length.",
+        "prediction": "The cart may emerge if the stored spring energy exceeds the braking work.",
         "artifact_ids": []
       },
       "at": "2026-11-17T09:00:00Z"
@@ -44,14 +44,14 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 2,
-      "previous_sha256": "46007d46c7498759311562bfc2aa4d2e6708ff8dc1bc114cc04a53d0849ea11a",
+      "previous_sha256": "eb225d48b55625e74121b015309c8c913728126f80955cc66c269212ba0126a8",
       "event_type": "HELP_EXPOSED",
       "payload": {
         "capability": "H1",
@@ -71,25 +71,28 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 3,
-      "previous_sha256": "35213e5b8939880b5f122db1c0ec4f966ba505c7eb2c0656e33a3cb98d272116",
+      "previous_sha256": "b783df09d1df5817498d244a38379397a577f910d239b2935401454145a63d45",
       "event_type": "FIRST_COMMITTED",
       "payload": {
         "responses": {
-          "q1": {
-            "kind": "NUMERIC_RESPONSE",
-            "value": 0.4,
-            "unit": "m"
+          "response": {
+            "kind": "CONSTRUCTED_RESPONSE",
+            "value": "The cart emerges at about 1.225 m/s; the spring stops pushing at natural length."
+          },
+          "work": {
+            "kind": "CONSTRUCTED_RESPONSE",
+            "value": "0.5×160×0.15²=1.8 J; braking work=-3×0.40=-1.2 J; K=0.6 J; v=sqrt(1.2/0.8)."
           }
         },
         "work": [
-          "4 J / (1 kg × 10 m/s²) = 0.4 m"
+          "Separate smooth contact and braking regions; positive final kinetic energy."
         ],
         "help_event_ids": [
           "evt:demo:hint:02"
@@ -103,28 +106,28 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 4,
-      "previous_sha256": "ed0171677862984925cdd1fb7e5332f9358d0445301d15c29aa2f7bb5b3c698c",
+      "previous_sha256": "5ef4ea36928715c34bf0ac378c545d2e4d108528bc38c57adf699048a35ee102",
       "event_type": "RECONSTRUCTION_COMMITTED",
       "payload": {
         "first_event_id": "evt:demo:first:03",
         "comparison": {
-          "step1": {
+          "demo:diagnosis:contact-boundary": {
             "aligned": true,
-            "notes": "Spring force ends at natural length; gravity remains on incline."
+            "notes": "1.8 J at release; subtract only braking work after contact."
           }
         },
         "reference_ref": {
           "type": "SOLUTION",
-          "id": "demo:wpe:source-solution",
+          "id": "demo:wpe:fresh-solution",
           "revision": 1,
-          "sha256": "a07d0b10bc5a003b6c4c0d19a215aac660b65258038df422d09c5813eecadad0"
+          "sha256": "7c2f73b43b2229ebd3968c991c76a21339f18b434d58e33f313f21b144cd4324"
         }
       },
       "at": "2026-11-17T09:03:00Z"
@@ -135,18 +138,18 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 5,
-      "previous_sha256": "d5125faae68a60e64222a5c554c0229d27efb7c0a2ca6eda9c7b31248b71a163",
+      "previous_sha256": "43c6558feb3dab4edbca6e126853a95ad375a79aa65ce6e78f7fe269f040cd0b",
       "event_type": "DIAGNOSIS_COMMITTED",
       "payload": {
         "move_id": "demo:diagnosis:contact-boundary",
-        "why": "Do not apply spring force once the unattached cart separates."
+        "why": "Avoid continuing spring work beyond natural length."
       },
       "at": "2026-11-17T09:04:00Z"
     },
@@ -156,19 +159,19 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 6,
-      "previous_sha256": "6f7299553fe6ec550b2bc6b89bb2a8f6d3849c1d5482aac7b40e2fd7400d6201",
+      "previous_sha256": "9590bcbf85f5b033d4643a0e887d8e91a670eeea546fc5f162103329ad11d9d4",
       "event_type": "REPAIR_COMMITTED",
       "payload": {
         "first_event_id": "evt:demo:first:03",
         "work": [
-          "Re-evaluate force after separation: gravity only on the upward slope."
+          "Draw separate force diagrams; use K=1.8−1.2=0.6 J on the strip."
         ],
         "why": "The unilateral spring stops pushing at zero compression."
       },
@@ -180,14 +183,14 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 7,
-      "previous_sha256": "322dd39bae9c26201ae0ba87070b2c15a872cdbcbd8c00c7ed9dad6efe4e3eb6",
+      "previous_sha256": "df6b4d2d06c78825a3739c7fbc7f785c6ad3635895496ccebc115023a6293fb1",
       "event_type": "BOUNDARY_COMMITTED",
       "payload": {
         "boundary_task_ref": {
@@ -197,12 +200,13 @@
           "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
         },
         "responses": {
-          "q1": {
-            "value": "Check contact-force sign and feasibility"
+          "response": {
+            "kind": "CONSTRUCTED_RESPONSE",
+            "value": "Stops after 1.8/3=0.60 m, before the 0.70 m strip ends. Do not extrapolate to negative kinetic energy."
           }
         },
         "work": [
-          "Apply the no-pull spring boundary."
+          "Set kinetic energy to zero: 1.8−3d=0."
         ],
         "help_event_ids": []
       },
@@ -214,14 +218,14 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 8,
-      "previous_sha256": "dab1c04b5ee1704f3a27b7ae7a128216f3e6ae68c26aa0528970fc3cf30708a8",
+      "previous_sha256": "5f27003a25fcc710a8e6d7bcb5fa19199609019b747c1fd5b945c06dfc9b2f10",
       "event_type": "BOUNDARY_FEEDBACK_VIEWED",
       "payload": {
         "boundary_event_id": "evt:demo:boundary:07",
@@ -240,22 +244,22 @@
       "journey_id": "jrn:demo:wpe:01",
       "release_id": "rel:synthetic:demo:01",
       "task_ref": {
-        "type": "QUESTION",
-        "id": "demo:wpe:source",
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
         "revision": 1,
-        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
       },
       "task_instance_id": "inst:synthetic:wpe:01",
       "sequence": 9,
-      "previous_sha256": "3ac2f2a3a48eee818466c29b85d00cbe352d776b3db5aff5c936b88811731f00",
+      "previous_sha256": "fb9719f65eab2f1ef12251c463845316a5c93eea1a222db204e733a94cc95910",
       "event_type": "SOURCE_RETURNED",
       "payload": {
         "origin_session_id": "SES-SYNTHETIC-DEMO-01",
         "origin_ref": {
-          "type": "LESSON",
-          "id": "demo:wpe:lesson",
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
           "revision": 1,
-          "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357"
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
         },
         "cursor": 0
       },
@@ -264,7 +268,73 @@
   ],
   "independent_receipt_status": "NOT_SUPPLIED",
   "notes": [
-    "The A47 event-schema and hash chain are demonstrative only. No trusted checkpoint or device persistence is attested.",
-    "Only synthetic, unratified R4 fixture object references are used."
-  ]
+    "Contributor-corrected synthetic chain, exact FRESH_TASK and origin refs; no trusted external checkpoint or device persistence attested.",
+    "First and boundary responses use the task field ids and A10 response wire format."
+  ],
+  "expected_policy": {
+    "task_ref": {
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:fresh",
+      "revision": 1,
+      "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+    },
+    "boundary_ref": {
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:boundary",
+      "revision": 1,
+      "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
+    },
+    "first_reference": {
+      "type": "SOLUTION",
+      "id": "demo:wpe:fresh-solution",
+      "revision": 1,
+      "sha256": "7c2f73b43b2229ebd3968c991c76a21339f18b434d58e33f313f21b144cd4324"
+    },
+    "boundary_reference": {
+      "type": "SOLUTION",
+      "id": "demo:wpe:boundary-solution",
+      "revision": 1,
+      "sha256": "4f78f40635c4ce9af0a003e8aa5cfc10540de009fe84beaf7ef2a31dfc4c9151"
+    },
+    "help_asset_refs": [
+      {
+        "type": "ASSET",
+        "id": "demo:wpe:hint-1",
+        "revision": 1,
+        "sha256": "ee523b2da0917fca851941fa10768c73d5053e9727154e31c8a524a67cfd7670"
+      }
+    ],
+    "origin_session_id": "SES-SYNTHETIC-DEMO-01",
+    "origin_ref": {
+      "type": "QUESTION",
+      "id": "demo:wpe:source",
+      "revision": 1,
+      "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+    },
+    "origin_cursor": 0,
+    "first_fields": {
+      "response": "CONSTRUCTED_RESPONSE",
+      "work": "CONSTRUCTED_RESPONSE"
+    },
+    "boundary_fields": {
+      "response": "CONSTRUCTED_RESPONSE"
+    },
+    "move_ids": [
+      "demo:diagnosis:contact-boundary"
+    ],
+    "capabilities": [
+      "H1",
+      "REFERENCE_SOLUTION",
+      "BOUNDARY_REFERENCE",
+      "SOURCE_RETURN"
+    ],
+    "mode": "PRACTICE"
+  },
+  "expected_checkpoint": {
+    "sequence": 9,
+    "sha256": "8b44c04a8e2a08caba13094db8c2dee4d49be5a831593e1003ee1e3767d57f02",
+    "stage": "COMPLETE",
+    "returned": true,
+    "assurance": "SYNTHETIC_EXPECTATION_NOT_TRUSTED_CUSTODY"
+  }
 }
