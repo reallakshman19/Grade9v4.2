@@ -1,92 +1,214 @@
 {
-  "schema_version": "g9-vertical-slice-coverage/1.0",
+  "schema_version": "g9-vertical-slice-coverage/1.1",
   "workpack_id": "A11",
-  "status": "PARTIAL_FAMILY_COVERAGE_AWAITING_DISPATCHER",
+  "status": "13_CONTRIBUTOR_DRAFT_GRAPHS_INDEPENDENT_RATIFICATION_PENDING",
   "families_total_required": 13,
-  "families_ratified_count": 1,
-  "ratified_families": [
+  "families_supplied_count": 13,
+  "families_ratified_count": 0,
+  "ratified_families": [],
+  "supplied_unratified_families": [
     {
-      "family_id": 1,
+      "family_id": "WPE-SYN-01",
       "domain": "PHYSICS",
-      "topic": "Hooke's Law and Unilateral Contact Work-Energy Theorem",
-      "source_fixture": "fixtures/synthetic/wpe-vertical-slice.json",
+      "family": "MULTIFORCE_LEDGER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
       "objects_count": 33,
-      "status": "RATIFIED_DEMO_FIXTURE"
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-02",
+      "domain": "PHYSICS",
+      "family": "SPRING_CONTACT",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-03",
+      "domain": "PHYSICS",
+      "family": "CONSTANT_POWER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-04",
+      "domain": "PHYSICS",
+      "family": "DISTRIBUTED_MASS",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-05",
+      "domain": "PHYSICS",
+      "family": "GRAPH_OPERATION",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-06",
+      "domain": "PHYSICS",
+      "family": "VERTICAL_CIRCLE",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-07",
+      "domain": "PHYSICS",
+      "family": "POTENTIAL_WELLS",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-08",
+      "domain": "PHYSICS",
+      "family": "SPRING_PROJECTILE_TRANSITION",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-09",
+      "domain": "PHYSICS",
+      "family": "RADIAL_FORCE_POTENTIAL",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-10",
+      "domain": "PHYSICS",
+      "family": "INSTANTANEOUS_POWER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-11",
+      "domain": "PHYSICS",
+      "family": "CONVEYOR_MOMENTUM_POWER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-12",
+      "domain": "PHYSICS",
+      "family": "DISSIPATIVE_BOUNCES",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
+    },
+    {
+      "family_id": "WPE-SYN-13",
+      "domain": "PHYSICS",
+      "family": "SPRING_CONTROLLED_VARIABLE",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED"
     }
   ],
   "pending_families": [
     {
-      "family_id": 2,
+      "family_id": "WPE-SYN-01",
       "domain": "PHYSICS",
-      "topic": "Two-body shared-clock kinematics",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
+      "family": "MULTIFORCE_LEDGER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
     },
     {
-      "family_id": 3,
+      "family_id": "WPE-SYN-02",
       "domain": "PHYSICS",
-      "topic": "Rotational equilibrium and torque balance",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
+      "family": "SPRING_CONTACT",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
     },
     {
-      "family_id": 4,
-      "domain": "CHEMISTRY",
-      "topic": "Stoichiometry and limiting reactant yield",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 5,
-      "domain": "CHEMISTRY",
-      "topic": "Redox electron transfer equivalence",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 6,
-      "domain": "CHEMISTRY",
-      "topic": "Periodic trends and atomic radii",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 7,
-      "domain": "MATHEMATICS",
-      "topic": "Polynomial long division and remainder theorem",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 8,
-      "domain": "MATHEMATICS",
-      "topic": "Geometric proof congruent triangle criteria",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 9,
-      "domain": "MATHEMATICS",
-      "topic": "Riemann sum integration bounds",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 10,
-      "domain": "BIOLOGY",
-      "topic": "Cellular respiration pathway stoichiometry",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 11,
-      "domain": "BIOLOGY",
-      "topic": "Mendelian genetics Punnett square probability",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
-    },
-    {
-      "family_id": 12,
+      "family_id": "WPE-SYN-03",
       "domain": "PHYSICS",
-      "topic": "Refraction Snell's law and total internal reflection",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
+      "family": "CONSTANT_POWER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
     },
     {
-      "family_id": 13,
+      "family_id": "WPE-SYN-04",
       "domain": "PHYSICS",
-      "topic": "Circuit Kirchhoff laws and equivalent resistance",
-      "status": "AWAITING_INDEPENDENT_DISPATCHER_GRAPH"
+      "family": "DISTRIBUTED_MASS",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-05",
+      "domain": "PHYSICS",
+      "family": "GRAPH_OPERATION",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-06",
+      "domain": "PHYSICS",
+      "family": "VERTICAL_CIRCLE",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-07",
+      "domain": "PHYSICS",
+      "family": "POTENTIAL_WELLS",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-08",
+      "domain": "PHYSICS",
+      "family": "SPRING_PROJECTILE_TRANSITION",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-09",
+      "domain": "PHYSICS",
+      "family": "RADIAL_FORCE_POTENTIAL",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-10",
+      "domain": "PHYSICS",
+      "family": "INSTANTANEOUS_POWER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-11",
+      "domain": "PHYSICS",
+      "family": "CONVEYOR_MOMENTUM_POWER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-12",
+      "domain": "PHYSICS",
+      "family": "DISSIPATIVE_BOUNCES",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-13",
+      "domain": "PHYSICS",
+      "family": "SPRING_CONTROLLED_VARIABLE",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
     }
   ],
-  "policy_note": "A11 explicitly documents 1 ratified vertical slice engineering example; twelve further full graphs must be obtained from independent dispatcher before claiming full family coverage. Academic approval: NONE. Release: NONE."
+  "historical_example": {
+    "family_id": "WPE-SYN-02",
+    "path": "fixtures/synthetic/wpe-vertical-slice.json",
+    "status": "ORIGINAL_UNRATIFIED_ENGINEERING_EXAMPLE_PRESERVED"
+  },
+  "policy_note": "All 13 R4 WPE family identities now have contributor-authored full graph drafts; zero independent ratifications. No authentic exam source, executable model, learner readiness, academic admission or release is asserted."
 }

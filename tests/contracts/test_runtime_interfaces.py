@@ -1,172 +1,117 @@
-"""Unit and contract tests for Workpack A12 frontend interfaces and state contracts."""
-import os
-import re
+"""A12 contract tests: strict compiler, wire examples and discriminating negatives."""
+import copy
+import json
+import shutil
 import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
+from jsonschema import Draft202012Validator
+
 ROOT = Path(__file__).resolve().parents[2]
-TYPES_TS = ROOT / "web" / "runtime" / "types.ts"
-CONTRACTS_TS = ROOT / "web" / "runtime" / "contracts.ts"
-R4_INTERFACES_TS = ROOT.parent / "grade9-r4-kit" / "Grade9v4.2_Execution_Kit_R4" / "02-contracts" / "runtime" / "interfaces.ts"
+RUNTIME = ROOT / 'web' / 'runtime'
+SCHEMAS = ROOT / 'schemas' / 'platform'
+REF = dict(type='FRESH_TASK', id='task:one', revision=1, sha256='a'*64)
+VALUES = {
+    'SINGLE_CHOICE': 'A', 'MULTIPLE_CHOICE': ['A', 'B'],
+    'INTEGER': '9007199254740993', 'NUMERIC_QUANTITY': {'decimal':'1.250','unit':'m'},
+    'SYMBOLIC_EXPRESSION':'x+1', 'CONSTRUCTED_RESPONSE':'because',
+    'MATHEMATICAL_PROOF':'proof', 'CHEMICAL_STRUCTURE':{'format':'SMILES','data':'C'},
+    'REACTION_MECHANISM':['step'], 'DATA_TABLE':[['a',None]],
+    'GRAPH':{'points':[['1','2']]}, 'EXPERIMENT_ANALYSIS':{'observations':['x'],'conclusion':'y'},
+    'MULTIPART':{'a':{'kind':'MULTIPART','value':{'b':{'kind':'INTEGER','value':'2'}}}},
+}
+BAD_VALUES = dict(zip(VALUES, [1, 'A', 1, 1.25, [], False, [], 'C', 42, [{'a':42}], None, False, {'a':42}]))
+RESPONSE = {'kind':'NUMERIC_QUANTITY','value':VALUES['NUMERIC_QUANTITY']}
+PAYLOADS = {
+    'PREDICTION_COMMITTED':dict(prediction='x',artifact_ids=[]),
+    'HELP_EXPOSED':dict(capability='H1',asset_ref={**REF,'type':'ASSET'},ordinal=1),
+    'FIRST_COMMITTED':dict(responses={'q':RESPONSE},work=[],help_event_ids=[]),
+    'RECONSTRUCTION_COMMITTED':dict(first_event_id='evt:first',comparison={'step':{'aligned':True}},reference_ref={**REF,'type':'SOLUTION'}),
+    'DIAGNOSIS_COMMITTED':dict(move_id='move:one',why='error'),
+    'REPAIR_COMMITTED':dict(first_event_id='evt:first',work=['repair'],why='fixed'),
+    'BOUNDARY_COMMITTED':dict(boundary_task_ref=REF,responses={'q':RESPONSE},work=[],help_event_ids=[]),
+    'BOUNDARY_FEEDBACK_VIEWED':dict(boundary_event_id='evt:boundary',reference_ref={**REF,'type':'SOLUTION'}),
+    'SOURCE_RETURNED':dict(origin_session_id='session:one',origin_ref=REF,cursor=0),
+}
+EVENT = dict(schema_version='g9-cognitive-event/1',event_id='evt:one',journey_id='journey:one',release_id='release:one',task_instance_id='instance:one',task_ref=REF,sequence=1,previous_sha256=None,at='2026-11-17T00:00:00Z')
+
+
+def schema(name):
+    return json.loads((SCHEMAS / (name+'.schema.json')).read_text(encoding='utf-8'))
+
+
+def literal(value):
+    return json.dumps(value, ensure_ascii=False)
+
+
+def compiler_source():
+    lines = ["import type {Response, Ref, NativeCore, CognitiveEvent, Grade, Attempt, ModelProjection, ResourceIdentity, ReasoningCell} from './web/runtime/types';",
+             "import type {Capability, Evaluator, CognitiveStore, DisclosureContext, ResourceRegistry, ModelEvaluationResult} from './web/runtime/contracts';"]
+    def case(name, typ, value, bad=False):
+        if bad:
+            lines.append('// @ts-expect-error rejected contract shape')
+        lines.append(f'const {name}: {typ} = {literal(value)};')
+    for n,(kind,value) in enumerate(VALUES.items()):
+        case(f'response{n}','Response',dict(kind=kind,value=value))
+        case(f'badResponse{n}','Response',dict(kind=kind,value=BAD_VALUES[kind]),True)
+    for n,(kind,payload) in enumerate(PAYLOADS.items()):
+        event = dict(EVENT,event_type=kind,payload=payload)
+        case(f'event{n}','CognitiveEvent',event)
+        case(f'badEvent{n}','CognitiveEvent',dict(event,payload={}),True)
+        case(f'noInstance{n}','CognitiveEvent',{k:v for k,v in event.items() if k!='task_instance_id'},True)
+    for n,kind in enumerate(schema('exact-ref')['properties']['type']['enum']):
+        case(f'ref{n}','Ref',dict(REF,type=kind))
+    case('badRef','Ref',dict(REF,type='UNKNOWN'),True)
+    for n,role in enumerate(['CORE1','CORE1A','CORE1B','CORE2','CORE2A','CORE2B']):
+        case(f'role{n}','NativeCore',role)
+    case('badRole','NativeCore','CORE3',True)
+    case('badProof','Response',dict(kind='MATHEMATICAL_PROOF',value='x',proofSteps=['x']),True)
+    case('badMulti','Response',dict(kind='MULTIPART',parts={'x':RESPONSE}),True)
+    case('badGrade','Grade',dict(status='REVIEW_PENDING',points=1,maxPoints=1,reasonCode='x'),True)
+    case('goodGrade','Grade',dict(status='REVIEW_PENDING',points=None,maxPoints=1,reasonCode='x'))
+    case('badEval',"Evaluator<'MATHEMATICAL_PROOF'>",dict(mode='AUTOMATIC',canonical_value='x'),True)
+    case('goodEval',"Evaluator<'INTEGER'>",dict(mode='AUTOMATIC',canonical_value='2'))
+    lines.extend(["declare const attempt: Attempt;", "// @ts-expect-error immutable ID", "attempt.id = 'x';", "// @ts-expect-error immutable work", "attempt.work.push({id:'x',kind:'NOTE',version:1,value:'x'});", "declare const cap: Capability<'INTEGER'>;", "// @ts-expect-error mismatched capability response", "cap.mount(document.body,{kind:'SINGLE_CHOICE',value:'A'},()=>{});", "declare const store: CognitiveStore;", "// @ts-expect-error incomplete replay identity", "store.replay('journey',ref0,'release');", "declare const registry: ResourceRegistry;", "// @ts-expect-error incomplete lookup", "registry.resolve('resource',1,'release');", "// @ts-expect-error invalid model result", "const invalidModel: ModelEvaluationResult = {domainStatus:'INVALID',outputs:{x:1},representationState:{}};", "// @ts-expect-error invalid resource identity", "const badIdentity: ResourceIdentity = {resourceId:'x',revision:1,releaseId:'r'};", "// @ts-expect-error missing model schema fields", "const badModel: ModelProjection = {id:'m'};", "// @ts-expect-error unscoped disclosure", "const badDisclosure: DisclosureContext = {stage:'PREDICT',mode:'LEARN',capability:'H1',firstCommitted:false,boundaryCommitted:false,reviewRef:null};", "// @ts-expect-error missing reasoning cell fields", "const badCell: ReasoningCell = {cell_id:'c'};"])
+    return '\n'.join(lines)+'\n'
 
 
 class TestRuntimeInterfaces(unittest.TestCase):
-    """Verifies strict TypeScript interfaces, cognitive state contracts, and platform parity."""
+    def test_response_wire_schema(self):
+        s = schema('response')
+        v = Draft202012Validator(s)
+        self.assertEqual(set(VALUES), set(s['properties']['kind']['enum']))
+        for kind,value in VALUES.items():
+            with self.subTest(kind=kind):
+                self.assertTrue(v.is_valid(dict(kind=kind,value=value)))
+                self.assertFalse(v.is_valid(dict(kind=kind,value=BAD_VALUES[kind])))
 
-    @classmethod
-    def setUpClass(cls):
-        cls.types_content = TYPES_TS.read_text(encoding="utf-8")
-        cls.contracts_content = CONTRACTS_TS.read_text(encoding="utf-8")
+    def test_event_wire_schema(self):
+        s = schema('cognitive-event')
+        v = Draft202012Validator(s)
+        response = Draft202012Validator(schema('response'))
+        self.assertEqual(set(PAYLOADS), set(s['properties']['event_type']['enum']))
+        for kind,payload in PAYLOADS.items():
+            with self.subTest(kind=kind):
+                event = dict(EVENT,event_type=kind,payload=payload)
+                self.assertTrue(v.is_valid(event))
+                self.assertFalse(v.is_valid(dict(event,payload={})))
+                missing = copy.deepcopy(event); del missing['task_instance_id']
+                self.assertFalse(v.is_valid(missing))
+                for value in payload.get('responses',{}).values():
+                    self.assertTrue(response.is_valid(value))
 
-    def test_files_exist_and_non_empty(self):
-        """Types and contracts files must exist within web/runtime/."""
-        self.assertTrue(TYPES_TS.exists(), "web/runtime/types.ts missing")
-        self.assertTrue(CONTRACTS_TS.exists(), "web/runtime/contracts.ts missing")
-        self.assertGreater(len(self.types_content), 500)
-        self.assertGreater(len(self.contracts_content), 500)
-
-    def test_node_strip_types_compilation(self):
-        """Node 22 experimental-strip-types parses both files with zero syntax errors."""
-        script = (
-            "import('./web/runtime/types.ts')"
-            ".then(() => import('./web/runtime/contracts.ts'))"
-            ".then(() => process.exit(0))"
-            ".catch(err => { console.error(err); process.exit(1); })"
-        )
-        res = subprocess.run(
-            ["node", "--experimental-strip-types", "-e", script],
-            cwd=str(ROOT),
-            capture_output=True,
-            text=True
-        )
-        self.assertEqual(res.returncode, 0, f"Node type compilation failed:\n{res.stderr}")
-
-    def test_all_thirteen_response_kinds_present(self):
-        """All 13 platform response kinds must be declared in Kind enum."""
-        expected_kinds = {
-            "SINGLE_CHOICE",
-            "MULTIPLE_CHOICE",
-            "INTEGER",
-            "NUMERIC_QUANTITY",
-            "SYMBOLIC_EXPRESSION",
-            "CONSTRUCTED_RESPONSE",
-            "MATHEMATICAL_PROOF",
-            "CHEMICAL_STRUCTURE",
-            "REACTION_MECHANISM",
-            "DATA_TABLE",
-            "GRAPH",
-            "EXPERIMENT_ANALYSIS",
-            "MULTIPART",
-        }
-        for kind in expected_kinds:
-            self.assertIn(f"'{kind}'", self.types_content, f"Kind '{kind}' missing in types.ts")
-
-    def test_all_nine_cognitive_event_types_present(self):
-        """All 9 canonical cognitive event types must be declared in CognitiveEventType."""
-        expected_event_types = {
-            "PREDICTION_COMMITTED",
-            "HELP_EXPOSED",
-            "FIRST_COMMITTED",
-            "RECONSTRUCTION_COMMITTED",
-            "DIAGNOSIS_COMMITTED",
-            "REPAIR_COMMITTED",
-            "BOUNDARY_COMMITTED",
-            "BOUNDARY_FEEDBACK_VIEWED",
-            "SOURCE_RETURNED",
-        }
-        for et in expected_event_types:
-            self.assertIn(f"'{et}'", self.types_content, f"CognitiveEventType '{et}' missing in types.ts")
-
-    def test_all_seven_cognitive_stages_present(self):
-        """All 7 cognitive stages from R3 cognitive runtime must be declared."""
-        expected_stages = {
-            "PREDICT",
-            "ATTEMPT",
-            "RECONSTRUCT",
-            "DIAGNOSE",
-            "REPAIR",
-            "BOUNDARY_TEST",
-            "COMPLETE",
-        }
-        for stage in expected_stages:
-            self.assertIn(f"'{stage}'", self.types_content, f"CognitiveStage '{stage}' missing in types.ts")
-
-    def test_all_ten_explorer_stages_present(self):
-        """All 10 GCDR Explorer stages must be declared in ExplorerStage."""
-        expected_explorer_stages = {
-            "PREDICT",
-            "MANIPULATE",
-            "OBSERVE",
-            "CONTRADICT",
-            "DECONSTRUCT",
-            "RECONSTRUCT",
-            "INVARIANT",
-            "BOUNDARY",
-            "FADE",
-            "TRANSFER",
-        }
-        for es in expected_explorer_stages:
-            self.assertIn(f"'{es}'", self.types_content, f"ExplorerStage '{es}' missing in types.ts")
-
-    def test_immutable_attempt_contract(self):
-        """Attempt interface must enforce immutable submission with readonly properties."""
-        self.assertIn("interface Attempt", self.types_content)
-        attempt_match = re.search(r"interface Attempt\s*\{([^}]+)\}", self.types_content)
-        self.assertIsNotNone(attempt_match, "Attempt interface declaration not found")
-        fields = attempt_match.group(1).split(";")
-        for field in fields:
-            field_clean = field.strip()
-            if field_clean:
-                self.assertTrue(
-                    field_clean.startswith("readonly"),
-                    f"Attempt field '{field_clean}' must be declared readonly"
-                )
-
-    def test_exact_ref_contract(self):
-        """Ref interface must have type, id, revision, and sha256."""
-        self.assertIn("interface Ref", self.types_content)
-        ref_match = re.search(r"interface Ref\s*\{([^}]+)\}", self.types_content)
-        self.assertIsNotNone(ref_match, "Ref interface declaration not found")
-        content = ref_match.group(1)
-        for expected in ("type", "id", "revision", "sha256"):
-            self.assertIn(expected, content, f"Ref interface missing property '{expected}'")
-
-    def test_all_core_subsystem_interfaces_present_in_contracts(self):
-        """All core subsystem service interfaces must be present in contracts.ts."""
-        expected_interfaces = [
-            "interface Capability",
-            "interface AssessmentEngine",
-            "interface ProgressStore",
-            "interface RelationService",
-            "interface CognitiveStore",
-            "interface DisclosurePolicy",
-            "interface ScientificModelAdapter",
-            "interface ResourceRegistry",
-            "interface LegacyHost",
-        ]
-        for iface in expected_interfaces:
-            self.assertIn(iface, self.contracts_content, f"Subsystem interface '{iface}' missing in contracts.ts")
-
-    def test_no_unconstrained_any_escape_in_signatures(self):
-        """No unconstrained `any` in public return types or parameter contracts."""
-        # Check that neither file uses ': any;' or '): any' or '<any>'
-        prohibited_patterns = [
-            r":\s*any\s*;",
-            r"\)\s*:\s*any\b",
-            r"Promise\s*<\s*any\s*>",
-            r"Array\s*<\s*any\s*>",
-        ]
-        for pattern in prohibited_patterns:
-            self.assertIsNone(
-                re.search(pattern, self.types_content),
-                f"Prohibited unconstrained 'any' pattern found in types.ts: {pattern}"
-            )
-            self.assertIsNone(
-                re.search(pattern, self.contracts_content),
-                f"Prohibited unconstrained 'any' pattern found in contracts.ts: {pattern}"
-            )
+    def test_strict_typescript_contracts(self):
+        compiler = shutil.which('tsc')
+        self.assertIsNotNone(compiler, 'tsc is required; Node strip-types is not a type check')
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            shutil.copytree(RUNTIME,tmp/'web'/'runtime')
+            (tmp/'probe.ts').write_text(compiler_source(),encoding='utf-8')
+            res = subprocess.run([compiler,'--noEmit','--strict','--target','ES2022','--module','ESNext','--moduleResolution','bundler','--lib','ES2022,DOM','probe.ts'],cwd=tmp,capture_output=True,text=True)
+            self.assertEqual(res.returncode,0,res.stdout+res.stderr)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
