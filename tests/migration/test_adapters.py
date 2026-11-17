@@ -34,3 +34,25 @@ class AdapterTests(unittest.TestCase):
  def test_promotion_blocked(self):
   a=QuestionImporter('TEST_A').import_question(**self.args({'id':'Q1'}));a['objects'][-1]['payload']['candidate_claims']['assessment']['status']='VERIFIED'
   with self.assertRaises(ImporterError):ReconciliationEngine.audit_candidate_claims(a)
+
+ def test_incomplete_option_rows_fail_closed(self):
+  for options in ([{}],['A'],[{'id':None}],[{'id':''}],[{'id':'  '}],[{'id':'A'},{'id':'A'}]):
+   with self.subTest(options=options):
+    with self.assertRaises(ImporterError):
+     QuestionImporter('TEST_A').import_question(**self.args({'id':'Q1','options':options}))
+ def test_custody_audit_is_replayed_before_reporting(self):
+  for kind in ('field_map','field_audit','source_sha256','record_locator'):
+   a=QuestionImporter('TEST_A').import_question(**self.args({'id':'Q1','text':'Δ'}))
+   if kind=='field_map':a['field_map']=[]
+   elif kind=='field_audit':a['field_audit']['status']='PASS_UNVERIFIED'
+   elif kind=='source_sha256':a['source_sha256']='0'*64
+   else:a['record_locator']='/records/1'
+   with self.subTest(kind=kind):
+    with self.assertRaises(ImporterError):
+     ReconciliationEngine.generate_private_custody_report([a])
+ def test_figure_approval_cannot_be_injected(self):
+  data=b'<svg/>'
+  fig={'id':'f','mandatory':True,'content_sha256':hashlib.sha256(data).hexdigest()}
+  a=QuestionImporter('TEST_A').import_question(available_assets={'f':data},**self.args({'source_figures':[fig]}))
+  a['objects'][-1]['payload']['candidate_claims']['figure_claims'][0]['status']='VERIFIED'
+  with self.assertRaises(ImporterError):ReconciliationEngine.generate_private_custody_report([a])

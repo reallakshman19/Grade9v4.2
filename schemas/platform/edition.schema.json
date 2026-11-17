@@ -115,6 +115,14 @@
             "null"
           ],
           "minimum": 1
+        },
+        "pass_mark": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "description": "Optional nonnegative threshold; cross-field <= max_points requires the independent binding validator."
         }
       }
     },
