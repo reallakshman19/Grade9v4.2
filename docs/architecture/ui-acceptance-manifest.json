@@ -5996,7 +5996,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:orientation",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6026,7 +6026,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:orientation",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6056,7 +6056,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:orientation",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6086,7 +6086,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:orientation",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6209,7 +6209,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:guided-practice",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6240,7 +6240,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:guided-practice",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6271,7 +6271,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:guided-practice",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6302,7 +6302,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:guided-practice",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6432,7 +6432,7 @@
         "postcommit"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:application-transfer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6465,7 +6465,7 @@
         "postcommit"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:application-transfer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6498,7 +6498,7 @@
         "postcommit"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:application-transfer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6531,7 +6531,7 @@
         "postcommit"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:application-transfer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6666,7 +6666,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:explorer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6700,7 +6700,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:explorer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6734,7 +6734,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:explorer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6768,7 +6768,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:explorer",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6898,7 +6898,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:legacy-app",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6930,7 +6930,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:legacy-app",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6962,7 +6962,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:legacy-app",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -6994,7 +6994,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:legacy-app",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -7116,7 +7116,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:resource-catalogue",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -7146,7 +7146,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:resource-catalogue",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -7176,7 +7176,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:resource-catalogue",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -7206,7 +7206,7 @@
         "populated"
       ],
       "verification_status": "SPECIFIED_PENDING_PHYSICAL_DEVICE_EVIDENCE",
-      "precondition": "HTTP synthetic build with fixture graph and explicit demo banner",
+      "precondition": "HTTP synthetic eligible projection; native mapped screen and A61 contract",
       "screen_contract_ref": "screen:resource-catalogue",
       "precondition_verification_status": "SPECIFIED_NOT_EXECUTED"
     },
@@ -9041,6 +9041,25 @@
     "executed_scenarios": 0,
     "executed_integration_flows": 0,
     "source": "R4/03-ui/screens.json + R4/06-acceptance/browser-matrix.json",
-    "status": "STRUCTURAL_PROPOSAL_ONLY_NOT_DEVICE_ACCEPTANCE"
+    "status": "STRUCTURAL_PROPOSAL_ONLY_NOT_DEVICE_ACCEPTANCE",
+    "source_preconditions_verified_against_r4_counts": true,
+    "source_precondition_distribution": {
+      "HTTP synthetic build with fixture graph and explicit demo banner": 60,
+      "full independently supplied synthetic fixture WPE-SYN-01": 7,
+      "full independently supplied synthetic fixture WPE-SYN-02": 7,
+      "full independently supplied synthetic fixture WPE-SYN-03": 7,
+      "full independently supplied synthetic fixture WPE-SYN-04": 7,
+      "full independently supplied synthetic fixture WPE-SYN-05": 7,
+      "full independently supplied synthetic fixture WPE-SYN-06": 7,
+      "full independently supplied synthetic fixture WPE-SYN-07": 7,
+      "full independently supplied synthetic fixture WPE-SYN-08": 7,
+      "full independently supplied synthetic fixture WPE-SYN-09": 7,
+      "full independently supplied synthetic fixture WPE-SYN-10": 7,
+      "full independently supplied synthetic fixture WPE-SYN-11": 7,
+      "full independently supplied synthetic fixture WPE-SYN-12": 7,
+      "full independently supplied synthetic fixture WPE-SYN-13": 7,
+      "HTTP synthetic build with exact refs": 8,
+      "HTTP synthetic eligible projection; native mapped screen and A61 contract": 93
+    }
   }
 }
