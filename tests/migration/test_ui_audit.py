@@ -184,7 +184,7 @@ class UIAuditTests(unittest.TestCase):
 
         summary = json.loads(summary_path.read_text(encoding="utf-8"))
         self.assertEqual(summary["workpack_id"], "A58")
-        self.assertEqual(summary["status"], "HOLD")
+        self.assertEqual(summary["status"], "BLOCKED")
         self.assertEqual(summary["ui_implementation_freeze"], "NOT_FROZEN")
         self.assertEqual(summary["production_release"], "NONE")
 
