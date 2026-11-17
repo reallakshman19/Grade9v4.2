@@ -62,3 +62,7 @@ Under no circumstances may an isolated application read or write to host protect
 - `release_authority`: Owner/IR authority only.
 
 Any attempt to forge or mutate evaluation scores from an application bridge returns a security violation and invalidates the session.
+
+## 5. Explicit schema/runtime boundary
+
+The schema rejects the five exact protected store names anywhere in nested `STATE_SNAPSHOT` data, using recursive `safeStateValue`. It does not prove the guest cannot encode a hidden key, issue a forged navigation request, or alter host storage. **An independently tested host bridge must enforce** the 65,536-byte serialized message size, depth 8, authenticated WindowProxy, cryptographic nonce, strict sequence, eligible navigation and protected-store isolation. These are not implemented by A60 schemas or its test-local helper functions. No production or learner admission is authorized.

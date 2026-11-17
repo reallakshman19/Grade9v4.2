@@ -216,5 +216,101 @@
     "capabilities",
     "governance",
     "search_visibility"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "search_visibility": {
+            "const": "LEARNER"
+          }
+        },
+        "required": [
+          "search_visibility"
+        ]
+      },
+      "then": {
+        "properties": {
+          "audience": {
+            "const": "LEARNER"
+          },
+          "kind": {
+            "not": {
+              "enum": [
+                "OWNER_TOOL",
+                "RUNTIME_HOST"
+              ]
+            }
+          },
+          "governance": {
+            "properties": {
+              "rights": {
+                "const": "CLEARED"
+              },
+              "academic": {
+                "const": "ADMITTED"
+              },
+              "technical": {
+                "const": "PASS"
+              },
+              "release": {
+                "const": "ELIGIBLE"
+              },
+              "receipt_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audience": {
+            "enum": [
+              "OWNER",
+              "LAB",
+              "INTERNAL"
+            ]
+          }
+        },
+        "required": [
+          "audience"
+        ]
+      },
+      "then": {
+        "properties": {
+          "search_visibility": {
+            "const": "EXCLUDED"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "OWNER_TOOL"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "audience": {
+            "enum": [
+              "OWNER",
+              "INTERNAL"
+            ]
+          },
+          "search_visibility": {
+            "const": "EXCLUDED"
+          }
+        }
+      }
+    }
   ]
 }

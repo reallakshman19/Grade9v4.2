@@ -100,7 +100,21 @@
                 "minLength": 1
               },
               "state": {
-                "type": "object"
+                "type": "object",
+                "propertyNames": {
+                  "not": {
+                    "enum": [
+                      "learner_attempts",
+                      "evaluation_scores",
+                      "topic_mastery",
+                      "academic_governance",
+                      "release_authority"
+                    ]
+                  }
+                },
+                "additionalProperties": {
+                  "$ref": "#/$defs/safeStateValue"
+                }
               }
             },
             "required": [
@@ -234,5 +248,42 @@
         }
       }
     }
-  ]
+  ],
+  "$defs": {
+    "safeStateValue": {
+      "anyOf": [
+        {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/safeStateValue"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "not": {
+              "enum": [
+                "learner_attempts",
+                "evaluation_scores",
+                "topic_mastery",
+                "academic_governance",
+                "release_authority"
+              ]
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/safeStateValue"
+          }
+        }
+      ]
+    }
+  }
 }

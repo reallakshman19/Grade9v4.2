@@ -162,7 +162,7 @@ def test_reject_duplicate_unit_role(teaching_validator):
     bad_instance["units"][-1]["role"] = "A1"
     with pytest.raises(TeachingProjectionError) as exc:
         validate_teaching_projection_contract(bad_instance, teaching_validator)
-    assert exc.value.code in {"TEACHING_ROLE_DUPLICATE", "TEACHING_ROLE_MISSING"}
+    assert exc.value.code in {"SCHEMA_VALIDATION_FAILED", "TEACHING_ROLE_DUPLICATE", "TEACHING_ROLE_MISSING"}
 
 
 def test_reject_invalid_anchor_level(teaching_validator):
@@ -178,7 +178,7 @@ def test_reject_duplicate_anchor_level(teaching_validator):
     bad_instance["anchors"][1]["level"] = "FOUNDATION"  # Two FOUNDATION, no CONNECTED
     with pytest.raises(TeachingProjectionError) as exc:
         validate_teaching_projection_contract(bad_instance, teaching_validator)
-    assert exc.value.code in {"ANCHOR_LEVELS_INCOMPLETE", "ANCHOR_LEVEL_DUPLICATE"}
+    assert exc.value.code in {"SCHEMA_VALIDATION_FAILED", "ANCHOR_LEVELS_INCOMPLETE", "ANCHOR_LEVEL_DUPLICATE"}
 
 
 def test_reject_recycled_anchor_task(teaching_validator):
@@ -229,6 +229,38 @@ def test_reject_invalid_status(teaching_validator):
     with pytest.raises(TeachingProjectionError) as exc:
         validate_teaching_projection_contract(bad_instance, teaching_validator)
     assert exc.value.code == "SCHEMA_VALIDATION_FAILED"
+
+
+
+def test_schema_fails_closed_without_test_local_semantic_helper(teaching_validator):
+    """Direct schema validation must enforce ordered A1-A9 and ordered anchors."""
+    original = make_valid_teaching_projection()
+    teaching_validator.validate(original)
+    for mutate in (
+        lambda x: x["units"].__setitem__(8, copy.deepcopy(x["units"][0])),
+        lambda x: x["units"].__setitem__(0, dict(x["units"][0], role="A9")),
+        lambda x: x["anchors"].__setitem__(1, copy.deepcopy(x["anchors"][0])),
+        lambda x: x["anchors"][0]["solution_ref"].__setitem__("type", "CONSTRUCTION"),
+        lambda x: x["anchors"][1]["task_ref"].__setitem__("type", "QUESTION"),
+        lambda x: x["synthesis_task_ref"].__setitem__("type", "QUESTION"),
+        lambda x: x["lesson_ref"].__setitem__("type", "QUESTION"),
+    ):
+        candidate = copy.deepcopy(original)
+        mutate(candidate)
+        with pytest.raises(jsonschema.ValidationError):
+            teaching_validator.validate(candidate)
+
+
+def test_semantic_cross_field_reuse_requires_the_separate_validation_gate(teaching_validator):
+    """JSON Schema 2020-12 cannot compare arbitrary task IDs across sibling arrays."""
+    baseline = make_valid_teaching_projection()
+    invalid = copy.deepcopy(baseline)
+    invalid["synthesis_task_ref"]["id"] = invalid["anchors"][0]["task_ref"]["id"]
+    # This structural PASS does not constitute a teaching-contract PASS.
+    teaching_validator.validate(invalid)
+    with pytest.raises(TeachingProjectionError) as exc:
+        validate_teaching_projection_contract(invalid, teaching_validator)
+    assert exc.value.code == "SYNTHESIS_TASK_RECYCLED"
 
 
 def test_rule_13_invariant_explicitly_stated():
