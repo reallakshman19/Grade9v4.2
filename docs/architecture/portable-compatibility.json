@@ -1,0 +1,239 @@
+{
+  "workpack_id": "A59",
+  "title": "Portable workbench compatibility decision",
+  "decision_id": "DEC-A59-PORTABLE-COMPATIBILITY-01",
+  "status": "CANDIDATE",
+  "academic_admission": "HOLD",
+  "release_authority": "NONE",
+  "ui_implementation_freeze": "NOT_FROZEN",
+  "rule_13_invariant": "No academic approval inferred from software validation.",
+  "parent_commit": "397c78b63a598a856dea0bea6f29bc1d6dbfa979",
+  "decision": {
+    "selected_strategy": "REUSE_ADAPTER_WITH_FAIL_CLOSED_VALIDATOR",
+    "rationale": "The native v3.5 portable workbench contract (packageVersion 1.0.0, componentApiVersion 0.1.0, transformationIrVersion 0.1.0, adapterApiVersion 0.2.0, scenePackageVersion 1.0.0) is strictly typed, data-only, declarative, and specifies fail-closed rejection requirements (blocking executable payloads, pixel placements, version mismatches, and ungrounded canonical claims). Grade9v4.2 adopts a reuse adapter contract that enforces native rejection rules, preserves exact semantic transforms and provenance, and guarantees zero runtime duplication unless an external decision mandates otherwise.",
+    "duplicate_runtime_authorized": false,
+    "independent_review_required": true
+  },
+  "version_seams": {
+    "package_schema": "portable-workbench-package",
+    "package_version": "1.0.0",
+    "component_api_version": "0.1.0",
+    "transformation_ir_version": "0.1.0",
+    "adapter_api_version": "0.2.0",
+    "scene_package_version": "1.0.0",
+    "declarative_adapter_id": "declarative-transfer-v1"
+  },
+  "audited_packages": [
+    {
+      "id": "portable-long-division",
+      "title": "Long Division — Multi-Step Arithmetic Scaffold",
+      "sha256": "c370b3c5623042facd6e248df0e92bf23643780bb7441b7d41a06169a8df7154",
+      "byte_count": 4737,
+      "provenance_authority": "NON_CANONICAL_COMPILED_PROOF",
+      "source_kind": "EXISTING_CORE_TEST_WITNESS",
+      "source_refs": [
+        "tests/fixtures/workbench/arithmetic-division.json"
+      ],
+      "scene_id": "division-first-quotient-digit",
+      "adapter_id": "declarative-transfer-v1",
+      "rules": [
+        "rule-first-quotient-digit"
+      ],
+      "projections_count": 3,
+      "academic_admission": "HOLD",
+      "disposition": "ADOPT_AS_PORTABLE_PROOF",
+      "notes": "Reuses existing Core witness; proves multi-step arithmetic scaffolding without promoting fixture to subject authority."
+    },
+    {
+      "id": "portable-redox-electron-equivalence",
+      "title": "Redox Reactions — Electron Conservation Equivalence",
+      "sha256": "581c8af9c3213341cb7cae630702e447f12ea6b52b5e7a358178ba1fc62c554c",
+      "byte_count": 4529,
+      "provenance_authority": "NON_CANONICAL_COMPILED_PROOF",
+      "source_kind": "COMPILED_PROOF_FIXTURE",
+      "source_refs": [
+        "standalone/chemistry-redox-reactions-master-suite.html",
+        "public/chemistry/redox/explorers/redox_reactions/index.html"
+      ],
+      "scene_id": "redox-electron-equivalence-proof",
+      "adapter_id": "declarative-transfer-v1",
+      "rules": [
+        "rule-equate-redox-electrons"
+      ],
+      "projections_count": 3,
+      "academic_admission": "HOLD",
+      "disposition": "ADOPT_AS_PORTABLE_PROOF",
+      "notes": "Electron conservation equivalence fixture; bespoke standalone prototype page is not imported as runtime authority."
+    },
+    {
+      "id": "portable-integration-riemann",
+      "title": "Riemann Sum — Partition Refinement and Area Bound",
+      "sha256": "e51a4325640d601899d7308d9b3171137edca06f2d794444c439b537f1150633",
+      "byte_count": 4298,
+      "provenance_authority": "NON_CANONICAL_COMPILED_PROOF",
+      "source_kind": "COMPILED_PROOF_FIXTURE",
+      "source_refs": [
+        "issue:163:integration-cross-subject-proof"
+      ],
+      "scene_id": "integration-riemann-refinement-proof",
+      "adapter_id": "declarative-transfer-v1",
+      "rules": [
+        "rule-riemann-refinement"
+      ],
+      "projections_count": 3,
+      "academic_admission": "HOLD",
+      "disposition": "ADOPT_AS_PORTABLE_PROOF",
+      "notes": "Partition refinement and upper/lower Darboux sum bounding; cross-subject mathematical proof fixture only."
+    },
+    {
+      "id": "portable-motion-shared-clock",
+      "title": "Two-Body Kinematics — Shared-Clock Independent Trajectories",
+      "sha256": "9a963c9977ef1d2e7b9aeee90a8524e36b611a78f80da11c1b6036d5bcddb97c",
+      "byte_count": 5758,
+      "provenance_authority": "CANONICAL_COMPILED_RESOURCE",
+      "source_kind": "CANONICAL_RESOURCE",
+      "source_refs": [
+        "SRC-AUTHOR-KIN-2D-EXAMSIDE-ADAPTATION"
+      ],
+      "resource_ref": "ACT-KIN-2D-SHARED-CLOCK",
+      "representation_ref": "REP-KIN-2D-SHARED-CLOCK",
+      "scene_id": "portable-motion-shared-clock-scene",
+      "adapter_id": "declarative-transfer-v1",
+      "rules": [
+        {
+          "id": "same-time",
+          "outcome": "ACCEPT",
+          "description": "Trajectory parameters aligned at identical time coordinates are valid."
+        },
+        {
+          "id": "mixed-time",
+          "outcome": "REJECT",
+          "reason": "Evaluated kinematics requires shared time coordinate; mixed-time state violates single physical state invariant."
+        }
+      ],
+      "projections_count": 2,
+      "academic_admission": "HOLD",
+      "disposition": "ADOPT_AS_CANONICAL_CANDIDATE",
+      "notes": "Governed two-body motion package compiled from canonical shared-clock source; enforces physical same-time invariant."
+    }
+  ],
+  "native_rejection_rules": [
+    {
+      "code": "PORTABLE_EXECUTABLE_FIELD_FORBIDDEN",
+      "condition": "Field name or key matches forbidden executable keywords (script, javascript, eval, function, handler, onclick, onload, onerror, sourcecode, executable)",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_PIXEL_COORDINATE_FORBIDDEN",
+      "condition": "Scene projection placement uses pixel coordinates (x, y, left, top, width, height) instead of named grid, row, and column references",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_COMPONENTAPIVERSION_MISMATCH",
+      "condition": "Package componentApiVersion differs from host expected componentApiVersion (0.1.0)",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_TRANSFORMATIONIRVERSION_MISMATCH",
+      "condition": "Package transformationIrVersion differs from host expected transformationIrVersion (0.1.0)",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_ADAPTERAPIVERSION_MISMATCH",
+      "condition": "Package adapterApiVersion differs from host expected adapterApiVersion (0.2.0)",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_SCENEPACKAGEVERSION_MISMATCH",
+      "condition": "Package scenePackageVersion differs from host expected scenePackageVersion (1.0.0)",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_CANONICAL_RESOURCE_REF_REQUIRED",
+      "condition": "Authority is CANONICAL_COMPILED_RESOURCE but resourceRef is missing or null",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_CANONICAL_RESOURCE_REF_MISMATCH",
+      "condition": "Package top-level resourceRef does not match provenance.resourceRef",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_CANONICAL_REPRESENTATION_REF_REQUIRED",
+      "condition": "Authority is CANONICAL_COMPILED_RESOURCE but provenance.representationRef is missing or null",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_CANONICAL_REPRESENTATION_REF_MISMATCH",
+      "condition": "Package provenance.representationRef is not listed in top-level representationRefs array",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_CANONICAL_SOURCE_REFS_REQUIRED",
+      "condition": "Authority is CANONICAL_COMPILED_RESOURCE but provenance.sourceRefs is empty or missing",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_CANONICAL_SOURCE_REFS_MISMATCH",
+      "condition": "Package provenance.sourceRefs does not exactly match top-level sourceRefs array",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_RESOURCE_BINDING_MISMATCH",
+      "condition": "Requested visual target resource_ref does not match package resourceRef",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_REPRESENTATION_BINDING_MISMATCH",
+      "condition": "Requested visual target representation does not match package representationRef",
+      "severity": "FAIL_CLOSED"
+    },
+    {
+      "code": "PORTABLE_PACKAGE_NOT_FOUND",
+      "condition": "Explicit ?package=<id> query parameter cannot be resolved in package catalog",
+      "severity": "FAIL_CLOSED"
+    }
+  ],
+  "security_and_containment": {
+    "sandbox_mode": "ISOLATED_HOST",
+    "iframe_sandbox_policy": "allow-scripts",
+    "forbidden_permissions": [
+      "allow-same-origin",
+      "allow-top-navigation",
+      "allow-popups",
+      "allow-forms",
+      "allow-downloads",
+      "allow-modals"
+    ],
+    "handshake_protocol": {
+      "initial_message": "READY",
+      "nonce_validation": "MANDATORY_HOST_GENERATED",
+      "window_proxy_check": "EXACT_PROXY",
+      "payload_size_cap_bytes": 65536
+    },
+    "telemetry_policy": {
+      "workbench_observations_untrusted": true,
+      "protected_stores_read_only_to_app": true,
+      "protected_stores": [
+        "learner_attempts",
+        "evaluation_scores",
+        "topic_mastery",
+        "academic_governance",
+        "release_authority"
+      ]
+    },
+    "offline_invariants": {
+      "remote_network_fetch_allowed": false,
+      "external_script_tags_allowed": false,
+      "external_cdn_dependencies_allowed": false
+    }
+  },
+  "verification_scope": {
+    "source_custody": "REQUIRES_EXACT_HASHED_ORIGINAL_BYTES",
+    "custody_path_env": "G9_V35_PORTABLE_PACKAGES",
+    "synthetic_fallback": "FORBIDDEN_FOR_REAL_PACKAGE_TESTS",
+    "test_authority": "AUTHOR_SELF_TEST_NOT_NATIVE_RUNTIME_ACCEPTANCE",
+    "independent_acceptance": "NOT_PROVIDED",
+    "status": "HOLD"
+  }
+}

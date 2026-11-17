@@ -1,0 +1,13 @@
+{
+  "fault": "N07: Missing mandatory figure",
+  "expected": "Release compiler or importer blocks item with MissingFigureError.",
+  "item": {
+    "id": "Q-GEO-FIGURE-01",
+    "source_figures": [
+      {
+        "id": "missing_diagram.svg",
+        "mandatory": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "fault": "N09: Answer leak in public search",
+  "expected": "Public search index projection validator fails if private answers are exposed.",
+  "prohibited_field": "assessment.raw_claim"
+}

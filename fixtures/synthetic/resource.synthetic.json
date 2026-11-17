@@ -1,0 +1,42 @@
+{
+  "schema_version": "g9-resource-projection/1",
+  "resource_id": "demo.explorer",
+  "revision": 1,
+  "kind": "OPAQUE_APP",
+  "audience": "LEARNER",
+  "title": "Synthetic explorer",
+  "aliases": [
+    "demo"
+  ],
+  "subject_id": "PHYSICS",
+  "topic_refs": [
+    "demo-topic"
+  ],
+  "capability_refs": [
+    "demo-cap"
+  ],
+  "core_roles": [
+    "EXPLORER"
+  ],
+  "origins": [
+    {
+      "snapshot_id": "synthetic-v35",
+      "commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "path": "standalone/demo.html",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "entrypoint": "apps/demo/index.html",
+  "integration": "ISOLATED_HOST",
+  "capabilities": [
+    "demo.slider"
+  ],
+  "governance": {
+    "rights": "HOLD",
+    "academic": "HOLD",
+    "technical": "UNTESTED",
+    "release": "HOLD",
+    "receipt_refs": []
+  },
+  "search_visibility": "EXCLUDED"
+}

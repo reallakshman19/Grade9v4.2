@@ -1,5 +1,23 @@
 # Grade9v4.2 — Git Ignore Rules
-# Strictly isolate private custody, build outputs, virtual environments, evidence, and secrets.
+# Convenience exclusions only. Not an access-control or secret-scanning boundary.
+
+# Local Secrets & Credentials
+.env
+.env.*
+!.env.example
+id_ed25519*
+id_rsa*
+id_ecdsa*
+id_dsa*
+*.kdbx
+*.jks
+*.keystore
+*.pkcs8
+*.crt.key
+*.secret
+secrets/
+credentials/
+trust/
 
 # Private Custody Roots (Stored externally; strictly forbidden from Git)
 custody/
@@ -7,6 +25,15 @@ _custody/
 external-custody/
 *.raw.tar*
 *.bundle
+
+# Private Migration Material & Archives
+*.gitbundle
+*.zip
+*.7z
+*.tar
+*.tar.gz
+*.tgz
+*.rar
 
 # Evidence and Logs (Stored outside target; strictly forbidden from Git)
 *-evidence/

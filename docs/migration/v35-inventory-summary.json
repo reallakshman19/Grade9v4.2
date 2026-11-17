@@ -1,0 +1,43 @@
+{
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "workpack_id": "A56",
+  "schema_version": "g9-dual-source-discovery-summary/2",
+  "sources": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657,
+      "tracked_bytes": 96373813
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634,
+      "tracked_bytes": 113853741
+    }
+  },
+  "observed_html_counts": {
+    "v35": 396,
+    "v41": 488,
+    "total": 884
+  },
+  "v35_unique_html_git_blobs": 252,
+  "v35_duplicate_groups": 118,
+  "v35_additional_identical_occurrences": 144,
+  "v35_standalone": 38,
+  "v35_explorer_entrypoints": 48,
+  "v35_registered_opaque_explorers": 11,
+  "v35_root_library_packages": 22,
+  "v35_portable_package_count": 4,
+  "v35_native_blueprint_count": 7,
+  "prior_catalog_blob": "721dc2ebbaa41951f7a830cfcb09ab31a3f4f828",
+  "observed_path_counts_scope": "Remote Git tree observations, not route closure or eligibility proof",
+  "full_private_discovery": "NOT_RUN against both actual custody sources; new engine supports input-derived dual-source static HTML discovery, registry and portable/blueprint metadata",
+  "dynamic_css_js_browser_closure": "NOT_RUN",
+  "subject_topic_manifest_semantic_reconciliation": "NOT_RUN",
+  "eligibility": "HOLD",
+  "acceptance": "BLOCKED_PENDING_FULL_CUSTODY_ROUTE_DISCOVERY_AND_REVIEW"
+}

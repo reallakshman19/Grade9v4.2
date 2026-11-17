@@ -1,0 +1,2176 @@
+{
+  "workpack_id": "A57",
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "ui_freeze": "NOT_GRANTED",
+  "governing_pins": {
+    "v35_commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+    "v35_tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+    "v41_commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+    "v41_tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
+  },
+  "schema_version": "g9-native-blueprint-map/2",
+  "registry_source": {
+    "snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+    "path": "Shared/web/interactive-page-blueprints.v1.json",
+    "git_blob": "591ba061b8771c30fdffc4506aa720ca9ba89335",
+    "size": 90186
+  },
+  "registry_version": "1.17.0",
+  "native_shell": "G9-TABLET-SHELL-V1@1.3.0",
+  "shell_fields": [
+    "controls",
+    "data_representation_policy",
+    "fixed_header",
+    "id",
+    "math_policy",
+    "print_policy",
+    "representation_accessibility_policy",
+    "responsive_modes",
+    "standalone_policy",
+    "typography_policy",
+    "vendor_policy",
+    "version"
+  ],
+  "shell_binding": {
+    "source_pointer": "/shell",
+    "proposed_target": "native.shell",
+    "status": "HOLD"
+  },
+  "component_policy_fields": [
+    "admission",
+    "column",
+    "coverage",
+    "depth",
+    "evidence",
+    "held_to",
+    "levels",
+    "promotion",
+    "typeset",
+    "waivers"
+  ],
+  "component_policy_binding": {
+    "source_pointer": "/component_policy",
+    "proposed_target": "native.component_policy",
+    "status": "HOLD"
+  },
+  "blueprints": [
+    {
+      "target_role": "CORE1",
+      "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
+      "layout_mode": "READING_ORIENTATION",
+      "source_pointer": "/blueprints/0",
+      "native_field_names": [
+        "core_roles",
+        "forbidden",
+        "id",
+        "interaction_policy",
+        "layout_family",
+        "learner_job",
+        "packaging_modes",
+        "representation_policy",
+        "responsive_policy",
+        "shell_ref",
+        "slots",
+        "status",
+        "touch_policy",
+        "version"
+      ],
+      "native_slots": [
+        {
+          "id": "identity",
+          "accepts_blocks": [
+            "identity_scope",
+            "learner_metadata"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "orientation",
+          "accepts_blocks": [
+            "objects_conventions",
+            "canonical_representation",
+            "governing_relations",
+            "compact_anchor",
+            "hard_transition_map",
+            "exclusions_extensions",
+            "orientation_closure"
+          ],
+          "required": true,
+          "column": "FULL"
+        }
+      ],
+      "native_components": [],
+      "component_bindings": [],
+      "slot_bindings": [
+        {
+          "slot_id": "identity",
+          "source_pointer": "/blueprints/0/slots/0",
+          "proposed_target": "native.slots.identity",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "orientation",
+          "source_pointer": "/blueprints/0/slots/1",
+          "proposed_target": "native.slots.orientation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "native_policies": {
+        "interaction_policy": {
+          "attempt_before_reveal": "FROM_PROJECTION",
+          "progressive_support": false,
+          "solution_policy": "FROM_PROJECTION"
+        },
+        "representation_policy": {
+          "preferred_mount_modes": [
+            "PORTABLE_SCENE",
+            "COMPONENT",
+            "STATIC_FIGURE"
+          ],
+          "legacy_iframe": "MIGRATION_ONLY"
+        },
+        "responsive_policy": {
+          "compact": "SINGLE_PANE",
+          "medium": "SINGLE_PANE",
+          "expanded": "SINGLE_PANE",
+          "primary_fraction": 1,
+          "support_fraction": 0
+        },
+        "touch_policy": {
+          "minimum_target_css_px": 48,
+          "minimum_control_gap_css_px": 8
+        },
+        "packaging_modes": [
+          "PUBLIC",
+          "PAGES",
+          "OFFLINE_DIRECTORY",
+          "SINGLE_FILE",
+          "EMBED"
+        ],
+        "forbidden": [
+          "PAGE_LOCAL_ACADEMIC_TRUTH",
+          "HOVER_ONLY_ESSENTIAL_INFORMATION",
+          "FULL_INFERENTIAL_CONSTRUCTION"
+        ]
+      },
+      "mapping_status": "PROPOSED_PRESERVE_NATIVE_CONTRACT_BY_REFERENCE"
+    },
+    {
+      "target_role": "CORE2",
+      "blueprint_id": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+      "layout_mode": "QUESTION_READER",
+      "source_pointer": "/blueprints/1",
+      "native_field_names": [
+        "components",
+        "core_roles",
+        "forbidden",
+        "id",
+        "interaction_policy",
+        "layout_family",
+        "learner_job",
+        "packaging_modes",
+        "presentation_policy",
+        "representation_policy",
+        "responsive_policy",
+        "shell_ref",
+        "slots",
+        "status",
+        "touch_policy",
+        "version"
+      ],
+      "native_slots": [
+        {
+          "id": "identity",
+          "accepts_blocks": [
+            "source_identity_provenance",
+            "learner_metadata"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "attempt",
+          "accepts_blocks": [
+            "source_question"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        },
+        {
+          "id": "representation",
+          "accepts_blocks": [
+            "source_figure"
+          ],
+          "required": false,
+          "column": "SUPPORT"
+        },
+        {
+          "id": "support",
+          "accepts_blocks": [
+            "source_hint_ladder",
+            "authored_core2_support",
+            "concept_navigation"
+          ],
+          "required": false,
+          "column": "SUPPORT"
+        },
+        {
+          "id": "solution",
+          "accepts_blocks": [
+            "source_answer_rubric",
+            "verified_solution_reasoning",
+            "custody_status"
+          ],
+          "required": true,
+          "column": "FULL"
+        }
+      ],
+      "native_components": [
+        {
+          "id": "IDENTITY",
+          "slot": "identity",
+          "level": "REQUIRED",
+          "compact_order": 10
+        },
+        {
+          "id": "SOURCE_PDF",
+          "slot": "identity",
+          "level": "OPTIONAL",
+          "compact_order": 15
+        },
+        {
+          "id": "DIFFICULTY_WHY",
+          "slot": "identity",
+          "level": "EXPECTED",
+          "compact_order": 20
+        },
+        {
+          "id": "STEM",
+          "slot": "attempt",
+          "level": "REQUIRED",
+          "compact_order": 30
+        },
+        {
+          "id": "CONDITIONS",
+          "slot": "attempt",
+          "level": "EXPECTED",
+          "compact_order": 50
+        },
+        {
+          "id": "TRAP",
+          "slot": "support",
+          "level": "OPTIONAL",
+          "compact_order": 60
+        },
+        {
+          "id": "ATTEMPT",
+          "slot": "attempt",
+          "level": "REQUIRED",
+          "compact_order": 70
+        },
+        {
+          "id": "REPRESENTATION",
+          "slot": "representation",
+          "level": "EXPECTED",
+          "compact_order": 40
+        },
+        {
+          "id": "HINT_LADDER",
+          "slot": "support",
+          "level": "EXPECTED",
+          "compact_order": 80
+        },
+        {
+          "id": "CONCEPT_NAV",
+          "slot": "support",
+          "level": "OPTIONAL",
+          "compact_order": 90
+        },
+        {
+          "id": "SOLUTION",
+          "slot": "solution",
+          "level": "REQUIRED",
+          "compact_order": 100
+        },
+        {
+          "id": "SOLUTION_STEPS",
+          "slot": "solution",
+          "level": "REQUIRED"
+        },
+        {
+          "id": "ANSWER",
+          "slot": "solution",
+          "level": "REQUIRED"
+        },
+        {
+          "id": "CHECK",
+          "slot": "solution",
+          "level": "EXPECTED"
+        },
+        {
+          "id": "DIAGNOSTIC_REPAIR",
+          "slot": "solution",
+          "level": "OPTIONAL"
+        }
+      ],
+      "component_bindings": [
+        {
+          "component_id": "IDENTITY",
+          "source_pointer": "/blueprints/1/components/0",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.IDENTITY",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "SOURCE_PDF",
+          "source_pointer": "/blueprints/1/components/1",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.SOURCE_PDF",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "DIFFICULTY_WHY",
+          "source_pointer": "/blueprints/1/components/2",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.DIFFICULTY_WHY",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "STEM",
+          "source_pointer": "/blueprints/1/components/3",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.STEM",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "CONDITIONS",
+          "source_pointer": "/blueprints/1/components/4",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.CONDITIONS",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "TRAP",
+          "source_pointer": "/blueprints/1/components/5",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.TRAP",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "ATTEMPT",
+          "source_pointer": "/blueprints/1/components/6",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.ATTEMPT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "REPRESENTATION",
+          "source_pointer": "/blueprints/1/components/7",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.REPRESENTATION",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "HINT_LADDER",
+          "source_pointer": "/blueprints/1/components/8",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.HINT_LADDER",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "CONCEPT_NAV",
+          "source_pointer": "/blueprints/1/components/9",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.CONCEPT_NAV",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "SOLUTION",
+          "source_pointer": "/blueprints/1/components/10",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.SOLUTION",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "SOLUTION_STEPS",
+          "source_pointer": "/blueprints/1/components/11",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "id",
+            "level",
+            "parent",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.SOLUTION_STEPS",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "ANSWER",
+          "source_pointer": "/blueprints/1/components/12",
+          "native_fields": [
+            "benchmark",
+            "id",
+            "level",
+            "parent",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.ANSWER",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "CHECK",
+          "source_pointer": "/blueprints/1/components/13",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "id",
+            "level",
+            "parent",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.CHECK",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "DIAGNOSTIC_REPAIR",
+          "source_pointer": "/blueprints/1/components/14",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "id",
+            "level",
+            "parent",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.DIAGNOSTIC_REPAIR",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "slot_bindings": [
+        {
+          "slot_id": "identity",
+          "source_pointer": "/blueprints/1/slots/0",
+          "proposed_target": "native.slots.identity",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "attempt",
+          "source_pointer": "/blueprints/1/slots/1",
+          "proposed_target": "native.slots.attempt",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "representation",
+          "source_pointer": "/blueprints/1/slots/2",
+          "proposed_target": "native.slots.representation",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "support",
+          "source_pointer": "/blueprints/1/slots/3",
+          "proposed_target": "native.slots.support",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "solution",
+          "source_pointer": "/blueprints/1/slots/4",
+          "proposed_target": "native.slots.solution",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "native_policies": {
+        "interaction_policy": {
+          "attempt_before_reveal": "FROM_PROJECTION",
+          "progressive_support": true,
+          "solution_policy": "LEARNER_OPENABLE"
+        },
+        "representation_policy": {
+          "preferred_mount_modes": [
+            "PORTABLE_SCENE",
+            "COMPONENT",
+            "STATIC_FIGURE"
+          ],
+          "legacy_iframe": "MIGRATION_ONLY"
+        },
+        "responsive_policy": {
+          "compact": "SINGLE_PANE",
+          "medium": "STACKED_SUPPORT",
+          "expanded": "STAGE_SUPPORT",
+          "primary_fraction": 0.42,
+          "support_fraction": 0.58,
+          "expanded_min_px": 980,
+          "support_sticky": false,
+          "tablet_12_7": {
+            "reference_viewport": {
+              "width": 1366,
+              "height": 854
+            },
+            "identity_max_px": 190,
+            "figure_min_text_css_px": 14
+          }
+        },
+        "touch_policy": {
+          "minimum_target_css_px": 48,
+          "minimum_control_gap_css_px": 8
+        },
+        "packaging_modes": [
+          "PUBLIC",
+          "PAGES",
+          "OFFLINE_DIRECTORY",
+          "SINGLE_FILE",
+          "EMBED"
+        ],
+        "forbidden": [
+          "PAGE_LOCAL_ACADEMIC_TRUTH",
+          "HOVER_ONLY_ESSENTIAL_INFORMATION",
+          "AUTHORED_SCAFFOLD_PRESENTED_AS_SOURCE_HINT",
+          "ANSWER_REVEALED_BY_PRE_SOLUTION_SUPPORT",
+          "GENERIC_FILLER_SUPPORT_TO_MEET_RUNG_COUNT",
+          "CORE2_COLLAPSED_INTO_QUESTION_CLINIC",
+          "CLOSED_DISCLOSURE_AS_SEMANTIC_PROTECTION",
+          "UNTRACKED_PRE_ATTEMPT_ASSISTANCE"
+        ],
+        "presentation_policy": {
+          "default_theme": "light"
+        }
+      },
+      "mapping_status": "PROPOSED_PRESERVE_NATIVE_CONTRACT_BY_REFERENCE"
+    },
+    {
+      "target_role": "CORE1A",
+      "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "layout_mode": "READING_CONSTRUCTION",
+      "source_pointer": "/blueprints/2",
+      "native_field_names": [
+        "components",
+        "core_roles",
+        "forbidden",
+        "id",
+        "interaction_policy",
+        "layout_family",
+        "learner_job",
+        "packaging_modes",
+        "presentation_policy",
+        "representation_policy",
+        "responsive_policy",
+        "shell_ref",
+        "slots",
+        "status",
+        "touch_policy",
+        "version"
+      ],
+      "native_slots": [
+        {
+          "id": "identity",
+          "accepts_blocks": [
+            "identity_entry_assumptions",
+            "convention_declaration",
+            "learner_metadata"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "construction",
+          "accepts_blocks": [
+            "inferential_jump",
+            "completed_construction",
+            "worked_conceptual_anchor",
+            "representation_bridge"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "repair_closure",
+          "accepts_blocks": [
+            "plausible_wrong_path",
+            "diagnose",
+            "repair",
+            "independent_checks",
+            "exit_task_closure",
+            "practice_navigation"
+          ],
+          "required": true,
+          "column": "FULL"
+        }
+      ],
+      "native_components": [
+        {
+          "id": "CONCEPT_HEADER",
+          "slot": "identity",
+          "level": "REQUIRED",
+          "compact_order": 10
+        },
+        {
+          "id": "SECTION_ROUTE",
+          "slot": "identity",
+          "level": "OPTIONAL",
+          "compact_order": 20
+        },
+        {
+          "id": "UNIT_HEADER",
+          "slot": "construction",
+          "level": "REQUIRED",
+          "compact_order": 30
+        },
+        {
+          "id": "MODEL_CONTRACT",
+          "slot": "construction",
+          "level": "EXPECTED",
+          "compact_order": 40
+        },
+        {
+          "id": "QUESTION_BRIDGE",
+          "slot": "construction",
+          "level": "OPTIONAL",
+          "compact_order": 50
+        },
+        {
+          "id": "CONSTRUCTION_STEPS",
+          "slot": "construction",
+          "level": "REQUIRED",
+          "compact_order": 60
+        },
+        {
+          "id": "STAGED_VISUAL",
+          "slot": "construction",
+          "level": "EXPECTED",
+          "compact_order": 70
+        },
+        {
+          "id": "MODEL_SCOPE_PROBE",
+          "slot": "construction",
+          "level": "OPTIONAL",
+          "compact_order": 80
+        },
+        {
+          "id": "KEY_STEP",
+          "slot": "construction",
+          "level": "REQUIRED",
+          "compact_order": 90
+        },
+        {
+          "id": "EQUATIONS",
+          "slot": "construction",
+          "level": "EXPECTED",
+          "compact_order": 100
+        },
+        {
+          "id": "WORKED_EXAMPLE",
+          "slot": "construction",
+          "level": "EXPECTED",
+          "compact_order": 110
+        },
+        {
+          "id": "TRAP_REPAIR",
+          "slot": "repair_closure",
+          "level": "OPTIONAL",
+          "compact_order": 120
+        },
+        {
+          "id": "QUICK_CHECK",
+          "slot": "repair_closure",
+          "level": "OPTIONAL",
+          "compact_order": 130
+        },
+        {
+          "id": "EXIT_RECALL",
+          "slot": "repair_closure",
+          "level": "REQUIRED",
+          "compact_order": 140
+        },
+        {
+          "id": "PRACTICE_LINKS",
+          "slot": "repair_closure",
+          "level": "OPTIONAL",
+          "compact_order": 150
+        },
+        {
+          "id": "INTERACTIVE_BRIDGE",
+          "slot": "repair_closure",
+          "level": "OPTIONAL",
+          "compact_order": 160
+        },
+        {
+          "id": "LEARNING_TRANSITIONS",
+          "slot": "repair_closure",
+          "level": "OPTIONAL",
+          "compact_order": 170
+        }
+      ],
+      "component_bindings": [
+        {
+          "component_id": "CONCEPT_HEADER",
+          "source_pointer": "/blueprints/2/components/0",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.CONCEPT_HEADER",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "SECTION_ROUTE",
+          "source_pointer": "/blueprints/2/components/1",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot"
+          ],
+          "proposed_target": "native.components.SECTION_ROUTE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "UNIT_HEADER",
+          "source_pointer": "/blueprints/2/components/2",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "duty",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.UNIT_HEADER",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "MODEL_CONTRACT",
+          "source_pointer": "/blueprints/2/components/3",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.MODEL_CONTRACT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "QUESTION_BRIDGE",
+          "source_pointer": "/blueprints/2/components/4",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.QUESTION_BRIDGE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "CONSTRUCTION_STEPS",
+          "source_pointer": "/blueprints/2/components/5",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.CONSTRUCTION_STEPS",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "STAGED_VISUAL",
+          "source_pointer": "/blueprints/2/components/6",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "duty",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.STAGED_VISUAL",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "MODEL_SCOPE_PROBE",
+          "source_pointer": "/blueprints/2/components/7",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.MODEL_SCOPE_PROBE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "KEY_STEP",
+          "source_pointer": "/blueprints/2/components/8",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.KEY_STEP",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "EQUATIONS",
+          "source_pointer": "/blueprints/2/components/9",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.EQUATIONS",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "WORKED_EXAMPLE",
+          "source_pointer": "/blueprints/2/components/10",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.WORKED_EXAMPLE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "TRAP_REPAIR",
+          "source_pointer": "/blueprints/2/components/11",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.TRAP_REPAIR",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "QUICK_CHECK",
+          "source_pointer": "/blueprints/2/components/12",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "repeat",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.QUICK_CHECK",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "EXIT_RECALL",
+          "source_pointer": "/blueprints/2/components/13",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.EXIT_RECALL",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "PRACTICE_LINKS",
+          "source_pointer": "/blueprints/2/components/14",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.PRACTICE_LINKS",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "INTERACTIVE_BRIDGE",
+          "source_pointer": "/blueprints/2/components/15",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.INTERACTIVE_BRIDGE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "LEARNING_TRANSITIONS",
+          "source_pointer": "/blueprints/2/components/16",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.LEARNING_TRANSITIONS",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "slot_bindings": [
+        {
+          "slot_id": "identity",
+          "source_pointer": "/blueprints/2/slots/0",
+          "proposed_target": "native.slots.identity",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "construction",
+          "source_pointer": "/blueprints/2/slots/1",
+          "proposed_target": "native.slots.construction",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "repair_closure",
+          "source_pointer": "/blueprints/2/slots/2",
+          "proposed_target": "native.slots.repair_closure",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "native_policies": {
+        "interaction_policy": {
+          "attempt_before_reveal": "FROM_PROJECTION",
+          "progressive_support": true,
+          "solution_policy": "FROM_PROJECTION",
+          "secondary_reference_default": "COLLAPSED",
+          "worked_example_step_policy": "SHOW_ALL"
+        },
+        "representation_policy": {
+          "preferred_mount_modes": [
+            "PORTABLE_SCENE",
+            "COMPONENT",
+            "STATIC_FIGURE"
+          ],
+          "legacy_iframe": "MIGRATION_ONLY"
+        },
+        "responsive_policy": {
+          "compact": "SINGLE_PANE",
+          "medium": "SINGLE_PANE",
+          "expanded": "SINGLE_PANE",
+          "primary_fraction": 0.6,
+          "support_fraction": 0.4,
+          "expanded_min_px": 1100,
+          "support_sticky": false,
+          "tablet_12_7": {
+            "reference_viewport": {
+              "width": 1366,
+              "height": 854
+            },
+            "identity_max_px": 190,
+            "figure_min_text_css_px": 14,
+            "support_scrolls_inside": false
+          }
+        },
+        "touch_policy": {
+          "minimum_target_css_px": 48,
+          "minimum_control_gap_css_px": 8
+        },
+        "packaging_modes": [
+          "PUBLIC",
+          "PAGES",
+          "OFFLINE_DIRECTORY",
+          "SINGLE_FILE",
+          "EMBED"
+        ],
+        "forbidden": [
+          "PAGE_LOCAL_ACADEMIC_TRUTH",
+          "HOVER_ONLY_ESSENTIAL_INFORMATION",
+          "ATTEMPT_FIRST_AS_PRIMARY_MODE",
+          "FABRICATED_MISCONCEPTION_REPAIR",
+          "BAND_AS_PANEL_COUNT"
+        ],
+        "presentation_policy": {
+          "default_theme": "light"
+        }
+      },
+      "mapping_status": "PROPOSED_PRESERVE_NATIVE_CONTRACT_BY_REFERENCE"
+    },
+    {
+      "target_role": "CORE1B",
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+      "layout_mode": "GUIDED_RECONSTRUCTION",
+      "source_pointer": "/blueprints/3",
+      "native_field_names": [
+        "core_roles",
+        "forbidden",
+        "id",
+        "interaction_policy",
+        "layout_family",
+        "learner_job",
+        "packaging_modes",
+        "representation_policy",
+        "responsive_policy",
+        "shell_ref",
+        "slots",
+        "status",
+        "touch_policy",
+        "version"
+      ],
+      "native_slots": [
+        {
+          "id": "identity",
+          "accepts_blocks": [
+            "identity_concept",
+            "learner_metadata"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "attempt",
+          "accepts_blocks": [
+            "predict",
+            "attempt"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        },
+        {
+          "id": "reconstruction",
+          "accepts_blocks": [
+            "reconstruct",
+            "diagnose",
+            "repair",
+            "boundary_test",
+            "model_response_or_rubric",
+            "rejoin_inferential_jump"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        }
+      ],
+      "native_components": [],
+      "component_bindings": [],
+      "slot_bindings": [
+        {
+          "slot_id": "identity",
+          "source_pointer": "/blueprints/3/slots/0",
+          "proposed_target": "native.slots.identity",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "attempt",
+          "source_pointer": "/blueprints/3/slots/1",
+          "proposed_target": "native.slots.attempt",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "reconstruction",
+          "source_pointer": "/blueprints/3/slots/2",
+          "proposed_target": "native.slots.reconstruction",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "native_policies": {
+        "interaction_policy": {
+          "attempt_before_reveal": "FROM_PROJECTION",
+          "progressive_support": true,
+          "solution_policy": "POST_ATTEMPT"
+        },
+        "representation_policy": {
+          "preferred_mount_modes": [
+            "PORTABLE_SCENE",
+            "COMPONENT",
+            "STATIC_FIGURE"
+          ],
+          "legacy_iframe": "MIGRATION_ONLY"
+        },
+        "responsive_policy": {
+          "compact": "SINGLE_PANE",
+          "medium": "STACKED_SUPPORT",
+          "expanded": "STAGE_SUPPORT",
+          "primary_fraction": 0.68,
+          "support_fraction": 0.32
+        },
+        "touch_policy": {
+          "minimum_target_css_px": 48,
+          "minimum_control_gap_css_px": 8
+        },
+        "packaging_modes": [
+          "PUBLIC",
+          "PAGES",
+          "OFFLINE_DIRECTORY",
+          "SINGLE_FILE",
+          "EMBED"
+        ],
+        "forbidden": [
+          "PAGE_LOCAL_ACADEMIC_TRUTH",
+          "HOVER_ONLY_ESSENTIAL_INFORMATION",
+          "ANSWER_BEFORE_ATTEMPT"
+        ]
+      },
+      "mapping_status": "PROPOSED_PRESERVE_NATIVE_CONTRACT_BY_REFERENCE"
+    },
+    {
+      "target_role": "CORE2A",
+      "blueprint_id": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+      "layout_mode": "QUESTION_STUDY",
+      "source_pointer": "/blueprints/4",
+      "native_field_names": [
+        "core_roles",
+        "forbidden",
+        "id",
+        "interaction_policy",
+        "layout_family",
+        "learner_job",
+        "packaging_modes",
+        "representation_policy",
+        "responsive_policy",
+        "shell_ref",
+        "slots",
+        "status",
+        "touch_policy",
+        "version"
+      ],
+      "native_slots": [
+        {
+          "id": "identity",
+          "accepts_blocks": [
+            "family_identity_provenance",
+            "learner_metadata"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "attempt",
+          "accepts_blocks": [
+            "question",
+            "initial_representation"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        },
+        {
+          "id": "support",
+          "accepts_blocks": [
+            "pedagogical_scaffolds",
+            "application_crux",
+            "bound_representation"
+          ],
+          "required": false,
+          "column": "SUPPORT"
+        },
+        {
+          "id": "reasoning",
+          "accepts_blocks": [
+            "reasoning_route",
+            "complete_solution",
+            "independent_check",
+            "failure_signal_repair",
+            "exposure_family_closure"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        }
+      ],
+      "native_components": [],
+      "component_bindings": [],
+      "slot_bindings": [
+        {
+          "slot_id": "identity",
+          "source_pointer": "/blueprints/4/slots/0",
+          "proposed_target": "native.slots.identity",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "attempt",
+          "source_pointer": "/blueprints/4/slots/1",
+          "proposed_target": "native.slots.attempt",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "support",
+          "source_pointer": "/blueprints/4/slots/2",
+          "proposed_target": "native.slots.support",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "reasoning",
+          "source_pointer": "/blueprints/4/slots/3",
+          "proposed_target": "native.slots.reasoning",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "native_policies": {
+        "interaction_policy": {
+          "attempt_before_reveal": "FROM_PROJECTION",
+          "progressive_support": true,
+          "solution_policy": "LEARNER_OPENABLE"
+        },
+        "representation_policy": {
+          "preferred_mount_modes": [
+            "PORTABLE_SCENE",
+            "COMPONENT",
+            "STATIC_FIGURE"
+          ],
+          "legacy_iframe": "MIGRATION_ONLY"
+        },
+        "responsive_policy": {
+          "compact": "SINGLE_PANE",
+          "medium": "STACKED_SUPPORT",
+          "expanded": "STAGE_SUPPORT",
+          "primary_fraction": 0.68,
+          "support_fraction": 0.32
+        },
+        "touch_policy": {
+          "minimum_target_css_px": 48,
+          "minimum_control_gap_css_px": 8
+        },
+        "packaging_modes": [
+          "PUBLIC",
+          "PAGES",
+          "OFFLINE_DIRECTORY",
+          "SINGLE_FILE",
+          "EMBED"
+        ],
+        "forbidden": [
+          "PAGE_LOCAL_ACADEMIC_TRUTH",
+          "HOVER_ONLY_ESSENTIAL_INFORMATION",
+          "SOURCE_HINT_AND_AUTHORED_SCAFFOLD_COLLAPSE"
+        ]
+      },
+      "mapping_status": "PROPOSED_PRESERVE_NATIVE_CONTRACT_BY_REFERENCE"
+    },
+    {
+      "target_role": "CORE2B",
+      "blueprint_id": "BP-CORE2B-TRANSFER@1.1.0",
+      "layout_mode": "TRANSFER_ATTEMPT",
+      "source_pointer": "/blueprints/5",
+      "native_field_names": [
+        "core_roles",
+        "forbidden",
+        "id",
+        "interaction_policy",
+        "layout_family",
+        "learner_job",
+        "packaging_modes",
+        "representation_policy",
+        "responsive_policy",
+        "shell_ref",
+        "slots",
+        "status",
+        "touch_policy",
+        "version"
+      ],
+      "native_slots": [
+        {
+          "id": "identity",
+          "accepts_blocks": [
+            "question_prior_exposure",
+            "learner_metadata"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "attempt",
+          "accepts_blocks": [
+            "safe_initial_representation",
+            "safe_pre_attempt_support",
+            "attempt_commitment"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        },
+        {
+          "id": "post_attempt",
+          "accepts_blocks": [
+            "post_attempt_support",
+            "full_answer_rubric",
+            "changed_demand_review",
+            "repair_route",
+            "lineage_continuity_check"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        }
+      ],
+      "native_components": [],
+      "component_bindings": [],
+      "slot_bindings": [
+        {
+          "slot_id": "identity",
+          "source_pointer": "/blueprints/5/slots/0",
+          "proposed_target": "native.slots.identity",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "attempt",
+          "source_pointer": "/blueprints/5/slots/1",
+          "proposed_target": "native.slots.attempt",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "post_attempt",
+          "source_pointer": "/blueprints/5/slots/2",
+          "proposed_target": "native.slots.post_attempt",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "native_policies": {
+        "interaction_policy": {
+          "attempt_before_reveal": "FROM_PROJECTION",
+          "progressive_support": true,
+          "solution_policy": "POST_ATTEMPT"
+        },
+        "representation_policy": {
+          "preferred_mount_modes": [
+            "PORTABLE_SCENE",
+            "COMPONENT",
+            "STATIC_FIGURE"
+          ],
+          "legacy_iframe": "MIGRATION_ONLY"
+        },
+        "responsive_policy": {
+          "compact": "SINGLE_PANE",
+          "medium": "STACKED_SUPPORT",
+          "expanded": "STAGE_SUPPORT",
+          "primary_fraction": 0.68,
+          "support_fraction": 0.32
+        },
+        "touch_policy": {
+          "minimum_target_css_px": 48,
+          "minimum_control_gap_css_px": 8
+        },
+        "packaging_modes": [
+          "PUBLIC",
+          "PAGES",
+          "OFFLINE_DIRECTORY",
+          "SINGLE_FILE",
+          "EMBED"
+        ],
+        "forbidden": [
+          "PAGE_LOCAL_ACADEMIC_TRUTH",
+          "HOVER_ONLY_ESSENTIAL_INFORMATION",
+          "PROTECTED_MOVE_DISCLOSED_PRE_ATTEMPT"
+        ]
+      },
+      "mapping_status": "PROPOSED_PRESERVE_NATIVE_CONTRACT_BY_REFERENCE"
+    },
+    {
+      "target_role": "EXPLORER",
+      "blueprint_id": "BP-EXPLORER-GCDR@1.0.0",
+      "layout_mode": "STAGE_SUPPORT",
+      "source_pointer": "/blueprints/6",
+      "native_field_names": [
+        "components",
+        "core_roles",
+        "forbidden",
+        "id",
+        "interaction_policy",
+        "layout_family",
+        "learner_job",
+        "packaging_modes",
+        "presentation_policy",
+        "representation_policy",
+        "responsive_policy",
+        "route",
+        "shell_ref",
+        "slots",
+        "status",
+        "touch_policy",
+        "version"
+      ],
+      "native_slots": [
+        {
+          "id": "identity",
+          "accepts_blocks": [
+            "page_title",
+            "route_rail"
+          ],
+          "required": true,
+          "column": "FULL"
+        },
+        {
+          "id": "stage",
+          "accepts_blocks": [
+            "phenomenon_view",
+            "mechanism_view",
+            "second_representation",
+            "state_controls"
+          ],
+          "required": true,
+          "column": "PRIMARY"
+        },
+        {
+          "id": "route",
+          "accepts_blocks": [
+            "cognitive_target",
+            "source_question",
+            "route_step"
+          ],
+          "required": true,
+          "column": "SUPPORT"
+        }
+      ],
+      "native_components": [
+        {
+          "id": "ROUTE_RAIL",
+          "slot": "identity",
+          "level": "REQUIRED",
+          "compact_order": 10
+        },
+        {
+          "id": "TARGET",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 50
+        },
+        {
+          "id": "SOURCE",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 60
+        },
+        {
+          "id": "PARAMETERS",
+          "slot": "stage",
+          "level": "REQUIRED",
+          "compact_order": 40
+        },
+        {
+          "id": "QUANTITIES",
+          "slot": "stage",
+          "level": "REQUIRED",
+          "compact_order": 45
+        },
+        {
+          "id": "SCENE",
+          "slot": "stage",
+          "level": "REQUIRED",
+          "compact_order": 20
+        },
+        {
+          "id": "SECOND_VIEW",
+          "slot": "stage",
+          "level": "REQUIRED",
+          "compact_order": 30
+        },
+        {
+          "id": "CONTEXT",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 70
+        },
+        {
+          "id": "PREDICT",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 80
+        },
+        {
+          "id": "MANIPULATE",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 90
+        },
+        {
+          "id": "OBSERVE",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 100
+        },
+        {
+          "id": "CONTRADICT",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 110
+        },
+        {
+          "id": "DECONSTRUCT",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 120
+        },
+        {
+          "id": "RECONSTRUCT",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 130
+        },
+        {
+          "id": "INVARIANT",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 140
+        },
+        {
+          "id": "BOUNDARY",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 150
+        },
+        {
+          "id": "FADE",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 160
+        },
+        {
+          "id": "TRANSFER",
+          "slot": "route",
+          "level": "REQUIRED",
+          "compact_order": 170
+        }
+      ],
+      "component_bindings": [
+        {
+          "component_id": "ROUTE_RAIL",
+          "source_pointer": "/blueprints/6/components/0",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot"
+          ],
+          "proposed_target": "native.components.ROUTE_RAIL",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "TARGET",
+          "source_pointer": "/blueprints/6/components/1",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.TARGET",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "SOURCE",
+          "source_pointer": "/blueprints/6/components/2",
+          "native_fields": [
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot"
+          ],
+          "proposed_target": "native.components.SOURCE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "PARAMETERS",
+          "source_pointer": "/blueprints/6/components/3",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.PARAMETERS",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "QUANTITIES",
+          "source_pointer": "/blueprints/6/components/4",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.QUANTITIES",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "SCENE",
+          "source_pointer": "/blueprints/6/components/5",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.SCENE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "SECOND_VIEW",
+          "source_pointer": "/blueprints/6/components/6",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.SECOND_VIEW",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "CONTEXT",
+          "source_pointer": "/blueprints/6/components/7",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "presentation",
+            "purpose",
+            "slot",
+            "source"
+          ],
+          "proposed_target": "native.components.CONTEXT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "PREDICT",
+          "source_pointer": "/blueprints/6/components/8",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.PREDICT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "MANIPULATE",
+          "source_pointer": "/blueprints/6/components/9",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.MANIPULATE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "OBSERVE",
+          "source_pointer": "/blueprints/6/components/10",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.OBSERVE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "CONTRADICT",
+          "source_pointer": "/blueprints/6/components/11",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.CONTRADICT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "DECONSTRUCT",
+          "source_pointer": "/blueprints/6/components/12",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.DECONSTRUCT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "RECONSTRUCT",
+          "source_pointer": "/blueprints/6/components/13",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.RECONSTRUCT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "INVARIANT",
+          "source_pointer": "/blueprints/6/components/14",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.INVARIANT",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "BOUNDARY",
+          "source_pointer": "/blueprints/6/components/15",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.BOUNDARY",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "FADE",
+          "source_pointer": "/blueprints/6/components/16",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.FADE",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "component_id": "TRANSFER",
+          "source_pointer": "/blueprints/6/components/17",
+          "native_fields": [
+            "authoring",
+            "benchmark",
+            "compact_order",
+            "id",
+            "level",
+            "min_items",
+            "presentation",
+            "purpose",
+            "slot",
+            "source",
+            "target_items"
+          ],
+          "proposed_target": "native.components.TRANSFER",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "slot_bindings": [
+        {
+          "slot_id": "identity",
+          "source_pointer": "/blueprints/6/slots/0",
+          "proposed_target": "native.slots.identity",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "stage",
+          "source_pointer": "/blueprints/6/slots/1",
+          "proposed_target": "native.slots.stage",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        },
+        {
+          "slot_id": "route",
+          "source_pointer": "/blueprints/6/slots/2",
+          "proposed_target": "native.slots.route",
+          "status": "HOLD_PENDING_SEMANTIC_REVIEW"
+        }
+      ],
+      "native_policies": {
+        "route": [
+          "CONTEXT",
+          "PREDICT",
+          "MANIPULATE",
+          "OBSERVE",
+          "CONTRADICT",
+          "DECONSTRUCT",
+          "RECONSTRUCT",
+          "INVARIANT",
+          "BOUNDARY",
+          "FADE",
+          "TRANSFER"
+        ],
+        "interaction_policy": {
+          "attempt_before_reveal": "ALWAYS",
+          "progressive_support": true,
+          "solution_policy": "POST_ATTEMPT"
+        },
+        "representation_policy": {
+          "preferred_mount_modes": [
+            "COMPONENT"
+          ],
+          "legacy_iframe": "MIGRATION_ONLY"
+        },
+        "responsive_policy": {
+          "compact": "SINGLE_PANE",
+          "medium": "STACKED_SUPPORT",
+          "expanded": "STAGE_SUPPORT",
+          "primary_fraction": 0.66,
+          "support_fraction": 0.34,
+          "expanded_min_px": 1100,
+          "support_sticky": true,
+          "tablet_12_7": {
+            "reference_viewport": {
+              "width": 1366,
+              "height": 854
+            },
+            "identity_max_px": 110,
+            "figure_min_text_css_px": 14,
+            "support_scrolls_inside": true
+          }
+        },
+        "touch_policy": {
+          "minimum_target_css_px": 48,
+          "minimum_control_gap_css_px": 8
+        },
+        "packaging_modes": [
+          "PUBLIC",
+          "PAGES",
+          "OFFLINE_DIRECTORY",
+          "SINGLE_FILE",
+          "EMBED"
+        ],
+        "forbidden": [
+          "PAGE_LOCAL_ACADEMIC_TRUTH",
+          "HOVER_ONLY_ESSENTIAL_INFORMATION",
+          "FREE_PLAY_BEFORE_PREDICTION",
+          "UNCHECKED_NUMBER",
+          "DECORATIVE_ANIMATION",
+          "TARGET_OTHER_THAN_THE_TOUGHEST_CONCEPT"
+        ],
+        "presentation_policy": {
+          "default_theme": "light"
+        }
+      },
+      "mapping_status": "PROPOSED_PRESERVE_NATIVE_CONTRACT_BY_REFERENCE"
+    }
+  ],
+  "subject_adapters": [
+    {
+      "subject": "Physics",
+      "source_tree": "f9e3c13a297e58ea1295b215f70bae867f53aa95",
+      "source_path": "Physics/adapter",
+      "status": "HOLD_PENDING_ADAPTER_REVIEW"
+    },
+    {
+      "subject": "Chemistry",
+      "source_tree": "a40258acd2347b4e2709674f5d92b861f9af28f0",
+      "source_path": "Chemistry/adapter",
+      "status": "HOLD_PENDING_ADAPTER_REVIEW"
+    },
+    {
+      "subject": "Mathematics",
+      "source_tree": "0c25dd92db2ef2428c7f2bab057f57722ce1f6c4",
+      "source_path": "Mathematics/adapter",
+      "status": "HOLD_PENDING_ADAPTER_REVIEW"
+    },
+    {
+      "subject": "Biology",
+      "status": "SCOPE_PENDING"
+    }
+  ]
+}

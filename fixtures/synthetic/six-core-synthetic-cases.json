@@ -1,0 +1,231 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-synthetic-six-core/1.0",
+  "status": "DEMO_SYNTHETIC_ONLY",
+  "notes": "Contributor-corrected synthetic role cases; not independently frozen or authorized native academic content.",
+  "cases": [
+    {
+      "role": "CORE1",
+      "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
+      "case_id": "SYN-CORE1-HOOKES-LAW",
+      "subject": "PHYSICS",
+      "payload": {
+        "concept": "Ideal massless spring and Hooke's Law",
+        "orientation_anchor": "Restoring force F = -kx",
+        "conventions": [
+          "x is displacement from natural length",
+          "k > 0 spring constant"
+        ],
+        "exclusions": [
+          "non-linear spring deformations",
+          "damping"
+        ]
+      }
+    },
+    {
+      "role": "CORE1A",
+      "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "case_id": "SYN-CORE1A-CART-COMPRESSION",
+      "subject": "PHYSICS",
+      "payload": {
+        "construction_id": "demo:c:construction",
+        "worked_steps": [
+          "Identify initial kinetic energy: E_k = 0.5 * m * v^2",
+          "Identify maximum potential energy at stop: E_p = 0.5 * k * x_max^2",
+          "Equate energies by work-energy theorem: 0.5 * m * v^2 = 0.5 * k * x_max^2",
+          "Solve for maximum compression: x_max = v * sqrt(m / k)"
+        ],
+        "common_trap_repair": "An unattached spring can push during rebound until natural length, then cannot pull after separation.",
+        "inferential_jump": "Use the current contact region to decide which interactions belong in the energy ledger."
+      }
+    },
+    {
+      "role": "CORE1B",
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+      "case_id": "SYN-CORE1B-RECONSTRUCT-SPRING",
+      "subject": "PHYSICS",
+      "payload": {
+        "inferential_jump": "Use the current contact region to decide which interactions belong in the energy ledger.",
+        "reconstruction_stages": [
+          {
+            "stage": 1,
+            "name": "PREDICT",
+            "prompt": "Will an unattached cart feel spring force after separation? Commit before feedback."
+          },
+          {
+            "stage": 2,
+            "name": "ATTEMPT",
+            "prompt": "Draw both region force diagrams and derive a stopping condition."
+          },
+          {
+            "stage": 3,
+            "name": "RECONSTRUCT",
+            "prompt": "After commit, compare the two diagrams and the energy transfer across their boundary."
+          },
+          {
+            "stage": 4,
+            "name": "DIAGNOSE",
+            "prompt": "Identify where the spring force was incorrectly carried into the second region."
+          },
+          {
+            "stage": 5,
+            "name": "REPAIR",
+            "prompt": "Preserve the first attempt; remove the vanished force and recompute the energy ledger."
+          },
+          {
+            "stage": 6,
+            "name": "BOUNDARY_TEST",
+            "prompt": "An attached spring can pull. Explain how that changes the continuation."
+          }
+        ],
+        "closure": "A correct response distinguishes contact from free motion; attached springs are a different model."
+      }
+    },
+    {
+      "role": "CORE2",
+      "blueprint_id": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+      "case_id": "SYN-CORE2-WPE-SOURCE",
+      "subject": "PHYSICS",
+      "payload": {
+        "source_ref": {
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
+          "revision": 1,
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        },
+        "solution_ref": {
+          "type": "SOLUTION",
+          "id": "demo:wpe:source-solution",
+          "revision": 1,
+          "sha256": "a07d0b10bc5a003b6c4c0d19a215aac660b65258038df422d09c5813eecadad0"
+        },
+        "source_status": "SYNTHETIC_NO_EXAM_CLAIM",
+        "precommit_refs": [
+          {
+            "type": "QUESTION",
+            "id": "demo:wpe:source",
+            "revision": 1,
+            "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+          }
+        ],
+        "source_hints": [],
+        "authored_hint_refs": [
+          {
+            "type": "ASSET",
+            "id": "demo:wpe:hint-1",
+            "revision": 1,
+            "sha256": "ee523b2da0917fca851941fa10768c73d5053e9727154e31c8a524a67cfd7670"
+          },
+          {
+            "type": "ASSET",
+            "id": "demo:wpe:hint-2",
+            "revision": 1,
+            "sha256": "0536c4f4320d967aab5c9c3695ca581296c1197c1dc61866bae7227bd1047f63"
+          },
+          {
+            "type": "ASSET",
+            "id": "demo:wpe:hint-3",
+            "revision": 1,
+            "sha256": "609d06ed7d77fa73bfad3fd8c5edb114bad141bb96d1e8b29b9ea2dc1ae1fe1f"
+          }
+        ],
+        "closure": "AFTER_COMMIT_ONLY"
+      }
+    },
+    {
+      "role": "CORE2A",
+      "blueprint_id": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+      "case_id": "SYN-CORE2A-FAMILIAR-CRUX",
+      "subject": "PHYSICS",
+      "payload": {
+        "crux": "unattached cart loses contact at natural spring length",
+        "scaffold": "Determine acceleration at x=0; contact force drops to zero.",
+        "complete_solution": "At x=0, normal force from spring vanishes; cart enters free motion."
+      }
+    },
+    {
+      "role": "CORE2B",
+      "blueprint_id": "BP-CORE2B-TRANSFER@1.1.0",
+      "case_id": "SYN-CORE2B-TRANSFER-DECIDE",
+      "subject": "PHYSICS",
+      "payload": {
+        "protected_decision": "Choose whether a force model can be carried across a contact boundary.",
+        "protected_move": "DECIDE",
+        "prior_exposure_ref": {
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
+          "revision": 1,
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        },
+        "transfer_task_ref": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        },
+        "boundary_task_ref": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:boundary",
+          "revision": 1,
+          "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
+        },
+        "precommit_refs": [
+          {
+            "type": "FRESH_TASK",
+            "id": "demo:wpe:fresh",
+            "revision": 1,
+            "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+          }
+        ],
+        "changed_demand": "From frictionless rise after release to finite braking strip and feasibility before exit.",
+        "closure_ref": {
+          "type": "SOLUTION",
+          "id": "demo:wpe:fresh-solution",
+          "revision": 1,
+          "sha256": "7c2f73b43b2229ebd3968c991c76a21339f18b434d58e33f313f21b144cd4324"
+        },
+        "closure": "AFTER_FIRST_COMMIT_ONLY",
+        "academic_status": "HOLD"
+      }
+    },
+    {
+      "role": "EXPLORER",
+      "blueprint_id": "BP-EXPLORER-GCDR@1.0.0",
+      "case_id": "SYN-EXPLORER-SPRING-SIM",
+      "subject": "PHYSICS",
+      "payload": {
+        "interactive_stage": "demo:stage:spring-cart",
+        "parameters": {
+          "mass": 2,
+          "spring_k": 200,
+          "initial_v": 3
+        },
+        "observables": [
+          "displacement_x",
+          "velocity_v",
+          "contact_force_N",
+          "energy_E"
+        ],
+        "stages": [
+          "PREDICT",
+          "MANIPULATE",
+          "OBSERVE",
+          "CONTRADICT",
+          "DECONSTRUCT",
+          "RECONSTRUCT",
+          "INVARIANT",
+          "BOUNDARY",
+          "FADE",
+          "TRANSFER"
+        ],
+        "model_ref": {
+          "type": "ASSET",
+          "id": "demo:wpe:model",
+          "revision": 1,
+          "sha256": "667d7296bdeeb1ce5c8c931e265a6ca69339e09c68440d8d8e7d7e0857e9b64a"
+        },
+        "executable_model_status": "NOT_SUPPLIED"
+      }
+    }
+  ]
+}

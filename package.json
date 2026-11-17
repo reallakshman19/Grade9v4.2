@@ -1,0 +1,25 @@
+{
+  "name": "grade9v4-build-shell",
+  "version": "4.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Grade9v4.2 local diagnostic shell; no learner UI or release",
+  "engines": {
+    "node": ">=22.16.0 <23",
+    "npm": ">=10.9.2 <11"
+  },
+  "scripts": {
+    "build": "npm run typecheck && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "browser:install": "playwright-core install chromium",
+    "test:smoke": "npm run build && node --experimental-strip-types --test tests/browser/smoke.spec.ts",
+    "test:python": "python -m pytest"
+  },
+  "devDependencies": {
+    "@types/node": "22.18.1",
+    "playwright-core": "1.61.1",
+    "typescript": "5.9.3",
+    "vite": "6.4.3"
+  }
+}

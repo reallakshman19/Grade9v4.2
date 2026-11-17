@@ -1,0 +1,488 @@
+[
+  {
+    "id": "WPE-SYN-01",
+    "synthetic": true,
+    "family": "MULTIFORCE_LEDGER",
+    "purpose": "Force-by-force signed work; net work vs individual force",
+    "inputs": {
+      "works": [
+        12,
+        -5,
+        -3
+      ]
+    },
+    "expected": {
+      "net": 4
+    },
+    "fault": "remove one ledger row",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "all work terms for same object over same displacement interval, no omitted terms"
+  },
+  {
+    "id": "WPE-SYN-02",
+    "synthetic": true,
+    "family": "SPRING_CONTACT",
+    "purpose": "Two regions; contact then rough track",
+    "inputs": {
+      "k": 80,
+      "x": 0.25,
+      "m": 1.25,
+      "friction": 2,
+      "distance": 0.5
+    },
+    "expected": {
+      "release_energy": 2.5,
+      "final_energy": 1.5,
+      "boundary_distance": 1.25
+    },
+    "fault": "include spring work after contact",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "ideal unattached spring, no loss during contact, constant opposing friction afterward; final energy clamped at stop, not continued past stop"
+  },
+  {
+    "id": "WPE-SYN-03",
+    "synthetic": true,
+    "family": "CONSTANT_POWER",
+    "purpose": "K linear, speed nonlinear; compare constant force",
+    "inputs": {
+      "mass": 2,
+      "initial_speed": 3,
+      "power": 10,
+      "time": 2
+    },
+    "expected": {
+      "kinetic": 29,
+      "speed": 5.385164807134504
+    },
+    "fault": "assume constant acceleration",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "positive constant net power, fixed mass, nonrelativistic motion"
+  },
+  {
+    "id": "WPE-SYN-04",
+    "synthetic": true,
+    "family": "DISTRIBUTED_MASS",
+    "purpose": "Variable hanging segment centre of mass",
+    "inputs": {
+      "density": 2,
+      "g": 10,
+      "initial": 3,
+      "final": 1
+    },
+    "expected": {
+      "lift_work": 80
+    },
+    "fault": "use entire mass at same height",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "uniform chain, vertical hanging segment, quasistatic lift, smooth table, reference tabletop"
+  },
+  {
+    "id": "WPE-SYN-05",
+    "synthetic": true,
+    "family": "GRAPH_OPERATION",
+    "purpose": "Area and slope; axis units determine inference",
+    "inputs": {
+      "base": 6,
+      "height": 4,
+      "potential_delta": -8,
+      "distance": 2
+    },
+    "expected": {
+      "area": 12,
+      "force": 4
+    },
+    "fault": "treat graph height as area",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "triangular force-position graph, linear potential over specified interval"
+  },
+  {
+    "id": "WPE-SYN-06",
+    "synthetic": true,
+    "family": "VERTICAL_CIRCLE",
+    "purpose": "Tension/feasibility; invalid continuation",
+    "inputs": {
+      "m": 2,
+      "g": 10,
+      "r": 1,
+      "bottom_v_squared": 45
+    },
+    "expected": {
+      "top_v_squared": 5,
+      "top_tension": -10,
+      "taut": false
+    },
+    "fault": "accept negative string tension",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "ideal string, gravity, formal energy continuation only; negative tension is infeasibility not actual tension"
+  },
+  {
+    "id": "WPE-SYN-07",
+    "synthetic": true,
+    "family": "POTENTIAL_WELLS",
+    "purpose": "Turning points and disconnected allowed regions",
+    "inputs": {
+      "energy": 5,
+      "barrier": 9,
+      "positions": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "potential": [
+        8,
+        2,
+        9,
+        2,
+        8
+      ]
+    },
+    "expected": {
+      "accessible_indices": [
+        1,
+        3
+      ],
+      "crossing": false
+    },
+    "fault": "infer path from endpoint energies",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "sampled potential at stated points, specified separating barrier; sample indices not continuous interval bounds"
+  },
+  {
+    "id": "WPE-SYN-08",
+    "synthetic": true,
+    "family": "SPRING_PROJECTILE_TRANSITION",
+    "purpose": "Contact friction then flight; independent time and range",
+    "inputs": {
+      "k": 100,
+      "x": 0.3,
+      "friction": 5,
+      "m": 1.5,
+      "g": 10,
+      "height": 0.8
+    },
+    "expected": {
+      "launch_kinetic": 3,
+      "speed": 2,
+      "time": 0.4,
+      "range": 0.8
+    },
+    "fault": "carry contact force into flight",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "unattached spring horizontal, friction only contact, no drag, horizontal launch"
+  },
+  {
+    "id": "WPE-SYN-09",
+    "synthetic": true,
+    "family": "RADIAL_FORCE_POTENTIAL",
+    "purpose": "Area of piecewise graph vs local force",
+    "inputs": {
+      "break_radius": 1,
+      "f0": 2,
+      "r": 3,
+      "f_at_r": 6,
+      "mass": 3
+    },
+    "expected": {
+      "potential": 10,
+      "v_squared": 6,
+      "kinetic": 9,
+      "total": 19
+    },
+    "fault": "use force height as potential",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "positive inward magnitude, outward coordinate, conservative, reference U(0)=0, piecewise linear; separate circular states"
+  },
+  {
+    "id": "WPE-SYN-10",
+    "synthetic": true,
+    "family": "INSTANTANEOUS_POWER",
+    "purpose": "Vector component dot products",
+    "inputs": {
+      "force": [
+        3,
+        -4
+      ],
+      "velocity": [
+        2,
+        1
+      ]
+    },
+    "expected": {
+      "power": 2
+    },
+    "fault": "multiply magnitudes without direction",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "Cartesian components same frame"
+  },
+  {
+    "id": "WPE-SYN-11",
+    "synthetic": true,
+    "family": "CONVEYOR_MOMENTUM_POWER",
+    "purpose": "Mass flux; momentum vs energy rate",
+    "inputs": {
+      "mass_rate": 3,
+      "speed": 4
+    },
+    "expected": {
+      "force": 12,
+      "kinetic_rate": 24,
+      "motor_power": 48
+    },
+    "fault": "conflate kinetic rate and ideal drive power",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "incoming mass at rest horizontally, deposited on belt maintained at constant speed; ideal drive power Fv includes dissipative capture, not only kinetic flux"
+  },
+  {
+    "id": "WPE-SYN-12",
+    "synthetic": true,
+    "family": "DISSIPATIVE_BOUNCES",
+    "purpose": "Restitution; energy lost",
+    "inputs": {
+      "mass": 2,
+      "impact_speed": 5,
+      "restitution": 0.6
+    },
+    "expected": {
+      "rebound_speed": 3,
+      "energy_loss": 16
+    },
+    "fault": "treat restitution as energy ratio",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "stationary rigid floor, vertical rebound, coefficient speed ratio"
+  },
+  {
+    "id": "WPE-SYN-13",
+    "synthetic": true,
+    "family": "SPRING_CONTROLLED_VARIABLE",
+    "purpose": "Fixed force vs fixed extension",
+    "inputs": {
+      "k1": 50,
+      "k2": 100,
+      "force": 10,
+      "extension": 0.2
+    },
+    "expected": {
+      "fixed_force_energies": [
+        1,
+        0.5
+      ],
+      "fixed_extension_energies": [
+        1,
+        2
+      ]
+    },
+    "fault": "reuse fixed-extension rule at fixed force",
+    "required_views": [
+      "CORE1A",
+      "CORE1B",
+      "CORE2",
+      "REFLECTION"
+    ],
+    "required_stages": [
+      "PREDICT",
+      "ATTEMPT",
+      "RECONSTRUCT",
+      "DIAGNOSE",
+      "REPAIR",
+      "BOUNDARY_TEST",
+      "COMPLETE"
+    ],
+    "academic_status": "HOLD",
+    "note": "Engineering numerical oracle only; not a complete A1–A9 lesson, fresh task, source or academic Golden. Dispatcher must supply independently authored full target fixture before target work.",
+    "assumptions": "ideal linear springs, compare separate fixed-force and fixed-extension equilibrium states"
+  }
+]

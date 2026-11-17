@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:g9:engineering:object:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "type",
+    "id",
+    "revision",
+    "subject_id",
+    "payload",
+    "dependencies",
+    "source_lineage_refs",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "engineering-projection/1"
+    },
+    "type": {
+      "enum": [
+        "SOURCE",
+        "OCCURRENCE",
+        "QUESTION",
+        "ASSESSMENT",
+        "WARRANT",
+        "QRT",
+        "CONSTRUCTION",
+        "LESSON",
+        "FRESH_TASK",
+        "SOLUTION",
+        "RELATIONSHIP",
+        "PRESENTATION",
+        "CONCEPT",
+        "ASSET",
+        "PROGRAMME",
+        "EXAM_EDITION",
+        "PAPER",
+        "STIMULUS",
+        "APPROVAL",
+        "RELEASE",
+        "SUBJECT_PROFILE"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "subject_id": {
+      "enum": [
+        "PHYSICS",
+        "CHEMISTRY",
+        "MATHEMATICS",
+        "BIOLOGY",
+        null
+      ]
+    },
+    "payload": {
+      "type": "object"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "id",
+          "revision",
+          "sha256"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "SOURCE",
+              "OCCURRENCE",
+              "QUESTION",
+              "ASSESSMENT",
+              "WARRANT",
+              "QRT",
+              "CONSTRUCTION",
+              "LESSON",
+              "FRESH_TASK",
+              "SOLUTION",
+              "RELATIONSHIP",
+              "PRESENTATION",
+              "CONCEPT",
+              "ASSET",
+              "PROGRAMME",
+              "EXAM_EDITION",
+              "PAPER",
+              "STIMULUS",
+              "APPROVAL",
+              "RELEASE",
+              "SUBJECT_PROFILE"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "source_lineage_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "id",
+          "revision",
+          "sha256"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "SOURCE",
+              "OCCURRENCE",
+              "QUESTION",
+              "ASSESSMENT",
+              "WARRANT",
+              "QRT",
+              "CONSTRUCTION",
+              "LESSON",
+              "FRESH_TASK",
+              "SOLUTION",
+              "RELATIONSHIP",
+              "PRESENTATION",
+              "CONCEPT",
+              "ASSET",
+              "PROGRAMME",
+              "EXAM_EDITION",
+              "PAPER",
+              "STIMULUS",
+              "APPROVAL",
+              "RELEASE",
+              "SUBJECT_PROFILE"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "uniqueItems": true
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "CANDIDATE",
+        "HOLD",
+        "WITHDRAWN"
+      ]
+    }
+  }
+}

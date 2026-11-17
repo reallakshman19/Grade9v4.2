@@ -1,0 +1,15 @@
+{
+  "fault": "N05: Stale dependency digest",
+  "expected": "Graph validator rejects node due to mismatched dependency sha256.",
+  "tampered_node": {
+    "id": "question:sample",
+    "dependencies": [
+      {
+        "type": "WARRANT",
+        "id": "warrant:sample",
+        "revision": 1,
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      }
+    ]
+  }
+}

@@ -1,0 +1,340 @@
+{
+  "schema_version": "g9-session-fixture/2.0",
+  "status": "DEMO_SYNTHETIC_ONLY_NOT_INDEPENDENTLY_AUTHENTICATED",
+  "assurance": "LOCAL_SYNTHETIC_HASH_CHAIN_NOT_TRUSTED_CUSTODY",
+  "session_id": "SES-SYNTHETIC-DEMO-01",
+  "user_pseudonym": "DEMO_LEARNER_01",
+  "source_graph": "fixtures/synthetic/wpe-vertical-slice.json",
+  "task_ref": {
+    "type": "FRESH_TASK",
+    "id": "demo:wpe:fresh",
+    "revision": 1,
+    "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+  },
+  "journey_id": "jrn:demo:wpe:01",
+  "release_id": "rel:synthetic:demo:01",
+  "task_instance_id": "inst:synthetic:wpe:01",
+  "event_count": 9,
+  "chain_head_sha256": "8b44c04a8e2a08caba13094db8c2dee4d49be5a831593e1003ee1e3767d57f02",
+  "history": [
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:prediction:01",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 1,
+      "previous_sha256": null,
+      "event_type": "PREDICTION_COMMITTED",
+      "payload": {
+        "prediction": "The cart may emerge if the stored spring energy exceeds the braking work.",
+        "artifact_ids": []
+      },
+      "at": "2026-11-17T09:00:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:hint:02",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 2,
+      "previous_sha256": "eb225d48b55625e74121b015309c8c913728126f80955cc66c269212ba0126a8",
+      "event_type": "HELP_EXPOSED",
+      "payload": {
+        "capability": "H1",
+        "asset_ref": {
+          "type": "ASSET",
+          "id": "demo:wpe:hint-1",
+          "revision": 1,
+          "sha256": "ee523b2da0917fca851941fa10768c73d5053e9727154e31c8a524a67cfd7670"
+        },
+        "ordinal": 1
+      },
+      "at": "2026-11-17T09:01:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:first:03",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 3,
+      "previous_sha256": "b783df09d1df5817498d244a38379397a577f910d239b2935401454145a63d45",
+      "event_type": "FIRST_COMMITTED",
+      "payload": {
+        "responses": {
+          "response": {
+            "kind": "CONSTRUCTED_RESPONSE",
+            "value": "The cart emerges at about 1.225 m/s; the spring stops pushing at natural length."
+          },
+          "work": {
+            "kind": "CONSTRUCTED_RESPONSE",
+            "value": "0.5×160×0.15²=1.8 J; braking work=-3×0.40=-1.2 J; K=0.6 J; v=sqrt(1.2/0.8)."
+          }
+        },
+        "work": [
+          "Separate smooth contact and braking regions; positive final kinetic energy."
+        ],
+        "help_event_ids": [
+          "evt:demo:hint:02"
+        ]
+      },
+      "at": "2026-11-17T09:02:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:reconstruct:04",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 4,
+      "previous_sha256": "5ef4ea36928715c34bf0ac378c545d2e4d108528bc38c57adf699048a35ee102",
+      "event_type": "RECONSTRUCTION_COMMITTED",
+      "payload": {
+        "first_event_id": "evt:demo:first:03",
+        "comparison": {
+          "demo:diagnosis:contact-boundary": {
+            "aligned": true,
+            "notes": "1.8 J at release; subtract only braking work after contact."
+          }
+        },
+        "reference_ref": {
+          "type": "SOLUTION",
+          "id": "demo:wpe:fresh-solution",
+          "revision": 1,
+          "sha256": "7c2f73b43b2229ebd3968c991c76a21339f18b434d58e33f313f21b144cd4324"
+        }
+      },
+      "at": "2026-11-17T09:03:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:diagnosis:05",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 5,
+      "previous_sha256": "43c6558feb3dab4edbca6e126853a95ad375a79aa65ce6e78f7fe269f040cd0b",
+      "event_type": "DIAGNOSIS_COMMITTED",
+      "payload": {
+        "move_id": "demo:diagnosis:contact-boundary",
+        "why": "Avoid continuing spring work beyond natural length."
+      },
+      "at": "2026-11-17T09:04:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:repair:06",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 6,
+      "previous_sha256": "9590bcbf85f5b033d4643a0e887d8e91a670eeea546fc5f162103329ad11d9d4",
+      "event_type": "REPAIR_COMMITTED",
+      "payload": {
+        "first_event_id": "evt:demo:first:03",
+        "work": [
+          "Draw separate force diagrams; use K=1.8−1.2=0.6 J on the strip."
+        ],
+        "why": "The unilateral spring stops pushing at zero compression."
+      },
+      "at": "2026-11-17T09:05:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:boundary:07",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 7,
+      "previous_sha256": "df6b4d2d06c78825a3739c7fbc7f785c6ad3635895496ccebc115023a6293fb1",
+      "event_type": "BOUNDARY_COMMITTED",
+      "payload": {
+        "boundary_task_ref": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:boundary",
+          "revision": 1,
+          "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
+        },
+        "responses": {
+          "response": {
+            "kind": "CONSTRUCTED_RESPONSE",
+            "value": "Stops after 1.8/3=0.60 m, before the 0.70 m strip ends. Do not extrapolate to negative kinetic energy."
+          }
+        },
+        "work": [
+          "Set kinetic energy to zero: 1.8−3d=0."
+        ],
+        "help_event_ids": []
+      },
+      "at": "2026-11-17T09:06:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:boundary-feedback:08",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 8,
+      "previous_sha256": "5f27003a25fcc710a8e6d7bcb5fa19199609019b747c1fd5b945c06dfc9b2f10",
+      "event_type": "BOUNDARY_FEEDBACK_VIEWED",
+      "payload": {
+        "boundary_event_id": "evt:demo:boundary:07",
+        "reference_ref": {
+          "type": "SOLUTION",
+          "id": "demo:wpe:boundary-solution",
+          "revision": 1,
+          "sha256": "4f78f40635c4ce9af0a003e8aa5cfc10540de009fe84beaf7ef2a31dfc4c9151"
+        }
+      },
+      "at": "2026-11-17T09:07:00Z"
+    },
+    {
+      "schema_version": "g9-cognitive-event/1",
+      "event_id": "evt:demo:source-return:09",
+      "journey_id": "jrn:demo:wpe:01",
+      "release_id": "rel:synthetic:demo:01",
+      "task_ref": {
+        "type": "FRESH_TASK",
+        "id": "demo:wpe:fresh",
+        "revision": 1,
+        "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+      },
+      "task_instance_id": "inst:synthetic:wpe:01",
+      "sequence": 9,
+      "previous_sha256": "fb9719f65eab2f1ef12251c463845316a5c93eea1a222db204e733a94cc95910",
+      "event_type": "SOURCE_RETURNED",
+      "payload": {
+        "origin_session_id": "SES-SYNTHETIC-DEMO-01",
+        "origin_ref": {
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
+          "revision": 1,
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        },
+        "cursor": 0
+      },
+      "at": "2026-11-17T09:08:00Z"
+    }
+  ],
+  "independent_receipt_status": "NOT_SUPPLIED",
+  "notes": [
+    "Contributor-corrected synthetic chain, exact FRESH_TASK and origin refs; no trusted external checkpoint or device persistence attested.",
+    "First and boundary responses use the task field ids and A10 response wire format."
+  ],
+  "expected_policy": {
+    "task_ref": {
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:fresh",
+      "revision": 1,
+      "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+    },
+    "boundary_ref": {
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:boundary",
+      "revision": 1,
+      "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
+    },
+    "first_reference": {
+      "type": "SOLUTION",
+      "id": "demo:wpe:fresh-solution",
+      "revision": 1,
+      "sha256": "7c2f73b43b2229ebd3968c991c76a21339f18b434d58e33f313f21b144cd4324"
+    },
+    "boundary_reference": {
+      "type": "SOLUTION",
+      "id": "demo:wpe:boundary-solution",
+      "revision": 1,
+      "sha256": "4f78f40635c4ce9af0a003e8aa5cfc10540de009fe84beaf7ef2a31dfc4c9151"
+    },
+    "help_asset_refs": [
+      {
+        "type": "ASSET",
+        "id": "demo:wpe:hint-1",
+        "revision": 1,
+        "sha256": "ee523b2da0917fca851941fa10768c73d5053e9727154e31c8a524a67cfd7670"
+      }
+    ],
+    "origin_session_id": "SES-SYNTHETIC-DEMO-01",
+    "origin_ref": {
+      "type": "QUESTION",
+      "id": "demo:wpe:source",
+      "revision": 1,
+      "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+    },
+    "origin_cursor": 0,
+    "first_fields": {
+      "response": "CONSTRUCTED_RESPONSE",
+      "work": "CONSTRUCTED_RESPONSE"
+    },
+    "boundary_fields": {
+      "response": "CONSTRUCTED_RESPONSE"
+    },
+    "move_ids": [
+      "demo:diagnosis:contact-boundary"
+    ],
+    "capabilities": [
+      "H1",
+      "REFERENCE_SOLUTION",
+      "BOUNDARY_REFERENCE",
+      "SOURCE_RETURN"
+    ],
+    "mode": "PRACTICE"
+  },
+  "expected_checkpoint": {
+    "sequence": 9,
+    "sha256": "8b44c04a8e2a08caba13094db8c2dee4d49be5a831593e1003ee1e3767d57f02",
+    "stage": "COMPLETE",
+    "returned": true,
+    "assurance": "SYNTHETIC_EXPECTATION_NOT_TRUSTED_CUSTODY"
+  }
+}

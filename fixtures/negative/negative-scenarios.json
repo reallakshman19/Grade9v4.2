@@ -1,0 +1,428 @@
+[
+  {
+    "id": "N01",
+    "fault": "duplicate logical/occurrence ID",
+    "expected": "no implicit merge; quarantine",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N02",
+    "fault": "missing source path or byte",
+    "expected": "migration BLOCKED",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N03",
+    "fault": "unknown source field dropped",
+    "expected": "migration BLOCKED",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N04",
+    "fault": "tampered restore hash",
+    "expected": "migration BLOCKED",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N05",
+    "fault": "stale dependency digest",
+    "expected": "graph rejects",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N06",
+    "fault": "dependency cycle",
+    "expected": "graph rejects",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N07",
+    "fault": "missing mandatory figure",
+    "expected": "release blocks item",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N08",
+    "fault": "HOLD included in release",
+    "expected": "release fails",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N09",
+    "fault": "private text/answer in search",
+    "expected": "build fails",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N10",
+    "fault": "unsupported response",
+    "expected": "no submit/grade; clear explanation",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N11",
+    "fault": "proof text matches keywords",
+    "expected": "REVIEW_PENDING, no score",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N12",
+    "fault": "multiple choice duplicate/unknown option",
+    "expected": "INVALID",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N13",
+    "fault": "numeric unit mismatch",
+    "expected": "INVALID",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N14",
+    "fault": "multipart missing required part",
+    "expected": "incomplete/pending, no fabricated total",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N15",
+    "fault": "timed exam hints before submit",
+    "expected": "no disclosure",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N16",
+    "fault": "stale relationship",
+    "expected": "no recovery claim",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N17",
+    "fault": "topic-only route",
+    "expected": "label only related",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N18",
+    "fault": "orientation switch while writing proof",
+    "expected": "draft identical",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N19",
+    "fault": "ink pointer cancel + rotate",
+    "expected": "persist completed strokes; no corrupt stroke",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N20",
+    "fault": "storage blocked/quota",
+    "expected": "visible unsaved warning and export",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N21",
+    "fault": "double submit",
+    "expected": "one attempt event",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N22",
+    "fault": "withdrawn route",
+    "expected": "unavailable/tombstone",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N23",
+    "fault": "tampered or unsigned receipt",
+    "expected": "prerequisite rejected",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N24",
+    "fault": "unauthorized path change",
+    "expected": "scope rejects",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N25",
+    "fault": "cross-subject adapter override scorer",
+    "expected": "dependency rejection",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N26",
+    "fault": "search stale release shard",
+    "expected": "reject/reload",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N27",
+    "fault": "virtual keyboard occludes submit",
+    "expected": "scroll/resize keeps control reachable",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N28",
+    "fault": "drag-only graph/structure interaction",
+    "expected": "keyboard/button equivalent required",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N29",
+    "fault": "large math overflow",
+    "expected": "local labelled zoom/scroll, page no overflow",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N30",
+    "fault": "unknown exam capability",
+    "expected": "block session; not downgrade",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N31",
+    "fault": "missing A1–A9 role",
+    "expected": "lesson projection rejects",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N32",
+    "fault": "same anchor or synthesis task",
+    "expected": "reject duplicate identity, academic freshness remains review",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N33",
+    "fault": "invalid model domain",
+    "expected": "no numeric output",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N34",
+    "fault": "precommit model leaks W",
+    "expected": "policy denies and no DOM/index disclosure",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N35",
+    "fault": "first commit storage failure",
+    "expected": "no reference, draft retained",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N36",
+    "fault": "boundary commit storage failure",
+    "expected": "no boundary feedback",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N37",
+    "fault": "out of sequence hint",
+    "expected": "reject, no display",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N38",
+    "fault": "cross task event",
+    "expected": "quarantine, no state restore",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N39",
+    "fault": "same event ID changed payload",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N40",
+    "fault": "stage skipped",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N41",
+    "fault": "first overwritten during repair",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N42",
+    "fault": "boundary feedback without commitment",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N43",
+    "fault": "missing C06 MAIN/duplicate instance",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N44",
+    "fault": "native WPE missing source",
+    "expected": "migration BLOCKED",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N45",
+    "fault": "candidate proof of mastery from correct numeric",
+    "expected": "no mastery claim",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "N46",
+    "fault": "adjacent teaching visible during fresh attempt",
+    "expected": "hide or explicitly record permitted exposure",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L01",
+    "fault": "legacy app missing dependency",
+    "expected": "block launch, preserve source",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L02",
+    "fault": "same blob different relative context",
+    "expected": "retain both occurrences and replay each context",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L03",
+    "fault": "unregistered learner HTML omitted",
+    "expected": "UI freeze BLOCKED",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L04",
+    "fault": "source capability mapped to nonexistent UI slot",
+    "expected": "UI freeze BLOCKED",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L05",
+    "fault": "missing landscape screenshot or interaction trace",
+    "expected": "UI freeze BLOCKED",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L06",
+    "fault": "approved exclusion misreported as complete parity",
+    "expected": "reject completeness claim",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L07",
+    "fault": "OPAQUE_APP search visibility but HOLD",
+    "expected": "exclude from learner search and launch",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L08",
+    "fault": "owner tool included in learner index",
+    "expected": "reject release",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L09",
+    "fault": "legacy app sends score or protected-attempt write",
+    "expected": "reject unknown event",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L10",
+    "fault": "wrong origin/window/nonce/session",
+    "expected": "reject message",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L11",
+    "fault": "replayed/out-of-order bridge message",
+    "expected": "reject message",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L12",
+    "fault": "navigation to unregistered route",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L13",
+    "fault": "portable scene executable field",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L14",
+    "fault": "portable scene pixel placement",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L15",
+    "fault": "noncanonical redox proof promoted",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L16",
+    "fault": "Core2A same-family practice labelled transfer",
+    "expected": "reject claim",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L17",
+    "fault": "Core2B missing prior exposure or protected move",
+    "expected": "HOLD",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L18",
+    "fault": "learner estimate changes Core1A intrinsic scope",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L19",
+    "fault": "legacy browser data imported twice",
+    "expected": "no duplicate record",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L20",
+    "fault": "GCDR unbound extension labelled canonical",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L21",
+    "fault": "hidden answer-bearing app mounted in protected assessment",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L22",
+    "fault": "source hint relabelled authored scaffold",
+    "expected": "reject",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L23",
+    "fault": "remote runtime script loaded",
+    "expected": "reject delivery",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L24",
+    "fault": "PDF link points to key or mismatched bytes",
+    "expected": "reject release",
+    "status": "TARGET_TEST_REQUIRED"
+  },
+  {
+    "id": "L25",
+    "fault": "legacy large HTML extraction loses embedded record",
+    "expected": "block migration",
+    "status": "TARGET_TEST_REQUIRED"
+  }
+]

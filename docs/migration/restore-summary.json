@@ -1,0 +1,31 @@
+{
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "workpack_id": "A03",
+  "schema_version": "g9-restore-summary/2",
+  "sources": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657,
+      "tracked_bytes": 96373813
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634,
+      "tracked_bytes": 113853741
+    }
+  },
+  "prior_candidate": "796d07fa27c834ca584b61f0c56d8d26020010cb",
+  "historical_claimed_restore_count": 5291,
+  "historical_claim_status": "NOT_INDEPENDENTLY_VERIFIED",
+  "new_synthetic_tests": 9,
+  "synthetic_backup_restore": "PASS_ON_DISPOSABLE_LINUX_FIXTURES",
+  "actual_full_source_backup_restore": "NOT_RUN",
+  "actual_custody_acl": "NOT_VERIFIED",
+  "verification": "strict no-follow type/mode/hash/path equality, exact snapshot and independent backup replay; isolated exclusive roots required",
+  "acceptance": "BLOCKED_PENDING_ACTUAL_CUSTODY_BACKUP_RESTORE"
+}

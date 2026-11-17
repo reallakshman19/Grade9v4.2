@@ -1,0 +1,297 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:g9:engineering:assessment:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "task_ref",
+    "response_kind",
+    "evaluator",
+    "max_points",
+    "penalty_points",
+    "dropped_policy",
+    "status",
+    "revision"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+    },
+    "task_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "QUESTION",
+            "FRESH_TASK"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "response_kind": {
+      "enum": [
+        "SINGLE_CHOICE",
+        "MULTIPLE_CHOICE",
+        "INTEGER",
+        "NUMERIC_QUANTITY",
+        "SYMBOLIC_EXPRESSION",
+        "CONSTRUCTED_RESPONSE",
+        "MATHEMATICAL_PROOF",
+        "CHEMICAL_STRUCTURE",
+        "REACTION_MECHANISM",
+        "DATA_TABLE",
+        "GRAPH",
+        "EXPERIMENT_ANALYSIS",
+        "MULTIPART"
+      ]
+    },
+    "evaluator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "AUTOMATIC",
+            "REVIEW_PENDING"
+          ]
+        },
+        "canonical_value": {},
+        "numeric_tolerance": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "rubric_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "max_points": {
+      "type": "number",
+      "minimum": 0
+    },
+    "penalty_points": {
+      "type": "number",
+      "minimum": 0
+    },
+    "dropped_policy": {
+      "enum": [
+        "NOT_DROPPED",
+        "FULL_CREDIT",
+        "REMOVED_FROM_TOTAL"
+      ]
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "HOLD",
+        "PROPOSED"
+      ]
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "not": {
+              "enum": [
+                "SINGLE_CHOICE",
+                "MULTIPLE_CHOICE",
+                "INTEGER",
+                "NUMERIC_QUANTITY"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evaluator": {
+            "properties": {
+              "mode": {
+                "const": "REVIEW_PENDING"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "evaluator": {
+            "properties": {
+              "mode": {
+                "const": "AUTOMATIC"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "response_kind": {
+            "enum": [
+              "SINGLE_CHOICE",
+              "MULTIPLE_CHOICE",
+              "INTEGER",
+              "NUMERIC_QUANTITY"
+            ]
+          },
+          "evaluator": {
+            "required": [
+              "mode",
+              "canonical_value"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "SINGLE_CHOICE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evaluator": {
+            "properties": {
+              "canonical_value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "numeric_tolerance": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "MULTIPLE_CHOICE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evaluator": {
+            "properties": {
+              "canonical_value": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "numeric_tolerance": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "INTEGER"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evaluator": {
+            "properties": {
+              "canonical_value": {
+                "type": "string",
+                "pattern": "^-?[0-9]+$"
+              },
+              "numeric_tolerance": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "response_kind": {
+            "const": "NUMERIC_QUANTITY"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "evaluator": {
+            "properties": {
+              "canonical_value": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "decimal",
+                  "unit"
+                ],
+                "properties": {
+                  "decimal": {
+                    "type": "string",
+                    "pattern": "^-?[0-9]+(\\.[0-9]+)?$"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

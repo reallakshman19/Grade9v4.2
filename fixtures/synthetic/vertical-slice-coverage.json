@@ -1,0 +1,238 @@
+{
+  "schema_version": "g9-vertical-slice-coverage/1.1",
+  "workpack_id": "A11",
+  "status": "13_CONTRIBUTOR_DRAFT_GRAPHS_TYPED_DEPENDENCIES_REPAIRED_INDEPENDENT_RATIFICATION_PENDING",
+  "families_total_required": 13,
+  "families_supplied_count": 13,
+  "families_ratified_count": 0,
+  "ratified_families": [],
+  "supplied_unratified_families": [
+    {
+      "family_id": "WPE-SYN-01",
+      "domain": "PHYSICS",
+      "family": "MULTIFORCE_LEDGER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-02",
+      "domain": "PHYSICS",
+      "family": "SPRING_CONTACT",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-03",
+      "domain": "PHYSICS",
+      "family": "CONSTANT_POWER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-04",
+      "domain": "PHYSICS",
+      "family": "DISTRIBUTED_MASS",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-05",
+      "domain": "PHYSICS",
+      "family": "GRAPH_OPERATION",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-06",
+      "domain": "PHYSICS",
+      "family": "VERTICAL_CIRCLE",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-07",
+      "domain": "PHYSICS",
+      "family": "POTENTIAL_WELLS",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-08",
+      "domain": "PHYSICS",
+      "family": "SPRING_PROJECTILE_TRANSITION",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-09",
+      "domain": "PHYSICS",
+      "family": "RADIAL_FORCE_POTENTIAL",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-10",
+      "domain": "PHYSICS",
+      "family": "INSTANTANEOUS_POWER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-11",
+      "domain": "PHYSICS",
+      "family": "CONVEYOR_MOMENTUM_POWER",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-12",
+      "domain": "PHYSICS",
+      "family": "DISSIPATIVE_BOUNCES",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    },
+    {
+      "family_id": "WPE-SYN-13",
+      "domain": "PHYSICS",
+      "family": "SPRING_CONTROLLED_VARIABLE",
+      "source_fixture": "fixtures/synthetic/wpe-family-graphs.json",
+      "objects_count": 33,
+      "status": "CONTRIBUTOR_AUTHORED_SYNTHETIC_UNRATIFIED",
+      "reviewer_receipt": "NOT_SUPPLIED",
+      "typed_dependency_status": "PYTHON_GRAPH_VALIDATOR_PASS_EXACT_RECONSTRUCTED_GRAPH"
+    }
+  ],
+  "pending_families": [
+    {
+      "family_id": "WPE-SYN-01",
+      "domain": "PHYSICS",
+      "family": "MULTIFORCE_LEDGER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-02",
+      "domain": "PHYSICS",
+      "family": "SPRING_CONTACT",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-03",
+      "domain": "PHYSICS",
+      "family": "CONSTANT_POWER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-04",
+      "domain": "PHYSICS",
+      "family": "DISTRIBUTED_MASS",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-05",
+      "domain": "PHYSICS",
+      "family": "GRAPH_OPERATION",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-06",
+      "domain": "PHYSICS",
+      "family": "VERTICAL_CIRCLE",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-07",
+      "domain": "PHYSICS",
+      "family": "POTENTIAL_WELLS",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-08",
+      "domain": "PHYSICS",
+      "family": "SPRING_PROJECTILE_TRANSITION",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-09",
+      "domain": "PHYSICS",
+      "family": "RADIAL_FORCE_POTENTIAL",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-10",
+      "domain": "PHYSICS",
+      "family": "INSTANTANEOUS_POWER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-11",
+      "domain": "PHYSICS",
+      "family": "CONVEYOR_MOMENTUM_POWER",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-12",
+      "domain": "PHYSICS",
+      "family": "DISSIPATIVE_BOUNCES",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    },
+    {
+      "family_id": "WPE-SYN-13",
+      "domain": "PHYSICS",
+      "family": "SPRING_CONTROLLED_VARIABLE",
+      "status": "INDEPENDENT_DISPATCHER_REVIEW_AND_RATIFICATION_PENDING"
+    }
+  ],
+  "historical_example": {
+    "family_id": "WPE-SYN-02",
+    "path": "fixtures/synthetic/wpe-vertical-slice.json",
+    "status": "ORIGINAL_UNRATIFIED_ENGINEERING_EXAMPLE_PRESERVED"
+  },
+  "policy_note": "All 13 R4 WPE family identities now have contributor-authored full graph drafts; zero independent ratifications. No authentic exam source, executable model, learner readiness, academic admission or release is asserted. Revision 2 repairs the missing typed edges; independent ratification and A14 admission remain absent.",
+  "graph_validation": {
+    "validator_blob": "10bb517e45021429bc058c0b3fe67459e24b55c3",
+    "family_graph_blob": "44ffa7a3a157cdef9e8ec1521b4c2118bead40bb",
+    "family_graphs_passed": 13,
+    "objects_passed": 429,
+    "combined_graph_passed": true,
+    "session_chains_passed": 13,
+    "events_passed": 117,
+    "negative_cases_rejected": 26,
+    "method": "Exact canonical graph and chain digests matched via independent local reconstruction; actual A08 and A47 Python validators. Not full checkout or independent acceptance."
+  }
+}

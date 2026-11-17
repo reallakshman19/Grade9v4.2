@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:g9:engineering:identity:1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "logical_id",
+    "occurrence_id",
+    "snapshot_id",
+    "source_path",
+    "record_locator",
+    "legacy_aliases",
+    "source_ref",
+    "record_digest",
+    "merge_decision",
+    "status"
+  ],
+  "properties": {
+    "logical_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+    },
+    "occurrence_id": {
+      "type": "string",
+      "pattern": "^occ:[0-9a-f]{64}$"
+    },
+    "snapshot_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*:[0-9a-f]{40}$"
+    },
+    "source_path": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_locator": {
+      "type": "string",
+      "pattern": "^(?:/(?:[^~/]|~[01])*)*$"
+    },
+    "legacy_aliases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "source_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "id",
+        "revision",
+        "sha256"
+      ],
+      "properties": {
+        "type": {
+          "const": "SOURCE"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "record_digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "merge_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "decision_type",
+        "authority_ref",
+        "related_occurrences"
+      ],
+      "properties": {
+        "decision_type": {
+          "enum": [
+            "UNMERGED",
+            "HOLD_CONFLICT"
+          ]
+        },
+        "authority_ref": {
+          "type": "null"
+        },
+        "related_occurrences": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^occ:[0-9a-f]{64}$"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "status": {
+      "enum": [
+        "SYNTHETIC",
+        "CANDIDATE",
+        "HOLD",
+        "WITHDRAWN"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "CANDIDATE",
+              "HOLD"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "logical_id": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

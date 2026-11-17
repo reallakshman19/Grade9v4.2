@@ -1,0 +1,13 @@
+{
+  "schema_version": "g9-ui-capability-map/1",
+  "workpack_id": "A58",
+  "status": "BLOCKED",
+  "academic_admission": "HOLD",
+  "ui_implementation_freeze": "NOT_FROZEN",
+  "production_release": "NONE",
+  "core_roles_covered": [],
+  "capabilities": [],
+  "native_blueprint_registry": "docs/architecture/native-blueprint-map.json",
+  "mapping_status": "NOT_VERIFIED_AGAINST_ACTUAL_LEGACY_UI",
+  "notes": "A57 has seven proposed native role definitions. No actual legacy UI capability is independently observed/mapped. The synthetic demo.slider fixture is limited to tests."
+}

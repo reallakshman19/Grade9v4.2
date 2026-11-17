@@ -1,0 +1,239 @@
+[
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "QUESTION",
+    "id": "demo:q:001",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "stem": "A force of 2 N acts along a displacement of 3 m. What work is done?",
+      "options": [
+        {
+          "id": "A",
+          "text": "5 J"
+        },
+        {
+          "id": "B",
+          "text": "6 J"
+        }
+      ],
+      "response_kind": "SINGLE_CHOICE"
+    },
+    "dependencies": [],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  },
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "ASSESSMENT",
+    "id": "demo:a:001",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "question": {
+        "type": "QUESTION",
+        "id": "demo:q:001",
+        "revision": 1,
+        "sha256": "b0c6ae0d9e56b0d079e896eeb2981839fa190a871b513e421ec918b70bf27ed0"
+      },
+      "correct_option_ids": [
+        "B"
+      ],
+      "max_points": 1
+    },
+    "dependencies": [
+      {
+        "type": "QUESTION",
+        "id": "demo:q:001",
+        "revision": 1,
+        "sha256": "b0c6ae0d9e56b0d079e896eeb2981839fa190a871b513e421ec918b70bf27ed0"
+      }
+    ],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  },
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "CONSTRUCTION",
+    "id": "demo:c:001",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "label": "Work as force component times displacement",
+      "native_semantics": "DEMO ONLY"
+    },
+    "dependencies": [
+      {
+        "type": "QUESTION",
+        "id": "demo:q:001",
+        "revision": 1,
+        "sha256": "b0c6ae0d9e56b0d079e896eeb2981839fa190a871b513e421ec918b70bf27ed0"
+      }
+    ],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  },
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "LESSON",
+    "id": "demo:l:001",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "title": "When does a force do work?",
+      "text": "Work depends on the component of force along displacement."
+    },
+    "dependencies": [
+      {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      }
+    ],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  },
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "FRESH_TASK",
+    "id": "demo:f:001",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "stem": "A force perpendicular to motion acts on a moving object. Explain the work done.",
+      "response_kind": "CONSTRUCTED_RESPONSE"
+    },
+    "dependencies": [
+      {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      }
+    ],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  },
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "RELATIONSHIP",
+    "id": "demo:r:001",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "from": {
+        "type": "QUESTION",
+        "id": "demo:q:001",
+        "revision": 1,
+        "sha256": "b0c6ae0d9e56b0d079e896eeb2981839fa190a871b513e421ec918b70bf27ed0"
+      },
+      "to": {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      },
+      "kind": "CRUX_RECOVERY",
+      "status": "SYNTHETIC",
+      "crux_ref": "DEMO-W",
+      "evidence_refs": []
+    },
+    "dependencies": [
+      {
+        "type": "QUESTION",
+        "id": "demo:q:001",
+        "revision": 1,
+        "sha256": "b0c6ae0d9e56b0d079e896eeb2981839fa190a871b513e421ec918b70bf27ed0"
+      },
+      {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      }
+    ],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  },
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "RELATIONSHIP",
+    "id": "demo:r:002",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "from": {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      },
+      "to": {
+        "type": "LESSON",
+        "id": "demo:l:001",
+        "revision": 1,
+        "sha256": "0f2affc6b82103aead021c3113faa3b2f3c0530d6f7cbf5374da7c54dbb22e67"
+      },
+      "kind": "TEACHES",
+      "status": "SYNTHETIC",
+      "evidence_refs": []
+    },
+    "dependencies": [
+      {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      },
+      {
+        "type": "LESSON",
+        "id": "demo:l:001",
+        "revision": 1,
+        "sha256": "0f2affc6b82103aead021c3113faa3b2f3c0530d6f7cbf5374da7c54dbb22e67"
+      }
+    ],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  },
+  {
+    "schema_version": "engineering-projection/1",
+    "type": "RELATIONSHIP",
+    "id": "demo:r:003",
+    "revision": 1,
+    "subject_id": "PHYSICS",
+    "payload": {
+      "from": {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      },
+      "to": {
+        "type": "FRESH_TASK",
+        "id": "demo:f:001",
+        "revision": 1,
+        "sha256": "d366d6197aec8a1d556d9a27a23e7c5c655a1c470cc072e99a5344ad55da6b23"
+      },
+      "kind": "FRESH_TRANSFER",
+      "status": "SYNTHETIC",
+      "evidence_refs": []
+    },
+    "dependencies": [
+      {
+        "type": "CONSTRUCTION",
+        "id": "demo:c:001",
+        "revision": 1,
+        "sha256": "ec718ec1784565c342fa4146057abde9401e43961807160d1a3cc6b41ee8b5d6"
+      },
+      {
+        "type": "FRESH_TASK",
+        "id": "demo:f:001",
+        "revision": 1,
+        "sha256": "d366d6197aec8a1d556d9a27a23e7c5c655a1c470cc072e99a5344ad55da6b23"
+      }
+    ],
+    "source_lineage_refs": [],
+    "status": "SYNTHETIC"
+  }
+]
