@@ -10,7 +10,7 @@
   "parent_commit": "397c78b63a598a856dea0bea6f29bc1d6dbfa979",
   "decision": {
     "selected_strategy": "REUSE_ADAPTER_WITH_FAIL_CLOSED_VALIDATOR",
-    "rationale": "The native v3.5 portable workbench contract (packageVersion 1.0.0, componentApiVersion 0.1.0, transformationIrVersion 0.1.0, adapterApiVersion 0.2.0, scenePackageVersion 1.0.0) is strictly typed, data-only, declarative, and already provides complete fail-closed enforcement (blocking executable payloads, pixel placements, version mismatches, and ungrounded canonical claims). Grade9v4.2 adopts a reuse adapter contract that enforces native rejection rules, preserves exact semantic transforms and provenance, and guarantees zero runtime duplication unless an external decision mandates otherwise.",
+    "rationale": "The native v3.5 portable workbench contract (packageVersion 1.0.0, componentApiVersion 0.1.0, transformationIrVersion 0.1.0, adapterApiVersion 0.2.0, scenePackageVersion 1.0.0) is strictly typed, data-only, declarative, and specifies fail-closed rejection requirements (blocking executable payloads, pixel placements, version mismatches, and ungrounded canonical claims). Grade9v4.2 adopts a reuse adapter contract that enforces native rejection rules, preserves exact semantic transforms and provenance, and guarantees zero runtime duplication unless an external decision mandates otherwise.",
     "duplicate_runtime_authorized": false,
     "independent_review_required": true
   },
@@ -227,5 +227,13 @@
       "external_script_tags_allowed": false,
       "external_cdn_dependencies_allowed": false
     }
+  },
+  "verification_scope": {
+    "source_custody": "REQUIRES_EXACT_HASHED_ORIGINAL_BYTES",
+    "custody_path_env": "G9_V35_PORTABLE_PACKAGES",
+    "synthetic_fallback": "FORBIDDEN_FOR_REAL_PACKAGE_TESTS",
+    "test_authority": "AUTHOR_SELF_TEST_NOT_NATIVE_RUNTIME_ACCEPTANCE",
+    "independent_acceptance": "NOT_PROVIDED",
+    "status": "HOLD"
   }
 }

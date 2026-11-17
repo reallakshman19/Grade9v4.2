@@ -18,6 +18,7 @@ from .record_inventory import (
     exact_ref,
     make_envelope,
     validate_identity,
+    parse_source_bytes,
 )
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -68,7 +69,7 @@ class V35MigrationEngine:
             raise V35MigrationError(f"SHA-256 mismatch for {source_path}: expected {expected_sha256}, got {actual_sha}")
 
         try:
-            raw_data = json.loads(raw_bytes.decode("utf-8"))
+            raw_data = parse_source_bytes(raw_bytes)
         except Exception as e:
             raise V35MigrationError(f"invalid JSON in {source_path}: {e}")
 
@@ -153,7 +154,7 @@ class V35MigrationEngine:
             "population_id": self.population_id,
             "package_id": str(package_id),
             "title": raw_data.get("title", ""),
-            "subject": raw_data.get("subject", "PHYSICS"),
+            "subject": raw_data.get("subject"),
             "roles": roles_extracted,
             "source_hints": hints,
             "authored_scaffolds": scaffolds,
@@ -224,6 +225,13 @@ class V35MigrationEngine:
         if kind not in valid_kinds:
             raise V35MigrationError(f"unrecognized resource kind: {kind}")
 
+        # A separate entry dict cannot be trusted against unrelated bytes.
+        try:
+            source_entry = parse_source_bytes(raw_bytes)
+        except (ValueError, UnicodeDecodeError) as e:
+            raise V35MigrationError("invalid registry source bytes") from e
+        if source_entry != entry:
+            raise V35MigrationError("registry entry differs from supplied source bytes")
         source_sha = self.compute_sha256(raw_bytes)
         source_env = make_envelope(
             "SOURCE",
@@ -321,8 +329,18 @@ class V35MigrationEngine:
         if not isinstance(raw_manifest, dict):
             raise V35MigrationError("portable package manifest must be JSON object")
 
-        if raw_manifest.get("executable") or raw_manifest.get("scripts"):
-            raise V35MigrationError("executable input in portable package forbidden")
+        if raw_manifest.get("package_id") != package_id:
+            raise V35MigrationError("portable package ID mismatch")
+        def contains_executable(item):
+            if isinstance(item, dict):
+                if {"executable", "scripts", "script", "javascript", "code"} & set(item):
+                    return True
+                return any(contains_executable(v) for v in item.values())
+            if isinstance(item, list):
+                return any(contains_executable(v) for v in item)
+            return False
+        if contains_executable(raw_manifest):
+            raise V35MigrationError("nested executable input forbidden")
 
         snapshot_id = "v35:8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b"
         source_path = f"portable/{package_id}/manifest.json"

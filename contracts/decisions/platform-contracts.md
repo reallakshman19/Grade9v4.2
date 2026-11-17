@@ -59,9 +59,9 @@ Every learner attempt produces an immutable response record validated by `schema
 
 ### 2.3 Assessment Engine and Pure Evaluation Boundaries
 
-1. **Pure Function Separation:** The assessment evaluation engine (`AssessmentEngine.evaluate`) is a pure logical function taking `(response, assessment_spec, policy)`. It has zero access to UI DOM, browser cookies, local storage, or network handles.
-2. **Deterministic Automatic Scoring:** Strictly restricted to closed forms (`SINGLE_CHOICE`, `MULTIPLE_CHOICE`, `INTEGER`, `NUMERIC_QUANTITY`). Any other response kind automatically evaluates to status `REVIEW_PENDING` with `points: null`.
-3. **Multipart Evaluation:** A multipart assessment aggregates part grades; if any non-automatic part exists, the top-level status remains `REVIEW_PENDING` until human/independent rubric review is recorded.
+1. **Future implementation boundary (not implemented by A10):** A later workpack must implement a pure `AssessmentEngine.evaluate(response, assessment_spec, policy)` independent of UI DOM, browser storage and network. A10 supplies schemas and restrictions only.
+2. **Schema-bound evaluation eligibility:** `AUTOMATIC` is allowed only for closed forms (`SINGLE_CHOICE`, `MULTIPLE_CHOICE`, `INTEGER`, `NUMERIC_QUANTITY`) and requires a typed canonical value. Complex kinds require `REVIEW_PENDING`. Scoring output and `points: null` are future runtime obligations, **not** behaviors executed by this A10 schema PR.
+3. **Multipart Evaluation (future workpack):** A multipart assessment needs a defined subpart/aggregate evaluator; this A10 contract requires `REVIEW_PENDING` and does not implement grade aggregation.
 4. **Dropped Question Policy:** Assessments explicitly declare `dropped_policy`: `NOT_DROPPED`, `FULL_CREDIT`, or `REMOVED_FROM_TOTAL`.
 
 ### 2.4 Programme and Edition Contracts
@@ -72,7 +72,7 @@ Every learner attempt produces an immutable response record validated by `schema
    - Enforces default assessment policies and immutable version revisions.
 2. **Edition Schema (`schemas/platform/edition.schema.json`):**
    - Binds examination papers/cycles to exact task references (`exact-ref` format: `type`, `id`, `revision`, `sha256`).
-   - Ensures paper codes, total point ceilings, duration limits, and pass marks are schema-enforced.
+   - Ensures paper codes, nonnegative point limits, duration bounds and the optional nonnegative pass-mark field are schema-constrained. A cross-field rule (`pass_mark <= max_points`) requires a separate binding check and is **not** established by this schema alone.
 
 ---
 
