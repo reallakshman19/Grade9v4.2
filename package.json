@@ -3,17 +3,23 @@
   "version": "4.2.0",
   "private": true,
   "type": "module",
-  "description": "Grade9v4.2 static build shell, toolchain, and browser smoke test suite",
+  "description": "Grade9v4.2 local diagnostic shell; no learner UI or release",
+  "engines": {
+    "node": ">=22.16.0 <23",
+    "npm": ">=10.9.2 <11"
+  },
   "scripts": {
-    "build": "vite build",
+    "build": "npm run typecheck && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "test:smoke": "playwright test tests/browser/smoke.spec.ts"
+    "browser:install": "playwright-core install chromium",
+    "test:smoke": "npm run build && node --experimental-strip-types --test tests/browser/smoke.spec.ts",
+    "test:python": "python -m pytest"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
-    "@types/node": "^22.7.5",
-    "typescript": "^5.6.3",
-    "vite": "^5.4.9"
+    "@types/node": "22.18.1",
+    "playwright-core": "1.61.1",
+    "typescript": "5.9.3",
+    "vite": "6.4.3"
   }
 }
