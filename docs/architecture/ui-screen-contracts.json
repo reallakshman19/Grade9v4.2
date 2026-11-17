@@ -20,150 +20,1546 @@
     {
       "id": "home",
       "route": "/",
-      "data_dependencies": ["summary", "actual_released_counts", "last_session"],
-      "actions": ["resume", "subject", "programme", "search"],
-      "states": ["empty no sessions", "no release", "storage error", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "data_dependencies": [
+        "summary",
+        "actual_released_counts",
+        "last_session"
+      ],
+      "actions": [
+        "resume",
+        "subject",
+        "programme",
+        "search"
+      ],
+      "states": [
+        "empty no sessions",
+        "no release",
+        "storage error",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-HOME-ACTION", "UI-HOME-STATES", "UI-HOME-TABLET"]
+      "test_ids": [
+        "UI-HOME-ACTION",
+        "UI-HOME-STATES",
+        "UI-HOME-TABLET"
+      ],
+      "contract_id": "screen:home",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "subject",
       "route": "/subject/:id",
-      "data_dependencies": ["subject_profile", "topic_tree"],
-      "actions": ["topic", "learn", "practice"],
-      "states": ["scope pending", "unknown subject", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "data_dependencies": [
+        "subject_profile",
+        "topic_tree"
+      ],
+      "actions": [
+        "topic",
+        "learn",
+        "practice"
+      ],
+      "states": [
+        "scope pending",
+        "unknown subject",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-SUBJECT-ACTION", "UI-SUBJECT-STATES", "UI-SUBJECT-TABLET"]
+      "test_ids": [
+        "UI-SUBJECT-ACTION",
+        "UI-SUBJECT-STATES",
+        "UI-SUBJECT-TABLET"
+      ],
+      "contract_id": "screen:subject",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "topic",
       "route": "/topic/:id",
-      "data_dependencies": ["concepts", "eligible_core1_core2_routes"],
-      "actions": ["learn", "challenge", "bank", "reasoning-matrix"],
-      "states": ["no eligible content", "unresolved QRT cell", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "data_dependencies": [
+        "concepts",
+        "eligible_core1_core2_routes"
+      ],
+      "actions": [
+        "learn",
+        "challenge",
+        "bank",
+        "reasoning-matrix"
+      ],
+      "states": [
+        "no eligible content",
+        "unresolved QRT cell",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-TOPIC-ACTION", "UI-TOPIC-STATES", "UI-TOPIC-TABLET"]
+      "test_ids": [
+        "UI-TOPIC-ACTION",
+        "UI-TOPIC-STATES",
+        "UI-TOPIC-TABLET"
+      ],
+      "contract_id": "screen:topic",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "programme",
       "route": "/programme/:id",
-      "data_dependencies": ["exam_editions", "syllabus", "allowed_subjects"],
-      "actions": ["edition", "paper", "practice"],
-      "states": ["unsupported capability", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "data_dependencies": [
+        "exam_editions",
+        "syllabus",
+        "allowed_subjects"
+      ],
+      "actions": [
+        "edition",
+        "paper",
+        "practice"
+      ],
+      "states": [
+        "unsupported capability",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-PROGRAMME-ACTION", "UI-PROGRAMME-STATES", "UI-PROGRAMME-TABLET"]
+      "test_ids": [
+        "UI-PROGRAMME-ACTION",
+        "UI-PROGRAMME-STATES",
+        "UI-PROGRAMME-TABLET"
+      ],
+      "contract_id": "screen:programme",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "bank",
       "route": "/bank",
-      "data_dependencies": ["catalogue_facets", "count", "attempt_state"],
-      "actions": ["filter", "search", "sort", "clear", "attempt"],
-      "states": ["zero matches", "withdrawn", "fetch error", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "data_dependencies": [
+        "catalogue_facets",
+        "count",
+        "attempt_state"
+      ],
+      "actions": [
+        "filter",
+        "search",
+        "sort",
+        "clear",
+        "attempt"
+      ],
+      "states": [
+        "zero matches",
+        "withdrawn",
+        "fetch error",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-BANK-ACTION", "UI-BANK-STATES", "UI-BANK-TABLET"]
+      "test_ids": [
+        "UI-BANK-ACTION",
+        "UI-BANK-STATES",
+        "UI-BANK-TABLET"
+      ],
+      "contract_id": "screen:bank",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "question",
       "route": "/question/:id",
-      "data_dependencies": ["exact_item_revision", "assets", "session", "capability"],
-      "actions": ["respond", "save", "submit", "hint", "recovery", "next"],
-      "states": ["unavailable", "unsupported", "save failure", "review pending", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "data_dependencies": [
+        "exact_item_revision",
+        "assets",
+        "session",
+        "capability"
+      ],
+      "actions": [
+        "respond",
+        "save",
+        "submit",
+        "hint",
+        "recovery",
+        "next"
+      ],
+      "states": [
+        "unavailable",
+        "unsupported",
+        "save failure",
+        "review pending",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-QUESTION-ACTION", "UI-QUESTION-STATES", "UI-QUESTION-TABLET"]
+      "test_ids": [
+        "UI-QUESTION-ACTION",
+        "UI-QUESTION-STATES",
+        "UI-QUESTION-TABLET"
+      ],
+      "contract_id": "screen:question",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "lesson",
       "route": "/learn/:id",
-      "data_dependencies": ["a1_a9_typed_units", "progressive_anchors", "reviewed_model_presentation"],
-      "actions": ["section", "example", "fresh task", "return", "predict-model", "observe-model", "depth", "model-fit"],
-      "states": ["no fresh task", "stale lesson", "missing unit", "invalid model domain", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "data_dependencies": [
+        "a1_a9_typed_units",
+        "progressive_anchors",
+        "reviewed_model_presentation"
+      ],
+      "actions": [
+        "section",
+        "example",
+        "fresh task",
+        "return",
+        "predict-model",
+        "observe-model",
+        "depth",
+        "model-fit"
+      ],
+      "states": [
+        "no fresh task",
+        "stale lesson",
+        "missing unit",
+        "invalid model domain",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-LESSON-ACTION", "UI-LESSON-STATES", "UI-LESSON-TABLET"]
+      "test_ids": [
+        "UI-LESSON-ACTION",
+        "UI-LESSON-STATES",
+        "UI-LESSON-TABLET"
+      ],
+      "contract_id": "screen:lesson",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "orientation",
       "route": "/orientation/:id",
-      "data_dependencies": ["core1_canonical_scope", "conventions", "relations", "closure"],
-      "actions": ["jump-concept", "open-lesson", "print-if-eligible"],
-      "states": ["missing scope", "unavailable", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "data_dependencies": [
+        "core1_canonical_scope",
+        "conventions",
+        "relations",
+        "closure"
+      ],
+      "actions": [
+        "jump-concept",
+        "open-lesson",
+        "print-if-eligible"
+      ],
+      "states": [
+        "missing scope",
+        "unavailable",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-ORIENTATION-ACTION", "UI-ORIENTATION-STATES", "UI-ORIENTATION-TABLET"]
+      "test_ids": [
+        "UI-ORIENTATION-ACTION",
+        "UI-ORIENTATION-STATES",
+        "UI-ORIENTATION-TABLET"
+      ],
+      "contract_id": "screen:orientation",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "guided-practice",
       "route": "/guided/:id",
-      "data_dependencies": ["core2a_family", "crux", "authored_scaffolds", "complete_solution_and_check"],
-      "actions": ["select-support", "reveal-familiar-crux", "self-check", "repair"],
-      "states": ["unknown learner", "no eligible route", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "data_dependencies": [
+        "core2a_family",
+        "crux",
+        "authored_scaffolds",
+        "complete_solution_and_check"
+      ],
+      "actions": [
+        "select-support",
+        "reveal-familiar-crux",
+        "self-check",
+        "repair"
+      ],
+      "states": [
+        "unknown learner",
+        "no eligible route",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-GUIDED-PRACTICE-ACTION", "UI-GUIDED-PRACTICE-STATES", "UI-GUIDED-PRACTICE-TABLET"]
+      "test_ids": [
+        "UI-GUIDED-PRACTICE-ACTION",
+        "UI-GUIDED-PRACTICE-STATES",
+        "UI-GUIDED-PRACTICE-TABLET"
+      ],
+      "contract_id": "screen:guided-practice",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "application-transfer",
       "route": "/application-transfer/:id",
-      "data_dependencies": ["core2b_prior_exposure", "protected_move", "safe_representation", "rubric"],
-      "actions": ["attempt", "commit", "compare", "repair", "return"],
-      "states": ["no prior exposure", "save failure", "protected", "postcommit", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "data_dependencies": [
+        "core2b_prior_exposure",
+        "protected_move",
+        "safe_representation",
+        "rubric"
+      ],
+      "actions": [
+        "attempt",
+        "commit",
+        "compare",
+        "repair",
+        "return"
+      ],
+      "states": [
+        "no prior exposure",
+        "save failure",
+        "protected",
+        "postcommit",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-APPLICATION-TRANSFER-ACTION", "UI-APPLICATION-TRANSFER-STATES", "UI-APPLICATION-TRANSFER-TABLET"]
+      "test_ids": [
+        "UI-APPLICATION-TRANSFER-ACTION",
+        "UI-APPLICATION-TRANSFER-STATES",
+        "UI-APPLICATION-TRANSFER-TABLET"
+      ],
+      "contract_id": "screen:application-transfer",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "explorer",
       "route": "/explore/:id",
-      "data_dependencies": ["gcdr_stage", "model_controls", "live_quantities", "safe_help", "representation", "fidelity"],
-      "actions": ["predict", "manipulate", "observe", "advance", "boundary", "transfer"],
-      "states": ["unbound extension", "invalid model domain", "storage error", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "data_dependencies": [
+        "gcdr_stage",
+        "model_controls",
+        "live_quantities",
+        "safe_help",
+        "representation",
+        "fidelity"
+      ],
+      "actions": [
+        "predict",
+        "manipulate",
+        "observe",
+        "advance",
+        "boundary",
+        "transfer"
+      ],
+      "states": [
+        "unbound extension",
+        "invalid model domain",
+        "storage error",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-EXPLORER-ACTION", "UI-EXPLORER-STATES", "UI-EXPLORER-TABLET"]
+      "test_ids": [
+        "UI-EXPLORER-ACTION",
+        "UI-EXPLORER-STATES",
+        "UI-EXPLORER-TABLET"
+      ],
+      "contract_id": "screen:explorer",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "legacy-app",
       "route": "/app/:id",
-      "data_dependencies": ["eligible_revision_and_isolated_host", "return_context", "state_capability"],
-      "actions": ["launch", "fullscreen", "restore", "exit"],
-      "states": ["blocked dependency", "handshake failure", "resume unavailable", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800], [854, 1366], [1366, 854], [390, 844]],
+      "data_dependencies": [
+        "eligible_revision_and_isolated_host",
+        "return_context",
+        "state_capability"
+      ],
+      "actions": [
+        "launch",
+        "fullscreen",
+        "restore",
+        "exit"
+      ],
+      "states": [
+        "blocked dependency",
+        "handshake failure",
+        "resume unavailable",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-LEGACY-APP-ACTION", "UI-LEGACY-APP-STATES", "UI-LEGACY-APP-TABLET"]
+      "test_ids": [
+        "UI-LEGACY-APP-ACTION",
+        "UI-LEGACY-APP-STATES",
+        "UI-LEGACY-APP-TABLET"
+      ],
+      "contract_id": "screen:legacy-app",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
     },
     {
       "id": "resource-catalogue",
       "route": "/resources",
-      "data_dependencies": ["eligible_registry", "role", "audience_and_topic_filter"],
-      "actions": ["filter", "open", "bookmark"],
-      "states": ["no eligible resource", "loading", "populated"],
-      "required_viewports": [[1000, 1600], [1600, 1000], [800, 1280], [1280, 800]],
+      "data_dependencies": [
+        "eligible_registry",
+        "role",
+        "audience_and_topic_filter"
+      ],
+      "actions": [
+        "filter",
+        "open",
+        "bookmark"
+      ],
+      "states": [
+        "no eligible resource",
+        "loading",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          390,
+          844
+        ]
+      ],
       "touch_min_hitbox_px": 48,
-      "test_ids": ["UI-RESOURCE-CATALOGUE-ACTION", "UI-RESOURCE-CATALOGUE-STATES", "UI-RESOURCE-CATALOGUE-TABLET"]
+      "test_ids": [
+        "UI-RESOURCE-CATALOGUE-ACTION",
+        "UI-RESOURCE-CATALOGUE-STATES",
+        "UI-RESOURCE-CATALOGUE-TABLET"
+      ],
+      "contract_id": "screen:resource-catalogue",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "transfer",
+      "contract_id": "screen:transfer",
+      "route": "/challenge/:id",
+      "data_dependencies": [
+        "six-stage event replay, isolated task instance, exact work and exposure refs"
+      ],
+      "actions": [
+        "respond",
+        "submit",
+        "repair",
+        "return",
+        "predict",
+        "commit-first",
+        "compare",
+        "diagnose",
+        "commit-boundary",
+        "return-source"
+      ],
+      "states": [
+        "pending review",
+        "stale origin",
+        "save blocked",
+        "stale event",
+        "assisted",
+        "boundary locked"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-TRANSFER-ACTION",
+        "UI-TRANSFER-STATES",
+        "UI-TRANSFER-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "paper",
+      "contract_id": "screen:paper",
+      "route": "/paper/:id",
+      "data_dependencies": [
+        "sections, rules, aids, timer, tasks"
+      ],
+      "actions": [
+        "start",
+        "navigate",
+        "submit all"
+      ],
+      "states": [
+        "missing tasks",
+        "unsupported, timeout"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-PAPER-ACTION",
+        "UI-PAPER-STATES",
+        "UI-PAPER-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "search",
+      "contract_id": "screen:search",
+      "route": "/search",
+      "data_dependencies": [
+        "release search results, facets"
+      ],
+      "actions": [
+        "query",
+        "filter",
+        "open",
+        "clear"
+      ],
+      "states": [
+        "no results, failed shard"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-SEARCH-ACTION",
+        "UI-SEARCH-STATES",
+        "UI-SEARCH-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "progress",
+      "contract_id": "screen:progress",
+      "route": "/progress",
+      "data_dependencies": [
+        "attempt history, review state"
+      ],
+      "actions": [
+        "resume",
+        "export",
+        "review"
+      ],
+      "states": [
+        "storage denied",
+        "no attempts"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-PROGRESS-ACTION",
+        "UI-PROGRESS-STATES",
+        "UI-PROGRESS-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "mistakes",
+      "contract_id": "screen:mistakes",
+      "route": "/mistakes",
+      "data_dependencies": [
+        "incorrect reviewed attempts"
+      ],
+      "actions": [
+        "retry",
+        "filter",
+        "inspect"
+      ],
+      "states": [
+        "no mistakes",
+        "withdrawn"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-MISTAKES-ACTION",
+        "UI-MISTAKES-STATES",
+        "UI-MISTAKES-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "bookmarks",
+      "contract_id": "screen:bookmarks",
+      "route": "/bookmarks",
+      "data_dependencies": [
+        "local IDs+revisions"
+      ],
+      "actions": [
+        "open",
+        "remove"
+      ],
+      "states": [
+        "withdrawn",
+        "empty"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-BOOKMARKS-ACTION",
+        "UI-BOOKMARKS-STATES",
+        "UI-BOOKMARKS-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "settings",
+      "contract_id": "screen:settings",
+      "route": "/settings",
+      "data_dependencies": [
+        "display, accessibility, data"
+      ],
+      "actions": [
+        "font",
+        "theme",
+        "export/import",
+        "clear confirm"
+      ],
+      "states": [
+        "storage denied",
+        "import conflict"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-SETTINGS-ACTION",
+        "UI-SETTINGS-STATES",
+        "UI-SETTINGS-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "unavailable",
+      "contract_id": "screen:unavailable",
+      "route": "/unavailable",
+      "data_dependencies": [
+        "safe reason and alternate routes"
+      ],
+      "actions": [
+        "back",
+        "bank"
+      ],
+      "states": [
+        "no redirect to wrong question"
+      ],
+      "required_viewports": [
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-UNAVAILABLE-ACTION",
+        "UI-UNAVAILABLE-STATES",
+        "UI-UNAVAILABLE-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "reflection",
+      "contract_id": "screen:reflection",
+      "route": "/reflect/:id",
+      "data_dependencies": [
+        "immutable first attempt, reference, separate repair"
+      ],
+      "actions": [
+        "compare",
+        "diagnose",
+        "repair",
+        "history"
+      ],
+      "states": [
+        "unavailable",
+        "pending",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1600,
+          1000
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-REFLECTION-ACTION",
+        "UI-REFLECTION-STATES",
+        "UI-REFLECTION-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "reasoning",
+      "contract_id": "screen:reasoning",
+      "route": "/reasoning/:id",
+      "data_dependencies": [
+        "authorized QRT cells, INSTANCE and MAIN"
+      ],
+      "actions": [
+        "filter",
+        "expand-cell",
+        "open-instance",
+        "open-main"
+      ],
+      "states": [
+        "unavailable",
+        "pending",
+        "populated"
+      ],
+      "required_viewports": [
+        [
+          1600,
+          1000
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "UI-REASONING-ACTION",
+        "UI-REASONING-STATES",
+        "UI-REASONING-TABLET"
+      ],
+      "source_reference": "R4/03-ui/screens.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE"
+    },
+    {
+      "id": "wpe-cognitive-journey",
+      "contract_id": "screen:wpe-cognitive-journey",
+      "route": null,
+      "route_status": "UNRATIFIED_STAGE_COMPOSITE_NO_NEW_ROUTE_AUTHORIZED",
+      "shared_screen_contracts": [
+        "transfer",
+        "lesson",
+        "reflection",
+        "explorer"
+      ],
+      "data_dependencies": [
+        "exact_release_task_revision_and_digest",
+        "independently_supplied_synthetic_full_family_graph",
+        "immutable_first_and_boundary_evidence",
+        "approved_disclosure_projection"
+      ],
+      "actions": [
+        "explore",
+        "predict",
+        "attempt",
+        "compare",
+        "diagnose",
+        "repair",
+        "boundary",
+        "return"
+      ],
+      "states": [
+        "precommit",
+        "committed",
+        "storage failure",
+        "stale revision",
+        "unavailable"
+      ],
+      "required_viewports": [
+        [
+          1600,
+          1000
+        ],
+        [
+          1000,
+          1600
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          390,
+          844
+        ]
+      ],
+      "touch_min_hitbox_px": 48,
+      "test_ids": [
+        "WPE-SYN-01-1600x1000",
+        "WPE-SYN-01-1000x1600",
+        "WPE-SYN-01-1280x800",
+        "WPE-SYN-01-800x1280",
+        "WPE-SYN-02-1600x1000",
+        "WPE-SYN-02-1000x1600",
+        "WPE-SYN-02-1280x800",
+        "WPE-SYN-02-800x1280",
+        "WPE-SYN-03-1600x1000",
+        "WPE-SYN-03-1000x1600",
+        "WPE-SYN-03-1280x800",
+        "WPE-SYN-03-800x1280",
+        "WPE-SYN-04-1600x1000",
+        "WPE-SYN-04-1000x1600",
+        "WPE-SYN-04-1280x800",
+        "WPE-SYN-04-800x1280",
+        "WPE-SYN-05-1600x1000",
+        "WPE-SYN-05-1000x1600",
+        "WPE-SYN-05-1280x800",
+        "WPE-SYN-05-800x1280",
+        "WPE-SYN-06-1600x1000",
+        "WPE-SYN-06-1000x1600",
+        "WPE-SYN-06-1280x800",
+        "WPE-SYN-06-800x1280",
+        "WPE-SYN-07-1600x1000",
+        "WPE-SYN-07-1000x1600",
+        "WPE-SYN-07-1280x800",
+        "WPE-SYN-07-800x1280",
+        "WPE-SYN-08-1600x1000",
+        "WPE-SYN-08-1000x1600",
+        "WPE-SYN-08-1280x800",
+        "WPE-SYN-08-800x1280",
+        "WPE-SYN-09-1600x1000",
+        "WPE-SYN-09-1000x1600",
+        "WPE-SYN-09-1280x800",
+        "WPE-SYN-09-800x1280",
+        "WPE-SYN-10-1600x1000",
+        "WPE-SYN-10-1000x1600",
+        "WPE-SYN-10-1280x800",
+        "WPE-SYN-10-800x1280",
+        "WPE-SYN-11-1600x1000",
+        "WPE-SYN-11-1000x1600",
+        "WPE-SYN-11-1280x800",
+        "WPE-SYN-11-800x1280",
+        "WPE-SYN-12-1600x1000",
+        "WPE-SYN-12-1000x1600",
+        "WPE-SYN-12-1280x800",
+        "WPE-SYN-12-800x1280",
+        "WPE-SYN-13-1600x1000",
+        "WPE-SYN-13-1000x1600",
+        "WPE-SYN-13-1280x800",
+        "WPE-SYN-13-800x1280",
+        "WPE-SYN-01-1366x854",
+        "WPE-SYN-01-854x1366",
+        "WPE-SYN-01-390x844",
+        "WPE-SYN-02-1366x854",
+        "WPE-SYN-02-854x1366",
+        "WPE-SYN-02-390x844",
+        "WPE-SYN-03-1366x854",
+        "WPE-SYN-03-854x1366",
+        "WPE-SYN-03-390x844",
+        "WPE-SYN-04-1366x854",
+        "WPE-SYN-04-854x1366",
+        "WPE-SYN-04-390x844",
+        "WPE-SYN-05-1366x854",
+        "WPE-SYN-05-854x1366",
+        "WPE-SYN-05-390x844",
+        "WPE-SYN-06-1366x854",
+        "WPE-SYN-06-854x1366",
+        "WPE-SYN-06-390x844",
+        "WPE-SYN-07-1366x854",
+        "WPE-SYN-07-854x1366",
+        "WPE-SYN-07-390x844",
+        "WPE-SYN-08-1366x854",
+        "WPE-SYN-08-854x1366",
+        "WPE-SYN-08-390x844",
+        "WPE-SYN-09-1366x854",
+        "WPE-SYN-09-854x1366",
+        "WPE-SYN-09-390x844",
+        "WPE-SYN-10-1366x854",
+        "WPE-SYN-10-854x1366",
+        "WPE-SYN-10-390x844",
+        "WPE-SYN-11-1366x854",
+        "WPE-SYN-11-854x1366",
+        "WPE-SYN-11-390x844",
+        "WPE-SYN-12-1366x854",
+        "WPE-SYN-12-854x1366",
+        "WPE-SYN-12-390x844",
+        "WPE-SYN-13-1366x854",
+        "WPE-SYN-13-854x1366",
+        "WPE-SYN-13-390x844"
+      ],
+      "source_reference": "R4/06-acceptance/browser-matrix.json",
+      "specification_status": "PROPOSED_PENDING_A61_ACCEPTANCE",
+      "required_complete_family_fixtures": 13,
+      "verified_complete_family_fixtures": 0,
+      "unratified_reference_examples": 1
     }
   ],
   "interaction_and_device_contracts": {
     "touchscreen_12_7_inch": {
       "reference_viewports": [
-        [1000, 1600],
-        [1600, 1000],
-        [800, 1280],
-        [1280, 800],
-        [854, 1366],
-        [1366, 854],
-        [390, 844]
+        [
+          1000,
+          1600
+        ],
+        [
+          1600,
+          1000
+        ],
+        [
+          800,
+          1280
+        ],
+        [
+          1280,
+          800
+        ],
+        [
+          854,
+          1366
+        ],
+        [
+          1366,
+          854
+        ],
+        [
+          390,
+          844
+        ]
       ],
       "touch_hitbox_min_px": 48,
       "primary_action_height_min_px": 56,
       "control_gap_min_px": 8,
       "pointer_events": {
-        "pointer_types": ["touch", "pen", "mouse"],
+        "pointer_types": [
+          "touch",
+          "pen",
+          "mouse"
+        ],
         "pointer_capture": "REQUIRED_DURING_DRAWING",
         "pointer_cancel": "HANDLED_PRESERVE_COMPLETED_STROKES",
         "pressure_sensitivity": "OPTIONAL_FALLBACK_TO_FIXED_WIDTH"
