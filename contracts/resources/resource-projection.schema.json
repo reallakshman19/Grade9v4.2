@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Grade9 Resource Projection Contract",
+  "description": "Reconciles native v3.5 resource schemas and v4.2 canonical projections.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "g9-resource-projection/1"
+    },
+    "resource_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_.:-]+$"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "kind": {
+      "enum": [
+        "STRUCTURED_PRODUCT",
+        "QUESTION_COLLECTION",
+        "OPAQUE_APP",
+        "GUIDED_SESSION",
+        "CONVERTED_DOCUMENT",
+        "OWNER_TOOL",
+        "RUNTIME_HOST",
+        "PORTABLE_SCENE",
+        "NATIVE_COMPONENT"
+      ]
+    },
+    "audience": {
+      "enum": [
+        "LEARNER",
+        "OWNER",
+        "LAB",
+        "INTERNAL"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "subject_id": {
+      "type": "string"
+    },
+    "topic_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "capability_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "core_roles": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "CORE1",
+          "CORE1A",
+          "CORE1B",
+          "CORE2",
+          "CORE2A",
+          "CORE2B",
+          "EXPLORER"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "origins": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "snapshot_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)(?!.*:).+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "snapshot_id",
+          "commit",
+          "path",
+          "sha256"
+        ]
+      },
+      "minItems": 1
+    },
+    "entrypoint": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)(?!.*:).+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "integration": {
+      "enum": [
+        "PRESERVED",
+        "ISOLATED_HOST",
+        "PORTABLE_ADAPTER",
+        "NATIVE_COMPONENT"
+      ]
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rights": {
+          "enum": [
+            "HOLD",
+            "CLEARED"
+          ]
+        },
+        "academic": {
+          "enum": [
+            "HOLD",
+            "ADMITTED",
+            "NOT_APPLICABLE_REVIEWED"
+          ]
+        },
+        "technical": {
+          "enum": [
+            "UNTESTED",
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "release": {
+          "enum": [
+            "HOLD",
+            "ELIGIBLE"
+          ]
+        },
+        "receipt_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "rights",
+        "academic",
+        "technical",
+        "release",
+        "receipt_refs"
+      ]
+    },
+    "search_visibility": {
+      "enum": [
+        "EXCLUDED",
+        "LEARNER"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "resource_id",
+    "revision",
+    "kind",
+    "audience",
+    "title",
+    "aliases",
+    "subject_id",
+    "topic_refs",
+    "capability_refs",
+    "core_roles",
+    "origins",
+    "entrypoint",
+    "integration",
+    "capabilities",
+    "governance",
+    "search_visibility"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "search_visibility": {
+            "const": "LEARNER"
+          }
+        },
+        "required": [
+          "search_visibility"
+        ]
+      },
+      "then": {
+        "properties": {
+          "audience": {
+            "const": "LEARNER"
+          },
+          "kind": {
+            "not": {
+              "enum": [
+                "OWNER_TOOL",
+                "RUNTIME_HOST"
+              ]
+            }
+          },
+          "governance": {
+            "properties": {
+              "rights": {
+                "const": "CLEARED"
+              },
+              "academic": {
+                "const": "ADMITTED"
+              },
+              "technical": {
+                "const": "PASS"
+              },
+              "release": {
+                "const": "ELIGIBLE"
+              },
+              "receipt_refs": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "audience": {
+            "enum": [
+              "OWNER",
+              "LAB",
+              "INTERNAL"
+            ]
+          }
+        },
+        "required": [
+          "audience"
+        ]
+      },
+      "then": {
+        "properties": {
+          "search_visibility": {
+            "const": "EXCLUDED"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "OWNER_TOOL"
+          }
+        },
+        "required": [
+          "kind"
+        ]
+      },
+      "then": {
+        "properties": {
+          "audience": {
+            "enum": [
+              "OWNER",
+              "INTERNAL"
+            ]
+          },
+          "search_visibility": {
+            "const": "EXCLUDED"
+          }
+        }
+      }
+    }
+  ]
+}
