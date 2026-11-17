@@ -1,0 +1,308 @@
+// Base-aware router supporting subpaths, GitHub Pages deployment, deep linking,
+// query parameters, and safe return navigation without relying on server-side SPA fallback.
+// Conforms to Workpack A15 specifications and Master Architecture requirements.
+
+export type RouteType =
+  | 'HOME'
+  | 'SUBJECT'
+  | 'TOPIC'
+  | 'QUESTION'
+  | 'ROLE'
+  | 'SEARCH'
+  | 'EXAM'
+  | 'NOT_FOUND';
+
+export interface RouteMatch {
+  readonly type: RouteType;
+  readonly path: string;
+  readonly params: Readonly<Record<string, string>>;
+  readonly query: Readonly<Record<string, string>>;
+  readonly hash: string;
+}
+
+export type RouteListener = (match: RouteMatch) => void;
+
+export interface RouterOptions {
+  readonly basePath?: string;
+  readonly useHash?: boolean;
+}
+
+export class Router {
+  readonly basePath: string;
+  readonly useHash: boolean;
+  private currentMatch: RouteMatch;
+  private readonly listeners = new Set<RouteListener>();
+  private readonly historyStack: RouteMatch[] = [];
+
+  constructor(options: RouterOptions = {}) {
+    this.basePath = Router.normalizeBasePath(options.basePath || '');
+    this.useHash = options.useHash ?? false;
+    this.currentMatch = {
+      type: 'HOME',
+      path: '/',
+      params: {},
+      query: {},
+      hash: '',
+    };
+  }
+
+  static normalizeBasePath(base: string): string {
+    if (!base || base === '/') return '';
+    let normalized = base.startsWith('/') ? base : `/${base}`;
+    if (normalized.endsWith('/')) {
+      normalized = normalized.slice(0, -1);
+    }
+    return normalized;
+  }
+
+  /**
+   * Normalizes a full URL or pathname by removing the basePath prefix.
+   */
+  stripBasePath(pathOrUrl: string): string {
+    let clean = pathOrUrl;
+    // If full URL provided, extract path
+    if (clean.includes('://')) {
+      try {
+        const u = new URL(clean);
+        clean = u.pathname + u.search + u.hash;
+      } catch {
+        // Fallback to string handling
+      }
+    }
+
+    if (this.basePath && clean.startsWith(this.basePath)) {
+      clean = clean.slice(this.basePath.length);
+    }
+    if (!clean.startsWith('/')) {
+      clean = `/${clean}`;
+    }
+    return clean;
+  }
+
+  /**
+   * Parses query string into key-value map.
+   */
+  static parseQuery(queryString: string): Record<string, string> {
+    const params: Record<string, string> = {};
+    const clean = queryString.startsWith('?') ? queryString.slice(1) : queryString;
+    if (!clean) return params;
+    for (const pair of clean.split('&')) {
+      if (!pair) continue;
+      const [key, val] = pair.split('=');
+      const decodedKey = decodeURIComponent(key.replace(/\+/g, ' '));
+      const decodedVal = decodeURIComponent((val || '').replace(/\+/g, ' '));
+      params[decodedKey] = decodedVal;
+    }
+    return params;
+  }
+
+  /**
+   * Matches a normalized pathname to registered platform routes.
+   */
+  match(pathWithQueryAndHash: string): RouteMatch {
+    const stripped = this.stripBasePath(pathWithQueryAndHash);
+
+    // Split pathname, query, and hash
+    let pathPart = stripped;
+    let queryPart = '';
+    let hashPart = '';
+
+    const hashIdx = pathPart.indexOf('#');
+    if (hashIdx !== -1) {
+      hashPart = pathPart.slice(hashIdx + 1);
+      pathPart = pathPart.slice(0, hashIdx);
+    }
+
+    const queryIdx = pathPart.indexOf('?');
+    if (queryIdx !== -1) {
+      queryPart = pathPart.slice(queryIdx);
+      pathPart = pathPart.slice(0, queryIdx);
+    }
+
+    // Normalize multiple slashes and trailing slash
+    pathPart = pathPart.replace(/\/+/g, '/');
+    if (pathPart.length > 1 && pathPart.endsWith('/')) {
+      pathPart = pathPart.slice(0, -1);
+    }
+
+    const query = Router.parseQuery(queryPart);
+
+    // 1. Home Route: "/"
+    if (pathPart === '' || pathPart === '/') {
+      return {
+        type: 'HOME',
+        path: '/',
+        params: {},
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 2. Search Route: "/search"
+    if (pathPart === '/search') {
+      return {
+        type: 'SEARCH',
+        path: pathPart,
+        params: {},
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 3. Question Route: "/question/:questionId"
+    const questionMatch = pathPart.match(/^\/question\/([^/]+)$/);
+    if (questionMatch) {
+      return {
+        type: 'QUESTION',
+        path: pathPart,
+        params: { questionId: decodeURIComponent(questionMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 4. Topic Route: "/subject/:subjectId/topic/:topicId"
+    const topicMatch = pathPart.match(/^\/subject\/([^/]+)\/topic\/([^/]+)$/);
+    if (topicMatch) {
+      return {
+        type: 'TOPIC',
+        path: pathPart,
+        params: {
+          subjectId: decodeURIComponent(topicMatch[1]),
+          topicId: decodeURIComponent(topicMatch[2]),
+        },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 5. Subject Route: "/subject/:subjectId"
+    const subjectMatch = pathPart.match(/^\/subject\/([^/]+)$/);
+    if (subjectMatch) {
+      return {
+        type: 'SUBJECT',
+        path: pathPart,
+        params: { subjectId: decodeURIComponent(subjectMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 6. Role Route: "/role/:coreRole/:resourceId"
+    const roleMatch = pathPart.match(/^\/role\/([^/]+)\/([^/]+)$/);
+    if (roleMatch) {
+      return {
+        type: 'ROLE',
+        path: pathPart,
+        params: {
+          coreRole: decodeURIComponent(roleMatch[1]),
+          resourceId: decodeURIComponent(roleMatch[2]),
+        },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 7. Exam Route: "/exam/:paperId"
+    const examMatch = pathPart.match(/^\/exam\/([^/]+)$/);
+    if (examMatch) {
+      return {
+        type: 'EXAM',
+        path: pathPart,
+        params: { paperId: decodeURIComponent(examMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // Unmatched / 404 Route
+    return {
+      type: 'NOT_FOUND',
+      path: pathPart,
+      params: {},
+      query,
+      hash: hashPart,
+    };
+  }
+
+  /**
+   * Generates a base-aware URL for navigation or href links.
+   */
+  toHref(relativePath: string, queryParams: Record<string, string> = {}): string {
+    let clean = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
+    const queryEntries = Object.entries(queryParams);
+    if (queryEntries.length > 0) {
+      const q = queryEntries
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+        .join('&');
+      clean += clean.includes('?') ? `&${q}` : `?${q}`;
+    }
+
+    if (this.useHash) {
+      return `${this.basePath}/#${clean}`;
+    }
+    return `${this.basePath}${clean}`;
+  }
+
+  /**
+   * Navigates to a new route, updating match and history stack.
+   */
+  navigate(targetPath: string): RouteMatch {
+    const nextMatch = this.match(targetPath);
+    if (this.currentMatch.type !== 'NOT_FOUND' || this.historyStack.length === 0) {
+      this.historyStack.push(this.currentMatch);
+    }
+    this.currentMatch = nextMatch;
+    this.notify();
+    return nextMatch;
+  }
+
+  /**
+   * Replaces current route without appending to history stack.
+   */
+  replace(targetPath: string): RouteMatch {
+    const nextMatch = this.match(targetPath);
+    this.currentMatch = nextMatch;
+    this.notify();
+    return nextMatch;
+  }
+
+  /**
+   * Safe return navigation: Pops previous entry from history stack,
+   * falling back to safe fallback route (e.g. topic or home) if stack is empty.
+   */
+  back(fallbackRoute: string = '/'): RouteMatch {
+    const prev = this.historyStack.pop();
+    if (prev && prev.path !== this.currentMatch.path) {
+      this.currentMatch = prev;
+      this.notify();
+      return prev;
+    }
+    return this.navigate(fallbackRoute);
+  }
+
+  /**
+   * Returns current active route match.
+   */
+  getCurrent(): RouteMatch {
+    return this.currentMatch;
+  }
+
+  /**
+   * Subscribes to route change events.
+   */
+  subscribe(listener: RouteListener): () => void {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
+  private notify(): void {
+    for (const listener of this.listeners) {
+      try {
+        listener(this.currentMatch);
+      } catch (err) {
+        console.error('Error in route listener:', err);
+      }
+    }
+  }
+}
