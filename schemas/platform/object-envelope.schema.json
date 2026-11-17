@@ -1,8 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:g9:platform:object:1",
-  "title": "Grade9v4.2 Canonical Object Envelope Contract",
-  "description": "Formal typed envelope for all platform educational, assessment, and governance entities.",
+  "$id": "urn:g9:engineering:object:1",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -176,7 +174,6 @@
         "SYNTHETIC",
         "CANDIDATE",
         "HOLD",
-        "ACTIVE",
         "WITHDRAWN"
       ]
     }

@@ -1,148 +1,93 @@
-"""Grade9v4.2 Object Graph and Dependency Validation Engine (Workpack A08).
-
-Validates exact cryptographic references, typed edges, directed acyclic graph (DAG)
-invariants, cross-subject isolation rules, hash protocols, and self-approval prohibitions.
-"""
-
+"""Structural graph verification. No approval or release authority inferred."""
 import hashlib
 import json
-from typing import Dict, List, Any, Tuple, Set, Optional
+from pathlib import Path
+from jsonschema import Draft202012Validator, ValidationError
+def canonical_bytes(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
 
-class GraphValidationError(ValueError):
-    """Raised when object graph dependencies, cycles, or edge rules are violated."""
-    pass
+SCHEMAS=Path(__file__).resolve().parents[2]/"schemas/platform"
+class GraphValidationError(ValueError): pass
 
-def object_key(obj: Dict[str, Any]) -> Tuple[str, str, int]:
-    """Extract canonical (type, id, revision) identity key."""
-    return (str(obj.get("type")), str(obj.get("id")), int(obj.get("revision", 1)))
+def object_key(obj): return (obj["type"],obj["id"],obj["revision"])
+def compute_object_digest(obj): return hashlib.sha256(canonical_bytes(obj)).hexdigest()
 
-def canonical_bytes(obj: Any) -> bytes:
-    """Return deterministic canonical UTF-8 bytes for JSON structure."""
-    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
-
-def compute_object_digest(obj: Dict[str, Any]) -> str:
-    """Compute SHA-256 digest of object canonical representation."""
-    return hashlib.sha256(canonical_bytes(obj)).hexdigest()
+def payload_refs(value):
+    if isinstance(value,dict):
+        if set(value)=={"type","id","revision","sha256"}: yield value
+        else:
+            for item in value.values(): yield from payload_refs(item)
+    elif isinstance(value,list):
+        for item in value: yield from payload_refs(item)
 
 class ObjectGraphValidator:
-    """Validates structural, cryptographic, and dependency rules across platform object graphs."""
-
-    ALLOWED_STATUSES = {"SYNTHETIC", "CANDIDATE", "HOLD", "ACTIVE", "WITHDRAWN"}
-
-    TYPED_EDGE_RULES = {
-        "ASSESSMENT": {"QUESTION"},
-        "LESSON": {"CONSTRUCTION", "CONCEPT"},
-        "FRESH_TASK": {"CONSTRUCTION", "CONCEPT"},
-        "SOLUTION": {"QUESTION", "FRESH_TASK"},
-        "QRT": {"QUESTION", "OCCURRENCE"}
-    }
-
-    def __init__(self, demo_mode: bool = False):
-        self.demo_mode = demo_mode
-        self.index: Dict[Tuple[str, str, int], Dict[str, Any]] = {}
-        self.edges: Dict[Tuple[str, str, int], List[Tuple[str, str, int]]] = {}
-
-    def add_object(self, obj: Dict[str, Any]) -> None:
-        """Register object into graph index."""
-        k = object_key(obj)
-        if k in self.index:
-            raise GraphValidationError(f"duplicate object {k}")
-
-        status = obj.get("status")
-        if status not in self.ALLOWED_STATUSES:
-            raise GraphValidationError(f"invalid status '{status}' on object {k}")
-
-        if self.demo_mode and status != "SYNTHETIC":
-            raise GraphValidationError(f"non-synthetic in demo graph: {k} has status {status}")
-
-        self.index[k] = obj
-        self.edges[k] = []
-
-    def validate_graph(self, objects: Optional[List[Dict[str, Any]]] = None) -> int:
-        """Execute full validation on registered objects (or a provided list)."""
+    # These are structural dependencies demonstrated by the R4 fixtures; other edges are not automatically authorized.
+    RULES={"ASSESSMENT":({"QUESTION"},{"QUESTION","WARRANT","SOURCE","OCCURRENCE"}),
+           "LESSON":({"CONSTRUCTION","CONCEPT"},{"CONSTRUCTION","CONCEPT","PRESENTATION","ASSET","FRESH_TASK","SOLUTION","WARRANT"}),
+           "FRESH_TASK":({"CONSTRUCTION","CONCEPT","FRESH_TASK"},{"CONSTRUCTION","CONCEPT","FRESH_TASK","WARRANT","ASSET","STIMULUS"}),
+           "SOLUTION":({"QUESTION","FRESH_TASK"},{"QUESTION","FRESH_TASK","WARRANT","ASSET","STIMULUS"}),
+           "QRT":({"QUESTION","OCCURRENCE"},{"QUESTION","OCCURRENCE","SOURCE","WARRANT","CONCEPT"})}
+    def __init__(self,demo_mode=False):
+        self.demo_mode=demo_mode; self.index={}; self.edges={}
+        self.schema=Draft202012Validator(json.loads((SCHEMAS/"object-envelope.schema.json").read_text()))
+        self.ref_schema=Draft202012Validator(json.loads((SCHEMAS/"exact-ref.schema.json").read_text()))
+    def add_object(self,obj):
+        try: self.schema.validate(obj); canonical_bytes(obj)
+        except (ValidationError,ValueError,TypeError) as e: raise GraphValidationError("invalid object schema: "+str(e)) from e
+        k=object_key(obj)
+        if k in self.index: raise GraphValidationError("duplicate object "+str(k))
+        if self.demo_mode and obj["status"]!="SYNTHETIC": raise GraphValidationError("non-synthetic in demo graph")
+        if obj["type"] in {"APPROVAL","RELEASE"} and obj["status"]!="SYNTHETIC": raise GraphValidationError("external approval/release verifier not configured")
+        self.index[k]=obj
+    def validate_graph(self,objects=None):
         if objects is not None:
-            self.index.clear()
-            self.edges.clear()
-            for obj in objects:
-                self.add_object(obj)
-
-        # 1. Referential integrity: check all dependency and lineage references exist
-        for k, obj in self.index.items():
-            refs = obj.get("dependencies", []) + obj.get("source_lineage_refs", [])
+            self.index={}
+            for o in objects: self.add_object(o)
+        else:
+            saved=list(self.index.values()); self.index={}
+            for o in saved:self.add_object(o)
+        self.edges={k:[] for k in self.index}
+        digests={k:compute_object_digest(o) for k,o in self.index.items()}
+        for k,o in self.index.items():
+            refs=o["dependencies"]+o["source_lineage_refs"]
             for ref in refs:
-                ref_k = object_key(ref)
-                if ref_k not in self.index:
-                    raise GraphValidationError(f"missing ref {ref_k} required by {k}")
-                self.edges[k].append(ref_k)
-
-        # 2. Cycle detection via Depth-First Search (DAG guarantee)
-        visiting: Set[Tuple[str, str, int]] = set()
-        done: Set[Tuple[str, str, int]] = set()
-
-        def dfs(node: Tuple[str, str, int]) -> None:
-            if node in visiting:
-                raise GraphValidationError(f"cycle detected at node {node}")
-            if node in done:
-                return
-            visiting.add(node)
-            for neighbor in self.edges.get(node, []):
-                dfs(neighbor)
-            visiting.remove(node)
-            done.add(node)
-
-        for node in self.edges:
-            dfs(node)
-
-        # 3. Digest verification, self-approval, typed edge rules, and relationship endpoints
-        for k, obj in self.index.items():
-            refs = obj.get("dependencies", []) + obj.get("source_lineage_refs", [])
-            obj_type = k[0]
-            obj_subject = obj.get("subject_id")
-
-            # Self-approval prohibition
-            if obj_type == "APPROVAL":
-                for ref in refs:
-                    ref_k = object_key(ref)
-                    if ref_k == k:
-                        raise GraphValidationError(f"self-approved object rejected: {k}")
-
-            for ref in refs:
-                ref_k = object_key(ref)
-                target_obj = self.index[ref_k]
-                computed_digest = compute_object_digest(target_obj)
-                expected_digest = ref.get("sha256")
-                if computed_digest != expected_digest:
-                    raise GraphValidationError(
-                        f"stale digest {ref_k}: expected {expected_digest}, computed {computed_digest}"
-                    )
-
-                # Cross-subject isolation rule
-                ref_subject = target_obj.get("subject_id")
-                if (obj_subject is not None and ref_subject is not None and
-                    obj_subject != ref_subject and obj_type != "RELATIONSHIP"):
-                    raise GraphValidationError(
-                        f"cross-subject violation: {k} ({obj_subject}) cannot directly depend on {ref_k} ({ref_subject})"
-                    )
-
-            # Typed edge constraints
-            if obj_type in self.TYPED_EDGE_RULES:
-                allowed_target_types = self.TYPED_EDGE_RULES[obj_type]
-                dep_types = {ref["type"] for ref in obj.get("dependencies", [])}
-                if not dep_types.intersection(allowed_target_types):
-                    raise GraphValidationError(
-                        f"typed edge violation on {k}: must depend on one of {allowed_target_types}, found {dep_types}"
-                    )
-
-            # Relationship endpoint consistency
-            if obj_type == "RELATIONSHIP":
-                payload = obj.get("payload", {})
-                from_ref = payload.get("from")
-                to_ref = payload.get("to")
-                if not from_ref or not to_ref:
-                    raise GraphValidationError(f"relationship {k} missing from/to payload")
-
-                deps = obj.get("dependencies", [])
-                if from_ref not in deps or to_ref not in deps:
-                    raise GraphValidationError(f"relationship endpoint not dependency on {k}")
-
-        return len(self.index)
+                target=object_key(ref)
+                if target not in self.index: raise GraphValidationError("missing ref "+str(target))
+                if digests[target]!=ref["sha256"]: raise GraphValidationError("stale digest "+str(target))
+                self.edges[k].append(target)
+                s,t=o["subject_id"],self.index[target]["subject_id"]
+                if s and t and s!=t and o["type"]!="RELATIONSHIP": raise GraphValidationError("cross-subject violation")
+            payload=o["payload"]
+            if o["type"]=="OCCURRENCE" and "identity" in payload:
+                identity=payload["identity"]
+                try: Draft202012Validator(json.loads((SCHEMAS/"identity.schema.json").read_text())).validate(identity)
+                except ValidationError as e:raise GraphValidationError("invalid occurrence identity") from e
+                locator=[identity["snapshot_id"],identity["source_path"],identity["record_locator"]]
+                if identity["occurrence_id"]!=o["id"] or o["id"]!="occ:"+compute_object_digest(locator) or compute_object_digest(payload["raw_record"])!=identity["record_digest"]:raise GraphValidationError("occurrence identity or record digest mismatch")
+                if identity["source_ref"] not in o["source_lineage_refs"]:raise GraphValidationError("occurrence source mismatch")
+                # Raw legacy records and claims are evidence, not canonical target references.
+                payload={"identity":identity}
+            for ref in payload_refs(payload):
+                if ref not in refs: raise GraphValidationError("payload reference not dependency")
+            if o["type"] in self.RULES:
+                required,allowed=self.RULES[o["type"]]; types={r["type"] for r in o["dependencies"]}
+                if not types&required or not types<=allowed: raise GraphValidationError("typed edge violation")
+            if o["type"]=="ASSESSMENT":
+                q=o["payload"].get("question")
+                if not isinstance(q,dict) or q.get("type")!="QUESTION" or q not in o["dependencies"]: raise GraphValidationError("assessment question binding mismatch")
+            if o["type"]=="RELATIONSHIP":
+                for field in ("from","to"):
+                    ref=o["payload"].get(field)
+                    if not isinstance(ref,dict) or ref not in refs: raise GraphValidationError("relationship endpoint not dependency")
+        # Iterative cycle detection (deep graphs do not exhaust Python recursion).
+        indegree={k:len(set(v)) for k,v in self.edges.items()}; reverse={k:[] for k in self.edges}
+        for k,v in self.edges.items():
+            for target in set(v):reverse[target].append(k)
+        ready=[k for k,n in indegree.items() if not n]; count=0
+        while ready:
+            k=ready.pop();count+=1
+            for dependent in reverse[k]:
+                indegree[dependent]-=1
+                if not indegree[dependent]:ready.append(dependent)
+        if count!=len(self.index):raise GraphValidationError("cycle detected")
+        return count

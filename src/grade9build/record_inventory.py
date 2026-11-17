@@ -1,166 +1,118 @@
-"""Grade9v4.2 Record Inventory and Extraction Engine (Workpack A07).
-
-Extracts source record occurrences and leaf paths from dual-source repositories,
-computes canonical record digests, manages RFC 6901 JSON pointer locators, and
-strictly preserves distinct populations (such as the 267 vs 288 problem banks)
-without implicit merging.
-"""
-
+"""Exact-byte custody and explicit RFC 6901 occurrence extraction. No implicit merge."""
+import copy
 import hashlib
 import json
+import re
 from pathlib import Path
-from typing import Dict, List, Any, Iterator, Tuple, Optional
+from jsonschema import Draft202012Validator
 
-def rfc6901_escape(token: str) -> str:
-    """Escape a JSON pointer reference token according to RFC 6901."""
+SCHEMAS = Path(__file__).resolve().parents[2] / "schemas/platform"
+
+def canonical_bytes(value):
+    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
+
+def canonical_json_digest(value):
+    return hashlib.sha256(canonical_bytes(value)).hexdigest()
+
+def parse_source_bytes(raw):
+    if not isinstance(raw, bytes):
+        raise ValueError("original bytes required")
+    def pairs(items):
+        out = {}
+        for k, v in items:
+            if k in out: raise ValueError("duplicate JSON key: " + k)
+            out[k] = v
+        return out
+    def nonfinite(x): raise ValueError("nonfinite: " + x)
+    return json.loads(raw.decode("utf-8"), object_pairs_hook=pairs, parse_constant=nonfinite)
+
+def rfc6901_escape(token):
     return str(token).replace("~", "~0").replace("/", "~1")
 
-def extract_leaf_pointers(obj: Any, prefix: str = "") -> Iterator[Tuple[str, Any]]:
-    """Recursively enumerate all leaf pointers and scalar/empty values in RFC 6901 format."""
-    if isinstance(obj, dict) and obj:
-        for k, v in obj.items():
-            yield from extract_leaf_pointers(v, prefix + "/" + rfc6901_escape(k))
-    elif isinstance(obj, list) and obj:
-        for i, v in enumerate(obj):
-            yield from extract_leaf_pointers(v, prefix + "/" + str(i))
-    else:
-        yield prefix, obj
+def pointer_tokens(pointer):
+    if not isinstance(pointer, str) or (pointer and not pointer.startswith("/")):
+        raise ValueError("invalid pointer")
+    if not pointer: return []
+    tokens = pointer[1:].split("/")
+    if any(re.search(r"~(?![01])", t) for t in tokens): raise ValueError("invalid pointer escape")
+    return [t.replace("~1", "/").replace("~0", "~") for t in tokens]
 
-def canonical_json_digest(data: Any) -> str:
-    """Produce deterministic SHA-256 hex digest of JSON-serializable structure."""
-    canonical_bytes = json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
-    return hashlib.sha256(canonical_bytes).hexdigest()
+def resolve_pointer(value, pointer):
+    for token in pointer_tokens(pointer):
+        if isinstance(value, dict): value = value[token]
+        elif isinstance(value, list) and re.fullmatch(r"0|[1-9][0-9]*", token): value = value[int(token)]
+        else: raise ValueError("pointer not resolvable: " + pointer)
+    return value
+
+def extract_leaf_pointers(obj, prefix=""):
+    if isinstance(obj, dict) and obj:
+        for k, v in obj.items(): yield from extract_leaf_pointers(v, prefix + "/" + rfc6901_escape(k))
+    elif isinstance(obj, list) and obj:
+        for i, v in enumerate(obj): yield from extract_leaf_pointers(v, prefix + "/" + str(i))
+    else: yield prefix, obj
+
+def validate_locator(snapshot_id, source_path, pointer):
+    if not re.fullmatch(r"[a-z0-9][a-z0-9._-]*:[0-9a-f]{40}", snapshot_id): raise ValueError("exact snapshot required")
+    if not isinstance(source_path, str) or not source_path or "\\" in source_path or ":" in source_path or any(t in ("", ".", "..") for t in source_path.split("/")):
+        raise ValueError("unsafe source path")
+    pointer_tokens(pointer)
+
+def occurrence_id(snapshot_id, source_path, pointer):
+    validate_locator(snapshot_id, source_path, pointer)
+    return "occ:" + canonical_json_digest([snapshot_id, source_path, pointer])
+
+def exact_ref(obj):
+    return {**{k: obj[k] for k in ("type", "id", "revision")}, "sha256": canonical_json_digest(obj)}
+
+def make_envelope(kind, id_, payload, *, subject_id=None, dependencies=(), lineage=(), status="HOLD"):
+    return {"schema_version":"engineering-projection/1", "type":kind, "id":id_, "revision":1,
+            "subject_id":subject_id, "payload":copy.deepcopy(payload), "dependencies":list(dependencies),
+            "source_lineage_refs":list(lineage), "status":status}
+
+def validate_identity(record):
+    Draft202012Validator(json.loads((SCHEMAS / "identity.schema.json").read_text())).validate(record)
+    if record["occurrence_id"] != occurrence_id(record["snapshot_id"], record["source_path"], record["record_locator"]):
+        raise ValueError("occurrence identity mismatch")
+    return record
 
 class RecordOccurrence:
-    """Represents a single immutable record occurrence extracted from a source artifact."""
-
-    def __init__(
-        self,
-        snapshot_id: str,
-        source_path: str,
-        record_locator: str,
-        occurrence_id: str,
-        payload: Dict[str, Any],
-        source_blob_sha: Optional[str] = None,
-        source_sha256: Optional[str] = None,
-        claimed_external_id: Optional[str] = None,
-        subject_claim: Optional[str] = None,
-        population_id: Optional[str] = None,
-        rights_class: str = "INTERNAL_RESEARCH",
-        disposition: str = "PRESERVED_IN_CUSTODY"
-    ):
-        self.snapshot_id = snapshot_id
-        self.source_path = source_path
-        self.record_locator = record_locator
-        self.occurrence_id = occurrence_id
-        self.payload = payload
-        self.source_blob_sha = source_blob_sha or ""
-        self.source_sha256 = source_sha256 or ""
-        self.claimed_external_id = claimed_external_id
-        self.subject_claim = subject_claim
-        self.population_id = population_id
-        self.rights_class = rights_class
-        self.disposition = disposition
+    def __init__(self, snapshot_id, source_path, record_locator, payload, source_blob_sha, source_sha256, population_id, kind):
+        self.snapshot_id, self.source_path, self.record_locator = snapshot_id, source_path, record_locator
+        self.occurrence_id = occurrence_id(snapshot_id, source_path, record_locator)
+        self._payload = copy.deepcopy(payload)
         self.record_digest = canonical_json_digest(payload)
-
-    def get_leaf_map(self) -> Dict[str, Any]:
-        """Return dictionary mapping all RFC 6901 JSON pointer paths to their values."""
-        return dict(extract_leaf_pointers(self.payload))
-
-    def to_dict(self) -> Dict[str, Any]:
-        return {
-            "snapshot_id": self.snapshot_id,
-            "source_path": self.source_path,
-            "record_locator": self.record_locator,
-            "occurrence_id": self.occurrence_id,
-            "record_digest": self.record_digest,
-            "claimed_external_id": self.claimed_external_id,
-            "subject_claim": self.subject_claim,
-            "population_id": self.population_id,
-            "rights_class": self.rights_class,
-            "disposition": self.disposition,
-            "leaf_count": len(self.get_leaf_map()),
-            "source_blob_sha": self.source_blob_sha,
-            "source_sha256": self.source_sha256
-        }
+        self.source_blob_sha, self.source_sha256, self.population_id, self.kind = source_blob_sha, source_sha256, population_id, kind
+    @property
+    def payload(self): return copy.deepcopy(self._payload)
+    def get_leaf_map(self): return dict(extract_leaf_pointers(self._payload))
+    def to_dict(self):
+        return {k: getattr(self,k) for k in ("snapshot_id","source_path","record_locator","occurrence_id","record_digest","source_blob_sha","source_sha256","population_id","kind")}
 
 class RecordInventoryEngine:
-    """Manages collections of record occurrences, population separation, and leaf catalogs."""
-
+    """Retains complete document and explicit collection occurrences; no guessed collection selection."""
     def __init__(self):
-        self.records: List[RecordOccurrence] = []
-        self._occurrence_ids: set = set()
-        self.populations: Dict[str, List[RecordOccurrence]] = {}
-
-    def add_record(self, record: RecordOccurrence) -> None:
-        if record.occurrence_id in self._occurrence_ids:
-            raise ValueError(f"Duplicate occurrence ID rejected: {record.occurrence_id}")
-        self._occurrence_ids.add(record.occurrence_id)
-        self.records.append(record)
-
-        pop = record.population_id or "default"
-        if pop not in self.populations:
-            self.populations[pop] = []
-        self.populations[pop].append(record)
-
-    def extract_records_from_payload(
-        self,
-        snapshot_id: str,
-        source_path: str,
-        raw_data: Any,
-        source_sha256: str = "",
-        population_id: Optional[str] = None
-    ) -> List[RecordOccurrence]:
-        """Extract occurrences from dict or list payloads."""
-        extracted = []
-        if isinstance(raw_data, list):
-            for idx, item in enumerate(raw_data):
-                loc = f"/{idx}"
-                oid = f"{source_path}#{idx}"
-                ext_id = item.get("id") or item.get("question_id") if isinstance(item, dict) else None
-                rec = RecordOccurrence(
-                    snapshot_id=snapshot_id,
-                    source_path=source_path,
-                    record_locator=loc,
-                    occurrence_id=oid,
-                    payload=item if isinstance(item, dict) else {"value": item},
-                    source_sha256=source_sha256,
-                    claimed_external_id=str(ext_id) if ext_id else None,
-                    population_id=population_id
-                )
-                self.add_record(rec)
-                extracted.append(rec)
-        elif isinstance(raw_data, dict):
-            # Check if container has items or questions list
-            items_list = raw_data.get("questions") or raw_data.get("items") or raw_data.get("records")
-            if isinstance(items_list, list):
-                for idx, item in enumerate(items_list):
-                    loc = f"/questions/{idx}" if "questions" in raw_data else f"/items/{idx}"
-                    oid = f"{source_path}#{idx}"
-                    ext_id = item.get("id") or item.get("question_id") if isinstance(item, dict) else None
-                    rec = RecordOccurrence(
-                        snapshot_id=snapshot_id,
-                        source_path=source_path,
-                        record_locator=loc,
-                        occurrence_id=oid,
-                        payload=item if isinstance(item, dict) else {"value": item},
-                        source_sha256=source_sha256,
-                        claimed_external_id=str(ext_id) if ext_id else None,
-                        population_id=population_id
-                    )
-                    self.add_record(rec)
-                    extracted.append(rec)
-            else:
-                oid = f"{source_path}#0"
-                rec = RecordOccurrence(
-                    snapshot_id=snapshot_id,
-                    source_path=source_path,
-                    record_locator="",
-                    occurrence_id=oid,
-                    payload=raw_data,
-                    source_sha256=source_sha256,
-                    population_id=population_id
-                )
-                self.add_record(rec)
-                extracted.append(rec)
-        return extracted
+        self.records=[]; self._occurrence_ids=set(); self.populations={}
+    def add_record(self, record):
+        if record.occurrence_id in self._occurrence_ids: raise ValueError("duplicate occurrence")
+        self._occurrence_ids.add(record.occurrence_id); self.records.append(record)
+        self.populations.setdefault(record.population_id, []).append(record)
+    def extract_document(self, *, snapshot_id, source_path, raw_bytes, expected_sha256, population_id, collection_paths, expected_blob_sha=None):
+        validate_locator(snapshot_id, source_path, "")
+        if not isinstance(population_id,str) or not population_id: raise ValueError("explicit population required")
+        digest=hashlib.sha256(raw_bytes).hexdigest()
+        if digest != expected_sha256: raise ValueError("source byte digest mismatch")
+        blob=hashlib.sha1(b"blob "+str(len(raw_bytes)).encode()+b"\0"+raw_bytes).hexdigest()
+        if expected_blob_sha is not None and blob != expected_blob_sha: raise ValueError("Git blob mismatch")
+        data=parse_source_bytes(raw_bytes)
+        if not isinstance(collection_paths,(list,tuple)) or len(set(collection_paths))!=len(collection_paths): raise ValueError("explicit unique collection paths required")
+        # The root preserves all container fields, even empty/unknown arrays. Record counts exclude this document witness.
+        entries=[("",data,"DOCUMENT")]
+        for path in collection_paths:
+            collection=resolve_pointer(data,path)
+            if not isinstance(collection,list): raise ValueError("collection is not an array: "+path)
+            entries.extend((path+"/"+str(i),v,"RECORD") for i,v in enumerate(collection))
+        records=[RecordOccurrence(snapshot_id,source_path,loc,v,blob,digest,population_id,kind) for loc,v,kind in entries]
+        ids=[r.occurrence_id for r in records]
+        if len(set(ids))!=len(ids) or set(ids)&self._occurrence_ids: raise ValueError("duplicate occurrence")
+        for record in records: self.add_record(record)
+        return records
