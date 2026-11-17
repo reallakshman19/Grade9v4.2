@@ -1,0 +1,10 @@
+[
+  {
+    "snapshot_id": "demo:source",
+    "path": "sample.json",
+    "kind": "FILE",
+    "size": 47,
+    "sha256": "bfb891687622a19f1b8b34dc6e5ada1c880a1ee6ca4068a0fbf03f18aa8600bd",
+    "mode": 420
+  }
+]

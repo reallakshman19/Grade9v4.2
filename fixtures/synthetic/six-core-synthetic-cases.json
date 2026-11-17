@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-synthetic-six-core/1.0",
+  "status": "DEMO_SYNTHETIC_ONLY",
+  "notes": "Independently frozen synthetic Six-Core role test cases.",
+  "cases": [
+    {
+      "role": "CORE1",
+      "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
+      "case_id": "SYN-CORE1-HOOKES-LAW",
+      "subject": "PHYSICS",
+      "payload": {
+        "concept": "Ideal massless spring and Hooke's Law",
+        "orientation_anchor": "Restoring force F = -kx",
+        "conventions": [
+          "x is displacement from natural length",
+          "k > 0 spring constant"
+        ],
+        "exclusions": [
+          "non-linear spring deformations",
+          "damping"
+        ]
+      }
+    },
+    {
+      "role": "CORE1A",
+      "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "case_id": "SYN-CORE1A-CART-COMPRESSION",
+      "subject": "PHYSICS",
+      "payload": {
+        "construction_id": "demo:c:construction",
+        "worked_steps": [
+          "Identify initial kinetic energy: E_k = 0.5 * m * v^2",
+          "Identify maximum potential energy at stop: E_p = 0.5 * k * x_max^2",
+          "Equate energies by work-energy theorem: 0.5 * m * v^2 = 0.5 * k * x_max^2",
+          "Solve for maximum compression: x_max = v * sqrt(m / k)"
+        ],
+        "common_trap_repair": "Cart is unattached; spring does not pull cart backward once velocity reverses."
+      }
+    },
+    {
+      "role": "CORE1B",
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.8.0",
+      "case_id": "SYN-CORE1B-RECONSTRUCT-SPRING",
+      "subject": "PHYSICS",
+      "payload": {
+        "reconstruction_stages": [
+          {
+            "stage": 1,
+            "name": "SETUP",
+            "prompt": "Identify system boundaries and external forces."
+          },
+          {
+            "stage": 2,
+            "name": "EQUATION",
+            "prompt": "State the work-energy relation."
+          },
+          {
+            "stage": 3,
+            "name": "ISOLATION",
+            "prompt": "Isolate the stopping distance variable."
+          },
+          {
+            "stage": 4,
+            "name": "EVALUATION",
+            "prompt": "Substitute parameters m=2kg, k=200N/m, v=3m/s."
+          },
+          {
+            "stage": 5,
+            "name": "CHECK",
+            "prompt": "Verify dimensional consistency [m]."
+          },
+          {
+            "stage": 6,
+            "name": "REPAIR",
+            "prompt": "Inspect contact release condition."
+          }
+        ]
+      }
+    },
+    {
+      "role": "CORE2A",
+      "blueprint_id": "BP-CORE2A-CRUX@1.1.0",
+      "case_id": "SYN-CORE2A-FAMILIAR-CRUX",
+      "subject": "PHYSICS",
+      "payload": {
+        "crux": "unattached cart loses contact at natural spring length",
+        "scaffold": "Determine acceleration at x=0; contact force drops to zero.",
+        "complete_solution": "At x=0, normal force from spring vanishes; cart enters free motion."
+      }
+    },
+    {
+      "role": "CORE2B",
+      "blueprint_id": "BP-CORE2B-DECIDE@1.1.0",
+      "case_id": "SYN-CORE2B-TRANSFER-DECIDE",
+      "subject": "PHYSICS",
+      "payload": {
+        "protected_decision": "Does the cart perform harmonic oscillations?",
+        "options": [
+          "Yes, continuous SHM",
+          "No, single compression and rebound"
+        ],
+        "expected_decision": "No, single compression and rebound",
+        "rubric": "Rubric award requires explicit identification of unilateral contact boundary."
+      }
+    },
+    {
+      "role": "CORE3",
+      "blueprint_id": "BP-CORE3-TRANSFERS@1.0.0",
+      "case_id": "SYN-CORE3-INCLINE-TRANSFER",
+      "subject": "PHYSICS",
+      "payload": {
+        "transfer_domain": "Vertical / inclined spring-mass system with gravity",
+        "transfer_challenge": "Account for gravitational potential energy during compression phase."
+      }
+    },
+    {
+      "role": "EXPLORER",
+      "blueprint_id": "BP-EXPLORER-SANDBOX@1.1.0",
+      "case_id": "SYN-EXPLORER-SPRING-SIM",
+      "subject": "PHYSICS",
+      "payload": {
+        "interactive_stage": "demo:stage:spring-cart",
+        "parameters": {
+          "mass": 2.0,
+          "spring_k": 200.0,
+          "initial_v": 3.0
+        },
+        "observables": [
+          "displacement_x",
+          "velocity_v",
+          "contact_force_N",
+          "energy_E"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "schema_version": "g9-session-fixture/1.0",
+  "status": "DEMO_SYNTHETIC_ONLY",
+  "session_id": "SES-SYNTHETIC-DEMO-01",
+  "user_pseudonym": "DEMO_LEARNER_01",
+  "task_ref": {
+    "type": "QUESTION",
+    "id": "demo:q:origin",
+    "revision": 1,
+    "sha256": "4b76c8c4a1de2a8c3e414c778931215b22eb1fbc659422df563b78be05c1e5e2"
+  },
+  "history": [
+    {
+      "sequence": 1,
+      "type": "PREDICTION_COMMITTED",
+      "timestamp": "2026-11-17T09:00:00Z",
+      "payload": {
+        "prediction": "The cart will compress the spring and rebound with equal speed.",
+        "artifact_ids": []
+      }
+    },
+    {
+      "sequence": 2,
+      "type": "HELP_EXPOSED",
+      "timestamp": "2026-11-17T09:01:00Z",
+      "payload": {
+        "capability": "H1",
+        "ordinal": 1,
+        "asset_ref": "demo:hint:energy-conservation"
+      }
+    },
+    {
+      "sequence": 3,
+      "type": "FIRST_COMMITTED",
+      "timestamp": "2026-11-17T09:02:00Z",
+      "payload": {
+        "responses": {
+          "ans": {
+            "kind": "NUMERIC_RESPONSE",
+            "value": 0.3,
+            "unit": "m"
+          }
+        }
+      }
+    },
+    {
+      "sequence": 4,
+      "type": "BOUNDARY_COMMITTED",
+      "timestamp": "2026-11-17T09:03:00Z",
+      "payload": {
+        "responses": {
+          "boundary_claim": {
+            "kind": "CONSTRUCTED_RESPONSE",
+            "value": "Cart separates at natural length."
+          }
+        }
+      }
+    }
+  ]
+}

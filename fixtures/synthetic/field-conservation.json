@@ -1,0 +1,70 @@
+{
+  "source": {
+    "id": "legacy-demo",
+    "stem": "A synthetic question",
+    "options": [
+      "A",
+      "B"
+    ],
+    "metadata": {
+      "unknown/field": "retain",
+      "empty": {},
+      "array": []
+    },
+    "rawAnswer": null
+  },
+  "target": {
+    "identity": {
+      "legacy_alias": "legacy-demo"
+    },
+    "payload": {
+      "stem": "A synthetic question",
+      "options": [
+        "A",
+        "B"
+      ]
+    }
+  },
+  "field_map": [
+    {
+      "source": "/id",
+      "disposition": "PRESERVE_EXACT",
+      "target": "/identity/legacy_alias"
+    },
+    {
+      "source": "/stem",
+      "disposition": "PRESERVE_EXACT",
+      "target": "/payload/stem"
+    },
+    {
+      "source": "/options/0",
+      "disposition": "PRESERVE_EXACT",
+      "target": "/payload/options/0"
+    },
+    {
+      "source": "/options/1",
+      "disposition": "PRESERVE_EXACT",
+      "target": "/payload/options/1"
+    },
+    {
+      "source": "/metadata/unknown~1field",
+      "disposition": "PRESERVED_PRIVATE",
+      "reason": "unknown field"
+    },
+    {
+      "source": "/metadata/empty",
+      "disposition": "PRESERVED_PRIVATE",
+      "reason": "unknown field"
+    },
+    {
+      "source": "/metadata/array",
+      "disposition": "PRESERVED_PRIVATE",
+      "reason": "unknown field"
+    },
+    {
+      "source": "/rawAnswer",
+      "disposition": "PRESERVED_PRIVATE",
+      "reason": "unverified raw claim"
+    }
+  ]
+}

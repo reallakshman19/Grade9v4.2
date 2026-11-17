@@ -1,0 +1,61 @@
+{
+  "schema_version": "g9-search-index/1.0",
+  "status": "DEMO_SYNTHETIC_ONLY",
+  "boost_rules": {
+    "exact_id": 10.0,
+    "title_tokens": 5.0,
+    "concept_aliases": 3.0,
+    "summary_tokens": 1.0
+  },
+  "normalization": "UNICODE_NFKC_CASEFOLD",
+  "projections": [
+    {
+      "id": "demo:wpe:concept:hooke",
+      "revision": 1,
+      "releaseId": "RELEASE-DEMO-01",
+      "route": "/learn/demo-hooke",
+      "kind": "CONCEPT",
+      "subjectIds": [
+        "PHYSICS"
+      ],
+      "title": "Hooke's Law and Work-Energy Theorem",
+      "summary": "Synthetic demonstration of elastic potential energy and contact dynamics.",
+      "reviewed_terms": [
+        "spring",
+        "hooke",
+        "work-energy",
+        "compression",
+        "elasticity"
+      ],
+      "public_facets": {
+        "subject": "PHYSICS",
+        "grade": 9,
+        "demo": true
+      }
+    },
+    {
+      "id": "demo:q:origin",
+      "revision": 1,
+      "releaseId": "RELEASE-DEMO-01",
+      "route": "/question/demo-origin",
+      "kind": "QUESTION",
+      "subjectIds": [
+        "PHYSICS"
+      ],
+      "title": "Unattached Cart Spring Collision",
+      "summary": "Determine maximum spring compression for an unattached cart.",
+      "reviewed_terms": [
+        "cart",
+        "collision",
+        "spring",
+        "energy",
+        "maximum-compression"
+      ],
+      "public_facets": {
+        "subject": "PHYSICS",
+        "role": "CORE2",
+        "demo": true
+      }
+    }
+  ]
+}
