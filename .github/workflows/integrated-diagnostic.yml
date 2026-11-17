@@ -1,5 +1,8 @@
-name: Integrated engineering diagnostic (not release)
+name: Integrated engineering diagnostic (informational)
 on:
+  workflow_dispatch:
+  push:
+    branches: [main]
   pull_request:
     branches:
       - feat/a13-build-shell-and-local-toolchain
@@ -9,18 +12,18 @@ permissions:
   contents: read
 jobs:
   python:
-    if: github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated'
+    if: github.event_name != 'pull_request' || (github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated')
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: f5e2bea369891318481691b1b4d7e5dbd0f15059
+          ref: ${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}
           persist-credentials: false
       - name: Verify exact candidate
         run: |
-          test "$(git rev-parse HEAD)" = "f5e2bea369891318481691b1b4d7e5dbd0f15059"
-          test "$(git rev-parse HEAD^{tree})" = "4d65a0d725af745cb21a4302f9fc1fa79801f994"
+          test "$(git rev-parse HEAD)" = "${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then test "$(git rev-parse HEAD^{tree})" = "8e98c7c2e38d280fb27a1c8635b395e2b89749a8"; fi
           git diff --exit-code HEAD
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
@@ -80,18 +83,18 @@ jobs:
           G9_V35_PORTABLE_PACKAGES: ${{ github.workspace }}/.source-v35/docs/portable-workbench/packages
         run: python -m pytest -ra --tb=short
   browser:
-    if: github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated'
+    if: github.event_name != 'pull_request' || (github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated')
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: f5e2bea369891318481691b1b4d7e5dbd0f15059
+          ref: ${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}
           persist-credentials: false
       - name: Verify exact candidate
         run: |
-          test "$(git rev-parse HEAD)" = "f5e2bea369891318481691b1b4d7e5dbd0f15059"
-          test "$(git rev-parse HEAD^{tree})" = "4d65a0d725af745cb21a4302f9fc1fa79801f994"
+          test "$(git rev-parse HEAD)" = "${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then test "$(git rev-parse HEAD^{tree})" = "8e98c7c2e38d280fb27a1c8635b395e2b89749a8"; fi
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.16.0'

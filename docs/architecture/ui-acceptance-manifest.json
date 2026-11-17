@@ -6,7 +6,7 @@
   "status": "PROPOSED_TEST_PLAN_NOT_EXECUTED",
   "created_at": "2026-11-17T08:35:00Z",
   "academic_admission": "HOLD",
-  "ui_implementation_freeze": "NOT_FROZEN (LOCKED_UNTIL_INDEPENDENT_A61_ACCEPTANCE)",
+  "ui_implementation_freeze": "NOT_FROZEN (NONBLOCKING_REVIEW_STATUS)",
   "production_release": "NONE",
   "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
   "target_scenarios_count": 252,
@@ -15733,11 +15733,13 @@
     }
   ],
   "acceptance_gate": {
-    "status": "BLOCKED",
-    "reason": "A61 physical-device evidence, independently supplied 13 WPE full-family synthetic fixtures, external signed prerequisite receipts, and approved native design reconciliation remain missing.",
+    "status": "REVIEW_NOT_COMPLETED_NONBLOCKING",
+    "reason": "Physical device, source audit and scenario execution remain incomplete; Owner directed that review status is a label, not a merge or deployment gate.",
     "freeze_decision": "NOT_GRANTED",
     "author_authority": "NONE",
-    "source_contracts_restored": true
+    "source_contracts_restored": true,
+    "blocks_merge": false,
+    "blocks_deployment": false
   },
   "total_specified_entries": 263,
   "matrix_count_definition": "252 separate target scenarios + 11 additional integration flows (263 total specified entries)",
@@ -15824,5 +15826,14 @@
     "evidence_storage": "Private external evidence; non-sensitive hashes only in public repository.",
     "receipt_digest": null,
     "review_status": "NOT_SUPPLIED"
+  },
+  "owner_delivery_policy": {
+    "decision": "OWNER_DIRECTED_NONBLOCKING_REVIEW",
+    "date": "2026-11-17",
+    "independent_review_required_for_merge_or_deployment": false,
+    "learner_ui_implementation_permitted": true,
+    "deployment_permitted": true,
+    "review_status_label": "review-not-completed",
+    "scope": "Engineering merge and deployment may proceed; report academic and UI review status accurately. Do not disclose restricted source or operator-only data. No completed review or learner-content approval implied."
   }
 }

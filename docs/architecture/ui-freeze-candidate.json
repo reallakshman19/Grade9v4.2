@@ -6,7 +6,7 @@
   "status": "PROPOSED_ENGINEERING_CONTRACT_RECONCILED_NOT_FROZEN",
   "created_at": "2026-11-17T08:35:00Z",
   "academic_admission": "HOLD",
-  "ui_implementation_freeze": "NOT_FROZEN (LOCKED_UNTIL_INDEPENDENT_A61_ACCEPTANCE)",
+  "ui_implementation_freeze": "NOT_FROZEN (NONBLOCKING_REVIEW_STATUS)",
   "production_release": "NONE",
   "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
   "receipt_digest_pinned": null,
@@ -222,7 +222,7 @@
   },
   "gate_determination": {
     "freeze_status": "PROPOSED_NOT_FROZEN",
-    "reason": "Structural reconciliation only; actual legacy evidence, target execution and independent design acceptance absent.",
+    "reason": "Structural reconciliation; Owner authorizes implementation and deployment with review-not-completed label. Actual freeze and academic review remain unverified.",
     "unresolved_blockers": [
       "A58 actual audit: 0 contexts and 0 mapped capabilities; no authentic screenshots/traces or signed exclusions.",
       "A59/A60 actual integration and interaction evidence unverified.",
@@ -232,7 +232,9 @@
       "Independent design decision and A61 receipt missing."
     ],
     "target_scenarios_count": 252,
-    "learner_ui_implementation_permitted": false
+    "learner_ui_implementation_permitted": true,
+    "blocks_merge": false,
+    "blocks_deployment": false
   },
   "unratified_blueprint_variants": [
     {
@@ -273,7 +275,7 @@
     }
   ],
   "native_blueprint_reconciliation": {
-    "status": "EXACT_SOURCE_SLOT_AND_POLICY_STRUCTURE_VERIFIED_TARGET_SEMANTICS_PENDING",
+    "status": "EXACT_SOURCE_COMPONENTS_AND_POLICIES_PRESERVED_TARGET_SEMANTICS_NOT_EXECUTED",
     "baseline_role_count": 7,
     "proposed_variant_count": 6,
     "source_reference": "01-architecture/six-core-blueprint-map.json",
@@ -313,7 +315,8 @@
     "verified_role_count": 7,
     "verified_slot_count": 23,
     "verified_block_bindings": 73,
-    "assurance": "Exact source structure, not browser observation or semantic acceptance."
+    "assurance": "Exact source structure, not browser observation or semantic acceptance.",
+    "verified_component_count": 50
   },
   "audit_evidence": {
     "summary_blob": "1212ae141d6413533a33c2885cc0b0b449b6aa4d",
@@ -328,7 +331,16 @@
     "note": "Hashes bind blocked reports, not screenshots/traces."
   },
   "corrected_contract_digests": {
-    "screen_contracts_sha256": "7b90cbcdeed8598d5392b51521b58d84145f6a950f361d8eb7c04546b9559865",
-    "acceptance_manifest_sha256": "7f513fd5c898ddc63c4eca950c6ffbbe1c28d6626bbcb271a4d4e8fa2ea58669"
+    "screen_contracts_sha256": "8ac3a3a1402a4f3b4182da1b5d0b692e285fdefcb5b7f4cd8f4021bd7d36fde9",
+    "acceptance_manifest_sha256": "d1744e487c8747cb92b3091116de930c1ae776ed9cc5da09dc0655884a67e66b"
+  },
+  "owner_delivery_policy": {
+    "decision": "OWNER_DIRECTED_NONBLOCKING_REVIEW",
+    "date": "2026-11-17",
+    "independent_review_required_for_merge_or_deployment": false,
+    "learner_ui_implementation_permitted": true,
+    "deployment_permitted": true,
+    "review_status_label": "review-not-completed",
+    "scope": "Engineering merge and deployment may proceed; report academic and UI review status accurately. Do not disclose restricted source or operator-only data. No completed review or learner-content approval implied."
   }
 }

@@ -2,7 +2,7 @@
 interface DiagnosticReport {
   readonly version: '4.2.0';
   readonly uiFreezeStatus: 'NOT_FROZEN';
-  readonly learnerUi: 'NOT_PERMITTED';
+  readonly learnerUi: 'IMPLEMENTATION_AUTHORIZED';
   readonly academicAdmission: 'HOLD';
   readonly productionRelease: 'NONE';
   readonly diagnosticScript: 'INITIALIZED';
@@ -12,7 +12,7 @@ export function initializeBuildShell(): DiagnosticReport {
   const report: DiagnosticReport = {
     version: '4.2.0',
     uiFreezeStatus: 'NOT_FROZEN',
-    learnerUi: 'NOT_PERMITTED',
+    learnerUi: 'IMPLEMENTATION_AUTHORIZED',
     academicAdmission: 'HOLD',
     productionRelease: 'NONE',
     diagnosticScript: 'INITIALIZED',

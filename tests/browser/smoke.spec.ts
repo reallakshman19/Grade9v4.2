@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { readFile, stat, realpath } from 'node:fs/promises';
-import { resolve, sep, extname } from 'node:path';
+import { readFile, stat, realpath, readdir, mkdtemp, cp, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { resolve, sep, extname, join } from 'node:path';
 import { once } from 'node:events';
 import { test, before, after } from 'node:test';
 import { chromium } from 'playwright-core';
@@ -28,10 +29,48 @@ const server = createServer(async (req, res) => {
     res.writeHead(200, {'Content-Type':type, 'X-Content-Type-Options':'nosniff', 'Cache-Control':'no-store'}).end(req.method === 'HEAD' ? undefined : body);
   } catch {res.writeHead(404).end();}
 });
+// The current diagnostic build has exactly one HTML entry and one local JS
+// bundle. Reject extra files even when renamed to plausible public assets.
+async function assertDiagnosticDist(dir: string): Promise<void> {
+  const html = await readFile(join(dir, 'index.html'), 'utf8');
+  const modules = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/g)];
+  assert.equal(modules.length, 1, 'expected one diagnostic module');
+  const entry = modules[0][1];
+  assert.match(entry, /^\.\/assets\/[A-Za-z0-9_-]+\.js$/, 'unexpected diagnostic module path');
+  const files: string[] = [];
+  async function walk(folder: string, prefix = ''): Promise<void> {
+    for (const item of await readdir(folder, {withFileTypes: true})) {
+      const path = prefix + item.name;
+      if (item.isDirectory()) await walk(join(folder, item.name), path + '/');
+      else {
+        assert(item.isFile(), 'non-regular diagnostic artifact');
+        files.push(path);
+      }
+    }
+  }
+  await walk(dir);
+  assert.deepEqual(files.sort(), ['index.html', entry.slice(2)].sort(), 'unexpected diagnostic artifact');
+}
+
+const expectedBody = [
+  '[DEMO ONLY] Review not completed. Engineering implementation and deployment are owner-authorized; learner content is not academically reviewed.',
+  'Grade9v4.2 Build Shell',
+  'Local static toolchain diagnostics. This is not a learner application or an approved release.',
+  'UI: NOT_FROZEN', 'ADMISSION: HOLD', 'RELEASE: NONE',
+  'Diagnostic script: INITIALIZED',
+  'Build shell version: 4.2.0',
+  'UI freeze: NOT_FROZEN',
+  'Learner UI: IMPLEMENTATION_AUTHORIZED',
+  'Academic admission: HOLD',
+  'Production release: NONE',
+  'Runtime interfaces: compile-time only; not verified by this page.'
+].join(' ');
+const normalizeText = (value: string) => value.replace(/\s+/g, ' ').trim();
+
 let browser: Browser;
 let origin: string;
 before(async () => {
-  await stat(resolve(root, 'index.html'));
+  await assertDiagnosticDist(root);
   server.listen(0, '127.0.0.1');
   await once(server, 'listening');
   const address = server.address();
@@ -66,13 +105,14 @@ for (const prefix of ['/', subpath]) {
           assert.equal(response?.status(), 200);
           await page.locator('#diagnostics[data-initialized="true"]').waitFor();
           assert.match(await page.title(), /Diagnostic Only/);
-          assert.match(await page.locator('#freeze-banner').innerText(), /freeze NOT GRANTED/);
+          assert.match(await page.locator('#freeze-banner').innerText(), /Review not completed/);
           assert.equal(await page.locator('#badge-ui-freeze').innerText(),'UI: NOT_FROZEN');
           assert.equal(await page.locator('#badge-admission').innerText(),'ADMISSION: HOLD');
           assert.equal(await page.locator('#badge-release').innerText(),'RELEASE: NONE');
           assert.match(await page.locator('#diagnostics').innerText(), /compile-time only; not verified by this page/);
           assert.equal(await page.locator('main').count(),1);
-          assert.equal(await page.locator('input,button,form,canvas,iframe').count(),0);
+          assert.equal(await page.locator('a[href],area[href],input,button,form,canvas,iframe,object,embed,[contenteditable],[tabindex],[role=button],[role=link]').count(),0);
+          assert.equal(normalizeText(await page.locator('body').innerText()), expectedBody);
           assert(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
         }
         assert.deepEqual(outside, []);
@@ -116,4 +156,32 @@ test('blocked module leaves honest uninitialized state', async () => {
     assert.equal(await page.locator('#diagnostics').getAttribute('data-initialized'),'false');
     assert.match(await page.locator('#diagnostics').innerText(),/has not initialized/);
   } finally {await context.close();}
+});
+
+test('diagnostic artifact inventory rejects a disguised operator export', async () => {
+  const temp = await mkdtemp(join(tmpdir(), 'g9-diagnostic-dist-'));
+  try {
+    await cp(root, temp, {recursive: true});
+    await assertDiagnosticDist(temp);
+    await writeFile(join(temp, 'assets', 'ordinary-data.json'), '{"operator_only":true}');
+    await assert.rejects(() => assertDiagnosticDist(temp), /unexpected diagnostic artifact/);
+  } finally { await rm(temp, {recursive:true, force:true}); }
+});
+
+test('diagnostic text and navigation guard detects unauthorized learner message', async () => {
+  const context = await browser.newContext({serviceWorkers:'block'});
+  try {
+    const page = await context.newPage();
+    await page.goto(origin + subpath);
+    await page.locator('#diagnostics[data-initialized="true"]').waitFor();
+    assert.equal(normalizeText(await page.locator('body').innerText()), expectedBody);
+    await page.evaluate(() => {
+      const link = document.createElement('a');
+      link.href = '/learner';
+      link.textContent = 'Learner application approved';
+      document.querySelector('main')!.append(link);
+    });
+    assert.notEqual(normalizeText(await page.locator('body').innerText()), expectedBody);
+    assert.equal(await page.locator('a[href]').count(), 1);
+  } finally { await context.close(); }
 });
