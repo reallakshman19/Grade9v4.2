@@ -1,33 +1,41 @@
 {
   "schema_version": "g9-baseline-report/4",
-  "revision": 4,
-  "generated_at": "2026-11-16T04:55:00Z",
+  "revision": 6,
+  "generated_at": "2026-11-17",
   "workpack_id": "A00",
-  "title": "Read-only authority and baseline audit (Revision 4 — Independent Review Remediation)",
+  "title": "Read-only authority and baseline audit (Revision 6 — full listed remote-byte rehash, HOLD)",
   "remediation_reference": {
-    "prior_candidate_commit": "93d8282e5bd9df5a37c6778fbbfb814044b25016",
-    "prior_candidate_tree": "0a656930b6f5f99a959d37a846cc5087efc1dfd7",
-    "independent_review_decision": "REQUEST_CHANGES",
-    "remediation_cycle": 2
+    "prior_candidate_commit": "b6615b92c4ef744107d336bf1460d0ffb6736e1e",
+    "prior_candidate_tree": "61db9d814580073930fc968f445a16362f9ffc9d",
+    "prior_report_raw_sha256": "140cb2f9771567ad9be12c68f5579f328664c87d9cbc8698c825f8279fde8e0d",
+    "overall_workpack_base": "bd8f568d21466cecb7b53b87f862c565a474c149",
+    "prior_candidate_disposition": "NO_GO",
+    "contributor": "ChatGPT GPT-6; Owner-authorized remediation; SELF_ASSESSED",
+    "prior_generated_at_reported": "2026-11-16T04:55:00Z",
+    "prior_integrated_commit_time": "2026-11-16T04:52:16Z",
+    "chronology_note": "Historical report timestamp postdates its integrated commit; original history retained; not authenticated."
   },
   "target_repository": {
-    "local_path": "D:/CodeD/g9v4.2",
+    "local_path": "[OWNER_LOCAL_PATH_WITHHELD]",
     "bootstrap_commit": "bd8f568d21466cecb7b53b87f862c565a474c149",
     "bootstrap_tree": "4b825dc642cb6eb9a060e54bf8d69288fbee4904",
-    "status": "INITIALIZED_PRIVATE_REMOTE_CONFIGURED",
+    "status": "PUBLIC_REMOTE_OBSERVED; DRAFT_REPRODUCTION_NOT_ACCEPTED",
     "remote_configured": true,
     "remote_url": "https://github.com/reallakshman19/Grade9v4.2.git",
-    "visibility": "private",
+    "visibility": "public",
     "default_branch": "main",
     "owner_authorization_ref": "OWNER-AUTH-20261116-G9V42-BOOTSTRAP",
-    "github_pages_status": "DISABLED",
+    "github_pages_status": "REPORTED_DISABLED_NOT_LIVE_VERIFIED",
     "branch_protection": {
-      "status": "ENABLED",
-      "enforce_admins": true,
-      "allow_force_pushes": false,
-      "allow_deletions": false,
-      "dismiss_stale_reviews": true,
-      "required_status_checks": "NOT_YET_CONFIGURED"
+      "status": "LIVE_PROTECTED; REQUIRED_CHECKS_OFF",
+      "enforce_admins": "REPORTED_TRUE_IN_SUPPLIED_ADMIN_SNAPSHOT",
+      "allow_force_pushes": "REPORTED_FALSE",
+      "allow_deletions": "REPORTED_FALSE",
+      "dismiss_stale_reviews": "REPORTED_TRUE",
+      "required_approving_review_count": 0,
+      "required_status_checks": "LIVE_OFF_EMPTY",
+      "detailed_live_settings": "NOT_AUTHORIZED_HTTP_403_IN_STAGE2",
+      "administrator_enforcement": "INDEPENDENT_ACCEPTANCE_NOT_ESTABLISHED"
     }
   },
   "kit_manifest_verification": {
@@ -35,30 +43,58 @@
     "manifest_files_count": 147,
     "manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
     "workpacks_count": 75,
-    "unmodified_kit_integrity": "VERIFIED"
+    "unmodified_kit_integrity": "VERIFIED_RAW_BYTES_AND_PINNED_MANIFEST; POSIX_FIXTURE_MODE_RESTORED_AFTER_ZIP_EXTRACTION"
   },
   "acceptance_testing_records": {
-    "authoritative_clean_linux_execution": {
-      "environment": "Clean Linux (unmodified reference kit)",
-      "executed_by": "Independent Reviewer",
-      "kit_integrity_check": "PASS (75 workpacks)",
-      "reference_examples_check": "PASS (9 archetypes)",
-      "acceptance_suite": "PASS (80/80 tests, 0 failures, 0 skips, runtime 0.302s)",
-      "shims_or_monkeypatches": "NONE"
+    "historical_producer_claims": {
+      "authoritative_clean_linux_execution": {
+        "environment": "Clean Linux (unmodified reference kit)",
+        "executed_by": "Independent Reviewer",
+        "kit_integrity_check": "PASS (75 workpacks)",
+        "reference_examples_check": "PASS (9 archetypes)",
+        "acceptance_suite": "PASS (80/80 tests, 0 failures, 0 skips, runtime 0.302s)",
+        "shims_or_monkeypatches": "NONE"
+      },
+      "local_windows_development_diagnostics": {
+        "environment": "Windows 11 / Python 3.12.14",
+        "role": "Local diagnostic / development only (non-authoritative)",
+        "historical_shim_path": "[OWNER_LOCAL_PATH_WITHHELD]",
+        "historical_shim_sha256": "737a9de66f366641bed6108393e8e78c20446aea9072422f15faec3140eca23b",
+        "portability_defects_identified": [
+          "check.py:79: str(f.relative_to(ROOT)) emits backslashes on Windows, failing against MANIFEST.sha256.json",
+          "check.py:20: safe_rel() forbids backslashes",
+          "check.py:60: migration_check() expects Unix permission mode 420 (0o644); Windows NTFS returns 438 (0o666)",
+          "test_kit.py:29: test_tamper chmod(0o644) is no-op on Windows NTFS group/other bits",
+          "check.py:115 & test_kit.py:63: Assumes openssl is on system PATH; in Windows it resides in Git usr/bin",
+          "check.py:97: Compares git rev-parse (forward slash) with str(repo) (backslashes on Windows)"
+        ]
+      }
     },
-    "local_windows_development_diagnostics": {
-      "environment": "Windows 11 / Python 3.12.14",
-      "role": "Local diagnostic / development only (non-authoritative)",
-      "historical_shim_path": "D:/CodeD/g9v4.2-evidence/A00/historical-windows-shim/sitecustomize.py",
-      "historical_shim_sha256": "737a9de66f366641bed6108393e8e78c20446aea9072422f15faec3140eca23b",
-      "portability_defects_identified": [
-        "check.py:79: str(f.relative_to(ROOT)) emits backslashes on Windows, failing against MANIFEST.sha256.json",
-        "check.py:20: safe_rel() forbids backslashes",
-        "check.py:60: migration_check() expects Unix permission mode 420 (0o644); Windows NTFS returns 438 (0o666)",
-        "test_kit.py:29: test_tamper chmod(0o644) is no-op on Windows NTFS group/other bits",
-        "check.py:115 & test_kit.py:63: Assumes openssl is on system PATH; in Windows it resides in Git usr/bin",
-        "check.py:97: Compares git rev-parse (forward slash) with str(repo) (backslashes on Windows)"
-      ]
+    "historical_claim_status": "REPORTED_ONLY; 0.302s Linux claim not authenticated; original logs do not establish it. New contributor runs do not retroactively authenticate historical claims.",
+    "current_contributor_clean_linux": {
+      "role": "SELF_ASSESSED_REMEDIATION_CONTRIBUTOR_NOT_INDEPENDENT_ACCEPTANCE",
+      "environment": "Linux 6.18.57 x86_64; Python 3.13.5; Git 2.47.3; OpenSSL 3.5.5",
+      "kit_integrity": "PASS 75 workpacks",
+      "reference_examples": "PASS 9 archetypes",
+      "reference_tests": "PASS 80/80 in 0.421s; zero failures/skips",
+      "administrator_guard_synthetic_tests": "PASS 29/29 in 3.466s; external proposal only, not installed",
+      "fixture_mode": "Initial examples run blocked: extracted fixture mode 0666; restored required 0644, bytes unchanged; reran all checks",
+      "shims_or_monkeypatches": "NONE",
+      "evidence_raw_sha256": {
+        "admin-guard-tests.log": "94fa64af30a31a466b472b85902ea6a06fdad4c0a5ac13e3f673dfa3cddd59db",
+        "examples-initial-mode-failure.log": "29cce6479eb9719edbf6ec48960f8ce9c0e822f639b8ba9ebe61c53036d71a22",
+        "examples.log": "00b0bf12fbe6c1620c3f3be538d6d58ca88c8f52978f8b2091a45d87444f8ba9",
+        "fixture-mode.log": "abe19bab8045489aaca8968741a1e59438469b6c352b5f27fef97f02030d37e9",
+        "kit.log": "98b4a5f1b4a7b28be8b8e93110bef5f0ac1719f10a8f50a4a32147055ed30309",
+        "reference-tests.log": "f5b005719319bfa89b3cf1259fb98449cbdcbda83b7dc2a0373d8b9ec6d7aa35"
+      }
+    },
+    "historical_log_normalization": {
+      "status": "EIGHT_HANDOFF_DIGESTS_MATCH_LF_NORMALIZED_NOT_RAW_DELIVERY_BYTES",
+      "evidence_file": "historical-log-bindings.json",
+      "raw_sha256": "9b63739f8981493a699b62fdb3bc2efad5f19f57915107c702237600df5a4e32",
+      "a00_bundle_report_raw_sha256": "c3abe590b883e8964ce433c49222d64a795da6722befdbc13e7cbcb6dc3c7385",
+      "a00_original_git_report_sha256": "140cb2f9771567ad9be12c68f5579f328664c87d9cbc8698c825f8279fde8e0d"
     }
   },
   "source_v41": {
@@ -230,6 +266,105 @@
         "raw_sha256": "f739305e50bd064e5d8fa73780a8e038a7a4f9c9680411539e767b3191aa589b",
         "size": 22524
       }
+    },
+    "additional_native_authority_bindings": {
+      "required_paths": [
+        "Shared/web/interactive-page-blueprints.v1.json",
+        "Shared/web/standalone-ledger.v1.json",
+        "Shared/tools/standalone_conformance.py",
+        "Shared/resources/concept-bundle.schema.json",
+        "docs/gcdr-suites/",
+        "public/portable-workbench/packages/"
+      ],
+      "additional_file_count": 11,
+      "directory_tree_bindings": {
+        "docs/gcdr-suites/": {
+          "tree": "7d89bc8b5980c26d33fea26e7321ae68463edd21",
+          "file_count": 6
+        },
+        "public/portable-workbench/packages/": {
+          "tree": "d94df75adfc900a201bb0b353ff26f68e0632885",
+          "file_count": 4
+        }
+      },
+      "files": {
+        "Shared/resources/concept-bundle.schema.json": {
+          "git_blob_sha1": "add2f6a072f9f8cb275ecbaa7c2b99baf58143d3",
+          "mode": "100644",
+          "size": 2206,
+          "raw_sha256": "f5a768cc0c024359eb5da3964ee4133e012e94b345bc92074436de857b34c193"
+        },
+        "docs/gcdr-suites/chemistry-chemical-bonding.json": {
+          "git_blob_sha1": "cad0d172a065300ceebf00ae9157065584fb0b7a",
+          "mode": "100644",
+          "size": 4962,
+          "raw_sha256": "b7712a5b46869312d41d2c847c6c6393b94532734327cea3676384aa00d7e0a5"
+        },
+        "docs/gcdr-suites/chemistry-gaseous-state.json": {
+          "git_blob_sha1": "301a71594a062072d0dd7bdc64c587bdcdbf18a7",
+          "mode": "100644",
+          "size": 4922,
+          "raw_sha256": "5ffb69b16fa0169a1f106c15929ca3b934b83c9fe964972be8504358fa27c7f3"
+        },
+        "docs/gcdr-suites/chemistry-mole-concept.json": {
+          "git_blob_sha1": "fa63d8b18e5086c00bc93bb2b4f00861fbdac53c",
+          "mode": "100644",
+          "size": 4982,
+          "raw_sha256": "28aa5faa91deb700dcc52b4136130c721543c3779ddb4a24f42f4decdd610f1c"
+        },
+        "docs/gcdr-suites/chemistry-redox.json": {
+          "git_blob_sha1": "c410107b9f6c09055babdb7808e98e7763ec2304",
+          "mode": "100644",
+          "size": 4919,
+          "raw_sha256": "c8cf75dc95043b08e346bfe0fafc1c1cab3b9038dd66ad3e932efd1e896c4fdf"
+        },
+        "docs/gcdr-suites/motion-1d.json": {
+          "git_blob_sha1": "cfdfeef5ff5f7c0b48b25c28f1f2d9a42fa4ff33",
+          "mode": "100644",
+          "size": 5018,
+          "raw_sha256": "d5b4d94c4b74877e256a9ae063c3b4a427296470a323a2434c09fc263c8eb0c3"
+        },
+        "docs/gcdr-suites/vector-algebra-3d.json": {
+          "git_blob_sha1": "cb0661002d2430e9f2410aafb1d7ec186baf8162",
+          "mode": "100644",
+          "size": 5661,
+          "raw_sha256": "bd2f292d7ae5b05055147a12644626606d9b3ad1610d459243f62c4e9557067e"
+        },
+        "public/portable-workbench/packages/portable-integration-riemann.json": {
+          "git_blob_sha1": "46c00013526dd89e530d2c25d8913a6bb11abf87",
+          "mode": "100644",
+          "size": 4298,
+          "raw_sha256": "e51a4325640d601899d7308d9b3171137edca06f2d794444c439b537f1150633"
+        },
+        "public/portable-workbench/packages/portable-long-division.json": {
+          "git_blob_sha1": "cd769aa026ed3d2278097ee04492941de7479a55",
+          "mode": "100644",
+          "size": 4737,
+          "raw_sha256": "c370b3c5623042facd6e248df0e92bf23643780bb7441b7d41a06169a8df7154"
+        },
+        "public/portable-workbench/packages/portable-motion-shared-clock.json": {
+          "git_blob_sha1": "df9eff909bbca06457ce876dff20446a788f16b0",
+          "mode": "100644",
+          "size": 5758,
+          "raw_sha256": "9a963c9977ef1d2e7b9aeee90a8524e36b611a78f80da11c1b6036d5bcddb97c"
+        },
+        "public/portable-workbench/packages/portable-redox-electron-equivalence.json": {
+          "git_blob_sha1": "30cb6104d193f65596e6db43948334ac7cb9e259",
+          "mode": "100644",
+          "size": 4529,
+          "raw_sha256": "581c8af9c3213341cb7cae630702e447f12ea6b52b5e7a358178ba1fc62c554c"
+        }
+      },
+      "evidence_raw_sha256": "c388cd1cff8b50c692f72d9fcf689bfef4c08617992b706f0a11a247824b5677",
+      "verification_method": "GitHub recursive tree (not truncated); fetch each exact commit path as base64 and compute raw SHA-256 on decoded bytes; compare reported blob ID and size with tree entry. Git SHA-1 was not independently recomputed for these 11 files.",
+      "status": "OBSERVED_REMOTE_BYTES_VERIFIED; NOT_ACADEMIC_ADMISSION_OR_LOCAL_CUSTODY_PROOF"
+    },
+    "total_listed_source_file_bindings": 32,
+    "revision_6_remote_rehash": {
+      "listed_bindings_verified": 32,
+      "raw_sha256_matches": 32,
+      "git_blob_sha1_recomputed_matches": 32,
+      "scope": "ALL_LISTED_BINDINGS_ONLY; LOCAL_CUSTODY_NOT_VERIFIED"
     }
   },
   "r3_policy_and_administrator_evidence": {
@@ -244,7 +379,8 @@
       "production_enabled": false,
       "academic_release_enabled": false,
       "d31": "PAUSED",
-      "trust_source": "G9_R3_TRUST_JSON"
+      "trust_source": "G9_R3_TRUST_JSON",
+      "revision_6_verified_git_blob_sha1": "0a1823944449fb6fa1b7a5f10949b18c6ef2ab11"
     },
     "quality_policy_v1_json": {
       "path": "docs/agent-entry/quality-gate-r2/quality-policy.v1.json",
@@ -254,7 +390,8 @@
       "activation": "PILOT_AWAITING_OWNER_GOLDEN",
       "owner_accepted_golden_head": null,
       "owner_golden_receipt_path": null,
-      "production_enabled": false
+      "production_enabled": false,
+      "revision_6_verified_git_blob_sha1": "ac8ed9bd65519ddfd5a881c2a505000090996452"
     },
     "admin_setup_md": {
       "path": "docs/agent-entry/production-control-r3/ADMIN_SETUP.md",
@@ -266,26 +403,28 @@
         "G9_R3_TRUST_JSON not configured in Actions variables",
         "Missing publication-manifest.json and release-receipt.json",
         "Release gates fail-closed under FREEZE_PENDING_GOLDEN"
-      ]
+      ],
+      "revision_6_verified_git_blob_sha1": "894a206f92d38ae05b7ace9ee5aae0b2a4eba3aa"
     }
   },
   "approved_custody_and_trust_architecture": {
-    "approved_custody_directory": "D:/CodeD/custody/",
+    "approved_custody_directory": "[OWNER_LOCAL_PATH_WITHHELD]",
     "authority_reference": "OWNER-CUSTODY-20261116-LOCAL-D-CODED",
     "access_policy": "Read-only to author agents, strictly excluded from Git tracking",
     "layout": {
-      "v35_source": "D:/CodeD/custody/Grade9v3.5/",
-      "v41_source": "D:/CodeD/custody/Grade9v4.1/",
-      "snapshots": "D:/CodeD/custody/snapshots/",
-      "manifests": "D:/CodeD/custody/manifests/"
+      "v35_source": "[OWNER_LOCAL_PATH_WITHHELD]",
+      "v41_source": "[OWNER_LOCAL_PATH_WITHHELD]",
+      "snapshots": "[OWNER_LOCAL_PATH_WITHHELD]",
+      "manifests": "[OWNER_LOCAL_PATH_WITHHELD]"
     },
     "approved_trust_roster": {
-      "roster_path": "D:/CodeD/trust/trust-roster.json",
+      "roster_path": "[OWNER_LOCAL_PATH_WITHHELD]",
       "authority_reference": "OWNER-TRUST-20261116-ED25519-ROSTER",
       "schema": "g9-r3-trust/v1",
       "key_type": "Ed25519 (public keys only)",
-      "key_custody": "Private keys strictly retained by independent reviewer; absent from agent environments"
-    }
+      "key_custody": "REQUIRED independent reviewer custody; actual identity, public key fingerprint and control NOT_ESTABLISHED"
+    },
+    "status": "OWNER_REGISTER_RECEIVED; ACTUAL_ACL_AND_TRUST_ENFORCEMENT_NOT_VERIFIED"
   },
   "owner_decisions_register": {
     "owner_authorization_ref": "OWNER-AUTH-20261116-G9V42-BOOTSTRAP",
@@ -293,12 +432,12 @@
     "target_repo": "https://github.com/reallakshman19/Grade9v4.2",
     "visibility": "private",
     "default_branch": "main",
-    "local_workspace": "D:/CodeD/g9v4.2",
+    "local_workspace": "[OWNER_LOCAL_PATH_WITHHELD]",
     "selected_v35_snapshot": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
     "selected_v35_snapshot_ref": "OWNER-SEL-20261116-V35-8A02A8EB",
     "selected_v41_snapshot": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
     "selected_v41_snapshot_ref": "OWNER-SEL-20261116-V41-564AD2A0",
-    "authorized_custody_root": "D:/CodeD/custody/",
+    "authorized_custody_root": "[OWNER_LOCAL_PATH_WITHHELD]",
     "authorized_custody_root_ref": "OWNER-CUSTODY-20261116-LOCAL-D-CODED",
     "external_trust_roster_ref": "OWNER-TRUST-20261116-ED25519-ROSTER",
     "allowed_subjects": [
@@ -308,13 +447,100 @@
     ],
     "biology_scope": "PENDING",
     "synthetic_only": true,
-    "scope_boundary": "Repository creation and controlled private development only. Does not constitute academic approval, production authorization or permission to bypass workpack acceptance gates."
+    "scope_boundary": "Repository creation and controlled private development only. Does not constitute academic approval, production authorization or permission to bypass workpack acceptance gates.",
+    "evidence_status": "Owner register supplied in bundle; selected source identities confirmed in conversation. Original authorization references and independent custody/control not authenticated.",
+    "register_raw_sha256": "a9c3a713be168f62d123881cfe02abfacc4998c02fae4a05659f3dfa0bfa0ee7",
+    "current_remediation_authorization": "Owner authorized local recovery and subsequently authorized publication to a public draft PR on 2026-11-16. No independent acceptance, merge, signing, subsequent workpack or release authority inferred."
   },
   "open_blockers": [
-    "A00 independent acceptance receipt unsigned by reviewer (status remains READY_FOR_REVIEW)",
-    "Workpack A01 cannot begin until A00 candidate commit/tree is signed externally",
-    "Automated CI status checks not yet configured on Grade9v4.2 repository",
-    "Academic admission remains HOLD; production deployment and GitHub Pages remain DISABLED"
+    "Independent reviewer identity, public-key fingerprint, protected evidence custody and receipt remain unestablished.",
+    "Original historical authorization chronology and actual local source custody/ACL require independently controlled verification.",
+    "Administrator-required status checks and independent review enforcement absent; external guard proposal must be independently reviewed and installed.",
+    "A01 premature integration incident remains open; reconcile exact new A00 base and accepted final state without rewriting history.",
+    "Academic admission HOLD; production release NONE; UI freeze not authorized.",
+    "Current live public visibility conflicts with R4 private target; explicit authenticated policy exception or restored private containment required.",
+    "Exact local checkout scope checker and target regression not executed; remote file-scope evidence is not a substitute."
   ],
-  "audit_disposition": "HOLD_PENDING_INDEPENDENT_RECEIPT"
+  "audit_disposition": "BLOCKED_PENDING_INDEPENDENT_REVIEW_AND_AUTHORITY",
+  "sequence_incident": {
+    "id": "SEQ-INCIDENT-A01-01",
+    "status": "OPEN",
+    "premature_a01_integration": "1489d0ad7f671fcc979ef27090b599cbbdd9e740",
+    "open_remediation_pr": 3,
+    "reviewed_a01_candidate": "97d5c206c142c249395685087fc8be4ac43338fa",
+    "instruction": "Preserve all original history. New A00 successor not integrated. A01 must not resume until independent A00 acceptance and authorized history-preserving reconciliation; no backdating."
+  },
+  "publication_note": {
+    "source_local_commit": "c14465e62c7bf2cdf804d501be2e1354fc87e1a9",
+    "source_local_tree": "ee68f58180aeac0608e71481d64e130a9b793364",
+    "status": "PUBLIC_DRAFT_REPRODUCTION; private local locators withheld; prior execution evidence belongs to original local candidate; fresh independent review required."
+  },
+  "revision_6_prior": {
+    "revision": 5,
+    "generated_at": "2026-11-16T07:48:14Z",
+    "title": "Read-only authority and baseline audit (Revision 5 — history-preserving evidence correction)",
+    "candidate_commit": "f492e720f9ab302e976f0b3c3a4df59bbde572e3",
+    "candidate_tree": "a231ff44d1c6e0848cf0a68148f22050387a0306",
+    "baseline_report_git_blob": "ef36a6a4c588c7763275de835c14c78b61635da6"
+  },
+  "current_recovery_verification": {
+    "date": "2026-11-17",
+    "role": "CONTRIBUTOR_SELF_ASSESSMENT_NOT_INDEPENDENT_ACCEPTANCE",
+    "reviewed_candidate": "f492e720f9ab302e976f0b3c3a4df59bbde572e3",
+    "reviewed_tree": "a231ff44d1c6e0848cf0a68148f22050387a0306",
+    "observed_main": "1489d0ad7f671fcc979ef27090b599cbbdd9e740",
+    "observed_main_tree": "93a15caa288cab79da0c5d5325e2bc1d6fac5a7d",
+    "source_scope": {
+      "v35_listed_files": 32,
+      "v35_raw_sha256_matches": 32,
+      "v35_recomputed_git_blob_sha1_matches": 32,
+      "v35_size_matches": 32,
+      "v41_policy_admin_files": 3,
+      "v41_raw_sha256_matches": 3,
+      "v41_recomputed_git_blob_sha1_matches": 3,
+      "v41_size_matches": 3,
+      "snapshot_commit_tree_pairs_verified": 6,
+      "method": "Fetch exact commit paths as base64, decode raw bytes, compute SHA-256 and Git blob SHA-1 over blob header and bytes, compare file length and exact recursive source tree entries. SHA algorithms self-tested against published abc digests. No source repositories modified.",
+      "scope_limit": "Listed authority file bindings only; does not verify all 2657 v3.5 paths or complete v4.1 bytes, local custody, ACL, original exam rights, source admission or A02 completion."
+    },
+    "reference_replay": {
+      "archive_sha256": "c9c7b194a2627a1faf730b0cf1894a8bd722e18cefd80bc8dbb37678c7c3442f",
+      "manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+      "python": "3.13.5",
+      "git": "2.47.3",
+      "openssl": "3.5.5",
+      "kit_workpacks": 75,
+      "examples": 9,
+      "tests_passed": 80,
+      "tests_failed": 0,
+      "tests_skipped": 0,
+      "elapsed_seconds": 0.287,
+      "log_name": "A00_R4_reference_replay.log",
+      "log_raw_sha256": "c42490ef1c5d8799afeb424aaadddca99e8695ccd3d2c4bdf8427cb76c518e62",
+      "log_custody": "Captured externally; not committed; independent reviewer receipt not demonstrated.",
+      "scope": "Unmodified reference kit only."
+    },
+    "scope": {
+      "original_candidate_parent": "b6615b92c4ef744107d336bf1460d0ffb6736e1e",
+      "api_changed_paths": [
+        "docs/migration/baseline-report.json"
+      ],
+      "api_scope_result": "PASS_1_OF_1",
+      "exact_checkout_scope_checker": "NOT_RUN_DNS_RESOLUTION_BLOCKED",
+      "target_full_regression": "NOT_RUN"
+    },
+    "authority": {
+      "owner_instruction": "Review, fix and merge requested; bounded recovery rehearsal only, not an R4 signed acceptance or public-target exception.",
+      "external_owner_authorization": "NOT_VERIFIED",
+      "visibility": "PUBLIC_CONTRARY_TO_PRIVATE_R4_TARGET",
+      "required_status_checks": "OFF_EMPTY",
+      "independent_trust_roster": "NOT_VERIFIED",
+      "independent_acceptance_receipt": "NOT_RECEIVED",
+      "custody_acl": "NOT_VERIFIED",
+      "main_integration": "BLOCKED",
+      "academic_admission": "HOLD",
+      "ui_freeze": "NOT_GRANTED",
+      "production_release": "NONE"
+    }
+  }
 }
