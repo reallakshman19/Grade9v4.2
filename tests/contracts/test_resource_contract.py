@@ -81,7 +81,10 @@ def is_learner_routable(resource: dict[str, Any]) -> bool:
         return False
     gov = resource.get("governance", {})
     return (
-        gov.get("rights") == "CLEARED"
+        resource.get("search_visibility") == "LEARNER"
+        and resource.get("kind") not in ("OWNER_TOOL", "RUNTIME_HOST")
+        and len(gov.get("receipt_refs", [])) > 0
+        and gov.get("rights") == "CLEARED"
         and gov.get("academic") == "ADMITTED"
         and gov.get("technical") == "PASS"
         and gov.get("release") == "ELIGIBLE"
@@ -118,6 +121,11 @@ def test_resource_projection_valid_instance(resource_validator):
 def test_resource_projection_all_kinds(resource_validator, kind):
     res = make_valid_resource()
     res["kind"] = kind
+    if kind == "OWNER_TOOL":
+        res["audience"] = "OWNER"
+        res["search_visibility"] = "EXCLUDED"
+    if kind == "RUNTIME_HOST":
+        res["search_visibility"] = "EXCLUDED"
     resource_validator.validate(res)
 
 
@@ -177,7 +185,8 @@ def test_search_visibility_filtering():
     res_hidden["search_visibility"] = "EXCLUDED"
 
     items = [res_visible, res_hidden]
-    indexed = [item["resource_id"] for item in items if item["search_visibility"] == "LEARNER"]
+    indexed = [item["resource_id"] for item in items
+               if item["search_visibility"] == "LEARNER" and is_learner_routable(item)]
     assert indexed == ["res:physics:kinematics:two-body-motion"]
 
 
@@ -324,3 +333,46 @@ def test_rule_13_invariant_in_all_authored_contracts():
     for doc in (RESOURCE_CONTRACT_MD, BRIDGE_CONTRACT_MD, THREAT_MODEL_MD):
         assert doc.exists(), f"Missing doc: {doc}"
         assert rule_13_phrase in doc.read_text(encoding="utf-8"), f"Rule 13 missing in {doc}"
+
+
+def test_learner_search_status_requires_full_declared_eligibility(resource_validator):
+    for field, value in (
+        ("audience", "OWNER"), ("kind", "OWNER_TOOL"), ("kind", "RUNTIME_HOST"),
+    ):
+        instance = make_valid_resource()
+        instance[field] = value
+        with pytest.raises(jsonschema.ValidationError):
+            resource_validator.validate(instance)
+    for key, value in (
+        ("rights", "HOLD"), ("academic", "HOLD"), ("academic", "NOT_APPLICABLE_REVIEWED"), ("technical", "UNTESTED"),
+        ("release", "HOLD"), ("receipt_refs", []),
+    ):
+        instance = make_valid_resource()
+        instance["governance"][key] = value
+        with pytest.raises(jsonschema.ValidationError):
+            resource_validator.validate(instance)
+    held = make_valid_resource()
+    held["search_visibility"] = "EXCLUDED"
+    held["governance"]["rights"] = "HOLD"
+    resource_validator.validate(held)
+    assert not is_learner_routable(held)
+
+
+def test_state_snapshot_rejects_recursive_protected_store_names(bridge_validator):
+    baseline = {
+        "type": "STATE_SNAPSHOT", "nonce": "abcdef0123456789abcdef0123456789",
+        "sequence": 1, "resource_id": "res:opaque-app-01",
+        "revision": 1, "session_id": "sess-1234-5678-90ab",
+        "payload": {"state_version": "1.0", "state": {"canvas": {"speed": 1}}}
+    }
+    bridge_validator.validate(baseline)
+    for field in ("learner_attempts", "evaluation_scores", "topic_mastery",
+                  "academic_governance", "release_authority"):
+        for nested in (False, True):
+            instance = json.loads(json.dumps(baseline))
+            if nested:
+                instance["payload"]["state"]["canvas"][field] = 1
+            else:
+                instance["payload"]["state"][field] = 1
+            with pytest.raises(jsonschema.ValidationError):
+                bridge_validator.validate(instance)

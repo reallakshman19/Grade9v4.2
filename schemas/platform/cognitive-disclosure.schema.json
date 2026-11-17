@@ -18,27 +18,8 @@
       "properties": {
         "type": {
           "enum": [
-            "SOURCE",
-            "OCCURRENCE",
             "QUESTION",
-            "ASSESSMENT",
-            "WARRANT",
-            "QRT",
-            "CONSTRUCTION",
-            "LESSON",
-            "FRESH_TASK",
-            "SOLUTION",
-            "RELATIONSHIP",
-            "PRESENTATION",
-            "CONCEPT",
-            "ASSET",
-            "PROGRAMME",
-            "EXAM_EDITION",
-            "PAPER",
-            "STIMULUS",
-            "APPROVAL",
-            "RELEASE",
-            "SUBJECT_PROFILE"
+            "FRESH_TASK"
           ]
         },
         "id": {
@@ -154,5 +135,256 @@
     "allowed",
     "review_ref",
     "reason_code"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "stage": {
+            "enum": [
+              "PREDICT"
+            ]
+          },
+          "capability": {
+            "enum": [
+              "H1",
+              "H2",
+              "H3",
+              "READ_ANCHOR",
+              "MODEL_AUTO_CALCULATE",
+              "MODEL_MANIPULATE",
+              "REFERENCE_SOLUTION",
+              "BOUNDARY_REFERENCE",
+              "SHOW_REASONING_CRUX",
+              "SOURCE_RETURN"
+            ]
+          }
+        },
+        "required": [
+          "stage",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "allowed": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stage": {
+            "enum": [
+              "ATTEMPT"
+            ]
+          },
+          "capability": {
+            "enum": [
+              "REFERENCE_SOLUTION",
+              "BOUNDARY_REFERENCE",
+              "SHOW_REASONING_CRUX",
+              "SOURCE_RETURN"
+            ]
+          }
+        },
+        "required": [
+          "stage",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "allowed": {
+            "const": false
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowed": {
+            "const": true
+          },
+          "capability": {
+            "enum": [
+              "H1",
+              "H2",
+              "H3",
+              "READ_ANCHOR",
+              "MODEL_AUTO_CALCULATE",
+              "MODEL_MANIPULATE"
+            ]
+          }
+        },
+        "required": [
+          "allowed",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "stage": {
+            "enum": [
+              "ATTEMPT"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowed": {
+            "const": true
+          },
+          "capability": {
+            "enum": [
+              "REFERENCE_SOLUTION",
+              "SHOW_REASONING_CRUX"
+            ]
+          }
+        },
+        "required": [
+          "allowed",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "stage": {
+            "enum": [
+              "RECONSTRUCT",
+              "DIAGNOSE",
+              "REPAIR",
+              "BOUNDARY_TEST",
+              "COMPLETE"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowed": {
+            "const": true
+          },
+          "capability": {
+            "enum": [
+              "BOUNDARY_REFERENCE"
+            ]
+          }
+        },
+        "required": [
+          "allowed",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "stage": {
+            "enum": [
+              "BOUNDARY_TEST",
+              "COMPLETE"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowed": {
+            "const": true
+          },
+          "capability": {
+            "enum": [
+              "SOURCE_RETURN"
+            ]
+          }
+        },
+        "required": [
+          "allowed",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "stage": {
+            "enum": [
+              "COMPLETE"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowed": {
+            "const": true
+          },
+          "capability": {
+            "enum": [
+              "H1",
+              "H2",
+              "H3",
+              "READ_ANCHOR",
+              "MODEL_AUTO_CALCULATE",
+              "MODEL_MANIPULATE",
+              "REFERENCE_SOLUTION",
+              "BOUNDARY_REFERENCE",
+              "SHOW_REASONING_CRUX"
+            ]
+          }
+        },
+        "required": [
+          "allowed",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "review_ref": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "const": "APPROVAL"
+              }
+            },
+            "required": [
+              "type"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "allowed": {
+            "const": true
+          },
+          "capability": {
+            "const": "REFERENCE_SOLUTION"
+          }
+        },
+        "required": [
+          "allowed",
+          "capability"
+        ]
+      },
+      "then": {
+        "properties": {
+          "reason_code": {
+            "const": "POST_COMMIT_SOLUTION_PERMITTED"
+          }
+        }
+      }
+    }
   ]
 }

@@ -16,7 +16,8 @@
     },
     "adapter_version": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
     },
     "parameters": {
       "type": "array",
@@ -63,7 +64,8 @@
         "type": "string",
         "minLength": 1
       },
-      "minItems": 1
+      "minItems": 1,
+      "uniqueItems": true
     },
     "representation_ids": {
       "type": "array",
@@ -71,7 +73,8 @@
         "type": "string",
         "minLength": 1
       },
-      "minItems": 1
+      "minItems": 1,
+      "uniqueItems": true
     },
     "warrant_refs": {
       "type": "array",
@@ -86,29 +89,7 @@
         ],
         "properties": {
           "type": {
-            "enum": [
-              "SOURCE",
-              "OCCURRENCE",
-              "QUESTION",
-              "ASSESSMENT",
-              "WARRANT",
-              "QRT",
-              "CONSTRUCTION",
-              "LESSON",
-              "FRESH_TASK",
-              "SOLUTION",
-              "RELATIONSHIP",
-              "PRESENTATION",
-              "CONCEPT",
-              "ASSET",
-              "PROGRAMME",
-              "EXAM_EDITION",
-              "PAPER",
-              "STIMULUS",
-              "APPROVAL",
-              "RELEASE",
-              "SUBJECT_PROFILE"
-            ]
+            "const": "WARRANT"
           },
           "id": {
             "type": "string",
@@ -124,7 +105,8 @@
           }
         }
       },
-      "minItems": 1
+      "minItems": 1,
+      "uniqueItems": true
     },
     "alt_text": {
       "type": "string",

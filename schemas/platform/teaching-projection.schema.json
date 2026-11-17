@@ -17,29 +17,7 @@
       ],
       "properties": {
         "type": {
-          "enum": [
-            "SOURCE",
-            "OCCURRENCE",
-            "QUESTION",
-            "ASSESSMENT",
-            "WARRANT",
-            "QRT",
-            "CONSTRUCTION",
-            "LESSON",
-            "FRESH_TASK",
-            "SOLUTION",
-            "RELATIONSHIP",
-            "PRESENTATION",
-            "CONCEPT",
-            "ASSET",
-            "PROGRAMME",
-            "EXAM_EDITION",
-            "PAPER",
-            "STIMULUS",
-            "APPROVAL",
-            "RELEASE",
-            "SUBJECT_PROFILE"
-          ]
+          "const": "LESSON"
         },
         "id": {
           "type": "string",
@@ -66,29 +44,7 @@
       ],
       "properties": {
         "type": {
-          "enum": [
-            "SOURCE",
-            "OCCURRENCE",
-            "QUESTION",
-            "ASSESSMENT",
-            "WARRANT",
-            "QRT",
-            "CONSTRUCTION",
-            "LESSON",
-            "FRESH_TASK",
-            "SOLUTION",
-            "RELATIONSHIP",
-            "PRESENTATION",
-            "CONCEPT",
-            "ASSET",
-            "PROGRAMME",
-            "EXAM_EDITION",
-            "PAPER",
-            "STIMULUS",
-            "APPROVAL",
-            "RELEASE",
-            "SUBJECT_PROFILE"
-          ]
+          "const": "CONSTRUCTION"
         },
         "id": {
           "type": "string",
@@ -176,7 +132,8 @@
                 }
               }
             },
-            "minItems": 1
+            "minItems": 1,
+            "uniqueItems": true
           },
           "evidence_refs": {
             "type": "array",
@@ -229,7 +186,8 @@
                 }
               }
             },
-            "minItems": 1
+            "minItems": 1,
+            "uniqueItems": true
           }
         },
         "required": [
@@ -265,29 +223,7 @@
             ],
             "properties": {
               "type": {
-                "enum": [
-                  "SOURCE",
-                  "OCCURRENCE",
-                  "QUESTION",
-                  "ASSESSMENT",
-                  "WARRANT",
-                  "QRT",
-                  "CONSTRUCTION",
-                  "LESSON",
-                  "FRESH_TASK",
-                  "SOLUTION",
-                  "RELATIONSHIP",
-                  "PRESENTATION",
-                  "CONCEPT",
-                  "ASSET",
-                  "PROGRAMME",
-                  "EXAM_EDITION",
-                  "PAPER",
-                  "STIMULUS",
-                  "APPROVAL",
-                  "RELEASE",
-                  "SUBJECT_PROFILE"
-                ]
+                "const": "FRESH_TASK"
               },
               "id": {
                 "type": "string",
@@ -314,29 +250,7 @@
             ],
             "properties": {
               "type": {
-                "enum": [
-                  "SOURCE",
-                  "OCCURRENCE",
-                  "QUESTION",
-                  "ASSESSMENT",
-                  "WARRANT",
-                  "QRT",
-                  "CONSTRUCTION",
-                  "LESSON",
-                  "FRESH_TASK",
-                  "SOLUTION",
-                  "RELATIONSHIP",
-                  "PRESENTATION",
-                  "CONCEPT",
-                  "ASSET",
-                  "PROGRAMME",
-                  "EXAM_EDITION",
-                  "PAPER",
-                  "STIMULUS",
-                  "APPROVAL",
-                  "RELEASE",
-                  "SUBJECT_PROFILE"
-                ]
+                "const": "SOLUTION"
               },
               "id": {
                 "type": "string",
@@ -365,29 +279,7 @@
               ],
               "properties": {
                 "type": {
-                  "enum": [
-                    "SOURCE",
-                    "OCCURRENCE",
-                    "QUESTION",
-                    "ASSESSMENT",
-                    "WARRANT",
-                    "QRT",
-                    "CONSTRUCTION",
-                    "LESSON",
-                    "FRESH_TASK",
-                    "SOLUTION",
-                    "RELATIONSHIP",
-                    "PRESENTATION",
-                    "CONCEPT",
-                    "ASSET",
-                    "PROGRAMME",
-                    "EXAM_EDITION",
-                    "PAPER",
-                    "STIMULUS",
-                    "APPROVAL",
-                    "RELEASE",
-                    "SUBJECT_PROFILE"
-                  ]
+                  "const": "WARRANT"
                 },
                 "id": {
                   "type": "string",
@@ -403,7 +295,8 @@
                 }
               }
             },
-            "minItems": 1
+            "minItems": 1,
+            "uniqueItems": true
           }
         },
         "required": [
@@ -478,29 +371,7 @@
       ],
       "properties": {
         "type": {
-          "enum": [
-            "SOURCE",
-            "OCCURRENCE",
-            "QUESTION",
-            "ASSESSMENT",
-            "WARRANT",
-            "QRT",
-            "CONSTRUCTION",
-            "LESSON",
-            "FRESH_TASK",
-            "SOLUTION",
-            "RELATIONSHIP",
-            "PRESENTATION",
-            "CONCEPT",
-            "ASSET",
-            "PROGRAMME",
-            "EXAM_EDITION",
-            "PAPER",
-            "STIMULUS",
-            "APPROVAL",
-            "RELEASE",
-            "SUBJECT_PROFILE"
-          ]
+          "const": "FRESH_TASK"
         },
         "id": {
           "type": "string",
@@ -533,5 +404,107 @@
     "model_refs",
     "synthesis_task_ref",
     "status"
+  ],
+  "allOf": [
+    {
+      "properties": {
+        "units": {
+          "prefixItems": [
+            {
+              "properties": {
+                "role": {
+                  "const": "A1"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A2"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A3"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A4"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A5"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A6"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A7"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A8"
+                }
+              }
+            },
+            {
+              "properties": {
+                "role": {
+                  "const": "A9"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "anchors": {
+          "prefixItems": [
+            {
+              "properties": {
+                "level": {
+                  "const": "FOUNDATION"
+                }
+              }
+            },
+            {
+              "properties": {
+                "level": {
+                  "const": "CONNECTED"
+                }
+              }
+            },
+            {
+              "properties": {
+                "level": {
+                  "const": "ADVANCED"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
   ]
 }

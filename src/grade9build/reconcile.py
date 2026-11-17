@@ -3,6 +3,7 @@ import copy,json
 from pathlib import Path
 from .importers.base import UnknownRouteError, InvalidClaimStatusError
 from .graph import ObjectGraphValidator
+from .field_ledger import FieldLedgerEngine,FieldLedgerAuditError
 ROOT=Path(__file__).resolve().parents[2]
 class RouteLedger:
     def __init__(self,route_map_path=None,blueprint_map_path=None):
@@ -35,6 +36,29 @@ class ReconciliationEngine:
                 if p.get("academic_admission")!="HOLD" or p.get("production_release")!="NONE" or p.get("candidate_claims",{}).get("status")!="HOLD":raise InvalidClaimStatusError("candidate claim promoted")
                 for k in ("assessment","qrt"):
                     if k in p["candidate_claims"] and p["candidate_claims"][k].get("status")!="HOLD":raise InvalidClaimStatusError("nested claim promoted")
+                figures=p["candidate_claims"].get("figure_claims",[])
+                if not isinstance(figures,list) or any(
+                    not isinstance(f,dict) or f.get("status") not in ("BYTE_MATCH_SYNTHETIC","HOLD_UNVERIFIED")
+                    for f in figures
+                ):raise InvalidClaimStatusError("figure claim promoted or malformed")
+        # Do not trust a recorded field-audit PASS badge after the bundle is mutated.
+        sources=[o for o in bundle["objects"] if o["type"]=="SOURCE"]
+        occurrences=[o for o in bundle["objects"] if o["type"]=="OCCURRENCE"]
+        if len(sources)!=1 or len(occurrences)!=1 or not isinstance(bundle.get("field_map"),list):
+            raise InvalidClaimStatusError("missing or ambiguous custody/field evidence")
+        source,occurrence=sources[0],occurrences[0]
+        identity=occurrence["payload"]["identity"]
+        if (bundle.get("source_sha256")!=source["payload"].get("raw_sha256") or
+            bundle.get("record_digest")!=identity["record_digest"] or
+            bundle.get("record_locator")!=identity["record_locator"]):
+            raise InvalidClaimStatusError("custody metadata changed")
+        try:
+            audit=FieldLedgerEngine.audit_field_conservation(
+                occurrence["payload"]["raw_record"],occurrence,bundle["field_map"])
+        except (FieldLedgerAuditError,TypeError,KeyError,ValueError) as e:
+            raise InvalidClaimStatusError("field conservation failed") from e
+        if bundle.get("field_audit")!=audit:
+            raise InvalidClaimStatusError("field audit is stale or altered")
     @staticmethod
     def generate_private_custody_report(bundles):
         for bundle in bundles:ReconciliationEngine.audit_candidate_claims(bundle)
