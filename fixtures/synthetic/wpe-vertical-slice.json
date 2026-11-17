@@ -1,0 +1,1503 @@
+{
+  "status": "SYNTHETIC_ENGINEERING_EXAMPLE_NOT_INDEPENDENTLY_RATIFIED",
+  "objects": [
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "WARRANT",
+      "id": "demo:wpe:warrant",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "law": "Work–energy theorem, Hooke spring and contact boundary",
+        "conditions": [
+          "ideal linear massless spring",
+          "unattached cart: contact is push only",
+          "horizontal track",
+          "neglect drag",
+          "friction only where specified"
+        ],
+        "relations": [
+          "Us = kx²/2",
+          "Kf = Ki + Wnet",
+          "Wf = −fd for constant opposing friction"
+        ],
+        "independent_check": "Units: N/m × m² = N m = J; energy ledger changes only when forces transfer energy."
+      },
+      "dependencies": [],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "QUESTION",
+      "id": "demo:wpe:source",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "title": "A synthetic spring launch question",
+        "stem": "A 1 kg cart, not attached to a spring, leaves it at natural length with 4 J kinetic energy. The track then slopes upward. Ignore friction. What maximum vertical rise can it reach? Take g = 10 m/s². Explain which force acts after separation.",
+        "response_kind": "CONSTRUCTED_RESPONSE",
+        "source_role": "SYNTHETIC_NO_EXAM_CLAIM"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "SOLUTION",
+      "id": "demo:wpe:source-solution",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "After release, no spring force; 4 J = mgh gives h=0.4 m. Gravity transfers kinetic to gravitational potential energy."
+      },
+      "dependencies": [
+        {
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
+          "revision": 1,
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "CONSTRUCTION",
+      "id": "demo:wpe:construction",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "title": "When a model changes",
+        "native_semantics": "DEMO ONLY",
+        "reasoning_goal": "Recognize phase boundary; carry state, not vanished forces, into next model."
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        },
+        {
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
+          "revision": 1,
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a1",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A1",
+        "title": "Why the push ends",
+        "text": "A compressed toy spring can start a cart moving. Watch the cart: after the spring returns to its usual length, an unattached cart can leave the spring behind. The cart still has motion, but the spring can no longer push it.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a2",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A2",
+        "title": "What you need first",
+        "text": "Kinetic energy is energy of motion, K=mv²/2. A compressed ideal spring stores kx²/2. Work transfers energy; a force opposing displacement does negative work. Joules are newton-metres.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a3",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A3",
+        "title": "Make a physical model",
+        "text": "Choose the cart and spring as the system during release. A contact force acts only while touching. After separation choose the cart for the next energy ledger. Transfer the release speed, not the old spring force.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a4",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A4",
+        "title": "Why the equations work",
+        "text": "For an ideal linear spring, the area under force magnitude kx versus compression from 0 to x is kx²/2. With no losses during release it equals the cart’s gain in kinetic energy. Afterwards use ΔK=Wnet for the forces actually acting. Do not assume friction acts on every segment.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a5",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A5",
+        "title": "Read the model",
+        "text": "The two labelled regions show spring contact and later motion. The natural-length marker is the boundary; diagrams are schematic. In the ideal smooth release model, x decreases to zero, stored energy falls and kinetic energy rises. Move the control and predict which quantity is unchanged.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a6",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A6",
+        "title": "Build your reasoning",
+        "text": "Work through the three distinct anchors: energy release, reverse design from required speed, and distinguishing an attached spring from an unattached one. Compare the underlying constraints.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a7",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A7",
+        "title": "Find the first wrong idea",
+        "text": "A learner keeps drawing a spring force after separation. The first wrong idea is treating loss of contact as irrelevant. Erase that force from the second-region force diagram before choosing a new equation.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a8",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A8",
+        "title": "When does the rule change?",
+        "text": "If the cart is attached, the spring can pull as well as push. The natural-length point is not automatically a force-law termination: beyond it the spring stretches and pulls back. If friction acts during contact, its work belongs in the contact ledger.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "PRESENTATION",
+      "id": "demo:wpe:a9",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "role": "A9",
+        "title": "Put it together",
+        "text": "Explain what is carried across a model boundary and what must be recomputed. Try the synthesis check without looking at a worked example; it does not reuse the fresh challenge.",
+        "depth": "INTUITION_MODEL_FORMAL",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "ASSET",
+      "id": "demo:wpe:model",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "adapter_id": "spring-contact-demo",
+        "adapter_version": "1",
+        "description": "Schematic wall, spring, cart, natural-length marker and separate post-contact track; no fresh challenge numbers. Accessible labels + quantity table.",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:anchor-1",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "stem": "A smooth 2 kg cart receives energy from a compressed spring storing 9 J. It starts from rest. Find its speed after release.",
+        "role": "WORKED_ANCHOR",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "SOLUTION",
+      "id": "demo:wpe:anchor-sol-1",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "K=9 J, v=3 m/s. No additional spring work after separation.",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-1",
+          "revision": 1,
+          "sha256": "1aececa4d1d464db08eb368b2bc59ff033249a5d94ff7dfd471898c79edad3e7"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:anchor-2",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "stem": "Design a smooth spring launcher for a 1 kg cart to leave at 4 m/s. For k=100 N/m, what compression is needed?",
+        "role": "WORKED_ANCHOR",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "SOLUTION",
+      "id": "demo:wpe:anchor-sol-2",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "K=8 J; x=sqrt(16/100)=0.4 m. Work backward from desired release state.",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-2",
+          "revision": 1,
+          "sha256": "7568ab8afed75200fd8bba16b15a5515f6a64b2552143b4449793329527d8816"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:anchor-3",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "stem": "Two identical carts cross the natural-length mark at the same speed. One is attached to the spring and one is not. Explain which may reverse direction on a smooth horizontal track.",
+        "role": "WORKED_ANCHOR",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "SOLUTION",
+      "id": "demo:wpe:anchor-sol-3",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "The attached spring can stretch and pull; kinetic energy can become elastic energy again. The unattached cart has no horizontal force and continues uniformly. Model selection matters.",
+        "visibility": "TEACHING"
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-3",
+          "revision": 1,
+          "sha256": "46df3445267f773c4e5792fd41c07e9ea68578aa1c52d4e6c2d61ca242e98e53"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:synthesis",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "stem": "Explain why a force diagram must be redrawn after a cart loses contact with a spring, even if its velocity is continuous.",
+        "response_kind": "CONSTRUCTED_RESPONSE",
+        "role": "SYNTHESIS"
+      },
+      "dependencies": [
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "SOLUTION",
+      "id": "demo:wpe:synthesis-sol",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "Velocity is the boundary state. Forces depend on current interactions; a vanished contact force does not continue."
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:synthesis",
+          "revision": 1,
+          "sha256": "197f7d26aa33e979b8d4f9e80f53e67144e6d08b9222749b8447c967c980836a"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "LESSON",
+      "id": "demo:wpe:lesson",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "title": "When the spring stops pushing",
+        "unit_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a1",
+            "revision": 1,
+            "sha256": "72cb3c7971ab1869b8d59508e88ca4c10612d20e24759d2748354ba0a8d54e31"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a2",
+            "revision": 1,
+            "sha256": "7681dd64eba8d21c444ef3e55a5a46ea6bcb98f80a97a3222b63f3cefb47fb26"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a3",
+            "revision": 1,
+            "sha256": "f5c382b0224db37929445b7e5f16da4b4c5d539dd4029bb83898f29c32cb4363"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a4",
+            "revision": 1,
+            "sha256": "aaccb9f052c345353a5a649b8d121740af6c8faa43d858184c4ed1438e23af98"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a5",
+            "revision": 1,
+            "sha256": "d826edf0e362719003bad2cbbf521149534df7c6e6371f26121c429c5cf53f68"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a6",
+            "revision": 1,
+            "sha256": "0eb4b696d9a91fe8f6e5fd95cc7a177ce15a9f685ff910d11afc621a8a4c24ba"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a7",
+            "revision": 1,
+            "sha256": "12b638eb9c1f0d3745f90c9e19c6bd6bd9cd41b5bc52d18d8219f20528412eda"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a8",
+            "revision": 1,
+            "sha256": "2c3fa29dfec8e471c68f39bd5af9f4aef52a70784bc4a451f472093064e7f660"
+          },
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a9",
+            "revision": 1,
+            "sha256": "e7c8172a0593607ef542167fd8f5f4e69cbd7499b2a28ad6091321bc12362692"
+          }
+        ],
+        "anchor_refs": [
+          {
+            "type": "FRESH_TASK",
+            "id": "demo:wpe:anchor-1",
+            "revision": 1,
+            "sha256": "1aececa4d1d464db08eb368b2bc59ff033249a5d94ff7dfd471898c79edad3e7"
+          },
+          {
+            "type": "FRESH_TASK",
+            "id": "demo:wpe:anchor-2",
+            "revision": 1,
+            "sha256": "7568ab8afed75200fd8bba16b15a5515f6a64b2552143b4449793329527d8816"
+          },
+          {
+            "type": "FRESH_TASK",
+            "id": "demo:wpe:anchor-3",
+            "revision": 1,
+            "sha256": "46df3445267f773c4e5792fd41c07e9ea68578aa1c52d4e6c2d61ca242e98e53"
+          }
+        ],
+        "model_ref": {
+          "type": "ASSET",
+          "id": "demo:wpe:model",
+          "revision": 1,
+          "sha256": "667d7296bdeeb1ce5c8c931e265a6ca69339e09c68440d8d8e7d7e0857e9b64a"
+        },
+        "synthesis_ref": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:synthesis",
+          "revision": 1,
+          "sha256": "197f7d26aa33e979b8d4f9e80f53e67144e6d08b9222749b8447c967c980836a"
+        }
+      },
+      "dependencies": [
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a1",
+          "revision": 1,
+          "sha256": "72cb3c7971ab1869b8d59508e88ca4c10612d20e24759d2748354ba0a8d54e31"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a2",
+          "revision": 1,
+          "sha256": "7681dd64eba8d21c444ef3e55a5a46ea6bcb98f80a97a3222b63f3cefb47fb26"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a3",
+          "revision": 1,
+          "sha256": "f5c382b0224db37929445b7e5f16da4b4c5d539dd4029bb83898f29c32cb4363"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a4",
+          "revision": 1,
+          "sha256": "aaccb9f052c345353a5a649b8d121740af6c8faa43d858184c4ed1438e23af98"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a5",
+          "revision": 1,
+          "sha256": "d826edf0e362719003bad2cbbf521149534df7c6e6371f26121c429c5cf53f68"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a6",
+          "revision": 1,
+          "sha256": "0eb4b696d9a91fe8f6e5fd95cc7a177ce15a9f685ff910d11afc621a8a4c24ba"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a7",
+          "revision": 1,
+          "sha256": "12b638eb9c1f0d3745f90c9e19c6bd6bd9cd41b5bc52d18d8219f20528412eda"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a8",
+          "revision": 1,
+          "sha256": "2c3fa29dfec8e471c68f39bd5af9f4aef52a70784bc4a451f472093064e7f660"
+        },
+        {
+          "type": "PRESENTATION",
+          "id": "demo:wpe:a9",
+          "revision": 1,
+          "sha256": "e7c8172a0593607ef542167fd8f5f4e69cbd7499b2a28ad6091321bc12362692"
+        },
+        {
+          "type": "ASSET",
+          "id": "demo:wpe:model",
+          "revision": 1,
+          "sha256": "667d7296bdeeb1ce5c8c931e265a6ca69339e09c68440d8d8e7d7e0857e9b64a"
+        },
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-1",
+          "revision": 1,
+          "sha256": "1aececa4d1d464db08eb368b2bc59ff033249a5d94ff7dfd471898c79edad3e7"
+        },
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-2",
+          "revision": 1,
+          "sha256": "7568ab8afed75200fd8bba16b15a5515f6a64b2552143b4449793329527d8816"
+        },
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-3",
+          "revision": 1,
+          "sha256": "46df3445267f773c4e5792fd41c07e9ea68578aa1c52d4e6c2d61ca242e98e53"
+        },
+        {
+          "type": "SOLUTION",
+          "id": "demo:wpe:anchor-sol-1",
+          "revision": 1,
+          "sha256": "dcce5a393936d85b897d1a5978fb4ccb221c75e89efeb95ecb2cf9b10cd9a646"
+        },
+        {
+          "type": "SOLUTION",
+          "id": "demo:wpe:anchor-sol-2",
+          "revision": 1,
+          "sha256": "5a90c20d51c53b93c624ee6547b71933ef1416f8b3b265e0a9bf12c000a1cea7"
+        },
+        {
+          "type": "SOLUTION",
+          "id": "demo:wpe:anchor-sol-3",
+          "revision": 1,
+          "sha256": "d02169a138b194f05f0b6695a79383b10ee26df83e453f2241173da646751b37"
+        },
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:synthesis",
+          "revision": 1,
+          "sha256": "197f7d26aa33e979b8d4f9e80f53e67144e6d08b9222749b8447c967c980836a"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:fresh",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "stem": "A 0.8 kg cart starts at rest against an unattached ideal spring of stiffness 160 N/m compressed 0.15 m. The horizontal track is smooth while the spring pushes. After it leaves the spring, a braking strip exerts a constant 3 N force opposite motion over 0.40 m. Does the cart emerge from the strip? If so, find its speed. Explain your model and show your work.",
+        "fields": [
+          {
+            "id": "response",
+            "kind": "CONSTRUCTED_RESPONSE",
+            "required": true,
+            "prompt": "Explain your reasoning"
+          },
+          {
+            "id": "work",
+            "kind": "CONSTRUCTED_RESPONSE",
+            "required": true,
+            "prompt": "Show your calculations or drawing"
+          }
+        ],
+        "prediction_prompt": "Describe what you expect to happen before calculating.",
+        "visibility": "ATTEMPT"
+      },
+      "dependencies": [
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "SOLUTION",
+      "id": "demo:wpe:fresh-solution",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "visibility": "AFTER_FIRST_COMMIT",
+        "steps": [
+          "Spring energy = 0.5×160×0.15² = 1.8 J. Smooth contact ends at natural length.",
+          "Release kinetic energy 1.8 J.",
+          "Braking strip removes 3×0.40 = 1.2 J.",
+          "Remaining energy 0.6 J; cart emerges with v=√(2×0.6/0.8)=√1.5 m/s ≈1.225 m/s."
+        ],
+        "rubric": [
+          "Choose two regions and correct contact boundary",
+          "Use spring energy only during contact",
+          "Compute negative braking work only on strip",
+          "Check feasibility before square root",
+          "Explain why the force model changes"
+        ],
+        "diagnosis": [
+          "Continuing spring work",
+          "Applying brake work in smooth region",
+          "Ignoring stop condition"
+        ],
+        "repair_prompt": "Redraw the force model for the region where your reasoning first diverged. Keep your original and revise separately."
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:boundary",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "stem": "Change only the strip length to 0.70 m. Does the cart emerge? Explain where motion stops.",
+        "fields": [
+          {
+            "id": "response",
+            "kind": "CONSTRUCTED_RESPONSE",
+            "required": true,
+            "prompt": "Show your reasoning"
+          }
+        ],
+        "visibility": "BOUNDARY_ATTEMPT"
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "SOLUTION",
+      "id": "demo:wpe:boundary-solution",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "Available kinetic energy is 1.8 J. It stops after 1.8/3=0.60 m, before the 0.70 m strip ends. Do not continue the energy expression into negative kinetic energy.",
+        "visibility": "AFTER_BOUNDARY_COMMIT"
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:boundary",
+          "revision": 1,
+          "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
+        },
+        {
+          "type": "WARRANT",
+          "id": "demo:wpe:warrant",
+          "revision": 1,
+          "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "ASSET",
+      "id": "demo:wpe:hint-1",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "Which interactions are present at the beginning and later?",
+        "visibility": "HINT",
+        "ordinal": 1
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "ASSET",
+      "id": "demo:wpe:hint-2",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "Consider which quantities can describe the state of the cart at each location.",
+        "visibility": "HINT",
+        "ordinal": 2
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "ASSET",
+      "id": "demo:wpe:hint-3",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "text": "Check whether the motion is physically possible at every point, not only at the requested endpoint.",
+        "visibility": "HINT",
+        "ordinal": 3
+      },
+      "dependencies": [
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "RELATIONSHIP",
+      "id": "demo:wpe:relation-1",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "from": {
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
+          "revision": 1,
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        },
+        "to": {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        "kind": "CRUX_RECOVERY",
+        "status": "SYNTHETIC",
+        "evidence_refs": []
+      },
+      "dependencies": [
+        {
+          "type": "QUESTION",
+          "id": "demo:wpe:source",
+          "revision": 1,
+          "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+        },
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "RELATIONSHIP",
+      "id": "demo:wpe:relation-2",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "from": {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        "to": {
+          "type": "LESSON",
+          "id": "demo:wpe:lesson",
+          "revision": 1,
+          "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357"
+        },
+        "kind": "TEACHES",
+        "status": "SYNTHETIC",
+        "evidence_refs": []
+      },
+      "dependencies": [
+        {
+          "type": "CONSTRUCTION",
+          "id": "demo:wpe:construction",
+          "revision": 1,
+          "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+        },
+        {
+          "type": "LESSON",
+          "id": "demo:wpe:lesson",
+          "revision": 1,
+          "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    },
+    {
+      "schema_version": "engineering-projection/1",
+      "type": "RELATIONSHIP",
+      "id": "demo:wpe:relation-3",
+      "revision": 1,
+      "subject_id": "PHYSICS",
+      "payload": {
+        "from": {
+          "type": "LESSON",
+          "id": "demo:wpe:lesson",
+          "revision": 1,
+          "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357"
+        },
+        "to": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        },
+        "kind": "FRESH_TRANSFER",
+        "status": "SYNTHETIC",
+        "evidence_refs": []
+      },
+      "dependencies": [
+        {
+          "type": "LESSON",
+          "id": "demo:wpe:lesson",
+          "revision": 1,
+          "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357"
+        },
+        {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:fresh",
+          "revision": 1,
+          "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+        }
+      ],
+      "source_lineage_refs": [],
+      "status": "SYNTHETIC"
+    }
+  ],
+  "teaching_projection": {
+    "schema_version": "g9-teaching-projection/1",
+    "lesson_ref": {
+      "type": "LESSON",
+      "id": "demo:wpe:lesson",
+      "revision": 1,
+      "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357"
+    },
+    "construction_ref": {
+      "type": "CONSTRUCTION",
+      "id": "demo:wpe:construction",
+      "revision": 1,
+      "sha256": "dc3e00811e9499bc6793404b27a3538edac447c0170a1b12eabc7d5339481769"
+    },
+    "units": [
+      {
+        "role": "A1",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a1",
+            "revision": 1,
+            "sha256": "72cb3c7971ab1869b8d59508e88ca4c10612d20e24759d2748354ba0a8d54e31"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A2",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a2",
+            "revision": 1,
+            "sha256": "7681dd64eba8d21c444ef3e55a5a46ea6bcb98f80a97a3222b63f3cefb47fb26"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A3",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a3",
+            "revision": 1,
+            "sha256": "f5c382b0224db37929445b7e5f16da4b4c5d539dd4029bb83898f29c32cb4363"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A4",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a4",
+            "revision": 1,
+            "sha256": "aaccb9f052c345353a5a649b8d121740af6c8faa43d858184c4ed1438e23af98"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A5",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a5",
+            "revision": 1,
+            "sha256": "d826edf0e362719003bad2cbbf521149534df7c6e6371f26121c429c5cf53f68"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A6",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a6",
+            "revision": 1,
+            "sha256": "0eb4b696d9a91fe8f6e5fd95cc7a177ce15a9f685ff910d11afc621a8a4c24ba"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A7",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a7",
+            "revision": 1,
+            "sha256": "12b638eb9c1f0d3745f90c9e19c6bd6bd9cd41b5bc52d18d8219f20528412eda"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A8",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a8",
+            "revision": 1,
+            "sha256": "2c3fa29dfec8e471c68f39bd5af9f4aef52a70784bc4a451f472093064e7f660"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "role": "A9",
+        "block_refs": [
+          {
+            "type": "PRESENTATION",
+            "id": "demo:wpe:a9",
+            "revision": 1,
+            "sha256": "e7c8172a0593607ef542167fd8f5f4e69cbd7499b2a28ad6091321bc12362692"
+          }
+        ],
+        "evidence_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      }
+    ],
+    "anchors": [
+      {
+        "level": "FOUNDATION",
+        "task_ref": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-1",
+          "revision": 1,
+          "sha256": "1aececa4d1d464db08eb368b2bc59ff033249a5d94ff7dfd471898c79edad3e7"
+        },
+        "solution_ref": {
+          "type": "SOLUTION",
+          "id": "demo:wpe:anchor-sol-1",
+          "revision": 1,
+          "sha256": "dcce5a393936d85b897d1a5978fb4ccb221c75e89efeb95ecb2cf9b10cd9a646"
+        },
+        "warrant_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "level": "CONNECTED",
+        "task_ref": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-2",
+          "revision": 1,
+          "sha256": "7568ab8afed75200fd8bba16b15a5515f6a64b2552143b4449793329527d8816"
+        },
+        "solution_ref": {
+          "type": "SOLUTION",
+          "id": "demo:wpe:anchor-sol-2",
+          "revision": 1,
+          "sha256": "5a90c20d51c53b93c624ee6547b71933ef1416f8b3b265e0a9bf12c000a1cea7"
+        },
+        "warrant_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      },
+      {
+        "level": "ADVANCED",
+        "task_ref": {
+          "type": "FRESH_TASK",
+          "id": "demo:wpe:anchor-3",
+          "revision": 1,
+          "sha256": "46df3445267f773c4e5792fd41c07e9ea68578aa1c52d4e6c2d61ca242e98e53"
+        },
+        "solution_ref": {
+          "type": "SOLUTION",
+          "id": "demo:wpe:anchor-sol-3",
+          "revision": 1,
+          "sha256": "d02169a138b194f05f0b6695a79383b10ee26df83e453f2241173da646751b37"
+        },
+        "warrant_refs": [
+          {
+            "type": "WARRANT",
+            "id": "demo:wpe:warrant",
+            "revision": 1,
+            "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+          }
+        ]
+      }
+    ],
+    "model_refs": [
+      {
+        "type": "ASSET",
+        "id": "demo:wpe:model",
+        "revision": 1,
+        "sha256": "667d7296bdeeb1ce5c8c931e265a6ca69339e09c68440d8d8e7d7e0857e9b64a"
+      }
+    ],
+    "synthesis_task_ref": {
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:synthesis",
+      "revision": 1,
+      "sha256": "197f7d26aa33e979b8d4f9e80f53e67144e6d08b9222749b8447c967c980836a"
+    },
+    "status": "SYNTHETIC"
+  },
+  "model_projection": {
+    "schema_version": "g9-model-projection/1",
+    "id": "demo:spring-model",
+    "adapter_id": "spring-contact-demo",
+    "adapter_version": "1",
+    "parameters": [
+      {
+        "id": "compression",
+        "unit": "m",
+        "min": 0,
+        "max": 0.3,
+        "step": 0.01,
+        "initial": 0.3
+      }
+    ],
+    "output_ids": [
+      "spring_energy",
+      "kinetic_energy"
+    ],
+    "representation_ids": [
+      "contact-schematic",
+      "energy-bar",
+      "quantity-table"
+    ],
+    "warrant_refs": [
+      {
+        "type": "WARRANT",
+        "id": "demo:wpe:warrant",
+        "revision": 1,
+        "sha256": "20bce2ca7a6da19ef3a5051d007b1d8f5cb0480f4d25dbc5ff2577b5cab6dbd0"
+      }
+    ],
+    "alt_text": "Cart in contact with spring, then separated; spring energy decreases and cart kinetic energy increases on a smooth track.",
+    "status": "SYNTHETIC"
+  },
+  "origin_ref": {
+    "type": "QUESTION",
+    "id": "demo:wpe:source",
+    "revision": 1,
+    "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+  },
+  "source_solution_ref": {
+    "type": "SOLUTION",
+    "id": "demo:wpe:source-solution",
+    "revision": 1,
+    "sha256": "a07d0b10bc5a003b6c4c0d19a215aac660b65258038df422d09c5813eecadad0"
+  },
+  "fresh_ref": {
+    "type": "FRESH_TASK",
+    "id": "demo:wpe:fresh",
+    "revision": 1,
+    "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+  },
+  "fresh_solution_ref": {
+    "type": "SOLUTION",
+    "id": "demo:wpe:fresh-solution",
+    "revision": 1,
+    "sha256": "7c2f73b43b2229ebd3968c991c76a21339f18b434d58e33f313f21b144cd4324"
+  },
+  "boundary_ref": {
+    "type": "FRESH_TASK",
+    "id": "demo:wpe:boundary",
+    "revision": 1,
+    "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
+  },
+  "boundary_solution_ref": {
+    "type": "SOLUTION",
+    "id": "demo:wpe:boundary-solution",
+    "revision": 1,
+    "sha256": "4f78f40635c4ce9af0a003e8aa5cfc10540de009fe84beaf7ef2a31dfc4c9151"
+  },
+  "hint_refs": [
+    {
+      "type": "ASSET",
+      "id": "demo:wpe:hint-1",
+      "revision": 1,
+      "sha256": "ee523b2da0917fca851941fa10768c73d5053e9727154e31c8a524a67cfd7670"
+    },
+    {
+      "type": "ASSET",
+      "id": "demo:wpe:hint-2",
+      "revision": 1,
+      "sha256": "0536c4f4320d967aab5c9c3695ca581296c1197c1dc61866bae7227bd1047f63"
+    },
+    {
+      "type": "ASSET",
+      "id": "demo:wpe:hint-3",
+      "revision": 1,
+      "sha256": "609d06ed7d77fa73bfad3fd8c5edb114bad141bb96d1e8b29b9ea2dc1ae1fe1f"
+    }
+  ],
+  "precommit_view_refs": [
+    {
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:fresh",
+      "revision": 1,
+      "sha256": "d35b9cf1efba11242991e1b955142f8c6e1adf60e37181a4ee508cfd1961c12c"
+    }
+  ],
+  "boundary_precommit_view_refs": [
+    {
+      "type": "FRESH_TASK",
+      "id": "demo:wpe:boundary",
+      "revision": 1,
+      "sha256": "68caf3236f48bb2bb0114bee97739acf1f8b3426a5df9f544eaf5db9820f9832"
+    }
+  ],
+  "expected_numeric": {
+    "release_energy": 1.8,
+    "final_energy": 0.6,
+    "speed": 1.224744871391589,
+    "boundary_stop_m": 0.6
+  },
+  "notes": [
+    "One complete engineering content example; no genuine examination source, independent reviewer evidence, native contract adoption or learner proof.",
+    "No executable model, target UI or source figure supplied. Other twelve full synthetic task graphs remain required before WPE suite.",
+    "Author-only reference objects belong in acceptance fixture outside public deployment. Runtime must project allowed views, not ship this fixture wholesale."
+  ]
+}

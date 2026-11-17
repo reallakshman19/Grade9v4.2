@@ -1,0 +1,344 @@
+[
+  {
+    "profile": {
+      "id": "PHY-E1",
+      "programme_id": "DEMO-PHYSICS",
+      "subject_ids": [
+        "PHYSICS"
+      ],
+      "stage": "E1",
+      "synthetic": true,
+      "capabilities": [
+        "SINGLE_CHOICE",
+        "MULTIPLE_CHOICE"
+      ],
+      "task_ids": [
+        "demo:PHY-E1"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 2,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "MULTIPLE_CHOICE",
+      "value": [
+        "A",
+        "C"
+      ]
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 2
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "PHY-E2",
+      "programme_id": "DEMO-PHYSICS",
+      "subject_ids": [
+        "PHYSICS"
+      ],
+      "stage": "E2",
+      "synthetic": true,
+      "capabilities": [
+        "MULTIPART",
+        "NUMERIC_QUANTITY",
+        "CONSTRUCTED_RESPONSE"
+      ],
+      "task_ids": [
+        "demo:PHY-E2"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 1,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "MULTIPART",
+      "value": {
+        "p1": {
+          "kind": "NUMERIC_QUANTITY",
+          "value": {
+            "decimal": "2.5",
+            "unit": "J"
+          }
+        },
+        "p2": {
+          "kind": "CONSTRUCTED_RESPONSE",
+          "value": "Explain the work relation."
+        }
+      }
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "PHY-E3",
+      "programme_id": "DEMO-PHYSICS",
+      "subject_ids": [
+        "PHYSICS"
+      ],
+      "stage": "E3",
+      "synthetic": true,
+      "capabilities": [
+        "DATA_TABLE",
+        "GRAPH",
+        "EXPERIMENT_ANALYSIS",
+        "NUMERIC_QUANTITY"
+      ],
+      "task_ids": [
+        "demo:PHY-E3"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 1,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "EXPERIMENT_ANALYSIS",
+      "value": {
+        "observations": [
+          "Synthetic readings vary with time."
+        ],
+        "conclusion": "Estimate uncertainty from the given data."
+      }
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "CHEM-E1",
+      "programme_id": "DEMO-CHEMISTRY",
+      "subject_ids": [
+        "CHEMISTRY"
+      ],
+      "stage": "E1",
+      "synthetic": true,
+      "capabilities": [
+        "SINGLE_CHOICE"
+      ],
+      "task_ids": [
+        "demo:CHEM-E1"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 1,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "SINGLE_CHOICE",
+      "value": "B"
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 1
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "CHEM-E2",
+      "programme_id": "DEMO-CHEMISTRY",
+      "subject_ids": [
+        "CHEMISTRY"
+      ],
+      "stage": "E2",
+      "synthetic": true,
+      "capabilities": [
+        "CHEMICAL_STRUCTURE",
+        "REACTION_MECHANISM",
+        "MULTIPART"
+      ],
+      "task_ids": [
+        "demo:CHEM-E2"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 1,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "CHEMICAL_STRUCTURE",
+      "value": {
+        "format": "SMILES",
+        "data": "CCO"
+      }
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "CHEM-E3",
+      "programme_id": "DEMO-CHEMISTRY",
+      "subject_ids": [
+        "CHEMISTRY"
+      ],
+      "stage": "E3",
+      "synthetic": true,
+      "capabilities": [
+        "DATA_TABLE",
+        "GRAPH",
+        "EXPERIMENT_ANALYSIS",
+        "CHEMICAL_STRUCTURE"
+      ],
+      "task_ids": [
+        "demo:CHEM-E3"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 1,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "DATA_TABLE",
+      "value": [
+        [
+          "sample",
+          "reading"
+        ],
+        [
+          "X",
+          "1.20"
+        ]
+      ]
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "MATH-E1",
+      "programme_id": "DEMO-MATHEMATICS",
+      "subject_ids": [
+        "MATHEMATICS"
+      ],
+      "stage": "E1",
+      "synthetic": true,
+      "capabilities": [
+        "INTEGER"
+      ],
+      "task_ids": [
+        "demo:MATH-E1"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 1,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "INTEGER",
+      "value": "7"
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 1
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "MATH-E2",
+      "programme_id": "DEMO-MATHEMATICS",
+      "subject_ids": [
+        "MATHEMATICS"
+      ],
+      "stage": "E2",
+      "synthetic": true,
+      "capabilities": [
+        "MATHEMATICAL_PROOF",
+        "SYMBOLIC_EXPRESSION"
+      ],
+      "task_ids": [
+        "demo:MATH-E2"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 1,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "MATHEMATICAL_PROOF",
+      "value": "Let n be even. Then n=2k for integer k, hence n²=4k²."
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  },
+  {
+    "profile": {
+      "id": "MATH-E3",
+      "programme_id": "DEMO-MATHEMATICS",
+      "subject_ids": [
+        "MATHEMATICS"
+      ],
+      "stage": "E3",
+      "synthetic": true,
+      "capabilities": [
+        "MATHEMATICAL_PROOF",
+        "MULTIPART"
+      ],
+      "task_ids": [
+        "demo:MATH-E3"
+      ],
+      "policy": {
+        "mode": "PRACTICE",
+        "max_points": 7,
+        "duration_seconds": null,
+        "aids": [],
+        "allow_hints": true
+      }
+    },
+    "response": {
+      "kind": "MATHEMATICAL_PROOF",
+      "value": "A draft proof with an unresolved lemma."
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null
+    },
+    "label": "Synthetic capability fixture; not an exam question"
+  }
+]

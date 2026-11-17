@@ -1,0 +1,16 @@
+[
+  {
+    "snapshot_id": "synthetic-v35",
+    "path": "standalone/demo.html",
+    "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "entry_context": "local-http-demo",
+    "audience": "LEARNER",
+    "capability_ids": [
+      "demo.slider"
+    ],
+    "permitted_slots": [
+      "SCENE",
+      "PARAMETERS"
+    ]
+  }
+]

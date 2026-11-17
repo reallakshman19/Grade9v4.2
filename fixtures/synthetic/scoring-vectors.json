@@ -1,0 +1,636 @@
+[
+  {
+    "id": "S01",
+    "response": {
+      "kind": "SINGLE_CHOICE",
+      "value": "B"
+    },
+    "policy": {
+      "kind": "SINGLE_CHOICE",
+      "allowed": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correct": "B",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 2,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S02",
+    "response": {
+      "kind": "SINGLE_CHOICE",
+      "value": "A"
+    },
+    "policy": {
+      "kind": "SINGLE_CHOICE",
+      "allowed": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correct": "B",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 0,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S03",
+    "response": {
+      "kind": "SINGLE_CHOICE",
+      "value": "Z"
+    },
+    "policy": {
+      "kind": "SINGLE_CHOICE",
+      "allowed": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correct": "B",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "INVALID",
+      "points": null,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S04",
+    "response": {
+      "kind": "MULTIPLE_CHOICE",
+      "value": [
+        "C",
+        "A"
+      ]
+    },
+    "policy": {
+      "kind": "MULTIPLE_CHOICE",
+      "allowed": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "max_points": 3
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 3,
+      "max_points": 3
+    }
+  },
+  {
+    "id": "S05",
+    "response": {
+      "kind": "MULTIPLE_CHOICE",
+      "value": [
+        "A"
+      ]
+    },
+    "policy": {
+      "kind": "MULTIPLE_CHOICE",
+      "allowed": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "max_points": 3
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 0,
+      "max_points": 3
+    }
+  },
+  {
+    "id": "S06",
+    "response": {
+      "kind": "MULTIPLE_CHOICE",
+      "value": [
+        "A",
+        "A"
+      ]
+    },
+    "policy": {
+      "kind": "MULTIPLE_CHOICE",
+      "allowed": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "max_points": 3
+    },
+    "expected": {
+      "status": "INVALID",
+      "points": null,
+      "max_points": 3
+    }
+  },
+  {
+    "id": "S07",
+    "response": {
+      "kind": "MULTIPLE_CHOICE",
+      "value": [
+        "A",
+        "Z"
+      ]
+    },
+    "policy": {
+      "kind": "MULTIPLE_CHOICE",
+      "allowed": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "correct": [
+        "A",
+        "C"
+      ],
+      "max_points": 3
+    },
+    "expected": {
+      "status": "INVALID",
+      "points": null,
+      "max_points": 3
+    }
+  },
+  {
+    "id": "S08",
+    "response": {
+      "kind": "INTEGER",
+      "value": "07"
+    },
+    "policy": {
+      "kind": "INTEGER",
+      "correct": "7",
+      "max_points": 1
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 1,
+      "max_points": 1
+    }
+  },
+  {
+    "id": "S09",
+    "response": {
+      "kind": "INTEGER",
+      "value": "7.0"
+    },
+    "policy": {
+      "kind": "INTEGER",
+      "correct": "7",
+      "max_points": 1
+    },
+    "expected": {
+      "status": "INVALID",
+      "points": null,
+      "max_points": 1
+    }
+  },
+  {
+    "id": "S10",
+    "response": {
+      "kind": "NUMERIC_QUANTITY",
+      "value": {
+        "decimal": "2500",
+        "unit": "mJ"
+      }
+    },
+    "policy": {
+      "kind": "NUMERIC_QUANTITY",
+      "correct": "2.50",
+      "unit": "J",
+      "unit_factors": {
+        "J": "1",
+        "mJ": "0.001"
+      },
+      "abs_tol": "0.01",
+      "rel_tol": "0",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 2,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S11",
+    "response": {
+      "kind": "NUMERIC_QUANTITY",
+      "value": {
+        "decimal": "2.51",
+        "unit": "J"
+      }
+    },
+    "policy": {
+      "kind": "NUMERIC_QUANTITY",
+      "correct": "2.50",
+      "unit": "J",
+      "unit_factors": {
+        "J": "1",
+        "mJ": "0.001"
+      },
+      "abs_tol": "0.01",
+      "rel_tol": "0",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 2,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S12",
+    "response": {
+      "kind": "NUMERIC_QUANTITY",
+      "value": {
+        "decimal": "2.52",
+        "unit": "J"
+      }
+    },
+    "policy": {
+      "kind": "NUMERIC_QUANTITY",
+      "correct": "2.50",
+      "unit": "J",
+      "unit_factors": {
+        "J": "1",
+        "mJ": "0.001"
+      },
+      "abs_tol": "0.01",
+      "rel_tol": "0",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 0,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S13",
+    "response": {
+      "kind": "NUMERIC_QUANTITY",
+      "value": {
+        "decimal": "2.50",
+        "unit": "s"
+      }
+    },
+    "policy": {
+      "kind": "NUMERIC_QUANTITY",
+      "correct": "2.50",
+      "unit": "J",
+      "unit_factors": {
+        "J": "1",
+        "mJ": "0.001"
+      },
+      "abs_tol": "0.01",
+      "rel_tol": "0",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "INVALID",
+      "points": null,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S14",
+    "response": {
+      "kind": "NUMERIC_QUANTITY",
+      "value": {
+        "decimal": "NaN",
+        "unit": "J"
+      }
+    },
+    "policy": {
+      "kind": "NUMERIC_QUANTITY",
+      "correct": "2.50",
+      "unit": "J",
+      "unit_factors": {
+        "J": "1",
+        "mJ": "0.001"
+      },
+      "abs_tol": "0.01",
+      "rel_tol": "0",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "INVALID",
+      "points": null,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S15",
+    "response": {
+      "kind": "MATHEMATICAL_PROOF",
+      "value": "QED. Correct proof."
+    },
+    "policy": {
+      "kind": "MATHEMATICAL_PROOF",
+      "max_points": 7
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 7
+    }
+  },
+  {
+    "id": "S16",
+    "response": {
+      "kind": "SYMBOLIC_EXPRESSION",
+      "value": "x+x"
+    },
+    "policy": {
+      "kind": "SYMBOLIC_EXPRESSION",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S17",
+    "response": {
+      "kind": "CHEMICAL_STRUCTURE",
+      "value": {
+        "format": "SMILES",
+        "data": "CCO"
+      }
+    },
+    "policy": {
+      "kind": "CHEMICAL_STRUCTURE",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S18",
+    "response": {
+      "kind": "REACTION_MECHANISM",
+      "value": [
+        "step 1"
+      ]
+    },
+    "policy": {
+      "kind": "REACTION_MECHANISM",
+      "max_points": 3
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 3
+    }
+  },
+  {
+    "id": "S19",
+    "response": {
+      "kind": "DATA_TABLE",
+      "value": [
+        [
+          "t",
+          "x"
+        ],
+        [
+          "1",
+          "2"
+        ]
+      ]
+    },
+    "policy": {
+      "kind": "DATA_TABLE",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S20",
+    "response": {
+      "kind": "GRAPH",
+      "value": {
+        "points": [
+          [
+            "1",
+            "2"
+          ]
+        ]
+      }
+    },
+    "policy": {
+      "kind": "GRAPH",
+      "max_points": 2
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 2
+    }
+  },
+  {
+    "id": "S21",
+    "response": {
+      "kind": "EXPERIMENT_ANALYSIS",
+      "value": {
+        "observations": [
+          "x"
+        ],
+        "conclusion": "y"
+      }
+    },
+    "policy": {
+      "kind": "EXPERIMENT_ANALYSIS",
+      "max_points": 5
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 5
+    }
+  },
+  {
+    "id": "S22",
+    "response": {
+      "kind": "CONSTRUCTED_RESPONSE",
+      "value": "A derivation."
+    },
+    "policy": {
+      "kind": "CONSTRUCTED_RESPONSE",
+      "max_points": 3
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 3
+    }
+  },
+  {
+    "id": "S23",
+    "response": {
+      "kind": "MULTIPART",
+      "value": {
+        "p1": {
+          "kind": "INTEGER",
+          "value": "7"
+        },
+        "p2": {
+          "kind": "MATHEMATICAL_PROOF",
+          "value": "draft"
+        }
+      }
+    },
+    "policy": {
+      "kind": "MULTIPART",
+      "max_points": 8,
+      "parts": {
+        "p1": {
+          "kind": "INTEGER",
+          "correct": "7",
+          "max_points": 1
+        },
+        "p2": {
+          "kind": "MATHEMATICAL_PROOF",
+          "max_points": 7
+        }
+      }
+    },
+    "expected": {
+      "status": "REVIEW_PENDING",
+      "points": null,
+      "max_points": 8
+    }
+  },
+  {
+    "id": "S24",
+    "response": {
+      "kind": "MULTIPART",
+      "value": {
+        "p1": {
+          "kind": "INTEGER",
+          "value": "7"
+        }
+      }
+    },
+    "policy": {
+      "kind": "MULTIPART",
+      "max_points": 8,
+      "parts": {
+        "p1": {
+          "kind": "INTEGER",
+          "correct": "7",
+          "max_points": 1
+        },
+        "p2": {
+          "kind": "MATHEMATICAL_PROOF",
+          "max_points": 7
+        }
+      }
+    },
+    "expected": {
+      "status": "INVALID",
+      "points": null,
+      "max_points": 8
+    }
+  },
+  {
+    "id": "S25",
+    "response": {
+      "kind": "MULTIPART",
+      "value": {
+        "p1": {
+          "kind": "INTEGER",
+          "value": "7"
+        },
+        "p2": {
+          "kind": "SINGLE_CHOICE",
+          "value": "A"
+        }
+      }
+    },
+    "policy": {
+      "kind": "MULTIPART",
+      "max_points": 3,
+      "parts": {
+        "p1": {
+          "kind": "INTEGER",
+          "correct": "7",
+          "max_points": 1
+        },
+        "p2": {
+          "kind": "SINGLE_CHOICE",
+          "allowed": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "correct": "B",
+          "max_points": 2
+        }
+      }
+    },
+    "expected": {
+      "status": "SCORED",
+      "points": 1,
+      "max_points": 3
+    }
+  },
+  {
+    "id": "S26",
+    "response": {
+      "kind": "UNKNOWN",
+      "value": "x"
+    },
+    "policy": {
+      "kind": "UNKNOWN",
+      "max_points": 1
+    },
+    "expected": {
+      "status": "UNSUPPORTED",
+      "points": null,
+      "max_points": 1
+    }
+  }
+]

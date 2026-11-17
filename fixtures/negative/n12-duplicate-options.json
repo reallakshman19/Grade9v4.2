@@ -1,0 +1,14 @@
+{
+  "fault": "N12: Duplicate multiple choice options",
+  "expected": "Question importer rejects duplicate option IDs.",
+  "options": [
+    {
+      "id": "A",
+      "text": "First"
+    },
+    {
+      "id": "A",
+      "text": "Second duplicate"
+    }
+  ]
+}

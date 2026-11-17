@@ -1,0 +1,10 @@
+{
+  "fault": "N08: Unauthorized HOLD promotion",
+  "expected": "Compiler rejects release if any candidate item remains in status HOLD.",
+  "item": {
+    "id": "Q-CANDIDATE-01",
+    "status": "HOLD",
+    "academic_admission": "HOLD",
+    "attempted_action": "PUBLISH_TO_RELEASE"
+  }
+}

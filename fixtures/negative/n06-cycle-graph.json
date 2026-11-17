@@ -1,0 +1,18 @@
+{
+  "fault": "N06: Dependency cycle",
+  "expected": "Graph validator detects cycle via DFS and raises GraphValidationError.",
+  "cycle_edges": [
+    {
+      "from": "node:A",
+      "to": "node:B"
+    },
+    {
+      "from": "node:B",
+      "to": "node:C"
+    },
+    {
+      "from": "node:C",
+      "to": "node:A"
+    }
+  ]
+}
