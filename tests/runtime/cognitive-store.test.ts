@@ -18,7 +18,7 @@ it('executes complete canonical stage sequence and replays exact checkpoint',asy
  await append('FIRST_COMMITTED',{responses:response,work:[],help_event_ids:[snap.eventIds[1]]});const f=snap.firstAttemptId;assert.equal(snap.stage,'RECONSTRUCT');
  await append('RECONSTRUCTION_COMMITTED',{first_event_id:f,comparison:{a:{ok:true}},reference_ref:task});await append('DIAGNOSIS_COMMITTED',{move_id:'m1',why:'reason'});
  await append('REPAIR_COMMITTED',{first_event_id:f,work:[artifact.id],why:'repair'},[artifact]);
- await append('BOUNDARY_COMMITTED',{boundary_task_ref:{...task,id:'que:boundary'},responses:response,work:[],help_event_ids:[snap.eventIds[1]]});
+ await append('BOUNDARY_COMMITTED',{boundary_task_ref:{...task,id:'que:boundary'},responses:response,work:[],help_event_ids:[]});
  await append('BOUNDARY_FEEDBACK_VIEWED',{boundary_event_id:snap.boundaryAttemptId,reference_ref:task});assert.equal(snap.stage,'COMPLETE');assert.equal(snap.eventIds.length,8);
  assert.deepEqual(await new DefaultCognitiveStore(d).replay(j,snap.checkpoint),snap);
 });

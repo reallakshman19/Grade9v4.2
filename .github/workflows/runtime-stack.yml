@@ -5,6 +5,9 @@ on:
       - feat/a48-immutable-cognitive-event-persistence
       - main
   workflow_dispatch:
+concurrency:
+  group: runtime-stack-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -45,7 +48,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: Install Chromium
         if: always() && !cancelled()
-        run: npm exec --no -- playwright-core install --with-deps chromium
+        run: npm exec --no -- playwright-core install chromium
       - name: Actual IndexedDB and cognitive replay
         if: always() && !cancelled()
         run: node --experimental-strip-types --test tests/browser/runtime.spec.ts

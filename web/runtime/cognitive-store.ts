@@ -53,11 +53,11 @@ export function applyEventToSnapshot(current:CognitiveSnapshot,event:CognitiveEv
  return {...current,stage,firstAttemptId:first,boundaryAttemptId:boundary,assisted,lastHash:eventHash,checkpoint:{sequence:event.sequence,sha256:eventHash},eventIds:[...current.eventIds,event.event_id]};
 }
 async function rebuild(events:readonly CognitiveEvent[],journey:JourneyKey):Promise<CognitiveSnapshot>{
- let snap=createGenesisSnapshot(journey);const help=new Set<string>();
+ let snap=createGenesisSnapshot(journey);const help=new Set<string>(),boundaryHelp=new Set<string>();
  for(const e of [...events].sort((a,b)=>a.sequence-b.sequence)){
    validateEvent(e);guard(sameJourney(identity(e),journey)&&e.sequence===snap.checkpoint.sequence+1&&e.previous_sha256===snap.lastHash&&!snap.eventIds.includes(e.event_id),'CORRUPT_CHAIN','Identity, sequence or previous hash mismatch');
-   if(e.event_type==='HELP_EXPOSED'){guard(e.payload.ordinal===help.size+1,'INVALID_LINEAGE','Wrong help ordinal');help.add(e.event_id);}
-   if(e.event_type==='FIRST_COMMITTED'||e.event_type==='BOUNDARY_COMMITTED')guard(e.payload.help_event_ids.every(id=>help.has(id))&&e.payload.help_event_ids.length===help.size,'INVALID_LINEAGE','Help lineage mismatch');
+   if(e.event_type==='HELP_EXPOSED'){guard(e.payload.ordinal===help.size+1,'INVALID_LINEAGE','Wrong help ordinal');help.add(e.event_id);if(snap.stage==='BOUNDARY_TEST')boundaryHelp.add(e.event_id);}
+   if(e.event_type==='FIRST_COMMITTED'||e.event_type==='BOUNDARY_COMMITTED'){const scoped=e.event_type==='FIRST_COMMITTED'?help:boundaryHelp;guard(e.payload.help_event_ids.every(id=>scoped.has(id))&&e.payload.help_event_ids.length===scoped.size,'INVALID_LINEAGE','Help lineage mismatch');}
    snap=applyEventToSnapshot(snap,e,await computeEventHash(e));
  }
  return snap;
