@@ -188,7 +188,7 @@ export class ProofWorkspaceController {
   }
 
   importDraft(draft: MathematicalProofDraft): void {
-    if(draft.archetype!==this.archetype||canonicalJson(draft.givenStatements)!==canonicalJson(this.givenStatements)||draft.goalStatement!==this.goalStatement||canonicalJson(draft.availableLemmas)!==canonicalJson(this.availableLemmas)||!Number.isSafeInteger(draft.revision)||draft.revision<1||!Array.isArray(draft.steps)||!draft.steps.every(s=>s.lemmaRefs.every(id=>this.availableLemmas.some(l=>l.id===id)))||draft.selectedApproachId!==null&&!this.approaches.some(a=>a.id===draft.selectedApproachId&&!a.isGated))throw Error('Foreign or invalid proof draft');
+    if(draft.archetype!==this.archetype||canonicalJson(draft.givenStatements)!==canonicalJson(this.givenStatements)||draft.goalStatement!==this.goalStatement||canonicalJson(draft.availableLemmas)!==canonicalJson(this.availableLemmas)||!Number.isSafeInteger(draft.revision)||draft.revision<1||!Array.isArray(draft.steps)||!draft.steps.every(s=>s.lemmaRefs.every((id:string)=>this.availableLemmas.some(l=>l.id===id)))||draft.selectedApproachId!==null&&!this.approaches.some(a=>a.id===draft.selectedApproachId&&!a.isGated))throw Error('Foreign or invalid proof draft');
     const next=createProofStepManager(draft.steps);
     this.selectedApproachId=draft.selectedApproachId;this.stepManager=next;this.scratchpadNote=draft.symbolicScratchpad||'';this.revision=draft.revision;this.evaluation=null;
   }
