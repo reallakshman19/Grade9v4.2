@@ -136,7 +136,9 @@ export class Core1BTransferJourney{
  getCheckpoint(){return structuredClone(this.evidence?.snapshot.checkpoint??null);}
  private b(){if(!this.binding||this.definition.status==='STALE'||this.definition.status==='PENDING_REVIEW')throw Error('TRANSFER_NOT_AUTHORIZED');return this.binding;}
  private checkIdentity(j:JourneyKey,ctx:Evidence['context'],session:Session,origin:Session){
-  const d=this.definition;
+  const d=this.definition,b=this.b();
+  const fieldsMatch=(ref:Ref<'ASSESSMENT'>,task:Ref,fields:Readonly<Record<string,string>>)=>{const p=b.engine.describeMultipart(ref,task as TaskRef);return !!p&&Object.keys(p).length===Object.keys(fields).length&&Object.keys(fields).every(k=>Object.hasOwn(p,k)&&p[k].kind===fields[k]);};
+  if(!fieldsMatch(b.assessmentA,ctx.task,ctx.firstFields)||!fieldsMatch(b.assessmentB,ctx.boundaryTask,ctx.boundaryFields))throw Error('ASSESSMENT_FIELD_BINDING_MISMATCH');
   if(j.journeyId!==d.journeyId||!sameRef(ctx.task,d.freshTaskA.taskRef as Ref)||!sameRef(ctx.boundaryTask,d.boundaryTaskB.taskRef as Ref)||!sameRef(ctx.firstReference,d.freshTaskA.solutionRef as Ref)||!sameRef(ctx.boundaryReference,d.boundaryTaskB.solutionRef as Ref)||!sameRef(origin.item,d.originRef as Ref)||origin.id===session.id||!session.origin||!sameRef(session.origin,origin.item))throw Error('TRANSFER_BINDING_MISMATCH');
  }
  private async checked(cp?:Checkpoint):Promise<Evidence>{
@@ -167,7 +169,8 @@ export class Core1BTransferJourney{
   // A help event can advance the checkpoint while the attempt stays open. Preserve
   // the older draft only if its hash is an actual prefix of this verified chain.
   const n=l.checkpoint.sequence;if(!Number.isSafeInteger(n)||n<0||n>e.events.length||l.checkpoint.sha256!==(n?await computeEventHash(e.events[n-1]):null))throw Error('DRAFT_PREFIX_MISMATCH');
-  const values=this.map(d.response.value,e);this.responses=values;this.work=structuredClone(d.artifacts);this.draftRevision=d.revision;
+  const values=this.map(d.response.value,e);const prefix=e.events.slice(0,n);const hasFirst=prefix.some(x=>x.event_type==='FIRST_COMMITTED'),hasRepair=prefix.some(x=>x.event_type==='REPAIR_COMMITTED'),hasBoundary=prefix.some(x=>x.event_type==='BOUNDARY_COMMITTED');if(l.stage==='ATTEMPT'&&(!prefix.some(x=>x.event_type==='PREDICTION_COMMITTED')||hasFirst)||l.stage==='BOUNDARY_TEST'&&(!hasRepair||hasBoundary))throw Error('DRAFT_STAGE_PREFIX_MISMATCH');
+  this.responses=values;this.work=structuredClone(d.artifacts);this.draftRevision=d.revision;
  }
  async start(){if(this.busy)throw Error('BUSY');this.busy=true;try{const b=this.b();if(b.definitionSha256!==await computeSha256(canonicalJson(this.definition)))throw Error('TRANSFER_DEFINITION_MISMATCH');const before=await b.controller.describeBinding();this.checkIdentity(before.journey,before.context,before.session,before.origin);await b.controller.begin();const e=await this.checked();await this.loadDraft(e);this.evidence=e;this.blocked=false;}catch(err){this.blocked=true;throw err;}finally{this.busy=false;}}
  async restore(){if(this.busy)throw Error('BUSY');this.busy=true;try{const e=await this.checked();await this.loadDraft(e);this.evidence=e;this.blocked=false;}catch(err){this.blocked=true;throw err;}finally{this.busy=false;}}
@@ -216,7 +219,7 @@ export class Core1BTransferJourney{
  commitFirstAttempt(){return this.submit('ATTEMPT');}commitBoundaryAttempt(){return this.submit('BOUNDARY_TEST');}
  async getTaskASolution(){const e=this.local();return this.b().controller.readProtectedText('REFERENCE_SOLUTION',e.context.firstReference,e.snapshot.checkpoint,this.b().loadProtected);}
  async completeReconstruction(comparison:Readonly<Record<string,JsonObject>>){
-  return this.act('RECONSTRUCT',async e=>{if(!e.snapshot.firstAttemptId||Object.keys(comparison).length!==e.context.moves.length||e.context.moves.some(k=>!Object.hasOwn(comparison,k)||!comparison[k]||!Object.keys(comparison[k]).length))throw Error('COMPARISON_REQUIRED');return (await this.append(e,'RECONSTRUCTION_COMMITTED',{first_event_id:e.snapshot.firstAttemptId,comparison,reference_ref:e.context.firstReference})).next.snapshot;});
+  return this.act('RECONSTRUCT',async e=>{if(!e.snapshot.firstAttemptId||Object.keys(comparison).length!==e.context.moves.length||e.context.moves.some(k=>!Object.hasOwn(comparison,k)||!comparison[k]||typeof comparison[k].observation!=='string'||!comparison[k].observation.trim()))throw Error('COMPARISON_REQUIRED');return (await this.append(e,'RECONSTRUCTION_COMMITTED',{first_event_id:e.snapshot.firstAttemptId,comparison,reference_ref:e.context.firstReference})).next.snapshot;});
  }
  async commitDiagnosis(moveId:string,why:string){if(!nonblank(why))throw Error('DIAGNOSIS_REASON_REQUIRED');return this.act('DIAGNOSE',async e=>(await this.append(e,'DIAGNOSIS_COMMITTED',{move_id:moveId,why})).next.snapshot);}
  async commitRepair(why:string,work:readonly WorkArtifact[]){if(!nonblank(why)||!work.length)throw Error('REPAIR_EVIDENCE_REQUIRED');return this.act('REPAIR',async e=>{const x=await this.append(e,'REPAIR_COMMITTED',{first_event_id:e.snapshot.firstAttemptId!,work:work.map(w=>w.id),why},work);await this.loadDraft(x.next);return x.next.snapshot;});}
