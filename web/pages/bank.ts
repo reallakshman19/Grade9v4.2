@@ -74,12 +74,12 @@ export class QuestionBankScreenController {
   }
 
   setPage(page: number): void {
-    this.currentPage = page;
+    this.currentPage = Number.isSafeInteger(page)&&page>0?page:1;
     this.state = this.computeViewState();
   }
 
   setPageSize(size: number): void {
-    if (size > 0) {
+    if (Number.isSafeInteger(size)&&size > 0&&size<=100) {
       this.pageSize = size;
       this.currentPage = 1;
       this.state = this.computeViewState();
@@ -125,6 +125,7 @@ export class QuestionBankScreenController {
 
     // Filter matching
     const matching = this.allQuestions.filter((q) => {
+      if(q.status==='HOLD')return false;
       // Withdrawn handling: exclude withdrawn unless explicitly requested
       if (!this.filter.includeWithdrawn && q.status === 'WITHDRAWN') {
         return false;
@@ -158,7 +159,7 @@ export class QuestionBankScreenController {
     this.currentPage = clampedPage;
 
     const startIndex = (clampedPage - 1) * this.pageSize;
-    const pageItems = matching.slice(startIndex, startIndex + this.pageSize);
+    const pageItems = [...matching].sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0).slice(startIndex,startIndex+this.pageSize);
 
     // Dynamic Facets with counts from released pool
     const availableFacets = this.computeFacets(releasedQuestions);
