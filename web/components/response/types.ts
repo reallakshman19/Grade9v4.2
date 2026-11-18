@@ -22,6 +22,7 @@ export interface ChoiceOption {
 
 export interface NumericQuantityValue {
   readonly magnitude: number;
+  readonly decimal?: string; // Exact learner token; required for grading.
   readonly unit: string;
   readonly tolerancePercent?: number;
 }
@@ -33,6 +34,7 @@ export type ResponseValue =
 
 export type SubmissionStatus =
   | 'UNANSWERED'
+  | 'DIRTY'
   | 'DRAFT_SAVED'
   | 'SUBMITTING'
   | 'COMMITTED_LOCKED';
