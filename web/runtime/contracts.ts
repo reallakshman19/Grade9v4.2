@@ -13,6 +13,7 @@ export interface AssessmentEngine {evaluate(response:Response,assessment:Ref<'AS
 export interface ProgressStore {saveDraft(session:Session,response:Response,artifacts:readonly WorkArtifact[],expectedRevision?:number,cognitive?:CognitiveDraftLineage|null):Promise<void>;loadDraft(sessionId:string):Promise<Draft|null>;appendAttempt(attempt:Attempt):Promise<void>;committedAttempt(sessionId:string,attemptId:string):Promise<Attempt|null>;exportAll():Promise<Blob>;importVerified(blob:Blob):Promise<void>}
 export interface RelationService {outbound(ref:Ref,kinds:readonly string[]):Promise<readonly Ref[]>;inbound(ref:Ref,kinds:readonly string[]):Promise<readonly Ref[]>;resolveRecovery(ref:Ref,releaseId:string,evidence:unknown):Promise<{readonly eligibleRoutes:readonly Ref[];readonly relatedTopics:readonly Ref[];readonly reasonCode:string}>}
 export interface CognitiveStore {
+  begin(journey:JourneyKey,originSessionId:string):Promise<CognitiveSnapshot>;
   append(event:CognitiveEvent,expected:JourneyKey,checkpoint:Checkpoint,work:readonly WorkArtifact[],attempt?:Attempt):Promise<CognitiveSnapshot>;
   replay(journey:JourneyKey,expectedCheckpoint:Checkpoint):Promise<CognitiveSnapshot>;
   retry(parent:JourneyKey,expectedCheckpoint:Checkpoint,next:JourneyKey):Promise<CognitiveSnapshot>;
