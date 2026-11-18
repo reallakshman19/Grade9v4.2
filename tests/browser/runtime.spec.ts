@@ -29,3 +29,26 @@ it('real browser IndexedDB supports dynamic cognitive stores, async hashing, ref
   assert.equal(result.stage,'ATTEMPT');assert.match(result.hash,/^[a-f0-9]{64}$/);assert(result.aborted&&result.missing);assert(result.invalid&&result.valid&&result.disposed);
  }finally{await browser.close();await server.close();}
 });
+
+it('two tabs share a durable draft CAS and reject stale writes after reload',async()=>{
+ const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();
+ const address=server.httpServer!.address();assert(address&&typeof address!=='string');
+ const browser=await chromium.launch({headless:true});
+ try{
+  const ctx=await browser.newContext(),a=await ctx.newPage(),b=await ctx.newPage(),url='http://127.0.0.1:'+address.port+'/';
+  await Promise.all([a.goto(url),b.goto(url)]);
+  const name='g9-two-tabs-'+Date.now();
+  const write=async (page:typeof a,value:string,revision:number)=>page.evaluate(async({name,value,revision})=>{
+   const storagePath='/runtime/storage.ts',progressPath='/runtime/progress.ts';
+   const {IndexedDBStorageDriver}=await import(storagePath),{DefaultProgressStore}=await import(progressPath);
+   const d=new IndexedDBStorageDriver({dbName:name});try{
+    const s=new DefaultProgressStore(d),session={id:'ses:tab',releaseId:'rel:tab',item:{type:'QUESTION',id:'que:tab',revision:1,sha256:'a'.repeat(64)},origin:null,returnRoute:null,mode:'PRACTICE',cursor:0,attemptIds:[],draftId:null};
+    await s.saveDraft(session,{kind:'INTEGER',value},[],revision);return true;
+   }catch{return false;}finally{await d.close();}
+  },{name,value,revision});
+  assert.equal(await write(a,'1',0),true);
+  const outcome=await Promise.all([write(a,'2',1),write(b,'3',1)]);assert.equal(outcome.filter(Boolean).length,1);
+  await b.reload();assert.equal(await write(b,'4',1),false);assert.equal(await write(b,'5',2),true);
+  await ctx.close();
+ }finally{await browser.close();await server.close();}
+});
