@@ -36,7 +36,7 @@ export interface Checkpoint {readonly sequence:number; readonly sha256:string|nu
 export interface CognitiveLineage {readonly journey:JourneyKey; readonly firstAttemptId:string|null; readonly parentJourney:JourneyKey|null; readonly originSessionId:string; readonly originRef:Ref; readonly originCursor:number}
 export interface Attempt {readonly id:string; readonly sessionId:string; readonly item:Ref; readonly releaseId:string; readonly response:Response; readonly work:readonly WorkArtifact[]; readonly hintIds:readonly string[]; readonly submittedAt:string; readonly grade:Grade; readonly cognitive:CognitiveLineage|null; readonly assessmentRef?:Ref<'ASSESSMENT'>; readonly scoringVersion?:string}
 export interface CognitiveDraftLineage extends CognitiveLineage {readonly stage:CognitiveStage;readonly checkpoint:Checkpoint}
-export interface Draft {readonly session:Session; readonly response:Response; readonly artifacts:readonly WorkArtifact[]; readonly cognitive:CognitiveDraftLineage|null;readonly revision:number}
+export interface Draft {readonly session:Session; readonly response:Response; readonly artifacts:readonly WorkArtifact[]; readonly cognitive:CognitiveDraftLineage|null;readonly cognitiveStale:boolean;readonly revision:number}
 export type CognitiveStage = 'PREDICT'|'ATTEMPT'|'RECONSTRUCT'|'DIAGNOSE'|'REPAIR'|'BOUNDARY_TEST'|'COMPLETE';
 export type HelpCapability = 'H1'|'H2'|'H3'|'READ_ANCHOR'|'MODEL_AUTO_CALCULATE'|'MODEL_MANIPULATE';
 export interface CognitivePayloads {
