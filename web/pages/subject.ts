@@ -48,7 +48,7 @@ export interface SubjectViewState {
 export class SubjectScreenController {
   private subject: SubjectDetail | null = null;
   private activeStrandFilter: string | null = null;
-  private state: SubjectViewState;
+  private state: SubjectViewState = {status:'LOADING',subject:null,visibleTopics:[],totalItemCount:0,coreRoles:ALL_SIX_CORE_ROLES,activeStrandFilter:null,explorerRoute:'/explorer',resourceCatalogueRoute:'/resources'};
 
   constructor(initialSubject?: SubjectDetail) {
     if (initialSubject) {
@@ -68,7 +68,7 @@ export class SubjectScreenController {
   }
 
   loadSubject(subject: SubjectDetail): void {
-    this.subject = subject;
+    this.subject = structuredClone(subject);
     this.activeStrandFilter = null;
     this.updateState();
   }
@@ -113,7 +113,7 @@ export class SubjectScreenController {
       return;
     }
 
-    if (this.subject.status === 'HOLD') {
+    if (this.subject.status !== 'AVAILABLE') {
       this.state = {
         status: 'UNAVAILABLE',
         subject: this.subject,
@@ -128,7 +128,7 @@ export class SubjectScreenController {
       return;
     }
 
-    const allTopics = this.subject.topics || [];
+    const allTopics = (this.subject.topics || []).filter(t=>t.status==='AVAILABLE');
     const visibleTopics = this.activeStrandFilter
       ? allTopics.filter((t) => t.strand === this.activeStrandFilter)
       : allTopics;
