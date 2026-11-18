@@ -33,7 +33,7 @@ function createSafeMount(kind: Kind) {
       field.setAttribute('aria-label',label.textContent);
       if(value)field.value=plain?String(value.value):JSON.stringify(value.value,null,2);
       const error=document.createElement('div');error.setAttribute('role','status');
-      const update=()=>{try{if(!plain&&findDuplicateKeyInJson(field.value))throw new ResponseValidationError('DUPLICATE_PART_ID','Duplicate decoded JSON key');const raw=plain?field.value:JSON.parse(field.value);const response=normalizeAndValidate(kind,raw);error.textContent='';field.removeAttribute('aria-invalid');onChange(response);}catch{error.textContent='Invalid '+kind+' response';field.setAttribute('aria-invalid','true');}};
+      const update=()=>{try{if(!plain&&findDuplicateKeyInJson(field.value))throw new ResponseValidationError('DUPLICATE_PART_ID','Duplicate decoded JSON key');const raw=plain?field.value:JSON.parse(field.value);const response=validateResponse({kind,value:raw});error.textContent='';field.removeAttribute('aria-invalid');onChange(response);}catch{error.textContent='Invalid '+kind+' response';field.setAttribute('aria-invalid','true');}};
       field.addEventListener('input',update);
       label.appendChild(field);container.append(label,error);
       root.appendChild(container);
@@ -54,7 +54,7 @@ function createSafeMount(kind: Kind) {
  * otherwise wraps the raw value into { kind, value }.
  */
 function normalizeAndValidate(kind: Kind, input: unknown): Response {
-  if (typeof input === 'object' && input !== null && 'kind' in input) {
+  if (typeof input === 'object' && input !== null && Object.hasOwn(input,'kind') && typeof (input as {kind:unknown}).kind==='string') {
     const rawKind = (input as { kind: unknown }).kind;
     if (rawKind !== kind) {
       throw new ResponseValidationError(
