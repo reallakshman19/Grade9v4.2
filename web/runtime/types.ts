@@ -30,7 +30,7 @@ export type Grade = GradeCommon & ({readonly status:'SCORED';readonly points:num
 export type ArtifactKind = 'NOTE'|'EQUATION'|'INK'|'TABLE'|'GRAPH'|'STRUCTURE'|'ATTACHMENT';
 export interface WorkArtifact {readonly id:string; readonly kind:ArtifactKind; readonly version:1; readonly value:Json}
 export type SessionMode = 'LEARN'|'PRACTICE'|'SIMULATED_EXAM';
-export interface Session {readonly id:string; readonly releaseId:string; readonly item:Ref; readonly origin:Ref|null; readonly returnRoute:string|null; readonly mode:SessionMode; readonly cursor:number; readonly attemptIds:readonly string[]; readonly draftId:string|null}
+export interface Session {readonly id:string; readonly releaseId:string; readonly item:Ref; readonly origin:Ref|null; readonly returnRoute:string|null; readonly mode:SessionMode; readonly deadlineAt?:string|null; readonly contentRevision?:string; readonly cursor:number; readonly attemptIds:readonly string[]; readonly draftId:string|null}
 export interface JourneyKey {readonly journeyId:string; readonly taskInstanceId:string; readonly task:Ref; readonly releaseId:string}
 export interface Checkpoint {readonly sequence:number; readonly sha256:string|null}
 export interface CognitiveLineage {readonly journey:JourneyKey; readonly firstAttemptId:string|null; readonly parentJourney:JourneyKey|null; readonly originSessionId:string; readonly originRef:Ref; readonly originCursor:number}
