@@ -2,6 +2,7 @@ import {it} from 'node:test';
 import assert from 'node:assert/strict';
 import {DefaultCognitiveStore,computeEventHash,createGenesisSnapshot} from '../../web/runtime/cognitive-store.ts';
 import {MemoryStorageDriver,StorageError} from '../../web/runtime/storage.ts';
+import {canonicalJson,computeSha256} from '../../web/runtime/loader.ts';
 import {DefaultProgressStore} from '../../web/runtime/progress.ts';
 import type {Attempt,Session,CognitiveEvent,JourneyKey,Ref,Checkpoint,WorkArtifact} from '../../web/runtime/types.ts';
 const task:Ref={type:'QUESTION',id:'que:physics:wpe:01',revision:1,sha256:'a'.repeat(64)};
@@ -46,11 +47,47 @@ it('rejects boundary feedback without boundary commitment',async()=>{const s=new
 it('rejects concurrent conflicting appends',async()=>{const s=new DefaultCognitiveStore(new MemoryStorageDriver()),j=journey(),e=pred(j);const outcomes=await Promise.allSettled([s.append(e,j,zero,[]),s.append({...e,event_id:'different'},j,zero,[])]);assert.equal(outcomes.filter(x=>x.status==='fulfilled').length,1);});
 
 import {readFileSync} from 'node:fs';
-it('replays the actual A11 synthetic session and matches its pinned chain head',async()=>{
+it('verifies A11 pinned hashes and rejects incomplete live evidence',async()=>{
  const f=JSON.parse(readFileSync('fixtures/synthetic/session.synthetic.json','utf8'));
  const j:JourneyKey={journeyId:f.journey_id,taskInstanceId:f.task_instance_id,releaseId:f.release_id,task:f.task_ref};
  const s=new DefaultCognitiveStore(new MemoryStorageDriver());let snap=createGenesisSnapshot(j);
  let previous:string|null=null;for(const e of f.history){assert.equal(e.previous_sha256,previous);previous=await computeEventHash(e);}
  assert.equal(f.history.length,f.event_count);assert.equal(previous,f.chain_head_sha256);
  await assert.rejects(async()=>{for(const e of f.history)snap=await s.append(e,j,snap.checkpoint,[]);},/INVALID_LINEAGE/);
+});
+
+it('Stage4: strict timestamps, task type and exact reference grammar',async()=>{
+ const e=pred(journey());
+ for(const at of ['2026-02-30T00:00:00Z','November 18 2026 Z','2026-11-17T24:00:00Z'])await assert.rejects(computeEventHash({...e,at}),/INVALID_EVENT_SCHEMA/);
+ await assert.rejects(computeEventHash({...e,task_ref:{...task,id:'?invalid id!'}}),/INVALID_EVENT_SCHEMA/);
+ await assert.rejects(computeEventHash({...e,task_ref:{...task,type:'SOLUTION'}}),/INVALID_EVENT_SCHEMA/);
+ assert.match(await computeEventHash({...e,at:'2024-02-29T00:00:00.12Z'}),/^[0-9a-f]{64}$/);
+});
+it('Stage4: reject coherently rehashed archive with omitted journey',async()=>{
+ const d=new MemoryStorageDriver(),s=store(d),j=journey();const p=await s.append(pred(j),j,zero,[]),e=first(j,p.checkpoint),a=await attemptFor(d,j,e,[]);
+ await s.append(e,j,p.checkpoint,[],a);
+ const bundle=JSON.parse(await (await s.exportAll()).text());bundle.data.journeys=[];bundle.checksum=await computeSha256(canonicalJson(bundle.data));
+ const fresh=new MemoryStorageDriver();await assert.rejects(store(fresh).importVerified(new Blob([JSON.stringify(bundle)])),/missing event/);
+ assert.equal((await fresh.getAll('attempts')).length,0);assert.equal((await fresh.getAll('sessions')).length,0);
+});
+it('Stage4: retry preserves original origin and rejects alternate origin commitment',async()=>{
+ const d=new MemoryStorageDriver(),s=store(d),p=journey(),j=journey('jrn:retry');
+ const a=await s.append(pred(p),p,zero,[]),e=first(p,a.checkpoint),att=await attemptFor(d,p,e,[]);const b=await s.append(e,p,a.checkpoint,[],att);
+ await s.retry(p,b.checkpoint,j);const c=await s.append(pred(j),j,zero,[]),ne=first(j,c.checkpoint),wrong=await attemptFor(d,j,ne,[]);
+ const lineage={...wrong.cognitive!,parentJourney:p};
+ await assert.rejects(s.append(ne,j,c.checkpoint,[],{...wrong,cognitive:lineage}),/origin differs/);
+ assert.equal(await d.get('attempts',wrong.id),undefined);
+ const right={...wrong,cognitive:{...lineage,originSessionId:att.cognitive!.originSessionId,originRef:att.cognitive!.originRef,originCursor:att.cognitive!.originCursor}};
+ assert.equal((await s.append(ne,j,c.checkpoint,[],right)).stage,'RECONSTRUCT');
+});
+it('Stage4: prediction draft restores its exact stage, lineage and revision',async()=>{
+ const d=new MemoryStorageDriver(),s=store(d),j=journey(),session:Session={id:'ses:draft',releaseId:j.releaseId,item:j.task,mode:'PRACTICE',origin:null,returnRoute:null,cursor:4,attemptIds:[],draftId:null};
+ await d.put('sessions',session.id,session);
+ const snap=await s.begin(j,session.id);
+ const lineage={journey:j,firstAttemptId:null,parentJourney:null,originSessionId:session.id,originRef:session.item,originCursor:4,stage:snap.stage,checkpoint:snap.checkpoint};
+ const p=new DefaultProgressStore(d),response={kind:'CONSTRUCTED_RESPONSE' as const,value:'unsure'};
+ await p.saveDraft(session,response,[],0,lineage);assert.deepEqual((await new DefaultProgressStore(d).loadDraft(session.id))?.cognitive,lineage);
+ const blob=await s.exportAll(),fresh=new MemoryStorageDriver();await store(fresh).importVerified(blob);
+ assert.deepEqual((await new DefaultProgressStore(fresh).loadDraft(session.id))?.cognitive,lineage);
+ await assert.rejects(p.saveDraft(session,response,[],1,{...lineage,stage:'REPAIR'}),/stale cognitive draft/);
 });
