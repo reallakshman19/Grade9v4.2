@@ -9,34 +9,38 @@ import { RESPONSE_KINDS, isResponseKind, validateResponse, ResponseValidationErr
 import { canonicalJson, computeSha256, sameRef } from './loader.ts';
 
 export const SCORING_VERSION = 'g9-scoring/1.1';
-// Exact decimal addition over finite JS numbers' decimal wire representation.
-function exactSum(values: readonly number[]): number {
-  const parts=values.map(v=>{const [m,e='0']=String(v).split('e');return [BigInt(m.replace('.','')),(m.split('.')[1]?.length??0)-Number(e)] as const;});
-  const scale=Math.max(0,...parts.map(p=>p[1]));
-  const n=parts.reduce((sum,p)=>sum+p[0]*10n**BigInt(scale-p[1]),0n);
-  const digits=(n<0n?-n:n).toString().padStart(scale+1,'0');
-  const result=Number((n<0n?'-':'')+(scale?digits.slice(0,-scale)+'.'+digits.slice(-scale):digits));
-  return result;
+// Bounded score wire domain: [0, 1e9], at most six decimal places.
+// All sums within this domain fit exact scaled integer arithmetic. Reject rather than round.
+function scoreDomain(v:number):boolean{return Number.isFinite(v)&&v>=0&&v<=1e9&&/^\d+(?:\.\d{1,6})?$/.test(String(v));}
+function decimal(v:string):[bigint,bigint]{const [whole,frac='']=v.split('.');return [BigInt(whole+frac),10n**BigInt(frac.length)];}
+function exactSum(values:readonly number[]):number {
+  const scale=1000000n;
+  const n=values.reduce((sum,v)=>{const [p,q]=decimal(String(v));return sum+p*scale/q;},0n);
+  if(n>1000000000n*scale)return Infinity;
+  return Number(n)/Number(scale);
 }
-// Conservative, explicit SI conversion subset; unknown conversion pairs fail closed.
-const UNITS:Readonly<Record<string,readonly [string,number]>>=Object.freeze({
-  m:['length',1],cm:['length',0.01],mm:['length',0.001],km:['length',1000],
-  s:['time',1],ms:['time',0.001],min:['time',60],h:['time',3600],
-  kg:['mass',1],g:['mass',0.001],mg:['mass',0.000001],
-  J:['energy',1],mJ:['energy',0.001],kJ:['energy',1000],
-  N:['force',1],kN:['force',1000],W:['power',1],kW:['power',1000],
-  Pa:['pressure',1],kPa:['pressure',1000],mol:['amount',1]
+// Canonical physical scale in exact decimal strings (not binary floats).
+const UNITS:Readonly<Record<string,readonly [string,string]>>=Object.freeze({
+  m:['length','1'],cm:['length','0.01'],mm:['length','0.001'],km:['length','1000'],
+  s:['time','1'],ms:['time','0.001'],min:['time','60'],h:['time','3600'],
+  kg:['mass','1'],g:['mass','0.001'],mg:['mass','0.000001'],
+  J:['energy','1'],mJ:['energy','0.001'],kJ:['energy','1000'],
+  N:['force','1'],kN:['force','1000'],W:['power','1'],kW:['power','1000'],
+  Pa:['pressure','1'],kPa:['pressure','1000'],mol:['amount','1']
 });
 function conversionValid(factors:Readonly<Record<string,string>>,canonical:string):boolean {
   if(!Object.hasOwn(UNITS,canonical)||!Object.hasOwn(factors,canonical))return false;
-  const [dimension,scale]=UNITS[canonical];
-  // R4 factors are expressed in the canonical unit; require its identity factor.
-  return Number(factors[canonical])===1&&Object.entries(factors).every(([unit,factor])=>Object.hasOwn(UNITS,unit)&&UNITS[unit][0]===dimension&&typeof factor==='string'&&/^[0-9]+(\.[0-9]+)?$/.test(factor)&&Number(factor)>0&&Number(factor)===UNITS[unit][1]/scale);
+  const [dimension,scale]=UNITS[canonical], [cp,cq]=decimal(scale);
+  return Object.entries(factors).every(([unit,factor])=>{
+    if(!Object.hasOwn(UNITS,unit)||UNITS[unit][0]!==dimension||typeof factor!=='string'||factor.length>4096||!/^\d+(?:\.\d+)?$/.test(factor))return false;
+    const [p,q]=decimal(factor),[up,uq]=decimal(UNITS[unit][1]);
+    return p>0n&&p*cp*uq===up*q*cq;
+  });
 }
 function validContract(c:AssessmentContract,depth=0):boolean {
-  if(!c||depth>16||!isResponseKind(c.response_kind)||!Number.isFinite(c.max_points)||c.max_points<0||!c.evaluator||!['AUTOMATIC','REVIEW_PENDING'].includes(c.evaluator.mode))return false;
+  if(!c||depth>16||!isResponseKind(c.response_kind)||!scoreDomain(c.max_points)||!c.evaluator||!['AUTOMATIC','REVIEW_PENDING'].includes(c.evaluator.mode))return false;
   if(c.dropped_policy!==undefined&&!['NOT_DROPPED','FULL_CREDIT','REMOVED_FROM_TOTAL'].includes(c.dropped_policy))return false;
-  if(c.penalty_points!==undefined&&(!Number.isFinite(c.penalty_points)||c.penalty_points<0))return false;
+  if(c.penalty_points!==undefined&&(!scoreDomain(c.penalty_points)))return false;
   if(c.evaluator.numeric_tolerance!=null&&(!Number.isFinite(c.evaluator.numeric_tolerance)||c.evaluator.numeric_tolerance<0))return false;
   if(c.response_kind==='NUMERIC_QUANTITY'&&c.evaluator.unit_factors){
     const canonical=c.evaluator.canonical_value as {unit?:string}|null;
