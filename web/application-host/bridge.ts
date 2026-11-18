@@ -224,6 +224,7 @@ export function validateBridgeMessage(
   if (nonceManager.isConsumed(wireToken)) {
     return { reason: "REPLAY", type: msgType, origin: event.origin, timestamp: now };
   }
+  if(wireToken!==sequenceToken)return {reason:'INVALID_PAYLOAD',type:msgType,origin:event.origin,timestamp:now};
   nonceManager.consume(wireToken);
 
   return null; // accepted
