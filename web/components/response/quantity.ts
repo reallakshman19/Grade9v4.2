@@ -21,14 +21,14 @@ export interface QuantityResponseValue {
 export class QuantityResponseController implements ResponseInputController<QuantityResponseValue> {
   private allowedUnits: readonly string[];
   private currentMagnitude: number | null = null;
+  private currentDecimal:string|null=null;
   private currentUnit: string = '';
   private locked: boolean = false;
 
   constructor(allowedUnits: readonly string[] = [], initialValue?: NumericQuantityValue | null) {
     this.allowedUnits = [...allowedUnits];
     if (initialValue) {
-      this.currentMagnitude = initialValue.magnitude;
-      this.currentUnit = initialValue.unit;
+      if(initialValue.decimal&&this.setMagnitude(initialValue.decimal)&&this.setUnit(initialValue.unit)){}else this.currentMagnitude=null;
     } else if (this.allowedUnits.length > 0) {
       this.currentUnit = this.allowedUnits[0];
     }
@@ -46,6 +46,7 @@ export class QuantityResponseController implements ResponseInputController<Quant
       kind: 'NUMERIC_QUANTITY',
       quantity: {
         magnitude: this.currentMagnitude,
+        decimal:this.currentDecimal!,
         unit: this.currentUnit,
       },
     };
@@ -54,10 +55,9 @@ export class QuantityResponseController implements ResponseInputController<Quant
   setValue(value: QuantityResponseValue): void {
     if (this.locked) return;
     if (value.quantity) {
-      this.currentMagnitude = value.quantity.magnitude;
-      this.currentUnit = value.quantity.unit;
+      if(!value.quantity.decimal||!this.setMagnitude(value.quantity.decimal)||!this.setUnit(value.quantity.unit)){this.currentMagnitude=null;this.currentDecimal=null;}
     } else {
-      this.currentMagnitude = null;
+      this.currentMagnitude = null;this.currentDecimal=null;
     }
   }
 
@@ -65,20 +65,21 @@ export class QuantityResponseController implements ResponseInputController<Quant
     if (this.locked) return false;
     const trimmed = magnitudeStr.trim();
     if (trimmed === '') {
-      this.currentMagnitude = null;
+      this.currentMagnitude = null;this.currentDecimal=null;
       return true;
     }
+    if(!/^-?[0-9]+(?:\.[0-9]+)?$/.test(trimmed)||trimmed.length>4096)return false;
     const parsed = Number(trimmed);
     if (Number.isNaN(parsed) || !Number.isFinite(parsed)) {
       return false;
     }
-    this.currentMagnitude = parsed;
+    this.currentMagnitude = parsed;this.currentDecimal=trimmed;
     return true;
   }
 
   setUnit(unit: string): boolean {
     if (this.locked) return false;
-    if (this.allowedUnits.length > 0 && !this.allowedUnits.includes(unit)) {
+    if (!unit.trim()||this.allowedUnits.length > 0 && !this.allowedUnits.includes(unit)) {
       return false;
     }
     this.currentUnit = unit;
@@ -86,7 +87,7 @@ export class QuantityResponseController implements ResponseInputController<Quant
   }
 
   isAnswered(): boolean {
-    return this.currentMagnitude !== null;
+    return this.currentDecimal!==null&&this.currentMagnitude !== null&&!!this.currentUnit;
   }
 
   setLocked(locked: boolean): void {
@@ -99,7 +100,7 @@ export class QuantityResponseController implements ResponseInputController<Quant
 
   reset(): void {
     if (this.locked) return;
-    this.currentMagnitude = null;
+    this.currentMagnitude = null;this.currentDecimal=null;
     if (this.allowedUnits.length > 0) {
       this.currentUnit = this.allowedUnits[0];
     }
