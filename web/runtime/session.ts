@@ -25,7 +25,7 @@ export class Session {
     if(attempt.sessionId!==s.id||attempt.releaseId!==s.releaseId||!sameRef(attempt.item,s.item)||attempt.cognitive!==null)throw new SessionError('ATTEMPT_IDENTITY_MISMATCH');
     const revision=await this.authority.liveRevision(s);
     if(!submissionPermitted(s,revision))throw new SessionError('SUBMISSION_BLOCKED');
-    await this.progress.appendAttempt(attempt);
+    await this.progress.appendQualifiedAttempt(attempt);
     const committed=await this.progress.committedAttempt(s.id,attempt.id);
     if(!committed)throw new SessionError('COMMIT_NOT_QUALIFIED');
     return committed;
