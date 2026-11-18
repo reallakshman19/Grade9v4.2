@@ -142,6 +142,7 @@ function shape(p:any):boolean{
  if(targets.some((t:any)=>!record(t)||!idOk(t.id))||targetIds.size!==targets.length||transforms.some((t:any)=>!strings(t.sourceEntityRefs)||!t.sourceEntityRefs.length||t.sourceEntityRefs.some((id:string)=>!s.entities.some((e:any)=>e.id===id))||!targetIds.has(t.targetRef)))return false;
  for(const r of a.rules){
   if(!['ACCEPT','REJECT'].includes(r.outcome)||r.transformationRef!==undefined&&!transforms.some((t:any)=>t.id===r.transformationRef)||r.sourceEntityRef!==undefined&&!s.entities.some((e:any)=>e.id===r.sourceEntityRef)||r.targetRef!==undefined&&!targetIds.has(r.targetRef))return false;
+  if(r.transformationRef!==undefined){const t=transforms.find((t:any)=>t.id===r.transformationRef);if(r.sourceEntityRef!==undefined&&!t.sourceEntityRefs.includes(r.sourceEntityRef)||r.targetRef!==undefined&&r.targetRef!==t.targetRef)return false;}
   if(r.summary!==undefined&&!textOk(r.summary)||r.reason!==undefined&&!textOk(r.reason))return false;
   if(r.patch!==undefined){const q=r.patch;if(r.outcome!=='ACCEPT'||!record(q)||Object.keys(q).some(k=>!['addEntities','addProjections','removeProjections'].includes(k)))return false;
    const es=q.addEntities??[],ps=q.addProjections??[],rm=q.removeProjections??[];

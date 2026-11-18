@@ -36,7 +36,8 @@ export class PortableWorkbenchAdapter {
   private dynamicEntities: SceneEntity[] = [];
   private dynamicProjections: SceneProjection[] = [];
   private removedProjectionIds: Set<string> = new Set();
-  private appliedRuleIds: string[] = [];
+  private appliedRuleIds:string[]=[];
+  private ruleHistory:{ruleId:string;activeEntityId:string|null}[]=[];
   private rotationDegrees: number = 0;
   private revision: number = 1;
 
@@ -128,7 +129,7 @@ export class PortableWorkbenchAdapter {
       }
     }
 
-    this.appliedRuleIds.push(rule.id);
+    this.appliedRuleIds.push(rule.id);this.ruleHistory.push({ruleId:rule.id,activeEntityId:this.activeEntityId});
     this.revision++;
 
     return {
@@ -154,7 +155,7 @@ export class PortableWorkbenchAdapter {
       packageId: this.pkg.id,
       packageIdentity:this.identity,
       activeEntityId: this.activeEntityId,
-      appliedRuleIds: [...this.appliedRuleIds],
+      appliedRuleIds:[...this.appliedRuleIds],ruleHistory:structuredClone(this.ruleHistory),
       dynamicEntities:structuredClone(this.dynamicEntities),
       dynamicProjections:structuredClone(this.dynamicProjections),
       rotationDegrees: this.rotationDegrees,
@@ -164,11 +165,12 @@ export class PortableWorkbenchAdapter {
 
   restoreState(state: PortableWorkbenchState): void {
     if(state.packageId!==this.pkg.id||state.packageIdentity!==this.identity||!Number.isSafeInteger(state.revision)||state.revision<1||!Array.isArray(state.appliedRuleIds)||new Set(state.appliedRuleIds).size!==state.appliedRuleIds.length)throw Error('Invalid or foreign package snapshot');
+    if(!Array.isArray(state.ruleHistory)||state.ruleHistory.length!==state.appliedRuleIds.length)throw Error('Missing rule history');
     const replay=new PortableWorkbenchAdapter(this.pkg);
-    for(const id of state.appliedRuleIds){const rule=replay.pkg.adapter.rules.find(r=>r.id===id);if(rule?.sourceEntityRef&&!replay.setActiveEntityId(rule.sourceEntityRef))throw Error('Invalid replay source');if(replay.applyRule(id).outcome!=='ACCEPT')throw Error('Invalid rule history');}
+    for(const [i,h] of state.ruleHistory.entries()){if(!h||h.ruleId!==state.appliedRuleIds[i]||!replay.setActiveEntityId(h.activeEntityId)||replay.applyRule(h.ruleId).outcome!=='ACCEPT')throw Error('Invalid rule history');}
     if(canonicalJson(replay.dynamicEntities)!==canonicalJson(state.dynamicEntities)||canonicalJson(replay.dynamicProjections)!==canonicalJson(state.dynamicProjections)||!replay.setActiveEntityId(state.activeEntityId))throw Error('Forged scene snapshot');
     replay.setRotation(state.rotationDegrees);
-    this.activeEntityId=replay.activeEntityId;this.appliedRuleIds=replay.appliedRuleIds;this.dynamicEntities=replay.dynamicEntities;this.dynamicProjections=replay.dynamicProjections;this.removedProjectionIds=replay.removedProjectionIds;this.rotationDegrees=replay.rotationDegrees;this.revision=state.revision;
+    this.activeEntityId=replay.activeEntityId;this.appliedRuleIds=replay.appliedRuleIds;this.ruleHistory=replay.ruleHistory;this.dynamicEntities=replay.dynamicEntities;this.dynamicProjections=replay.dynamicProjections;this.removedProjectionIds=replay.removedProjectionIds;this.rotationDegrees=replay.rotationDegrees;this.revision=state.revision;
   }
 
   // --- Accessible Semantic Descriptions ---

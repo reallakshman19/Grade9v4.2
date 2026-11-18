@@ -230,3 +230,17 @@ describe('A64 external custody packages (not run without authorized directory)',
 
 export {};
 it('rejects graph and patch faults; replays removals and rejects forged state',()=>{const pkg=syntheticPackage();assert.equal(validatePortablePackage(pkg).isValid,true);const a=new PortableWorkbenchAdapter(pkg);assert.equal(a.applyRule('move').outcome,'ACCEPT');assert.equal(a.applyRule('move').outcome,'REJECT');assert.deepEqual(a.getAllProjections().map(p=>p.id),['p2']);const saved=a.exportState(),b=new PortableWorkbenchAdapter(pkg);b.restoreState(saved);assert.deepEqual(b.getAllProjections(),a.getAllProjections());assert.throws(()=>b.restoreState({...saved,dynamicEntities:[{id:'evil',label:'evil'}]}));assert.throws(()=>b.restoreState({...saved,appliedRuleIds:['missing']}));assert.throws(()=>b.restoreState({...saved,packageIdentity:'foreign'}));assert.throws(()=>b.setRotation(NaN));assert.equal(validatePortablePackage({...pkg,scene:{...pkg.scene,projections:[{...pkg.scene.projections[0],entityRef:'missing'}]}}).isValid,false);assert.equal(validatePortablePackage({...pkg,adapter:{...pkg.adapter,rules:[{id:'bad',outcome:'ACCEPT',patch:{addProjections:[{...pkg.scene.projections[0],id:'p3',placement:{grid:'unknown',row:'r',column:'c'}}]}}]}}).isValid,false);});
+
+it('four independently constructed synthetic semantic analogues (not native custody parity)',()=>{
+ // Labels/patches are diagnostic examples, not a mathematical evaluator.
+ const variants=[
+  {id:'division',source:'Dividend 84',next:'Quotient 7 remainder 0',rule:'divide',reason:'Inconsistent dividend'},
+  {id:'redox',source:'Electron donor 2e-',next:'Electron acceptor 2e-',rule:'balance',reason:'Unequal electron counts'},
+  {id:'riemann',source:'Partition width 0.5',next:'Rectangle contribution',rule:'partition',reason:'Invalid interval'},
+  {id:'motion',source:'State at t=2 s',next:'Same instant',rule:'same-time',reason:'Different physical instant'}
+ ];
+ for(const z of variants){const p=syntheticPackage(),pkg={...p,id:z.id,scene:{...p.scene,entities:[{id:'e',label:z.source}]},adapter:{...p.adapter,rules:[{...p.adapter.rules[0],id:z.rule,patch:{...p.adapter.rules[0].patch,addEntities:[{id:'e2',label:z.next}]}},{id:'reject',outcome:'REJECT' as const,reason:z.reason}]}};
+  const a=new PortableWorkbenchAdapter(pkg);assert.equal(a.applyRule('reject').outcome,'REJECT');assert.equal(a.getAppliedRules().length,0);assert.equal(a.applyRule(z.rule).outcome,'ACCEPT');
+  const saved=a.exportState(),b=new PortableWorkbenchAdapter(pkg);b.restoreState(saved);assert.equal(b.getAllEntities().find(x=>x.id==='e2')?.label,z.next);assert.deepEqual(b.getAllProjections().map(x=>x.id),['p2']);assert.throws(()=>b.restoreState({...saved,ruleHistory:[{ruleId:z.rule,activeEntityId:null}]}));
+ }
+});
