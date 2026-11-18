@@ -16,6 +16,8 @@ export interface EvaluatorSpec {
   readonly numeric_tolerance?: number | null;
   readonly rubric_ref?: string | null;
   readonly allowed_options?: readonly string[];
+  readonly unit_factors?: Readonly<Record<string,string>>;
+  readonly relative_tolerance?: string;
 }
 
 export interface AssessmentContract {
@@ -296,7 +298,8 @@ function evaluateNumericQuantity(response: Response, contract: AssessmentContrac
   const canonUnit = typeof canonical.unit==='string'?canonical.unit:'';
 
   // N13: Dimension/Unit mismatch check
-  if (normalizeUnit(candUnit) !== normalizeUnit(canonUnit)) {
+  const factors=contract.evaluator.unit_factors;
+  if (normalizeUnit(candUnit) !== normalizeUnit(canonUnit) && (!factors||!Object.hasOwn(factors,candUnit)||!Object.hasOwn(factors,canonUnit))) {
     return {
       status: 'INVALID',
       points: null,
@@ -310,10 +313,17 @@ function evaluateNumericQuantity(response: Response, contract: AssessmentContrac
   // Compare scaled decimal integers, not binary floats (including large integers).
   const tolText=String(tolerance);
   const decimal=(v:string):[bigint,number]=>{const [mantissa,exponent='0']=v.toLowerCase().split('e');const fraction=mantissa.split('.')[1]?.length??0;return [BigInt(mantissa.replace('.','')),fraction-Number(exponent)];};
-  const [a,as]=decimal(candDecStr),[b,bs]=decimal(canonDecStr),[c,cs]=decimal(tolText);
-  const scale=Math.max(as,bs,cs,0);const scaled=(v:bigint,n:number)=>v*10n**BigInt(scale-n);
-  const diff=scaled(a,as)-scaled(b,bs);
-  if ((diff<0n?-diff:diff) <= scaled(c,cs)) {
+  const validDecimal=(v:unknown):v is string=>typeof v==='string'&&v.length<=4096&&/^-?[0-9]+(\.[0-9]+)?$/.test(v);
+  const mul=(a:[bigint,number],b:[bigint,number]):[bigint,number]=>[a[0]*b[0],a[1]+b[1]];
+  let aa=decimal(candDecStr),bb=decimal(canonDecStr);
+  if(factors){const af=factors[candUnit],bf=factors[canonUnit];if(!Object.hasOwn(factors,candUnit)||!Object.hasOwn(factors,canonUnit)||!validDecimal(af)||!validDecimal(bf)||decimal(af)[0]<=0n||decimal(bf)[0]<=0n)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.DIMENSION_MISMATCH};aa=mul(aa,decimal(af));bb=mul(bb,decimal(bf));}
+  const absTol=decimal(tolText),rel=contract.evaluator.relative_tolerance??'0';
+  if(!validDecimal(rel)||decimal(rel)[0]<0n)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.INVALID_QUANTITY_FORMAT};
+  const relTol=mul([bb[0]<0n?-bb[0]:bb[0],bb[1]],decimal(rel));
+  const scale=Math.max(aa[1],bb[1],absTol[1],relTol[1],0);
+  const scaled=(v:[bigint,number])=>v[0]*10n**BigInt(scale-v[1]);
+  const diff=scaled(aa)-scaled(bb),absolute=diff<0n?-diff:diff;
+  if (absolute<=scaled(absTol)||absolute<=scaled(relTol)) {
     return {
       status: 'SCORED',
       points: contract.max_points,
@@ -439,7 +449,7 @@ function evaluateMultipart(
   }
 
   // Any part pending manual review -> entire multipart is REVIEW_PENDING with points: null
-  if (hasReviewPending) {
+  if (hasReviewPending && !hasInvalid) {
     return {
       status: 'REVIEW_PENDING',
       points: null,
@@ -481,7 +491,7 @@ export function evaluateResponse(
 ): Grade {
   if(!contract||!Number.isFinite(contract.max_points)||contract.max_points<0||!contract.evaluator||!['AUTOMATIC','REVIEW_PENDING'].includes(contract.evaluator.mode))return {status:'INVALID',points:null,maxPoints:0,reasonCode:'INVALID_ASSESSMENT'};
   if(!response||!isResponseKind(response.kind))return {status:'UNSUPPORTED',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.UNSUPPORTED_RESPONSE_KIND};
-  try{validateResponse(response);}catch(e){return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:e instanceof ResponseValidationError&&e.code==='DUPLICATE_ELEMENTS'?ReasonCodes.DUPLICATE_CHOICE_OPTION:ReasonCodes.MALFORMED_RESPONSE};}
+  try{validateResponse(response);}catch(e){return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:e instanceof ResponseValidationError&&e.code==='DUPLICATE_ELEMENTS'?ReasonCodes.DUPLICATE_CHOICE_OPTION:response.kind==='INTEGER'?ReasonCodes.INVALID_INTEGER_FORMAT:response.kind==='NUMERIC_QUANTITY'?ReasonCodes.INVALID_QUANTITY_FORMAT:ReasonCodes.MALFORMED_RESPONSE};}
   if(response.kind!==contract.response_kind)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.KIND_MISMATCH};
   // Handle dropped item policies
   if (contract.dropped_policy === 'FULL_CREDIT') {
