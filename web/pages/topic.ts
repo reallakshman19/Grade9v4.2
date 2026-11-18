@@ -40,7 +40,7 @@ export interface TopicViewState {
 
 export class TopicScreenController {
   private topic: TopicDetail | null = null;
-  private state: TopicViewState;
+  private state: TopicViewState = {status:'LOADING',topic:null,coreRoleActions:[],explorerRoute:'/explorer',resourceCatalogueRoute:'/resources'};
 
   constructor(initialTopic?: TopicDetail) {
     if (initialTopic) {
@@ -57,7 +57,7 @@ export class TopicScreenController {
   }
 
   loadTopic(topic: TopicDetail): void {
-    this.topic = topic;
+    this.topic = structuredClone(topic);
     this.updateState();
   }
 
@@ -90,7 +90,7 @@ export class TopicScreenController {
       return;
     }
 
-    if (this.topic.status === 'HOLD') {
+    if (this.topic.status !== 'AVAILABLE') {
       this.state = {
         status: 'UNAVAILABLE',
         topic: this.topic,
