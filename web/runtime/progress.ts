@@ -56,12 +56,7 @@ export async function computeSha256(data: string | Uint8Array): Promise<string> 
 export function isLegacyExport(obj: any): boolean {
   if (typeof obj !== 'object' || obj === null) return false;
   if (obj.schema_version === STORAGE_EXPORT_VERSION) return false;
-  return (
-    obj.export_version === LEGACY_EXPORT_VERSION ||
-    obj.legacy === true ||
-    obj.version === '1.0' ||
-    ('attempts' in obj && !('data' in obj))
-  );
+  return obj.schema_version===undefined&&obj.export_version===LEGACY_EXPORT_VERSION;
 }
 
 /**
@@ -75,16 +70,22 @@ export async function migrateLegacyExport(raw:any):Promise<ExportBundle>{
 }
 const eq=(a:unknown,b:unknown)=>canonicalJson(a)===canonicalJson(b);
 function check(condition:unknown,message:string):asserts condition{if(!condition)throw new StorageError('INVALID_RECORD',message);}
-function refOk(x:any){return x&&typeof x.id==='string'&&typeof x.type==='string'&&Number.isSafeInteger(x.revision)&&x.revision>0&&/^[a-f0-9]{64}$/.test(x.sha256);}
-function artifactOk(x:any){return x&&typeof x.id==='string'&&x.version===1&&['NOTE','EQUATION','INK','TABLE','GRAPH','STRUCTURE','ATTACHMENT'].includes(x.kind)&&x.value!==undefined;}
-function validateAttempt(a:any){check(a&&typeof a.id==='string'&&typeof a.sessionId==='string'&&typeof a.releaseId==='string'&&refOk(a.item)&&Array.isArray(a.work)&&a.work.every(artifactOk)&&Array.isArray(a.hintIds)&&typeof a.submittedAt==='string'&&a.cognitive!==undefined&&a.grade&&Number.isFinite(a.grade.maxPoints)&&a.grade.maxPoints>=0&&((a.grade.status==='SCORED'&&Number.isFinite(a.grade.points)&&a.grade.points>=0&&a.grade.points<=a.grade.maxPoints)||(['REVIEW_PENDING','INVALID','UNSUPPORTED'].includes(a.grade.status)&&a.grade.points===null)),'Invalid attempt');validateResponse(a.response);}
+function refOk(x:any){return x&&Object.keys(x).sort().join(',')==='id,revision,sha256,type'&&typeof x.id==='string'&&x.id.trim().length>0&&typeof x.type==='string'&&Number.isSafeInteger(x.revision)&&x.revision>0&&typeof x.sha256==='string'&&/^[a-f0-9]{64}$/.test(x.sha256);}
+const nonblank=(x:unknown):x is string=>typeof x==='string'&&x.trim().length>0;
+const timestamp=(x:unknown)=>typeof x==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|\+00:00)$/.test(x)&&Number.isFinite(Date.parse(x));
+const uniqueStrings=(x:unknown)=>Array.isArray(x)&&x.every(nonblank)&&new Set(x).size===x.length;
+function sessionOk(s:any){return s&&nonblank(s.id)&&refOk(s.item)&&['QUESTION','FRESH_TASK'].includes(s.item.type)&&nonblank(s.releaseId)&&['LEARN','PRACTICE','SIMULATED_EXAM'].includes(s.mode)&&uniqueStrings(s.attemptIds)&&Number.isSafeInteger(s.cursor)&&s.cursor>=0&&(s.draftId===null||s.draftId===s.id)&&(s.origin===null||refOk(s.origin))&&(s.returnRoute===undefined||s.returnRoute===null||typeof s.returnRoute==='string');}
+function sameSession(a:Session,b:Session){return sameRef(a.item,b.item)&&a.releaseId===b.releaseId&&a.mode===b.mode&&eq(a.origin,b.origin)&&(a.returnRoute??null)===(b.returnRoute??null);}
+function artifactOk(x:any){if(!x||Object.keys(x).sort().join(',')!=='id,kind,value,version'||!nonblank(x.id)||x.version!==1||!['NOTE','EQUATION','INK','TABLE','GRAPH','STRUCTURE','ATTACHMENT'].includes(x.kind))return false;try{canonicalJson(x.value);return x.value!==undefined;}catch{return false;}}
+function validateAttempt(a:any){check(a&&nonblank(a.id)&&nonblank(a.sessionId)&&nonblank(a.releaseId)&&refOk(a.item)&&Array.isArray(a.work)&&a.work.every(artifactOk)&&new Set(a.work.map((w:WorkArtifact)=>w.id)).size===a.work.length&&uniqueStrings(a.hintIds)&&timestamp(a.submittedAt)&&a.cognitive!==undefined&&a.grade&&Number.isFinite(a.grade.maxPoints)&&a.grade.maxPoints>=0&&((a.grade.status==='SCORED'&&Number.isFinite(a.grade.points)&&a.grade.points>=0&&a.grade.points<=a.grade.maxPoints)||(['REVIEW_PENDING','INVALID','UNSUPPORTED'].includes(a.grade.status)&&a.grade.points===null)),'Invalid attempt');validateResponse(a.response);if(a.assessmentRef!==undefined)check(refOk(a.assessmentRef)&&a.assessmentRef.type==='ASSESSMENT'&&nonblank(a.scoringVersion),'Invalid assessment binding');if(a.cognitive!==null){const c=a.cognitive;check(c&&c.journey&&nonblank(c.journey.journeyId)&&nonblank(c.journey.taskInstanceId)&&c.journey.releaseId===a.releaseId&&refOk(c.journey.task)&&nonblank(c.originSessionId)&&refOk(c.originRef)&&Number.isSafeInteger(c.originCursor)&&c.originCursor>=0,'Invalid cognitive lineage');}}
 function validateBundleData(data:any):void{
   check(data&&['sessions','drafts','attempts','artifacts'].every(k=>Array.isArray(data[k])),'Invalid export structure');
   for(const [name,key] of [['sessions','id'],['drafts','sessionId'],['attempts','id'],['artifacts','id']]){const ids=new Set();for(const x of data[name]){check(x&&typeof x[key]==='string'&&!ids.has(x[key]),'Duplicate or missing record identity');ids.add(x[key]);}}
-  for(const s of data.sessions)check(refOk(s.item)&&typeof s.releaseId==='string'&&['LEARN','PRACTICE','SIMULATED_EXAM'].includes(s.mode)&&Array.isArray(s.attemptIds)&&Number.isSafeInteger(s.cursor)&&s.cursor>=0,'Invalid session');
+  for(const s of data.sessions){check(sessionOk(s),'Invalid session');for(const id of s.attemptIds)check(data.attempts.some((a:Attempt)=>a.id===id&&a.sessionId===s.id),'Session has missing or foreign attempt');check(s.draftId===null?!data.drafts.some((d:DraftRecord)=>d.sessionId===s.id):data.drafts.some((d:DraftRecord)=>d.sessionId===s.id),'Session draft link mismatch');}
   for(const a of data.attempts){validateAttempt(a);const s=data.sessions.find((s:Session)=>s.id===a.sessionId);check(s&&s.releaseId===a.releaseId&&sameRef(s.item,a.item)&&s.attemptIds.includes(a.id),'Orphan or mismatched attempt');}
   for(const d of data.drafts){check(data.sessions.some((s:Session)=>s.id===d.sessionId)&&Number.isSafeInteger(d.revision)&&d.revision>0&&Array.isArray(d.artifacts)&&d.artifacts.every(artifactOk),'Invalid draft');validateResponse(d.response);}
   for(const a of data.artifacts)check(artifactOk(a),'Invalid artifact');
+  const owners=new Map<string,string>();for(const [owner,work] of [...data.attempts.map((a:Attempt)=>[a.sessionId,a.work]),...data.drafts.map((d:DraftRecord)=>[d.sessionId,d.artifacts])] as [string,readonly WorkArtifact[]][]){for(const w of work){const canonical=data.artifacts.find((a:WorkArtifact)=>a.id===w.id);check(canonical&&eq(canonical,w),'Missing or conflicting canonical artifact');check(!owners.has(w.id)||owners.get(w.id)===owner,'Artifact belongs to another session');owners.set(w.id,owner);}}
 }
 async function immutablePut<T>(tx:import('./storage.ts').TransactionContext,s:string,id:string,value:T){const existing=await tx.get<T>(s,id);if(existing!==undefined&&!eq(existing,value))throw new StorageError('RECORD_CONFLICT','Conflicting '+s+' identity '+id);if(existing===undefined)await tx.put(s,id,value);}
 /**
@@ -93,9 +94,17 @@ async function immutablePut<T>(tx:import('./storage.ts').TransactionContext,s:st
  */
 export class DefaultProgressStore implements ProgressStore {
   private readonly driver: StorageDriver;
-
-  constructor(driver: StorageDriver) {
-    this.driver = driver;
+  private readonly verifyAttempt: (attempt:Attempt)=>Promise<boolean>;
+  // Trusted controller must recompute grade using a verified release/task/assessment/scoring binding.
+  // Default permits unverified non-scored local history only.
+  constructor(driver:StorageDriver,verifyAttempt:(attempt:Attempt)=>Promise<boolean>=async()=>false) {
+    this.driver=driver;this.verifyAttempt=verifyAttempt;
+  }
+  private async qualify(attempt:Attempt):Promise<boolean>{
+    validateAttempt(attempt);
+    const verified=!!attempt.assessmentRef&&!!attempt.scoringVersion&&await this.verifyAttempt(structuredClone(attempt));
+    if(attempt.grade.status==='SCORED'&&!verified)throw new StorageError('UNVERIFIED_GRADE','Scored attempt requires trusted assessment recomputation');
+    return verified;
   }
 
   /**
@@ -105,18 +114,21 @@ export class DefaultProgressStore implements ProgressStore {
   async saveDraft(
     session: Session,
     response: Response,
-    artifacts: readonly WorkArtifact[]
+    artifacts: readonly WorkArtifact[], expectedRevision=0
   ): Promise<void> {
-    // Validate response schema before persisting
-    validateResponse(response);
+    // Snapshot caller values before awaiting a transaction.
+    session=structuredClone(session);response=structuredClone(response);artifacts=structuredClone(artifacts);
+    validateResponse(response);check(sessionOk(session)&&artifacts.every(artifactOk)&&new Set(artifacts.map(a=>a.id)).size===artifacts.length,'Invalid draft');
 
     await this.driver.transaction(
-      ['drafts', 'sessions', 'artifacts'],
+      ['drafts', 'sessions', 'artifacts','artifact_owners'],
       'readwrite',
       async (tx) => {
         const existing = await tx.get<DraftRecord>('drafts', session.id);
         const priorSession=await tx.get<Session>('sessions',session.id);
-        if(priorSession&&(!sameRef(priorSession.item,session.item)||priorSession.releaseId!==session.releaseId))throw new StorageError('RECORD_CONFLICT','Session identity mismatch');
+        if(priorSession&&!sameSession(priorSession,session))throw new StorageError('RECORD_CONFLICT','Session identity mismatch');
+        check((existing?.revision??0)===expectedRevision,'Stale draft revision');
+        check(!!priorSession||session.attemptIds.length===0,'New session cannot claim previous attempts');
         const revision = existing ? existing.revision + 1 : 1;
 
         const draft: DraftRecord = {
@@ -135,6 +147,7 @@ export class DefaultProgressStore implements ProgressStore {
         });
 
         for (const art of artifacts) {
+          await immutablePut(tx,'artifact_owners',art.id,session.id);
           await immutablePut(tx,'artifacts',art.id,art);
         }
       }
@@ -153,9 +166,9 @@ export class DefaultProgressStore implements ProgressStore {
    * Idempotent on identical attempt, rejects conflicting attempt with RECORD_CONFLICT.
    */
   async appendAttempt(attempt: Attempt): Promise<void> {
-    validateAttempt(attempt);
+    attempt=structuredClone(attempt);const qualified=await this.qualify(attempt);
     await this.driver.transaction(
-      ['attempts', 'sessions', 'artifacts','drafts'],
+      ['attempts', 'sessions', 'artifacts','drafts','artifact_owners','attempt_authority'],
       'readwrite',
       async (tx) => {
         const existing = await tx.get<Attempt>('attempts', attempt.id);
@@ -191,8 +204,10 @@ export class DefaultProgressStore implements ProgressStore {
         }
 
         for (const art of attempt.work) {
+          await immutablePut(tx,'artifact_owners',art.id,attempt.sessionId);
           await immutablePut(tx,'artifacts',art.id,art);
         }
+        await tx.put('attempt_authority',attempt.id,qualified?'LOCAL_VERIFIED_SCORE':'LOCAL_UNVERIFIED');
       }
     );
   }
@@ -271,9 +286,10 @@ export class DefaultProgressStore implements ProgressStore {
     }
 
     validateBundleData(bundle.data);
+    for(const a of bundle.data.attempts)await this.qualify(a);
     // Execute atomic import transaction
     await this.driver.transaction(
-      ['sessions', 'drafts', 'attempts', 'artifacts'],
+      ['sessions', 'drafts', 'attempts', 'artifacts','artifact_owners','attempt_authority'],
       'readwrite',
       async (tx) => {
         // Import Sessions
@@ -282,7 +298,7 @@ export class DefaultProgressStore implements ProgressStore {
           if (!existing) {
             await tx.put('sessions', ses.id, ses);
           } else {
-            if(existing.releaseId!==ses.releaseId||!sameRef(existing.item,ses.item))throw new StorageError('RECORD_CONFLICT','Session identity mismatch');
+            if(!sameSession(existing,ses))throw new StorageError('RECORD_CONFLICT','Session identity mismatch');
             // Merge attempt IDs
             const mergedAttemptIds = Array.from(
               new Set([...(existing.attemptIds ?? []), ...(ses.attemptIds ?? [])])
@@ -296,6 +312,7 @@ export class DefaultProgressStore implements ProgressStore {
 
         // Import Drafts
         for (const draft of bundle.data.drafts ?? []) {
+          for(const art of draft.artifacts)await immutablePut(tx,'artifact_owners',art.id,draft.sessionId);
           const existing = await tx.get<DraftRecord>('drafts', draft.sessionId);
           if(existing&&draft.revision===existing.revision&&!eq(existing,draft))throw new StorageError('RECORD_CONFLICT','Draft conflict');
           if (!existing || draft.revision > existing.revision) {
@@ -305,7 +322,9 @@ export class DefaultProgressStore implements ProgressStore {
 
         // Import Attempts (Fault L19: duplicate browser data imported twice -> no duplicate record)
         for (const att of bundle.data.attempts ?? []) {
-          await immutablePut(tx,'attempts',att.id,att);
+          const before=await tx.get('attempts',att.id);await immutablePut(tx,'attempts',att.id,att);
+          if(!before)await tx.put('attempt_authority',att.id,'IMPORTED_UNAUTHENTICATED');
+          for(const art of att.work)await immutablePut(tx,'artifact_owners',art.id,att.sessionId);
         }
 
         // Import Artifacts
