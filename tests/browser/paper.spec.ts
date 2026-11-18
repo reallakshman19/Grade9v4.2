@@ -164,3 +164,46 @@ describe('A30 durable paper and exam policy',()=>{
  it('history export/import cannot become a local examination commitment',async()=>{const {ws,binding,driver,s}=await setup();answerAll(ws);await ws.submitPaper();const blob=await binding.progress.exportAll();const clean=new MemoryStorageDriver(),p=new DefaultProgressStore(clean,async()=>true);await p.importVerified(blob);const session=new Session({sessionId:s.id,releaseId:s.releaseId,item:s.item,mode:s.mode},clean,p,{liveRevision:async()=> 'r1',reviewedDisclosure:async()=>true});const reopened=new PaperWorkspaceController(full,{...binding,session,progress:p});await assert.rejects(reopened.restore(),/UNQUALIFIED_PAPER_COMMIT/);assert.equal(reopened.getViewState().isCommitted,false);assert.equal(reopened.getSolution('p-phy-e1').allowed,false);});
 });
 it('actual Chromium: paper navigation/prompt cannot create active markup',async()=>{const browser=await chromium.launch({headless:true});try{const page=await browser.newPage();const w=new PaperWorkspaceController({...full,paperTitle:'<img src=x onerror=alert(1)>',parts:full.parts.map(p=>({...p,label:'" onmouseover="alert(1)',promptHtml:'<svg onload=alert(1)><p>safe</p>'}))});await page.setContent(w.render());assert.equal(await page.locator('img,svg,[onerror],[onmouseover],[onload]').count(),0);assert.equal(await page.locator('#submit-paper-btn').isDisabled(),true);assert.equal(await page.locator('.part-prompt p').textContent(),'safe');}finally{await browser.close();}});
+
+it('actual Chromium: paper draft CAS, interrupted commit rollback, reload and sealed exact grading',{timeout:60000},async()=>{
+ const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');
+ const browser=await chromium.launch({headless:true});try{
+ const ctx=await browser.newContext(),a=await ctx.newPage(),b=await ctx.newPage(),url='http://127.0.0.1:'+addr.port+'/';await Promise.all([a.goto(url),b.goto(url)]);
+ const name='g9-paper-'+Date.now(),deadlineAt=new Date(Date.now()+300000).toISOString();
+ const run=async(page:typeof a,action:string)=>page.evaluate(async({name,deadlineAt,action})=>{
+  const paths=['/runtime/storage.ts','/runtime/progress.ts','/runtime/session.ts','/runtime/assessment.ts','/runtime/loader.ts','/pages/paper.ts'];
+  const [{IndexedDBStorageDriver},{DefaultProgressStore},{Session},{StandardAssessmentEngine,SCORING_VERSION},{canonicalJson,computeSha256,sameRef},{PaperWorkspaceController,paperDefinitionDigest}]=await Promise.all(paths.map(p=>import(p)));
+  const d=new IndexedDBStorageDriver({dbName:name}),task={type:'QUESTION',id:'que:paper:browser',revision:1,sha256:'a'.repeat(64)},paper={type:'PAPER',id:'paper:browser',revision:1,sha256:'b'.repeat(64)},releaseId='rel:browser:paper';
+  const config={paperId:paper.id,paperTitle:'Synthetic browser exam',durationSeconds:300,sections:[{id:'sec',title:'Section',partIds:['a','b']}],parts:[{id:'a',partKey:'1',sectionId:'sec',label:'A',maxPoints:.1,archetypeId:'PHY-E1',promptHtml:'<p>A</p>',responseKind:'INTEGER'},{id:'b',partKey:'2',sectionId:'sec',label:'B',maxPoints:.2,archetypeId:'MTH-E1',promptHtml:'<p>B</p>',responseKind:'INTEGER'}]};
+  const sub=(id:string,max_points:number,value:string)=>({id,task_ref:task,response_kind:'INTEGER',max_points,evaluator:{mode:'AUTOMATIC',canonical_value:value}});
+  const contract={id:'asmt:browser:paper',revision:1,task_ref:task,response_kind:'MULTIPART',max_points:.3,evaluator:{mode:'REVIEW_PENDING'},parts:{a:sub('asmt:a',.1,'1'),b:sub('asmt:b',.2,'2')}};
+  const assessment={type:'ASSESSMENT',id:contract.id,revision:1,sha256:await computeSha256(canonicalJson(contract))};
+  const engine=new StandardAssessmentEngine([{assessment,task}]);await engine.registerContract(contract,assessment);
+  const s={id:'ses:browser:paper',releaseId,item:task,mode:'SIMULATED_EXAM',deadlineAt,contentRevision:'r1',origin:null,returnRoute:null,cursor:0,attemptIds:[],draftId:null};
+  const verify=async(a:any)=>a.releaseId===releaseId&&sameRef(a.item,task)&&sameRef(a.assessmentRef,assessment)&&a.scoringVersion===SCORING_VERSION&&canonicalJson(a.grade)===canonicalJson(await engine.evaluate(a.response,assessment,'SIMULATED_EXAM',task));
+  const p=new DefaultProgressStore(d,verify),session=new Session({sessionId:s.id,releaseId,item:task,mode:s.mode},d,p,{liveRevision:async()=> 'r1',reviewedDisclosure:async()=>true});
+  if(action==='initialize')await d.put('sessions',s.id,s);
+  const binding={paper,definitionSha256:await paperDefinitionDigest(config),task,assessment,releaseId,attemptId:'att:browser:paper',session,progress:p,engine,verifyRequiredAssets:async()=>true};
+  try{
+   const w=new PaperWorkspaceController(config,binding);await w.restore();
+   if(action==='initialize'){w.setPartResponse('a',{kind:'INTEGER',value:'1'});w.setPartResponse('b',{kind:'INTEGER',value:'2'});await w.saveDraft();return {revision:(await p.loadDraft(s.id)).revision};}
+   if(action==='race'){w.setPartResponse('a',{kind:'INTEGER',value:'1'});try{await w.saveDraft();return {saved:true};}catch{return {saved:false};}}
+   if(action==='commit'){
+    const t=d.transaction.bind(d);d.transaction=(names:any,mode:any,op:any)=>t(names,mode,async(tx:any)=>op({...tx,put:async(store:string,key:string,value:any)=>{if(store==='sessions'&&key===s.id)throw Error('injected after attempt write');return tx.put(store,key,value);}}));
+    let rejected=false;try{await w.submitPaper();}catch{rejected=true;}d.transaction=t;
+    const rollback=rejected&&!w.getViewState().isCommitted&&!(await d.get('attempts',binding.attemptId))&&!!await p.loadDraft(s.id);
+    const result=await w.submitPaper();return {rollback,committed:w.getViewState().isCommitted,sealed:result.totalPoints===null};
+   }
+   const attempt=await d.get('attempts',binding.attemptId);
+   return {committed:w.getViewState().isCommitted,score:attempt.grade.points,attempts:(await d.getAll('attempts')).length,solution:w.getSolution('a').allowed,deadline:w.getTimer().exportState().startedAt,hasDraft:!!await p.loadDraft(s.id)};
+  }finally{await d.close();}
+ },{name,deadlineAt,action});
+ assert.deepEqual(await run(a,'initialize'),{revision:1});
+ // Each page opens its own driver. A sequential stale-race guarantee is separately
+ // covered by the memory test and the existing two-tab CAS runtime suite.
+ const race=await Promise.all([run(a,'race'),run(b,'race')]);assert(race.some(x=>x.saved===true));
+ assert.deepEqual(await run(a,'commit'),{rollback:true,committed:true,sealed:true});
+ await b.reload();assert.deepEqual(await run(b,'restore'),{committed:true,score:.3,attempts:1,solution:false,deadline:new Date(Date.parse(deadlineAt)-300000).toISOString(),hasDraft:false});
+ await ctx.close();
+ }finally{await browser.close();await server.close();}
+});
