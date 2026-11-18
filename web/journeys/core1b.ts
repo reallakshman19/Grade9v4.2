@@ -117,7 +117,7 @@ const task=(t:TaskDefinition):TaskDefinition=>{
 export type PublicTransferDefinition=Omit<Core1BTransferDefinition,'expectedPredictionIndex'>;
 export function publicTransfer(d:Core1BTransferDefinition):PublicTransferDefinition{
  if(!nonblank(d.journeyId)||!refOk(d.originRef)||!nonblank(d.qualitativePredictionPrompt)||!Array.isArray(d.predictionOptions)||d.predictionOptions.length<2||!d.predictionOptions.every(nonblank)||!['SYNTHETIC','HOLD','CANDIDATE','STALE','PENDING_REVIEW'].includes(d.status))throw Error('INVALID_DEFINITION');
- const a=task(d.freshTaskA),b=task(d.boundaryTaskB);
+ const a=task(d.freshTaskA),boundary=task(d.boundaryTaskB),b={...boundary,title:'Boundary task (sealed)',prompt:'',conditions:[]};
  if(a.taskRef.type!=='FRESH_TASK'||new Set([d.originRef.id,a.taskRef.id,b.taskRef.id]).size!==3||a.taskRef.sha256===b.taskRef.sha256)throw Error('TASK_SEPARATION_VIOLATION');
  if(!Array.isArray(d.hints)||d.hints.length>3||d.hints.some((h,i)=>h.level!==ORDERED_HINTS[i]||!refOk(h.assetRef))||new Set(d.hints.map(h=>h.assetRef.id)).size!==d.hints.length||!Array.isArray(d.diagnosticRules)||d.diagnosticRules.some(r=>!nonblank(r.code)||!nonblank(r.label))||new Set(d.diagnosticRules.map(r=>r.code)).size!==d.diagnosticRules.length)throw Error('INVALID_HELP_OR_DIAGNOSIS');
  return structuredClone({journeyId:d.journeyId,originRef:d.originRef,freshTaskA:a,boundaryTaskB:b,hints:d.hints.map(h=>({level:h.level,assetRef:h.assetRef,text:'',guidance:''})),diagnosticRules:d.diagnosticRules.map(r=>({code:r.code,label:r.label,misconceptionDescription:'',correctiveGuidance:''})),qualitativePredictionPrompt:d.qualitativePredictionPrompt,predictionOptions:d.predictionOptions,status:d.status});
@@ -135,8 +135,13 @@ export class Core1BTransferJourney{
  getExposedHints(){const ids=this.evidence?.events.filter(e=>e.event_type==='HELP_EXPOSED').map(e=>e.payload.asset_ref)??[];return this.definition.hints.filter(h=>ids.some(x=>sameRef(x,h.assetRef as Ref))).map(h=>structuredClone(h));}
  getCheckpoint(){return structuredClone(this.evidence?.snapshot.checkpoint??null);}
  private b(){if(!this.binding||this.definition.status==='STALE'||this.definition.status==='PENDING_REVIEW')throw Error('TRANSFER_NOT_AUTHORIZED');return this.binding;}
+ private checkIdentity(j:JourneyKey,ctx:Evidence['context'],session:Session,origin:Session){
+  const d=this.definition;
+  if(j.journeyId!==d.journeyId||!sameRef(ctx.task,d.freshTaskA.taskRef as Ref)||!sameRef(ctx.boundaryTask,d.boundaryTaskB.taskRef as Ref)||!sameRef(ctx.firstReference,d.freshTaskA.solutionRef as Ref)||!sameRef(ctx.boundaryReference,d.boundaryTaskB.solutionRef as Ref)||!sameRef(origin.item,d.originRef as Ref)||origin.id===session.id||!session.origin||!sameRef(session.origin,origin.item))throw Error('TRANSFER_BINDING_MISMATCH');
+ }
  private async checked(cp?:Checkpoint):Promise<Evidence>{
   const b=this.b(),d=this.definition,e=await b.controller.readEvidence(cp);
+  this.checkIdentity(e.snapshot.journey,e.context,e.session,e.origin);
   if(b.definitionSha256!==await computeSha256(canonicalJson(d))||e.snapshot.journey.journeyId!==d.journeyId||!sameRef(e.context.task,d.freshTaskA.taskRef as Ref)||!sameRef(e.context.boundaryTask,d.boundaryTaskB.taskRef as Ref)||!sameRef(e.context.firstReference,d.freshTaskA.solutionRef as Ref)||!sameRef(e.context.boundaryReference,d.boundaryTaskB.solutionRef as Ref)||!sameRef(e.origin.item,d.originRef as Ref)||e.origin.id===e.session.id||!e.session.origin||!sameRef(e.session.origin,e.origin.item)||!refOk(b.assessmentA)||!refOk(b.assessmentB)||b.assessmentA.type!=='ASSESSMENT'||b.assessmentB.type!=='ASSESSMENT')throw Error('TRANSFER_BINDING_MISMATCH');
   return e;
  }
@@ -164,7 +169,7 @@ export class Core1BTransferJourney{
   const n=l.checkpoint.sequence;if(!Number.isSafeInteger(n)||n<0||n>e.events.length||l.checkpoint.sha256!==(n?await computeEventHash(e.events[n-1]):null))throw Error('DRAFT_PREFIX_MISMATCH');
   const values=this.map(d.response.value,e);this.responses=values;this.work=structuredClone(d.artifacts);this.draftRevision=d.revision;
  }
- async start(){if(this.busy)throw Error('BUSY');this.busy=true;try{const b=this.b();if(b.definitionSha256!==await computeSha256(canonicalJson(this.definition)))throw Error('TRANSFER_DEFINITION_MISMATCH');await b.controller.begin();const e=await this.checked();await this.loadDraft(e);this.evidence=e;this.blocked=false;}catch(err){this.blocked=true;throw err;}finally{this.busy=false;}}
+ async start(){if(this.busy)throw Error('BUSY');this.busy=true;try{const b=this.b();if(b.definitionSha256!==await computeSha256(canonicalJson(this.definition)))throw Error('TRANSFER_DEFINITION_MISMATCH');const before=await b.controller.describeBinding();this.checkIdentity(before.journey,before.context,before.session,before.origin);await b.controller.begin();const e=await this.checked();await this.loadDraft(e);this.evidence=e;this.blocked=false;}catch(err){this.blocked=true;throw err;}finally{this.busy=false;}}
  async restore(){if(this.busy)throw Error('BUSY');this.busy=true;try{const e=await this.checked();await this.loadDraft(e);this.evidence=e;this.blocked=false;}catch(err){this.blocked=true;throw err;}finally{this.busy=false;}}
  private local(){if(!this.isReady())throw Error('TRANSFER_NOT_READY');return this.evidence!;}
  setResponses(values:Readonly<Record<string,Response>>,work:readonly WorkArtifact[]=this.work){
@@ -190,7 +195,7 @@ export class Core1BTransferJourney{
  private async bytes(ref:Ref){const bytes=Uint8Array.from(await this.b().loadProtected(structuredClone(ref)));if(!bytes.length||bytes.length>2000000||await computeSha256(bytes)!==ref.sha256)throw Error('PROTECTED_ASSET_INTEGRITY');new TextDecoder('utf-8',{fatal:true}).decode(bytes);return bytes;}
  async requestHint(){return this.act('ATTEMPT',async e=>{
   const used=e.events.filter(e=>e.event_type==='HELP_EXPOSED'),n=used.filter(e=>ORDERED_HINTS.includes(e.payload.capability as HintLevel)).length,h=this.definition.hints[n];if(!h)throw Error('NO_NEXT_HINT');
-  const asset=h.assetRef as Ref,bytes=await this.bytes(asset);
+  const asset=h.assetRef as Ref;if(!await this.b().controller.canRequest(h.level,asset,e.snapshot.checkpoint))throw Error('HINT_NOT_AUTHORIZED');const bytes=await this.bytes(asset);
   const {event,next}=await this.append(e,'HELP_EXPOSED',{capability:h.level,asset_ref:asset,ordinal:used.length+1});
   const text=await this.b().controller.readProtectedText(h.level,asset,next.snapshot.checkpoint,async()=>bytes,event.event_id);if(text===null)throw Error('HINT_DISCLOSURE_DENIED');return {...h,text};
  });}
@@ -215,9 +220,11 @@ export class Core1BTransferJourney{
  }
  async commitDiagnosis(moveId:string,why:string){if(!nonblank(why))throw Error('DIAGNOSIS_REASON_REQUIRED');return this.act('DIAGNOSE',async e=>(await this.append(e,'DIAGNOSIS_COMMITTED',{move_id:moveId,why})).next.snapshot);}
  async commitRepair(why:string,work:readonly WorkArtifact[]){if(!nonblank(why)||!work.length)throw Error('REPAIR_EVIDENCE_REQUIRED');return this.act('REPAIR',async e=>{const x=await this.append(e,'REPAIR_COMMITTED',{first_event_id:e.snapshot.firstAttemptId!,work:work.map(w=>w.id),why},work);await this.loadDraft(x.next);return x.next.snapshot;});}
- async viewBoundaryFeedback(){return this.act('BOUNDARY_TEST',async e=>{if(!e.snapshot.boundaryAttemptId)throw Error('BOUNDARY_COMMIT_REQUIRED');const ref=e.context.boundaryReference,bytes=await this.bytes(ref);const {next}=await this.append(e,'BOUNDARY_FEEDBACK_VIEWED',{boundary_event_id:e.snapshot.boundaryAttemptId,reference_ref:ref});const text=await this.b().controller.readProtectedText('BOUNDARY_REFERENCE',ref,next.snapshot.checkpoint,async()=>bytes);if(text===null)throw Error('BOUNDARY_DISCLOSURE_DENIED');return text;});}
+ async viewBoundaryFeedback(){return this.act('BOUNDARY_TEST',async e=>{if(!e.snapshot.boundaryAttemptId)throw Error('BOUNDARY_COMMIT_REQUIRED');const ref=e.context.boundaryReference;if(!await this.b().controller.canDisplay('BOUNDARY_REFERENCE',ref,e.snapshot.checkpoint))throw Error('BOUNDARY_NOT_AUTHORIZED');const bytes=await this.bytes(ref);const {next}=await this.append(e,'BOUNDARY_FEEDBACK_VIEWED',{boundary_event_id:e.snapshot.boundaryAttemptId,reference_ref:ref});const text=await this.b().controller.readProtectedText('BOUNDARY_REFERENCE',ref,next.snapshot.checkpoint,async()=>bytes);if(text===null)throw Error('BOUNDARY_DISCLOSURE_DENIED');return text;});}
  async getTaskBSolution(){const e=this.local();if(!e.events.some(e=>e.event_type==='BOUNDARY_FEEDBACK_VIEWED'))return null;return this.b().controller.readProtectedText('BOUNDARY_REFERENCE',e.context.boundaryReference,e.snapshot.checkpoint,this.b().loadProtected);}
  async returnToSource(){return this.act('COMPLETE',async e=>{const origin=e.meta.origin!;if(e.events.some(e=>e.event_type==='SOURCE_RETURNED'))throw Error('SOURCE_ALREADY_RETURNED');const {next}=await this.append(e,'SOURCE_RETURNED',{origin_session_id:origin.sessionId,origin_ref:origin.ref,cursor:origin.cursor});if(!await this.b().controller.canDisplay('SOURCE_RETURN',origin.ref,next.snapshot.checkpoint))throw Error('SOURCE_RETURN_DENIED');return structuredClone(origin);});}
+ async readBoundaryStimulus(){const e=this.local();if(e.snapshot.stage!=='BOUNDARY_TEST')return null;return this.b().controller.readProtectedText('VIEW_STIMULUS',e.context.boundaryTask,e.snapshot.checkpoint,this.b().loadProtected);}
+ async readReviewMoves(){const e=this.local(),verified=await this.checked(e.snapshot.checkpoint);return verified.snapshot.firstAttemptId?[...verified.context.moves]:[];}
  async readOriginalAttempt(){const e=this.local(),verified=await this.checked(e.snapshot.checkpoint);return structuredClone(verified.attempts[0]??null);}
  async readHistory(){const e=this.local(),verified=await this.checked(e.snapshot.checkpoint);return structuredClone(verified.events);}
  toDraft():Core1BDraft|null{const e=this.evidence;return e&&this.editable(e)?{journeyId:this.definition.journeyId,checkpoint:structuredClone(e.snapshot.checkpoint),responses:this.getResponses(),work:this.getWork(),revision:this.draftRevision}:null;}
