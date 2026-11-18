@@ -92,7 +92,7 @@ export class ProofWorkspaceController {
   }
 
   updateStep(id: string, updates: Partial<Pick<ProofStep, 'assertion' | 'justification' | 'lemmaRefs'>>): boolean {
-    if(updates.lemmaRefs&&!updates.lemmaRefs.every(id=>this.availableLemmas.some(l=>l.id===id)))return false;
+    if(updates.lemmaRefs&&!updates.lemmaRefs.every((id:string)=>this.availableLemmas.some(l=>l.id===id)))return false;
     const ok = this.stepManager.updateStep(id, updates);
     if (ok){this.evaluation=null;this.revision++;}
     return ok;
