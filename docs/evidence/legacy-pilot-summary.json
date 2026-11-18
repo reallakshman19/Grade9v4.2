@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "workpack_id": "A69",
+  "title": "Three legacy functional-parity pilots summary",
+  "academic_admission": "HOLD",
+  "release_authority": "NONE",
+  "real_legacy_parity_status": "BLOCKED_PENDING_EXPLICIT_AUTHORIZATION",
+  "synthetic_analogue_parity": "VERIFIED_TECHNICAL_HARNESS_ONLY",
+  "disclaimer": "No academic approval inferred from software validation. No claim synthetic = legacy parity.",
+  "pilots": [
+    {
+      "pilot_id": "PILOT-PHYS-MOTION-IN-PLANE",
+      "subject": "PHYSICS",
+      "topic": "PHYS-TOPIC-MOTION-2D",
+      "legacy_source_path": "public/standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+      "custody_ref": "D:/CodeD/custody/Grade9v3.5/public/standalone/practice/core2-motion-in-a-plane-tablet.html",
+      "capabilities": [
+        "graphs/live-telemetry",
+        "trajectory-vector-decomposition",
+        "portable-workbench-clock-coupling",
+        "gcdr-10-stage-simulation-hook"
+      ],
+      "telemetry_fields": [
+        "time_s",
+        "pos_x_m",
+        "pos_y_m",
+        "vel_x_mps",
+        "vel_y_mps",
+        "accel_x_mps2",
+        "accel_y_mps2",
+        "kinetic_energy_j",
+        "potential_energy_j"
+      ],
+      "controls": {
+        "play_pause_toggle": { "type": "BUTTON", "min_hit_target_px": 48 },
+        "reset_button": { "type": "BUTTON", "min_hit_target_px": 48 },
+        "launch_angle_slider": { "type": "SLIDER", "range": [0, 90], "unit": "deg", "min_hit_target_px": 48 },
+        "initial_speed_slider": { "type": "SLIDER", "range": [0, 50], "unit": "m/s", "min_hit_target_px": 48 },
+        "gravity_preset_select": { "type": "SELECT", "options": ["Earth (9.81)", "Moon (1.62)", "Zero-G (0.0)"], "min_hit_target_px": 48 }
+      },
+      "tablet_layout": {
+        "landscape": "SPLIT_66_34",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_verification": {
+        "data_field_conservation": "CONSERVED_EXACT",
+        "trajectory_kinematic_invariants": "CONSERVED_EXACT",
+        "portable_workbench_package": "portable-motion-shared-clock.json",
+        "synthetic_vs_legacy_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+      }
+    },
+    {
+      "pilot_id": "PILOT-CHEM-REDOX-ADAPTIVE",
+      "subject": "CHEMISTRY",
+      "topic": "CHEM-TOPIC-REDOX",
+      "legacy_source_path": "public/chemistry/redox/adaptive-hard-concept-proof.html",
+      "custody_ref": "D:/CodeD/custody/Grade9v3.5/public/standalone/practice/chemistry-redox-reactions-master-suite.html",
+      "capabilities": [
+        "adaptive-branching-tree",
+        "oxidation-number-tracker",
+        "electron-equivalence-proof",
+        "misconception-remediation-loop"
+      ],
+      "telemetry_fields": [
+        "reaction_id",
+        "reactant_species",
+        "product_species",
+        "oxidation_state_initial",
+        "oxidation_state_final",
+        "electrons_transferred",
+        "half_reaction_type",
+        "branch_node_id",
+        "is_charge_balanced",
+        "is_mass_balanced"
+      ],
+      "controls": {
+        "species_selector": { "type": "SELECT", "min_hit_target_px": 48 },
+        "oxidation_state_input": { "type": "INPUT", "min_hit_target_px": 48 },
+        "half_reaction_step_btn": { "type": "BUTTON", "min_hit_target_px": 48 },
+        "electron_balance_verify_btn": { "type": "BUTTON", "min_hit_target_px": 48 },
+        "adaptive_remediation_trigger": { "type": "BUTTON", "min_hit_target_px": 48 }
+      },
+      "tablet_layout": {
+        "landscape": "SPLIT_66_34",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_verification": {
+        "data_field_conservation": "CONSERVED_EXACT",
+        "redox_electron_conservation": "CONSERVED_EXACT",
+        "portable_workbench_package": "portable-redox-electron-equivalence.json",
+        "synthetic_vs_legacy_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+      }
+    },
+    {
+      "pilot_id": "PILOT-MATH-CIRCLES-MASTER",
+      "subject": "MATHEMATICS",
+      "topic": "MATH-TOPIC-CIRCLES-GEOMETRY",
+      "legacy_source_path": "public/standalone/practice/mathematics-circles-master-suite.html",
+      "custody_ref": "D:/CodeD/custody/Grade9v3.5/Mathematics/library/figures/FIG-CIRCLES-THEOREMS.json",
+      "capabilities": [
+        "large-embedded-dataset",
+        "chord-tangent-secant-geometry",
+        "angle-subtended-theorem-proof",
+        "cyclic-quadrilateral-invariants"
+      ],
+      "telemetry_fields": [
+        "center_x",
+        "center_y",
+        "radius_r",
+        "points_count",
+        "chord_length",
+        "subtended_center_angle_deg",
+        "subtended_circumference_angle_deg",
+        "tangent_secant_product_ratio",
+        "cyclic_quad_opposite_angle_sum_deg"
+      ],
+      "controls": {
+        "chord_drag_handle": { "type": "TOUCH_DRAG", "min_hit_target_px": 48 },
+        "tangent_point_selector": { "type": "BUTTON", "min_hit_target_px": 48 },
+        "radius_slider": { "type": "SLIDER", "range": [10, 200], "min_hit_target_px": 48 },
+        "theorem_step_next_btn": { "type": "BUTTON", "min_hit_target_px": 48 },
+        "dataset_point_inspector": { "type": "GRID_ROW", "min_hit_target_px": 48 }
+      },
+      "tablet_layout": {
+        "landscape": "SPLIT_66_34",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_verification": {
+        "data_field_conservation": "CONSERVED_EXACT",
+        "geometric_theorem_invariants": "CONSERVED_EXACT",
+        "dataset_points_preserved": 120,
+        "synthetic_vs_legacy_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+      }
+    }
+  ]
+}
