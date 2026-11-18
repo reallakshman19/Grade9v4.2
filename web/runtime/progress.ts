@@ -79,7 +79,7 @@ export function timestamp(x:unknown):x is string {
   return new Date(x).toISOString()===m[1]+'.'+(m[2]??'').padEnd(3,'0')+'Z';
 }
 const uniqueStrings=(x:unknown)=>Array.isArray(x)&&x.every(nonblank)&&new Set(x).size===x.length;
-function sessionOk(s:any){return s&&nonblank(s.id)&&refOk(s.item)&&['QUESTION','FRESH_TASK'].includes(s.item.type)&&nonblank(s.releaseId)&&['LEARN','PRACTICE','SIMULATED_EXAM'].includes(s.mode)&&uniqueStrings(s.attemptIds)&&Number.isSafeInteger(s.cursor)&&s.cursor>=0&&(s.mode!=='SIMULATED_EXAM'||timestamp(s.deadlineAt))&&(s.contentRevision===undefined||nonblank(s.contentRevision))&&(s.draftId===null||s.draftId===s.id)&&(s.origin===null||refOk(s.origin))&&(s.returnRoute===undefined||s.returnRoute===null||typeof s.returnRoute==='string');}
+function sessionOk(s:any){return s&&nonblank(s.id)&&refOk(s.item)&&['QUESTION','FRESH_TASK'].includes(s.item.type)&&nonblank(s.releaseId)&&['LEARN','PRACTICE','SIMULATED_EXAM'].includes(s.mode)&&uniqueStrings(s.attemptIds)&&s.attemptIds.length<=1&&Number.isSafeInteger(s.cursor)&&s.cursor>=0&&(s.mode!=='SIMULATED_EXAM'||timestamp(s.deadlineAt))&&(s.contentRevision===undefined||nonblank(s.contentRevision))&&(s.draftId===null||s.draftId===s.id)&&(s.origin===null||refOk(s.origin))&&(s.returnRoute===undefined||s.returnRoute===null||typeof s.returnRoute==='string');}
 function sameSession(a:Session,b:Session){return sameRef(a.item,b.item)&&a.releaseId===b.releaseId&&a.mode===b.mode&&eq(a.origin,b.origin)&&(a.returnRoute??null)===(b.returnRoute??null)&&(a.deadlineAt??null)===(b.deadlineAt??null)&&(a.contentRevision??null)===(b.contentRevision??null);}
 function artifactOk(x:any){if(!x||Object.keys(x).sort().join(',')!=='id,kind,value,version'||!nonblank(x.id)||x.version!==1||!['NOTE','EQUATION','INK','TABLE','GRAPH','STRUCTURE','ATTACHMENT'].includes(x.kind))return false;try{canonicalJson(x.value);return x.value!==undefined;}catch{return false;}}
 function validateAttempt(a:any){check(a&&nonblank(a.id)&&nonblank(a.sessionId)&&nonblank(a.releaseId)&&refOk(a.item)&&Array.isArray(a.work)&&a.work.every(artifactOk)&&new Set(a.work.map((w:WorkArtifact)=>w.id)).size===a.work.length&&uniqueStrings(a.hintIds)&&timestamp(a.submittedAt)&&a.cognitive!==undefined&&a.grade&&Number.isFinite(a.grade.maxPoints)&&a.grade.maxPoints>=0&&((a.grade.status==='SCORED'&&Number.isFinite(a.grade.points)&&a.grade.points>=0&&a.grade.points<=a.grade.maxPoints)||(['REVIEW_PENDING','INVALID','UNSUPPORTED'].includes(a.grade.status)&&a.grade.points===null)),'Invalid attempt');validateResponse(a.response);if(a.assessmentRef!==undefined)check(refOk(a.assessmentRef)&&a.assessmentRef.type==='ASSESSMENT'&&nonblank(a.scoringVersion),'Invalid assessment binding');if(a.cognitive!==null){const c=a.cognitive;check(c&&c.journey&&nonblank(c.journey.journeyId)&&nonblank(c.journey.taskInstanceId)&&c.journey.releaseId===a.releaseId&&refOk(c.journey.task)&&nonblank(c.originSessionId)&&refOk(c.originRef)&&Number.isSafeInteger(c.originCursor)&&c.originCursor>=0,'Invalid cognitive lineage');}}
@@ -93,10 +93,10 @@ export function validateBundleData(data:any):void{
   const owners=new Map<string,string>();for(const [owner,work] of [...data.attempts.map((a:Attempt)=>[a.sessionId,a.work]),...data.drafts.map((d:DraftRecord)=>[d.sessionId,d.artifacts])] as [string,readonly WorkArtifact[]][]){for(const w of work){const canonical=data.artifacts.find((a:WorkArtifact)=>a.id===w.id);check(canonical&&eq(canonical,w),'Missing or conflicting canonical artifact');check(!owners.has(w.id)||owners.get(w.id)===owner,'Artifact belongs to another session');owners.set(w.id,owner);}}
 }
 // Verify draft against the exact persisted stage and event checkpoint, not a mutable UI flag.
-export async function verifyDraftLineage(tx:import('./storage.ts').TransactionContext,session:Session,lineage:CognitiveDraftLineage):Promise<void>{
+export async function verifyDraftLineage(tx:import('./storage.ts').TransactionContext,session:Session,lineage:CognitiveDraftLineage,verifiedHistoricalSnapshot?:CognitiveSnapshot):Promise<void>{
   const j=lineage.journey;check(j&&refOk(j.task)&&j.releaseId===session.releaseId&&session.mode!=='SIMULATED_EXAM'&&nonblank(j.journeyId)&&nonblank(j.taskInstanceId),'Invalid cognitive draft identity');
   const meta=await tx.get<{journey:unknown;parentJourney:unknown;origin?:{sessionId:string;ref:unknown;cursor:number}}>('cognitive_journeys',j.journeyId);
-  const snap=await tx.get<CognitiveSnapshot>('cog_snap:'+j.journeyId,j.journeyId);
+  const snap=verifiedHistoricalSnapshot??await tx.get<CognitiveSnapshot>('cog_snap:'+j.journeyId,j.journeyId);
   check(meta&&eq(meta.journey,j)&&snap&&eq(snap.journey,j)&&eq(snap.checkpoint,lineage.checkpoint)&&snap.stage===lineage.stage&&snap.stage!=='COMPLETE','Missing or stale cognitive draft checkpoint');
   check(eq(meta.parentJourney,lineage.parentJourney),'Draft retry lineage differs');
   const first=snap.firstAttemptId?await tx.get<{id:string}>('cognitive_event_attempt',snap.firstAttemptId):undefined;
@@ -180,7 +180,16 @@ export class DefaultProgressStore implements ProgressStore {
    * Loads draft record for a session, returning null if no draft exists.
    */
   async loadDraft(sessionId:string):Promise<(Draft&DraftRecord)|null>{
-    return this.driver.transaction(['drafts','sessions'],'readonly',async tx=>{const draft=await tx.get<DraftRecord>('drafts',sessionId);if(!draft)return null;const session=await tx.get<Session>('sessions',sessionId);check(session,'Draft missing session');return {...draft,session,cognitive:draft.cognitive??null};});
+    const initial=await this.driver.get<DraftRecord>('drafts',sessionId);if(!initial)return null;
+    const lineage=initial.cognitive;
+    return this.driver.transaction(['drafts','sessions',...(lineage?['cog_snap:'+lineage.journey.journeyId]:[])],'readonly',async tx=>{
+      const draft=await tx.get<DraftRecord>('drafts',sessionId);if(!draft)return null;
+      check(eq(draft,initial),'Draft changed during read; retry');
+      const session=await tx.get<Session>('sessions',sessionId);check(session,'Draft missing session');
+      const snapshot=lineage?await tx.get<CognitiveSnapshot>('cog_snap:'+lineage.journey.journeyId,lineage.journey.journeyId):undefined;
+      const cognitiveStale=!!lineage&&(!snapshot||!eq(snapshot.journey,lineage.journey)||snapshot.stage!==lineage.stage||!eq(snapshot.checkpoint,lineage.checkpoint));
+      return {...draft,session,cognitive:draft.cognitive??null,cognitiveStale};
+    });
   }
 
   /**
