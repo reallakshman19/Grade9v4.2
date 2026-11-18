@@ -150,7 +150,7 @@ describe('Filter Panel — URL Serialization and Deserialization', () => {
 describe('Question Card — Public View & Zero Private Metadata', () => {
   it('strips internal answer keys, custody git hashes, and review notes', () => {
     const raw = SAMPLE_QUESTIONS[0];
-    const card = createQuestionCard(raw);
+    const card = createQuestionCard(raw,()=>true);
     const summary = card.getSummary();
 
     // Public properties present
@@ -167,7 +167,7 @@ describe('Question Card — Public View & Zero Private Metadata', () => {
   });
 
   it('marks released question as attemptable and generates valid workspace path', () => {
-    const card = createQuestionCard(SAMPLE_QUESTIONS[0]);
+    const card = createQuestionCard(SAMPLE_QUESTIONS[0],()=>true);
     const state = card.getViewState();
 
     assert.equal(state.isAttemptable, true);
@@ -176,7 +176,7 @@ describe('Question Card — Public View & Zero Private Metadata', () => {
   });
 
   it('marks withdrawn question as NOT attemptable', () => {
-    const card = createQuestionCard(SAMPLE_QUESTIONS[2]); // WITHDRAWN
+    const card = createQuestionCard(SAMPLE_QUESTIONS[2],()=>true); // WITHDRAWN
     assert.equal(card.isAttemptable(), false);
     assert.equal(card.getViewState().statusBadgeText, 'WITHDRAWN');
   });
@@ -310,3 +310,5 @@ describe('Question Bank Screen — URL Synchronization', () => {
     assert.equal(restoredState.pageItems[0].id, 'Q-PHYS-02');
   });
 });
+
+it('unrecognized status cannot become a released route',()=>{const c=createQuestionCard({id:'que:unknown',stem:'private'});assert.equal(c.isAttemptable(),false);assert.equal(c.getSummary().status,'HOLD');assert.equal(c.getSummary().stemPreview,'');});
