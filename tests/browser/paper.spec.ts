@@ -1,38 +1,15 @@
-/**
- * tests/browser/paper.spec.ts
- * A30 — Multipart paper and examination workspace test suite.
- *
- * Verifies:
- * - Nine archetype examination flows (PHY E1–E3, CHM E1–E3, MTH E1–E3, and multipart)
- * - Strict solution secrecy invariant: Solutions sealed during active examination ("no early solution")
- * - Persistent examination timer with exact reload restoration ("timer reload")
- * - Incomplete total pending invariant: If any part is pending review or incomplete,
- *   the aggregate paper evaluation remains REVIEW_PENDING with total score withheld (points: null)
- * - Multi-section examination navigation and part status lifecycle (UNVISITED -> VIEWED -> ATTEMPTED -> FLAGGED)
- * - Configured aids access control (authorized vs forbidden aids)
- * - Shared stimulus binding across multipart questions
- * - Full session export and restoration roundtrip
- * - 48px minimum touch/hit target bounds
- *
- * No academic approval inferred from software validation.
- */
-
-import { describe, it } from 'node:test';
+import {describe,it} from 'node:test';
 import assert from 'node:assert/strict';
-
-import {
-  PartNavigationController,
-} from '../../web/components/part-navigation.ts';
-import {
-  ExamTimer,
-  PaperWorkspaceController,
-} from '../../web/pages/paper.ts';
-import type {
-  PaperQuestionPart,
-  SharedStimulus,
-} from '../../web/pages/paper.ts';
-
-// Test fixture covering all nine archetypes across 3 sections with shared stimulus
+import {chromium} from 'playwright-core';
+import {createServer} from 'vite';
+import {PartNavigationController} from '../../web/components/part-navigation.ts';
+import {ExamTimer,PaperWorkspaceController,paperDefinitionDigest,type PaperQuestionPart,type SharedStimulus,type PaperWorkspaceConfig} from '../../web/pages/paper.ts';
+import {MemoryStorageDriver,StorageError} from '../../web/runtime/storage.ts';
+import {DefaultProgressStore} from '../../web/runtime/progress.ts';
+import {Session} from '../../web/runtime/session.ts';
+import {StandardAssessmentEngine,SCORING_VERSION,type AssessmentContract} from '../../web/runtime/assessment.ts';
+import {canonicalJson,computeSha256,sameRef} from '../../web/runtime/loader.ts';
+import type {Response,Kind,TaskRef,Ref,Session as SessionRecord} from '../../web/runtime/types.ts';
 const NINE_ARCHETYPE_PARTS: PaperQuestionPart[] = [
   // Section A: Physics
   {
@@ -147,305 +124,43 @@ const STIMULI_FIXTURE: SharedStimulus[] = [
   },
 ];
 
-describe('A30 Part Navigation: Sections & States', () => {
-  it('initializes parts to UNVISITED, marks active part as VIEWED, and supports flagging', () => {
-    const nav = new PartNavigationController({
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-    });
 
-    assert.equal(nav.getActivePartId(), 'p-phy-e1');
-    assert.equal(nav.getPartStatus('p-phy-e1'), 'VIEWED');
-    assert.equal(nav.getPartStatus('p-phy-e2'), 'UNVISITED');
-
-    // Toggle flag
-    assert.equal(nav.isFlagged('p-phy-e1'), false);
-    nav.toggleFlag('p-phy-e1');
-    assert.equal(nav.isFlagged('p-phy-e1'), true);
-    assert.equal(nav.getPartStatus('p-phy-e1'), 'FLAGGED');
-
-    const counts = nav.getSummaryCounts();
-    assert.equal(counts.total, 9);
-    assert.equal(counts.flagged, 1);
-    assert.equal(counts.unvisited, 8);
-  });
-
-  it('supports sequential next/previous and direct navigation across sections', () => {
-    const nav = new PartNavigationController({
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-    });
-
-    assert.equal(nav.goToNextPart(), true);
-    assert.equal(nav.getActivePartId(), 'p-phy-e2');
-
-    assert.equal(nav.goToPreviousPart(), true);
-    assert.equal(nav.getActivePartId(), 'p-phy-e1');
-
-    // Direct jump across sections
-    assert.equal(nav.goToPart('p-mth-e3'), true);
-    assert.equal(nav.getActivePartId(), 'p-mth-e3');
-    assert.equal(nav.getActiveSection()?.id, 'sec-mth');
-  });
+const KINDS:Kind[]=['SINGLE_CHOICE','NUMERIC_QUANTITY','GRAPH','INTEGER','REACTION_MECHANISM','EXPERIMENT_ANALYSIS','INTEGER','SYMBOLIC_EXPRESSION','MATHEMATICAL_PROOF'];
+const ANSWERS:Response[]=[{kind:'SINGLE_CHOICE',value:'B'},{kind:'NUMERIC_QUANTITY',value:{decimal:'2.45',unit:'s'}},{kind:'GRAPH',value:{points:[['1','4.02']]}},{kind:'INTEGER',value:'5'},{kind:'REACTION_MECHANISM',value:['step']},{kind:'EXPERIMENT_ANALYSIS',value:{observations:['peak'],conclusion:'candidate'}},{kind:'INTEGER',value:'840'},{kind:'SYMBOLIC_EXPRESSION',value:'x+1'},{kind:'MATHEMATICAL_PROOF',value:'Cauchy-Schwarz'}];
+const full:PaperWorkspaceConfig={paperId:'paper:synthetic:nine',paperTitle:'Nine synthetic archetypes',durationSeconds:7200,sections:SECTIONS_FIXTURE,parts:NINE_ARCHETYPE_PARTS.map((p,i)=>({...p,responseKind:KINDS[i]})),stimuli:STIMULI_FIXTURE,allowedAids:['PERIODIC_TABLE','FORMULA_SHEET']};
+const closed:PaperWorkspaceConfig={...full,paperId:'paper:synthetic:closed',parts:[full.parts[0],full.parts[3],full.parts[6]].map((p,i)=>({...p,maxPoints:[.1,.2,.3][i]})),sections:SECTIONS_FIXTURE.map((s,i)=>({...s,partIds:[full.parts[[0,3,6][i]].id]}))};
+async function setup(config=full,deadlineAt=new Date(Date.now()+3600000).toISOString()){
+ const driver=new MemoryStorageDriver(),task:TaskRef={type:'QUESTION',id:'que:paper:synthetic',revision:1,sha256:'a'.repeat(64)},releaseId='rel:synthetic:paper',paper:Ref<'PAPER'>={type:'PAPER',id:config.paperId,revision:1,sha256:'b'.repeat(64)};
+ const parts:Record<string,AssessmentContract>={};for(const p of config.parts){const i=full.parts.findIndex(q=>q.id===p.id),answer=ANSWERS[i],mode=['SINGLE_CHOICE','INTEGER','NUMERIC_QUANTITY'].includes(answer.kind)?'AUTOMATIC':'REVIEW_PENDING';
+ parts[p.id]={id:'asmt:'+p.id,task_ref:task,response_kind:answer.kind,max_points:p.maxPoints,evaluator:mode==='REVIEW_PENDING'?{mode}:{mode,canonical_value:answer.value,...(answer.kind==='SINGLE_CHOICE'?{allowed_options:['A','B','C']}:{})}};}
+ const contract:AssessmentContract={id:'asmt:paper:synthetic',revision:1,task_ref:task,response_kind:'MULTIPART',max_points:config===closed?0.6:45,evaluator:{mode:'REVIEW_PENDING'},parts};
+ // Nine original fixture maxima are 3+5+7+3+6+6+3+5+7 = 45.
+ const assessment:Ref<'ASSESSMENT'>={type:'ASSESSMENT',id:contract.id,revision:1,sha256:await computeSha256(canonicalJson(contract))};
+ const engine=new StandardAssessmentEngine([{assessment,task}]);await engine.registerContract(contract,assessment);
+ const s:SessionRecord={id:'ses:paper',releaseId,item:task,mode:'SIMULATED_EXAM',deadlineAt,contentRevision:'r1',origin:null,returnRoute:null,cursor:0,attemptIds:[],draftId:null};
+ await driver.put('sessions',s.id,s);
+ const progress=new DefaultProgressStore(driver,async a=>a.releaseId===releaseId&&sameRef(a.item,task)&&!!a.assessmentRef&&sameRef(a.assessmentRef,assessment)&&a.scoringVersion===SCORING_VERSION&&canonicalJson(a.grade)===canonicalJson(await engine.evaluate(a.response,assessment,'SIMULATED_EXAM',task)));
+ const session=new Session({sessionId:s.id,releaseId,item:task,mode:'SIMULATED_EXAM'},driver,progress,{liveRevision:async()=> 'r1',reviewedDisclosure:async()=>true});
+ const binding={paper,definitionSha256:await paperDefinitionDigest(config),task,assessment,releaseId,attemptId:'att:paper',session,progress,engine,verifyRequiredAssets:async()=>true};
+ const ws=new PaperWorkspaceController(config,binding);await ws.restore();return {driver,binding,ws,s};
+}
+function answerAll(ws:PaperWorkspaceController,config=full){for(const p of config.parts)assert.equal(ws.setPartResponse(p.id,ANSWERS[full.parts.findIndex(q=>q.id===p.id)]),true);}
+describe('A30 navigation and time authority',()=>{
+ it('navigates nine archetypes with flags and exact section closure',()=>{const n=new PartNavigationController({sections:full.sections,parts:full.parts});assert.equal(n.getActivePartId(),'p-phy-e1');n.toggleFlag('p-phy-e1');assert.equal(n.getSummaryCounts().flagged,1);assert(n.goToNextPart());assert(n.goToPreviousPart());assert(n.goToPart('p-mth-e3'));assert.equal(n.getActiveSection()?.id,'sec-mth');assert.throws(()=>n.restoreState({...n.exportState(),activePartId:'foreign'}));assert.throws(()=>new PartNavigationController({sections:full.sections,parts:[...full.parts,full.parts[0]]}));assert.equal((n.getParts()[0] as PaperQuestionPart).solutionHtml,undefined);});
+ it('uses absolute deadline across reload and refuses clock rollback within an instance',()=>{let now=Date.parse('2026-11-18T09:00:00Z');const deadline=new Date(now+3600000).toISOString();const t=new ExamTimer(3600,deadline,()=>now);now+=10000;assert.equal(t.getRemainingSeconds(),3590);now+=5000;const reloaded=new ExamTimer(3600,deadline,()=>now);assert.equal(reloaded.getRemainingSeconds(),3585);now-=5000;assert.equal(reloaded.getRemainingSeconds(),3585);now=Date.parse(deadline);assert(reloaded.isExpired());assert.equal(reloaded.getRemainingSeconds(),0);});
+ it('preview cannot save, submit, open aids or expose solution',async()=>{const w=new PaperWorkspaceController(full);assert.equal(w.setPartResponse(full.parts[0].id,3),false);assert.equal(w.openAid('PERIODIC_TABLE').allowed,false);assert.equal(w.getSolution(full.parts[0].id).allowed,false);await assert.rejects(w.restore());await assert.rejects(w.submitPaper());assert.throws(()=>w.restoreSession({...w.exportSession(),isCommitted:true}));assert.equal(w.getViewState().isCommitted,false);});
 });
-
-describe('A30 Examination Timer: Countdown & Reload Persistence', () => {
-  it('tracks elapsed and remaining duration and stops on pause or expiry', () => {
-    const timer = new ExamTimer(3600); // 1 hour
-    assert.equal(timer.getRemainingSeconds(), 3600);
-    assert.equal(timer.getElapsedSeconds(), 0);
-
-    timer.tick(10);
-    assert.equal(timer.getRemainingSeconds(), 3590);
-    assert.equal(timer.getElapsedSeconds(), 10);
-
-    timer.pause();
-    timer.tick(10);
-    assert.equal(timer.getRemainingSeconds(), 3590); // paused, no tick
-
-    timer.resume();
-    timer.tick(15);
-    assert.equal(timer.getRemainingSeconds(), 3575);
-  });
-
-  it('preserves exact elapsed and remaining time across timer reload without drift', () => {
-    const timer = new ExamTimer(5400); // 90 mins
-    timer.tick(1245); // 1245s elapsed
-    assert.equal(timer.getRemainingSeconds(), 4155);
-
-    const savedState = timer.exportState();
-
-    // Reload into a fresh instance
-    const reloadedTimer = new ExamTimer(5400);
-    reloadedTimer.restoreState(savedState);
-
-    assert.equal(reloadedTimer.getElapsedSeconds(), 1245);
-    assert.equal(reloadedTimer.getRemainingSeconds(), 4155);
-    assert.equal(reloadedTimer.isExpired(), false);
-
-    // Verify tick continues seamlessly from restored state
-    reloadedTimer.tick(5);
-    assert.equal(reloadedTimer.getRemainingSeconds(), 4150);
-  });
+describe('A30 durable paper and exam policy',()=>{
+ it('all nine archetypes commit as a single exact multipart attempt, pending total and sealed feedback',async()=>{const {ws,driver,binding}=await setup();answerAll(ws);assert.equal(ws.openAid('PERIODIC_TABLE').allowed,true);assert.equal(ws.openAid('CALCULATOR').allowed,false);ws.getNavigation().goToPart('p-chm-e2');assert.equal(ws.getViewState().activeStimulus?.id,'stim-organic-synth');assert.equal(ws.getSolution('p-phy-e1').allowed,false);
+ const view=await ws.submitPaper();assert.equal(view.totalPoints,null);assert.equal(view.isFinal,false);assert(ws.getViewState().isCommitted);assert(view.partResults.every(p=>p.points===null));assert.equal(ws.getSolution('p-phy-e1').allowed,false);assert.equal(ws.openAid('PERIODIC_TABLE').allowed,false);assert.equal(ws.setPartResponse('p-phy-e1',ANSWERS[0]),false);
+ const a:any=await driver.get('attempts',binding.attemptId);assert.equal(a.grade.status,'REVIEW_PENDING');assert.equal(a.grade.parts['p-phy-e1'].points,3);assert.equal(a.grade.parts['p-mth-e3'].points,null);assert.equal(Object.keys(a.response.value).length,9);assert.equal((await driver.getAll('attempts')).length,1);await ws.submitPaper();assert.equal((await driver.getAll('attempts')).length,1);
+ });
+ it('closed exact fractional grading persists but is not disclosed; arbitrary points rejected',async()=>{const {ws,driver,binding}=await setup(closed);assert.equal(ws.setPartResponse(closed.parts[0].id,1000),false);assert.equal(ws.setPartResponse(closed.parts[0].id,{kind:'INTEGER',value:'3'}),false);answerAll(ws,closed);ws.setPartResponse(closed.parts[1].id,{kind:'INTEGER',value:'99'});const result=await ws.submitPaper();const a:any=await driver.get('attempts',binding.attemptId);assert.equal(a.grade.status,'SCORED');assert.equal(a.grade.maxPoints,.6);assert.equal(a.grade.points,.4);assert.equal(result.totalPoints,null);assert(result.partResults.every(p=>p.points===null));});
+ it('nonempty partial answer commits missing-part grade without fabricated total',async()=>{const {ws,driver,binding}=await setup();ws.setPartResponse(full.parts[0].id,ANSWERS[0]);const result=await ws.submitPaper();const a:any=await driver.get('attempts',binding.attemptId);assert.equal(a.grade.status,'INVALID');assert.equal(a.grade.reasonCode,'MISSING_REQUIRED_PART');assert.equal(a.grade.points,null);assert.equal(result.totalPoints,null);assert.equal(result.partResults.filter(p=>p.status==='UNANSWERED').length,8);});
+ it('rejects empty, mismatched definition, expired deadline and unavailable required asset',async()=>{const {ws,binding,driver}=await setup();await assert.rejects(ws.submitPaper());const foreign=new PaperWorkspaceController({...full,paperTitle:'different'},binding);await assert.rejects(foreign.restore(),/PAPER_NOT_AUTHORIZED/);const blocked=new PaperWorkspaceController(full,{...binding,verifyRequiredAssets:async()=>false});await blocked.restore();answerAll(blocked);await assert.rejects(blocked.submitPaper(),/REQUIRED_ASSET_UNAVAILABLE/);assert.equal((await driver.getAll('attempts')).length,0);const expired=await setup(full,new Date(Date.now()-1000).toISOString());assert.equal(expired.ws.setPartResponse(full.parts[0].id,ANSWERS[0]),false);await assert.rejects(expired.ws.submitPaper(),/DEADLINE/);});
+ it('draft CAS rejects stale save and stale commit, rollback preserves draft, restart recovers exact attempt',async()=>{const {ws,binding,driver,s}=await setup();answerAll(ws);ws.getNavigation().toggleFlag('p-phy-e2');ws.getNavigation().goToPart('p-chm-e2');await ws.saveDraft();const stale=new PaperWorkspaceController(full,binding);await stale.restore();const fresh=new PaperWorkspaceController(full,binding);await fresh.restore();assert.equal(fresh.getViewState().activePartId,'p-chm-e2');assert(fresh.getNavigation().isFlagged('p-phy-e2'));fresh.setPartResponse('p-chm-e1',{kind:'INTEGER',value:'6'});await fresh.saveDraft();await assert.rejects(stale.submitPaper(),/Stale draft revision/);await assert.rejects(stale.saveDraft(),/Stale draft revision/);assert.equal((await driver.getAll('attempts')).length,0);
+ driver.setFailureHook((store,op)=>store==='sessions'&&op==='put'?new StorageError('TRANSACTION_ABORTED','injected'):null);await assert.rejects(fresh.submitPaper());assert.equal(fresh.getViewState().isCommitted,false);assert.equal((await driver.getAll('attempts')).length,0);assert.equal((await binding.progress.loadDraft(s.id))?.revision,2);driver.setFailureHook(null);await fresh.submitPaper();const restored=new PaperWorkspaceController(full,binding);await restored.restore();assert(restored.getViewState().isCommitted);assert.equal(restored.getPartResponse('p-chm-e1')?.value,'6');assert.equal(restored.getSolution('p-phy-e1').allowed,false);assert.equal((await driver.getAll('attempts')).length,1);assert.equal(await binding.progress.loadDraft(s.id),null);
+ });
+ it('history export/import cannot become a local examination commitment',async()=>{const {ws,binding,driver,s}=await setup();answerAll(ws);await ws.submitPaper();const blob=await binding.progress.exportAll();const clean=new MemoryStorageDriver(),p=new DefaultProgressStore(clean,async()=>true);await p.importVerified(blob);const session=new Session({sessionId:s.id,releaseId:s.releaseId,item:s.item,mode:s.mode},clean,p,{liveRevision:async()=> 'r1',reviewedDisclosure:async()=>true});const reopened=new PaperWorkspaceController(full,{...binding,session,progress:p});await assert.rejects(reopened.restore(),/UNQUALIFIED_PAPER_COMMIT/);assert.equal(reopened.getViewState().isCommitted,false);assert.equal(reopened.getSolution('p-phy-e1').allowed,false);});
 });
-
-describe('A30 Early Solution Secrecy: Solutions Sealed In-Progress', () => {
-  it('strictly blocks solution inspection while examination is active ("no early solution")', () => {
-    const workspace = new PaperWorkspaceController({
-      paperId: 'exam-paper-01',
-      paperTitle: 'Integrated Olympiad Stage 2 Screening',
-      durationSeconds: 7200,
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-    });
-
-    // Attempting to read solution during active exam must fail
-    const attempt = workspace.getSolution('p-phy-e1');
-    assert.equal(attempt.allowed, false);
-    assert.match(attempt.error || '', /sealed during active examination/i);
-    assert.equal(attempt.solutionHtml, undefined);
-
-    // Enter a response
-    workspace.setPartResponse('p-phy-e1', 3);
-
-    // Still blocked before submission
-    const attempt2 = workspace.getSolution('p-phy-e1');
-    assert.equal(attempt2.allowed, false);
-
-    // Submit paper
-    workspace.submitPaper();
-
-    // Now solution is unlocked
-    const attemptAfterSubmit = workspace.getSolution('p-phy-e1');
-    assert.equal(attemptAfterSubmit.allowed, true);
-    assert.ok(attemptAfterSubmit.solutionHtml?.includes('Option B is correct'));
-  });
-});
-
-describe('A30 Incomplete Total Pending: Aggregate Score Withholding', () => {
-  it('enforces incomplete total pending: if any part requires review, totalPoints is null', () => {
-    const workspace = new PaperWorkspaceController({
-      paperId: 'exam-paper-01',
-      paperTitle: 'Integrated Olympiad Stage 2 Screening',
-      durationSeconds: 7200,
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-    });
-
-    // Answer PHY-E1 (closed: scored)
-    workspace.setPartResponse('p-phy-e1', 3);
-    // Answer MTH-E3 (open proof: review pending)
-    workspace.setPartResponse('p-mth-e3', 'Proof using Cauchy-Schwarz');
-
-    const result = workspace.submitPaper();
-
-    // Incomplete total pending invariant:
-    assert.equal(result.status, 'REVIEW_PENDING');
-    assert.equal(result.totalPoints, null); // Score withheld!
-    assert.equal(result.isFinal, false);
-    assert.match(result.summaryFeedback, /Total score is pending review/i);
-
-    // Individual parts are tagged correctly
-    const phyE1 = result.partResults.find((p) => p.partId === 'p-phy-e1');
-    assert.equal(phyE1?.status, 'SCORED');
-    assert.equal(phyE1?.points, 3);
-
-    const mthE3 = result.partResults.find((p) => p.partId === 'p-mth-e3');
-    assert.equal(mthE3?.status, 'REVIEW_PENDING');
-    assert.equal(mthE3?.points, null);
-  });
-
-  it('allows final numerical score only when paper consists entirely of closed-form parts', () => {
-    const closedParts: PaperQuestionPart[] = [
-      {
-        id: 'cp-1',
-        partKey: '1',
-        sectionId: 'sec-1',
-        label: 'PHY E1 Question',
-        maxPoints: 4,
-        archetypeId: 'PHY-E1',
-        promptHtml: '<p>Prompt 1</p>',
-      },
-      {
-        id: 'cp-2',
-        partKey: '2',
-        sectionId: 'sec-1',
-        label: 'CHM E1 Question',
-        maxPoints: 4,
-        archetypeId: 'CHM-E1',
-        promptHtml: '<p>Prompt 2</p>',
-      },
-      {
-        id: 'cp-3',
-        partKey: '3',
-        sectionId: 'sec-1',
-        label: 'MTH E1 Question',
-        maxPoints: 4,
-        archetypeId: 'MTH-E1',
-        promptHtml: '<p>Prompt 3</p>',
-      },
-    ];
-
-    const closedWorkspace = new PaperWorkspaceController({
-      paperId: 'closed-paper',
-      paperTitle: 'All-Closed Screening Paper',
-      durationSeconds: 3600,
-      sections: [{ id: 'sec-1', title: 'Objective Section', partIds: ['cp-1', 'cp-2', 'cp-3'] }],
-      parts: closedParts,
-    });
-
-    closedWorkspace.setPartResponse('cp-1', 4);
-    closedWorkspace.setPartResponse('cp-2', 4);
-    closedWorkspace.setPartResponse('cp-3', 2);
-
-    const result = closedWorkspace.submitPaper();
-    assert.equal(result.status, 'SCORED');
-    assert.equal(result.totalPoints, 10);
-    assert.equal(result.maxPoints, 12);
-    assert.equal(result.isFinal, true);
-  });
-});
-
-describe('A30 Configured Aids & Shared Stimulus', () => {
-  it('controls access to permitted aids and rejects forbidden aids', () => {
-    const workspace = new PaperWorkspaceController({
-      paperId: 'paper-aids',
-      paperTitle: 'Chemistry Paper with Periodic Table',
-      durationSeconds: 3600,
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-      allowedAids: ['PERIODIC_TABLE', 'FORMULA_SHEET'], // Calculator is forbidden!
-    });
-
-    // Permitted aid opens cleanly
-    const ptResult = workspace.openAid('PERIODIC_TABLE');
-    assert.equal(ptResult.allowed, true);
-
-    // Forbidden aid is blocked
-    const calcResult = workspace.openAid('CALCULATOR');
-    assert.equal(calcResult.allowed, false);
-    assert.match(calcResult.error || '', /forbidden by examination rules/i);
-  });
-
-  it('binds shared stimulus to multiple parts in split view', () => {
-    const workspace = new PaperWorkspaceController({
-      paperId: 'paper-stimulus',
-      paperTitle: 'Paper with Shared Stimulus',
-      durationSeconds: 3600,
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-      stimuli: STIMULI_FIXTURE,
-    });
-
-    // Part 1.1 has no stimulus
-    workspace.getNavigation().goToPart('p-phy-e1');
-    assert.equal(workspace.getViewState().activeStimulus, null);
-
-    // Part 2.2 links to stim-organic-synth
-    workspace.getNavigation().goToPart('p-chm-e2');
-    const state = workspace.getViewState();
-    assert.ok(state.activeStimulus);
-    assert.equal(state.activeStimulus.id, 'stim-organic-synth');
-    assert.match(state.activeStimulus.title, /Ester Synthesis/);
-  });
-});
-
-describe('A30 Paper Session Persistence & Ergonomics', () => {
-  it('persists and restores complete paper state across lifecycle transitions', () => {
-    const workspace = new PaperWorkspaceController({
-      paperId: 'paper-session-test',
-      paperTitle: 'State Roundtrip Test',
-      durationSeconds: 5400,
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-    });
-
-    workspace.getTimer().tick(600); // 10 minutes elapsed
-    workspace.setPartResponse('p-phy-e1', 3);
-    workspace.setPartResponse('p-chm-e2', 'SMILES: CC(=O)Cl');
-    workspace.getNavigation().toggleFlag('p-phy-e2');
-    workspace.getNavigation().goToPart('p-chm-e2');
-
-    const exported = workspace.exportSession();
-    assert.equal(exported.timerState.elapsedSeconds, 600);
-    assert.equal(exported.responses['p-phy-e1'], 3);
-    assert.equal(exported.navigationState.activePartId, 'p-chm-e2');
-    assert.ok(exported.navigationState.flagged.includes('p-phy-e2'));
-
-    // Fresh controller restored from state
-    const restored = new PaperWorkspaceController({
-      paperId: 'paper-session-test',
-      paperTitle: 'State Roundtrip Test',
-      durationSeconds: 5400,
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-    });
-    restored.restoreSession(exported);
-
-    const restoredState = restored.getViewState();
-    assert.equal(restoredState.timer.elapsedSeconds, 600);
-    assert.equal(restoredState.activePartId, 'p-chm-e2');
-    assert.equal(restored.getPartResponse('p-phy-e1'), 3);
-    assert.equal(restored.getNavigation().isFlagged('p-phy-e2'), true);
-  });
-
-  it('verifies all interactive elements conform to 48px hit target bounds', () => {
-    const workspace = new PaperWorkspaceController({
-      paperId: 'paper-hit-targets',
-      paperTitle: 'Hit Target Verification',
-      durationSeconds: 3600,
-      sections: SECTIONS_FIXTURE,
-      parts: NINE_ARCHETYPE_PARTS,
-      allowedAids: ['FORMULA_SHEET'],
-    });
-
-    const state = workspace.getViewState();
-    assert.equal(state.minHitTargetPx, 48);
-
-    const html = workspace.render();
-    assert.ok(html.includes('min-height: 48px'));
-    assert.ok(html.includes('min-width: 48px'));
-    assert.ok(html.includes('id="submit-paper-btn"'));
-    assert.ok(html.includes('class="part-navigation-panel"'));
-  });
-});
+it('actual Chromium: paper navigation/prompt cannot create active markup',async()=>{const browser=await chromium.launch({headless:true});try{const page=await browser.newPage();const w=new PaperWorkspaceController({...full,paperTitle:'<img src=x onerror=alert(1)>',parts:full.parts.map(p=>({...p,label:'" onmouseover="alert(1)',promptHtml:'<svg onload=alert(1)><p>safe</p>'}))});await page.setContent(w.render());assert.equal(await page.locator('img,svg,[onerror],[onmouseover],[onload]').count(),0);assert.equal(await page.locator('#submit-paper-btn').isDisabled(),true);assert.equal(await page.locator('.part-prompt p').textContent(),'safe');}finally{await browser.close();}});
