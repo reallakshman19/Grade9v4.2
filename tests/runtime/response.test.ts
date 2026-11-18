@@ -503,19 +503,10 @@ describe('Capability Registry and Safe Fallbacks', () => {
 
     // Validate raw value string
     const r1 = singleCap.validate('option_a');
-    assert.equal(r1.kind, 'SINGLE_CHOICE');
-    assert.equal(r1.value, 'option_a');
-
-    // Validate already wrapped response
-    const r2 = singleCap.validate({ kind: 'SINGLE_CHOICE', value: 'option_b' });
-    assert.equal(r2.kind, 'SINGLE_CHOICE');
-    assert.equal(r2.value, 'option_b');
-
-    // Rejects kind mismatch
-    assert.throws(
-      () => singleCap.validate({ kind: 'INTEGER', value: '42' }),
-      (err: unknown) => err instanceof ResponseValidationError && err.code === 'KIND_MISMATCH'
-    );
+    assert.deepEqual(r1,{ok:true,value:{kind:'SINGLE_CHOICE',value:'option_a'}});
+    const r2=singleCap.validate({kind:'SINGLE_CHOICE',value:'option_b'});
+    assert.deepEqual(r2,{ok:true,value:{kind:'SINGLE_CHOICE',value:'option_b'}});
+    assert.deepEqual(singleCap.validate({kind:'INTEGER',value:'42'}),{ok:false,reasonCode:'KIND_MISMATCH'});
   });
 
   it('standard capability mounts safely in headless environment', () => {
@@ -538,14 +529,7 @@ describe('Capability Registry and Safe Fallbacks', () => {
     assert.equal(fallback.supportsOffline, false);
 
     // Calling validate on fallback fails closed
-    assert.throws(
-      () => fallback.validate({ test: true }),
-      (err: unknown) => {
-        assert(err instanceof ResponseValidationError);
-        assert.equal(err.code, 'UNSUPPORTED_KIND');
-        return true;
-      }
-    );
+    assert.deepEqual(fallback.validate({test:true}),{ok:false,reasonCode:'UNSUPPORTED_KIND'});
 
     // Calling mount on fallback is safe no-op
     const mockRoot = {} as HTMLElement;
@@ -571,12 +555,15 @@ describe('Capability Registry and Safe Fallbacks', () => {
   it('operates purely on structural response contracts without subject-specific dispatch', () => {
     // Physics, Mathematics, and Chemistry responses use identical capability validation
     const mathExp = defaultCapabilityRegistry.get('SYMBOLIC_EXPRESSION')?.validate('x^2 + y^2 = r^2');
-    assert.equal(mathExp?.kind, 'SYMBOLIC_EXPRESSION');
+    assert.equal(mathExp?.ok && mathExp.value.kind, 'SYMBOLIC_EXPRESSION');
 
     const physQuantity = defaultCapabilityRegistry.get('NUMERIC_QUANTITY')?.validate({ decimal: '9.8', unit: 'm/s^2' });
-    assert.equal(physQuantity?.kind, 'NUMERIC_QUANTITY');
+    assert.equal(physQuantity?.ok && physQuantity.value.kind, 'NUMERIC_QUANTITY');
 
     const chemStruct = defaultCapabilityRegistry.get('CHEMICAL_STRUCTURE')?.validate({ format: 'SMILES', data: 'O=C=O' });
-    assert.equal(chemStruct?.kind, 'CHEMICAL_STRUCTURE');
+    assert.equal(chemStruct?.ok && chemStruct.value.kind, 'CHEMICAL_STRUCTURE');
   });
 });
+
+it('rejects escaped duplicate JSON keys and extra multipart aliases',()=>{assert.throws(()=>parseResponseJson('{"kind":"MULTIPART","value":{"a":{"kind":"INTEGER","value":"1"},"\\u0061":{"kind":"INTEGER","value":"2"}}}'),/DUPLICATE_PART_ID/);assert.throws(()=>validateResponse({kind:'MULTIPART',value:{a:{kind:'INTEGER',value:'1'}},parts:{}}),/EXTRA_PROPERTIES/);});
+it('retains prototype-shaped multipart IDs as own data, without pollution',()=>{const v=parseResponseJson('{"kind":"MULTIPART","value":{"__proto__":{"kind":"INTEGER","value":"1"}}}');assert(v.kind==='MULTIPART');assert(Object.hasOwn(v.value,'__proto__'));assert.deepEqual(v.value['__proto__'],{kind:'INTEGER',value:'1'});assert.deepEqual(Object.keys(v),['kind','value']);});
