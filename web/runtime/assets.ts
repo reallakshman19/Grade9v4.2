@@ -52,7 +52,7 @@ export class AssetRegistry {
       if (!imageTypes.has(descriptor.mimeType) || !/^[a-f0-9]{64}$/.test(descriptor.expectedSha256)) throw new Error('Invalid asset descriptor');
       const bytes = typeof raw === 'string' ? decode(raw, descriptor.mimeType) : Uint8Array.from(raw);
       if (!bytes.length || bytes.length > 18_000_000) throw new Error('Invalid asset size');
-      const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), v=>v.toString(16).padStart(2,'0')).join('');
+      const hash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', Uint8Array.from(bytes))), v=>v.toString(16).padStart(2,'0')).join('');
       if (hash !== descriptor.expectedSha256) throw new Error('Asset digest mismatch');
       const result: ResolvedAsset = Object.freeze({descriptor,status:'VERIFIED',contentDataUrl:'data:'+descriptor.mimeType+';base64,'+encode(bytes)});
       verified.add(result);
