@@ -50,7 +50,7 @@ export interface CognitivePayloads {
   readonly SOURCE_RETURNED:{readonly origin_session_id:string;readonly origin_ref:Ref;readonly cursor:number};
 }
 export type CognitiveEventType = keyof CognitivePayloads;
-interface EventEnvelope {readonly schema_version:'g9-cognitive-event/1';readonly event_id:string;readonly journey_id:string;readonly release_id:string;readonly task_instance_id:string;readonly task_ref:Ref;readonly sequence:number;readonly previous_sha256:string|null;readonly at:string}
+interface EventEnvelope {readonly schema_version:'g9-cognitive-event/1'|'g9-cognitive-event/2';readonly event_id:string;readonly journey_id:string;readonly release_id:string;readonly task_instance_id:string;readonly task_ref:Ref;readonly sequence:number;readonly previous_sha256:string|null;readonly at:string}
 export type CognitiveEvent = {[K in CognitiveEventType]: EventEnvelope & {readonly event_type:K;readonly payload:CognitivePayloads[K]}}[CognitiveEventType];
 export interface CognitiveSnapshot {readonly journey:JourneyKey;readonly checkpoint:Checkpoint;readonly stage:CognitiveStage;readonly firstAttemptId:string|null;readonly boundaryAttemptId:string|null;readonly assisted:boolean;readonly lastHash:string|null;readonly eventIds:readonly string[]}
 export interface ReasoningField {readonly id:string;readonly kind:Kind;readonly required:boolean;readonly promptRef:Ref;readonly privateMoveRef?:Ref}
