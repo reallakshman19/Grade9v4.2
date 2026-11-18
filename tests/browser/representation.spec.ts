@@ -14,7 +14,9 @@
  * No academic approval inferred from software validation.
  */
 
-import { describe, it } from 'node:test';
+import { describe, it, before } from 'node:test';
+import { createHash } from 'node:crypto';
+import { chromium } from 'playwright-core';
 import assert from 'node:assert/strict';
 
 import {
@@ -27,7 +29,7 @@ import {
   createAssetRegistry,
   AssetRegistry,
 } from '../../web/runtime/assets.ts';
-import type { AssetDescriptor } from '../../web/runtime/assets.ts';
+import type { AssetDescriptor, ResolvedAsset } from '../../web/runtime/assets.ts';
 
 import {
   createFigureController,
@@ -100,17 +102,12 @@ describe('Math Rendering — Non-Clipping & Typography Bounds', () => {
 // ---------------------------------------------------------------------------
 
 describe('Figure Component — Zoom, Alt Text & Missing Asset States', () => {
-  const VERIFIED_ASSET = {
-    descriptor: {
-      id: 'fig-friction-block',
-      mimeType: 'image/svg+xml',
-      mandatory: true,
-      expectedSha256: 'abcdef1234567890',
-      altText: 'Free body diagram of block on incline',
-    },
-    status: 'VERIFIED' as const,
-    contentDataUrl: 'data:image/svg+xml;base64,PHN2Zz48L3N2Zz4=',
-  };
+  let VERIFIED_ASSET: ResolvedAsset;
+  before(async () => {
+    const dataBase64 = 'PHN2Zz48L3N2Zz4=';
+    const expectedSha256 = createHash('sha256').update(Buffer.from(dataBase64,'base64')).digest('hex');
+    VERIFIED_ASSET = await createAssetRegistry([{id:'fig-friction-block',mimeType:'image/svg+xml',mandatory:true,expectedSha256,dataBase64,altText:'Free body diagram of block on incline'}]).resolveAsset('fig-friction-block');
+  });
 
   const MISSING_REQUIRED_ASSET = {
     descriptor: {
@@ -206,22 +203,22 @@ describe('Figure Component — Zoom, Alt Text & Missing Asset States', () => {
 
 describe('Asset Registry — Mandatory Asset Integrity Checks', () => {
   const REGISTRY_ASSETS: AssetDescriptor[] = [
-    { id: 'ast-req-1', mimeType: 'image/svg+xml', mandatory: true, expectedSha256: 'hash1', dataBase64: 'PHN2Zz4=' },
+    { id: 'ast-req-1', mimeType: 'image/svg+xml', mandatory: true, expectedSha256: createHash('sha256').update(Buffer.from('PHN2Zz4=','base64')).digest('hex'), dataBase64: 'PHN2Zz4=' },
     { id: 'ast-req-2', mimeType: 'image/svg+xml', mandatory: true, expectedSha256: 'hash2' }, // missing bytes
     { id: 'ast-opt-1', mimeType: 'image/svg+xml', mandatory: false, expectedSha256: 'hash3' }, // missing optional
   ];
 
-  it('identifies missing mandatory assets correctly', () => {
+  it('identifies missing mandatory assets correctly', async () => {
     const registry = createAssetRegistry(REGISTRY_ASSETS);
-    const check = registry.verifyAllMandatoryAssets(['ast-req-1', 'ast-req-2', 'ast-opt-1']);
+    const check = await registry.verifyAllMandatoryAssets(['ast-req-1', 'ast-req-2', 'ast-opt-1']);
 
     assert.equal(check.allAvailable, false);
     assert.deepEqual(check.missingMandatoryIds, ['ast-req-2']);
   });
 
-  it('passes when all queried mandatory assets are verified', () => {
+  it('passes when all queried mandatory assets are verified', async () => {
     const registry = createAssetRegistry(REGISTRY_ASSETS);
-    const check = registry.verifyAllMandatoryAssets(['ast-req-1']);
+    const check = await registry.verifyAllMandatoryAssets(['ast-req-1']);
 
     assert.equal(check.allAvailable, true);
     assert.equal(check.missingMandatoryIds.length, 0);
@@ -247,4 +244,31 @@ describe('Shared Stimulus — Multi-part Question Context', () => {
     assert.ok(html.includes('Experiment: Inclined Plane Friction'));
     assert.ok(html.includes('500g is released from rest'));
   });
+});
+
+it('rejects hash mismatch, unsafe mime, forged verified result and mutable descriptor', async () => {
+  const bytes = new Uint8Array([1,2,3]);
+  const digest = createHash('sha256').update(bytes).digest('hex');
+  const desc = {id:'x', mimeType:'image/png',mandatory:true,expectedSha256:digest};
+  const registry = createAssetRegistry([desc]);
+  desc.expectedSha256 = '0'.repeat(64);
+  const good = await registry.resolveAsset('x',bytes);
+  assert.equal(good.status,'VERIFIED');
+  assert.equal(good.contentDataUrl,'data:image/png;base64,AQID');
+  assert.equal((await registry.resolveAsset('x',new Uint8Array([4]))).status,'CORRUPT_HASH_MISMATCH');
+  assert.equal((await registry.resolveAsset('x','data:text/html;base64,AQID')).status,'CORRUPT_HASH_MISMATCH');
+  assert.equal(createFigureController({...good,contentDataUrl:'javascript:alert(1)'}).isBroken(),true);
+  assert.throws(()=>registry.registerAsset(desc));
+});
+it('actual Chromium: hostile markup and attribute labels cannot create active elements', async () => {
+  const browser = await chromium.launch({headless:true});
+  try {
+    const page = await browser.newPage();
+    const hostile = '<svg/onload=alert(1)><a href="javascript:alert(1)">bad</a><img src=x onerror=alert(1)><p>safe</p>';
+    const raw = wrapMathInAccessibleContainer({rawText:hostile,isBlock:true,label:'x" onmouseover="alert(1)'});
+    await page.setContent(raw);
+    assert.equal(await page.locator('svg,a,img,script,[onmouseover],[onerror],[onload]').count(),0);
+    assert.equal(await page.locator('p').textContent(),'safe');
+    assert.equal(await page.locator('[role=region]').getAttribute('aria-label'),'x" onmouseover="alert(1)');
+  } finally { await browser.close(); }
 });

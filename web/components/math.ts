@@ -26,7 +26,7 @@ export class MathRendererController {
   private minFontSizePx: number = 14; // W3C / Grade9 typography minimum >= 14px
 
   constructor(formula: MathFormulaDescriptor) {
-    this.formula = formula;
+    this.formula = Object.freeze({...formula});
   }
 
   getFormula(): MathFormulaDescriptor {

@@ -22,40 +22,26 @@ export interface MathFormulaDescriptor {
   readonly label?: string;
 }
 
-const SCRIPT_BLOCK_REGEX = /<script\b[^>]*>[\s\S]*?<\/script>/gi;
-const STYLE_BLOCK_REGEX = /<style\b[^>]*>[\s\S]*?<\/style>/gi;
-const DANGEROUS_TAG_REGEX = /<\s*\/?\s*(script|iframe|object|embed|applet|meta|link|style|base|form|input|button|textarea|select|option)\b[^>]*>/gi;
-const DANGEROUS_ATTR_REGEX = /\s*(on[a-z]+|javascript:|data:\s*text\/html)\s*=\s*(['"][^'"]*['"]|[^\s>]+)/gi;
-
-/**
- * Strips script tags and blocks, inline event handlers, and dangerous attributes.
- */
+// Permit only inert, attribute-free formatting. All other tokens are removed;
+// unmatched '<' is escaped so malformed markup cannot create a browser element.
+const SAFE_TAG = /^<\/?(?:p|em|strong|b|i|sub|sup|br|ul|ol|li|span|div|pre|code|table|thead|tbody|tr|td|th|blockquote|h3|h4)>$/i;
+export function escapeHtml(value: string): string {
+  return value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 export function sanitizeMarkup(rawHtml: string): SanitizedHtml {
   const strippedTags: string[] = [];
-
-  let cleaned = rawHtml.replace(SCRIPT_BLOCK_REGEX, () => {
-    strippedTags.push('script');
-    return '';
-  });
-
-  cleaned = cleaned.replace(STYLE_BLOCK_REGEX, () => {
-    strippedTags.push('style');
-    return '';
-  });
-
-  cleaned = cleaned.replace(DANGEROUS_TAG_REGEX, (match, tag) => {
-    strippedTags.push(tag.toLowerCase());
-    return '';
-  });
-
-  const hadAttributes = DANGEROUS_ATTR_REGEX.test(cleaned);
-  cleaned = cleaned.replace(DANGEROUS_ATTR_REGEX, '');
-
-  return {
-    html: cleaned,
-    wasSanitized: strippedTags.length > 0 || hadAttributes,
-    strippedTags,
-  };
+  const stripped = rawHtml.replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,(_m,tag:string)=>{strippedTags.push(tag.toLowerCase());return '';});
+  let cursor=0, html='';
+  for (const match of stripped.matchAll(/<[^>]*>/g)) {
+    const index=match.index!;
+    html+=stripped.slice(cursor,index).replace(/</g,'&lt;');
+    const token=match[0];
+    if (SAFE_TAG.test(token)) html+=token;
+    else strippedTags.push((/^<\/?\s*([a-z0-9-]+)/i.exec(token)?.[1]??'markup').toLowerCase());
+    cursor=index+token.length;
+  }
+  html+=stripped.slice(cursor).replace(/</g,'&lt;');
+  return {html,wasSanitized:html!==rawHtml,strippedTags};
 }
 
 /**
@@ -69,7 +55,7 @@ export function wrapMathInAccessibleContainer(formula: MathFormulaDescriptor): s
   const scrollClass = formula.isBlock ? 'math-block-container scrollable-x' : 'math-inline-container';
 
   return (
-    `<${tag} class="${scrollClass}" role="${role}" aria-label="${ariaLabel}" tabindex="0" ` +
+    `<${tag} class="${scrollClass}" role="${role}" aria-label="${escapeHtml(ariaLabel)}" tabindex="0" ` +
     `style="overflow-x: auto; max-width: 100%; display: ${formula.isBlock ? 'block' : 'inline-block'}; vertical-align: middle;">` +
     sanitized +
     `</${tag}>`
@@ -87,7 +73,7 @@ export class SharedStimulusRenderer {
   private stimulus: SharedStimulusDescriptor;
 
   constructor(stimulus: SharedStimulusDescriptor) {
-    this.stimulus = stimulus;
+    this.stimulus = Object.freeze({...stimulus,figureRefs:stimulus.figureRefs ? Object.freeze([...stimulus.figureRefs]) : undefined});
   }
 
   getStimulus(): SharedStimulusDescriptor {

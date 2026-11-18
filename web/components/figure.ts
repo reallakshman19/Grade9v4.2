@@ -12,7 +12,8 @@
  */
 
 import { HIT_TARGET_MIN_PX } from '../styles/tokens.ts';
-import type { ResolvedAsset } from '../runtime/assets.ts';
+import { isVerifiedAsset, type ResolvedAsset } from '../runtime/assets.ts';
+import { escapeHtml } from '../runtime/rendering.ts';
 
 export const FIGURE_ZOOM_LEVELS: readonly number[] = [1.0, 1.5, 2.0, 3.0];
 
@@ -66,7 +67,7 @@ export class FigureController {
   }
 
   isBroken(): boolean {
-    return this.resolvedAsset.status === 'MISSING_REQUIRED' || this.resolvedAsset.status === 'CORRUPT_HASH_MISMATCH';
+    return this.resolvedAsset.status === 'MISSING_REQUIRED' || this.resolvedAsset.status === 'CORRUPT_HASH_MISMATCH' || (this.resolvedAsset.status === 'VERIFIED' && !isVerifiedAsset(this.resolvedAsset));
   }
 
   getViewState(): FigureViewState {
@@ -85,7 +86,7 @@ export class FigureController {
       canZoomOut: !isBrokenRequired && this.currentZoomIndex > 0,
       isBrokenRequired,
       isMissingOptional,
-      contentDataUrl: this.resolvedAsset.contentDataUrl,
+      contentDataUrl: isVerifiedAsset(this.resolvedAsset) ? this.resolvedAsset.contentDataUrl : undefined,
       minHitTargetPx: HIT_TARGET_MIN_PX,
     };
   }
@@ -97,18 +98,18 @@ export class FigureController {
       return (
         `<figure class="figure-container figure-error" role="group" aria-label="Figure error">` +
         `<div class="missing-required-banner" role="alert">` +
-        `<strong>Missing Required Figure:</strong> Asset '${state.figureId}' is unavailable.` +
+        `<strong>Missing Required Figure:</strong> Asset '${escapeHtml(state.figureId)}' is unavailable.` +
         `</div>` +
-        `<figcaption>${state.caption}</figcaption>` +
+        `<figcaption>${escapeHtml(state.caption)}</figcaption>` +
         `</figure>`
       );
     }
 
     if (state.isMissingOptional) {
       return (
-        `<figure class="figure-container figure-placeholder" role="group" aria-label="${state.altText}">` +
-        `<div class="optional-placeholder-box">Figure placeholder: ${state.caption}</div>` +
-        `<figcaption>${state.caption}</figcaption>` +
+        `<figure class="figure-container figure-placeholder" role="group" aria-label="${escapeHtml(state.altText)}">` +
+        `<div class="optional-placeholder-box">Figure placeholder: ${escapeHtml(state.caption)}</div>` +
+        `<figcaption>${escapeHtml(state.caption)}</figcaption>` +
         `</figure>`
       );
     }
@@ -116,11 +117,11 @@ export class FigureController {
     const scaleStyle = state.zoomScale > 1.0 ? `transform: scale(${state.zoomScale}); transform-origin: top left;` : '';
 
     return (
-      `<figure class="figure-container" role="group" aria-label="${state.altText}">` +
+      `<figure class="figure-container" role="group" aria-label="${escapeHtml(state.altText)}">` +
       `<div class="figure-viewport scrollable-x scrollable-y" style="overflow: auto; max-width: 100%;">` +
-      `<img src="${state.contentDataUrl}" alt="${state.altText}" style="${scaleStyle} display: block; max-width: 100%; height: auto;" />` +
+      `<img src="${escapeHtml(state.contentDataUrl ?? '')}" alt="${escapeHtml(state.altText)}" style="${scaleStyle} display: block; max-width: 100%; height: auto;" />` +
       `</div>` +
-      `<figcaption class="figure-caption">${state.caption}</figcaption>` +
+      `<figcaption class="figure-caption">${escapeHtml(state.caption)}</figcaption>` +
       `</figure>`
     );
   }
