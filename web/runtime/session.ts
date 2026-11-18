@@ -20,12 +20,12 @@ export class Session {
     if(!s||s.releaseId!==this.config.releaseId||s.mode!==this.config.mode||!sameRef(s.item,this.config.item))throw new SessionError('SESSION_IDENTITY_MISMATCH');
     return s;
   }
-  async appendAttempt(attempt:Attempt):Promise<Attempt>{
+  async appendAttempt(attempt:Attempt,expectedDraftRevision?:number):Promise<Attempt>{
     const s=await this.snapshot();
     if(attempt.sessionId!==s.id||attempt.releaseId!==s.releaseId||!sameRef(attempt.item,s.item)||attempt.cognitive!==null)throw new SessionError('ATTEMPT_IDENTITY_MISMATCH');
     const revision=await this.authority.liveRevision(s);
     if(!submissionPermitted(s,revision))throw new SessionError('SUBMISSION_BLOCKED');
-    await this.progress.appendQualifiedAttempt(attempt);
+    await this.progress.appendQualifiedAttempt(attempt,expectedDraftRevision);
     const committed=await this.progress.committedAttempt(s.id,attempt.id);
     if(!committed)throw new SessionError('COMMIT_NOT_QUALIFIED');
     return committed;

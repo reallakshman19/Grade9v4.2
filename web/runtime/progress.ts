@@ -148,6 +148,7 @@ export class DefaultProgressStore implements ProgressStore {
         const priorSession=await tx.get<Session>('sessions',session.id);
         if(priorSession&&!sameSession(priorSession,session))throw new StorageError('RECORD_CONFLICT','Session identity mismatch');
         check((existing?.revision??0)===expectedRevision,'Stale draft revision');
+        if(session.mode==='SIMULATED_EXAM'){check(!!priorSession&&priorSession.attemptIds.length===0&&timestamp(priorSession.deadlineAt)&&Date.now()<=Date.parse(priorSession.deadlineAt!),'Exam draft locked or deadline passed');}
         check(!!priorSession||session.attemptIds.length===0,'New session cannot claim previous attempts');
         if(cognitive)await verifyDraftLineage(tx,session,cognitive);
         check(!existing?.cognitive||cognitive&&eq(existing.cognitive.journey,cognitive.journey),'Cannot overwrite cognitive draft with foreign or ordinary draft');
@@ -201,17 +202,18 @@ export class DefaultProgressStore implements ProgressStore {
     attempt=structuredClone(attempt);check(attempt.cognitive===null,'Cognitive attempts must commit with their event in one transaction');
     await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt));
   }
-  async appendQualifiedAttempt(attempt:Attempt):Promise<void>{
+  async appendQualifiedAttempt(attempt:Attempt,expectedDraftRevision?:number):Promise<void>{
     attempt=structuredClone(attempt);check(attempt.cognitive===null,'Cognitive attempts must commit with their event');
-    await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt,true));
+    await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt,true,expectedDraftRevision));
   }
   // For A48's atomic transaction. The same validated write path is used by both APIs.
-  async commitAttempt(tx:import('./storage.ts').TransactionContext,attempt:Attempt,requireQualified=false):Promise<void>{
+  async commitAttempt(tx:import('./storage.ts').TransactionContext,attempt:Attempt,requireQualified=false,expectedDraftRevision?:number):Promise<void>{
     attempt=structuredClone(attempt);validateAttempt(attempt);
     const session=await tx.get<Session>('sessions',attempt.sessionId);
     if(!session||!sessionOk(session)||!sameRef(session.item,attempt.item)||session.releaseId!==attempt.releaseId)throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
     const old=await tx.get<Attempt>('attempts',attempt.id);
     if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');const qualified=await this.qualify(attempt);check(!requireQualified||qualified&&await tx.get('attempt_authority',attempt.id)==='LOCAL_VERIFIED_SCORE','Existing attempt not qualified');return;}
+    if(expectedDraftRevision!==undefined){const draft=await tx.get<DraftRecord>('drafts',session.id);check(Number.isSafeInteger(expectedDraftRevision)&&expectedDraftRevision>=0&&(draft?.revision??0)===expectedDraftRevision,'Stale draft revision at commitment');}
     const qualified=await this.qualify(attempt);check(!requireQualified||qualified,'Unqualified commitment');
     if(session.mode==='SIMULATED_EXAM')check(timestamp(session.deadlineAt)&&Date.now()<=Date.parse(session.deadlineAt!)&&Date.parse(attempt.submittedAt)<=Date.parse(session.deadlineAt!),'Exam submission deadline passed or unavailable');
     check(session.attemptIds.length===0,'Session already contains a committed attempt; use a new exact retry session');

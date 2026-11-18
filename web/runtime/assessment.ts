@@ -648,6 +648,12 @@ export class StandardAssessmentEngine implements AssessmentEngine {
     if(old&&!sameRef(old.ref,ref))throw new Error('ASSESSMENT_REVISION_CONFLICT');
     this.contracts.set(key,{ref:{...ref},contract:copy});
   }
+  describeMultipart(assessment:Ref<'ASSESSMENT'>,task:TaskRef):Readonly<Record<string,{kind:Kind;maxPoints:number}>>|null{
+    const entry=this.contracts.get(assessment.id+':'+assessment.revision);
+    if(!entry||!sameRef(entry.ref,assessment)||!sameRef(entry.contract.task_ref,task)||entry.contract.response_kind!=='MULTIPART'||!entry.contract.parts||entry.contract.dropped_policy&&entry.contract.dropped_policy!=='NOT_DROPPED')return null;
+    if(exactSum(Object.values(entry.contract.parts).map(p=>p.max_points))!==entry.contract.max_points)return null;
+    return Object.freeze(Object.fromEntries(Object.entries(entry.contract.parts).map(([id,p])=>[id,Object.freeze({kind:p.response_kind,maxPoints:p.max_points})])));
+  }
   async evaluate(response:Response,assessment:Ref<'ASSESSMENT'>,mode:SessionMode,task:TaskRef):Promise<Grade>{
     const entry=this.contracts.get(assessment.id+':'+assessment.revision);
     if(!entry||!sameRef(entry.ref,assessment)||!sameRef(entry.contract.task_ref,task))return {status:'INVALID',points:null,maxPoints:0,reasonCode:ReasonCodes.ASSESSMENT_NOT_FOUND};
