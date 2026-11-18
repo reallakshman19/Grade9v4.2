@@ -193,10 +193,7 @@ export class PartNavigationController {
     statuses: Record<string, PartStatus>;
     flagged: string[];
   } {
-    const statuses: Record<string, PartStatus> = {};
-    for (const [id, s] of this.partStatuses.entries()) {
-      statuses[id] = s;
-    }
+    const statuses:Record<string,PartStatus>=Object.fromEntries(this.partStatuses);
     return {
       activePartId: this.activePartId,
       statuses,

@@ -126,7 +126,7 @@ export class PaperWorkspaceController{
  }
  async submitPaper():Promise<PaperEvaluationResult>{
   if(!this.ready||this.busy)throw Error('PAPER_NOT_READY');this.busy=true;
-  try{const b=this.binding!,s=await this.bound();if(await this.recover(s))return structuredClone(this.evaluationResult!);
+  try{const b=this.binding!,s=await this.bound();if(s.attemptIds.length){if(!this.committed)throw Error('PAPER_ALREADY_COMMITTED_RESTORE_REQUIRED');if(await this.recover(s))return structuredClone(this.evaluationResult!);}
    if(this.timer.isExpired())throw Error('PAPER_DEADLINE_PASSED');if(!await b.verifyRequiredAssets())throw Error('REQUIRED_ASSET_UNAVAILABLE');
    const response=this.wire(),grade=await b.engine.evaluate(response,b.assessment,'SIMULATED_EXAM',b.task);
    if(grade.status==='UNSUPPORTED'||grade.status==='INVALID'&&grade.reasonCode!=='MISSING_REQUIRED_PART')throw Error('PAPER_RESPONSE_INVALID');

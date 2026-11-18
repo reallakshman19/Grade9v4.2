@@ -183,10 +183,11 @@ export class DefaultProgressStore implements ProgressStore {
   async loadDraft(sessionId:string):Promise<(Draft&DraftRecord)|null>{
     const initial=await this.driver.get<DraftRecord>('drafts',sessionId);if(!initial)return null;
     const lineage=initial.cognitive;
-    return this.driver.transaction(['drafts','sessions',...(lineage?['cog_snap:'+lineage.journey.journeyId]:[])],'readonly',async tx=>{
+    return this.driver.transaction(['drafts','sessions','artifacts','artifact_owners',...(lineage?['cog_snap:'+lineage.journey.journeyId]:[])],'readonly',async tx=>{
       const draft=await tx.get<DraftRecord>('drafts',sessionId);if(!draft)return null;
       check(eq(draft,initial),'Draft changed during read; retry');
       const session=await tx.get<Session>('sessions',sessionId);check(session,'Draft missing session');
+      if(session.mode==='SIMULATED_EXAM'){check(session.draftId===sessionId&&session.attemptIds.length===0,'Invalid exam draft lineage');for(const a of draft.artifacts){check(artifactOk(a)&&eq(await tx.get('artifacts',a.id),a)&&await tx.get('artifact_owners',a.id)===sessionId,'Invalid exam draft artifact closure');}}
       const snapshot=lineage?await tx.get<CognitiveSnapshot>('cog_snap:'+lineage.journey.journeyId,lineage.journey.journeyId):undefined;
       const cognitiveStale=!!lineage&&(!snapshot||!eq(snapshot.journey,lineage.journey)||snapshot.stage!==lineage.stage||!eq(snapshot.checkpoint,lineage.checkpoint));
       return {...draft,session,cognitive:draft.cognitive??null,cognitiveStale};
