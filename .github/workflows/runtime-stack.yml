@@ -36,9 +36,11 @@ jobs:
       - name: Runtime regression and adversarial tests
         if: always() && !cancelled()
         run: node --experimental-strip-types --test tests/runtime/*.test.ts tests/runtime/*.spec.ts
-      - name: Public Python contract and release regression
+      - name: Self-contained Python contract and release regression
         if: always() && !cancelled()
-        run: PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release -q
+        run: |
+          echo 'NOT_RUN: test_platform.py requires external G9_R4_KIT; test_portable_compatibility.py requires external G9_V35_PORTABLE_PACKAGES. Full custody-dependent regression is separate.'
+          PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
   browser:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
