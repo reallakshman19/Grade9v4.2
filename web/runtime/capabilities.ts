@@ -25,10 +25,21 @@ function createSafeMount(kind: Kind) {
       const container = document.createElement('div');
       container.className = `g9-response-widget g9-kind-${kind.toLowerCase().replace(/_/g, '-')}`;
       container.setAttribute('data-capability-kind', kind);
+      const label=document.createElement('label');
+      label.textContent=kind.replace(/_/g,' ')+' response';
+      const plain=['SINGLE_CHOICE','INTEGER','SYMBOLIC_EXPRESSION','CONSTRUCTED_RESPONSE','MATHEMATICAL_PROOF'].includes(kind);
+      const field=plain?document.createElement('input'):document.createElement('textarea');
+      field.setAttribute('aria-label',label.textContent);
+      if(value)field.value=plain?String(value.value):JSON.stringify(value.value,null,2);
+      const error=document.createElement('div');error.setAttribute('role','status');
+      const update=()=>{try{const raw=plain?field.value:JSON.parse(field.value);const response=normalizeAndValidate(kind,raw);error.textContent='';field.removeAttribute('aria-invalid');onChange(response);}catch{error.textContent='Invalid '+kind+' response';field.setAttribute('aria-invalid','true');}};
+      field.addEventListener('input',update);
+      label.appendChild(field);container.append(label,error);
       root.appendChild(container);
 
       return () => {
         if (container.parentNode) {
+          field.removeEventListener('input',update);
           container.parentNode.removeChild(container);
         }
       };
@@ -83,7 +94,7 @@ export function createStandardCapability<K extends Kind>(
 /**
  * Creates an unsupported fallback capability that fails closed safely.
  */
-export function createUnsupportedCapability(kind: string): Capability {
+export function createUnsupportedCapability(kind: string): Capability<Kind> {
   return {
     kind: kind as Kind,
     supportsOffline: false,

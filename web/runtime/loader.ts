@@ -2,7 +2,8 @@
 import type { Ref } from './types.ts';
 export type LoaderErrorCode = 'MANIFEST_NOT_FOUND'|'DIGEST_MISMATCH'|'STALE_MANIFEST_HASH'|'ITEM_NOT_FOUND'|'MALFORMED_PROJECTION'|'INVALID_REVISION'|'FETCH_FAILED'|'PROTECTED_PROJECTION';
 export class LoaderError extends Error {
-  constructor(readonly code: LoaderErrorCode, message: string, readonly detail?: unknown) { super(message+' ('+code+')'); this.name='LoaderError'; }
+  readonly code:LoaderErrorCode; readonly detail?:unknown;
+  constructor(code: LoaderErrorCode, message: string, detail?: unknown) { super(message+' ('+code+')'); this.name='LoaderError';this.code=code;this.detail=detail; }
 }
 export interface ReleaseManifest {
   readonly schema_version:'g9-release-projection/1.1';
