@@ -1,0 +1,118 @@
+{
+  "schema_version": "g9-legacy-state-map/1.0",
+  "workpack_id": "A72",
+  "title": "Legacy Learner-State Storage Key and Origin Inventory Map",
+  "status": "HOLD",
+  "academic_admission": "HOLD",
+  "release_authority": "NONE",
+  "security_policy": {
+    "direct_cross_origin_access": "FORBIDDEN",
+    "user_authorization_required": true,
+    "dry_run_supported": true,
+    "atomic_rollback_required": true,
+    "idempotent_import_enforced": true
+  },
+  "pedagogical_invariants": {
+    "old_history_as_protected_evidence": "FORBIDDEN",
+    "old_history_as_mastery": "FORBIDDEN",
+    "default_grade_status": "REVIEW_PENDING",
+    "default_reason_code": "MIGRATED_FROM_LEGACY",
+    "unknown_device_policy": "REMAINS_UNKNOWN_UNVERIFIED"
+  },
+  "inventoried_origins": [
+    {
+      "origin": "https://grade9-v35.local",
+      "version": "3.5",
+      "description": "Grade9 v3.5 local packaging origin",
+      "status": "LEGACY_VALID"
+    },
+    {
+      "origin": "https://grade9-v41.local",
+      "version": "4.1",
+      "description": "Grade9 v4.1 local preview origin",
+      "status": "LEGACY_VALID"
+    },
+    {
+      "origin": "http://localhost:8080",
+      "version": "3.5",
+      "description": "Historical local development webserver",
+      "status": "LEGACY_VALID"
+    },
+    {
+      "origin": "null",
+      "version": "unknown",
+      "description": "Sandboxed iframe origin (untrusted)",
+      "status": "SANDBOX_ONLY"
+    }
+  ],
+  "storage_keys": [
+    {
+      "key": "g9_v35_sessions",
+      "source_scope": "localStorage",
+      "target_store": "sessions",
+      "entity_type": "SESSION",
+      "disposition": "MIGRATED_UNVERIFIED",
+      "notes": "Session metadata including start time, duration, and topic references"
+    },
+    {
+      "key": "g9_v35_attempts",
+      "source_scope": "localStorage",
+      "target_store": "attempts",
+      "entity_type": "ATTEMPT",
+      "disposition": "MIGRATED_UNVERIFIED",
+      "notes": "Historical learner responses and timestamps; not verified for mastery"
+    },
+    {
+      "key": "g9_v35_scratchpad",
+      "source_scope": "localStorage",
+      "target_store": "artifacts",
+      "entity_type": "WORK_ARTIFACT",
+      "disposition": "PRESERVED_PRIVATE",
+      "notes": "Raw stylus vectors and learner working drawings"
+    },
+    {
+      "key": "g9_v35_bookmarks",
+      "source_scope": "localStorage",
+      "target_store": "bookmarks",
+      "entity_type": "BOOKMARK",
+      "disposition": "MIGRATED_UNVERIFIED",
+      "notes": "Learner bookmark references"
+    },
+    {
+      "key": "g9_v41_learner_state",
+      "source_scope": "localStorage",
+      "target_store": "composite",
+      "entity_type": "COMPOSITE_STATE",
+      "disposition": "MIGRATED_UNVERIFIED",
+      "notes": "v4.1 combined learner session and attempt snapshot"
+    },
+    {
+      "key": "g9_legacy_notes",
+      "source_scope": "localStorage",
+      "target_store": "artifacts",
+      "entity_type": "WORK_ARTIFACT",
+      "disposition": "PRESERVED_PRIVATE",
+      "notes": "Learner private markdown or text notes"
+    },
+    {
+      "key": "g9_legacy_response_cache",
+      "source_scope": "sessionStorage",
+      "target_store": "drafts",
+      "entity_type": "DRAFT",
+      "disposition": "DROPPED_STALE",
+      "notes": "Ephemeral in-flight form entries; dropped upon clean migration"
+    }
+  ],
+  "field_mapping_rules": {
+    "attempt_mapping": {
+      "id": "derive_or_preserve_uuid",
+      "sessionId": "link_or_assign_migrated_session",
+      "itemId": "verify_canonical_item_id",
+      "response": "validate_options_against_item_manifest",
+      "grade_status": "LOCKED_REVIEW_PENDING",
+      "points": "NULL",
+      "is_protected_evidence": false,
+      "mastery_eligible": false
+    }
+  }
+}
