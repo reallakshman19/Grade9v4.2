@@ -203,3 +203,31 @@ describe('A50 Model Registry & Policy-Filtered Disclosure', () => {
 });
 
 it('rejects invalid oracle regimes, vector truncation and duplicate registry identity',()=>{for(const [family,p] of [['INSTANTANEOUS_POWER',{force:[1,2],velocity:[1]}],['SPRING_CONTACT',{k:1,x:1,m:1,friction:0,distance:1}],['DISSIPATIVE_BOUNCES',{mass:1,impact_speed:1,restitution:2}],['CONSTANT_POWER',{mass:0,initial_speed:1,power:1,time:1}] ] as const)assert.throws(()=>evaluateWpeModel(family,p));const r=new ModelRegistry();assert.equal(r.getByFamily('POTENTIAL_WELLS')?.id,'PHYS-MODEL-ENERGY-WELL');assert.throws(()=>r.register(new HarmonicEnergyWellAdapter()));});
+
+import {MemoryStorageDriver} from '../../web/runtime/storage.ts';
+import {DefaultCognitiveStore} from '../../web/runtime/cognitive-store.ts';
+import {CognitiveController} from '../../web/journeys/cognitive-controller.ts';
+import {sameRef} from '../../web/runtime/loader.ts';
+import type {TaskRef,Ref,Session,JourneyKey,CognitiveEvent,Checkpoint} from '../../web/runtime/types.ts';
+it('A50 actual A49 durable exposure is required, exact model asset and stale checkpoint denied',async()=>{
+ const driver=new MemoryStorageDriver(),task:TaskRef={type:'QUESTION',id:'que:model:synthetic',revision:1,sha256:'a'.repeat(64)},boundary:TaskRef={...task,type:'FRESH_TASK',id:'que:model:boundary'},asset:Ref={type:'ASSET',id:'PHYS-MODEL-ENERGY-WELL',revision:1,sha256:'b'.repeat(64)};
+ const firstReference:Ref={...task,type:'SOLUTION',id:'sol:model:first'},boundaryReference:Ref={...task,type:'SOLUTION',id:'sol:model:boundary'};
+ const releaseId='rel:model:synthetic',journey:JourneyKey={journeyId:'journey:model',taskInstanceId:'inst:model',task,releaseId};
+ const session:Session={id:'ses:model',item:task,releaseId,mode:'PRACTICE',contentRevision:'r1',origin:null,returnRoute:null,cursor:0,attemptIds:[],draftId:null};
+ await driver.put('sessions',session.id,session);
+ const authority={liveRevision:async()=> 'r1',reviewedContext:async()=>({releaseId,task,boundaryTask:boundary,firstReference,boundaryReference,firstFields:{a:'INTEGER' as const},boundaryFields:{a:'INTEGER' as const},moves:['m']}),allowed:async(_j:any,_s:any,cap:string,a:Ref)=>cap==='MODEL_AUTO_CALCULATE'&&sameRef(a,asset),boundaryAllowed:async()=>false};
+ const controller=new CognitiveController({journey,sessionId:session.id},new DefaultCognitiveStore(driver),driver,authority);
+ let snap=await controller.begin();
+ const event=(cp:Checkpoint,type:CognitiveEvent['event_type'],payload:any):CognitiveEvent=>({schema_version:'g9-cognitive-event/2',event_id:'evt:model:'+String(cp.sequence+1),journey_id:journey.journeyId,task_instance_id:journey.taskInstanceId,release_id:releaseId,task_ref:task,sequence:cp.sequence+1,previous_sha256:cp.sha256,at:'2026-11-18T09:00:00Z',event_type:type,payload} as CognitiveEvent);
+ const registry=new ModelRegistry(),binding={controller,asset,checkpoint:snap.checkpoint,exposureId:'evt:model:2',modelId:asset.id};
+ assert((await registry.evaluateAuthorized(asset.id,{x:.2},binding)).isMasked);
+ snap=await controller.commit(event(snap.checkpoint,'PREDICTION_COMMITTED',{prediction:'UNSURE',artifact_ids:[]}),snap.checkpoint,[]);
+ const h=event(snap.checkpoint,'HELP_EXPOSED',{capability:'MODEL_AUTO_CALCULATE',asset_ref:asset,ordinal:1});
+ const stale=snap.checkpoint;assert((await registry.evaluateAuthorized(asset.id,{x:.2},{...binding,checkpoint:stale})).isMasked);
+ snap=await controller.commit(h,snap.checkpoint,[]);
+ const valid={...binding,checkpoint:snap.checkpoint};
+ const value=await registry.evaluateAuthorized(asset.id,{x:.2},valid);assert.equal(value.isMasked,false);assert.ok(Math.abs(value.outputs!.U-2)<1e-12);
+ assert((await registry.evaluateAuthorized(asset.id,{x:.2},{...valid,checkpoint:stale})).isMasked);
+ assert((await registry.evaluateAuthorized(asset.id,{x:.2},{...valid,asset:{...asset,sha256:'c'.repeat(64)}})).isMasked);
+ await driver.put('sessions',session.id,{...session,mode:'SIMULATED_EXAM',deadlineAt:'2099-01-01T00:00:00Z'});assert((await registry.evaluateAuthorized(asset.id,{x:.2},valid)).isMasked);
+});
