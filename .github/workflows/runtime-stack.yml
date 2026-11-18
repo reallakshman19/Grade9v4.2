@@ -35,7 +35,10 @@ jobs:
           echo "G9_COMPILED_PROJECTION=$RUNNER_TEMP/g9-projection.json" >> "$GITHUB_ENV"
       - name: Runtime regression and adversarial tests
         if: always() && !cancelled()
-        run: node --experimental-strip-types --test tests/runtime/*.test.ts
+        run: node --experimental-strip-types --test tests/runtime/*.test.ts tests/runtime/*.spec.ts
+      - name: Public Python contract and release regression
+        if: always() && !cancelled()
+        run: PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release -q
   browser:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
