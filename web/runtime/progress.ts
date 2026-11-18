@@ -78,7 +78,7 @@ function sessionOk(s:any){return s&&nonblank(s.id)&&refOk(s.item)&&['QUESTION','
 function sameSession(a:Session,b:Session){return sameRef(a.item,b.item)&&a.releaseId===b.releaseId&&a.mode===b.mode&&eq(a.origin,b.origin)&&(a.returnRoute??null)===(b.returnRoute??null);}
 function artifactOk(x:any){if(!x||Object.keys(x).sort().join(',')!=='id,kind,value,version'||!nonblank(x.id)||x.version!==1||!['NOTE','EQUATION','INK','TABLE','GRAPH','STRUCTURE','ATTACHMENT'].includes(x.kind))return false;try{canonicalJson(x.value);return x.value!==undefined;}catch{return false;}}
 function validateAttempt(a:any){check(a&&nonblank(a.id)&&nonblank(a.sessionId)&&nonblank(a.releaseId)&&refOk(a.item)&&Array.isArray(a.work)&&a.work.every(artifactOk)&&new Set(a.work.map((w:WorkArtifact)=>w.id)).size===a.work.length&&uniqueStrings(a.hintIds)&&timestamp(a.submittedAt)&&a.cognitive!==undefined&&a.grade&&Number.isFinite(a.grade.maxPoints)&&a.grade.maxPoints>=0&&((a.grade.status==='SCORED'&&Number.isFinite(a.grade.points)&&a.grade.points>=0&&a.grade.points<=a.grade.maxPoints)||(['REVIEW_PENDING','INVALID','UNSUPPORTED'].includes(a.grade.status)&&a.grade.points===null)),'Invalid attempt');validateResponse(a.response);if(a.assessmentRef!==undefined)check(refOk(a.assessmentRef)&&a.assessmentRef.type==='ASSESSMENT'&&nonblank(a.scoringVersion),'Invalid assessment binding');if(a.cognitive!==null){const c=a.cognitive;check(c&&c.journey&&nonblank(c.journey.journeyId)&&nonblank(c.journey.taskInstanceId)&&c.journey.releaseId===a.releaseId&&refOk(c.journey.task)&&nonblank(c.originSessionId)&&refOk(c.originRef)&&Number.isSafeInteger(c.originCursor)&&c.originCursor>=0,'Invalid cognitive lineage');}}
-function validateBundleData(data:any):void{
+export function validateBundleData(data:any):void{
   check(data&&['sessions','drafts','attempts','artifacts'].every(k=>Array.isArray(data[k])),'Invalid export structure');
   for(const [name,key] of [['sessions','id'],['drafts','sessionId'],['attempts','id'],['artifacts','id']]){const ids=new Set();for(const x of data[name]){check(x&&typeof x[key]==='string'&&!ids.has(x[key]),'Duplicate or missing record identity');ids.add(x[key]);}}
   for(const s of data.sessions){check(sessionOk(s),'Invalid session');for(const id of s.attemptIds)check(data.attempts.some((a:Attempt)=>a.id===id&&a.sessionId===s.id),'Session has missing or foreign attempt');check(s.draftId===null?!data.drafts.some((d:DraftRecord)=>d.sessionId===s.id):data.drafts.some((d:DraftRecord)=>d.sessionId===s.id),'Session draft link mismatch');}
@@ -182,6 +182,17 @@ export class DefaultProgressStore implements ProgressStore {
     await tx.put('attempt_authority',attempt.id,qualified?'LOCAL_VERIFIED_SCORE':'LOCAL_UNVERIFIED');
     await tx.put('sessions',session.id,{...session,attemptIds:[...session.attemptIds,attempt.id],draftId:null});
     await tx.delete('drafts',session.id);
+  }
+
+  // Shared restore transaction, used by A48. Imports are historical, never disclosure receipts.
+  async restoreEmpty(tx:import('./storage.ts').TransactionContext,data:ExportDataPayload):Promise<void>{
+    validateBundleData(data);
+    for(const store of DefaultProgressStore.attemptStores)check((await tx.getAll(store)).length===0,'Restore requires empty progress stores');
+    for(const a of data.attempts)await this.qualify(a);
+    for(const session of data.sessions)await tx.put('sessions',session.id,session);
+    for(const artifact of data.artifacts)await tx.put('artifacts',artifact.id,artifact);
+    for(const draft of data.drafts){await tx.put('drafts',draft.sessionId,draft);for(const art of draft.artifacts)await immutablePut(tx,'artifact_owners',art.id,draft.sessionId);}
+    for(const a of data.attempts){await tx.put('attempts',a.id,a);await tx.put('attempt_authority',a.id,'IMPORTED_UNAUTHENTICATED');for(const art of a.work)await immutablePut(tx,'artifact_owners',art.id,a.sessionId);}
   }
 
   /**
