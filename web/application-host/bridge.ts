@@ -81,6 +81,7 @@ export interface BridgeEnvelope {
   type: BridgeMessageType;
   nonce: string;
   sessionId: string;
+  sequence?: number;
   payload?: unknown;
 }
 
@@ -106,7 +107,7 @@ export class NonceManager {
 
   constructor(sessionId: string) {
     // Nonce is derived from session + a random component
-    this.sessionNonce = `${sessionId}-${Math.random().toString(36).slice(2)}-${Date.now()}`;
+    this.sessionNonce = `${sessionId}-${crypto.randomUUID()}`;
   }
 
   /** The session nonce sent in HOST_READY. */
@@ -209,11 +210,21 @@ export function validateBridgeMessage(
     return { reason: "WRONG_NONCE", type: msgType, origin: event.origin, timestamp: now };
   }
 
-  // 7. Replay check
-  if (nonceManager.isConsumed(sequenceToken)) {
+  // 7. Validate wire sequence and closed payload, before consuming.
+  const p=env.payload as Record<string,unknown>|undefined;
+  const keys=(...names:string[])=>!!p&&typeof p==='object'&&!Array.isArray(p)&&Object.keys(p).sort().join(',')===names.sort().join(',');
+  const empty=p===undefined||p===null||keys();
+  const valid=msgType==='APP_READY'||msgType==='APP_FULLSCREEN'||msgType==='APP_TIMEOUT_ACK'?empty:
+    msgType==='APP_HEIGHT'?keys('height')&&typeof p!.height==='number'&&Number.isFinite(p!.height)&&p!.height>=0&&p!.height<=10000:
+    msgType==='APP_STATE'?keys('state')&&typeof p!.state==='string'&&p!.state.length<=65536:
+    msgType==='APP_NAVIGATE'?keys('path')&&typeof p!.path==='string'&&p!.path.length<=256:
+    msgType==='APP_CAPABILITY'?keys('capability')&&typeof p!.capability==='string'&&p!.capability.length<=64:false;
+  if(!valid||!Number.isSafeInteger(env.sequence)||Number(env.sequence)<1)return {reason:'INVALID_PAYLOAD',type:msgType,origin:event.origin,timestamp:now};
+  const wireToken='seq-'+env.sequence;
+  if (nonceManager.isConsumed(wireToken)) {
     return { reason: "REPLAY", type: msgType, origin: event.origin, timestamp: now };
   }
-  nonceManager.consume(sequenceToken);
+  nonceManager.consume(wireToken);
 
   return null; // accepted
 }
