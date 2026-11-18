@@ -457,3 +457,10 @@ it('serializes concurrent draft revisions and rejects altered immutable grade',a
 it('refuses writes in readonly memory transactions',async()=>{const d=new MemoryStorageDriver();await assert.rejects(d.transaction(['x'],'readonly',tx=>tx.put('x','a',1)),/TRANSACTION_SCOPE/);assert.equal(await d.get('x','a'),undefined);});
 
 it('rejects scored attempts without a trusted verifier',async()=>{const d=new MemoryStorageDriver(),s=new DefaultProgressStore(d),a=makeTestAttempt();await d.put('sessions',a.sessionId,makeTestSession(a.sessionId));await assert.rejects(s.appendAttempt(a),/UNVERIFIED_GRADE|trusted assessment/);assert.equal(await d.get('attempts',a.id),undefined);});
+
+it('Stage4: reject two attempts in one import and conflicting single-attempt imports',async()=>{
+ const d=new MemoryStorageDriver(),store=qualified(d),session=makeTestSession(),a=makeTestAttempt(),second={...a,id:'att:other'};
+ const make=async(attempts:Attempt[])=>{const data={sessions:[{...session,attemptIds:attempts.map(a=>a.id)}],drafts:[],attempts,artifacts:a.work};return new Blob([JSON.stringify({schema_version:STORAGE_EXPORT_VERSION,exported_at:a.submittedAt,checksum:await computeSha256(JSON.stringify(data)),data})]);};
+ await assert.rejects(store.importVerified(await make([a,second])),/multiple attempts/);assert.equal((await d.getAll('attempts')).length,0);
+ await store.importVerified(await make([a]));await assert.rejects(store.importVerified(await make([second])),/multiple commitments/);assert.equal((await d.getAll('attempts')).length,1);
+});
