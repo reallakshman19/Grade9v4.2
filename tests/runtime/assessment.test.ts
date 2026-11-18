@@ -24,7 +24,7 @@ function makeTaskRef(id: string = 'task:synthetic:01'): Ref {
 
 describe('Scoring Engine Version & Idempotence', () => {
   it('declares explicit scoring engine version', () => {
-    assert.equal(SCORING_VERSION, 'g9-scoring/1.0');
+    assert.equal(SCORING_VERSION, 'g9-scoring/1.1');
   });
 
   it('guarantees pure, idempotent evaluation with zero state mutation', () => {
@@ -463,7 +463,7 @@ describe('Fault N10 & Safety Handlers', () => {
 
 describe('StandardAssessmentEngine Integration', () => {
   it('resolves registered contracts and evaluates asynchronously', async () => {
-    const engine = new StandardAssessmentEngine();
+
     const contract: AssessmentContract = {
       id: 'asmt:reg:01',
       task_ref: makeTaskRef('task:reg:01'),
@@ -475,6 +475,8 @@ describe('StandardAssessmentEngine Integration', () => {
     const {computeSha256,canonicalJson}=await import('../../web/runtime/loader.ts');
     const versioned={...contract,revision:1};
     const exact={type:'ASSESSMENT' as const,id:versioned.id,revision:1,sha256:await computeSha256(canonicalJson(versioned))};
+    const engine = new StandardAssessmentEngine([{assessment:exact,task:versioned.task_ref as any}]);
+    await assert.rejects(new StandardAssessmentEngine().registerContract(versioned,exact),/AUTHORITY|TRUST|UNAUTHORIZED/i);
     await engine.registerContract(versioned,exact);
 
     const resp: Response = { kind: 'INTEGER', value: '100' };
