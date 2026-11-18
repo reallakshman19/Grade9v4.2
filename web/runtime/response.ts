@@ -77,7 +77,6 @@ export interface ConstructedResponse {
 export interface MathematicalProofResponse {
   readonly kind: 'MATHEMATICAL_PROOF';
   readonly value: string;
-  readonly proofSteps?: readonly string[];
 }
 
 export interface ChemicalStructureValue {
@@ -122,7 +121,6 @@ export interface ExperimentAnalysisResponse {
 export interface MultipartResponse {
   readonly kind: 'MULTIPART';
   readonly value: Readonly<Record<string, ValidatedResponse>>;
-  readonly parts?: Readonly<Record<string, ValidatedResponse>>;
 }
 
 export type ValidatedResponse =
@@ -175,10 +173,11 @@ export function findDuplicateKeyInJson(jsonStr: string): { key: string; position
           // This string was an object key
           if (stack.length > 0) {
             const currentScope = stack[stack.length - 1];
-            if (currentScope.has(currentString)) {
-              return { key: currentString, position: stringStartPos };
+            const decodedKey = JSON.parse(jsonStr.slice(stringStartPos,i+1)) as string;
+            if (currentScope.has(decodedKey)) {
+              return { key: decodedKey, position: stringStartPos };
             }
-            currentScope.add(currentString);
+            currentScope.add(decodedKey);
           }
         }
       } else {
@@ -205,7 +204,8 @@ export function findDuplicateKeyInJson(jsonStr: string): { key: string; position
  * Parses JSON and fails closed if duplicate object keys are detected.
  */
 export function parseResponseJson(jsonString: string): ValidatedResponse {
-  const duplicate = findDuplicateKeyInJson(jsonString);
+  let duplicate: ReturnType<typeof findDuplicateKeyInJson>;
+  try { duplicate = findDuplicateKeyInJson(jsonString); } catch { throw new ResponseValidationError('MALFORMED_JSON','Invalid JSON key'); }
   if (duplicate) {
     throw new ResponseValidationError(
       'DUPLICATE_PART_ID',
@@ -256,11 +256,11 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
 
   const raw = input as Record<string, unknown>;
 
-  if (!('kind' in raw)) {
+  if (!Object.hasOwn(raw,'kind')) {
     throw new ResponseValidationError('MISSING_KIND', "Missing required property 'kind'", path);
   }
 
-  if (!('value' in raw)) {
+  if (!Object.hasOwn(raw,'value')) {
     throw new ResponseValidationError('MISSING_VALUE', "Missing required property 'value'", path);
   }
 
@@ -276,9 +276,7 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
   // Enforce additionalProperties: false at root (allow 'parts' only on MULTIPART as convenience alias)
   for (const key of Object.keys(raw)) {
     if (key !== 'kind' && key !== 'value') {
-      if (kind === 'MULTIPART' && key === 'parts') {
-        continue;
-      }
+      
       throw new ResponseValidationError(
         'EXTRA_PROPERTIES',
         `Disallowed property '${key}' for response object`,
@@ -561,7 +559,7 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
         throw new ResponseValidationError('EMPTY_MULTIPART', 'MULTIPART value must contain at least one part', path);
       }
 
-      const validatedParts: Record<string, ValidatedResponse> = {};
+      const validatedParts: Record<string, ValidatedResponse> = Object.create(null);
       for (const partId of partIds) {
         if (!STABLE_PART_ID_REGEX.test(partId)) {
           throw new ResponseValidationError(
@@ -579,7 +577,6 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
       return {
         kind,
         value: frozenParts,
-        parts: frozenParts,
       };
     }
 

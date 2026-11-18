@@ -1,0 +1,111 @@
+name: Integrated engineering diagnostic (informational)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches:
+      - feat/a13-build-shell-and-local-toolchain
+    paths:
+      - '.github/workflows/integrated-diagnostic.yml'
+permissions:
+  contents: read
+jobs:
+  python:
+    if: github.event_name != 'pull_request' || (github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}
+          persist-credentials: false
+      - name: Verify exact candidate
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then test "$(git rev-parse HEAD^{tree})" = "8e98c7c2e38d280fb27a1c8635b395e2b89749a8"; fi
+          git diff --exit-code HEAD
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.13.5'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+      - name: Install pinned dependencies
+        run: |
+          test "$(node --version)" = "v22.16.0"
+          test "$(npm --version)" = "10.9.2"
+          npm ci --no-audit --no-fund
+          python -m pip install -e '.[dev]'
+          python -m pip check
+      # Source repository is already public. Retrieve the pinned files into
+      # the ephemeral runner only; do not commit or upload source bytes.
+      - name: Checkout immutable public v3.5 source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: reallakshman19/Grade9v3.5
+          ref: 8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b
+          path: .source-v35
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /Shared/web/interactive-page-blueprints.v1.json
+            /Shared/roles/CORE-AUTHORITY-CONTRACT.md
+            /Shared/roles/LEARNER-PRODUCT-TEMPLATES.md
+            /docs/portable-workbench/packages/
+      - name: Verify pinned v3.5 source and packages
+        run: |
+          test "$(git -C .source-v35 rev-parse HEAD)" = "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b"
+          test "$(git -C .source-v35 rev-parse HEAD^{tree})" = "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
+          git -C .source-v35 diff --exit-code HEAD
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('.source-v35/docs/portable-workbench/packages')
+          data = json.loads(Path('docs/architecture/portable-compatibility.json').read_text())
+          for item in data['audited_packages']:
+              path = root / (item['id'] + '.json')
+              assert path.is_file() and not path.is_symlink()
+              raw = path.read_bytes()
+              assert len(raw) == item['byte_count']
+              assert hashlib.sha256(raw).hexdigest() == item['sha256']
+          print('All four pinned portable packages verified')
+          PY
+      - name: Run source-backed v3.5 compatibility and native checks
+        env:
+          G9_V35_ROOT: ${{ github.workspace }}/.source-v35
+          G9_V35_PORTABLE_PACKAGES: ${{ github.workspace }}/.source-v35/docs/portable-workbench/packages
+        run: python -m pytest -ra --tb=short tests/contracts/test_portable_compatibility.py tests/contracts/test_native_six_core.py
+      - name: Run full Python suite
+        if: always() && !cancelled()
+        env:
+          G9_V35_ROOT: ${{ github.workspace }}/.source-v35
+          G9_V35_PORTABLE_PACKAGES: ${{ github.workspace }}/.source-v35/docs/portable-workbench/packages
+        run: python -m pytest -ra --tb=short
+  browser:
+    if: github.event_name != 'pull_request' || (github.event.pull_request.number == 42 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'validation/a13-a14-a62-integrated')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}
+          persist-credentials: false
+      - name: Verify exact candidate
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event_name == 'pull_request' && 'd67d26d6bbc771438ca39bad55be0faec5d1488b' || github.sha }}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then test "$(git rev-parse HEAD^{tree})" = "8e98c7c2e38d280fb27a1c8635b395e2b89749a8"; fi
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+      - name: Install locked JavaScript dependencies
+        run: |
+          test "$(node --version)" = "v22.16.0"
+          test "$(npm --version)" = "10.9.2"
+          npm ci --no-audit --no-fund
+      - name: Strict typecheck and Vite build
+        run: npm run build
+      - name: Install Chromium for diagnostic smoke
+        run: npm exec --no -- playwright-core install --with-deps chromium
+      - name: Run diagnostic browser smoke
+        run: npm run test:smoke

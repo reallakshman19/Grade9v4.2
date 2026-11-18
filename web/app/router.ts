@@ -70,7 +70,7 @@ export class Router {
       }
     }
 
-    if (this.basePath && clean.startsWith(this.basePath)) {
+    if (this.basePath && (clean === this.basePath || clean.startsWith(this.basePath + '/') || clean.startsWith(this.basePath + '?') || clean.startsWith(this.basePath + '#'))) {
       clean = clean.slice(this.basePath.length);
     }
     if (!clean.startsWith('/')) {
@@ -83,16 +83,8 @@ export class Router {
    * Parses query string into key-value map.
    */
   static parseQuery(queryString: string): Record<string, string> {
-    const params: Record<string, string> = {};
-    const clean = queryString.startsWith('?') ? queryString.slice(1) : queryString;
-    if (!clean) return params;
-    for (const pair of clean.split('&')) {
-      if (!pair) continue;
-      const [key, val] = pair.split('=');
-      const decodedKey = decodeURIComponent(key.replace(/\+/g, ' '));
-      const decodedVal = decodeURIComponent((val || '').replace(/\+/g, ' '));
-      params[decodedKey] = decodedVal;
-    }
+    const params: Record<string, string> = Object.create(null);
+    for (const [key,value] of new URLSearchParams(queryString)) params[key]=value;
     return params;
   }
 
@@ -100,7 +92,9 @@ export class Router {
    * Matches a normalized pathname to registered platform routes.
    */
   match(pathWithQueryAndHash: string): RouteMatch {
-    const stripped = this.stripBasePath(pathWithQueryAndHash);
+    let stripped = this.stripBasePath(pathWithQueryAndHash);
+    if(this.useHash && stripped.startsWith('/#/')) stripped=stripped.slice(2);
+    try { decodeURIComponent(stripped); } catch { return {type:'NOT_FOUND',path:stripped,params:{},query:{},hash:''}; }
 
     // Split pathname, query, and hash
     let pathPart = stripped;
@@ -229,6 +223,7 @@ export class Router {
    * Generates a base-aware URL for navigation or href links.
    */
   toHref(relativePath: string, queryParams: Record<string, string> = {}): string {
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|\\)/i.test(relativePath)) throw new Error('External route forbidden');
     let clean = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
     const queryEntries = Object.entries(queryParams);
     if (queryEntries.length > 0) {
@@ -249,7 +244,7 @@ export class Router {
    */
   navigate(targetPath: string): RouteMatch {
     const nextMatch = this.match(targetPath);
-    if (this.currentMatch.type !== 'NOT_FOUND' || this.historyStack.length === 0) {
+    if (JSON.stringify(nextMatch)!==JSON.stringify(this.currentMatch) && this.currentMatch.type !== 'NOT_FOUND') {
       this.historyStack.push(this.currentMatch);
     }
     this.currentMatch = nextMatch;
@@ -273,12 +268,12 @@ export class Router {
    */
   back(fallbackRoute: string = '/'): RouteMatch {
     const prev = this.historyStack.pop();
-    if (prev && prev.path !== this.currentMatch.path) {
+    if (prev && JSON.stringify(prev)!==JSON.stringify(this.currentMatch)) {
       this.currentMatch = prev;
       this.notify();
       return prev;
     }
-    return this.navigate(fallbackRoute);
+    return this.replace(fallbackRoute);
   }
 
   /**

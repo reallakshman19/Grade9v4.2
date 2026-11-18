@@ -2,8 +2,8 @@
 // Governs mounting, validation, offline declarations, and fallback safety across all 13 response kinds.
 // Pure structural engine: No subject-specific dispatch or academic authorization.
 
-import type { Capability } from './contracts.ts';
-import type { Kind, Response } from './types.ts';
+import type { Capability, Validation } from './contracts.ts';
+import type { Kind, Response, ResponseOf } from './types.ts';
 import {
   RESPONSE_KINDS,
   validateResponse,
@@ -60,23 +60,23 @@ function normalizeAndValidate(kind: Kind, input: unknown): Response {
 /**
  * Creates a standard Capability implementation for a registered response kind.
  */
-export function createStandardCapability(
-  kind: ResponseKind,
+export function createStandardCapability<K extends Kind>(
+  kind: K,
   options?: {
     supportsOffline?: boolean;
     customValidate?: (input: unknown) => Response;
   }
-): Capability {
+): Capability<K> {
   return {
     kind,
     supportsOffline: options?.supportsOffline ?? true,
-    validate(input: unknown): Response {
-      if (options?.customValidate) {
-        return options.customValidate(input);
-      }
-      return normalizeAndValidate(kind, input);
+    validate(input: unknown): Validation<ResponseOf<K>> {
+      try {
+        const candidate=options?.customValidate ? options.customValidate(input) : input;
+        return {ok:true,value:normalizeAndValidate(kind,candidate) as ResponseOf<K>};
+      } catch(e){return {ok:false,reasonCode:e instanceof ResponseValidationError?e.code:'INVALID_RESPONSE'};}
     },
-    mount: createSafeMount(kind),
+    mount: (root,value,onChange)=>createSafeMount(kind)(root,value,onChange as (r:Response)=>void),
   };
 }
 
@@ -87,13 +87,7 @@ export function createUnsupportedCapability(kind: string): Capability {
   return {
     kind: kind as Kind,
     supportsOffline: false,
-    validate(input: unknown): Response {
-      throw new ResponseValidationError(
-        'UNSUPPORTED_KIND',
-        `Response kind '${kind}' is not supported by the capability registry`,
-        ''
-      );
-    },
+    validate(): Validation<Response> { return {ok:false,reasonCode:'UNSUPPORTED_KIND'}; },
     mount(root: HTMLElement, value: Response | null, onChange: (r: Response) => void): () => void {
       if (root && typeof root.appendChild === 'function' && typeof document !== 'undefined') {
         const fallback = document.createElement('div');
@@ -117,9 +111,9 @@ export function createUnsupportedCapability(kind: string): Capability {
  * Guarantees safe fallbacks, zero subject-specific dispatch, and offline inspection.
  */
 export class CapabilityRegistry {
-  private readonly capabilities = new Map<string, Capability>();
+  private readonly capabilities = new Map<string, Capability<Kind>>();
 
-  constructor(initialCapabilities?: readonly Capability[]) {
+  constructor(initialCapabilities?: readonly Capability<Kind>[]) {
     if (initialCapabilities) {
       for (const cap of initialCapabilities) {
         this.register(cap);
@@ -127,15 +121,15 @@ export class CapabilityRegistry {
     }
   }
 
-  register(cap: Capability): void {
-    this.capabilities.set(cap.kind, cap);
+  register<K extends Kind>(cap: Capability<K>): void {
+    this.capabilities.set(cap.kind, cap as unknown as Capability<Kind>);
   }
 
   unregister(kind: string): boolean {
     return this.capabilities.delete(kind);
   }
 
-  get(kind: string): Capability | undefined {
+  get(kind: string): Capability<Kind> | undefined {
     return this.capabilities.get(kind);
   }
 
@@ -143,7 +137,7 @@ export class CapabilityRegistry {
     return this.capabilities.has(kind);
   }
 
-  getOrFallback(kind: string): Capability {
+  getOrFallback(kind: string): Capability<Kind> {
     const cap = this.capabilities.get(kind);
     if (cap) {
       return cap;
@@ -151,7 +145,7 @@ export class CapabilityRegistry {
     return createUnsupportedCapability(kind);
   }
 
-  getAll(): readonly Capability[] {
+  getAll(): readonly Capability<Kind>[] {
     return Array.from(this.capabilities.values());
   }
 

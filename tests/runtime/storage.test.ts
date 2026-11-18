@@ -61,6 +61,7 @@ function makeTestAttempt(id = 'att:test:01', sessionId = 'ses:test:01'): Attempt
       },
     ],
     hintIds: [],
+    cognitive: null,
     submittedAt: '2026-11-17T12:00:00Z',
     grade: {
       status: 'SCORED',
@@ -262,6 +263,7 @@ describe('Attempt Appending & Conflict Detection', () => {
 
   it('allows duplicate identical attempt append idempotently', async () => {
     const attempt = makeTestAttempt('att:dup:01', 'ses:dup:01');
+    await driver.put('sessions',attempt.sessionId,makeTestSession(attempt.sessionId));
 
     await store.appendAttempt(attempt);
     // Second append of identical attempt should not throw
@@ -273,6 +275,7 @@ describe('Attempt Appending & Conflict Detection', () => {
 
   it('rejects conflicting attempt with same ID but different data with RECORD_CONFLICT', async () => {
     const attempt1 = makeTestAttempt('att:conf:01', 'ses:conf:01');
+    await driver.put('sessions',attempt1.sessionId,makeTestSession(attempt1.sessionId));
     await store.appendAttempt(attempt1);
 
     const conflictingAttempt: Attempt = {
@@ -423,16 +426,12 @@ describe('Export, Import, Checksum Verification & Duplicate Protection (Fault L1
       legacy: true,
       sessions: [
         {
-          id: 'ses:legacy:01',
-          mode: 'PRACTICE',
-          cursor: 1,
+          ...makeTestSession('ses:legacy:01'), attemptIds:['att:legacy:01'],
         },
       ],
       attempts: [
         {
-          id: 'att:legacy:01',
-          sessionId: 'ses:legacy:01',
-          itemId: 'que:legacy:01',
+          ...makeTestAttempt('att:legacy:01','ses:legacy:01'),
           response: { kind: 'SINGLE_CHOICE', value: 'B' },
           submittedAt: '2025-01-01T00:00:00Z',
           grade: { status: 'SCORED', points: 1, maxPoints: 1, reasonCode: 'CORRECT' },
@@ -450,3 +449,6 @@ describe('Export, Import, Checksum Verification & Duplicate Protection (Fault L1
     assert.equal(migratedAttempts[0].sessionId, 'ses:legacy:01');
   });
 });
+
+it('serializes concurrent draft revisions and rejects altered immutable grade',async()=>{const driver=new MemoryStorageDriver(),store=new DefaultProgressStore(driver),session=makeTestSession();await Promise.all([store.saveDraft(session,{kind:'INTEGER',value:'1'},[]),store.saveDraft(session,{kind:'INTEGER',value:'2'},[])]);assert.equal((await store.loadDraft(session.id))?.revision,2);const a=makeTestAttempt();await store.appendAttempt(a);assert.equal(await store.loadDraft(session.id),null);await assert.rejects(store.appendAttempt({...a,grade:{...a.grade,points:0} as any}),/RECORD_CONFLICT/);});
+it('refuses writes in readonly memory transactions',async()=>{const d=new MemoryStorageDriver();await assert.rejects(d.transaction(['x'],'readonly',tx=>tx.put('x','a',1)),/TRANSACTION_SCOPE/);assert.equal(await d.get('x','a'),undefined);});

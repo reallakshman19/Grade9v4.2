@@ -1,244 +1,190 @@
-"""Release projection compiler for deterministic synthetic demo builds."""
+"""Deterministic synthetic demo compiler. No production or runtime authority.
+
+The public artifact is deliberately separate from operator-only answer material.
+Static browser code cannot protect any answer bytes that have already been shipped.
+Only the two exact, immutable R4 demo graphs are admitted by this compiler.
+"""
 from __future__ import annotations
 
 import copy
-import hashlib
-import json
-from typing import Any, Dict, Iterable, List, Optional, Set
+import re
+from typing import Any, Iterable
 
-from .graph import ObjectGraphValidator
-from .record_inventory import canonical_json_digest
+from .graph import ObjectGraphValidator, GraphValidationError, compute_object_digest
 
 
-class ReleaseCompilationError(Exception):
-    """Raised when release compilation fails due to invariant violations or security gates."""
-    pass
+class ReleaseCompilationError(ValueError):
+    """Fail-closed demo compilation error; never include private payload bytes."""
 
 
-HELP_CAPABILITIES = {"H1", "H2", "H3"}
+# Canonical SHA-256 of full graph sorted by object ID, using graph.py canonical bytes.
+# These are fixture identities, not signed approval receipts. Adding new fixtures needs
+# a separate reviewed code change; the input cannot supply its own trust policy.
+DEMO_GRAPHS = {
+    "eb0a02d04fb43c6f23b634d3fd2367972272c3a364b69de9c6e8f20fbb64e61f": (
+        "R4-GRAPH", ("demo:q:001", "demo:f:001")),
+    "e1c080193ee471b479b447cd99168fd8acddc66c2777fccfd07a2caef70ca152": (
+        "R4-WPE-SPRING", ("demo:wpe:source", "demo:wpe:fresh")),
+}
+STAGES = ("PREDICT", "ATTEMPT", "RECONSTRUCT", "DIAGNOSE", "REPAIR", "BOUNDARY_TEST", "COMPLETE")
+HELP_CAPABILITIES = frozenset({"H1", "H2", "H3", "MODEL_MANIPULATE", "MODEL_AUTO_CALCULATE", "READ_ANCHOR"})
+POST_FIRST = frozenset(STAGES[2:])
+CAPABILITIES = ("VIEW_STIMULUS", "EDIT_WORK", "MODEL_MANIPULATE", "MODEL_AUTO_CALCULATE", "H1", "H2", "H3", "REFERENCE_SOLUTION", "BOUNDARY_REFERENCE", "SOURCE_RETURN", "READ_ANCHOR", "SHOW_REASONING_CRUX")
 
 
-def is_capability_visible(
-    stage: str,
-    capability: str,
-    first_committed: bool = False,
-    boundary_committed: bool = False,
-    allowed_capabilities: Iterable[str] = (),
-    is_exam: bool = False,
-) -> bool:
-    """Stage-gated capability and disclosure visibility rules conforming to R3/R4 contracts."""
-    allowed = set(allowed_capabilities)
+def is_capability_visible(stage: str, capability: str, first_committed: bool = False,
+                          boundary_committed: bool = False, allowed_capabilities: Iterable[str] = (),
+                          is_exam: bool = False) -> bool:
+    """Pure stage constraint, NOT a disclosure authorization or persistence check.
 
-    # Basic interaction is always visible unless exam mode blocks specific features
-    if capability in {"VIEW_STIMULUS", "EDIT_WORK"}:
-        return True
-
-    # Exam mode strictly disables all hints, disclosures, and reference solutions before submission
-    if is_exam:
+    The caller must supply a verified scoped policy/checkpoint. This function is
+    never used to put protected bytes into a public static artifact.
+    """
+    if stage not in STAGES or capability not in CAPABILITIES:
         return False
-
-    if capability == "REFERENCE_SOLUTION":
-        return (
-            capability in allowed
-            and first_committed
-            and stage in {"RECONSTRUCT", "DIAGNOSE", "REPAIR", "BOUNDARY_TEST", "COMPLETE"}
-        )
-
+    if any(type(x) is not bool for x in (first_committed, boundary_committed, is_exam)):
+        return False
+    if stage in ("PREDICT", "ATTEMPT") and first_committed:
+        return False
+    if boundary_committed and (not first_committed or stage not in ("BOUNDARY_TEST", "COMPLETE")):
+        return False
+    if stage in POST_FIRST and not first_committed:
+        return False
+    if stage == "COMPLETE" and not boundary_committed:
+        return False
+    if capability == "VIEW_STIMULUS":
+        return True
+    if capability == "EDIT_WORK":
+        return stage != "COMPLETE"
+    if is_exam or capability not in allowed_capabilities:
+        return False
+    if capability in HELP_CAPABILITIES:
+        return stage == "ATTEMPT" and not first_committed
+    if capability in ("REFERENCE_SOLUTION", "SHOW_REASONING_CRUX"):
+        return first_committed and stage in POST_FIRST
     if capability == "BOUNDARY_REFERENCE":
-        return (
-            capability in allowed
-            and boundary_committed
-            and stage in {"BOUNDARY_TEST", "COMPLETE"}
-        )
-
+        return boundary_committed and stage in ("BOUNDARY_TEST", "COMPLETE")
     if capability == "SOURCE_RETURN":
-        return stage == "COMPLETE" and capability in allowed
+        return stage == "COMPLETE" and boundary_committed
+    return False
 
-    if capability == "SHOW_REASONING_CRUX":
-        return (
-            first_committed
-            and stage in {"RECONSTRUCT", "DIAGNOSE", "REPAIR", "BOUNDARY_TEST", "COMPLETE"}
-            and capability in allowed
-        )
 
-    # Progressive scaffolds / hints are only visible in ATTEMPT stage before first commit
-    return stage == "ATTEMPT" and capability in HELP_CAPABILITIES and capability in allowed
+def _ref(obj):
+    return {"type": obj["type"], "id": obj["id"], "revision": obj["revision"],
+            "sha256": compute_object_digest(obj)}
+
+
+def _digest_package(package):
+    return {**package, "release_digest": compute_object_digest(package)}
+
+
+def _validated_graph(graph, available_assets):
+    if type(graph) is not list or not graph or any(type(o) is not dict for o in graph):
+        raise ReleaseCompilationError("INVALID_GRAPH")
+    # Asset names or claimed digests are not verified bytes. No external asset
+    # ingestion is implemented in this bounded demo compiler.
+    if available_assets is not None and available_assets:
+        raise ReleaseCompilationError("EXTERNAL_ASSETS_NOT_SUPPORTED")
+    for o in graph:
+        if o.get("status") != "SYNTHETIC":
+            raise ReleaseCompilationError("NON_SYNTHETIC_OR_HOLD")
+        if o.get("asset_claims"):
+            raise ReleaseCompilationError("UNVERIFIED_ASSET_CLAIM")
+        if o.get("source_lineage_refs") or o.get("type") in {"SOURCE", "OCCURRENCE", "APPROVAL", "RELEASE"}:
+            raise ReleaseCompilationError("SOURCE_OR_AUTHORITY_OBJECT_NOT_PERMITTED")
+    try:
+        # Run the authoritative graph validator before consulting the fixture pin.
+        # A malformed or stale dependency cannot be accepted merely by relabeling.
+        if any(type(o.get("id")) is not str for o in graph):
+            raise ReleaseCompilationError("INVALID_ID")
+        if len({o["id"] for o in graph}) != len(graph):
+            raise ReleaseCompilationError("DUPLICATE_ID")
+        objects = sorted(copy.deepcopy(graph), key=lambda o: o["id"])
+        ObjectGraphValidator(demo_mode=True).validate_graph(objects)
+        digest = compute_object_digest(objects)
+    except ReleaseCompilationError:
+        raise
+    except (GraphValidationError, ValueError, TypeError, KeyError, RecursionError) as exc:
+        # Avoid forwarding the graph validator's exception text (which can include raw data).
+        raise ReleaseCompilationError("INVALID_GRAPH_CLOSURE") from None
+    if digest not in DEMO_GRAPHS:
+        raise ReleaseCompilationError("UNPINNED_SYNTHETIC_GRAPH")
+    return objects, digest
+
+
+def _initial_view(obj):
+    payload = obj["payload"]
+    # Only explicitly reviewed fixture IDs reach here. Do not forward arbitrary
+    # nested objects or author-only metadata. Exact refs are of public tasks only.
+    view = {**_ref(obj), "stem": payload["stem"], "subject_id": obj["subject_id"],
+            "demo": True, "asset_refs": []}
+    if "response_kind" in payload:
+        view["response_kind"] = payload["response_kind"]
+    if "options" in payload:
+        view["options"] = [{"id": x["id"], "text": x["text"]} for x in payload["options"]]
+    if "fields" in payload:
+        view["fields"] = [{k: x[k] for k in ("id", "kind", "required", "prompt")} for x in payload["fields"]]
+    if "prediction_prompt" in payload:
+        view["prediction_prompt"] = payload["prediction_prompt"]
+    return view
 
 
 class ReleaseProjectionCompiler:
-    """Deterministic release compiler generating public-safe demo projections."""
+    """Generate in-memory artifacts only; never writes or deploys a release."""
 
     def __init__(self, target_mode: str = "DEMO") -> None:
         if target_mode != "DEMO":
-            raise ReleaseCompilationError(
-                f"Production release compilation is strictly prohibited (target_mode: {target_mode}). Only DEMO is permitted."
-            )
-        self.target_mode = target_mode
+            raise ReleaseCompilationError("PRODUCTION_TARGET_PROHIBITED")
 
-    def compile_release(
-        self,
-        graph: List[Dict[str, Any]],
-        release_id: str = "RELEASE-DEMO-01",
-        available_assets: Optional[Set[str]] = None,
-    ) -> Dict[str, Any]:
-        """Compile a platform object graph into a closed, deterministic release projection."""
-        if not graph:
-            raise ReleaseCompilationError("Cannot compile an empty graph")
+    def compile_release(self, graph: list[dict[str, Any]], release_id: str = "RELEASE-DEMO-01",
+                        available_assets: set[str] | None = None) -> dict[str, Any]:
+        """Public-safe synthetic diagnostic projection, not an actual learner release."""
+        if type(release_id) is not str or not re.fullmatch(r"RELEASE-[A-Z0-9-]{1,48}", release_id):
+            raise ReleaseCompilationError("INVALID_RELEASE_ID")
+        objects, digest = _validated_graph(graph, available_assets)
+        name, ids = DEMO_GRAPHS[digest]
+        index = {o["id"]: o for o in objects}
+        return _digest_package({
+            "schema_version": "g9-release-projection/1.1", "release_id": release_id,
+            "target_mode": "DEMO", "demo_banner": True, "academic_admission": "HOLD",
+            "production_release": "NONE", "ui_freeze": "NOT_GRANTED",
+            "artifact_scope": "PUBLIC_SAFE_DIAGNOSTIC_ONLY", "learner_release": False,
+            "fixture_id": name, "graph_digest": digest, "total_objects": len(objects),
+            "projections": {"learner_precommit": [_initial_view(index[i]) for i in sorted(ids)],
+                            "learner_postcommit": [], "search_index": [], "assessment_contracts": []},
+            "search_status": "NO_REGISTERED_ELIGIBLE_LEARNER_ROUTES",
+            "protected_projection_status": "SEPARATE_OPERATOR_DIAGNOSTIC_ONLY",
+            "visibility_policy": {"stages": list(STAGES), "capabilities": list(CAPABILITIES),
+                                  "scope": "STAGE_CONSTRAINTS_ONLY_NOT_AUTHORIZATION",
+                                  "protected_content_in_static_bundle": False,
+                                  "runtime_disclosure_service": "NOT_IMPLEMENTED"},
+        })
 
-        if available_assets is None:
-            available_assets = set()
+    def compile_operator_diagnostic(self, graph: list[dict[str, Any]], task_ref: dict[str, Any]) -> dict[str, Any]:
+        """Separate private, local-only test oracle for one exact task.
 
-        # 1. Reject any candidate item with status HOLD (N08)
-        for obj in graph:
-            obj_id = obj.get("id", "unknown")
-            if obj.get("status") == "HOLD":
-                raise ReleaseCompilationError(
-                    f"Cannot compile release: object '{obj_id}' has status HOLD (N08)"
-                )
-            if obj.get("academic_admission") == "HOLD" and obj.get("status") not in {"SYNTHETIC", "ACCEPTED"}:
-                raise ReleaseCompilationError(
-                    f"Cannot compile release: object '{obj_id}' has unadmitted status HOLD (N08)"
-                )
-
-        # 2. Referential integrity and cryptographic closure validation
-        obj_map: Dict[str, Dict[str, Any]] = {o["id"]: o for o in graph}
-        if len(obj_map) != len(graph):
-            raise ReleaseCompilationError("Duplicate object IDs detected in release graph")
-
-        for obj in graph:
-            obj_id = obj["id"]
-            deps = obj.get("dependencies", [])
-            for dep in deps:
-                dep_id = dep["id"]
-                if dep_id not in obj_map:
-                    raise ReleaseCompilationError(
-                        f"Dangling reference: object '{obj_id}' references missing dependency '{dep_id}'"
-                    )
-                target_obj = obj_map[dep_id]
-                if dep.get("type") and dep["type"] != target_obj.get("type"):
-                    raise ReleaseCompilationError(
-                        f"Type mismatch: dependency '{dep_id}' expected type '{dep.get('type')}', got '{target_obj.get('type')}'"
-                    )
-                # Digest verification (N05)
-                expected_sha = dep.get("sha256")
-                if expected_sha:
-                    actual_sha = canonical_json_digest(target_obj)
-                    if actual_sha != expected_sha:
-                        raise ReleaseCompilationError(
-                            f"Stale dependency digest: dependency '{dep_id}' referenced by '{obj_id}' has sha256 '{actual_sha}', expected '{expected_sha}' (N05)"
-                        )
-
-            # Asset references verification (N07)
-            asset_claims = obj.get("asset_claims", [])
-            for asset in asset_claims:
-                asset_id = asset.get("asset_id") or asset.get("id")
-                is_mandatory = bool(asset.get("mandatory", False))
-                is_present = (
-                    asset_id in available_assets
-                    or asset.get("digest") is not None
-                    or asset.get("content_sha256") is not None
-                    or asset.get("classification") == "PRESENT"
-                )
-                if is_mandatory and not is_present:
-                    raise ReleaseCompilationError(
-                        f"Missing mandatory asset: object '{obj_id}' references missing mandatory asset '{asset_id}' (N07)"
-                    )
-
-        # 3. Cycle verification via ObjectGraphValidator
-        validator = ObjectGraphValidator(demo_mode=True)
-        validator.validate_graph(graph)
-
-        # 4. Generate view-specific, stage-gated projections
-        precommit_views: List[Dict[str, Any]] = []
-        postcommit_views: List[Dict[str, Any]] = []
-        search_entries: List[Dict[str, Any]] = []
-        assessment_contracts: List[Dict[str, Any]] = []
-
-        for obj in sorted(graph, key=lambda x: str(x.get("id", ""))):
-            obj_type = obj.get("type")
-            obj_id = obj.get("id", "")
-            payload = copy.deepcopy(obj.get("payload", {}))
-
-            # Filter Precommit View (NO answers, NO solutions, NO hints)
-            if obj_type in {"QUESTION", "FRESH_TASK"}:
-                precommit_item = {
-                    "id": obj_id,
-                    "type": obj_type,
-                    "revision": obj.get("revision", 1),
-                    "stem": payload.get("stem"),
-                    "options": [
-                        {"id": opt.get("id"), "text": opt.get("text")}
-                        if isinstance(opt, dict) else str(opt)
-                        for opt in payload.get("options", [])
-                    ],
-                    "asset_refs": [a.get("asset_id") or a.get("id") for a in obj.get("asset_claims", [])],
-                }
-                precommit_views.append(precommit_item)
-
-            # Postcommit View (discloses reference solution, worked steps, and crux)
-            if obj_type in {"SOLUTION", "CONSTRUCTION"}:
-                postcommit_views.append({
-                    "id": obj_id,
-                    "type": obj_type,
-                    "revision": obj.get("revision", 1),
-                    "solution_text": payload.get("text") or payload.get("worked_steps"),
-                    "crux": payload.get("crux"),
-                })
-
-            # Search Index Projection (Public-safe, no answer leak - N09)
-            if obj_type in {"QUESTION", "LESSON", "CONCEPT"}:
-                search_entry = {
-                    "id": obj_id,
-                    "revision": obj.get("revision", 1),
-                    "releaseId": release_id,
-                    "route": f"/{obj_type.lower()}/{obj_id}",
-                    "kind": obj_type,
-                    "title": payload.get("title") or payload.get("stem", "")[:60] or obj_id,
-                    "summary": payload.get("summary") or "Synthetic curriculum component",
-                    "reviewed_terms": payload.get("reviewed_terms", [obj_type.lower()]),
-                    "public_facets": {
-                        "type": obj_type,
-                        "subject": obj.get("subject_id", "PHYSICS"),
-                        "demo": True,
-                    },
-                }
-                search_entries.append(search_entry)
-
-            # Assessment evaluation contracts
-            if obj_type in {"RUBRIC", "EVALUATOR_POLICY"}:
-                assessment_contracts.append({
-                    "id": obj_id,
-                    "type": obj_type,
-                    "payload": payload,
-                })
-
-        # 5. Assemble closed release package
-        release_projection = {
-            "schema_version": "g9-release-projection/1.0",
-            "release_id": release_id,
-            "target_mode": "DEMO",
-            "demo_banner": True,
-            "academic_admission": "HOLD",
-            "production_release": "NONE",
-            "compiled_at": "2026-11-17T00:00:00Z",
-            "total_objects": len(graph),
-            "projections": {
-                "learner_precommit": precommit_views,
-                "learner_postcommit": postcommit_views,
-                "search_index": search_entries,
-                "assessment_contracts": assessment_contracts,
-            },
-            "visibility_matrix": {
-                "predict_stage_allowed": ["VIEW_STIMULUS", "EDIT_WORK"],
-                "attempt_stage_allowed": ["VIEW_STIMULUS", "EDIT_WORK", "H1", "H2", "H3"],
-                "reconstruct_stage_allowed": ["VIEW_STIMULUS", "EDIT_WORK", "REFERENCE_SOLUTION", "SHOW_REASONING_CRUX"],
-                "boundary_stage_allowed": ["VIEW_STIMULUS", "EDIT_WORK", "REFERENCE_SOLUTION", "BOUNDARY_REFERENCE"],
-                "complete_stage_allowed": ["VIEW_STIMULUS", "REFERENCE_SOLUTION", "BOUNDARY_REFERENCE", "SOURCE_RETURN"],
-            },
-        }
-
-        # Compute deterministic canonical digest of release package
-        raw_bytes = json.dumps(release_projection, sort_keys=True, separators=(",", ":")).encode("utf-8")
-        release_projection["release_digest"] = hashlib.sha256(raw_bytes).hexdigest()
-
-        return release_projection
+        Not a learner endpoint. Caller is responsible for access-controlled local
+        custody; no runtime gate is implemented. Never copy this artifact into dist.
+        """
+        objects, digest = _validated_graph(graph, None)
+        candidates = [o for o in objects if o["type"] in {"QUESTION", "FRESH_TASK"} and _ref(o) == task_ref]
+        if len(candidates) != 1:
+            raise ReleaseCompilationError("EXACT_TASK_REQUIRED")
+        task = candidates[0]
+        post = []
+        assessments = []
+        for o in objects:
+            if task_ref not in o["dependencies"]:
+                continue
+            if o["type"] == "SOLUTION":
+                stage = "BOUNDARY_TEST" if o["payload"].get("visibility") == "AFTER_BOUNDARY_COMMIT" else "RECONSTRUCT"
+                post.append({"ref": _ref(o), "requires_stage": stage,
+                             "requires_durable_commit": "BOUNDARY" if stage == "BOUNDARY_TEST" else "FIRST",
+                             "payload": copy.deepcopy(o["payload"])})
+            elif o["type"] == "ASSESSMENT" and o["payload"].get("question") == task_ref:
+                assessments.append({"ref": _ref(o), "payload": copy.deepcopy(o["payload"])})
+        return _digest_package({"schema_version": "g9-private-demo-diagnostic/1.0",
+            "artifact_scope": "OPERATOR_ONLY_DO_NOT_PUBLISH", "graph_digest": digest,
+            "academic_admission": "HOLD", "production_release": "NONE",
+            "runtime_authorization": "NOT_IMPLEMENTED", "task_ref": _ref(task),
+            "task": _initial_view(task), "postcommit": post, "assessment_contracts": assessments})

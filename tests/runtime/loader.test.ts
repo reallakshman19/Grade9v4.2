@@ -1,214 +1,22 @@
-// Unit and integration tests for Loader and Router subsystems (Workpack A15).
-// Tests digest verification, exact revision resolution, base-aware routing, deep linking, and safe returns.
-
-import { describe, it } from 'node:test';
+import { describe,it } from 'node:test';
 import assert from 'node:assert/strict';
-import { ManifestLoader, LoaderError, computeSha256 } from '../../web/runtime/loader.ts';
+import { ManifestLoader, computeManifestContentDigest, computeSha256 } from '../../web/runtime/loader.ts';
 import { Router } from '../../web/app/router.ts';
 import type { ReleaseManifest } from '../../web/runtime/loader.ts';
-import type { Ref } from '../../web/runtime/types.ts';
-
-function makeTestManifest(digest: string = 'a'.repeat(64)): ReleaseManifest {
-  return {
-    schema_version: 'g9-release-projection/1.0',
-    release_id: 'rel:synthetic:demo:2026',
-    target_mode: 'DEMO',
-    demo_banner: true,
-    academic_admission: 'HOLD',
-    production_release: 'NONE',
-    compiled_at: '2026-11-17T00:00:00Z',
-    total_objects: 3,
-    release_digest: digest,
-    projections: {
-      learner_precommit: {
-        'que:physics:wpe:01': {
-          id: 'que:physics:wpe:01',
-          revision: 1,
-          stem: 'Calculate the net work done by a constant 10N force over 5m.',
-          has_solution: false,
-        },
-      },
-      learner_postcommit: {
-        'que:physics:wpe:01': {
-          id: 'que:physics:wpe:01',
-          revision: 1,
-          stem: 'Calculate the net work done by a constant 10N force over 5m.',
-          solution: 'W = F * d = 10 * 5 = 50 J',
-          has_solution: true,
-        },
-      },
-      search_index: [
-        {
-          id: 'que:physics:wpe:01',
-          title: 'Constant Force Work Calculation',
-          topic: 'topic:physics:wpe',
-        },
-      ],
-      assessment_contracts: {
-        'que:physics:wpe:01': {
-          numeric_tolerance: 0.01,
-          expected_unit: 'J',
-        },
-      },
-    },
-    visibility_matrix: {
-      predict_stage_allowed: ['VIEW_STIMULUS', 'EDIT_WORK'],
-      attempt_stage_allowed: ['VIEW_STIMULUS', 'EDIT_WORK', 'H1'],
-    },
-  };
+const ref={type:'QUESTION' as const,id:'que:physics:wpe:01',revision:1,sha256:'a'.repeat(64)};
+async function fixture(){
+ const m:ReleaseManifest={schema_version:'g9-release-projection/1.1',release_id:'RELEASE-DEMO-01',target_mode:'DEMO',demo_banner:true,academic_admission:'HOLD',production_release:'NONE',artifact_scope:'PUBLIC_SAFE_DIAGNOSTIC_ONLY',learner_release:false,release_digest:'0'.repeat(64),projections:{learner_precommit:[{...ref,stem:'Synthetic question',subject_id:'PHYSICS',demo:true,asset_refs:[]}],learner_postcommit:[],search_index:[],assessment_contracts:[]}};
+ return {...m,release_digest:await computeManifestContentDigest(m)};
 }
-
-describe('ManifestLoader', () => {
-  it('loads and validates a valid release manifest from string data', async () => {
-    const loader = new ManifestLoader();
-    const digest = 'c'.repeat(64);
-    const manifest = makeTestManifest(digest);
-    const loaded = await loader.loadFromData(JSON.stringify(manifest), digest);
-
-    assert.equal(loaded.release_id, 'rel:synthetic:demo:2026');
-    assert.equal(loaded.release_digest, digest);
-    assert.equal(loader.getCached('rel:synthetic:demo:2026')?.release_id, 'rel:synthetic:demo:2026');
-  });
-
-  it('rejects stale or mismatched manifest hash with STALE_MANIFEST_HASH', async () => {
-    const loader = new ManifestLoader();
-    const manifest = makeTestManifest('e'.repeat(64));
-    const raw = JSON.stringify(manifest);
-
-    await assert.rejects(
-      async () => {
-        await loader.loadFromData(raw, 'f'.repeat(64));
-      },
-      (err: unknown) => {
-        assert(err instanceof LoaderError);
-        assert.equal(err.code, 'STALE_MANIFEST_HASH');
-        return true;
-      }
-    );
-  });
-
-  it('rejects malformed JSON with MALFORMED_PROJECTION', async () => {
-    const loader = new ManifestLoader();
-    await assert.rejects(
-      async () => {
-        await loader.loadFromData('{ invalid json ...');
-      },
-      (err: unknown) => {
-        assert(err instanceof LoaderError);
-        assert.equal(err.code, 'MALFORMED_PROJECTION');
-        return true;
-      }
-    );
-  });
-
-  it('rejects manifest missing mandatory metadata fields', async () => {
-    const loader = new ManifestLoader();
-    const invalidManifest = { target_mode: 'DEMO' };
-    await assert.rejects(
-      async () => {
-        await loader.loadFromData(JSON.stringify(invalidManifest));
-      },
-      (err: unknown) => {
-        assert(err instanceof LoaderError);
-        assert.equal(err.code, 'MALFORMED_PROJECTION');
-        return true;
-      }
-    );
-  });
-
-  it('resolves item in precommit mode without solution leaks', () => {
-    const loader = new ManifestLoader();
-    const manifest = makeTestManifest();
-    const ref: Ref = {
-      type: 'QUESTION',
-      id: 'que:physics:wpe:01',
-      revision: 1,
-      sha256: 'a'.repeat(64),
-    };
-
-    const item = loader.resolveItem<{ stem: string; has_solution: boolean; solution?: string }>(
-      manifest,
-      ref,
-      'PRECOMMIT'
-    );
-    assert.equal(item.has_solution, false);
-    assert.equal(item.solution, undefined);
-  });
-
-  it('resolves item in postcommit mode with verified solution', () => {
-    const loader = new ManifestLoader();
-    const manifest = makeTestManifest();
-    const ref: Ref = {
-      type: 'QUESTION',
-      id: 'que:physics:wpe:01',
-      revision: 1,
-      sha256: 'a'.repeat(64),
-    };
-
-    const item = loader.resolveItem<{ stem: string; has_solution: boolean; solution: string }>(
-      manifest,
-      ref,
-      'POSTCOMMIT'
-    );
-    assert.equal(item.has_solution, true);
-    assert.ok(item.solution.includes('50 J'));
-  });
-
-  it('rejects missing item with ITEM_NOT_FOUND', () => {
-    const loader = new ManifestLoader();
-    const manifest = makeTestManifest();
-    const ref: Ref = {
-      type: 'QUESTION',
-      id: 'que:unknown:99',
-      revision: 1,
-      sha256: 'a'.repeat(64),
-    };
-
-    assert.throws(
-      () => {
-        loader.resolveItem(manifest, ref, 'PRECOMMIT');
-      },
-      (err: unknown) => {
-        assert(err instanceof LoaderError);
-        assert.equal(err.code, 'ITEM_NOT_FOUND');
-        return true;
-      }
-    );
-  });
-
-  it('rejects item revision mismatch with INVALID_REVISION', () => {
-    const loader = new ManifestLoader();
-    const manifest = makeTestManifest();
-    const ref: Ref = {
-      type: 'QUESTION',
-      id: 'que:physics:wpe:01',
-      revision: 2, // Requested rev 2, manifest only has rev 1
-      sha256: 'a'.repeat(64),
-    };
-
-    assert.throws(
-      () => {
-        loader.resolveItem(manifest, ref, 'PRECOMMIT');
-      },
-      (err: unknown) => {
-        assert(err instanceof LoaderError);
-        assert.equal(err.code, 'INVALID_REVISION');
-        return true;
-      }
-    );
-  });
-
-  it('supports cache clearing', async () => {
-    const loader = new ManifestLoader();
-    const manifest = makeTestManifest();
-    await loader.loadFromData(JSON.stringify(manifest));
-    assert.ok(loader.getCached('rel:synthetic:demo:2026'));
-
-    loader.clearCache('rel:synthetic:demo:2026');
-    assert.equal(loader.getCached('rel:synthetic:demo:2026'), null);
-  });
+describe('ManifestLoader',()=>{
+ it('verifies actual content and resolves exact immutable reference',async()=>{const m=await fixture(),l=new ManifestLoader();const loaded=await l.loadFromData(JSON.stringify(m),m.release_digest);assert.equal(l.getCached(m.release_id),loaded);assert.equal(l.resolveItem<{stem:string}>(loaded,ref).stem,'Synthetic question');assert(Object.isFrozen(loaded.projections.learner_precommit[0]));l.clearCache();assert.equal(l.getCached(m.release_id),null);});
+ it('rejects nested mutation even with unchanged declared digest',async()=>{const m=await fixture();const bad=JSON.parse(JSON.stringify(m));bad.projections.learner_precommit[0].stem='Altered';await assert.rejects(new ManifestLoader().loadFromData(JSON.stringify(bad),m.release_digest),/DIGEST_MISMATCH/);});
+ it('rejects missing or stale trusted digest',async()=>{const m=await fixture(),l=new ManifestLoader();await assert.rejects(l.loadFromData(JSON.stringify(m)),/STALE_MANIFEST_HASH/);await assert.rejects(l.loadFromData(JSON.stringify(m),'b'.repeat(64)),/STALE_MANIFEST_HASH/);});
+ it('rejects malformed JSON and missing metadata',async()=>{const l=new ManifestLoader();for(const s of ['{','null','{}'])await assert.rejects(l.loadFromData(s),/MALFORMED_PROJECTION/);});
+ it('rejects private postcommit data even when rehashed',async()=>{const m=await fixture();const bad={...m,projections:{...m.projections,learner_postcommit:[{answer:'secret'}]}};const digest=await computeManifestContentDigest(bad);await assert.rejects(new ManifestLoader().loadFromData(JSON.stringify({...bad,release_digest:digest}),digest),/PROTECTED_PROJECTION/);});
+ it('denies postcommit and forged refs, unknown or stale revisions, unverified objects',async()=>{const m=await fixture(),l=new ManifestLoader(),loaded=await l.loadFromData(JSON.stringify(m),m.release_digest);assert.throws(()=>l.resolveItem(m,ref),/DIGEST_MISMATCH/);assert.throws(()=>l.resolveItem(loaded,ref,'POSTCOMMIT'),/PROTECTED_PROJECTION/);assert.throws(()=>l.resolveItem(loaded,{...ref,sha256:'b'.repeat(64)}),/DIGEST_MISMATCH/);assert.throws(()=>l.resolveItem(loaded,{...ref,id:'missing'}),/ITEM_NOT_FOUND/);assert.throws(()=>l.resolveItem(loaded,{...ref,revision:2}),/INVALID_REVISION/);});
+ it('hashes known bytes',async()=>assert.equal(await computeSha256('abc'),'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'));
 });
-
 describe('Router', () => {
   it('normalizes basePaths and strips them cleanly', () => {
     const router1 = new Router({ basePath: '/Grade9v4.2/' });
@@ -336,3 +144,5 @@ describe('Router', () => {
     assert.equal(callCount, 1); // Not called after unsubscribe
   });
 });
+
+it('round trips static hash links, preserves equals, rejects malformed routes',()=>{const r=new Router({basePath:'/Grade9v4.2',useHash:true});assert.equal(r.match(r.toHref('/question/q1',{q:'a=b'})).params.questionId,'q1');assert.equal(r.match(r.toHref('/search',{q:'a=b'})).query.q,'a=b');assert.equal(r.match('/question/%ZZ').type,'NOT_FOUND');assert.equal(r.stripBasePath('/Grade9v4.2-other'),'/Grade9v4.2-other');});
