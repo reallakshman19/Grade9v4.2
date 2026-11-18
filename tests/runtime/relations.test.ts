@@ -332,3 +332,5 @@ describe("RecoveryService – linked retry", () => {
     assert.equal(r.routeClass, "STALE_REJECTED");
   });
 });
+
+it('rejects edge reparenting, ambiguous routes and detour origin replacement',()=>{const g=createRelationGraph(),e=makeEdge();g.register(e);assert.throws(()=>g.register({...e,sourceId:'wrong'}),/Cannot replace edge identity/);const o=makeOrigin(),s=createRecoveryService(g);s.openDetour('d',e.sourceId,o);assert.throws(()=>s.openDetour('d',e.sourceId,{...o,sessionId:'foreign'}),/Detour already exists/);assert.deepEqual(s.closeDetour('d'),o);g.register(makeEdge({sourceId:e.sourceId,targetId:'other'}));assert.equal(g.resolveRoute(e.sourceId,o).routeClass,'NO_ROUTE');});
