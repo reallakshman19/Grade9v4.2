@@ -33,7 +33,7 @@ export interface ProgrammeViewState {
 
 export class ProgrammeScreenController {
   private programme: ProgrammeDetail | null = null;
-  private state: ProgrammeViewState;
+  private state: ProgrammeViewState = {status:'LOADING',programme:null,totalTopicsCount:0,totalQuestionsCount:0};
 
   constructor(initialProgramme?: ProgrammeDetail) {
     if (initialProgramme) {
@@ -49,7 +49,7 @@ export class ProgrammeScreenController {
   }
 
   loadProgramme(programme: ProgrammeDetail): void {
-    this.programme = programme;
+    this.programme = structuredClone(programme);
     this.updateState();
   }
 
@@ -80,7 +80,7 @@ export class ProgrammeScreenController {
       return;
     }
 
-    if (this.programme.status === 'HOLD') {
+    if (this.programme.status !== 'AVAILABLE') {
       this.state = {
         status: 'UNAVAILABLE',
         programme: this.programme,
@@ -91,7 +91,7 @@ export class ProgrammeScreenController {
       return;
     }
 
-    const subjects = this.programme.subjects || [];
+    const subjects = (this.programme.subjects || []).filter(s=>s.status==='AVAILABLE');
     const totalTopicsCount = subjects.reduce((sum, s) => sum + s.topicIds.length, 0);
     const totalQuestionsCount = subjects.reduce((sum, s) => sum + s.totalItemCount, 0);
 
