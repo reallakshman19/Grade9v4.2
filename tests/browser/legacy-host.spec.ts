@@ -52,7 +52,7 @@ function makeHost(): ApplicationHostController {
 }
 
 function makeEnvelope(type: string, sessionId: string, nonce: string, payload?: unknown): object {
-  return { type, nonce, sessionId, payload };
+  return { type, nonce, sessionId, sequence:1, payload };
 }
 
 function launchAndReady(host: ApplicationHostController): void {
@@ -252,13 +252,13 @@ describe("ApplicationHost – multiple rejections logged", () => {
 
 describe("ResourcesPage – message delegation", () => {
   it("handleMessage returns false with no active host", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     const result = ctrl.handleMessage({ origin: APP_ORIGIN, data: {} });
     assert.equal(result, false);
   });
 
   it("handleMessage rejects wrong-origin even with active host", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE_RES]);
     ctrl.launch("legacy-01");
     const result = ctrl.handleMessage({ origin: "https://evil.com", data: {} });
@@ -266,7 +266,7 @@ describe("ResourcesPage – message delegation", () => {
   });
 
   it("active host state after safeReturn is null", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE_RES]);
     ctrl.launch("legacy-01");
     ctrl.safeReturn();
