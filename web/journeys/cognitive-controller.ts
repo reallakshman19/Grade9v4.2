@@ -22,16 +22,23 @@ export class CognitiveController{
     if(!s||s.releaseId!==j.releaseId||!sameRef(s.item,j.task)||s.mode==='SIMULATED_EXAM'||!s.contentRevision||s.contentRevision!==await this.authority.liveRevision(s))throw new ControllerError('SESSION_OR_EXAM_POLICY_BLOCKED');
     return s;
   }
+  async begin():Promise<CognitiveSnapshot>{const s=await this.session();return this.store.begin(this.config.journey,s.id);}
   async snapshot(checkpoint:Checkpoint):Promise<CognitiveSnapshot>{await this.session();return this.store.replayForDisclosure(this.config.journey,checkpoint);}
   async commit(event:CognitiveEvent,checkpoint:Checkpoint,work:readonly WorkArtifact[],attempt?:Attempt):Promise<CognitiveSnapshot>{
     const s=await this.session(),j=this.config.journey;
     if(event.journey_id!==j.journeyId||event.task_instance_id!==j.taskInstanceId||event.release_id!==j.releaseId||!sameRef(event.task_ref,j.task))throw new ControllerError('EVENT_IDENTITY_MISMATCH');
     if(event.event_type==='FIRST_COMMITTED'&&attempt?.sessionId!==s.id)throw new ControllerError('FIRST_ATTEMPT_SESSION_MISMATCH');
-    if(event.event_type==='BOUNDARY_COMMITTED'&&!await this.authority.boundaryAllowed(j,event.payload.boundary_task_ref))throw new ControllerError('BOUNDARY_NOT_AUTHORIZED');
+    if(event.event_type==='BOUNDARY_COMMITTED'){
+      const boundary=attempt&&await this.driver.get<Session>('sessions',attempt.sessionId);
+      if(!boundary||boundary.mode==='SIMULATED_EXAM'||boundary.releaseId!==j.releaseId||!sameRef(boundary.item,event.payload.boundary_task_ref)||!boundary.contentRevision||boundary.contentRevision!==await this.authority.liveRevision(boundary)||!await this.authority.boundaryAllowed(j,event.payload.boundary_task_ref))throw new ControllerError('BOUNDARY_NOT_AUTHORIZED');
+    }
     if(event.event_type==='HELP_EXPOSED'&&!await this.authority.allowed(j,s,event.payload.capability,event.payload.asset_ref))throw new ControllerError('HELP_NOT_AUTHORIZED');
     if(event.event_type==='RECONSTRUCTION_COMMITTED'&&!await this.authority.allowed(j,s,'REFERENCE_SOLUTION',event.payload.reference_ref))throw new ControllerError('REFERENCE_NOT_AUTHORIZED');
     if(event.event_type==='BOUNDARY_FEEDBACK_VIEWED'&&!await this.authority.allowed(j,s,'BOUNDARY_REFERENCE',event.payload.reference_ref))throw new ControllerError('BOUNDARY_REFERENCE_NOT_AUTHORIZED');
     if(event.event_type==='SOURCE_RETURNED'&&!await this.authority.allowed(j,s,'SOURCE_RETURN',event.payload.origin_ref))throw new ControllerError('SOURCE_RETURN_NOT_AUTHORIZED');
+    if(attempt&&(attempt.cognitive?.originSessionId!==s.id&&event.event_type==='FIRST_COMMITTED')){
+      const existing=await this.store.readForDisclosure(j,checkpoint);if(existing.meta.origin?.sessionId!==attempt.cognitive?.originSessionId)throw new ControllerError('ORIGIN_NOT_AUTHORIZED');
+    }
     // A48 commits attempt + event together; no interruption window between the two writes.
     return this.store.append(event,j,checkpoint,work,attempt);
   }
