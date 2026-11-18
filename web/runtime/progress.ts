@@ -172,11 +172,12 @@ export class DefaultProgressStore implements ProgressStore {
   }
   // For A48's atomic transaction. The same validated write path is used by both APIs.
   async commitAttempt(tx:import('./storage.ts').TransactionContext,attempt:Attempt):Promise<void>{
-    attempt=structuredClone(attempt);const qualified=await this.qualify(attempt);
+    attempt=structuredClone(attempt);validateAttempt(attempt);
     const session=await tx.get<Session>('sessions',attempt.sessionId);
     if(!session||!sameRef(session.item,attempt.item)||session.releaseId!==attempt.releaseId)throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
     const old=await tx.get<Attempt>('attempts',attempt.id);
-    if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');return;}
+    if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');await this.qualify(attempt);return;}
+    const qualified=await this.qualify(attempt);
     if(session.mode==='SIMULATED_EXAM')check(timestamp(session.deadlineAt)&&Date.now()<=Date.parse(session.deadlineAt!)&&Date.parse(attempt.submittedAt)<=Date.parse(session.deadlineAt!),'Exam submission deadline passed or unavailable');
     check(session.attemptIds.length===0,'Session already contains a committed attempt; use a new exact retry session');
     for(const art of attempt.work){await immutablePut(tx,'artifact_owners',art.id,attempt.sessionId);await immutablePut(tx,'artifacts',art.id,art);}
@@ -280,6 +281,7 @@ export class DefaultProgressStore implements ProgressStore {
     }
 
     validateBundleData(bundle.data);
+    check(bundle.data.attempts.every(a=>a.cognitive===null),'Cognitive history requires the complete A48 archive');
     for(const a of bundle.data.attempts)await this.qualify(a);
     // Execute atomic import transaction
     await this.driver.transaction(
