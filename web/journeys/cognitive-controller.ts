@@ -4,10 +4,10 @@
 import type {Attempt,Checkpoint,CognitiveEvent,CognitiveSnapshot,DisclosureCapability,JourneyKey,Ref,Session,WorkArtifact,Kind} from '../runtime/types.ts';
 import type {StorageDriver} from '../runtime/storage.ts';
 import {DefaultCognitiveStore} from '../runtime/cognitive-store.ts';
-import {sameRef} from '../runtime/loader.ts';
+import {sameRef,computeSha256} from '../runtime/loader.ts';
 import {refOk} from '../runtime/progress.ts';
 import {permittedStage} from '../runtime/cognitive-policy.ts';
-export interface ControllerConfig{readonly journey:JourneyKey;readonly sessionId:string}
+export interface ControllerConfig{readonly journey:JourneyKey;readonly sessionId:string;readonly originSessionId?:string}
 export interface ReviewedTaskContext {
   readonly releaseId:string;readonly task:Ref;readonly boundaryTask:Ref;
   readonly firstReference:Ref;readonly boundaryReference:Ref;
@@ -36,9 +36,14 @@ export class CognitiveController{
     if(!x||x.releaseId!==j.releaseId||!sameRef(x.task,j.task)||!refOk(x.boundaryTask)||!['QUESTION','FRESH_TASK'].includes(x.boundaryTask.type)||x.boundaryTask.id===j.task.id||!refOk(x.firstReference)||!refOk(x.boundaryReference)||x.firstReference.type!=='SOLUTION'||x.boundaryReference.type!=='SOLUTION'||!Object.keys(x.firstFields).length||!Object.keys(x.boundaryFields).length||!x.moves.length||new Set(x.moves).size!==x.moves.length)throw new ControllerError('REVIEWED_CONTEXT_REQUIRED');
     return structuredClone(x);
   }
-  async begin():Promise<CognitiveSnapshot>{const s=await this.session();await this.context(s);return this.store.begin(this.config.journey,s.id);}
+  async begin():Promise<CognitiveSnapshot>{const s=await this.session();await this.context(s);const originId=this.config.originSessionId??s.id;const origin=await this.driver.get<Session>('sessions',originId);if(!origin||origin.releaseId!==s.releaseId||origin.mode==='SIMULATED_EXAM'||!origin.contentRevision||origin.contentRevision!==await this.authority.liveRevision(origin)||originId!==s.id&&(!s.origin||!sameRef(s.origin,origin.item)))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');return this.store.begin(this.config.journey,originId);}
+  async readEvidence(checkpoint?:Checkpoint){const s=await this.session(),context=await this.context(s),e=await this.store.readForDisclosure(this.config.journey,checkpoint);if(e.meta.origin?.sessionId!==(this.config.originSessionId??s.id))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');const origin=await this.driver.get<Session>('sessions',e.meta.origin.sessionId);if(!origin||origin.releaseId!==s.releaseId||!sameRef(origin.item,e.meta.origin.ref)||!origin.contentRevision||origin.contentRevision!==await this.authority.liveRevision(origin))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');return {...e,context,session:s,origin};}
+  async readProtectedText(cap:DisclosureCapability,asset:Ref,checkpoint:Checkpoint,load:(asset:Ref)=>Promise<Uint8Array>,exposureId?:string):Promise<string|null>{
+    const ref=structuredClone(asset),cp=structuredClone(checkpoint);if(!refOk(ref)||!await this.canDisplay(cap,ref,cp,exposureId))return null;
+    try{const bytes=Uint8Array.from(await load(structuredClone(ref)));if(!bytes.length||bytes.length>2000000||await computeSha256(bytes)!==ref.sha256||!await this.canDisplay(cap,ref,cp,exposureId))return null;return new TextDecoder('utf-8',{fatal:true}).decode(bytes);}catch{return null;}
+  }
   async snapshot(checkpoint:Checkpoint):Promise<CognitiveSnapshot>{await this.session();return this.store.replayForDisclosure(this.config.journey,checkpoint);}
-  async commit(event:CognitiveEvent,checkpoint:Checkpoint,work:readonly WorkArtifact[],attempt?:Attempt):Promise<CognitiveSnapshot>{
+  async commit(event:CognitiveEvent,checkpoint:Checkpoint,work:readonly WorkArtifact[],attempt?:Attempt,expectedDraftRevision?:number):Promise<CognitiveSnapshot>{
     const s=await this.session(),j=this.config.journey,ctx=await this.context(s);
     if(event.journey_id!==j.journeyId||event.task_instance_id!==j.taskInstanceId||event.release_id!==j.releaseId||!sameRef(event.task_ref,j.task))throw new ControllerError('EVENT_IDENTITY_MISMATCH');
     const fieldsMatch=(responses:Readonly<Record<string,{kind:string}>>,fields:Readonly<Record<string,Kind>>)=>Object.keys(responses).length===Object.keys(fields).length&&Object.keys(fields).every(k=>Object.hasOwn(responses,k)&&responses[k].kind===fields[k]);
@@ -60,7 +65,7 @@ export class CognitiveController{
       const existing=await this.store.readForDisclosure(j,checkpoint);if(existing.meta.origin?.sessionId!==attempt.cognitive?.originSessionId)throw new ControllerError('ORIGIN_NOT_AUTHORIZED');
     }
     // A48 commits attempt + event together; no interruption window between the two writes.
-    return this.store.append(event,j,checkpoint,work,attempt);
+    return this.store.append(event,j,checkpoint,work,attempt,expectedDraftRevision);
   }
   async canDisplay(cap:DisclosureCapability,asset:Ref,checkpoint:Checkpoint,exposureId?:string):Promise<boolean>{
     try{
