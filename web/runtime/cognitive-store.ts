@@ -240,7 +240,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
      const stored=await tx.get<CognitiveSnapshot>('cog_snap:'+id,id);
      guard((checkpoint===undefined||equal(snap.checkpoint,checkpoint))&&stored&&equal(stored,snap),'STALE_HASH','Missing or stale disclosure checkpoint');
      await verifyEvidence(tx,events,meta!);await verifyRetry(tx,meta!);
-     const ordered=[...events].sort((a,b)=>a.sequence-b.sequence),attempts:Attempt[]=[];for(const e of ordered)if(isCommit(e)){const link=await tx.get<{id:string}>('cognitive_event_attempt',e.event_id);const attempt=link&&await tx.get<Attempt>('attempts',link.id);guard(attempt,'INVALID_LINEAGE','Missing committed attempt');attempts.push(attempt!);}
+     const ordered=[...events].sort((a,b)=>a.sequence-b.sequence),attempts:Attempt[]=[];for(const e of ordered)if(isCommit(e)){const link=await tx.get<{id:string}>('cognitive_event_attempt',e.event_id);const attempt=link&&await tx.get<Attempt>('attempts',link.id);guard(attempt&&await this.progress.verifyQualifiedStoredAttempt(tx,attempt),'INVALID_LINEAGE','Committed attempt no longer qualifies');attempts.push(attempt!);}
      return {snapshot:snap,events:ordered,meta:meta!,attempts};
    });
  }

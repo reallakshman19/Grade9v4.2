@@ -225,6 +225,13 @@ export class DefaultProgressStore implements ProgressStore {
     await tx.delete('drafts',session.id);
   }
 
+  // Read-only qualification of a stored attempt inside the caller's evidence transaction.
+  async verifyQualifiedStoredAttempt(tx:import('./storage.ts').TransactionContext,a:Attempt):Promise<boolean>{
+    const session=await tx.get<Session>('sessions',a.sessionId);
+    if(!session||!eq(await tx.get('attempts',a.id),a)||!session.attemptIds.includes(a.id)||session.releaseId!==a.releaseId||!sameRef(session.item,a.item)||await tx.get('attempt_authority',a.id)!=='LOCAL_VERIFIED_SCORE'||!await this.qualify(a))return false;
+    for(const w of a.work)if(!eq(await tx.get('artifacts',w.id),w)||await tx.get('artifact_owners',w.id)!==a.sessionId)return false;
+    return true;
+  }
   async committedAttempt(sessionId:string,attemptId:string):Promise<Attempt|null>{
     return this.driver.transaction(DefaultProgressStore.attemptStores,'readonly',async tx=>{
       const a=await tx.get<Attempt>('attempts',attemptId),session=await tx.get<Session>('sessions',sessionId);

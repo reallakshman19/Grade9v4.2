@@ -38,10 +38,18 @@ export class CognitiveController{
   }
   async describeBinding(){const session=await this.session(),context=await this.context(session),originId=this.config.originSessionId??session.id,origin=await this.driver.get<Session>('sessions',originId);if(!origin||origin.releaseId!==session.releaseId||origin.mode==='SIMULATED_EXAM'||!origin.contentRevision||origin.contentRevision!==await this.authority.liveRevision(origin)||originId!==session.id&&(!session.origin||!sameRef(session.origin,origin.item)))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');return {session,context,origin,journey:structuredClone(this.config.journey)};}
   async begin():Promise<CognitiveSnapshot>{const e=await this.describeBinding();return this.store.begin(e.journey,e.origin.id);}
-  async canRequest(cap:DisclosureCapability,asset:Ref,checkpoint:Checkpoint):Promise<boolean>{try{const e=await this.readEvidence(checkpoint);return refOk(asset)&&permittedStage(e.snapshot,e.session.mode,cap)&&await this.authority.allowed(e.snapshot.journey,e.session,cap,asset);}catch{return false;}}
-  async readEvidence(checkpoint?:Checkpoint){const s=await this.session(),context=await this.context(s),e=await this.store.readForDisclosure(this.config.journey,checkpoint);if(e.meta.origin?.sessionId!==(this.config.originSessionId??s.id))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');const origin=await this.driver.get<Session>('sessions',e.meta.origin!.sessionId);if(!origin||origin.mode==='SIMULATED_EXAM'||origin.releaseId!==s.releaseId||!sameRef(origin.item,e.meta.origin!.ref)||!origin.contentRevision||origin.contentRevision!==await this.authority.liveRevision(origin))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');return {...e,context,session:s,origin};}
+  private assetPermitted(ctx:ReviewedTaskContext,snap:Pick<CognitiveSnapshot,'stage'>,cap:DisclosureCapability,asset:Ref):boolean{
+    if(!refOk(asset))return false;
+    if(sameRef(asset,ctx.boundaryReference)&&cap!=='BOUNDARY_REFERENCE')return false;
+    if(ctx.task.type==='FRESH_TASK'&&sameRef(asset,ctx.firstReference)&&!['REFERENCE_SOLUTION','SHOW_REASONING_CRUX'].includes(cap))return false;
+    if(sameRef(asset,ctx.boundaryTask)&&!['BOUNDARY_TEST','COMPLETE'].includes(snap.stage))return false;
+    if(cap==='VIEW_STIMULUS'&&asset.type==='SOLUTION')return false;
+    return true;
+  }
+  async canRequest(cap:DisclosureCapability,asset:Ref,checkpoint:Checkpoint):Promise<boolean>{try{const e=await this.readEvidence(checkpoint);return ['H1','H2','H3','READ_ANCHOR','MODEL_AUTO_CALCULATE','MODEL_MANIPULATE'].includes(cap)&&this.assetPermitted(e.context,e.snapshot,cap,asset)&&permittedStage(e.snapshot,e.session.mode,cap)&&await this.authority.allowed(e.snapshot.journey,e.session,cap,asset);}catch{return false;}}
+  async readEvidence(checkpoint?:Checkpoint){const binding=await this.describeBinding(),e=await this.store.readForDisclosure(binding.journey,checkpoint);if(e.meta.origin?.sessionId!==binding.origin.id||!sameRef(e.meta.origin.ref,binding.origin.item))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');return {...e,context:binding.context,session:binding.session,origin:binding.origin};}
   async readProtectedText(cap:DisclosureCapability,asset:Ref,checkpoint:Checkpoint,load:(asset:Ref)=>Promise<Uint8Array>,exposureId?:string):Promise<string|null>{
-    const ref=structuredClone(asset),cp=structuredClone(checkpoint);if(!refOk(ref)||!await this.canDisplay(cap,ref,cp,exposureId))return null;
+    const ref=structuredClone(asset),cp=structuredClone(checkpoint);if(['EDIT_WORK','SOURCE_RETURN'].includes(cap)||!refOk(ref)||!await this.canDisplay(cap,ref,cp,exposureId))return null;
     try{const bytes=Uint8Array.from(await load(structuredClone(ref)));if(!bytes.length||bytes.length>2000000||await computeSha256(bytes)!==ref.sha256||!await this.canDisplay(cap,ref,cp,exposureId))return null;return new TextDecoder('utf-8',{fatal:true}).decode(bytes);}catch{return null;}
   }
   async snapshot(checkpoint:Checkpoint):Promise<CognitiveSnapshot>{await this.session();return this.store.replayForDisclosure(this.config.journey,checkpoint);}
@@ -59,7 +67,7 @@ export class CognitiveController{
       const boundary=attempt&&await this.driver.get<Session>('sessions',attempt.sessionId);
       if(!boundary||boundary.mode==='SIMULATED_EXAM'||boundary.releaseId!==j.releaseId||!sameRef(boundary.item,event.payload.boundary_task_ref)||!boundary.contentRevision||boundary.contentRevision!==await this.authority.liveRevision(boundary)||!await this.authority.boundaryAllowed(j,event.payload.boundary_task_ref))throw new ControllerError('BOUNDARY_NOT_AUTHORIZED');
     }
-    if(event.event_type==='HELP_EXPOSED'&&!await this.authority.allowed(j,s,event.payload.capability,event.payload.asset_ref))throw new ControllerError('HELP_NOT_AUTHORIZED');
+    if(event.event_type==='HELP_EXPOSED'&&(!this.assetPermitted(ctx,{stage:'ATTEMPT'},event.payload.capability,event.payload.asset_ref)||!await this.authority.allowed(j,s,event.payload.capability,event.payload.asset_ref)))throw new ControllerError('HELP_NOT_AUTHORIZED');
     if(event.event_type==='RECONSTRUCTION_COMMITTED'&&!await this.authority.allowed(j,s,'REFERENCE_SOLUTION',event.payload.reference_ref))throw new ControllerError('REFERENCE_NOT_AUTHORIZED');
     if(event.event_type==='BOUNDARY_FEEDBACK_VIEWED'&&!await this.authority.allowed(j,s,'BOUNDARY_REFERENCE',event.payload.reference_ref))throw new ControllerError('BOUNDARY_REFERENCE_NOT_AUTHORIZED');
     if(event.event_type==='SOURCE_RETURNED'&&!await this.authority.allowed(j,s,'SOURCE_RETURN',event.payload.origin_ref))throw new ControllerError('SOURCE_RETURN_NOT_AUTHORIZED');
@@ -71,9 +79,8 @@ export class CognitiveController{
   }
   async canDisplay(cap:DisclosureCapability,asset:Ref,checkpoint:Checkpoint,exposureId?:string):Promise<boolean>{
     try{
-      const s=await this.session(),j=this.config.journey,ctx=await this.context(s);
-      const evidence=await this.readEvidence(checkpoint),snap=evidence.snapshot;
-      if(!permittedStage(snap,s.mode,cap)||!await this.authority.allowed(j,s,cap,asset))return false;
+      const evidence=await this.readEvidence(checkpoint),snap=evidence.snapshot,s=evidence.session,j=snap.journey,ctx=evidence.context;
+      if(!this.assetPermitted(ctx,snap,cap,asset)||!permittedStage(snap,s.mode,cap)||!await this.authority.allowed(j,s,cap,asset))return false;
       if((cap==='REFERENCE_SOLUTION'||cap==='SHOW_REASONING_CRUX')&&!sameRef(asset,ctx.firstReference)||cap==='BOUNDARY_REFERENCE'&&!sameRef(asset,ctx.boundaryReference))return false;
       if(['H1','H2','H3','READ_ANCHOR','MODEL_AUTO_CALCULATE','MODEL_MANIPULATE'].includes(cap))return evidence.events.some(e=>e.event_type==='HELP_EXPOSED'&&e.event_id===exposureId&&e.payload.capability===cap&&sameRef(e.payload.asset_ref,asset));
       if(cap==='SOURCE_RETURN')return evidence.events.some(e=>e.event_type==='SOURCE_RETURNED'&&sameRef(e.payload.origin_ref,asset));

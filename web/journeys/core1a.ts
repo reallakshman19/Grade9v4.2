@@ -209,7 +209,7 @@ export class Core1ATeachingJourney{
  observeModel():never{throw Error('DURABLE_MODEL_EXPOSURE_REQUIRED');}isModelObserved(){return false;}
  checkModelFit(){return {valid:Object.keys(this.parameters).every(k=>Object.hasOwn(this.lesson.modelConfig.parameterBounds,k)&&Number.isFinite(this.parameters[k])),feedback:'Local parameter-domain check only; no academic model-fit claim.'};}
  async readModel(binding:Parameters<ReturnType<typeof getModelRegistry>['evaluateAuthorized']>[2]){
-  if(this.prediction===null||this.lesson.status==='STALE')return null;return getModelRegistry().evaluateAuthorized(this.lesson.modelConfig.modelId,this.parameters,binding);
+  if(this.prediction===null||this.lesson.status==='STALE')return null;const evidence=await binding.controller.readEvidence(binding.checkpoint);if(!sameRef(evidence.origin.item,this.lesson.lessonRef as Ref))return null;return getModelRegistry().evaluateAuthorized(this.lesson.modelConfig.modelId,this.parameters,binding);
  }
  async readAnchor(level:AnchorLevel,controller:CognitiveController,checkpoint:Checkpoint,exposureId:string,load:(ref:Ref)=>Promise<Uint8Array>){
   const anchor=this.lesson.anchors.find(a=>a.level===level);if(!anchor||this.lesson.status==='STALE')return null;

@@ -5,7 +5,8 @@ import {createServer} from 'vite';
 import {MemoryStorageDriver,StorageError} from '../../web/runtime/storage.ts';
 import {Core1BTransferJourney} from '../../web/journeys/core1b.ts';
 import {Core1BTransferPageController} from '../../web/pages/transfer.ts';
-import {canonicalJson} from '../../web/runtime/loader.ts';
+import {canonicalJson,computeSha256} from '../../web/runtime/loader.ts';
+import type {Attempt,Ref} from '../../web/runtime/types.ts';
 import {artifact,firstResponses,boundaryResponses,setupTransfer,throughFirst,throughRepair} from '../fixtures/wave8-synthetic.ts';
 it('durable nine-event journey, exact protected bytes, qualified first/boundary grade and original source return',async()=>{
  const f=await setupTransfer(),j=f.make();await j.start();assert.equal(await j.getTaskASolution(),null);assert.equal(await j.readBoundaryStimulus(),null);assert(!JSON.stringify(j.getDefinition()).includes('SECRET'));await assert.rejects(j.requestHint(),/ILLEGAL_STAGE/);
@@ -35,4 +36,16 @@ it('actual Chromium IndexedDB: commit rollback and recovery, boundary persistenc
  },{path,name,action});
  assert.deepEqual(await run('initialize'),{stage:'ATTEMPT'});await page.reload();assert.deepEqual(await run('first'),{rollback:true,stage:'BOUNDARY_TEST'});await page.reload();assert.deepEqual(await run('boundary'),{restored:true,source:'session:origin',attempts:2});await page.reload();assert.deepEqual(await run('verify'),{stage:'COMPLETE',returned:true,first:'REVIEWED_FIRST_REFERENCE',boundary:'REVIEWED_BOUNDARY_REFERENCE',origin:7});
  }finally{await browser.close();await server.close();}
+});
+
+it('direct A49 boundary read is sealed before repair; rehashed stored grades cannot authorize reference',async()=>{
+ const f=await setupTransfer(),j=f.make();await j.start();const boundary=f.definition.boundaryTaskB.taskRef as Ref;
+ let loads=0;const loader=async(ref:Ref)=>{loads++;return f.binding.loadProtected(ref);};
+ assert.equal(await f.controller.readProtectedText('VIEW_STIMULUS',boundary,j.getCheckpoint()!,loader),null);assert.equal(loads,0);
+ await j.predict(0);j.setResponses(firstResponses,[artifact('work:first')]);await j.commitFirstAttempt();assert.equal(await f.controller.readProtectedText('VIEW_STIMULUS',boundary,j.getCheckpoint()!,loader),null);assert.equal(loads,0);
+ const original=(await j.readOriginalAttempt())!,event=(await j.readHistory()).find(e=>e.event_type==='FIRST_COMMITTED')!;
+ const altered={...original,grade:{...original.grade,parts:{...original.grade.parts,a:{...original.grade.parts!.a,points:0}}}} as Attempt;
+ await f.driver.put('attempts',original.id,altered);await f.driver.put('cognitive_event_attempt',event.event_id,{id:original.id,sha256:await computeSha256(canonicalJson(altered))});
+ assert.equal(await f.controller.canDisplay('REFERENCE_SOLUTION',f.firstRef,j.getCheckpoint()!),false);
+ assert.equal(await j.getTaskASolution(),null);await assert.rejects(j.restore(),/no longer qualifies/);
 });
