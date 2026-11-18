@@ -567,3 +567,11 @@ describe('Capability Registry and Safe Fallbacks', () => {
 
 it('rejects escaped duplicate JSON keys and extra multipart aliases',()=>{assert.throws(()=>parseResponseJson('{"kind":"MULTIPART","value":{"a":{"kind":"INTEGER","value":"1"},"\\u0061":{"kind":"INTEGER","value":"2"}}}'),/DUPLICATE_PART_ID/);assert.throws(()=>validateResponse({kind:'MULTIPART',value:{a:{kind:'INTEGER',value:'1'}},parts:{}}),/EXTRA_PROPERTIES/);});
 it('retains prototype-shaped multipart IDs as own data, without pollution',()=>{const v=parseResponseJson('{"kind":"MULTIPART","value":{"__proto__":{"kind":"INTEGER","value":"1"}}}');assert(v.kind==='MULTIPART');assert(Object.hasOwn(v.value,'__proto__'));assert.deepEqual(v.value['__proto__'],{kind:'INTEGER',value:'1'});assert.deepEqual(Object.keys(v),['kind','value']);});
+
+it('R2 Stage4: multipart raw kind and value identifiers are legal',()=>{
+ const cap=createStandardCapability('MULTIPART');
+ const value={kind:{kind:'INTEGER',value:'7'},value:{kind:'INTEGER',value:'8'}};
+ const result=cap.validate(value);
+ assert.equal(result.ok,true);
+ if(result.ok)assert.deepEqual(JSON.parse(JSON.stringify(result.value)),{kind:'MULTIPART',value});
+});
