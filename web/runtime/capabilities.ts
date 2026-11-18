@@ -7,6 +7,7 @@ import type { Kind, Response, ResponseOf } from './types.ts';
 import {
   RESPONSE_KINDS,
   validateResponse,
+  findDuplicateKeyInJson,
   ResponseValidationError,
   type ResponseKind,
   type ValidatedResponse,
@@ -32,7 +33,7 @@ function createSafeMount(kind: Kind) {
       field.setAttribute('aria-label',label.textContent);
       if(value)field.value=plain?String(value.value):JSON.stringify(value.value,null,2);
       const error=document.createElement('div');error.setAttribute('role','status');
-      const update=()=>{try{const raw=plain?field.value:JSON.parse(field.value);const response=normalizeAndValidate(kind,raw);error.textContent='';field.removeAttribute('aria-invalid');onChange(response);}catch{error.textContent='Invalid '+kind+' response';field.setAttribute('aria-invalid','true');}};
+      const update=()=>{try{if(!plain&&findDuplicateKeyInJson(field.value))throw new ResponseValidationError('DUPLICATE_PART_ID','Duplicate decoded JSON key');const raw=plain?field.value:JSON.parse(field.value);const response=normalizeAndValidate(kind,raw);error.textContent='';field.removeAttribute('aria-invalid');onChange(response);}catch{error.textContent='Invalid '+kind+' response';field.setAttribute('aria-invalid','true');}};
       field.addEventListener('input',update);
       label.appendChild(field);container.append(label,error);
       root.appendChild(container);
