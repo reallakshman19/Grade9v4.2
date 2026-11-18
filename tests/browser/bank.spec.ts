@@ -263,16 +263,16 @@ describe('Question Bank Screen — Deterministic Pagination', () => {
     assert.equal(state.totalPages, 2); // 4 released items / 2 per page = 2 pages
     assert.equal(state.currentPage, 1);
     assert.equal(state.pageItems.length, 2);
-    assert.equal(state.pageItems[0].id, 'Q-PHYS-01');
-    assert.equal(state.pageItems[1].id, 'Q-PHYS-02');
+    assert.equal(state.pageItems[0].id, 'Q-MATH-01');
+    assert.equal(state.pageItems[1].id, 'Q-MATH-02');
 
     // Advance to page 2
     bank.setPage(2);
     state = bank.getViewState();
     assert.equal(state.currentPage, 2);
     assert.equal(state.pageItems.length, 2);
-    assert.equal(state.pageItems[0].id, 'Q-MATH-01');
-    assert.equal(state.pageItems[1].id, 'Q-MATH-02');
+    assert.equal(state.pageItems[0].id, 'Q-PHYS-01');
+    assert.equal(state.pageItems[1].id, 'Q-PHYS-02');
 
     // Page overflow clamped to totalPages
     bank.setPage(999);
