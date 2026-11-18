@@ -1,0 +1,11 @@
+{
+  "schema_version": "g9-legacy-state-map/2",
+  "status": "CANDIDATE_SOURCE_INVENTORY_NOT_RECEIVED",
+  "source_origins": "AUTHORITATIVE_OWNER_INPUT_REQUIRED",
+  "storage_keys": "NOT_RECEIVED",
+  "supported_envelope": "g9-legacy-import/1.0",
+  "mapping": "exact owner-authorized origin and raw SHA; exact item id/revision/ref and option membership; no inferred ID, timestamp, grade, session, or release",
+  "disposition": "unresolved data quarantined; normalized history separate from live attempts; UNKNOWN_DEVICE; REVIEW_PENDING; not protected or mastery evidence",
+  "atomicity": "one StorageDriver transaction for raw archive and history rows",
+  "academic_admission": "HOLD"
+}
