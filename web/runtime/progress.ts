@@ -2,7 +2,7 @@
 // Implements transactional drafts, attempts, artifacts, local export/import, conflict resolution, and legacy migration.
 // Conforms to R4 engineering contracts: "No academic approval inferred from software validation."
 
-import type { Session, Attempt, WorkArtifact, Response, Draft } from './types.ts';
+import type { Session, Attempt, WorkArtifact, Response, Draft, CognitiveDraftLineage, CognitiveSnapshot } from './types.ts';
 import type { ProgressStore } from './contracts.ts';
 import {
   StorageError,
@@ -70,9 +70,14 @@ export async function migrateLegacyExport(raw:any):Promise<ExportBundle>{
 }
 const eq=(a:unknown,b:unknown)=>a===undefined||b===undefined?a===b:canonicalJson(a)===canonicalJson(b);
 function check(condition:unknown,message:string):asserts condition{if(!condition)throw new StorageError('INVALID_RECORD',message);}
-function refOk(x:any){return x&&Object.keys(x).sort().join(',')==='id,revision,sha256,type'&&typeof x.id==='string'&&x.id.trim().length>0&&typeof x.type==='string'&&Number.isSafeInteger(x.revision)&&x.revision>0&&typeof x.sha256==='string'&&/^[a-f0-9]{64}$/.test(x.sha256);}
+export function refOk(x:any){return x&&Object.keys(x).sort().join(',')==='id,revision,sha256,type'&&typeof x.id==='string'&&/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(x.id)&&['SOURCE','OCCURRENCE','QUESTION','ASSESSMENT','WARRANT','QRT','CONSTRUCTION','LESSON','FRESH_TASK','SOLUTION','RELATIONSHIP','PRESENTATION','CONCEPT','ASSET','PROGRAMME','EXAM_EDITION','PAPER','STIMULUS','APPROVAL','RELEASE','SUBJECT_PROFILE'].includes(x.type)&&Number.isSafeInteger(x.revision)&&x.revision>0&&typeof x.sha256==='string'&&/^[a-f0-9]{64}$/.test(x.sha256);}
 const nonblank=(x:unknown):x is string=>typeof x==='string'&&x.trim().length>0;
-const timestamp=(x:unknown)=>typeof x==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|\+00:00)$/.test(x)&&Number.isFinite(Date.parse(x));
+export function timestamp(x:unknown):x is string {
+  if(typeof x!=='string')return false;
+  const m=/^(\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d)(?:\.(\d{1,3}))?(?:Z|\+00:00)$/.exec(x);
+  if(!m||!Number.isFinite(Date.parse(x)))return false;
+  return new Date(x).toISOString()===m[1]+'.'+(m[2]??'').padEnd(3,'0')+'Z';
+}
 const uniqueStrings=(x:unknown)=>Array.isArray(x)&&x.every(nonblank)&&new Set(x).size===x.length;
 function sessionOk(s:any){return s&&nonblank(s.id)&&refOk(s.item)&&['QUESTION','FRESH_TASK'].includes(s.item.type)&&nonblank(s.releaseId)&&['LEARN','PRACTICE','SIMULATED_EXAM'].includes(s.mode)&&uniqueStrings(s.attemptIds)&&Number.isSafeInteger(s.cursor)&&s.cursor>=0&&(s.mode!=='SIMULATED_EXAM'||timestamp(s.deadlineAt))&&(s.contentRevision===undefined||nonblank(s.contentRevision))&&(s.draftId===null||s.draftId===s.id)&&(s.origin===null||refOk(s.origin))&&(s.returnRoute===undefined||s.returnRoute===null||typeof s.returnRoute==='string');}
 function sameSession(a:Session,b:Session){return sameRef(a.item,b.item)&&a.releaseId===b.releaseId&&a.mode===b.mode&&eq(a.origin,b.origin)&&(a.returnRoute??null)===(b.returnRoute??null)&&(a.deadlineAt??null)===(b.deadlineAt??null)&&(a.contentRevision??null)===(b.contentRevision??null);}
@@ -81,11 +86,26 @@ function validateAttempt(a:any){check(a&&nonblank(a.id)&&nonblank(a.sessionId)&&
 export function validateBundleData(data:any):void{
   check(data&&['sessions','drafts','attempts','artifacts'].every(k=>Array.isArray(data[k])),'Invalid export structure');
   for(const [name,key] of [['sessions','id'],['drafts','sessionId'],['attempts','id'],['artifacts','id']]){const ids=new Set();for(const x of data[name]){check(x&&typeof x[key]==='string'&&!ids.has(x[key]),'Duplicate or missing record identity');ids.add(x[key]);}}
-  for(const s of data.sessions){check(sessionOk(s),'Invalid session');for(const id of s.attemptIds)check(data.attempts.some((a:Attempt)=>a.id===id&&a.sessionId===s.id),'Session has missing or foreign attempt');check(s.draftId===null?!data.drafts.some((d:DraftRecord)=>d.sessionId===s.id):data.drafts.some((d:DraftRecord)=>d.sessionId===s.id),'Session draft link mismatch');}
-  for(const a of data.attempts){validateAttempt(a);const s=data.sessions.find((s:Session)=>s.id===a.sessionId);check(s&&s.releaseId===a.releaseId&&sameRef(s.item,a.item)&&s.attemptIds.includes(a.id),'Orphan or mismatched attempt');}
-  for(const d of data.drafts){check(data.sessions.some((s:Session)=>s.id===d.sessionId)&&Number.isSafeInteger(d.revision)&&d.revision>0&&Array.isArray(d.artifacts)&&d.artifacts.every(artifactOk),'Invalid draft');validateResponse(d.response);}
+  for(const s of data.sessions){check(sessionOk(s)&&s.attemptIds.length<=1,'Invalid session or multiple attempts');for(const id of s.attemptIds)check(data.attempts.some((a:Attempt)=>a.id===id&&a.sessionId===s.id),'Session has missing or foreign attempt');check(s.draftId===null?!data.drafts.some((d:DraftRecord)=>d.sessionId===s.id):data.drafts.some((d:DraftRecord)=>d.sessionId===s.id),'Session draft link mismatch');}
+  for(const a of data.attempts){validateAttempt(a);const s=data.sessions.find((s:Session)=>s.id===a.sessionId);check(s&&s.releaseId===a.releaseId&&sameRef(s.item,a.item)&&s.attemptIds.includes(a.id),'Orphan or mismatched attempt');if(a.cognitive){const origin=data.sessions.find((s:Session)=>s.id===a.cognitive.originSessionId);check(origin&&origin.releaseId===a.releaseId&&sameRef(origin.item,a.cognitive.originRef),'Missing cognitive origin');}}
+  for(const d of data.drafts){check(data.sessions.some((s:Session)=>s.id===d.sessionId)&&Number.isSafeInteger(d.revision)&&d.revision>0&&Array.isArray(d.artifacts)&&d.artifacts.every(artifactOk),'Invalid draft');validateResponse(d.response);if(d.cognitive){const ses=data.sessions.find((s:Session)=>s.id===d.sessionId);const origin=data.sessions.find((s:Session)=>s.id===d.cognitive.originSessionId);check(ses&&origin&&origin.releaseId===ses.releaseId&&sameRef(origin.item,d.cognitive.originRef)&&d.cognitive.journey?.releaseId===ses.releaseId&&refOk(d.cognitive.journey.task),'Invalid cognitive draft origin');}}
   for(const a of data.artifacts)check(artifactOk(a),'Invalid artifact');
   const owners=new Map<string,string>();for(const [owner,work] of [...data.attempts.map((a:Attempt)=>[a.sessionId,a.work]),...data.drafts.map((d:DraftRecord)=>[d.sessionId,d.artifacts])] as [string,readonly WorkArtifact[]][]){for(const w of work){const canonical=data.artifacts.find((a:WorkArtifact)=>a.id===w.id);check(canonical&&eq(canonical,w),'Missing or conflicting canonical artifact');check(!owners.has(w.id)||owners.get(w.id)===owner,'Artifact belongs to another session');owners.set(w.id,owner);}}
+}
+// Verify draft against the exact persisted stage and event checkpoint, not a mutable UI flag.
+export async function verifyDraftLineage(tx:import('./storage.ts').TransactionContext,session:Session,lineage:CognitiveDraftLineage):Promise<void>{
+  const j=lineage.journey;check(j&&refOk(j.task)&&j.releaseId===session.releaseId&&session.mode!=='SIMULATED_EXAM'&&nonblank(j.journeyId)&&nonblank(j.taskInstanceId),'Invalid cognitive draft identity');
+  const meta=await tx.get<{journey:unknown;parentJourney:unknown;origin?:{sessionId:string;ref:unknown;cursor:number}}>('cognitive_journeys',j.journeyId);
+  const snap=await tx.get<CognitiveSnapshot>('cog_snap:'+j.journeyId,j.journeyId);
+  check(meta&&eq(meta.journey,j)&&snap&&eq(snap.journey,j)&&eq(snap.checkpoint,lineage.checkpoint)&&snap.stage===lineage.stage&&snap.stage!=='COMPLETE','Missing or stale cognitive draft checkpoint');
+  check(eq(meta.parentJourney,lineage.parentJourney),'Draft retry lineage differs');
+  const first=snap.firstAttemptId?await tx.get<{id:string}>('cognitive_event_attempt',snap.firstAttemptId):undefined;
+  check(lineage.firstAttemptId===(first?.id??null),'Draft first attempt differs');
+  const origin=await tx.get<Session>('sessions',lineage.originSessionId);
+  check(origin&&origin.releaseId===j.releaseId&&sameRef(origin.item,lineage.originRef)&&Number.isSafeInteger(lineage.originCursor)&&lineage.originCursor>=0,'Draft origin missing');
+  check(!meta.origin||eq(meta.origin,{sessionId:lineage.originSessionId,ref:lineage.originRef,cursor:lineage.originCursor}),'Draft origin differs');
+  if(snap.stage!=='BOUNDARY_TEST')check(sameRef(session.item,j.task),'Draft task differs');
+  else check(!sameRef(session.item,j.task),'Boundary draft requires distinct task');
 }
 async function immutablePut<T>(tx:import('./storage.ts').TransactionContext,s:string,id:string,value:T){const existing=await tx.get<T>(s,id);if(existing!==undefined&&!eq(existing,value))throw new StorageError('RECORD_CONFLICT','Conflicting '+s+' identity '+id);if(existing===undefined)await tx.put(s,id,value);}
 /**
@@ -114,14 +134,14 @@ export class DefaultProgressStore implements ProgressStore {
   async saveDraft(
     session: Session,
     response: Response,
-    artifacts: readonly WorkArtifact[], expectedRevision=0
+    artifacts: readonly WorkArtifact[], expectedRevision=0,cognitive:CognitiveDraftLineage|null=null
   ): Promise<void> {
     // Snapshot caller values before awaiting a transaction.
-    session=structuredClone(session);response=structuredClone(response);artifacts=structuredClone(artifacts);
+    session=structuredClone(session);response=structuredClone(response);artifacts=structuredClone(artifacts);cognitive=structuredClone(cognitive);
     validateResponse(response);check(sessionOk(session)&&artifacts.every(artifactOk)&&new Set(artifacts.map(a=>a.id)).size===artifacts.length,'Invalid draft');
 
     await this.driver.transaction(
-      ['drafts', 'sessions', 'artifacts','artifact_owners'],
+      ['drafts', 'sessions', 'artifacts','artifact_owners',...(cognitive?['cognitive_journeys','cognitive_event_attempt','cog_snap:'+cognitive.journey.journeyId]:[])],
       'readwrite',
       async (tx) => {
         const existing = await tx.get<DraftRecord>('drafts', session.id);
@@ -129,6 +149,8 @@ export class DefaultProgressStore implements ProgressStore {
         if(priorSession&&!sameSession(priorSession,session))throw new StorageError('RECORD_CONFLICT','Session identity mismatch');
         check((existing?.revision??0)===expectedRevision,'Stale draft revision');
         check(!!priorSession||session.attemptIds.length===0,'New session cannot claim previous attempts');
+        if(cognitive)await verifyDraftLineage(tx,session,cognitive);
+        check(!existing?.cognitive||cognitive&&eq(existing.cognitive.journey,cognitive.journey),'Cannot overwrite cognitive draft with foreign or ordinary draft');
         const revision = existing ? existing.revision + 1 : 1;
 
         const draft: DraftRecord = {
@@ -136,7 +158,7 @@ export class DefaultProgressStore implements ProgressStore {
           response,
           artifacts,
           savedAt: new Date().toISOString(),
-          revision,
+          revision,cognitive,
         };
 
         await tx.put('drafts', session.id, draft);
@@ -158,7 +180,7 @@ export class DefaultProgressStore implements ProgressStore {
    * Loads draft record for a session, returning null if no draft exists.
    */
   async loadDraft(sessionId:string):Promise<(Draft&DraftRecord)|null>{
-    return this.driver.transaction(['drafts','sessions'],'readonly',async tx=>{const draft=await tx.get<DraftRecord>('drafts',sessionId);if(!draft)return null;const session=await tx.get<Session>('sessions',sessionId);check(session,'Draft missing session');return {...draft,session,cognitive:null};});
+    return this.driver.transaction(['drafts','sessions'],'readonly',async tx=>{const draft=await tx.get<DraftRecord>('drafts',sessionId);if(!draft)return null;const session=await tx.get<Session>('sessions',sessionId);check(session,'Draft missing session');return {...draft,session,cognitive:draft.cognitive??null};});
   }
 
   /**
@@ -281,7 +303,7 @@ export class DefaultProgressStore implements ProgressStore {
     }
 
     validateBundleData(bundle.data);
-    check(bundle.data.attempts.every(a=>a.cognitive===null),'Cognitive history requires the complete A48 archive');
+    check(bundle.data.attempts.every(a=>a.cognitive===null)&&bundle.data.drafts.every(d=>!d.cognitive),'Cognitive history requires the complete A48 archive');
     for(const a of bundle.data.attempts)await this.qualify(a);
     // Execute atomic import transaction
     await this.driver.transaction(
@@ -299,6 +321,7 @@ export class DefaultProgressStore implements ProgressStore {
             const mergedAttemptIds = Array.from(
               new Set([...(existing.attemptIds ?? []), ...(ses.attemptIds ?? [])])
             );
+            check(mergedAttemptIds.length<=1,'Imported session contains multiple commitments');
             await tx.put('sessions', ses.id, {
               ...existing,
               attemptIds: mergedAttemptIds,
