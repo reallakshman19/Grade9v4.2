@@ -50,7 +50,7 @@ export function applyEventToSnapshot(current:CognitiveSnapshot,event:CognitiveEv
  case 'RECONSTRUCTION_COMMITTED':requireStage('RECONSTRUCT');guard(event.payload.first_event_id===first,'INVALID_LINEAGE','Wrong first event');stage='DIAGNOSE';break;
  case 'DIAGNOSIS_COMMITTED':requireStage('DIAGNOSE');stage='REPAIR';break;
  case 'REPAIR_COMMITTED':requireStage('REPAIR');guard(event.payload.first_event_id===first,'INVALID_LINEAGE','Wrong first event');stage='BOUNDARY_TEST';break;
- case 'BOUNDARY_COMMITTED':requireStage('BOUNDARY_TEST');guard(!boundary&&!sameRef(event.payload.boundary_task_ref,event.task_ref),'INVALID_LINEAGE','Boundary must be distinct and committed once');boundary=event.event_id;break;
+ case 'BOUNDARY_COMMITTED':requireStage('BOUNDARY_TEST');guard(!boundary&&event.payload.boundary_task_ref.id!==event.task_ref.id&&event.payload.work.length>0,'INVALID_LINEAGE','Boundary must be distinct, have work and commit once');boundary=event.event_id;break;
  case 'BOUNDARY_FEEDBACK_VIEWED':requireStage('BOUNDARY_TEST');guard(!!boundary&&event.payload.boundary_event_id===boundary,'INVALID_LINEAGE','Boundary commit required');stage='COMPLETE';break;
  case 'SOURCE_RETURNED':requireStage('COMPLETE');break;
  }
