@@ -17,7 +17,7 @@ import {
 } from '../components/question-workspace.ts';
 import type {
   WorkspaceQuestionDescriptor,
-  QuestionWorkspaceViewState,
+  QuestionWorkspaceViewState,WorkspaceBinding,
 } from '../components/question-workspace.ts';
 import type { EvaluationResult } from '../components/response/types.ts';
 
@@ -49,8 +49,8 @@ export class QuestionPageController {
     this.topicCode = topicCode;
   }
 
-  loadQuestion(question: WorkspaceQuestionDescriptor): void {
-    this.workspace = createQuestionWorkspace(question);
+  loadQuestion(question: WorkspaceQuestionDescriptor,binding?:WorkspaceBinding): void {
+    this.evaluationResult=null;this.workspace = createQuestionWorkspace(question,undefined,binding);
     if (question.status === 'HOLD') {
       this.status = 'HOLD_LOCKED';
     } else {
@@ -67,13 +67,10 @@ export class QuestionPageController {
     return this.workspace;
   }
 
-  submit(): EvaluationResult | null {
+  async submit(): Promise<EvaluationResult | null> {
     if (!this.workspace) return null;
     this.status = 'EVALUATING';
-    const result = this.workspace.submit();
-    this.evaluationResult = result;
-    this.status = 'FEEDBACK_SHOWN';
-    return result;
+    try{const result=await this.workspace.submit();this.evaluationResult=result;this.status=this.workspace.getViewState().isLocked?'FEEDBACK_SHOWN':result.academicHold?'HOLD_LOCKED':'INTERACTIVE';return result;}catch(e){this.status='INTERACTIVE';throw e;}
   }
 
   getViewState(): QuestionPageViewState {
