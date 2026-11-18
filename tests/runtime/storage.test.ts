@@ -4,6 +4,9 @@
 
 import { describe, it, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {canonicalJson} from '../../web/runtime/loader.ts';
+import {evaluateResponse,SCORING_VERSION,type AssessmentContract} from '../../web/runtime/assessment.ts';
 import {
   StorageError,
   MemoryStorageDriver,
@@ -37,6 +40,9 @@ function makeTestSession(id = 'ses:test:01'): Session {
   };
 }
 
+const testContract:AssessmentContract={id:'asmt:test',revision:1,task_ref:makeTestSession().item,response_kind:'NUMERIC_QUANTITY',evaluator:{mode:'AUTOMATIC',canonical_value:{decimal:'50',unit:'J'}},max_points:2};
+const assessmentRef={type:'ASSESSMENT' as const,id:testContract.id,revision:1,sha256:createHash('sha256').update(canonicalJson(testContract)).digest('hex')};
+function qualified(driver:MemoryStorageDriver){return new DefaultProgressStore(driver,async a=>canonicalJson(a.assessmentRef)===canonicalJson(assessmentRef)&&a.scoringVersion===SCORING_VERSION&&a.releaseId===makeTestSession().releaseId&&canonicalJson(a.item)===canonicalJson(testContract.task_ref)&&canonicalJson(a.grade)===canonicalJson(evaluateResponse(a.response,testContract,'PRACTICE')));}
 function makeTestAttempt(id = 'att:test:01', sessionId = 'ses:test:01'): Attempt {
   return {
     id,
@@ -62,6 +68,7 @@ function makeTestAttempt(id = 'att:test:01', sessionId = 'ses:test:01'): Attempt
     ],
     hintIds: [],
     cognitive: null,
+    assessmentRef,scoringVersion:SCORING_VERSION,
     submittedAt: '2026-11-17T12:00:00Z',
     grade: {
       status: 'SCORED',
@@ -127,7 +134,7 @@ describe('Draft Persistence & Session Refresh', () => {
 
   beforeEach(() => {
     driver = new MemoryStorageDriver();
-    store = new DefaultProgressStore(driver);
+    store = qualified(driver);
   });
 
   it('saves and loads drafts with incremented revision numbers', async () => {
@@ -149,7 +156,7 @@ describe('Draft Persistence & Session Refresh', () => {
 
     // Save updated draft
     const resp2: Response = { kind: 'INTEGER', value: '45' };
-    await store.saveDraft(session, resp2, artifacts);
+    await store.saveDraft(session, resp2, artifacts,1);
 
     const loaded2 = await store.loadDraft(session.id);
     assert.equal(loaded2?.revision, 2);
@@ -166,7 +173,7 @@ describe('Draft Persistence & Session Refresh', () => {
     await store.saveDraft(session, resp, []);
 
     // Create a new store instance referencing the underlying storage driver (simulating refresh)
-    const freshStore = new DefaultProgressStore(driver);
+    const freshStore = qualified(driver);
     const restored = await freshStore.loadDraft('ses:refresh:01');
 
     assert.notEqual(restored, null);
@@ -184,7 +191,7 @@ describe('Quota Enforcement & "No Fake Saved" (Fault N20)', () => {
   it('throws QUOTA_EXCEEDED and rolls back when storage size limit is hit', async () => {
     // Constrain driver to tiny 200 byte quota
     const driver = new MemoryStorageDriver({ quotaBytes: 200 });
-    const store = new DefaultProgressStore(driver);
+    const store = qualified(driver);
 
     const session = makeTestSession('ses:quota:01');
     const largeText = 'A'.repeat(500); // Exceeds 200 bytes
@@ -216,7 +223,7 @@ describe('Quota Enforcement & "No Fake Saved" (Fault N20)', () => {
       return null;
     });
 
-    const store = new DefaultProgressStore(driver);
+    const store = qualified(driver);
     const session = makeTestSession('ses:abort:01');
     const resp: Response = { kind: 'SINGLE_CHOICE', value: 'opt_a' };
 
@@ -240,7 +247,7 @@ describe('Attempt Appending & Conflict Detection', () => {
 
   beforeEach(() => {
     driver = new MemoryStorageDriver();
-    store = new DefaultProgressStore(driver);
+    store = qualified(driver);
   });
 
   it('appends attempt, stores work artifacts, and links to session attemptIds', async () => {
@@ -303,7 +310,7 @@ describe('Export, Import, Checksum Verification & Duplicate Protection (Fault L1
 
   beforeEach(() => {
     driver = new MemoryStorageDriver();
-    store = new DefaultProgressStore(driver);
+    store = qualified(driver);
   });
 
   it('exports all records into an integrity-checked JSON Blob', async () => {
@@ -334,7 +341,7 @@ describe('Export, Import, Checksum Verification & Duplicate Protection (Fault L1
 
     // Import into clean second store
     const freshDriver = new MemoryStorageDriver();
-    const freshStore = new DefaultProgressStore(freshDriver);
+    const freshStore = qualified(freshDriver);
 
     await freshStore.importVerified(exportBlob);
 
@@ -405,7 +412,7 @@ describe('Export, Import, Checksum Verification & Duplicate Protection (Fault L1
     const exportBlob = await store.exportAll();
 
     const targetDriver = new MemoryStorageDriver();
-    const targetStore = new DefaultProgressStore(targetDriver);
+    const targetStore = qualified(targetDriver);
 
     // First import
     await targetStore.importVerified(exportBlob);
@@ -441,14 +448,19 @@ describe('Export, Import, Checksum Verification & Duplicate Protection (Fault L1
 
     const legacyBlob = new Blob([JSON.stringify(legacyPayload)], { type: 'application/json' });
 
-    await store.importVerified(legacyBlob);
-
-    const migratedAttempts = await driver.getAll<Attempt>('attempts');
-    assert.equal(migratedAttempts.length, 1);
-    assert.equal(migratedAttempts[0].id, 'att:legacy:01');
-    assert.equal(migratedAttempts[0].sessionId, 'ses:legacy:01');
+    await assert.rejects(store.importVerified(legacyBlob));
+    assert.equal((await driver.getAll<Attempt>('attempts')).length,0);
   });
 });
 
-it('serializes concurrent draft revisions and rejects altered immutable grade',async()=>{const driver=new MemoryStorageDriver(),store=new DefaultProgressStore(driver),session=makeTestSession();await Promise.all([store.saveDraft(session,{kind:'INTEGER',value:'1'},[]),store.saveDraft(session,{kind:'INTEGER',value:'2'},[])]);assert.equal((await store.loadDraft(session.id))?.revision,2);const a=makeTestAttempt();await store.appendAttempt(a);assert.equal(await store.loadDraft(session.id),null);await assert.rejects(store.appendAttempt({...a,grade:{...a.grade,points:0} as any}),/RECORD_CONFLICT/);});
+it('serializes concurrent draft revisions and rejects altered immutable grade',async()=>{const driver=new MemoryStorageDriver(),store=qualified(driver),session=makeTestSession();const writes=await Promise.allSettled([store.saveDraft(session,{kind:'INTEGER',value:'1'},[]),store.saveDraft(session,{kind:'INTEGER',value:'2'},[])]);assert.equal(writes.filter(w=>w.status==='fulfilled').length,1);assert.equal((await store.loadDraft(session.id))?.revision,1);const a=makeTestAttempt();await store.appendAttempt(a);assert.equal(await store.loadDraft(session.id),null);await assert.rejects(store.appendAttempt({...a,grade:{...a.grade,points:0} as any}),/RECORD_CONFLICT/);});
 it('refuses writes in readonly memory transactions',async()=>{const d=new MemoryStorageDriver();await assert.rejects(d.transaction(['x'],'readonly',tx=>tx.put('x','a',1)),/TRANSACTION_SCOPE/);assert.equal(await d.get('x','a'),undefined);});
+
+it('rejects scored attempts without a trusted verifier',async()=>{const d=new MemoryStorageDriver(),s=new DefaultProgressStore(d),a=makeTestAttempt();await d.put('sessions',a.sessionId,makeTestSession(a.sessionId));await assert.rejects(s.appendAttempt(a),/UNVERIFIED_GRADE|trusted assessment/);assert.equal(await d.get('attempts',a.id),undefined);});
+
+it('Stage4: reject two attempts in one import and conflicting single-attempt imports',async()=>{
+ const d=new MemoryStorageDriver(),store=qualified(d),session=makeTestSession(),a=makeTestAttempt(),second={...a,id:'att:other'};
+ const make=async(attempts:Attempt[])=>{const data={sessions:[{...session,attemptIds:attempts.map(a=>a.id)}],drafts:[],attempts,artifacts:a.work};return new Blob([JSON.stringify({schema_version:STORAGE_EXPORT_VERSION,exported_at:a.submittedAt,checksum:await computeSha256(JSON.stringify(data)),data})]);};
+ await assert.rejects(store.importVerified(await make([a,second])),/multiple attempts/);assert.equal((await d.getAll('attempts')).length,0);
+ await store.importVerified(await make([a]));await assert.rejects(store.importVerified(await make([second])),/multiple commitments/);assert.equal((await d.getAll('attempts')).length,1);
+});

@@ -24,7 +24,7 @@ function makeTaskRef(id: string = 'task:synthetic:01'): Ref {
 
 describe('Scoring Engine Version & Idempotence', () => {
   it('declares explicit scoring engine version', () => {
-    assert.equal(SCORING_VERSION, 'g9-scoring/1.0');
+    assert.equal(SCORING_VERSION, 'g9-scoring/1.1');
   });
 
   it('guarantees pure, idempotent evaluation with zero state mutation', () => {
@@ -463,7 +463,7 @@ describe('Fault N10 & Safety Handlers', () => {
 
 describe('StandardAssessmentEngine Integration', () => {
   it('resolves registered contracts and evaluates asynchronously', async () => {
-    const engine = new StandardAssessmentEngine();
+
     const contract: AssessmentContract = {
       id: 'asmt:reg:01',
       task_ref: makeTaskRef('task:reg:01'),
@@ -475,6 +475,8 @@ describe('StandardAssessmentEngine Integration', () => {
     const {computeSha256,canonicalJson}=await import('../../web/runtime/loader.ts');
     const versioned={...contract,revision:1};
     const exact={type:'ASSESSMENT' as const,id:versioned.id,revision:1,sha256:await computeSha256(canonicalJson(versioned))};
+    const engine = new StandardAssessmentEngine([{assessment:exact,task:versioned.task_ref as any}]);
+    await assert.rejects(new StandardAssessmentEngine().registerContract(versioned,exact),/ASSESSMENT_NOT_AUTHORIZED/);
     await engine.registerContract(versioned,exact);
 
     const resp: Response = { kind: 'INTEGER', value: '100' };
@@ -504,4 +506,20 @@ it('replays all 26 pinned synthetic scoring vectors',()=>{
  const vectors=JSON.parse(readFileSync('fixtures/synthetic/scoring-vectors.json','utf8'));
  const build=(p:any,id:string):AssessmentContract=>({id,task_ref:makeTaskRef(),response_kind:p.kind,max_points:p.max_points,evaluator:{mode:['SINGLE_CHOICE','MULTIPLE_CHOICE','INTEGER','NUMERIC_QUANTITY'].includes(p.kind)?'AUTOMATIC':'REVIEW_PENDING',...(p.correct===undefined?{}:{canonical_value:p.kind==='NUMERIC_QUANTITY'?{decimal:p.correct,unit:p.unit}:p.correct}),...(p.allowed?{allowed_options:p.allowed}:{}),...(p.abs_tol?{numeric_tolerance:Number(p.abs_tol),relative_tolerance:p.rel_tol,unit_factors:p.unit_factors}:{})},...(p.parts?{parts:Object.fromEntries(Object.entries(p.parts).map(([k,v])=>[k,build(v,k)]))}:{})});
  for(const v of vectors){const g=evaluateResponse(v.response,build(v.policy,v.id));assert.deepEqual({status:g.status,points:g.points,max_points:g.maxPoints},v.expected,v.id);}
+});
+
+it('R2 Stage4: rejects a rounded-but-incorrect physical conversion factor',()=>{
+ const c:AssessmentContract={id:'asmt:scale',task_ref:makeTaskRef(),response_kind:'NUMERIC_QUANTITY',max_points:2,evaluator:{mode:'AUTOMATIC',canonical_value:{decimal:'1',unit:'m'},numeric_tolerance:0,unit_factors:{m:'1.00000000000000001',cm:'0.01'}}};
+ const response:Response={kind:'NUMERIC_QUANTITY',value:{decimal:'100',unit:'cm'}};
+ assert.equal(evaluateResponse(response,c).status,'INVALID');
+ const corrected={...c,evaluator:{...c.evaluator,unit_factors:{m:'1',cm:'0.01'}}};
+ assert.equal(evaluateResponse(response,corrected).points,2);
+});
+it('R2 Stage4: bounded exact score domain rejects extreme nesting rather than rounding',()=>{
+ const leaf=(max_points:number):AssessmentContract=>({id:'asmt:leaf',task_ref:makeTaskRef(),response_kind:'INTEGER',max_points,evaluator:{mode:'AUTOMATIC',canonical_value:'7'}});
+ const group=(max_points:number,parts:Record<string,AssessmentContract>):AssessmentContract=>({id:'asmt:group',task_ref:makeTaskRef(),response_kind:'MULTIPART',max_points,evaluator:{mode:'REVIEW_PENDING'},parts});
+ const a:Response={kind:'INTEGER',value:'7'};
+ const nested:Response={kind:'MULTIPART',value:{x:{kind:'MULTIPART',value:{a,b:a}},y:a}};
+ assert.equal(evaluateResponse(nested,group(10000000000000002,{x:group(10000000000000000,{a:leaf(10000000000000000),b:leaf(1)}),y:leaf(1)})).status,'INVALID');
+ assert.equal(evaluateResponse(nested,group(0.6,{x:group(0.3,{a:leaf(0.1),b:leaf(0.2)}),y:leaf(0.3)})).points,0.6);
 });

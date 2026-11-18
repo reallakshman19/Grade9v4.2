@@ -8,7 +8,47 @@ import { RESPONSE_KINDS, isResponseKind, validateResponse, ResponseValidationErr
 
 import { canonicalJson, computeSha256, sameRef } from './loader.ts';
 
-export const SCORING_VERSION = 'g9-scoring/1.0';
+export const SCORING_VERSION = 'g9-scoring/1.1';
+// Bounded score wire domain: [0, 1e9], at most six decimal places.
+// All sums within this domain fit exact scaled integer arithmetic. Reject rather than round.
+function scoreDomain(v:number):boolean{return Number.isFinite(v)&&v>=0&&v<=1e9&&/^\d+(?:\.\d{1,6})?$/.test(String(v));}
+function decimal(v:string):[bigint,bigint]{const [whole,frac='']=v.split('.');return [BigInt(whole+frac),10n**BigInt(frac.length)];}
+function exactSum(values:readonly number[]):number {
+  const scale=1000000n;
+  const n=values.reduce((sum,v)=>{const [p,q]=decimal(String(v));return sum+p*scale/q;},0n);
+  if(n>1000000000n*scale)return Infinity;
+  return Number(n)/Number(scale);
+}
+// Canonical physical scale in exact decimal strings (not binary floats).
+const UNITS:Readonly<Record<string,readonly [string,string]>>=Object.freeze({
+  m:['length','1'],cm:['length','0.01'],mm:['length','0.001'],km:['length','1000'],
+  s:['time','1'],ms:['time','0.001'],min:['time','60'],h:['time','3600'],
+  kg:['mass','1'],g:['mass','0.001'],mg:['mass','0.000001'],
+  J:['energy','1'],mJ:['energy','0.001'],kJ:['energy','1000'],
+  N:['force','1'],kN:['force','1000'],W:['power','1'],kW:['power','1000'],
+  Pa:['pressure','1'],kPa:['pressure','1000'],mol:['amount','1']
+});
+function conversionValid(factors:Readonly<Record<string,string>>,canonical:string):boolean {
+  if(!Object.hasOwn(UNITS,canonical)||!Object.hasOwn(factors,canonical))return false;
+  const [dimension,scale]=UNITS[canonical], [cp,cq]=decimal(scale);
+  return Object.entries(factors).every(([unit,factor])=>{
+    if(!Object.hasOwn(UNITS,unit)||UNITS[unit][0]!==dimension||typeof factor!=='string'||factor.length>4096||!/^\d+(?:\.\d+)?$/.test(factor))return false;
+    const [p,q]=decimal(factor),[up,uq]=decimal(UNITS[unit][1]);
+    return p>0n&&p*cp*uq===up*q*cq;
+  });
+}
+function validContract(c:AssessmentContract,depth=0):boolean {
+  if(!c||depth>16||!isResponseKind(c.response_kind)||!scoreDomain(c.max_points)||!c.evaluator||!['AUTOMATIC','REVIEW_PENDING'].includes(c.evaluator.mode))return false;
+  if(c.dropped_policy!==undefined&&!['NOT_DROPPED','FULL_CREDIT','REMOVED_FROM_TOTAL'].includes(c.dropped_policy))return false;
+  if(c.penalty_points!==undefined&&(!scoreDomain(c.penalty_points)))return false;
+  if(c.evaluator.numeric_tolerance!=null&&(!Number.isFinite(c.evaluator.numeric_tolerance)||c.evaluator.numeric_tolerance<0))return false;
+  if(c.response_kind==='NUMERIC_QUANTITY'&&c.evaluator.unit_factors){
+    const canonical=c.evaluator.canonical_value as {unit?:string}|null;
+    if(!canonical?.unit||!conversionValid(c.evaluator.unit_factors,canonical.unit))return false;
+  }
+  if(c.parts){if(c.response_kind!=='MULTIPART'||!Object.keys(c.parts).length||!Object.values(c.parts).every(p=>validContract(p,depth+1)))return false;}
+  return true;
+}
 
 export interface EvaluatorSpec {
   readonly mode: 'AUTOMATIC' | 'REVIEW_PENDING';
@@ -389,17 +429,19 @@ function evaluateMultipart(
   let hasMissingRequired = false;
   let hasReviewPending = false;
   let hasInvalid = false;
-  let totalPoints = 0;
-  let totalMaxPoints = 0;
+  const pointParts:number[]=[];
+  const declaredMaxParts:number[]=[];
+  const effectiveMaxParts:number[]=[];
 
   for (const partId of requiredPartIds) {
     const partContract = partContracts[partId];
-    totalMaxPoints += partContract.max_points;
+    declaredMaxParts.push(partContract.max_points);
 
     const candPart = Object.hasOwn(candParts,partId)?candParts[partId]:undefined;
     if (!candPart) {
       // N14: missing required part
       hasMissingRequired = true;
+      effectiveMaxParts.push(partContract.max_points);
       partGrades[partId] = {
         status: 'INVALID',
         points: null,
@@ -411,13 +453,14 @@ function evaluateMultipart(
 
     const subGrade = evaluateResponse(candPart, partContract, mode);
     partGrades[partId] = subGrade;
+    effectiveMaxParts.push(subGrade.maxPoints);
 
     if (subGrade.status === 'REVIEW_PENDING') {
       hasReviewPending = true;
     } else if (subGrade.status === 'INVALID' || subGrade.status === 'UNSUPPORTED') {
       hasInvalid = true;
     } else if (subGrade.status === 'SCORED' && typeof subGrade.points === 'number') {
-      totalPoints += subGrade.points;
+      pointParts.push(subGrade.points);
     }
   }
 
@@ -434,8 +477,8 @@ function evaluateMultipart(
     }
   }
 
-  const effectiveMaxPoints = contract.max_points;
-  if(totalMaxPoints!==effectiveMaxPoints||totalPoints>effectiveMaxPoints)return {status:'INVALID',points:null,maxPoints:effectiveMaxPoints,reasonCode:'PART_TOTAL_MISMATCH'};
+  const effectiveMaxPoints=exactSum(effectiveMaxParts),totalPoints=exactSum(pointParts);
+  if(exactSum(declaredMaxParts)!==contract.max_points||!Number.isFinite(totalPoints)||totalPoints>effectiveMaxPoints)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:'PART_TOTAL_MISMATCH'};
 
   // N14: Missing part -> incomplete/pending, no fabricated total!
   if (hasMissingRequired) {
@@ -489,8 +532,9 @@ export function evaluateResponse(
   contract: AssessmentContract,
   mode: SessionMode = 'PRACTICE'
 ): Grade {
-  if(!contract||!Number.isFinite(contract.max_points)||contract.max_points<0||!contract.evaluator||!['AUTOMATIC','REVIEW_PENDING'].includes(contract.evaluator.mode))return {status:'INVALID',points:null,maxPoints:0,reasonCode:'INVALID_ASSESSMENT'};
+  if(!contract||!Number.isFinite(contract.max_points)||contract.max_points<0)return {status:'INVALID',points:null,maxPoints:0,reasonCode:'INVALID_ASSESSMENT'};
   if(!response||!isResponseKind(response.kind))return {status:'UNSUPPORTED',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.UNSUPPORTED_RESPONSE_KIND};
+  if(!validContract(contract))return {status:'INVALID',points:null,maxPoints:0,reasonCode:'INVALID_ASSESSMENT'};
   try{validateResponse(response);}catch(e){return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:e instanceof ResponseValidationError&&e.code==='DUPLICATE_ELEMENTS'?ReasonCodes.DUPLICATE_CHOICE_OPTION:response.kind==='INTEGER'?ReasonCodes.INVALID_INTEGER_FORMAT:response.kind==='NUMERIC_QUANTITY'?ReasonCodes.INVALID_QUANTITY_FORMAT:ReasonCodes.MALFORMED_RESPONSE};}
   if(response.kind!==contract.response_kind)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.KIND_MISMATCH};
   // Handle dropped item policies
@@ -585,13 +629,27 @@ export function evaluateResponse(
  */
 export class StandardAssessmentEngine implements AssessmentEngine {
   private readonly contracts=new Map<string,{ref:Ref<'ASSESSMENT'>;contract:AssessmentContract}>();
+  private readonly authorized:readonly {readonly assessment:Ref<'ASSESSMENT'>;readonly task:TaskRef}[];
+  // Only the trusted release bootstrap may supply this exact allowlist. Hash equality alone is not authority.
+  constructor(authorized:readonly {readonly assessment:Ref<'ASSESSMENT'>;readonly task:TaskRef}[]=[]){this.authorized=structuredClone(authorized);}
   async registerContract(contract:AssessmentContract,ref:Ref<'ASSESSMENT'>):Promise<void>{
     const copy=structuredClone(contract);
     if(ref.type!=='ASSESSMENT'||ref.id!==copy.id||ref.revision!==copy.revision||ref.sha256!==await computeSha256(canonicalJson(copy)))throw new Error('ASSESSMENT_IDENTITY_MISMATCH');
-    this.contracts.set(ref.id,{ref:{...ref},contract:copy});
+    if(!validContract(copy)||!Number.isSafeInteger(copy.revision)||!copy.task_ref||!['QUESTION','FRESH_TASK'].includes(copy.task_ref.type))throw new Error('INVALID_ASSESSMENT');
+    if(!this.authorized.some(a=>sameRef(a.assessment,ref)&&sameRef(a.task,copy.task_ref)))throw new Error('ASSESSMENT_NOT_AUTHORIZED');
+    if(copy.evaluator.mode==='AUTOMATIC'&&['SINGLE_CHOICE','MULTIPLE_CHOICE','INTEGER','NUMERIC_QUANTITY'].includes(copy.response_kind)){
+      validateResponse({kind:copy.response_kind,value:copy.evaluator.canonical_value});
+      if(copy.response_kind==='SINGLE_CHOICE'||copy.response_kind==='MULTIPLE_CHOICE'){
+        const opts=copy.evaluator.allowed_options,correct=Array.isArray(copy.evaluator.canonical_value)?copy.evaluator.canonical_value:[copy.evaluator.canonical_value];
+        if(!opts||new Set(opts).size!==opts.length||!correct.every(x=>typeof x==='string'&&opts.includes(x)))throw new Error('INVALID_ASSESSMENT_OPTIONS');
+      }
+    }
+    const key=ref.id+':'+ref.revision,old=this.contracts.get(key);
+    if(old&&!sameRef(old.ref,ref))throw new Error('ASSESSMENT_REVISION_CONFLICT');
+    this.contracts.set(key,{ref:{...ref},contract:copy});
   }
   async evaluate(response:Response,assessment:Ref<'ASSESSMENT'>,mode:SessionMode,task:TaskRef):Promise<Grade>{
-    const entry=this.contracts.get(assessment.id);
+    const entry=this.contracts.get(assessment.id+':'+assessment.revision);
     if(!entry||!sameRef(entry.ref,assessment)||!sameRef(entry.contract.task_ref,task))return {status:'INVALID',points:null,maxPoints:0,reasonCode:ReasonCodes.ASSESSMENT_NOT_FOUND};
     return evaluateResponse(response,entry.contract,mode);
   }

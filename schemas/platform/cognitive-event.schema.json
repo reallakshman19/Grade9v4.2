@@ -4,7 +4,10 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "g9-cognitive-event/1"
+      "enum": [
+        "g9-cognitive-event/1",
+        "g9-cognitive-event/2"
+      ]
     },
     "event_id": {
       "type": "string",
@@ -30,27 +33,8 @@
       "properties": {
         "type": {
           "enum": [
-            "SOURCE",
-            "OCCURRENCE",
             "QUESTION",
-            "ASSESSMENT",
-            "WARRANT",
-            "QRT",
-            "CONSTRUCTION",
-            "LESSON",
-            "FRESH_TASK",
-            "SOLUTION",
-            "RELATIONSHIP",
-            "PRESENTATION",
-            "CONCEPT",
-            "ASSET",
-            "PROGRAMME",
-            "EXAM_EDITION",
-            "PAPER",
-            "STIMULUS",
-            "APPROVAL",
-            "RELEASE",
-            "SUBJECT_PROFILE"
+            "FRESH_TASK"
           ]
         },
         "id": {
@@ -101,7 +85,8 @@
     "at": {
       "type": "string",
       "format": "date-time",
-      "pattern": "(?:Z|\\+00:00)$"
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,3})?(?:Z|\\+00:00)$",
+      "description": "UTC calendar timestamp with at most millisecond precision; enforce date-time format as well as lexical pattern. Reject invalid dates and leap seconds at the runtime boundary."
     },
     "task_instance_id": {
       "type": "string",
@@ -469,27 +454,8 @@
                 "properties": {
                   "type": {
                     "enum": [
-                      "SOURCE",
-                      "OCCURRENCE",
                       "QUESTION",
-                      "ASSESSMENT",
-                      "WARRANT",
-                      "QRT",
-                      "CONSTRUCTION",
-                      "LESSON",
-                      "FRESH_TASK",
-                      "SOLUTION",
-                      "RELATIONSHIP",
-                      "PRESENTATION",
-                      "CONCEPT",
-                      "ASSET",
-                      "PROGRAMME",
-                      "EXAM_EDITION",
-                      "PAPER",
-                      "STIMULUS",
-                      "APPROVAL",
-                      "RELEASE",
-                      "SUBJECT_PROFILE"
+                      "FRESH_TASK"
                     ]
                   },
                   "id": {

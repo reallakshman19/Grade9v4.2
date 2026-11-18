@@ -4,6 +4,7 @@ on:
     branches:
       - feat/a48-immutable-cognitive-event-persistence
       - main
+      - fix/runtime-integrity-r2
   workflow_dispatch:
 concurrency:
   group: runtime-stack-${{ github.ref }}
@@ -34,7 +35,12 @@ jobs:
           echo "G9_COMPILED_PROJECTION=$RUNNER_TEMP/g9-projection.json" >> "$GITHUB_ENV"
       - name: Runtime regression and adversarial tests
         if: always() && !cancelled()
-        run: node --experimental-strip-types --test tests/runtime/*.test.ts
+        run: node --experimental-strip-types --test tests/runtime/*.test.ts tests/runtime/*.spec.ts
+      - name: Self-contained Python contract and release regression
+        if: always() && !cancelled()
+        run: |
+          echo 'NOT_RUN: test_platform.py requires external G9_R4_KIT; test_portable_compatibility.py requires external G9_V35_PORTABLE_PACKAGES. Full custody-dependent regression is separate.'
+          PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
   browser:
     runs-on: ubuntu-24.04
     timeout-minutes: 15

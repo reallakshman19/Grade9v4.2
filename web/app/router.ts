@@ -25,18 +25,21 @@ export type RouteListener = (match: RouteMatch) => void;
 export interface RouterOptions {
   readonly basePath?: string;
   readonly useHash?: boolean;
+  readonly origin?:string;
 }
 
 export class Router {
   readonly basePath: string;
   readonly useHash: boolean;
   private currentMatch: RouteMatch;
+  private readonly origin:string|null;
   private readonly listeners = new Set<RouteListener>();
   private readonly historyStack: RouteMatch[] = [];
 
   constructor(options: RouterOptions = {}) {
     this.basePath = Router.normalizeBasePath(options.basePath || '');
     this.useHash = options.useHash ?? false;
+    this.origin=options.origin??(typeof location!=='undefined'&&location.origin!=='null'?location.origin:null);
     this.currentMatch = {
       type: 'HOME',
       path: '/',
@@ -92,6 +95,10 @@ export class Router {
    * Matches a normalized pathname to registered platform routes.
    */
   match(pathWithQueryAndHash: string): RouteMatch {
+    const invalid=():RouteMatch=>({type:'NOT_FOUND',path:pathWithQueryAndHash,params:{},query:{},hash:''});
+    if(/^[\s\\/]*\/\//.test(pathWithQueryAndHash)||/^[\s]*[a-z][a-z0-9+.-]*:/i.test(pathWithQueryAndHash)){
+      try{const u=new URL(pathWithQueryAndHash);if(!this.origin||u.origin!==this.origin||!['http:','https:'].includes(u.protocol)||u.username||u.password)return invalid();if(this.basePath&&!(u.pathname===this.basePath||u.pathname.startsWith(this.basePath+'/')))return invalid();}catch{return invalid();}
+    }
     let stripped = this.stripBasePath(pathWithQueryAndHash);
     if(this.useHash && stripped.startsWith('/#/')) stripped=stripped.slice(2);
     try { decodeURIComponent(stripped); } catch { return {type:'NOT_FOUND',path:stripped,params:{},query:{},hash:''}; }
@@ -113,12 +120,15 @@ export class Router {
       pathPart = pathPart.slice(0, queryIdx);
     }
 
+    // Reject encoded separators, dot traversal and ambiguous decoded segments before matching.
+    for(const raw of pathPart.split('/')){const part=decodeURIComponent(raw);if(part==='.'||part==='..'||/[\\/\\\\\u0000-\u001f\u007f]/.test(part))return invalid();}
     // Normalize multiple slashes and trailing slash
     pathPart = pathPart.replace(/\/+/g, '/');
     if (pathPart.length > 1 && pathPart.endsWith('/')) {
       pathPart = pathPart.slice(0, -1);
     }
 
+    const seen=new Set<string>();for(const [key] of new URLSearchParams(queryPart)){if(seen.has(key)||['__proto__','constructor','prototype'].includes(key))return invalid();seen.add(key);}
     const query = Router.parseQuery(queryPart);
 
     // 1. Home Route: "/"
@@ -223,7 +233,7 @@ export class Router {
    * Generates a base-aware URL for navigation or href links.
    */
   toHref(relativePath: string, queryParams: Record<string, string> = {}): string {
-    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|\\)/i.test(relativePath)) throw new Error('External route forbidden');
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/\/|\\)/i.test(relativePath)||this.match(relativePath).type==='NOT_FOUND') throw new Error('External or unsafe route forbidden');
     let clean = relativePath.startsWith('/') ? relativePath : `/${relativePath}`;
     const queryEntries = Object.entries(queryParams);
     if (queryEntries.length > 0) {

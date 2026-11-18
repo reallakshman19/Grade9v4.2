@@ -22,7 +22,9 @@ export const RESPONSE_KINDS = [
 
 export type ResponseKind = (typeof RESPONSE_KINDS)[number];
 
+// R2 boundary: stable addressable part IDs (A16), stricter than unrestricted R4 object keys.
 export const STABLE_PART_ID_REGEX = /^[a-zA-Z0-9_.:-]{1,64}$/;
+// Require a complete decimal token; a trailing newline accepted by some schema engines is not an integer token.
 export const INTEGER_STRING_REGEX = /^-?[0-9]+$/;
 export const NUMERIC_DECIMAL_REGEX = /^-?[0-9]+(\.[0-9]+)?$/;
 export const MAX_RECURSION_DEPTH = 16;
@@ -347,13 +349,13 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
           throw new ResponseValidationError('EXTRA_PROPERTIES', `Disallowed property '${k}' in NUMERIC_QUANTITY`, `${path}.${k}`);
         }
       }
-      if (!('decimal' in q) || typeof q.decimal !== 'string') {
+      if (!Object.hasOwn(q,'decimal') || typeof q.decimal !== 'string') {
         throw new ResponseValidationError('MISSING_FIELD', "NUMERIC_QUANTITY requires string 'decimal'", `${path}.decimal`);
       }
       if (!NUMERIC_DECIMAL_REGEX.test(q.decimal)) {
         throw new ResponseValidationError('INVALID_FORMAT', `decimal '${q.decimal}' does not match pattern ^-?[0-9]+(\\.[0-9]+)?$`, `${path}.decimal`);
       }
-      if (!('unit' in q) || typeof q.unit !== 'string') {
+      if (!Object.hasOwn(q,'unit') || typeof q.unit !== 'string') {
         throw new ResponseValidationError('MISSING_FIELD', "NUMERIC_QUANTITY requires string 'unit'", `${path}.unit`);
       }
       if (q.unit.length < 1) {
@@ -408,10 +410,10 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
           throw new ResponseValidationError('EXTRA_PROPERTIES', `Disallowed property '${k}' in CHEMICAL_STRUCTURE`, `${path}.${k}`);
         }
       }
-      if (!('format' in cs) || typeof cs.format !== 'string' || cs.format.length < 1) {
+      if (!Object.hasOwn(cs,'format') || typeof cs.format !== 'string' || cs.format.length < 1) {
         throw new ResponseValidationError('MISSING_FIELD', "CHEMICAL_STRUCTURE requires non-empty string 'format'", `${path}.format`);
       }
-      if (!('data' in cs) || typeof cs.data !== 'string' || cs.data.length < 1) {
+      if (!Object.hasOwn(cs,'data') || typeof cs.data !== 'string' || cs.data.length < 1) {
         throw new ResponseValidationError('MISSING_FIELD', "CHEMICAL_STRUCTURE requires non-empty string 'data'", `${path}.data`);
       }
       return {
@@ -485,7 +487,7 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
           throw new ResponseValidationError('EXTRA_PROPERTIES', `Disallowed property '${k}' in GRAPH value`, `${path}.${k}`);
         }
       }
-      if (!('points' in g) || !Array.isArray(g.points)) {
+      if (!Object.hasOwn(g,'points') || !Array.isArray(g.points)) {
         throw new ResponseValidationError('MISSING_FIELD', "GRAPH requires 'points' array", `${path}.points`);
       }
       if (g.points.length < 1) {
@@ -521,7 +523,7 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
           throw new ResponseValidationError('EXTRA_PROPERTIES', `Disallowed property '${k}' in EXPERIMENT_ANALYSIS`, `${path}.${k}`);
         }
       }
-      if (!('observations' in exp) || !Array.isArray(exp.observations)) {
+      if (!Object.hasOwn(exp,'observations') || !Array.isArray(exp.observations)) {
         throw new ResponseValidationError('MISSING_FIELD', "EXPERIMENT_ANALYSIS requires 'observations' array", `${path}.observations`);
       }
       if (exp.observations.length < 1) {
@@ -537,7 +539,7 @@ export function validateResponse(input: unknown, path = '', depth = 0): Validate
           );
         }
       }
-      if (!('conclusion' in exp) || typeof exp.conclusion !== 'string' || exp.conclusion.length < 1) {
+      if (!Object.hasOwn(exp,'conclusion') || typeof exp.conclusion !== 'string' || exp.conclusion.length < 1) {
         throw new ResponseValidationError('MISSING_FIELD', "EXPERIMENT_ANALYSIS requires non-empty string 'conclusion'", `${path}.conclusion`);
       }
       return {

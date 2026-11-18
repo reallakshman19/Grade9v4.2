@@ -2,7 +2,7 @@
 // Provides IndexedDB persistence with safe in-memory fallback for headless/CI runtimes.
 // Engineering validation: "No academic approval inferred from software validation."
 
-import type { Response, WorkArtifact, Session, Attempt } from './types.ts';
+import type { Response, WorkArtifact, Session, Attempt, CognitiveDraftLineage } from './types.ts';
 
 export class StorageError extends Error {
   readonly code: string;
@@ -20,6 +20,7 @@ export interface DraftRecord {
   readonly artifacts: readonly WorkArtifact[];
   readonly savedAt: string;
   readonly revision: number;
+  readonly cognitive?:CognitiveDraftLineage|null;
 }
 
 export interface TransactionContext {

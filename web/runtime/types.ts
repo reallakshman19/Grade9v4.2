@@ -30,12 +30,13 @@ export type Grade = GradeCommon & ({readonly status:'SCORED';readonly points:num
 export type ArtifactKind = 'NOTE'|'EQUATION'|'INK'|'TABLE'|'GRAPH'|'STRUCTURE'|'ATTACHMENT';
 export interface WorkArtifact {readonly id:string; readonly kind:ArtifactKind; readonly version:1; readonly value:Json}
 export type SessionMode = 'LEARN'|'PRACTICE'|'SIMULATED_EXAM';
-export interface Session {readonly id:string; readonly releaseId:string; readonly item:Ref; readonly origin:Ref|null; readonly returnRoute:string|null; readonly mode:SessionMode; readonly cursor:number; readonly attemptIds:readonly string[]; readonly draftId:string|null}
+export interface Session {readonly id:string; readonly releaseId:string; readonly item:Ref; readonly origin:Ref|null; readonly returnRoute:string|null; readonly mode:SessionMode; readonly deadlineAt?:string|null; readonly contentRevision?:string; readonly cursor:number; readonly attemptIds:readonly string[]; readonly draftId:string|null}
 export interface JourneyKey {readonly journeyId:string; readonly taskInstanceId:string; readonly task:Ref; readonly releaseId:string}
 export interface Checkpoint {readonly sequence:number; readonly sha256:string|null}
 export interface CognitiveLineage {readonly journey:JourneyKey; readonly firstAttemptId:string|null; readonly parentJourney:JourneyKey|null; readonly originSessionId:string; readonly originRef:Ref; readonly originCursor:number}
-export interface Attempt {readonly id:string; readonly sessionId:string; readonly item:Ref; readonly releaseId:string; readonly response:Response; readonly work:readonly WorkArtifact[]; readonly hintIds:readonly string[]; readonly submittedAt:string; readonly grade:Grade; readonly cognitive:CognitiveLineage|null}
-export interface Draft {readonly session:Session; readonly response:Response; readonly artifacts:readonly WorkArtifact[]; readonly cognitive:CognitiveLineage|null}
+export interface Attempt {readonly id:string; readonly sessionId:string; readonly item:Ref; readonly releaseId:string; readonly response:Response; readonly work:readonly WorkArtifact[]; readonly hintIds:readonly string[]; readonly submittedAt:string; readonly grade:Grade; readonly cognitive:CognitiveLineage|null; readonly assessmentRef?:Ref<'ASSESSMENT'>; readonly scoringVersion?:string}
+export interface CognitiveDraftLineage extends CognitiveLineage {readonly stage:CognitiveStage;readonly checkpoint:Checkpoint}
+export interface Draft {readonly session:Session; readonly response:Response; readonly artifacts:readonly WorkArtifact[]; readonly cognitive:CognitiveDraftLineage|null;readonly cognitiveStale:boolean;readonly revision:number}
 export type CognitiveStage = 'PREDICT'|'ATTEMPT'|'RECONSTRUCT'|'DIAGNOSE'|'REPAIR'|'BOUNDARY_TEST'|'COMPLETE';
 export type HelpCapability = 'H1'|'H2'|'H3'|'READ_ANCHOR'|'MODEL_AUTO_CALCULATE'|'MODEL_MANIPULATE';
 export interface CognitivePayloads {
@@ -50,7 +51,7 @@ export interface CognitivePayloads {
   readonly SOURCE_RETURNED:{readonly origin_session_id:string;readonly origin_ref:Ref;readonly cursor:number};
 }
 export type CognitiveEventType = keyof CognitivePayloads;
-interface EventEnvelope {readonly schema_version:'g9-cognitive-event/1';readonly event_id:string;readonly journey_id:string;readonly release_id:string;readonly task_instance_id:string;readonly task_ref:Ref;readonly sequence:number;readonly previous_sha256:string|null;readonly at:string}
+interface EventEnvelope {readonly schema_version:'g9-cognitive-event/1'|'g9-cognitive-event/2';readonly event_id:string;readonly journey_id:string;readonly release_id:string;readonly task_instance_id:string;readonly task_ref:Ref;readonly sequence:number;readonly previous_sha256:string|null;readonly at:string}
 export type CognitiveEvent = {[K in CognitiveEventType]: EventEnvelope & {readonly event_type:K;readonly payload:CognitivePayloads[K]}}[CognitiveEventType];
 export interface CognitiveSnapshot {readonly journey:JourneyKey;readonly checkpoint:Checkpoint;readonly stage:CognitiveStage;readonly firstAttemptId:string|null;readonly boundaryAttemptId:string|null;readonly assisted:boolean;readonly lastHash:string|null;readonly eventIds:readonly string[]}
 export interface ReasoningField {readonly id:string;readonly kind:Kind;readonly required:boolean;readonly promptRef:Ref;readonly privateMoveRef?:Ref}
