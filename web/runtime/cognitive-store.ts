@@ -6,7 +6,7 @@ import { canonicalJson,computeSha256,sameRef } from './loader.ts';
 import { validateResponse } from './response.ts';
 export const COGNITIVE_EVENT_SCHEMA_VERSION='g9-cognitive-event/1';
 export const COGNITIVE_EXPORT_VERSION='g9-cognitive-export/1.0';
-export class CognitiveStoreError extends Error {constructor(readonly code:string,message:string){super(message+' ('+code+')');this.name='CognitiveStoreError';}}
+export class CognitiveStoreError extends Error {readonly code:string;constructor(code:string,message:string){super(message+' ('+code+')');this.name='CognitiveStoreError';this.code=code;}}
 export interface QuarantineRecord{readonly id:string;readonly journeyId:string;readonly event:CognitiveEvent;readonly reason:string;readonly recordedAt:string;}
 export interface JourneyMeta{readonly journey:JourneyKey;readonly parentJourney:JourneyKey|null;readonly parentCheckpoint:Checkpoint|null;}
 const guard=(ok:unknown,code:string,message:string)=>{if(!ok)throw new CognitiveStoreError(code,message);};
@@ -63,7 +63,8 @@ async function rebuild(events:readonly CognitiveEvent[],journey:JourneyKey):Prom
  return snap;
 }
 export class DefaultCognitiveStore implements CognitiveStore {
- constructor(private readonly driver:StorageDriver=createStorageDriver()){}
+ private readonly driver:StorageDriver;
+ constructor(driver:StorageDriver=createStorageDriver()){this.driver=driver;}
  async append(event:CognitiveEvent,expected:JourneyKey,checkpoint:Checkpoint,work:readonly WorkArtifact[]):Promise<CognitiveSnapshot>{
    validateEvent(event);guard(sameJourney(identity(event),expected),'IDENTITY_MISMATCH','Wrong journey, task, instance or release');
    const id=expected.journeyId,eventsKey='cog_events:'+id,snapKey='cog_snap:'+id;
