@@ -58,7 +58,7 @@ jobs:
         run: npm exec --no -- playwright-core install chromium
       - name: Actual IndexedDB and cognitive replay
         if: always() && !cancelled()
-        run: node --experimental-strip-types --test tests/browser/runtime.spec.ts tests/browser/bank.spec.ts tests/browser/catalogue.spec.ts tests/browser/legacy-host.spec.ts tests/browser/shell.spec.ts
+        run: node --experimental-strip-types --test --test-concurrency=1 --test-timeout=60000 --test-force-exit tests/browser/runtime.spec.ts tests/browser/bank.spec.ts tests/browser/catalogue.spec.ts tests/browser/legacy-host.spec.ts tests/browser/shell.spec.ts
       - name: Diagnostic shell smoke
         if: always() && !cancelled()
         run: npm run test:smoke
