@@ -192,14 +192,18 @@ export class DefaultProgressStore implements ProgressStore {
     attempt=structuredClone(attempt);check(attempt.cognitive===null,'Cognitive attempts must commit with their event in one transaction');
     await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt));
   }
+  async appendQualifiedAttempt(attempt:Attempt):Promise<void>{
+    attempt=structuredClone(attempt);check(attempt.cognitive===null,'Cognitive attempts must commit with their event');
+    await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt,true));
+  }
   // For A48's atomic transaction. The same validated write path is used by both APIs.
-  async commitAttempt(tx:import('./storage.ts').TransactionContext,attempt:Attempt):Promise<void>{
+  async commitAttempt(tx:import('./storage.ts').TransactionContext,attempt:Attempt,requireQualified=false):Promise<void>{
     attempt=structuredClone(attempt);validateAttempt(attempt);
     const session=await tx.get<Session>('sessions',attempt.sessionId);
-    if(!session||!sameRef(session.item,attempt.item)||session.releaseId!==attempt.releaseId)throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
+    if(!session||!sessionOk(session)||!sameRef(session.item,attempt.item)||session.releaseId!==attempt.releaseId)throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
     const old=await tx.get<Attempt>('attempts',attempt.id);
-    if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');await this.qualify(attempt);return;}
-    const qualified=await this.qualify(attempt);
+    if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');const qualified=await this.qualify(attempt);check(!requireQualified||qualified&&await tx.get('attempt_authority',attempt.id)==='LOCAL_VERIFIED_SCORE','Existing attempt not qualified');return;}
+    const qualified=await this.qualify(attempt);check(!requireQualified||qualified,'Unqualified commitment');
     if(session.mode==='SIMULATED_EXAM')check(timestamp(session.deadlineAt)&&Date.now()<=Date.parse(session.deadlineAt!)&&Date.parse(attempt.submittedAt)<=Date.parse(session.deadlineAt!),'Exam submission deadline passed or unavailable');
     check(session.attemptIds.length===0,'Session already contains a committed attempt; use a new exact retry session');
     for(const art of attempt.work){await immutablePut(tx,'artifact_owners',art.id,attempt.sessionId);await immutablePut(tx,'artifacts',art.id,art);}
