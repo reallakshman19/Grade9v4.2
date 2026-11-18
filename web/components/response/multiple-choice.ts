@@ -25,8 +25,8 @@ export class MultipleChoiceController implements ResponseInputController<Multipl
   private focusedOptionIndex: number = 0;
 
   constructor(options: readonly ChoiceOption[], initialSelectedIds: readonly string[] = []) {
-    this.options = [...options];
-    this.selectedOptionIds = new Set(initialSelectedIds);
+    if(new Set(options.map(o=>o.id)).size!==options.length)throw Error('Duplicate option identity');this.options=Object.freeze(options.map(o=>Object.freeze({...o})));
+    if(new Set(initialSelectedIds).size!==initialSelectedIds.length||!initialSelectedIds.every(id=>this.options.some(o=>o.id===id)))throw Error('Invalid initial option IDs');this.selectedOptionIds=new Set(initialSelectedIds);
   }
 
   getOptions(): readonly ChoiceOption[] {
@@ -42,7 +42,7 @@ export class MultipleChoiceController implements ResponseInputController<Multipl
 
   setValue(value: MultipleChoiceValue): void {
     if (this.locked) return;
-    this.selectedOptionIds = new Set(value.selectedOptionIds);
+    if(new Set(value.selectedOptionIds).size===value.selectedOptionIds.length&&value.selectedOptionIds.every(id=>this.options.some(o=>o.id===id)))this.selectedOptionIds=new Set(value.selectedOptionIds);
   }
 
   toggleOption(optionId: string): boolean {
