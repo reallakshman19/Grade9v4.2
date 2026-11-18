@@ -146,3 +146,6 @@ describe('Router', () => {
 });
 
 it('round trips static hash links, preserves equals, rejects malformed routes',()=>{const r=new Router({basePath:'/Grade9v4.2',useHash:true});assert.equal(r.match(r.toHref('/question/q1',{q:'a=b'})).params.questionId,'q1');assert.equal(r.match(r.toHref('/search',{q:'a=b'})).query.q,'a=b');assert.equal(r.match('/question/%ZZ').type,'NOT_FOUND');assert.equal(r.stripBasePath('/Grade9v4.2-other'),'/Grade9v4.2-other');});
+
+import {readFileSync} from 'node:fs';
+it('loads real Python compiler output when provided by the hosted integration job',async()=>{const path=process.env.G9_COMPILED_PROJECTION;if(!path)return;const raw=readFileSync(path,'utf8'),m=JSON.parse(raw);const l=new ManifestLoader(),loaded=await l.loadFromData(raw,m.release_digest);for(const x of loaded.projections.learner_precommit)assert.equal(l.resolveItem(loaded,x),x);});
