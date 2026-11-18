@@ -118,7 +118,7 @@ async function reverseClosure(tx:TransactionContext,data:CognitiveArchive):Promi
   for(const entry of data.journeys)for(const e of entry.events)if(e.attempt){guard(!ids.has(e.attempt.id),'INVALID_LINEAGE','Reused attempt');ids.add(e.attempt.id);}
   for(const a of data.progress.attempts){guard(ids.has(a.id)===(a.cognitive!==null),'INVALID_LINEAGE','Cognitive attempt missing event or ordinary attempt linked to event');if(a.cognitive){const link=await tx.get<string>('cognitive_attempt_event',a.id);guard(link,'INVALID_LINEAGE','Missing reverse commitment');}}
   guard(ids.size===data.progress.attempts.filter(a=>a.cognitive!==null).length,'INVALID_LINEAGE','Missing archive attempt');
-  for(const d of data.progress.drafts)if(d.cognitive){const session=data.progress.sessions.find(s=>s.id===d.sessionId);guard(session,'INVALID_LINEAGE','Draft session missing');await verifyDraftLineage(tx,session!,d.cognitive);}
+  for(const d of data.progress.drafts)if(d.cognitive){const session=data.progress.sessions.find(s=>s.id===d.sessionId);const j=d.cognitive.journey,entry=data.journeys.find(x=>sameJourney(x.meta.journey,j));guard(session&&entry,'INVALID_LINEAGE','Draft session or journey missing');const prefix=entry!.events.map(x=>x.event).filter(e=>e.sequence<=d.cognitive!.checkpoint.sequence);const verified=await rebuild(prefix,j);guard(equal(verified.checkpoint,d.cognitive.checkpoint),'INVALID_LINEAGE','Draft historical checkpoint missing');await verifyDraftLineage(tx,session!,d.cognitive,verified);}
 }
 async function verifyRetry(tx:TransactionContext,meta:JourneyMeta,seen=new Set<string>()):Promise<void>{
   const id=meta.journey.journeyId;guard(!seen.has(id),'INVALID_LINEAGE','Retry cycle');seen.add(id);
