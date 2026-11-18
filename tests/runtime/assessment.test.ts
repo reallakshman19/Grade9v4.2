@@ -476,7 +476,7 @@ describe('StandardAssessmentEngine Integration', () => {
     const versioned={...contract,revision:1};
     const exact={type:'ASSESSMENT' as const,id:versioned.id,revision:1,sha256:await computeSha256(canonicalJson(versioned))};
     const engine = new StandardAssessmentEngine([{assessment:exact,task:versioned.task_ref as any}]);
-    await assert.rejects(new StandardAssessmentEngine().registerContract(versioned,exact),/AUTHORITY|TRUST|UNAUTHORIZED/i);
+    await assert.rejects(new StandardAssessmentEngine().registerContract(versioned,exact),/ASSESSMENT_NOT_AUTHORIZED/);
     await engine.registerContract(versioned,exact);
 
     const resp: Response = { kind: 'INTEGER', value: '100' };
