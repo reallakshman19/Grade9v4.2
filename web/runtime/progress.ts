@@ -150,7 +150,7 @@ export class DefaultProgressStore implements ProgressStore {
         check((existing?.revision??0)===expectedRevision,'Stale draft revision');
         if(session.mode==='SIMULATED_EXAM'){check(!!priorSession&&priorSession.attemptIds.length===0&&timestamp(priorSession.deadlineAt)&&Date.now()<=Date.parse(priorSession.deadlineAt!),'Exam draft locked or deadline passed');}
         check(!!priorSession||session.attemptIds.length===0,'New session cannot claim previous attempts');
-        if(cognitive){check(!!priorSession&&priorSession.attemptIds.length===0,'Cognitive draft session is committed or missing');await verifyDraftLineage(tx,session,cognitive);}
+        if(cognitive){check(!!priorSession&&(!['ATTEMPT','BOUNDARY_TEST'].includes(cognitive.stage)||priorSession.attemptIds.length===0),'Cognitive attempt draft session is committed or missing');await verifyDraftLineage(tx,session,cognitive);}
         check(!existing?.cognitive||cognitive&&eq(existing.cognitive.journey,cognitive.journey),'Cannot overwrite cognitive draft with foreign or ordinary draft');
         const revision = existing ? existing.revision + 1 : 1;
 
@@ -187,7 +187,7 @@ export class DefaultProgressStore implements ProgressStore {
       const draft=await tx.get<DraftRecord>('drafts',sessionId);if(!draft)return null;
       check(eq(draft,initial),'Draft changed during read; retry');
       const session=await tx.get<Session>('sessions',sessionId);check(session,'Draft missing session');
-      if(session.mode==='SIMULATED_EXAM'||draft.cognitive){check(session.draftId===sessionId&&session.attemptIds.length===0,'Invalid exam draft lineage');for(const a of draft.artifacts){check(artifactOk(a)&&eq(await tx.get('artifacts',a.id),a)&&await tx.get('artifact_owners',a.id)===sessionId,'Invalid exam draft artifact closure');}}
+      if(session.mode==='SIMULATED_EXAM'||draft.cognitive){check(session.draftId===sessionId&&(!(session.mode==='SIMULATED_EXAM'||draft.cognitive&&['ATTEMPT','BOUNDARY_TEST'].includes(draft.cognitive.stage))||session.attemptIds.length===0),'Invalid exam draft lineage');for(const a of draft.artifacts){check(artifactOk(a)&&eq(await tx.get('artifacts',a.id),a)&&await tx.get('artifact_owners',a.id)===sessionId,'Invalid exam draft artifact closure');}}
       const snapshot=lineage?await tx.get<CognitiveSnapshot>('cog_snap:'+lineage.journey.journeyId,lineage.journey.journeyId):undefined;
       const cognitiveStale=!!lineage&&(!snapshot||!eq(snapshot.journey,lineage.journey)||snapshot.stage!==lineage.stage||!eq(snapshot.checkpoint,lineage.checkpoint));
       return {...draft,session,cognitive:draft.cognitive??null,cognitiveStale};
