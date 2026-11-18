@@ -64,6 +64,8 @@ it('A49 exact contextual authorization, both durable commitments and source retu
  const re=event(snap.checkpoint,'SOURCE_RETURNED',{origin_session_id:a.id,origin_ref:task,cursor:4});snap=await controller.commit(re,snap.checkpoint,[]);
  assert.equal(await controller.canDisplay('SOURCE_RETURN',task,snap.checkpoint),true);assert.equal((await controller.commit(re,{sequence:re.sequence-1,sha256:re.previous_sha256},[])).checkpoint.sha256,snap.checkpoint.sha256);
  assert.equal((await d.getAll('attempts')).length,2);assert.equal((await s.replay(journey,snap.checkpoint)).stage,'COMPLETE');
+ const historical=await p.loadDraft(a.id);assert.equal(historical?.cognitiveStale,true);assert.deepEqual(historical?.cognitive,lineage);
+ const archive=await s.exportAll(),fresh=new MemoryStorageDriver(),restored=new DefaultCognitiveStore(fresh,new DefaultProgressStore(fresh));await restored.importVerified(archive);assert.equal((await restored.replay(journey,snap.checkpoint)).stage,'COMPLETE');const oldDraft=await new DefaultProgressStore(fresh).loadDraft(a.id);assert.deepEqual(oldDraft?.cognitive,lineage);assert.equal(oldDraft?.cognitiveStale,true);
 });
 it('A49 denies exam and unreviewed task context before durable changes',async()=>{
  const f=await fixture('SIMULATED_EXAM');await assert.rejects(f.controller.begin(),/SESSION_OR_EXAM_POLICY_BLOCKED/);assert.equal(await f.controller.canDisplay('H1',hint,zero,'evt:1'),false);
