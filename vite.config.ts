@@ -1,28 +1,15 @@
 import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import { fileURLToPath } from 'node:url';
+
+const root = fileURLToPath(new URL('./web', import.meta.url));
+const outDir = fileURLToPath(new URL('./dist', import.meta.url));
 
 export default defineConfig({
-  root: resolve(__dirname, 'web'),
+  root,
   base: './',
-  build: {
-    outDir: resolve(__dirname, 'dist'),
-    emptyOutDir: true,
-    target: 'es2022',
-    sourcemap: true,
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'web/index.html')
-      }
-    }
-  },
-  server: {
-    port: 3000,
-    strictPort: true,
-    host: '127.0.0.1'
-  },
-  preview: {
-    port: 4173,
-    strictPort: true,
-    host: '127.0.0.1'
-  }
+  appType: 'mpa',
+  publicDir: false,
+  build: {outDir, emptyOutDir: true, target: 'es2022', sourcemap: false},
+  server: {port: 3000, strictPort: true, host: '127.0.0.1', fs: {strict: true}},
+  preview: {port: 4173, strictPort: true, host: '127.0.0.1'},
 });
