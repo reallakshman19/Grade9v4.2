@@ -168,7 +168,7 @@ export class QuestionWorkspaceController {
       if(grade.status==='INVALID'||grade.status==='UNSUPPORTED'){this.submissionStatus='DIRTY';return this.result('INVALID',grade.reasonCode,null,grade.maxPoints);}
       const attempt:Attempt={id:b.attemptId,sessionId:s.id,releaseId:s.releaseId,item:b.task,response,work:this.work,hintIds:[],submittedAt:new Date().toISOString(),grade,assessmentRef:b.assessment,scoringVersion:SCORING_VERSION,cognitive:null};
       const committed=await b.session.appendAttempt(attempt);this.evaluation=await this.displayCommitted(committed);return this.evaluation;
-    }catch(e){if(this.submissionStatus!=='COMMITTED_LOCKED')this.submissionStatus='DIRTY';throw e;}finally{this.busy=false;}
+    }catch(e){if(!this.getViewState().isLocked)this.submissionStatus='DIRTY';throw e;}finally{this.busy=false;}
   }
   getViewState(): QuestionWorkspaceViewState {
     const allFigures = this.question.figures || [];
