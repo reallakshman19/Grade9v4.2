@@ -4,7 +4,7 @@ import type { CognitiveStore } from './contracts.ts';
 import { type StorageDriver,type TransactionContext,createStorageDriver } from './storage.ts';
 import { canonicalJson,computeSha256,sameRef } from './loader.ts';
 import { validateResponse,findDuplicateKeyInJson } from './response.ts';
-import { DefaultProgressStore,type ExportDataPayload } from './progress.ts';
+import { DefaultProgressStore,verifyDraftLineage,validateBundleData,timestamp,type ExportDataPayload } from './progress.ts';
 import type { DraftRecord } from './storage.ts';
 export const COGNITIVE_EVENT_SCHEMA_VERSION='g9-cognitive-event/2';
 const HISTORICAL_INSTANCE_VERSION='g9-cognitive-event/1';
@@ -19,7 +19,8 @@ const sameJourney=(a:JourneyKey,b:JourneyKey)=>a.journeyId===b.journeyId&&a.task
 const str=(v:unknown)=>typeof v==='string'&&v.trim().length>0;
 const record=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
 const strings=(v:unknown)=>Array.isArray(v)&&v.every(str)&&new Set(v).size===v.length;
-const refOk=(r:unknown)=>record(r)&&Object.keys(r).sort().join(',')==='id,revision,sha256,type'&&str(r.id)&&typeof r.type==='string'&&['SOURCE','OCCURRENCE','QUESTION','ASSESSMENT','WARRANT','QRT','CONSTRUCTION','LESSON','FRESH_TASK','SOLUTION','RELATIONSHIP','PRESENTATION','CONCEPT','ASSET','PROGRAMME','EXAM_EDITION','PAPER','STIMULUS','APPROVAL','RELEASE','SUBJECT_PROFILE'].includes(r.type)&&Number.isSafeInteger(r.revision)&&Number(r.revision)>0&&typeof r.sha256==='string'&&/^[a-f0-9]{64}$/.test(r.sha256);
+const refOk=(r:unknown)=>record(r)&&Object.keys(r).sort().join(',')==='id,revision,sha256,type'&&typeof r.id==='string'&&/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(r.id)&&typeof r.type==='string'&&['SOURCE','OCCURRENCE','QUESTION','ASSESSMENT','WARRANT','QRT','CONSTRUCTION','LESSON','FRESH_TASK','SOLUTION','RELATIONSHIP','PRESENTATION','CONCEPT','ASSET','PROGRAMME','EXAM_EDITION','PAPER','STIMULUS','APPROVAL','RELEASE','SUBJECT_PROFILE'].includes(r.type)&&Number.isSafeInteger(r.revision)&&Number(r.revision)>0&&typeof r.sha256==='string'&&/^[a-f0-9]{64}$/.test(r.sha256);
+const taskOk=(r:unknown):r is Ref=>refOk(r)&&['QUESTION','FRESH_TASK'].includes((r as Ref).type);
 const responseMap=(r:unknown)=>{if(!record(r)||Object.keys(r).length===0)return false;try{for(const x of Object.values(r))validateResponse(x);return true;}catch{return false;}};
 const payloadRules:Record<string,Record<string,(v:unknown)=>unknown>>={
  PREDICTION_COMMITTED:{prediction:str,artifact_ids:strings},
@@ -28,12 +29,12 @@ const payloadRules:Record<string,Record<string,(v:unknown)=>unknown>>={
  RECONSTRUCTION_COMMITTED:{first_event_id:str,comparison:v=>record(v)&&Object.keys(v).length>0&&Object.values(v).every(record),reference_ref:refOk},
  DIAGNOSIS_COMMITTED:{move_id:str,why:str},
  REPAIR_COMMITTED:{first_event_id:str,work:v=>strings(v)&&Array.isArray(v)&&v.length>0,why:str},
- BOUNDARY_COMMITTED:{boundary_task_ref:refOk,responses:responseMap,work:strings,help_event_ids:strings},
+ BOUNDARY_COMMITTED:{boundary_task_ref:taskOk,responses:responseMap,work:strings,help_event_ids:strings},
  BOUNDARY_FEEDBACK_VIEWED:{boundary_event_id:str,reference_ref:refOk},
  SOURCE_RETURNED:{origin_session_id:str,origin_ref:refOk,cursor:v=>Number.isSafeInteger(v)&&Number(v)>=0}
 };
 function validateEvent(e:CognitiveEvent):void{
- guard(record(e)&&Object.keys(e).sort().join(',')==='at,event_id,event_type,journey_id,payload,previous_sha256,release_id,schema_version,sequence,task_instance_id,task_ref'&&[COGNITIVE_EVENT_SCHEMA_VERSION,HISTORICAL_INSTANCE_VERSION].includes(e.schema_version)&&str(e.event_id)&&str(e.journey_id)&&str(e.release_id)&&str(e.task_instance_id)&&refOk(e.task_ref)&&Number.isSafeInteger(e.sequence)&&e.sequence>0&&str(e.at)&&Number.isFinite(Date.parse(e.at))&&/(Z|\+00:00)$/.test(e.at)&&(e.sequence===1?e.previous_sha256===null:typeof e.previous_sha256==='string'&&/^[a-f0-9]{64}$/.test(e.previous_sha256)),'INVALID_EVENT_SCHEMA','Invalid event header');
+ guard(record(e)&&Object.keys(e).sort().join(',')==='at,event_id,event_type,journey_id,payload,previous_sha256,release_id,schema_version,sequence,task_instance_id,task_ref'&&[COGNITIVE_EVENT_SCHEMA_VERSION,HISTORICAL_INSTANCE_VERSION].includes(e.schema_version)&&str(e.event_id)&&str(e.journey_id)&&str(e.release_id)&&str(e.task_instance_id)&&taskOk(e.task_ref)&&Number.isSafeInteger(e.sequence)&&e.sequence>0&&timestamp(e.at)&&(e.sequence===1?e.previous_sha256===null:typeof e.previous_sha256==='string'&&/^[a-f0-9]{64}$/.test(e.previous_sha256)),'INVALID_EVENT_SCHEMA','Invalid event header');
  const rules=Object.hasOwn(payloadRules,e.event_type)?payloadRules[e.event_type]:undefined;
  guard(rules&&record(e.payload)&&Object.keys(e.payload).sort().join(',')===Object.keys(rules).sort().join(',')&&Object.entries(rules).every(([k,fn])=>fn((e.payload as unknown as Record<string,unknown>)[k])),'INVALID_EVENT_SCHEMA','Invalid event payload');
 }
@@ -112,11 +113,18 @@ async function verifyEvidence(tx:TransactionContext,events:readonly CognitiveEve
 interface ArchivedEvent {readonly event:CognitiveEvent;readonly workDigests:readonly string[];readonly attempt:{readonly id:string;readonly sha256:string}|null}
 interface ArchivedJourney {readonly meta:JourneyMeta;readonly checkpoint:Checkpoint;readonly events:readonly ArchivedEvent[]}
 interface CognitiveArchive {readonly progress:ExportDataPayload;readonly journeys:readonly ArchivedJourney[]}
+async function reverseClosure(tx:TransactionContext,data:CognitiveArchive):Promise<void>{
+  validateBundleData(data.progress);const ids=new Set<string>();
+  for(const entry of data.journeys)for(const e of entry.events)if(e.attempt){guard(!ids.has(e.attempt.id),'INVALID_LINEAGE','Reused attempt');ids.add(e.attempt.id);}
+  for(const a of data.progress.attempts){guard(ids.has(a.id)===(a.cognitive!==null),'INVALID_LINEAGE','Cognitive attempt missing event or ordinary attempt linked to event');if(a.cognitive){const link=await tx.get<string>('cognitive_attempt_event',a.id);guard(link,'INVALID_LINEAGE','Missing reverse commitment');}}
+  guard(ids.size===data.progress.attempts.filter(a=>a.cognitive!==null).length,'INVALID_LINEAGE','Missing archive attempt');
+  for(const d of data.progress.drafts)if(d.cognitive){const session=data.progress.sessions.find(s=>s.id===d.sessionId);guard(session,'INVALID_LINEAGE','Draft session missing');await verifyDraftLineage(tx,session!,d.cognitive);}
+}
 async function verifyRetry(tx:TransactionContext,meta:JourneyMeta,seen=new Set<string>()):Promise<void>{
   const id=meta.journey.journeyId;guard(!seen.has(id),'INVALID_LINEAGE','Retry cycle');seen.add(id);
   if(!meta.parentJourney){guard(meta.parentCheckpoint===null,'INVALID_LINEAGE','Unexpected parent checkpoint');return;}
   const parent=await tx.get<JourneyMeta>('cognitive_journeys',meta.parentJourney.journeyId);
-  guard(parent&&sameJourney(parent.journey,meta.parentJourney)&&meta.parentCheckpoint&&sameRef(parent.journey.task,meta.journey.task)&&parent.journey.releaseId===meta.journey.releaseId&&parent.journey.taskInstanceId!==meta.journey.taskInstanceId,'INVALID_LINEAGE','Retry parent missing or mismatched');
+  guard(parent&&sameJourney(parent.journey,meta.parentJourney)&&parent.origin&&equal(parent.origin,meta.origin)&&meta.parentCheckpoint&&sameRef(parent.journey.task,meta.journey.task)&&parent.journey.releaseId===meta.journey.releaseId&&parent.journey.taskInstanceId!==meta.journey.taskInstanceId,'INVALID_LINEAGE','Retry parent missing or mismatched');
   const events=await tx.getAll<CognitiveEvent>('cog_events:'+parent!.journey.journeyId);
   const prefix=events.filter(e=>e.sequence<=meta.parentCheckpoint!.sequence);
   const snapshot=await rebuild(prefix,parent!.journey);
@@ -128,6 +136,20 @@ export class DefaultCognitiveStore implements CognitiveStore {
  private readonly progress:DefaultProgressStore;
  constructor(driver:StorageDriver=createStorageDriver(),progress?:DefaultProgressStore){this.driver=driver;this.progress=progress??new DefaultProgressStore(driver);}
  private async names(journeyIds:readonly string[]=[]):Promise<string[]>{const metas=await this.driver.getAll<JourneyMeta>('cognitive_journeys');return [...new Set([...EVIDENCE_STORES,...[...journeyIds,...metas.map(m=>m.journey.journeyId)].flatMap(id=>['cog_events:'+id,'cog_snap:'+id])])];}
+ // Start a stage-specific draft at PREDICT without fabricating an event.
+ async begin(journey:JourneyKey,originSessionId:string):Promise<CognitiveSnapshot>{
+   journey=structuredClone(journey);const id=journey.journeyId;
+   guard(str(id)&&str(journey.taskInstanceId)&&str(journey.releaseId)&&taskOk(journey.task),'IDENTITY_MISMATCH','Invalid journey');
+   return this.driver.transaction(await this.names([id]),'readwrite',async tx=>{
+     const origin=await tx.get<Session>('sessions',originSessionId);
+     guard(origin&&origin.releaseId===journey.releaseId&&origin.mode!=='SIMULATED_EXAM'&&refOk(origin.item),'INVALID_LINEAGE','Missing original session');
+     guard(!(await tx.get('cognitive_journeys',id))&&!(await tx.get('cognitive_instances',journey.taskInstanceId)),'EVENT_ID_COLLISION','Journey or instance already exists');
+     const genesis=createGenesisSnapshot(journey);
+     await tx.put('cognitive_journeys',id,{journey,parentJourney:null,parentCheckpoint:null,origin:{sessionId:originSessionId,ref:origin!.item,cursor:origin!.cursor}} satisfies JourneyMeta);
+     await tx.put('cognitive_instances',journey.taskInstanceId,id);
+     await tx.put('cog_snap:'+id,id,genesis);return genesis;
+   });
+ }
  async append(event:CognitiveEvent,expected:JourneyKey,checkpoint:Checkpoint,work:readonly WorkArtifact[],attempt?:Attempt):Promise<CognitiveSnapshot>{
    event=structuredClone(event);expected=structuredClone(expected);checkpoint=structuredClone(checkpoint);work=structuredClone(work);attempt=attempt&&structuredClone(attempt);
    validateEvent(event);guard(sameJourney(identity(event),expected),'IDENTITY_MISMATCH','Wrong journey, task, instance or release');
@@ -155,7 +177,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
        guard(attempt&&equal(attempt.work,work),'INVALID_LINEAGE','Commit requires corresponding attempt and work');
        if(!meta.origin)meta={...meta,origin:originOf(attempt!)};
        const origin=await tx.get<Session>('sessions',meta.origin!.sessionId);
-       guard(origin&&(current.firstAttemptId!==null||origin.cursor===meta.origin!.cursor),'INVALID_LINEAGE','Origin cursor must match at initial commitment');
+       guard(origin&&(current.firstAttemptId!==null||meta.parentJourney!==null||origin.cursor===meta.origin!.cursor),'INVALID_LINEAGE','Origin cursor must match at initial commitment');
        await this.progress.commitAttempt(tx,attempt!);
        const first=current.firstAttemptId?await tx.get<{id:string}>('cognitive_event_attempt',current.firstAttemptId):undefined;
        await checkAttempt(tx,event,attempt!,meta,first?.id??null);
@@ -186,9 +208,9 @@ export class DefaultCognitiveStore implements CognitiveStore {
    const key='cog_events:'+parent.journeyId;
    return this.driver.transaction(await this.names([parent.journeyId,next.journeyId]),'readwrite',async tx=>{
      const meta=await tx.get<JourneyMeta>('cognitive_journeys',parent.journeyId);guard(meta&&sameJourney(meta.journey,parent),'JOURNEY_NOT_FOUND','Parent not found');
-     const events=await tx.getAll<CognitiveEvent>(key);const snap=await rebuild(events,parent);await verifyEvidence(tx,events,meta!);await verifyRetry(tx,meta!);guard(!meta!.imported&&equal(snap.checkpoint,checkpoint),'STALE_HASH','Parent checkpoint mismatch or imported history');
+     const events=await tx.getAll<CognitiveEvent>(key);const snap=await rebuild(events,parent);await verifyEvidence(tx,events,meta!);await verifyRetry(tx,meta!);guard(!meta!.imported&&meta!.origin&&equal(snap.checkpoint,checkpoint),'STALE_HASH','Parent checkpoint mismatch or imported history');
      guard(!(await tx.get('cognitive_journeys',next.journeyId))&&!(await tx.get('cognitive_instances',next.taskInstanceId)),'EVENT_ID_COLLISION','Retry journey or instance already exists');await tx.put('cognitive_instances',next.taskInstanceId,next.journeyId);
-     await tx.put('cognitive_journeys',next.journeyId,{journey:next,parentJourney:parent,parentCheckpoint:checkpoint} satisfies JourneyMeta);return createGenesisSnapshot(next);
+     const genesis=createGenesisSnapshot(next);await tx.put('cognitive_journeys',next.journeyId,{journey:next,parentJourney:parent,parentCheckpoint:checkpoint,origin:meta!.origin} satisfies JourneyMeta);await tx.put('cog_snap:'+next.journeyId,next.journeyId,genesis);return genesis;
    });
  }
  // R4 original v1 has no task instance; preserve exact input, original hashes, and quarantine.
@@ -238,7 +260,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
        journeys.push({meta,checkpoint:snap.checkpoint,events:entries});
      }
      const progress:ExportDataPayload={sessions:await tx.getAll<Session>('sessions'),drafts:await tx.getAll<DraftRecord>('drafts'),attempts:await tx.getAll<Attempt>('attempts'),artifacts:await tx.getAll<WorkArtifact>('artifacts')};
-     return {progress,journeys} satisfies CognitiveArchive;
+     const archive={progress,journeys} satisfies CognitiveArchive;await reverseClosure(tx,archive);return archive;
    });
    return new Blob([JSON.stringify({schema_version:COGNITIVE_EXPORT_VERSION,checksum:await computeSha256(canonicalJson(data)),data})],{type:'application/json'});
  }
@@ -253,7 +275,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
      await this.progress.restoreEmpty(tx,data.progress);
      for(const entry of data.journeys){
        const meta:JourneyMeta={...entry.meta,imported:true};
-       const j=meta.journey;guard(str(j.journeyId)&&str(j.taskInstanceId)&&str(j.releaseId)&&refOk(j.task)&&!(await tx.get('cognitive_instances',j.taskInstanceId)),'INVALID_LINEAGE','Invalid or duplicate task instance');
+       const j=meta.journey;guard(str(j.journeyId)&&str(j.taskInstanceId)&&str(j.releaseId)&&taskOk(j.task)&&!(await tx.get('cognitive_instances',j.taskInstanceId)),'INVALID_LINEAGE','Invalid or duplicate task instance');
        guard((await tx.getAll('cog_events:'+j.journeyId)).length===0&&!(await tx.get('cog_snap:'+j.journeyId,j.journeyId)),'RECORD_CONFLICT','Restore target already has events');
        await tx.put('cognitive_journeys',j.journeyId,meta);await tx.put('cognitive_instances',j.taskInstanceId,j.journeyId);
        for(const e of entry.events){
@@ -267,6 +289,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
        guard(equal(snap.checkpoint,entry.checkpoint),'STALE_HASH','Archive checkpoint differs');await tx.put('cog_snap:'+j.journeyId,j.journeyId,snap);
      }
      for(const entry of data.journeys){const meta=await tx.get<JourneyMeta>('cognitive_journeys',entry.meta.journey.journeyId);await verifyEvidence(tx,entry.events.map(e=>e.event),meta!);await verifyRetry(tx,meta!);}
+     await reverseClosure(tx,data);
    });
  }
  async getQuarantinedEvents(journeyId?:string):Promise<readonly QuarantineRecord[]>{const all=await this.driver.getAll<QuarantineRecord>('cognitive_quarantine');return journeyId?all.filter(q=>q.journeyId===journeyId):all;}
