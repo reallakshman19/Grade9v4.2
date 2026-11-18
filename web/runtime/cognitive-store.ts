@@ -139,9 +139,9 @@ export class DefaultCognitiveStore implements CognitiveStore {
      const current=await rebuild(events,expected);
      guard(!events.length||meta,'CORRUPT_CHAIN','Missing journey metadata');if(meta){await verifyEvidence(tx,events,meta);await verifyRetry(tx,meta);}
      const stored=await tx.get<CognitiveSnapshot>(snapKey,id);
-     if(stored)guard(equal(stored,current),'CORRUPT_CHAIN','Stored checkpoint diverges');
+     guard(!events.length||stored&&equal(stored,current),'CORRUPT_CHAIN','Missing or divergent stored checkpoint');
      const duplicate=await tx.get<CognitiveEvent>('cognitive_event_ids',event.event_id);
-     if(duplicate){guard(equal(duplicate,event),'EVENT_ID_COLLISION','Duplicate event ID differs');guard(current.eventIds.includes(event.event_id),'IDENTITY_MISMATCH','Event belongs to another journey');const linked=await tx.get<readonly string[]>('cognitive_event_work',event.event_id);guard(equal(linked??[],work.map(a=>a.id)),'RECORD_CONFLICT','Duplicate event work differs');for(const a of work)guard(equal(await tx.get('artifacts',a.id),a),'RECORD_CONFLICT','Duplicate artifact differs');return current;}
+     if(duplicate){guard(equal(duplicate,event),'EVENT_ID_COLLISION','Duplicate event ID differs');guard(current.eventIds.includes(event.event_id),'IDENTITY_MISMATCH','Event belongs to another journey');const linked=await tx.get<readonly string[]>('cognitive_event_work',event.event_id);guard(equal(linked??[],work.map(a=>a.id)),'RECORD_CONFLICT','Duplicate event work differs');for(const a of work)guard(equal(await tx.get('artifacts',a.id),a),'RECORD_CONFLICT','Duplicate artifact differs');if(attempt){const binding=await tx.get<{id:string;sha256:string}>('cognitive_event_attempt',event.event_id);guard(binding&&binding.id===attempt.id&&binding.sha256===await computeSha256(canonicalJson(attempt)),'RECORD_CONFLICT','Duplicate commitment attempt differs');}return current;}
      guard(equal(checkpoint,current.checkpoint),'STALE_HASH','Expected checkpoint differs');
      guard(event.sequence===current.checkpoint.sequence+1,'CHAIN_DIVERGENCE','Sequence gap');
      guard(event.previous_sha256===current.lastHash,'STALE_HASH','Previous hash differs');
@@ -164,7 +164,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
        await tx.put('cognitive_attempt_event',attempt!.id,event.event_id);
      }else guard(!attempt,'INVALID_LINEAGE','Attempt only belongs to a commitment');
      const digests:string[]=[];
-     for(const a of work){guard(validArtifact(a),'INVALID_EVENT_SCHEMA','Invalid artifact');const old=await tx.get<WorkArtifact>('artifacts',a.id);guard(!old||equal(old,a),'RECORD_CONFLICT','Immutable artifact conflict');const own=await tx.get<string>('cognitive_artifact_owner',a.id);guard(!own||own===id,'INVALID_LINEAGE','Cross-journey artifact');if(!old)await tx.put('artifacts',a.id,a);await tx.put('cognitive_artifact_owner',a.id,id);digests.push(await computeSha256(canonicalJson(a)));}
+     for(const a of work){guard(validArtifact(a),'INVALID_EVENT_SCHEMA','Invalid artifact');const old=await tx.get<WorkArtifact>('artifacts',a.id);guard(!old||equal(old,a),'RECORD_CONFLICT','Immutable artifact conflict');const own=await tx.get<string>('cognitive_artifact_owner',a.id);guard(!own||own===id,'INVALID_LINEAGE','Cross-journey artifact');if(event.event_type==='REPAIR_COMMITTED'||event.event_type==='BOUNDARY_COMMITTED')guard(!own,'INVALID_LINEAGE','Repair and boundary require new work IDs');if(!old)await tx.put('artifacts',a.id,a);await tx.put('cognitive_artifact_owner',a.id,id);digests.push(await computeSha256(canonicalJson(a)));}
      await tx.put('cognitive_instances',expected.taskInstanceId,id);
      await tx.put('cognitive_journeys',id,meta);
      await tx.put('cognitive_event_work',event.event_id,required);await tx.put('cognitive_work_digest',event.event_id,digests);await tx.put(eventsKey,String(event.sequence),event);await tx.put('cognitive_event_ids',event.event_id,event);
@@ -178,7 +178,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
      const meta=await tx.get<JourneyMeta>('cognitive_journeys',id);guard(meta&&sameJourney(meta.journey,journey),'IDENTITY_MISMATCH','Missing or wrong replay identity');
      const events=await tx.getAll<CognitiveEvent>(key);const snap=await rebuild(events,journey);await verifyEvidence(tx,events,meta!);await verifyRetry(tx,meta!);
      guard(equal(snap.checkpoint,expectedCheckpoint),'STALE_HASH','Replay checkpoint mismatch');
-     const stored=await tx.get<CognitiveSnapshot>(snapKey,id);if(stored)guard(equal(stored,snap),'CORRUPT_CHAIN','Stored snapshot mismatch');return snap;
+     const stored=await tx.get<CognitiveSnapshot>(snapKey,id);guard(!events.length||stored&&equal(stored,snap),'CORRUPT_CHAIN','Missing or divergent stored snapshot');return snap;
    });
  }
  async retry(parent:JourneyKey,checkpoint:Checkpoint,next:JourneyKey):Promise<CognitiveSnapshot>{
@@ -209,11 +209,19 @@ export class DefaultCognitiveStore implements CognitiveStore {
    await this.driver.transaction(['cognitive_legacy_quarantine'],'readwrite',async tx=>{const old=await tx.get('cognitive_legacy_quarantine',id);guard(!old||equal(old,entry),'RECORD_CONFLICT','Legacy evidence conflict');if(!old)await tx.put('cognitive_legacy_quarantine',id,entry);});
    return {id,disposition:'QUARANTINED',reason};
  }
- async replayForDisclosure(journey:JourneyKey,checkpoint:Checkpoint):Promise<CognitiveSnapshot>{
-   const snap=await this.replay(journey,checkpoint);
-   const meta=await this.driver.get<JourneyMeta>('cognitive_journeys',journey.journeyId);
-   guard(meta&&!meta.imported,'INVALID_LINEAGE','Imported history cannot authorize disclosure');return snap;
+ async readForDisclosure(journey:JourneyKey,checkpoint:Checkpoint):Promise<{snapshot:CognitiveSnapshot;events:readonly CognitiveEvent[];meta:JourneyMeta}>{
+   const id=journey.journeyId;
+   return this.driver.transaction(await this.names([id]),'readonly',async tx=>{
+     const meta=await tx.get<JourneyMeta>('cognitive_journeys',id);
+     guard(meta&&!meta.imported&&sameJourney(meta.journey,journey),'INVALID_LINEAGE','Missing live journey or imported history');
+     const events=await tx.getAll<CognitiveEvent>('cog_events:'+id),snap=await rebuild(events,journey);
+     const stored=await tx.get<CognitiveSnapshot>('cog_snap:'+id,id);
+     guard(equal(snap.checkpoint,checkpoint)&&(!events.length||stored&&equal(stored,snap)),'STALE_HASH','Missing or stale disclosure checkpoint');
+     await verifyEvidence(tx,events,meta!);await verifyRetry(tx,meta!);
+     return {snapshot:snap,events:[...events].sort((a,b)=>a.sequence-b.sequence),meta:meta!};
+   });
  }
+ async replayForDisclosure(journey:JourneyKey,checkpoint:Checkpoint):Promise<CognitiveSnapshot>{return (await this.readForDisclosure(journey,checkpoint)).snapshot;}
  async exportAll():Promise<Blob>{
    const names=await this.names();
    const data=await this.driver.transaction(names,'readonly',async tx=>{
