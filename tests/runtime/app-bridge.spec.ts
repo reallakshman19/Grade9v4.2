@@ -62,7 +62,7 @@ function makeEnvelope(
   nonce: string,
   payload?: unknown,
 ): object {
-  return { type, nonce, sessionId, payload };
+  return { type, nonce, sessionId, sequence:1, payload };
 }
 
 // ---------------------------------------------------------------------------
@@ -483,27 +483,27 @@ describe("ResourcesPageController – registry", () => {
   ];
 
   it("loads resources", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources(SAMPLE);
     assert.equal(ctrl.getResources().length, 4);
   });
 
   it("filters to eligible only", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources(SAMPLE);
     assert.equal(ctrl.getEligibleResources().length, 1);
     assert.equal(ctrl.getEligibleResources()[0].id, "r1");
   });
 
   it("findResource by id", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources(SAMPLE);
     assert.ok(ctrl.findResource("r2") !== undefined);
     assert.equal(ctrl.findResource("r2")?.eligibility, "HOLD");
   });
 
   it("findResource returns undefined for missing id", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources(SAMPLE);
     assert.equal(ctrl.findResource("not-exist"), undefined);
   });
@@ -528,42 +528,42 @@ describe("ResourcesPageController – launch eligibility", () => {
   };
 
   it("launches eligible resource successfully", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     const result = ctrl.launch("r-elig");
     assert.equal(result.outcome, "LAUNCHED");
   });
 
   it("rejects HOLD resource", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([HOLD]);
     const result = ctrl.launch("r-hold");
     assert.equal(result.outcome, "REJECTED_HOLD");
   });
 
   it("rejects RESTRICTED resource", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([RESTRICTED]);
     const result = ctrl.launch("r-restr");
     assert.equal(result.outcome, "REJECTED_RESTRICTED");
   });
 
   it("rejects STALE resource", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([STALE]);
     const result = ctrl.launch("r-stale");
     assert.equal(result.outcome, "REJECTED_STALE");
   });
 
   it("rejects unknown resource id", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     const result = ctrl.launch("does-not-exist");
     assert.equal(result.outcome, "REJECTED_UNKNOWN");
   });
 
   it("rejects same-origin resource", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     const sameOrigin: Resource = {
       id: "same", title: "Same", url: `${HOST_ORIGIN}/app`, origin: HOST_ORIGIN, eligibility: "ELIGIBLE",
     };
@@ -573,7 +573,7 @@ describe("ResourcesPageController – launch eligibility", () => {
   });
 
   it("rejects mismatched origin field vs URL", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     const bad: Resource = {
       id: "bad", title: "Bad", url: `${APP_ORIGIN}/bad`, origin: "https://different.example.com", eligibility: "ELIGIBLE",
     };
@@ -593,21 +593,21 @@ describe("ResourcesPageController – lifecycle", () => {
   };
 
   it("active host is non-null after launch", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     ctrl.launch("r-elig");
     assert.ok(ctrl.getActiveHost() !== null);
   });
 
   it("active resource id set after launch", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     ctrl.launch("r-elig");
     assert.equal(ctrl.getActiveResourceId(), "r-elig");
   });
 
   it("prevents double-launch (ALREADY_ACTIVE)", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     ctrl.launch("r-elig");
     const result = ctrl.launch("r-elig");
@@ -615,7 +615,7 @@ describe("ResourcesPageController – lifecycle", () => {
   });
 
   it("safeReturn() clears active host", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     ctrl.launch("r-elig");
     ctrl.safeReturn();
@@ -624,7 +624,7 @@ describe("ResourcesPageController – lifecycle", () => {
   });
 
   it("safeReturn() returns HOST_DISMISS envelope", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     ctrl.launch("r-elig");
     const env = ctrl.safeReturn();
@@ -633,17 +633,17 @@ describe("ResourcesPageController – lifecycle", () => {
   });
 
   it("safeReturn() returns null when no active host", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     assert.equal(ctrl.safeReturn(), null);
   });
 
   it("rotate() returns null when no active host", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     assert.equal(ctrl.rotate("landscape"), null);
   });
 
   it("rotate() forwards orientation to host", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     ctrl.launch("r-elig");
     const env = ctrl.rotate("landscape");
@@ -653,14 +653,14 @@ describe("ResourcesPageController – lifecycle", () => {
   });
 
   it("getHostState() is LAUNCHING right after launch", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     ctrl.loadResources([ELIGIBLE]);
     ctrl.launch("r-elig");
     assert.equal(ctrl.getHostState(), "LAUNCHING");
   });
 
   it("getHostState() is null when no active host", () => {
-    const ctrl = createResourcesPage(HOST_ORIGIN);
+    const ctrl = createResourcesPage(HOST_ORIGIN,()=>true);
     assert.equal(ctrl.getHostState(), null);
   });
 });
