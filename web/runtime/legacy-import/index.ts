@@ -3,6 +3,7 @@ import type {StorageDriver} from '../storage.ts';
 import type {Ref} from '../types.ts';
 import {canonicalJson,computeSha256} from '../loader.ts';
 import {findDuplicateKeyInJson,validateResponse} from '../response.ts';
+import {refOk,timestamp} from '../progress.ts';
 export interface LegacyAuthority{
   authorize(rawSha256:string,origin:string):Promise<boolean>;
   resolveItem(id:string,revision:number):Promise<{ref:Ref<'QUESTION'|'FRESH_TASK'>;optionIds:readonly string[]}|null>;
@@ -11,7 +12,20 @@ export interface LegacyHistoryRow{readonly sourceOrigin:string;readonly sourceId
 export interface LegacyDryRun{readonly rawSha256:string;readonly origin:string;readonly deviceTrust:'UNKNOWN_DEVICE';readonly disposition:'MAPPED_HISTORY'|'QUARANTINED';readonly reasons:readonly string[];readonly rows:readonly LegacyHistoryRow[]}
 const nonblank=(v:unknown):v is string=>typeof v==='string'&&v.trim().length>0;
 const obj=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
-const timestamp=(v:unknown):v is string=>typeof v==='string'&&/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|\+00:00)$/.test(v)&&Number.isFinite(Date.parse(v));
+// Observed in pinned native source code. These browser-local records lack the
+// authenticated session/instance/attempt closure necessary for live promotion.
+export function classifyNativeKey(key:string):string|null{
+  if(key.startsWith('gx1:'))return 'V35_EXPLORER_LOG';
+  if(key.startsWith('grade9v3_atlas_'))return 'V35_ATLAS_STATE';
+  if(key==='grade9v3_prompt_composer_handoff_v1')return 'V35_COMPOSER_HANDOFF';
+  if(key==='g9-theme')return 'V35_THEME_PREFERENCE';
+  if(key.startsWith('G9V41:PHYSICS:QUALITY-R2:STUDY:'))return 'V41_GUIDE_EXPOSURE';
+  if(key.startsWith('G9V41:PHYSICS:R2:'))return 'V41_PROTECTED_LOCAL_ATTEMPT';
+  if(key.startsWith('g9-physics-agent2-core1b-v1:'))return 'V41_CORE1B_LOCAL_STATE';
+  if(key.startsWith('g9:nsejs:iapt-link-note:v1:'))return 'V41_SOURCE_LINK_NOTE';
+  if(key.startsWith('g9:nsejs:author-core1b:v1:'))return 'V41_AUTHORED_TRANSFER';
+  return null;
+}
 export class LegacyStateImporter{
   private readonly driver:StorageDriver;private readonly authority:LegacyAuthority;
   constructor(driver:StorageDriver,authority:LegacyAuthority){this.driver=driver;this.authority=authority;}
@@ -22,6 +36,7 @@ export class LegacyStateImporter{
     const rawSha256=await computeSha256(raw),origin=value.origin;
     if(!await this.authority.authorize(rawSha256,origin))throw Error('LEGACY_EXPORT_NOT_AUTHORIZED');
     const reasons:string[]=[],rows:LegacyHistoryRow[]=[];
+    if(value.rawStorageDump!==undefined){if(!obj(value.rawStorageDump))reasons.push('INVALID_NATIVE_STORAGE_DUMP');else for(const key of Object.keys(value.rawStorageDump)){const family=classifyNativeKey(key);reasons.push(family?'NATIVE_RECORD_REQUIRES_EXACT_MAPPING:'+family:'UNRECOGNIZED_NATIVE_STORAGE_KEY');}}
     const sessions=Array.isArray(value.sessions)?value.sessions:[],attempts=Array.isArray(value.attempts)?value.attempts:[];
     if(!Array.isArray(value.sessions)||!Array.isArray(value.attempts))reasons.push('MISSING_SOURCE_COLLECTION');
     const sessionIds=new Set<string>(),attemptIds=new Set<string>();
@@ -30,7 +45,7 @@ export class LegacyStateImporter{
       if(!obj(a)||!nonblank(a.id)||!nonblank(a.sessionId)||!sessionIds.has(a.sessionId)||!nonblank(a.itemId)||!Number.isSafeInteger(a.revision)||Number(a.revision)<1||!timestamp(a.submittedAt)||attemptIds.has(a.id)){reasons.push('UNVERIFIABLE_ATTEMPT');continue;}
       attemptIds.add(a.id);
       const item=await this.authority.resolveItem(a.itemId,Number(a.revision));
-      if(!item||item.ref.id!==a.itemId||item.ref.revision!==a.revision){reasons.push('UNRESOLVED_EXACT_ITEM');continue;}
+      if(!item||!refOk(item.ref)||!['QUESTION','FRESH_TASK'].includes(item.ref.type)||item.ref.id!==a.itemId||item.ref.revision!==a.revision){reasons.push('UNRESOLVED_EXACT_ITEM');continue;}
       try{
         const response=validateResponse(a.response);
         if(response.kind==='SINGLE_CHOICE'&&!item.optionIds.includes(response.value)||response.kind==='MULTIPLE_CHOICE'&&!response.value.every(id=>item.optionIds.includes(id)))throw Error('INVALID_OPTION');
