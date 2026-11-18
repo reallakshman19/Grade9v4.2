@@ -25,8 +25,8 @@ export class SingleChoiceController implements ResponseInputController<SingleCho
   private focusedOptionIndex: number = 0;
 
   constructor(options: readonly ChoiceOption[], initialSelectedId: string | null = null) {
-    this.options = [...options];
-    this.selectedOptionId = initialSelectedId;
+    if(new Set(options.map(o=>o.id)).size!==options.length)throw Error('Duplicate option identity');this.options=Object.freeze(options.map(o=>Object.freeze({...o})));
+    this.selectedOptionId=initialSelectedId!==null&&this.options.some(o=>o.id===initialSelectedId)?initialSelectedId:null;
   }
 
   getOptions(): readonly ChoiceOption[] {
@@ -42,7 +42,7 @@ export class SingleChoiceController implements ResponseInputController<SingleCho
 
   setValue(value: SingleChoiceValue): void {
     if (this.locked) return;
-    this.selectedOptionId = value.selectedOptionId;
+    if(value.selectedOptionId===null||this.options.some(o=>o.id===value.selectedOptionId))this.selectedOptionId=value.selectedOptionId;
   }
 
   selectOption(optionId: string): boolean {
