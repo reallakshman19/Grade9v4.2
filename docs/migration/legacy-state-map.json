@@ -1,11 +1,77 @@
 {
   "schema_version": "g9-legacy-state-map/2",
-  "status": "CANDIDATE_SOURCE_INVENTORY_NOT_RECEIVED",
-  "source_origins": "AUTHORITATIVE_OWNER_INPUT_REQUIRED",
-  "storage_keys": "NOT_RECEIVED",
+  "status": "BOUNDED_NATIVE_SOURCE_INVENTORY_VERIFIED_USER_EXPORT_NOT_RECEIVED",
+  "source_origins": "Actual browser origin must be bound by owner-authorized export; not inferred from repository URL.",
+  "storage_keys": [
+    {
+      "source": "Grade9v3.5",
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "path": "Shared/web/explorer-runtime.js",
+      "blob": "c6874d1901db7e78e1bcf878f4d9c128606277d9",
+      "keys": [
+        "gx1:${pathname}:${renderDigest}",
+        "gx1:${pathname}:${renderDigest}:retry",
+        "g9-theme"
+      ],
+      "mapping": "raw preservation; log and preferences are not canonical attempts"
+    },
+    {
+      "source": "Grade9v3.5",
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "path": "docs/js/topic-atlas.js",
+      "blob": "ed791c0ed02eeda34e58a43b0c88ceb4f4a16253",
+      "keys": [
+        "grade9v3_atlas_${matrix_id}",
+        "grade9v3_prompt_composer_handoff_v1"
+      ],
+      "mapping": "raw preservation; atlas state and handoff are not canonical attempts"
+    },
+    {
+      "source": "Grade9v4.1",
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "path": "nsejs/physics/quality-r1/protected-attempt-store.js",
+      "blob": "9fe78bc03b1bd434ff41f358a53da3a99b41455c",
+      "keys": [
+        "G9V41:PHYSICS:QUALITY-R2:STUDY:${unit}:${revision}",
+        "G9V41:PHYSICS:R2:${uid}:${revision}:${hash}"
+      ],
+      "mapping": "raw preservation; native stage record lacks authenticated v4.2 instance/attempt closure"
+    },
+    {
+      "source": "Grade9v4.1",
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "path": "nsejs/physics/curriculum/agent2/core1b-runtime.js",
+      "blob": "069edd250d141506a396b13e2759b742c0883de0",
+      "keys": [
+        "g9-physics-agent2-core1b-v1:${task_id}"
+      ],
+      "mapping": "raw preservation; exact package/task/response mapping needed"
+    },
+    {
+      "source": "Grade9v4.1",
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "path": "nsejs/js/source-linked-exam-practice.js",
+      "blob": "79fe30d2490d6bec3067abea04928ad884f94710",
+      "keys": [
+        "g9:nsejs:iapt-link-note:v1:${revision}:${subject}:2024:CODE51:Q${number}"
+      ],
+      "mapping": "raw preservation; exact edition/item/option mapping needed"
+    },
+    {
+      "source": "Grade9v4.1",
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "path": "nsejs/js/authored-transfer-practice.js",
+      "blob": "a4837a13691eb1718babfc0446339972d90e8cf5",
+      "keys": [
+        "g9:nsejs:author-core1b:v1:${subject}:${sourceDigest}:${uid}:${revision_sha256}"
+      ],
+      "mapping": "raw preservation; exact task/source mapping needed"
+    }
+  ],
   "supported_envelope": "g9-legacy-import/1.0",
   "mapping": "exact owner-authorized origin and raw SHA; exact item id/revision/ref and option membership; no inferred ID, timestamp, grade, session, or release",
   "disposition": "unresolved data quarantined; normalized history separate from live attempts; UNKNOWN_DEVICE; REVIEW_PENDING; not protected or mastery evidence",
   "atomicity": "one StorageDriver transaction for raw archive and history rows",
-  "academic_admission": "HOLD"
+  "academic_admission": "HOLD",
+  "coverage": "Bounded source-code inventory, not full repository/device enumeration. Raw user export and authorized origin/revision mapping not received. Raw native records are retained and quarantined rather than fabricated."
 }
