@@ -52,3 +52,57 @@ it('two tabs share a durable draft CAS and reject stale writes after reload',asy
   await ctx.close();
  }finally{await browser.close();await server.close();}
 });
+
+it('Stage4: real Chromium atomic cognitive commitment, rollback, refresh and database deletion/restore',async()=>{
+ const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();
+ const address=server.httpServer!.address();assert(address&&typeof address!=='string');
+ const browser=await chromium.launch({headless:true});
+ try{
+  const page=await browser.newPage();await page.goto('http://127.0.0.1:'+address.port+'/');
+  const result=await page.evaluate(async()=>{
+   const storagePath='/runtime/storage.ts',progressPath='/runtime/progress.ts',cogPath='/runtime/cognitive-store.ts',assessmentPath='/runtime/assessment.ts',loaderPath='/runtime/loader.ts',controllerPath='/journeys/cognitive-controller.ts',capPath='/runtime/capabilities.ts';
+   const {IndexedDBStorageDriver}=await import(storagePath),{DefaultProgressStore}=await import(progressPath),{DefaultCognitiveStore}=await import(cogPath),{StandardAssessmentEngine,SCORING_VERSION}=await import(assessmentPath),{canonicalJson,computeSha256}=await import(loaderPath),{CognitiveController}=await import(controllerPath),{createStandardCapability}=await import(capPath);
+   const mount=document.createElement('div');document.body.append(mount);let received:any=null;const dispose=createStandardCapability('MULTIPART').mount(mount,null,(v:any)=>received=v);
+   const field=mount.querySelector('textarea')!;field.value='{"kind":{"kind":"INTEGER","value":"7"}}';field.dispatchEvent(new Event('input'));
+   const partOk=received?.value?.kind?.value==='7';field.value='{"a":{"kind":"INTEGER","value":"7"},"a":{"kind":"INTEGER","value":"8"}}';field.dispatchEvent(new Event('input'));const duplicateRejected=field.getAttribute('aria-invalid')==='true'&&received?.value?.kind?.value==='7';dispose();mount.remove();
+   const dbName='g9-cog-r3-'+crypto.randomUUID(),task={type:'QUESTION',id:'que:browser:r3',revision:1,sha256:'a'.repeat(64)},releaseId='RELEASE-DEMO-01',j={journeyId:'jrn:browser:r3',taskInstanceId:'inst:browser:r3',task,releaseId},at='2026-11-17T12:00:00Z';
+   const contract={id:'asmt:browser:r3',revision:1,task_ref:task,response_kind:'MULTIPART',max_points:1,evaluator:{mode:'REVIEW_PENDING'}};
+   const assessment={type:'ASSESSMENT',id:contract.id,revision:1,sha256:await computeSha256(canonicalJson(contract))};
+   const engine=new StandardAssessmentEngine([{assessment,task}]);await engine.registerContract(contract,assessment);
+   const response={kind:'MULTIPART',value:{a:{kind:'INTEGER',value:'7'}}};
+   const grade=await engine.evaluate(response,assessment,'PRACTICE',task);
+   const verify=async(a:any)=>a.releaseId===releaseId&&a.scoringVersion===SCORING_VERSION&&canonicalJson(a.assessmentRef)===canonicalJson(assessment)&&canonicalJson(a.item)===canonicalJson(task)&&canonicalJson(a.grade)===canonicalJson(await engine.evaluate(a.response,assessment,'PRACTICE',task));
+   const session={id:'ses:browser:r3',releaseId,item:task,mode:'PRACTICE',contentRevision:'r3',cursor:0,origin:null,returnRoute:null,attemptIds:[],draftId:null};
+   const auth={liveRevision:async()=> 'r3',allowed:async(_j:any,_s:any,_cap:any,asset:any)=>canonicalJson(asset)===canonicalJson(task),boundaryAllowed:async()=>false};
+   const d=new IndexedDBStorageDriver({dbName}),p=new DefaultProgressStore(d,verify),s=new DefaultCognitiveStore(d,p),controller=new CognitiveController({journey:j,sessionId:session.id},s,d,auth);
+   await d.put('sessions',session.id,session);let snap=await controller.begin();
+   const event=(kind:string,payload:any,cp:any)=>({schema_version:'g9-cognitive-event/2',event_id:'evt:r3:'+String(cp.sequence+1),journey_id:j.journeyId,task_instance_id:j.taskInstanceId,release_id:releaseId,task_ref:task,sequence:cp.sequence+1,previous_sha256:cp.sha256,event_type:kind,payload,at});
+   const pre=await controller.canDisplay('REFERENCE_SOLUTION',task,snap.checkpoint);
+   snap=await controller.commit(event('PREDICTION_COMMITTED',{prediction:'unsure',artifact_ids:[]},snap.checkpoint),snap.checkpoint,[]);
+   const help=event('HELP_EXPOSED',{capability:'H1',asset_ref:task,ordinal:1},snap.checkpoint);
+   const hintBefore=await controller.canDisplay('H1',task,snap.checkpoint,help.event_id);snap=await controller.commit(help,snap.checkpoint,[]);
+   const hintAfter=await controller.canDisplay('H1',task,snap.checkpoint,help.event_id);
+   const art={id:'art:browser:r3',kind:'NOTE',version:1,value:'synthetic reasoning'};
+   const commit=event('FIRST_COMMITTED',{responses:response.value,work:[art.id],help_event_ids:[help.event_id]},snap.checkpoint);
+   const attempt={id:'att:browser:r3',sessionId:session.id,releaseId,item:task,response,work:[art],hintIds:[help.event_id],submittedAt:at,grade,assessmentRef:assessment,scoringVersion:SCORING_VERSION,cognitive:{journey:j,firstAttemptId:null,parentJourney:null,originSessionId:session.id,originRef:task,originCursor:0}};
+   // Fail inside the actual IndexedDB transaction after attempt/session/artifact writes.
+   const transaction=d.transaction.bind(d);d.transaction=(names:any,mode:any,op:any)=>transaction(names,mode,async(tx:any)=>op({...tx,put:async(name:string,key:string,val:any)=>{if(name.startsWith('cog_events:')&&key===String(commit.sequence))throw Error('injected after attempt writes');return tx.put(name,key,val);}}));
+   let rejected=false;try{await controller.commit(commit,snap.checkpoint,[art],attempt);}catch{rejected=true;}d.transaction=transaction;
+   const rolledBack=rejected&&!(await d.get('attempts',attempt.id))&&!(await d.get('artifacts',art.id))&&((await d.get('sessions',session.id)).attemptIds.length===0)&&(await s.replay(j,snap.checkpoint)).stage==='ATTEMPT';
+   snap=await controller.commit(commit,snap.checkpoint,[art],attempt);
+   const unlocked=await controller.canDisplay('REFERENCE_SOLUTION',task,snap.checkpoint);
+   const exactRetry=await controller.commit(commit,{sequence:commit.sequence-1,sha256:commit.previous_sha256},[art],attempt);
+   const once=exactRetry.checkpoint.sha256===snap.checkpoint.sha256&&(await d.getAll('attempts')).length===1;
+   await d.close();
+   const fresh=new IndexedDBStorageDriver({dbName}),reopened=new DefaultCognitiveStore(fresh,new DefaultProgressStore(fresh,verify));
+   const persisted=(await reopened.replay(j,snap.checkpoint)).stage==='RECONSTRUCT';
+   const archive=await reopened.exportAll();await fresh.close();
+   await new Promise<void>((resolve,reject)=>{const req=indexedDB.deleteDatabase(dbName);req.onsuccess=()=>resolve();req.onerror=()=>reject(req.error);req.onblocked=()=>reject(Error('database deletion blocked'));});
+   const clean=new IndexedDBStorageDriver({dbName}),restored=new DefaultCognitiveStore(clean,new DefaultProgressStore(clean,verify));await restored.importVerified(archive);
+   const restoredExact=canonicalJson(await restored.replay(j,snap.checkpoint))===canonicalJson(snap);
+   let importedBlocked=false;try{await restored.replayForDisclosure(j,snap.checkpoint);}catch{importedBlocked=true;}
+   await clean.close();return {partOk,duplicateRejected,pre,hintBefore,hintAfter,rolledBack,unlocked,once,persisted,restoredExact,importedBlocked};
+  });
+  assert.deepEqual(result,{partOk:true,duplicateRejected:true,pre:false,hintBefore:false,hintAfter:true,rolledBack:true,unlocked:true,once:true,persisted:true,restoredExact:true,importedBlocked:true});
+ }finally{await browser.close();await server.close();}
+});
