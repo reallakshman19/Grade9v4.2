@@ -1,0 +1,35 @@
+name: Runtime stack audit
+on:
+  push:
+    branches:
+      - feat/a48-immutable-cognitive-event-persistence
+      - main
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  runtime:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+      - run: npm ci --no-audit --no-fund
+      - name: Strict typecheck and build
+        run: npm run build
+      - name: Runtime regression and adversarial tests
+        if: always() && !cancelled()
+        run: node --experimental-strip-types --test tests/runtime/*.test.ts
+      - name: Install Chromium
+        if: always() && !cancelled()
+        run: npm exec --no -- playwright-core install --with-deps chromium
+      - name: Actual IndexedDB and cognitive replay
+        if: always() && !cancelled()
+        run: node --experimental-strip-types --test tests/browser/runtime.spec.ts
+      - name: Diagnostic shell smoke
+        if: always() && !cancelled()
+        run: npm run test:smoke

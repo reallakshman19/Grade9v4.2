@@ -83,7 +83,7 @@ export function createStandardCapability<K extends Kind>(
 /**
  * Creates an unsupported fallback capability that fails closed safely.
  */
-export function createUnsupportedCapability(kind: string): Capability {
+export function createUnsupportedCapability(kind: string): Capability<Kind> {
   return {
     kind: kind as Kind,
     supportsOffline: false,

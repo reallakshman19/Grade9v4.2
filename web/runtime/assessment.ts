@@ -481,7 +481,7 @@ export function evaluateResponse(
 ): Grade {
   if(!contract||!Number.isFinite(contract.max_points)||contract.max_points<0||!contract.evaluator||!['AUTOMATIC','REVIEW_PENDING'].includes(contract.evaluator.mode))return {status:'INVALID',points:null,maxPoints:0,reasonCode:'INVALID_ASSESSMENT'};
   if(!response||!isResponseKind(response.kind))return {status:'UNSUPPORTED',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.UNSUPPORTED_RESPONSE_KIND};
-  try{validateResponse(response);}catch(e){return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:e instanceof ResponseValidationError&&e.code==='DUPLICATE_ELEMENTS'?ReasonCodes.DUPLICATE_CHOICE_OPTION:ReasonCodes.MALFORMED_RESPONSE};}
+  try{validateResponse(response);}catch(e){return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:e instanceof ResponseValidationError&&e.code==='DUPLICATE_ELEMENTS'?ReasonCodes.DUPLICATE_CHOICE_OPTION:response.kind==='INTEGER'?ReasonCodes.INVALID_INTEGER_FORMAT:response.kind==='NUMERIC_QUANTITY'?ReasonCodes.INVALID_QUANTITY_FORMAT:ReasonCodes.MALFORMED_RESPONSE};}
   if(response.kind!==contract.response_kind)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.KIND_MISMATCH};
   // Handle dropped item policies
   if (contract.dropped_policy === 'FULL_CREDIT') {
