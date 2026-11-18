@@ -73,11 +73,12 @@ it('Stage4: real Chromium atomic cognitive commitment, rollback, refresh and dat
    const grade=await engine.evaluate(response,assessment,'PRACTICE',task);
    const verify=async(a:any)=>a.releaseId===releaseId&&a.scoringVersion===SCORING_VERSION&&canonicalJson(a.assessmentRef)===canonicalJson(assessment)&&canonicalJson(a.item)===canonicalJson(task)&&canonicalJson(a.grade)===canonicalJson(await engine.evaluate(a.response,assessment,'PRACTICE',task));
    const session={id:'ses:browser:r3',releaseId,item:task,mode:'PRACTICE',contentRevision:'r3',cursor:0,origin:null,returnRoute:null,attemptIds:[],draftId:null};
-   const auth={liveRevision:async()=> 'r3',allowed:async(_j:any,_s:any,_cap:any,asset:any)=>canonicalJson(asset)===canonicalJson(task),boundaryAllowed:async()=>false};
+   const firstReference={...task,type:'SOLUTION',id:'solution:browser:r3'},boundaryReference={...task,type:'SOLUTION',id:'solution:browser:boundary'},boundaryTask={...task,type:'FRESH_TASK',id:'que:browser:boundary'};
+   const auth={liveRevision:async()=> 'r3',reviewedContext:async()=>({releaseId,task,boundaryTask,firstReference,boundaryReference,firstFields:{a:'INTEGER'},boundaryFields:{a:'INTEGER'},moves:['move:one']}),allowed:async(_j:any,_s:any,_cap:any,asset:any)=>[task,firstReference,boundaryReference].some(x=>canonicalJson(asset)===canonicalJson(x)),boundaryAllowed:async()=>false};
    const d=new IndexedDBStorageDriver({dbName}),p=new DefaultProgressStore(d,verify),s=new DefaultCognitiveStore(d,p),controller=new CognitiveController({journey:j,sessionId:session.id},s,d,auth);
    await d.put('sessions',session.id,session);let snap=await controller.begin();
    const event=(kind:string,payload:any,cp:any)=>({schema_version:'g9-cognitive-event/2',event_id:'evt:r3:'+String(cp.sequence+1),journey_id:j.journeyId,task_instance_id:j.taskInstanceId,release_id:releaseId,task_ref:task,sequence:cp.sequence+1,previous_sha256:cp.sha256,event_type:kind,payload,at});
-   const pre=await controller.canDisplay('REFERENCE_SOLUTION',task,snap.checkpoint);
+   const pre=await controller.canDisplay('REFERENCE_SOLUTION',firstReference,snap.checkpoint);
    snap=await controller.commit(event('PREDICTION_COMMITTED',{prediction:'unsure',artifact_ids:[]},snap.checkpoint),snap.checkpoint,[]);
    const help=event('HELP_EXPOSED',{capability:'H1',asset_ref:task,ordinal:1},snap.checkpoint);
    const hintBefore=await controller.canDisplay('H1',task,snap.checkpoint,help.event_id);snap=await controller.commit(help,snap.checkpoint,[]);
@@ -90,7 +91,7 @@ it('Stage4: real Chromium atomic cognitive commitment, rollback, refresh and dat
    let rejected=false;try{await controller.commit(commit,snap.checkpoint,[art],attempt);}catch{rejected=true;}d.transaction=transaction;
    const rolledBack=rejected&&!(await d.get('attempts',attempt.id))&&!(await d.get('artifacts',art.id))&&((await d.get('sessions',session.id)).attemptIds.length===0)&&(await s.replay(j,snap.checkpoint)).stage==='ATTEMPT';
    snap=await controller.commit(commit,snap.checkpoint,[art],attempt);
-   const unlocked=await controller.canDisplay('REFERENCE_SOLUTION',task,snap.checkpoint);
+   const unlocked=await controller.canDisplay('REFERENCE_SOLUTION',firstReference,snap.checkpoint);
    const exactRetry=await controller.commit(commit,{sequence:commit.sequence-1,sha256:commit.previous_sha256},[art],attempt);
    const once=exactRetry.checkpoint.sha256===snap.checkpoint.sha256&&(await d.getAll('attempts')).length===1;
    await d.close();
