@@ -123,7 +123,7 @@ export function publicTransfer(d:Core1BTransferDefinition):PublicTransferDefinit
  return structuredClone({journeyId:d.journeyId,originRef:d.originRef,freshTaskA:a,boundaryTaskB:b,hints:d.hints.map(h=>({level:h.level,assetRef:h.assetRef,text:'',guidance:''})),diagnosticRules:d.diagnosticRules.map(r=>({code:r.code,label:r.label,misconceptionDescription:'',correctiveGuidance:''})),qualitativePredictionPrompt:d.qualitativePredictionPrompt,predictionOptions:d.predictionOptions,status:d.status});
 }
 export async function transferDefinitionDigest(d:Core1BTransferDefinition){return computeSha256(canonicalJson(publicTransfer(d)));}
-export class Core1BValidationError extends Error{constructor(readonly code:string,message:string){super(code+': '+message);}}
+export class Core1BValidationError extends Error{readonly code:string;constructor(code:string,message:string){super(code+': '+message);this.code=code;}}
 export class Core1BTransferJourney{
  private readonly definition:PublicTransferDefinition;private readonly binding?:TransferBinding;private evidence:Evidence|null=null;private busy=false;private blocked=false;
  private responses:Record<string,Response>={};private work:readonly WorkArtifact[]=[];private draftRevision=0;
