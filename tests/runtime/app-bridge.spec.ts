@@ -382,7 +382,7 @@ describe("ApplicationHostController – sandbox", () => {
   });
 
   it("validates safe sandbox string", () => {
-    const r = ApplicationHostController.validateSandbox("allow-scripts allow-forms");
+    const r = ApplicationHostController.validateSandbox("allow-scripts");
     assert.equal(r.valid, true);
   });
 
@@ -681,7 +681,7 @@ describe("ResourcesPageController – sandbox enforcement", () => {
   });
 
   it("validateSandbox accepts safe string", () => {
-    const r = ResourcesPageController.validateSandbox("allow-scripts allow-forms");
+    const r = ResourcesPageController.validateSandbox("allow-scripts");
     assert.equal(r.valid, true);
   });
 });
@@ -708,3 +708,5 @@ describe("Bridge – no answer/storage leakage", () => {
     });
   }
 });
+
+it("rejects replayed wire sequence and unsafe iframe privileges",()=>{const host=makeHost();host.launch();const ready=makeEnvelope("APP_READY",host.getSessionId(),host.getNonce());assert.equal(host.handleMessage({origin:APP_ORIGIN,data:ready}),true);assert.equal(host.handleMessage({origin:APP_ORIGIN,data:ready}),false);assert.equal(ApplicationHostController.validateSandbox("allow-scripts allow-popups-to-escape-sandbox").valid,false);host.dismiss();});
