@@ -33,6 +33,23 @@ import {
 import type { WorkspaceQuestionDescriptor } from '../../web/components/question-workspace.ts';
 
 import { createQuestionPage } from '../../web/pages/question.ts';
+import {MemoryStorageDriver,StorageError} from '../../web/runtime/storage.ts';
+import {DefaultProgressStore} from '../../web/runtime/progress.ts';
+import {Session as DurableController} from '../../web/runtime/session.ts';
+import {StandardAssessmentEngine,SCORING_VERSION,type AssessmentContract} from '../../web/runtime/assessment.ts';
+import {canonicalJson,computeSha256,sameRef} from '../../web/runtime/loader.ts';
+import type {Session,TaskRef} from '../../web/runtime/types.ts';
+async function binding(){
+ const driver=new MemoryStorageDriver(),task:TaskRef={type:'QUESTION',id:'Q-OBJ-01',revision:1,sha256:'a'.repeat(64)},releaseId='rel:synthetic:objective';
+ const contract:AssessmentContract={id:'asmt:objective',revision:1,task_ref:task,response_kind:'SINGLE_CHOICE',max_points:2,evaluator:{mode:'AUTOMATIC',canonical_value:'OPT-A',allowed_options:['OPT-A','OPT-B','OPT-C','OPT-D']}};
+ const assessment={type:'ASSESSMENT' as const,id:contract.id,revision:1,sha256:await computeSha256(canonicalJson(contract))};
+ const engine=new StandardAssessmentEngine([{assessment,task}]);await engine.registerContract(contract,assessment);
+ const ses:Session={id:'ses:objective',releaseId,item:task,mode:'PRACTICE',contentRevision:'r1',origin:null,returnRoute:null,cursor:0,attemptIds:[],draftId:null};
+ await driver.put('sessions',ses.id,ses);
+ const progress=new DefaultProgressStore(driver,async a=>a.releaseId===releaseId&&sameRef(a.item,task)&&sameRef(a.assessmentRef!,assessment)&&a.scoringVersion===SCORING_VERSION&&canonicalJson(a.grade)===canonicalJson(await engine.evaluate(a.response,assessment,'PRACTICE',task)));
+ const session=new DurableController({sessionId:ses.id,releaseId,item:task,mode:'PRACTICE'},driver,progress,{liveRevision:async()=> 'r1',reviewedDisclosure:async()=>true});
+ return {driver,releaseId,task,assessment,attemptId:'att:objective',session,progress,engine};
+}
 
 // ---------------------------------------------------------------------------
 // Test Fixtures
@@ -127,7 +144,7 @@ describe('Multiple Choice Controller — Multi-Select & Toggling', () => {
     mc.toggleOption('OPT-A');
     mc.toggleOption('OPT-C');
     assert.equal(mc.isAnswered(), true);
-    assert.deepEqual(mc.getValue().selectedOptionIds.sort(), ['OPT-A', 'OPT-C']);
+    assert.deepEqual(mc.getValue().selectedOptionIds.slice().sort(), ['OPT-A', 'OPT-C']);
 
     // Toggling OPT-A again removes it
     mc.toggleOption('OPT-A');
@@ -160,7 +177,7 @@ describe('Numeric Quantity Controller — Magnitude & Units', () => {
     assert.equal(unitOk, true);
 
     assert.equal(qc.isAnswered(), true);
-    assert.deepEqual(qc.getValue().quantity, { magnitude: 49.5, unit: 'J' });
+    assert.deepEqual(qc.getValue().quantity, { magnitude: 49.5, decimal:'49.5', unit: 'J' });
   });
 
   it('rejects non-numeric magnitude and invalid units', () => {
@@ -180,8 +197,8 @@ describe('Numeric Quantity Controller — Magnitude & Units', () => {
 describe('Question Workspace — Layout, Rotation & Submit', () => {
   let ws: QuestionWorkspaceController;
 
-  beforeEach(() => {
-    ws = createQuestionWorkspace(STANDARD_QUESTION, 'LANDSCAPE');
+  beforeEach(async () => {
+    ws = createQuestionWorkspace(STANDARD_QUESTION, 'LANDSCAPE',await binding());
   });
 
   it('configures landscape as 50/50 side-by-side row split', () => {
@@ -201,9 +218,9 @@ describe('Question Workspace — Layout, Rotation & Submit', () => {
     assert.equal(state.layout.workPaneWidthPercent, 100);
   });
 
-  it('evaluates correct answer accurately and awards points', () => {
+  it('evaluates correct answer accurately and awards points', async () => {
     ws.updateResponse({ kind: 'SINGLE_CHOICE', selectedOptionId: 'OPT-A' });
-    const result = ws.submit();
+    const result = await ws.submit();
 
     assert.equal(result.status, 'CORRECT');
     assert.equal(result.rawPoints, 2);
@@ -211,28 +228,18 @@ describe('Question Workspace — Layout, Rotation & Submit', () => {
     assert.equal(ws.getViewState().isLocked, true); // commit lock
   });
 
-  it('evaluates incorrect answer accurately with zero points', () => {
+  it('evaluates incorrect answer accurately with zero points', async () => {
     ws.updateResponse({ kind: 'SINGLE_CHOICE', selectedOptionId: 'OPT-B' });
-    const result = ws.submit();
+    const result = await ws.submit();
 
     assert.equal(result.status, 'INCORRECT');
     assert.equal(result.rawPoints, 0);
   });
 
-  it('applies hint penalty progressively when hints are unlocked', () => {
-    // Unlock 1st hint (20% penalty)
-    const unlocked = ws.unlockNextHint();
-    assert.equal(unlocked, true);
-    assert.equal(ws.getViewState().unlockedHintCount, 1);
-
-    ws.updateResponse({ kind: 'SINGLE_CHOICE', selectedOptionId: 'OPT-A' });
-    const result = ws.submit();
-
-    assert.equal(result.status, 'CORRECT');
-    // 2 points - 20% = 1.6 points
-    assert.equal(result.rawPoints, 1.6);
+  it('refuses unaudited hint disclosure rather than fabricating a penalty',async()=>{
+    assert.equal(ws.unlockNextHint(),false);assert.equal(ws.getViewState().unlockedHintCount,0);
+    ws.updateResponse({kind:'SINGLE_CHOICE',selectedOptionId:'OPT-A'});assert.equal((await ws.submit()).rawPoints,2);
   });
-
   it('meets hit target size bounds (48px min, 56px primary)', () => {
     const state = ws.getViewState();
     assert.ok(state.hitTargetMinPx >= 48);
@@ -261,7 +268,7 @@ describe('Core2 Fault Handling — Missing Figures, Ambiguous Keys & HOLD', () =
     assert.equal(state.missingFigures[0].id, 'FIG-MISSING');
   });
 
-  it('NEVER claims positive score on HOLD questions', () => {
+  it('NEVER claims positive score on HOLD questions', async () => {
     const holdQuestion: WorkspaceQuestionDescriptor = {
       ...STANDARD_QUESTION,
       status: 'HOLD',
@@ -269,7 +276,7 @@ describe('Core2 Fault Handling — Missing Figures, Ambiguous Keys & HOLD', () =
 
     const ws = createQuestionWorkspace(holdQuestion);
     ws.updateResponse({ kind: 'SINGLE_CHOICE', selectedOptionId: 'OPT-A' }); // Correct option selected
-    const result = ws.submit();
+    const result = await ws.submit();
 
     assert.equal(result.status, 'HOLD_UNGRADED');
     assert.equal(result.rawPoints, null); // raw points MUST be null
@@ -277,7 +284,7 @@ describe('Core2 Fault Handling — Missing Figures, Ambiguous Keys & HOLD', () =
     assert.equal(result.reasonCode, 'QUESTION_ON_ACADEMIC_HOLD');
   });
 
-  it('flags unverified or ambiguous answer keys as REVIEW_PENDING with null score', () => {
+  it('flags unverified or ambiguous answer keys as REVIEW_PENDING with null score', async () => {
     const ambiguousQuestion: WorkspaceQuestionDescriptor = {
       ...STANDARD_QUESTION,
       keyStatus: 'AMBIGUOUS',
@@ -285,7 +292,7 @@ describe('Core2 Fault Handling — Missing Figures, Ambiguous Keys & HOLD', () =
 
     const ws = createQuestionWorkspace(ambiguousQuestion);
     ws.updateResponse({ kind: 'SINGLE_CHOICE', selectedOptionId: 'OPT-A' });
-    const result = ws.submit();
+    const result = await ws.submit();
 
     assert.equal(result.status, 'REVIEW_PENDING');
     assert.equal(result.rawPoints, null);
@@ -308,12 +315,12 @@ describe('Question Page Screen Controller — Lifecycle & Feedback', () => {
     assert.equal(page.getViewState().returnRoute, '/topic/phys/wpe');
   });
 
-  it('transitions to FEEDBACK_SHOWN on submission', () => {
+  it('transitions to FEEDBACK_SHOWN on submission', async () => {
     const page = createQuestionPage('phys', 'wpe');
-    page.loadQuestion(STANDARD_QUESTION);
+    page.loadQuestion(STANDARD_QUESTION,await binding());
 
     page.getWorkspace()?.updateResponse({ kind: 'SINGLE_CHOICE', selectedOptionId: 'OPT-A' });
-    const result = page.submit();
+    const result = await page.submit();
 
     assert.ok(result !== null);
     assert.equal(page.getViewState().pageStatus, 'FEEDBACK_SHOWN');
@@ -326,4 +333,19 @@ describe('Question Page Screen Controller — Lifecycle & Feedback', () => {
 
     assert.equal(page.getViewState().pageStatus, 'HOLD_LOCKED');
   });
+});
+
+it('A24 denies caller-supplied key and never claims a fake save',async()=>{
+ const ws=createQuestionWorkspace(STANDARD_QUESTION);ws.updateResponse({kind:'SINGLE_CHOICE',selectedOptionId:'OPT-A'});
+ assert.equal(ws.getViewState().submissionStatus,'DIRTY');assert.equal(ws.getViewState().question.correctKey,undefined);
+ assert.equal((await ws.submit()).status,'REVIEW_PENDING');assert.equal(ws.getViewState().isLocked,false);await assert.rejects(ws.saveDraft());
+});
+it('A24 actual qualified draft and attempt rollback/restore',async()=>{
+ const b=await binding(),ws=createQuestionWorkspace(STANDARD_QUESTION,undefined,b);ws.updateResponse({kind:'SINGLE_CHOICE',selectedOptionId:'OPT-A'});
+ await ws.saveDraft();assert.equal(ws.getViewState().submissionStatus,'DRAFT_SAVED');
+ const reopened=createQuestionWorkspace(STANDARD_QUESTION,undefined,b);await reopened.restore();assert.equal(reopened.getViewState().submissionStatus,'DRAFT_SAVED');
+ b.driver.setFailureHook((store,op)=>store==='sessions'&&op==='put'?new StorageError('TRANSACTION_ABORTED','test'):null);
+ await assert.rejects(reopened.submit());assert.equal(reopened.getViewState().isLocked,false);assert.equal(await b.driver.get('attempts',b.attemptId),undefined);b.driver.setFailureHook(null);
+ assert.equal((await reopened.submit()).rawPoints,2);assert.equal((await b.driver.getAll('attempts')).length,1);
+ const restored=createQuestionWorkspace(STANDARD_QUESTION,undefined,b);await restored.restore();assert.equal(restored.getViewState().isLocked,true);assert.equal(restored.getViewState().evaluation?.rawPoints,2);
 });
