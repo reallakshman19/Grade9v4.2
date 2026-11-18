@@ -80,6 +80,7 @@ export class ApplicationHostController {
 
   private rejectionLog: RejectionRecord[] = [];
   private sequenceCounter = 0;
+  private frame:HTMLIFrameElement|null=null;
   private timeoutHandle: ReturnType<typeof setTimeout> | null = null;
   private orientation: Orientation = "portrait";
   private fullscreenActive = false;
@@ -92,7 +93,7 @@ export class ApplicationHostController {
     // (In Node test context window is undefined; guard accordingly)
     const url = new URL(config.appUrl);
     const expectedOrigin = config.expectedOrigin;
-    if (url.origin !== expectedOrigin) {
+    if (url.origin !== expectedOrigin||!['http:','https:'].includes(url.protocol)||url.username||url.password||(typeof location!=='undefined'&&url.origin===location.origin)) {
       throw new Error(
         `ApplicationHostController: appUrl origin '${url.origin}' does not match expectedOrigin '${expectedOrigin}'.`
       );
@@ -108,7 +109,7 @@ export class ApplicationHostController {
       ...config,
     };
 
-    this.sessionId = `session-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    this.sessionId = `session-${crypto.randomUUID()}`;
     this.nonceManager = new NonceManager(this.sessionId);
   }
 
@@ -166,15 +167,20 @@ export class ApplicationHostController {
    * Process an incoming postMessage event from the iframe.
    * Returns true if the message was accepted and handled.
    */
-  handleMessage(event: { origin: string; data: unknown }): boolean {
+  bindFrame(frame:HTMLIFrameElement):void{
+    if(this.frame||frame.src!==this.config.appUrl||frame.getAttribute('sandbox')!==ApplicationHostController.sandboxAttribute()||!frame.contentWindow)throw Error('Unsafe or unbound iframe');this.frame=frame;
+  }
+  handleMessage(event: { origin: string; data: unknown;source?:MessageEventSource|null }): boolean {
     if (this.state === "DISMISSED" || this.state === "ERROR" || this.state === "IDLE") {
       return false;
     }
 
-    const sequenceToken = `seq-${++this.sequenceCounter}`;
+    const inBrowser=typeof window!=='undefined';
+    if(inBrowser&&(!this.frame||event.source!==this.frame.contentWindow||this.frame.src!==this.config.appUrl||this.frame.getAttribute('sandbox')!==ApplicationHostController.sandboxAttribute()))return false;
+    const sequenceToken = 'seq-'+(this.sequenceCounter+1);
     const rejection = validateBridgeMessage(
       event,
-      this.config.expectedOrigin,
+      inBrowser?'null':this.config.expectedOrigin,
       this.nonceManager,
       this.sessionId,
       sequenceToken,
@@ -187,6 +193,9 @@ export class ApplicationHostController {
     }
 
     const env = event.data as BridgeEnvelope;
+    if(env.sequence!==this.sequenceCounter+1)return false;
+    this.sequenceCounter++;
+    if(this.state==='LAUNCHING'&&env.type!=='APP_READY'||this.state==='TIMEOUT'&&env.type!=='APP_TIMEOUT_ACK'||this.state!=='TIMEOUT'&&env.type==='APP_TIMEOUT_ACK'||this.state!=='LAUNCHING'&&env.type==='APP_READY')return false;
     return this.dispatch(env);
   }
 
@@ -338,7 +347,7 @@ export class ApplicationHostController {
    * that combination would allow the iframe to remove its own sandbox.
    */
   static sandboxAttribute(): string {
-    return "allow-scripts allow-forms allow-popups-to-escape-sandbox";
+    return "allow-scripts";
   }
 
   /**
@@ -355,7 +364,7 @@ export class ApplicationHostController {
         reason: "allow-scripts + allow-same-origin together removes sandbox protections.",
       };
     }
-    return { valid: true, reason: "OK" };
+    return tokens.length===1&&hasScripts?{valid:true,reason:"OK"}:{valid:false,reason:"Only allow-scripts is permitted"};
   }
 
   // ---------------------------------------------------------------------------
