@@ -150,7 +150,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
      await tx.put('cog_snap:'+id,id,genesis);return genesis;
    });
  }
- async append(event:CognitiveEvent,expected:JourneyKey,checkpoint:Checkpoint,work:readonly WorkArtifact[],attempt?:Attempt):Promise<CognitiveSnapshot>{
+ async append(event:CognitiveEvent,expected:JourneyKey,checkpoint:Checkpoint,work:readonly WorkArtifact[],attempt?:Attempt,expectedDraftRevision?:number):Promise<CognitiveSnapshot>{
    event=structuredClone(event);expected=structuredClone(expected);checkpoint=structuredClone(checkpoint);work=structuredClone(work);attempt=attempt&&structuredClone(attempt);
    validateEvent(event);guard(sameJourney(identity(event),expected),'IDENTITY_MISMATCH','Wrong journey, task, instance or release');
    const id=expected.journeyId,eventsKey='cog_events:'+id,snapKey='cog_snap:'+id;
@@ -178,7 +178,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
        if(!meta.origin)meta={...meta,origin:originOf(attempt!)};
        const origin=await tx.get<Session>('sessions',meta.origin!.sessionId);
        guard(origin&&(current.firstAttemptId!==null||meta.parentJourney!==null||origin.cursor===meta.origin!.cursor),'INVALID_LINEAGE','Origin cursor must match at initial commitment');
-       await this.progress.commitAttempt(tx,attempt!);
+       await this.progress.commitAttempt(tx,attempt!,true,expectedDraftRevision);
        const first=current.firstAttemptId?await tx.get<{id:string}>('cognitive_event_attempt',current.firstAttemptId):undefined;
        await checkAttempt(tx,event,attempt!,meta,first?.id??null);
        guard(!(await tx.get('cognitive_attempt_event',attempt!.id)),'INVALID_LINEAGE','Attempt already used by another commitment');
@@ -231,16 +231,17 @@ export class DefaultCognitiveStore implements CognitiveStore {
    await this.driver.transaction(['cognitive_legacy_quarantine'],'readwrite',async tx=>{const old=await tx.get('cognitive_legacy_quarantine',id);guard(!old||equal(old,entry),'RECORD_CONFLICT','Legacy evidence conflict');if(!old)await tx.put('cognitive_legacy_quarantine',id,entry);});
    return {id,disposition:'QUARANTINED',reason};
  }
- async readForDisclosure(journey:JourneyKey,checkpoint:Checkpoint):Promise<{snapshot:CognitiveSnapshot;events:readonly CognitiveEvent[];meta:JourneyMeta}>{
+ async readForDisclosure(journey:JourneyKey,checkpoint?:Checkpoint):Promise<{snapshot:CognitiveSnapshot;events:readonly CognitiveEvent[];meta:JourneyMeta;attempts:readonly Attempt[]}>{
    const id=journey.journeyId;
    return this.driver.transaction(await this.names([id]),'readonly',async tx=>{
      const meta=await tx.get<JourneyMeta>('cognitive_journeys',id);
      guard(meta&&!meta.imported&&sameJourney(meta.journey,journey),'INVALID_LINEAGE','Missing live journey or imported history');
      const events=await tx.getAll<CognitiveEvent>('cog_events:'+id),snap=await rebuild(events,journey);
      const stored=await tx.get<CognitiveSnapshot>('cog_snap:'+id,id);
-     guard(equal(snap.checkpoint,checkpoint)&&(!events.length||stored&&equal(stored,snap)),'STALE_HASH','Missing or stale disclosure checkpoint');
+     guard((checkpoint===undefined||equal(snap.checkpoint,checkpoint))&&stored&&equal(stored,snap),'STALE_HASH','Missing or stale disclosure checkpoint');
      await verifyEvidence(tx,events,meta!);await verifyRetry(tx,meta!);
-     return {snapshot:snap,events:[...events].sort((a,b)=>a.sequence-b.sequence),meta:meta!};
+     const ordered=[...events].sort((a,b)=>a.sequence-b.sequence),attempts:Attempt[]=[];for(const e of ordered)if(isCommit(e)){const link=await tx.get<{id:string}>('cognitive_event_attempt',e.event_id);const attempt=link&&await tx.get<Attempt>('attempts',link.id);guard(attempt&&await this.progress.verifyQualifiedStoredAttempt(tx,attempt),'INVALID_LINEAGE','Committed attempt no longer qualifies');attempts.push(attempt!);}
+     return {snapshot:snap,events:ordered,meta:meta!,attempts};
    });
  }
  async replayForDisclosure(journey:JourneyKey,checkpoint:Checkpoint):Promise<CognitiveSnapshot>{return (await this.readForDisclosure(journey,checkpoint)).snapshot;}
