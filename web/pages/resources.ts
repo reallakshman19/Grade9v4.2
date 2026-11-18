@@ -44,7 +44,8 @@ export type LaunchOutcome =
   | "REJECTED_STALE"
   | "REJECTED_UNKNOWN"
   | "REJECTED_SAME_ORIGIN"
-  | "ALREADY_ACTIVE";
+  | "ALREADY_ACTIVE"
+  | "REJECTED_UNAUTHORIZED";
 
 export interface LaunchResult {
   outcome: LaunchOutcome;
@@ -61,13 +62,14 @@ export class ResourcesPageController {
   private activeHost: ApplicationHostController | null = null;
   private activeResourceId: string | null = null;
   private currentOrigin: string;
+  private readonly authorize:(resource:Readonly<Resource>)=>boolean;
 
   /**
    * @param currentOrigin The host shell's own origin (e.g. "https://app.grade9.local")
    *   Used to reject any resource URL that shares the same origin.
    */
-  constructor(currentOrigin: string) {
-    this.currentOrigin = currentOrigin;
+  constructor(currentOrigin: string,authorize:(resource:Readonly<Resource>)=>boolean=()=>false) {
+    this.currentOrigin = currentOrigin;this.authorize=authorize;
   }
 
   // ---------------------------------------------------------------------------
@@ -75,15 +77,15 @@ export class ResourcesPageController {
   // ---------------------------------------------------------------------------
 
   loadResources(resources: Resource[]): void {
-    this.resources = [...resources];
+    if(new Set(resources.map(r=>r.id)).size!==resources.length)throw Error('Duplicate resource identity');this.resources=resources.map(r=>Object.freeze({...r}));
   }
 
   getResources(): readonly Resource[] {
-    return this.resources;
+    return [...this.resources];
   }
 
   getEligibleResources(): readonly Resource[] {
-    return this.resources.filter((r) => r.eligibility === "ELIGIBLE");
+    return this.resources.filter((r) => r.eligibility === "ELIGIBLE"&&this.authorize(r));
   }
 
   findResource(id: string): Resource | undefined {
@@ -137,12 +139,13 @@ export class ResourcesPageController {
       return { outcome: "REJECTED_UNKNOWN", resourceId, reason: "Resource origin field does not match URL origin." };
     }
 
+    if(resource.eligibility!=='ELIGIBLE'||!this.authorize(resource))return {outcome:'REJECTED_UNAUTHORIZED',resourceId,reason:'No trusted resource authorization'};
     // Create and launch host
     const config: ApplicationHostConfig = {
-      appUrl: resource.url,
-      expectedOrigin: resource.origin,
       timeoutMs: 30 * 60 * 1000,
       ...hostConfig,
+      appUrl: resource.url,
+      expectedOrigin: resource.origin,
     };
 
     const host = createApplicationHost(config);
@@ -170,7 +173,7 @@ export class ResourcesPageController {
    * Process a postMessage from the active iframe.
    * Returns false if no active host or message rejected.
    */
-  handleMessage(event: { origin: string; data: unknown }): boolean {
+  handleMessage(event: { origin: string; data: unknown;source?:MessageEventSource|null }): boolean {
     if (!this.activeHost) return false;
     return this.activeHost.handleMessage(event);
   }
@@ -226,6 +229,6 @@ export class ResourcesPageController {
 // Factory
 // ---------------------------------------------------------------------------
 
-export function createResourcesPage(currentOrigin: string): ResourcesPageController {
-  return new ResourcesPageController(currentOrigin);
+export function createResourcesPage(currentOrigin: string,authorize?:(resource:Readonly<Resource>)=>boolean): ResourcesPageController {
+  return new ResourcesPageController(currentOrigin,authorize);
 }
