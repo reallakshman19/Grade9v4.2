@@ -4,22 +4,12 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
     "noEmit": true,
     "skipLibCheck": true,
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "paths": {
-      "@/*": ["./web/*"]
-    }
+    "types": ["node"],
+    "paths": {"@/*": ["./web/*"]}
   },
-  "include": [
-    "web/**/*.ts",
-    "web/**/*.d.ts",
-    "tests/browser/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["web/**/*.ts", "tests/browser/**/*.ts", "vite.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

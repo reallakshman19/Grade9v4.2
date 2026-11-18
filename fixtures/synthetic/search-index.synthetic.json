@@ -1,61 +1,92 @@
 {
   "schema_version": "g9-search-index/1.0",
-  "status": "DEMO_SYNTHETIC_ONLY",
+  "status": "DEMO_SYNTHETIC_SOURCE_LINKED_NOT_RELEASED",
   "boost_rules": {
-    "exact_id": 10.0,
-    "title_tokens": 5.0,
-    "concept_aliases": 3.0,
-    "summary_tokens": 1.0
+    "exact_id": 10,
+    "title_tokens": 5,
+    "concept_aliases": 3,
+    "summary_tokens": 1
   },
   "normalization": "UNICODE_NFKC_CASEFOLD",
   "projections": [
     {
-      "id": "demo:wpe:concept:hooke",
+      "id": "demo:wpe:lesson",
       "revision": 1,
-      "releaseId": "RELEASE-DEMO-01",
-      "route": "/learn/demo-hooke",
-      "kind": "CONCEPT",
+      "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357",
+      "source_ref": {
+        "type": "LESSON",
+        "id": "demo:wpe:lesson",
+        "revision": 1,
+        "sha256": "e6b702c37594c5e2adf564600899092f14b395dc86c4ac072acb4465bd061357"
+      },
+      "source_graph_path": "fixtures/synthetic/wpe-vertical-slice.json",
+      "releaseId": "rel:synthetic:demo:01",
+      "route": "/learn/demo-wpe-lesson",
+      "route_status": "SYNTHETIC_STUB_NOT_REGISTERED",
+      "search_index_eligible": false,
+      "kind": "LESSON",
       "subjectIds": [
         "PHYSICS"
       ],
-      "title": "Hooke's Law and Work-Energy Theorem",
-      "summary": "Synthetic demonstration of elastic potential energy and contact dynamics.",
+      "title": "When the spring stops pushing",
+      "summary": "When the spring stops pushing",
       "reviewed_terms": [
         "spring",
         "hooke",
         "work-energy",
         "compression",
-        "elasticity"
+        "contact"
       ],
       "public_facets": {
         "subject": "PHYSICS",
         "grade": 9,
         "demo": true
-      }
+      },
+      "source_record_status": "SYNTHETIC",
+      "public_release_authority": "NONE"
     },
     {
-      "id": "demo:q:origin",
+      "id": "demo:wpe:source",
       "revision": 1,
-      "releaseId": "RELEASE-DEMO-01",
-      "route": "/question/demo-origin",
+      "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43",
+      "source_ref": {
+        "type": "QUESTION",
+        "id": "demo:wpe:source",
+        "revision": 1,
+        "sha256": "dc7fa4f3a2e6e7639ecb8a5a5a28cbb9f59d5d30513d10950b77269e9dde4d43"
+      },
+      "source_graph_path": "fixtures/synthetic/wpe-vertical-slice.json",
+      "releaseId": "rel:synthetic:demo:01",
+      "route": "/question/demo-wpe-source",
+      "route_status": "SYNTHETIC_STUB_NOT_REGISTERED",
+      "search_index_eligible": false,
       "kind": "QUESTION",
       "subjectIds": [
         "PHYSICS"
       ],
-      "title": "Unattached Cart Spring Collision",
-      "summary": "Determine maximum spring compression for an unattached cart.",
+      "title": "A synthetic spring launch question",
+      "summary": "A 1 kg cart, not attached to a spring, leaves it at natural length with 4 J kinetic energy. The track then slopes upward. Ignore friction. What maximum vertical rise can it reach? Take g = 10 m/s². Explain which force acts after separation.",
       "reviewed_terms": [
         "cart",
-        "collision",
         "spring",
         "energy",
-        "maximum-compression"
+        "rise",
+        "contact"
       ],
       "public_facets": {
         "subject": "PHYSICS",
-        "role": "CORE2",
+        "grade": 9,
         "demo": true
-      }
+      },
+      "source_record_status": "SYNTHETIC",
+      "public_release_authority": "NONE"
     }
+  ],
+  "release_eligibility": "HOLD_NO_REGISTERED_RELEASE_NO_PUBLIC_INDEX",
+  "source_graph_path": "fixtures/synthetic/wpe-vertical-slice.json",
+  "verification_notes": [
+    "Every projection refers to an actual R4 synthetic object by exact type/id/revision/sha256.",
+    "Routes are demo stubs only; do not publish without an authorized release and route registry.",
+    "Titles and question summary derive from the referenced object payload; reviewed_terms are demo tags, not academic approval."
   ]
 }

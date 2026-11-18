@@ -472,10 +472,13 @@ describe('StandardAssessmentEngine Integration', () => {
       max_points: 4,
     };
 
-    engine.registerContract(contract);
+    const {computeSha256,canonicalJson}=await import('../../web/runtime/loader.ts');
+    const versioned={...contract,revision:1};
+    const exact={type:'ASSESSMENT' as const,id:versioned.id,revision:1,sha256:await computeSha256(canonicalJson(versioned))};
+    await engine.registerContract(versioned,exact);
 
     const resp: Response = { kind: 'INTEGER', value: '100' };
-    const grade = await engine.evaluate(resp, contract.task_ref, 'SIMULATED_EXAM');
+    const grade = await engine.evaluate(resp, exact, 'SIMULATED_EXAM',contract.task_ref as any);
 
     assert.equal(grade.status, 'SCORED');
     assert.equal(grade.points, 4);
@@ -486,10 +489,12 @@ describe('StandardAssessmentEngine Integration', () => {
     const missingRef = makeTaskRef('task:nonexistent');
     const resp: Response = { kind: 'INTEGER', value: '100' };
 
-    const grade = await engine.evaluate(resp, missingRef);
+    const grade = await engine.evaluate(resp, missingRef as any,'PRACTICE',makeTaskRef() as any);
 
     assert.equal(grade.status, 'INVALID');
     assert.equal(grade.points, null);
     assert.equal(grade.reasonCode, ReasonCodes.ASSESSMENT_NOT_FOUND);
   });
 });
+
+it('does not conflate SI case or round distinct large decimals',()=>{const task={type:'QUESTION' as const,id:'que:test',revision:1,sha256:'a'.repeat(64)};const c:AssessmentContract={id:'asmt:test',task_ref:task,response_kind:'NUMERIC_QUANTITY',evaluator:{mode:'AUTOMATIC',canonical_value:{decimal:'9007199254740992',unit:'m'}},max_points:1};assert.equal(evaluateResponse({kind:'NUMERIC_QUANTITY',value:{decimal:'9007199254740993',unit:'m'}},c).points,0);assert.equal(evaluateResponse({kind:'NUMERIC_QUANTITY',value:{decimal:'9007199254740992',unit:'M'}},c).status,'INVALID');});

@@ -1,449 +1,111 @@
-// Immutable Cognitive Event Persistence and Hash Chain Engine for Grade9 Platform Runtime.
-// Implements atomic append, hash guards, replay, per-task isolation, quarantine, and retry provenance.
-// Conforms to schemas/platform/cognitive-event.schema.json: "No academic approval inferred from software validation."
-
-import type {
-  CognitiveEvent,
-  CognitiveSnapshot,
-  CognitiveStage,
-  WorkArtifact,
-  Ref,
-} from './types.ts';
+// A48: exact journey/checkpoint binding, schema payload validation, immutable replay.
+import type { CognitiveEvent,CognitiveSnapshot,CognitiveStage,WorkArtifact,Ref,JourneyKey,Checkpoint } from './types.ts';
 import type { CognitiveStore } from './contracts.ts';
-import { StorageError, type StorageDriver, createStorageDriver } from './storage.ts';
-
-export const COGNITIVE_EVENT_SCHEMA_VERSION = 'g9-cognitive-event/1';
-export const COGNITIVE_EXPORT_VERSION = 'g9-cognitive-export/1.0';
-
-export class CognitiveStoreError extends Error {
-  readonly code: string;
-
-  constructor(code: string, message: string) {
-    super(`${message} (${code})`);
-    this.name = 'CognitiveStoreError';
-    this.code = code;
-  }
+import { type StorageDriver,type TransactionContext,createStorageDriver } from './storage.ts';
+import { canonicalJson,computeSha256,sameRef } from './loader.ts';
+import { validateResponse } from './response.ts';
+export const COGNITIVE_EVENT_SCHEMA_VERSION='g9-cognitive-event/1';
+export const COGNITIVE_EXPORT_VERSION='g9-cognitive-export/1.0';
+export class CognitiveStoreError extends Error {constructor(readonly code:string,message:string){super(message+' ('+code+')');this.name='CognitiveStoreError';}}
+export interface QuarantineRecord{readonly id:string;readonly journeyId:string;readonly event:CognitiveEvent;readonly reason:string;readonly recordedAt:string;}
+export interface JourneyMeta{readonly journey:JourneyKey;readonly parentJourney:JourneyKey|null;readonly parentCheckpoint:Checkpoint|null;}
+const guard=(ok:unknown,code:string,message:string)=>{if(!ok)throw new CognitiveStoreError(code,message);};
+const equal=(a:unknown,b:unknown)=>canonicalJson(a)===canonicalJson(b);
+const identity=(e:CognitiveEvent):JourneyKey=>({journeyId:e.journey_id,taskInstanceId:e.task_instance_id,task:e.task_ref,releaseId:e.release_id});
+const sameJourney=(a:JourneyKey,b:JourneyKey)=>a.journeyId===b.journeyId&&a.taskInstanceId===b.taskInstanceId&&a.releaseId===b.releaseId&&sameRef(a.task,b.task);
+const str=(v:unknown)=>typeof v==='string'&&v.length>0;
+const record=(v:unknown):v is Record<string,unknown>=>!!v&&typeof v==='object'&&!Array.isArray(v);
+const strings=(v:unknown)=>Array.isArray(v)&&v.every(str)&&new Set(v).size===v.length;
+const refOk=(r:unknown)=>record(r)&&Object.keys(r).sort().join(',')==='id,revision,sha256,type'&&str(r.id)&&typeof r.type==='string'&&Number.isSafeInteger(r.revision)&&Number(r.revision)>0&&typeof r.sha256==='string'&&/^[a-f0-9]{64}$/.test(r.sha256);
+const responseMap=(r:unknown)=>{if(!record(r)||Object.keys(r).length===0)return false;try{for(const x of Object.values(r))validateResponse(x);return true;}catch{return false;}};
+const payloadRules:Record<string,Record<string,(v:unknown)=>unknown>>={
+ PREDICTION_COMMITTED:{prediction:str,artifact_ids:strings},
+ HELP_EXPOSED:{capability:v=>['H1','H2','H3','READ_ANCHOR','MODEL_AUTO_CALCULATE','MODEL_MANIPULATE'].includes(String(v)),asset_ref:refOk,ordinal:v=>Number.isSafeInteger(v)&&Number(v)>0},
+ FIRST_COMMITTED:{responses:responseMap,work:strings,help_event_ids:strings},
+ RECONSTRUCTION_COMMITTED:{first_event_id:str,comparison:v=>record(v)&&Object.keys(v).length>0&&Object.values(v).every(record),reference_ref:refOk},
+ DIAGNOSIS_COMMITTED:{move_id:str,why:str},
+ REPAIR_COMMITTED:{first_event_id:str,work:v=>strings(v)&&Array.isArray(v)&&v.length>0,why:str},
+ BOUNDARY_COMMITTED:{boundary_task_ref:refOk,responses:responseMap,work:strings,help_event_ids:strings},
+ BOUNDARY_FEEDBACK_VIEWED:{boundary_event_id:str,reference_ref:refOk},
+ SOURCE_RETURNED:{origin_session_id:str,origin_ref:refOk,cursor:v=>Number.isSafeInteger(v)&&Number(v)>=0}
+};
+function validateEvent(e:CognitiveEvent):void{
+ guard(record(e)&&Object.keys(e).sort().join(',')==='at,event_id,event_type,journey_id,payload,previous_sha256,release_id,schema_version,sequence,task_instance_id,task_ref'&&e.schema_version===COGNITIVE_EVENT_SCHEMA_VERSION&&str(e.event_id)&&str(e.journey_id)&&str(e.release_id)&&str(e.task_instance_id)&&refOk(e.task_ref)&&Number.isSafeInteger(e.sequence)&&e.sequence>0&&str(e.at)&&Number.isFinite(Date.parse(e.at))&&/(Z|\+00:00)$/.test(e.at)&&(e.sequence===1?e.previous_sha256===null:typeof e.previous_sha256==='string'&&/^[a-f0-9]{64}$/.test(e.previous_sha256)),'INVALID_EVENT_SCHEMA','Invalid event header');
+ const rules=Object.hasOwn(payloadRules,e.event_type)?payloadRules[e.event_type]:undefined;
+ guard(rules&&record(e.payload)&&Object.keys(e.payload).sort().join(',')===Object.keys(rules).sort().join(',')&&Object.entries(rules).every(([k,fn])=>fn((e.payload as unknown as Record<string,unknown>)[k])),'INVALID_EVENT_SCHEMA','Invalid event payload');
 }
-
-export interface QuarantineRecord {
-  readonly id: string;
-  readonly journeyId: string;
-  readonly event: CognitiveEvent;
-  readonly reason: string;
-  readonly recordedAt: string;
+export async function computeEventHash(event:CognitiveEvent):Promise<string>{validateEvent(event);return computeSha256(canonicalJson(event));}
+export function createGenesisSnapshot(journey:JourneyKey):CognitiveSnapshot{return {journey:structuredClone(journey),checkpoint:{sequence:0,sha256:null},stage:'PREDICT',firstAttemptId:null,boundaryAttemptId:null,assisted:false,lastHash:null,eventIds:[]};}
+export function applyEventToSnapshot(current:CognitiveSnapshot,event:CognitiveEvent,eventHash:string):CognitiveSnapshot{
+ let stage:CognitiveStage=current.stage,first=current.firstAttemptId,boundary=current.boundaryAttemptId,assisted=current.assisted;
+ const requireStage=(s:CognitiveStage)=>guard(stage===s,'INVALID_STAGE','Expected '+s+', found '+stage);
+ switch(event.event_type){
+ case 'PREDICTION_COMMITTED':requireStage('PREDICT');stage='ATTEMPT';break;
+ case 'HELP_EXPOSED':guard(stage!=='COMPLETE','INVALID_STAGE','Completed journey');assisted=true;break;
+ case 'FIRST_COMMITTED':requireStage('ATTEMPT');first=event.event_id;stage='RECONSTRUCT';break;
+ case 'RECONSTRUCTION_COMMITTED':requireStage('RECONSTRUCT');guard(event.payload.first_event_id===first,'INVALID_LINEAGE','Wrong first event');stage='DIAGNOSE';break;
+ case 'DIAGNOSIS_COMMITTED':requireStage('DIAGNOSE');stage='REPAIR';break;
+ case 'REPAIR_COMMITTED':requireStage('REPAIR');guard(event.payload.first_event_id===first,'INVALID_LINEAGE','Wrong first event');stage='BOUNDARY_TEST';break;
+ case 'BOUNDARY_COMMITTED':requireStage('BOUNDARY_TEST');guard(!boundary&&!sameRef(event.payload.boundary_task_ref,event.task_ref),'INVALID_LINEAGE','Boundary must be distinct and committed once');boundary=event.event_id;break;
+ case 'BOUNDARY_FEEDBACK_VIEWED':requireStage('BOUNDARY_TEST');guard(!!boundary&&event.payload.boundary_event_id===boundary,'INVALID_LINEAGE','Boundary commit required');stage='COMPLETE';break;
+ case 'SOURCE_RETURNED':requireStage('COMPLETE');break;
+ }
+ return {...current,stage,firstAttemptId:first,boundaryAttemptId:boundary,assisted,lastHash:eventHash,checkpoint:{sequence:event.sequence,sha256:eventHash},eventIds:[...current.eventIds,event.event_id]};
 }
-
-export interface JourneyMeta {
-  readonly journeyId: string;
-  readonly parentJourneyId: string | null;
-  readonly taskRef: Ref;
-  readonly releaseId: string;
-  readonly createdAt: string;
+async function rebuild(events:readonly CognitiveEvent[],journey:JourneyKey):Promise<CognitiveSnapshot>{
+ let snap=createGenesisSnapshot(journey);const help=new Set<string>();
+ for(const e of [...events].sort((a,b)=>a.sequence-b.sequence)){
+   validateEvent(e);guard(sameJourney(identity(e),journey)&&e.sequence===snap.checkpoint.sequence+1&&e.previous_sha256===snap.lastHash&&!snap.eventIds.includes(e.event_id),'CORRUPT_CHAIN','Identity, sequence or previous hash mismatch');
+   if(e.event_type==='HELP_EXPOSED'){guard(e.payload.ordinal===help.size+1,'INVALID_LINEAGE','Wrong help ordinal');help.add(e.event_id);}
+   if(e.event_type==='FIRST_COMMITTED'||e.event_type==='BOUNDARY_COMMITTED')guard(e.payload.help_event_ids.every(id=>help.has(id))&&e.payload.help_event_ids.length===help.size,'INVALID_LINEAGE','Help lineage mismatch');
+   snap=applyEventToSnapshot(snap,e,await computeEventHash(e));
+ }
+ return snap;
 }
-
-/**
- * Computes hexadecimal SHA-256 digest using global Web Crypto API.
- */
-async function computeSha256(data: string | Uint8Array): Promise<string> {
-  const bytes = typeof data === 'string' ? new TextEncoder().encode(data) : data;
-  const hashBuffer = await globalThis.crypto.subtle.digest('SHA-256', bytes);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-}
-
-/**
- * Computes canonical SHA-256 hash of a CognitiveEvent.
- * The hash chain binds every header field and payload deterministically.
- */
-export async function computeEventHash(event: CognitiveEvent): Promise<string> {
-  const canonical = {
-    schema_version: event.schema_version,
-    event_id: event.event_id,
-    journey_id: event.journey_id,
-    release_id: event.release_id,
-    task_ref: {
-      type: event.task_ref.type,
-      id: event.task_ref.id,
-      revision: event.task_ref.revision,
-      sha256: event.task_ref.sha256,
-    },
-    sequence: event.sequence,
-    previous_sha256: event.previous_sha256,
-    event_type: event.event_type,
-    payload: event.payload,
-    at: event.at,
-  };
-
-  return computeSha256(JSON.stringify(canonical));
-}
-
-/**
- * Initializes a blank cognitive snapshot at genesis.
- */
-export function createGenesisSnapshot(): CognitiveSnapshot {
-  return {
-    stage: 'PREDICT',
-    firstAttemptId: null,
-    boundaryAttemptId: null,
-    assisted: false,
-    lastHash: null,
-    eventIds: Object.freeze([]),
-  };
-}
-
-/**
- * Transitions cognitive snapshot according to the R3 cognitive runtime state machine.
- */
-export function applyEventToSnapshot(
-  current: CognitiveSnapshot,
-  event: CognitiveEvent,
-  eventHash: string
-): CognitiveSnapshot {
-  let nextStage: CognitiveStage = current.stage;
-  let firstAttemptId = current.firstAttemptId;
-  let boundaryAttemptId = current.boundaryAttemptId;
-  let assisted = current.assisted;
-
-  switch (event.event_type) {
-    case 'PREDICTION_COMMITTED':
-      if (current.stage === 'PREDICT') {
-        nextStage = 'ATTEMPT';
-      }
-      break;
-
-    case 'HELP_EXPOSED':
-      assisted = true;
-      break;
-
-    case 'FIRST_COMMITTED':
-      if (current.stage === 'ATTEMPT') {
-        nextStage = 'RECONSTRUCT';
-      }
-      if (!firstAttemptId && event.payload && typeof event.payload.attempt_id === 'string') {
-        firstAttemptId = event.payload.attempt_id;
-      }
-      break;
-
-    case 'RECONSTRUCTION_COMMITTED':
-      if (current.stage === 'RECONSTRUCT') {
-        nextStage = 'DIAGNOSE';
-      }
-      break;
-
-    case 'DIAGNOSIS_COMMITTED':
-      if (current.stage === 'DIAGNOSE') {
-        nextStage = 'REPAIR';
-      }
-      break;
-
-    case 'REPAIR_COMMITTED':
-      if (current.stage === 'REPAIR') {
-        nextStage = 'BOUNDARY_TEST';
-      }
-      break;
-
-    case 'BOUNDARY_COMMITTED':
-      if (!boundaryAttemptId && event.payload && typeof event.payload.attempt_id === 'string') {
-        boundaryAttemptId = event.payload.attempt_id;
-      }
-      break;
-
-    case 'BOUNDARY_FEEDBACK_VIEWED':
-      if (current.stage === 'BOUNDARY_TEST') {
-        nextStage = 'COMPLETE';
-      }
-      break;
-
-    case 'SOURCE_RETURNED':
-      // Provenance event, maintains current unlocked stage
-      break;
-
-    default:
-      break;
-  }
-
-  const eventIds = Object.freeze([...current.eventIds, event.event_id]);
-
-  return {
-    stage: nextStage,
-    firstAttemptId,
-    boundaryAttemptId,
-    assisted,
-    lastHash: eventHash,
-    eventIds,
-  };
-}
-
-/**
- * Standard implementation of CognitiveStore with immutable hash-chained persistence.
- */
 export class DefaultCognitiveStore implements CognitiveStore {
-  private readonly driver: StorageDriver;
-
-  constructor(driver?: StorageDriver) {
-    this.driver = driver ?? createStorageDriver();
-  }
-
-  /**
-   * Appends a cognitive event to the journey's hash chain.
-   * Atomically updates state and work artifacts. Injected failure rolls back without stage unlock.
-   */
-  async append(
-    event: CognitiveEvent,
-    expectedPreviousSha256: string | null,
-    work: readonly WorkArtifact[] = []
-  ): Promise<CognitiveSnapshot> {
-    // Basic schema guard
-    if (event.schema_version !== COGNITIVE_EVENT_SCHEMA_VERSION) {
-      throw new CognitiveStoreError(
-        'INVALID_EVENT_SCHEMA',
-        `Unsupported schema_version '${event.schema_version}'`
-      );
-    }
-
-    if (event.sequence < 1) {
-      throw new CognitiveStoreError('INVALID_SEQUENCE', 'Sequence must be >= 1');
-    }
-
-    // Sequence 1 must start with null previous hash
-    if (event.sequence === 1) {
-      if (event.previous_sha256 !== null || expectedPreviousSha256 !== null) {
-        throw new CognitiveStoreError(
-          'CHAIN_DIVERGENCE',
-          'Genesis event (sequence 1) must have null previous_sha256'
-        );
-      }
-    } else {
-      if (!event.previous_sha256 || !expectedPreviousSha256) {
-        throw new CognitiveStoreError(
-          'STALE_HASH',
-          `Sequence ${event.sequence} requires non-null previous hash`
-        );
-      }
-      if (event.previous_sha256 !== expectedPreviousSha256) {
-        throw new CognitiveStoreError(
-          'STALE_HASH',
-          `event.previous_sha256 ('${event.previous_sha256}') does not match expectedPreviousSha256 ('${expectedPreviousSha256}')`
-        );
-      }
-    }
-
-    const journeyId = event.journey_id;
-    const storeKey = `cog_events:${journeyId}`;
-    const snapKey = `cog_snap:${journeyId}`;
-
-    let quarantineToRecord: QuarantineRecord | null = null;
-
-    try {
-      return await this.driver.transaction(
-        [storeKey, snapKey, 'artifacts', 'cognitive_journeys'],
-        'readwrite',
-        async (tx) => {
-          // Retrieve existing events for journey
-          const existingEvents = (await tx.getAll<CognitiveEvent>(storeKey)) ?? [];
-          existingEvents.sort((a, b) => a.sequence - b.sequence);
-
-          // Check for repeat event ID
-          const duplicateIdEvent = existingEvents.find((e) => e.event_id === event.event_id);
-          if (duplicateIdEvent) {
-            const isIdentical =
-              duplicateIdEvent.sequence === event.sequence &&
-              duplicateIdEvent.previous_sha256 === event.previous_sha256 &&
-              duplicateIdEvent.event_type === event.event_type &&
-              JSON.stringify(duplicateIdEvent.payload) === JSON.stringify(event.payload);
-
-            if (isIdentical) {
-              // Repeat ID with identical content: idempotent return of current snapshot
-              const currentSnap = await tx.get<CognitiveSnapshot>(snapKey, journeyId);
-              return currentSnap ?? createGenesisSnapshot();
-            }
-
-            // Conflict on ID: quarantine and throw
-            quarantineToRecord = {
-              id: `quar:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
-              journeyId,
-              event,
-              reason: `Duplicate event_id '${event.event_id}' with differing content`,
-              recordedAt: new Date().toISOString(),
-            };
-
-            throw new CognitiveStoreError(
-              'EVENT_ID_COLLISION',
-              `Event ID '${event.event_id}' already exists with differing payload`
-            );
-          }
-
-          // Verify sequence and hash chain continuity
-          if (event.sequence === 1) {
-            if (existingEvents.length > 0) {
-              quarantineToRecord = {
-                id: `quar:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
-                journeyId,
-                event,
-                reason: 'Genesis event appended to existing non-empty chain',
-                recordedAt: new Date().toISOString(),
-              };
-              throw new CognitiveStoreError('CHAIN_DIVERGENCE', 'Genesis event appended to non-empty chain');
-            }
-          } else {
-            const expectedSeq = existingEvents.length + 1;
-            if (event.sequence !== expectedSeq) {
-              quarantineToRecord = {
-                id: `quar:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
-                journeyId,
-                event,
-                reason: `Sequence gap: expected ${expectedSeq}, got ${event.sequence}`,
-                recordedAt: new Date().toISOString(),
-              };
-              throw new CognitiveStoreError(
-                'CHAIN_DIVERGENCE',
-                `Sequence gap: expected sequence ${expectedSeq}, received ${event.sequence}`
-              );
-            }
-
-            const lastEvent = existingEvents[existingEvents.length - 1];
-            const lastEventHash = await computeEventHash(lastEvent);
-
-            if (event.previous_sha256 !== lastEventHash) {
-              quarantineToRecord = {
-                id: `quar:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`,
-                journeyId,
-                event,
-                reason: `Hash divergence: expected previous '${lastEventHash}', got '${event.previous_sha256}'`,
-                recordedAt: new Date().toISOString(),
-              };
-              throw new CognitiveStoreError('STALE_HASH', 'Stale hash: previous event hash mismatch');
-            }
-          }
-
-          // Compute hash for incoming event
-          const incomingHash = await computeEventHash(event);
-
-          // Store event
-          await tx.put(storeKey, String(event.sequence), event);
-
-          // Store work artifacts
-          for (const art of work) {
-            await tx.put('artifacts', art.id, art);
-          }
-
-          // Update journey meta if sequence 1
-          if (event.sequence === 1) {
-            const meta: JourneyMeta = {
-              journeyId,
-              parentJourneyId: null,
-              taskRef: event.task_ref,
-              releaseId: event.release_id,
-              createdAt: event.at,
-            };
-            await tx.put('cognitive_journeys', journeyId, meta);
-          }
-
-          // Apply event to snapshot
-          const currentSnap =
-            (await tx.get<CognitiveSnapshot>(snapKey, journeyId)) ?? createGenesisSnapshot();
-          const updatedSnap = applyEventToSnapshot(currentSnap, event, incomingHash);
-
-          await tx.put(snapKey, journeyId, updatedSnap);
-
-          return updatedSnap;
-        }
-      );
-    } catch (err: unknown) {
-      if (quarantineToRecord) {
-        try {
-          await this.driver.put(
-            'cognitive_quarantine',
-            (quarantineToRecord as QuarantineRecord).id,
-            quarantineToRecord
-          );
-        } catch {
-          // ignore quarantine write error
-        }
-      }
-      throw err;
-    }
-  }
-
-  /**
-   * Replays an entire journey from sequence 1 to tip, validating every link in the cryptographic chain.
-   */
-  async replay(
-    journeyId: string,
-    task: Ref,
-    releaseId: string
-  ): Promise<CognitiveSnapshot> {
-    const storeKey = `cog_events:${journeyId}`;
-    const events = (await this.driver.getAll<CognitiveEvent>(storeKey)) ?? [];
-    events.sort((a, b) => a.sequence - b.sequence);
-
-    if (events.length === 0) {
-      return createGenesisSnapshot();
-    }
-
-    let snapshot = createGenesisSnapshot();
-    let prevHash: string | null = null;
-
-    for (let i = 0; i < events.length; i++) {
-      const ev = events[i];
-      const expectedSeq = i + 1;
-
-      if (ev.sequence !== expectedSeq) {
-        throw new CognitiveStoreError(
-          'CORRUPT_CHAIN',
-          `Sequence corruption at index ${i}: expected ${expectedSeq}, got ${ev.sequence}`
-        );
-      }
-
-      if (ev.previous_sha256 !== prevHash) {
-        throw new CognitiveStoreError(
-          'CORRUPT_CHAIN',
-          `Hash chain broken at sequence ${ev.sequence}: expected prev '${prevHash}', found '${ev.previous_sha256}'`
-        );
-      }
-
-      const evHash = await computeEventHash(ev);
-      snapshot = applyEventToSnapshot(snapshot, ev, evHash);
-      prevHash = evHash;
-    }
-
-    return snapshot;
-  }
-
-  /**
-   * Spawns a retry journey linked to parentJourneyId.
-   * Preserves parent journey provenance and firstAttemptId immutably.
-   */
-  async retry(parentJourneyId: string): Promise<string> {
-    const parentMeta = await this.driver.get<JourneyMeta>('cognitive_journeys', parentJourneyId);
-    if (!parentMeta) {
-      throw new CognitiveStoreError(
-        'JOURNEY_NOT_FOUND',
-        `Parent journey '${parentJourneyId}' does not exist`
-      );
-    }
-
-    const retryId = `${parentJourneyId}:retry:${Date.now()}_${Math.random().toString(36).slice(2, 6)}`;
-
-    const retryMeta: JourneyMeta = {
-      journeyId: retryId,
-      parentJourneyId,
-      taskRef: parentMeta.taskRef,
-      releaseId: parentMeta.releaseId,
-      createdAt: new Date().toISOString(),
-    };
-
-    await this.driver.put('cognitive_journeys', retryId, retryMeta);
-
-    return retryId;
-  }
-
-  /**
-   * Returns quarantined events for audit and diagnostic inspection.
-   */
-  async getQuarantinedEvents(journeyId?: string): Promise<readonly QuarantineRecord[]> {
-    const all = await this.driver.getAll<QuarantineRecord>('cognitive_quarantine');
-    if (!journeyId) return all;
-    return all.filter((q) => q.journeyId === journeyId);
-  }
+ constructor(private readonly driver:StorageDriver=createStorageDriver()){}
+ async append(event:CognitiveEvent,expected:JourneyKey,checkpoint:Checkpoint,work:readonly WorkArtifact[]):Promise<CognitiveSnapshot>{
+   validateEvent(event);guard(sameJourney(identity(event),expected),'IDENTITY_MISMATCH','Wrong journey, task, instance or release');
+   const id=expected.journeyId,eventsKey='cog_events:'+id,snapKey='cog_snap:'+id;
+   try{return await this.driver.transaction([eventsKey,snapKey,'artifacts','cognitive_journeys','cognitive_event_ids'],'readwrite',async tx=>{
+     const meta=await tx.get<JourneyMeta>('cognitive_journeys',id);
+     if(meta)guard(sameJourney(meta.journey,expected),'IDENTITY_MISMATCH','Stored journey differs');
+     const events=await tx.getAll<CognitiveEvent>(eventsKey);
+     const current=await rebuild(events,expected);
+     const stored=await tx.get<CognitiveSnapshot>(snapKey,id);
+     if(stored)guard(equal(stored,current),'CORRUPT_CHAIN','Stored checkpoint diverges');
+     const duplicate=await tx.get<CognitiveEvent>('cognitive_event_ids',event.event_id);
+     if(duplicate){guard(equal(duplicate,event),'EVENT_ID_COLLISION','Duplicate event ID differs');guard(current.eventIds.includes(event.event_id),'IDENTITY_MISMATCH','Event belongs to another journey');return current;}
+     guard(equal(checkpoint,current.checkpoint),'STALE_HASH','Expected checkpoint differs');
+     guard(event.sequence===current.checkpoint.sequence+1,'CHAIN_DIVERGENCE','Sequence gap');
+     guard(event.previous_sha256===current.lastHash,'STALE_HASH','Previous hash differs');
+     const updated=await rebuild([...events,event],expected);
+     const required=event.event_type==='PREDICTION_COMMITTED'?event.payload.artifact_ids:event.event_type==='FIRST_COMMITTED'||event.event_type==='REPAIR_COMMITTED'||event.event_type==='BOUNDARY_COMMITTED'?event.payload.work:[];
+     guard(work.every(a=>required.includes(a.id)),'INVALID_LINEAGE','Unreferenced artifact');
+     for(const a of work){guard(str(a.id)&&a.version===1&&['NOTE','EQUATION','INK','TABLE','GRAPH','STRUCTURE','ATTACHMENT'].includes(a.kind),'INVALID_EVENT_SCHEMA','Invalid artifact');const old=await tx.get<WorkArtifact>('artifacts',a.id);guard(!old||equal(old,a),'RECORD_CONFLICT','Immutable artifact conflict');if(!old)await tx.put('artifacts',a.id,a);}
+     for(const key of required)guard(await tx.get('artifacts',key),'INVALID_LINEAGE','Missing work artifact');
+     if(!meta)await tx.put('cognitive_journeys',id,{journey:expected,parentJourney:null,parentCheckpoint:null} satisfies JourneyMeta);
+     await tx.put(eventsKey,String(event.sequence),event);await tx.put('cognitive_event_ids',event.event_id,event);await tx.put(snapKey,id,updated);return updated;
+   });}catch(e){if(e instanceof CognitiveStoreError){try{const q:QuarantineRecord={id:crypto.randomUUID(),journeyId:id,event,reason:e.message,recordedAt:new Date().toISOString()};await this.driver.put('cognitive_quarantine',q.id,q);}catch{}}throw e;}
+ }
+ async replay(journey:JourneyKey,expectedCheckpoint:Checkpoint):Promise<CognitiveSnapshot>{
+   const id=journey.journeyId,key='cog_events:'+id,snapKey='cog_snap:'+id;
+   return this.driver.transaction([key,snapKey,'cognitive_journeys'],'readonly',async tx=>{
+     const meta=await tx.get<JourneyMeta>('cognitive_journeys',id);if(meta)guard(sameJourney(meta.journey,journey),'IDENTITY_MISMATCH','Wrong replay identity');
+     const snap=await rebuild(await tx.getAll<CognitiveEvent>(key),journey);
+     guard(equal(snap.checkpoint,expectedCheckpoint),'STALE_HASH','Replay checkpoint mismatch');
+     const stored=await tx.get<CognitiveSnapshot>(snapKey,id);if(stored)guard(equal(stored,snap),'CORRUPT_CHAIN','Stored snapshot mismatch');return snap;
+   });
+ }
+ async retry(parent:JourneyKey,checkpoint:Checkpoint,next:JourneyKey):Promise<CognitiveSnapshot>{
+   guard(parent.journeyId!==next.journeyId&&parent.taskInstanceId!==next.taskInstanceId&&sameRef(parent.task,next.task)&&parent.releaseId===next.releaseId,'IDENTITY_MISMATCH','Retry requires new journey and instance for same task and release');
+   const key='cog_events:'+parent.journeyId;
+   return this.driver.transaction([key,'cognitive_journeys'],'readwrite',async tx=>{
+     const meta=await tx.get<JourneyMeta>('cognitive_journeys',parent.journeyId);guard(meta&&sameJourney(meta.journey,parent),'JOURNEY_NOT_FOUND','Parent not found');
+     const snap=await rebuild(await tx.getAll<CognitiveEvent>(key),parent);guard(equal(snap.checkpoint,checkpoint),'STALE_HASH','Parent checkpoint mismatch');
+     guard(!(await tx.get('cognitive_journeys',next.journeyId)),'EVENT_ID_COLLISION','Retry already exists');
+     await tx.put('cognitive_journeys',next.journeyId,{journey:next,parentJourney:parent,parentCheckpoint:checkpoint} satisfies JourneyMeta);return createGenesisSnapshot(next);
+   });
+ }
+ async getQuarantinedEvents(journeyId?:string):Promise<readonly QuarantineRecord[]>{const all=await this.driver.getAll<QuarantineRecord>('cognitive_quarantine');return journeyId?all.filter(q=>q.journeyId===journeyId):all;}
 }
