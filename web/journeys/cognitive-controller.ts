@@ -70,7 +70,7 @@ export class CognitiveController{
   async canDisplay(cap:DisclosureCapability,asset:Ref,checkpoint:Checkpoint,exposureId?:string):Promise<boolean>{
     try{
       const s=await this.session(),j=this.config.journey,ctx=await this.context(s);
-      const evidence=await this.store.readForDisclosure(j,checkpoint),snap=evidence.snapshot;
+      const evidence=await this.readEvidence(checkpoint),snap=evidence.snapshot;
       if(!permittedStage(snap,s.mode,cap)||!await this.authority.allowed(j,s,cap,asset))return false;
       if((cap==='REFERENCE_SOLUTION'||cap==='SHOW_REASONING_CRUX')&&!sameRef(asset,ctx.firstReference)||cap==='BOUNDARY_REFERENCE'&&!sameRef(asset,ctx.boundaryReference))return false;
       if(['H1','H2','H3','READ_ANCHOR','MODEL_AUTO_CALCULATE','MODEL_MANIPULATE'].includes(cap))return evidence.events.some(e=>e.event_type==='HELP_EXPOSED'&&e.event_id===exposureId&&e.payload.capability===cap&&sameRef(e.payload.asset_ref,asset));
