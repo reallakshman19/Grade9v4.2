@@ -165,51 +165,23 @@ export class DefaultProgressStore implements ProgressStore {
    * Appends an attempt, updating session attemptIds and persisting work artifacts.
    * Idempotent on identical attempt, rejects conflicting attempt with RECORD_CONFLICT.
    */
-  async appendAttempt(attempt: Attempt): Promise<void> {
+  static readonly attemptStores=['attempts','sessions','artifacts','drafts','artifact_owners','attempt_authority'] as const;
+  async appendAttempt(attempt:Attempt):Promise<void>{
+    attempt=structuredClone(attempt);
+    await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt));
+  }
+  // For A48's atomic transaction. The same validated write path is used by both APIs.
+  async commitAttempt(tx:import('./storage.ts').TransactionContext,attempt:Attempt):Promise<void>{
     attempt=structuredClone(attempt);const qualified=await this.qualify(attempt);
-    await this.driver.transaction(
-      ['attempts', 'sessions', 'artifacts','drafts','artifact_owners','attempt_authority'],
-      'readwrite',
-      async (tx) => {
-        const existing = await tx.get<Attempt>('attempts', attempt.id);
-        if (existing) {
-          // Compare content for conflict
-          const isIdentical = eq(existing,attempt);
-
-          if (!isIdentical) {
-            throw new StorageError(
-              'RECORD_CONFLICT',
-              `Attempt with id '${attempt.id}' already exists with differing data`
-            );
-          }
-          // Identical attempt: no-op (idempotent duplicate append)
-          return;
-        }
-
-        await tx.put('attempts', attempt.id, attempt);
-
-        const session = await tx.get<Session>('sessions', attempt.sessionId);
-        if(!session||session.releaseId!==attempt.releaseId||!sameRef(session.item,attempt.item))throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
-        if (session) {
-          const attemptIds = session.attemptIds ? [...session.attemptIds] : [];
-          if (!attemptIds.includes(attempt.id)) {
-            attemptIds.push(attempt.id);
-          }
-          await tx.put('sessions', session.id, {
-            ...session,
-            attemptIds,
-            draftId: null, // Clear active draft on commit
-          });
-          await tx.delete('drafts',session.id);
-        }
-
-        for (const art of attempt.work) {
-          await immutablePut(tx,'artifact_owners',art.id,attempt.sessionId);
-          await immutablePut(tx,'artifacts',art.id,art);
-        }
-        await tx.put('attempt_authority',attempt.id,qualified?'LOCAL_VERIFIED_SCORE':'LOCAL_UNVERIFIED');
-      }
-    );
+    const session=await tx.get<Session>('sessions',attempt.sessionId);
+    if(!session||!sameRef(session.item,attempt.item)||session.releaseId!==attempt.releaseId)throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
+    const old=await tx.get<Attempt>('attempts',attempt.id);
+    if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');return;}
+    for(const art of attempt.work){await immutablePut(tx,'artifact_owners',art.id,attempt.sessionId);await immutablePut(tx,'artifacts',art.id,art);}
+    await tx.put('attempts',attempt.id,attempt);
+    await tx.put('attempt_authority',attempt.id,qualified?'LOCAL_VERIFIED_SCORE':'LOCAL_UNVERIFIED');
+    await tx.put('sessions',session.id,{...session,attemptIds:[...session.attemptIds,attempt.id],draftId:null});
+    await tx.delete('drafts',session.id);
   }
 
   /**
@@ -306,6 +278,7 @@ export class DefaultProgressStore implements ProgressStore {
             await tx.put('sessions', ses.id, {
               ...existing,
               attemptIds: mergedAttemptIds,
+              draftId: existing.draftId??ses.draftId,
             });
           }
         }
