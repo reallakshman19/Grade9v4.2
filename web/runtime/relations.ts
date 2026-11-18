@@ -126,7 +126,11 @@ export class RelationGraph {
    * Re-registration with a different registeredRevision updates the edge.
    */
   register(edge: RelationEdge): void {
-    this.edges.set(edge.edgeId, edge);
+    if(!edge.edgeId||!edge.sourceId||!edge.targetId||edge.sourceId===edge.targetId||!edge.registeredRevision||!Number.isFinite(edge.registeredAt)||!['SUFFICIENT','TOPIC_ONLY','PREREQUISITE','EXTENSION'].includes(edge.kind)||!['CURRENT','STALE','UNKNOWN'].includes(edge.evidence))throw new RelationError('INVALID_EDGE','Invalid edge identity');
+    const prior=this.edges.get(edge.edgeId);
+    if(prior&&(prior.sourceId!==edge.sourceId||prior.targetId!==edge.targetId||prior.kind!==edge.kind||prior.registeredRevision!==edge.registeredRevision))throw new RelationError('EDGE_IDENTITY_CONFLICT','Cannot replace edge identity; register a new exact revision');
+    if(prior&&prior.evidence==='STALE'&&edge.evidence==='CURRENT')throw new RelationError('STALE_EDGE','Stale evidence cannot be silently reactivated');
+    this.edges.set(edge.edgeId,Object.freeze({...edge}));
 
     // Forward index
     if (!this.forward.has(edge.sourceId)) {
@@ -198,6 +202,7 @@ export class RelationGraph {
    * Origin anchor is embedded in ELIGIBLE_ROUTE results for exact return.
    */
   resolveRoute(sourceId: string, origin: OriginAnchor): RouteResult {
+    if(!origin.releaseId||!origin.sessionId||!Number.isSafeInteger(origin.cursorIndex)||origin.cursorIndex<0||!Number.isFinite(origin.capturedAt))throw new RelationError('INVALID_ORIGIN','Exact origin context required');
     const candidates = this.edgesFrom(sourceId);
     if (candidates.length === 0) {
       return {
@@ -230,12 +235,13 @@ export class RelationGraph {
     // Check for a current SUFFICIENT edge
     const currentSufficient = sufficient.filter(e => e.evidence === "CURRENT");
     if (currentSufficient.length > 0) {
+      if(currentSufficient.length!==1)return {routeClass:'NO_ROUTE',targetId:null,edgeId:null,origin:null,reason:'Ambiguous sufficient relationships; explicit reviewed route selection required'};
       const best = currentSufficient[0];
       return {
         routeClass: "ELIGIBLE_ROUTE",
         targetId: best.targetId,
         edgeId: best.edgeId,
-        origin,
+        origin: Object.freeze({...origin}),
         reason: `Eligible route via SUFFICIENT edge ${best.edgeId}`,
       };
     }
@@ -301,9 +307,10 @@ export class RecoveryService {
     sourceId: string,
     origin: OriginAnchor
   ): RouteResult {
+    if(!detourId||this.openDetours.has(detourId))throw new RelationError('DETOUR_ID_CONFLICT','Detour already exists');
     const result = this.graph.resolveRoute(sourceId, origin);
     if (result.routeClass === "ELIGIBLE_ROUTE" && result.targetId !== null) {
-      this.openDetours.set(detourId, { origin, targetId: result.targetId });
+      this.openDetours.set(detourId, { origin:Object.freeze({...origin}), targetId: result.targetId });
     }
     return result;
   }
