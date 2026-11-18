@@ -353,3 +353,27 @@ describe("ApplicationHost – no answer/storage leakage (browser layer)", () => 
     assert.equal(PROTECTED_EVENT_TYPES.has("APP_EVAL"), true);
   });
 });
+
+import {chromium} from 'playwright-core';
+import {createServer} from 'vite';
+it('actual Chromium opaque sandbox binds source, rejects replay and foreign window',async()=>{
+ const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();
+ const address=server.httpServer!.address();assert(address&&typeof address!=='string');
+ const browser=await chromium.launch({headless:true});
+ try{
+  const page=await browser.newPage();
+  await page.route('https://isolated.example.test/app',route=>route.fulfill({contentType:'text/html',body:'<script>addEventListener("message",e=>{parent.postMessage(e.data,"*");parent.postMessage(e.data,"*")})<\/script>'}));
+  await page.goto('http://127.0.0.1:'+address.port+'/');
+  const result=await page.evaluate(async()=>{
+    const modulePath='/application-host/index.ts';const {ApplicationHostController}=await import(modulePath);
+    const url='https://isolated.example.test/app';const frame=document.createElement('iframe');frame.src=url;frame.setAttribute('sandbox',ApplicationHostController.sandboxAttribute());
+    const loaded=new Promise<void>(resolve=>frame.addEventListener('load',()=>resolve(),{once:true}));document.body.append(frame);await loaded;
+    const host=new ApplicationHostController({appUrl:url,expectedOrigin:new URL(url).origin});host.bindFrame(frame);host.launch();
+    const envelope={type:'APP_READY',sessionId:host.getSessionId(),nonce:host.getNonce(),sequence:1};
+    const foreign=host.handleMessage({source:window,origin:'null',data:envelope});
+    const seen:boolean[]=[];const origins:string[]=[];
+    await new Promise<void>((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('opaque iframe did not reply')),5000);const handler=(e:MessageEvent)=>{if(e.source!==frame.contentWindow)return;origins.push(e.origin);seen.push(host.handleMessage(e));if(seen.length===2){clearTimeout(timer);window.removeEventListener('message',handler);resolve();}};window.addEventListener('message',handler);frame.contentWindow!.postMessage(envelope,'*');});
+    const state=host.getState();host.dismiss();frame.remove();return {foreign,seen,origins,state};
+  });assert.deepEqual(result,{foreign:false,seen:[true,false],origins:['null','null'],state:'RUNNING'});
+ }finally{await browser.close();await server.close();}
+});
