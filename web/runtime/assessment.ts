@@ -2,9 +2,11 @@
 // Conforms to schemas/platform/assessment.schema.json (urn:g9:engineering:assessment:1).
 // Pure structural evaluation engine: "No academic approval inferred from software validation."
 
-import type { Kind, Response, Grade, GradeStatus, Ref, SessionMode } from './types.ts';
+import type { Kind, Response, Grade, GradeStatus, Ref, SessionMode, TaskRef } from './types.ts';
 import type { AssessmentEngine } from './contracts.ts';
-import { RESPONSE_KINDS, isResponseKind } from './response.ts';
+import { RESPONSE_KINDS, isResponseKind, validateResponse, ResponseValidationError } from './response.ts';
+
+import { canonicalJson, computeSha256, sameRef } from './loader.ts';
 
 export const SCORING_VERSION = 'g9-scoring/1.0';
 
@@ -79,7 +81,7 @@ export type ScoringReasonCode = (typeof ReasonCodes)[keyof typeof ReasonCodes] |
  * Normalizes string unit representation (case-insensitive trim).
  */
 function normalizeUnit(unit: string): string {
-  return unit.trim().toLowerCase();
+  return unit;
 }
 
 /**
@@ -205,7 +207,7 @@ function evaluateMultipleChoice(response: Response, contract: AssessmentContract
  * Evaluates INTEGER response.
  */
 function evaluateInteger(response: Response, contract: AssessmentContract): Grade {
-  const candidate = String(response.value ?? '').trim();
+  const candidate = typeof response.value==='string'?response.value:'';
   if (!/^-?[0-9]+$/.test(candidate)) {
     return {
       status: 'INVALID',
@@ -216,7 +218,7 @@ function evaluateInteger(response: Response, contract: AssessmentContract): Grad
   }
 
   const canonicalRaw = contract.evaluator.canonical_value;
-  const canonical = String(canonicalRaw ?? '').trim();
+  const canonical = typeof canonicalRaw==='string'?canonicalRaw:'';
   if (!/^-?[0-9]+$/.test(canonical)) {
     return {
       status: 'REVIEW_PENDING',
@@ -268,8 +270,8 @@ function evaluateNumericQuantity(response: Response, contract: AssessmentContrac
     };
   }
 
-  const candDecStr = String(candidate.decimal ?? '').trim();
-  const candUnit = String(candidate.unit ?? '').trim();
+  const candDecStr = typeof candidate.decimal==='string'?candidate.decimal:'';
+  const candUnit = typeof candidate.unit==='string'?candidate.unit:'';
 
   if (!/^-?[0-9]+(\.[0-9]+)?$/.test(candDecStr) || candUnit.length === 0) {
     return {
@@ -290,8 +292,8 @@ function evaluateNumericQuantity(response: Response, contract: AssessmentContrac
     };
   }
 
-  const canonDecStr = String(canonical.decimal ?? '').trim();
-  const canonUnit = String(canonical.unit ?? '').trim();
+  const canonDecStr = typeof canonical.decimal==='string'?canonical.decimal:'';
+  const canonUnit = typeof canonical.unit==='string'?canonical.unit:'';
 
   // N13: Dimension/Unit mismatch check
   if (normalizeUnit(candUnit) !== normalizeUnit(canonUnit)) {
@@ -303,21 +305,15 @@ function evaluateNumericQuantity(response: Response, contract: AssessmentContrac
     };
   }
 
-  const candVal = parseFloat(candDecStr);
-  const canonVal = parseFloat(canonDecStr);
-  const tolerance = contract.evaluator.numeric_tolerance ?? 0;
-
-  if (Number.isNaN(candVal) || Number.isNaN(canonVal)) {
-    return {
-      status: 'INVALID',
-      points: null,
-      maxPoints: contract.max_points,
-      reasonCode: ReasonCodes.INVALID_QUANTITY_FORMAT,
-    };
-  }
-
-  const diff = Math.abs(candVal - canonVal);
-  if (diff <= tolerance) {
+  const tolerance=contract.evaluator.numeric_tolerance??0;
+  if(!/^-?[0-9]+(\.[0-9]+)?$/.test(canonDecStr)||!Number.isFinite(tolerance)||tolerance<0||candDecStr.length>4096||canonDecStr.length>4096)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.INVALID_QUANTITY_FORMAT};
+  // Compare scaled decimal integers, not binary floats (including large integers).
+  const tolText=String(tolerance);
+  const decimal=(v:string):[bigint,number]=>{const [mantissa,exponent='0']=v.toLowerCase().split('e');const fraction=mantissa.split('.')[1]?.length??0;return [BigInt(mantissa.replace('.','')),fraction-Number(exponent)];};
+  const [a,as]=decimal(candDecStr),[b,bs]=decimal(canonDecStr),[c,cs]=decimal(tolText);
+  const scale=Math.max(as,bs,cs,0);const scaled=(v:bigint,n:number)=>v*10n**BigInt(scale-n);
+  const diff=scaled(a,as)-scaled(b,bs);
+  if ((diff<0n?-diff:diff) <= scaled(c,cs)) {
     return {
       status: 'SCORED',
       points: contract.max_points,
@@ -379,7 +375,7 @@ function evaluateMultipart(
     };
   }
 
-  const partGrades: Record<string, Grade> = {};
+  const partGrades: Record<string, Grade> = Object.create(null);
   let hasMissingRequired = false;
   let hasReviewPending = false;
   let hasInvalid = false;
@@ -390,7 +386,7 @@ function evaluateMultipart(
     const partContract = partContracts[partId];
     totalMaxPoints += partContract.max_points;
 
-    const candPart = candParts[partId];
+    const candPart = Object.hasOwn(candParts,partId)?candParts[partId]:undefined;
     if (!candPart) {
       // N14: missing required part
       hasMissingRequired = true;
@@ -417,7 +413,7 @@ function evaluateMultipart(
 
   // Check for unexpected extra parts
   for (const candPartId of Object.keys(candParts)) {
-    if (!partContracts[candPartId]) {
+    if (!Object.hasOwn(partContracts,candPartId)) {
       partGrades[candPartId] = {
         status: 'INVALID',
         points: null,
@@ -428,7 +424,8 @@ function evaluateMultipart(
     }
   }
 
-  const effectiveMaxPoints = contract.max_points > 0 ? contract.max_points : totalMaxPoints;
+  const effectiveMaxPoints = contract.max_points;
+  if(totalMaxPoints!==effectiveMaxPoints||totalPoints>effectiveMaxPoints)return {status:'INVALID',points:null,maxPoints:effectiveMaxPoints,reasonCode:'PART_TOTAL_MISMATCH'};
 
   // N14: Missing part -> incomplete/pending, no fabricated total!
   if (hasMissingRequired) {
@@ -482,6 +479,10 @@ export function evaluateResponse(
   contract: AssessmentContract,
   mode: SessionMode = 'PRACTICE'
 ): Grade {
+  if(!contract||!Number.isFinite(contract.max_points)||contract.max_points<0||!contract.evaluator||!['AUTOMATIC','REVIEW_PENDING'].includes(contract.evaluator.mode))return {status:'INVALID',points:null,maxPoints:0,reasonCode:'INVALID_ASSESSMENT'};
+  if(!response||!isResponseKind(response.kind))return {status:'UNSUPPORTED',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.UNSUPPORTED_RESPONSE_KIND};
+  try{validateResponse(response);}catch(e){return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:e instanceof ResponseValidationError&&e.code==='DUPLICATE_ELEMENTS'?ReasonCodes.DUPLICATE_CHOICE_OPTION:ReasonCodes.MALFORMED_RESPONSE};}
+  if(response.kind!==contract.response_kind)return {status:'INVALID',points:null,maxPoints:contract.max_points,reasonCode:ReasonCodes.KIND_MISMATCH};
   // Handle dropped item policies
   if (contract.dropped_policy === 'FULL_CREDIT') {
     return {
@@ -521,7 +522,7 @@ export function evaluateResponse(
   }
 
   // If contract explicitly requires manual review, honour REVIEW_PENDING
-  if (contract.evaluator.mode === 'REVIEW_PENDING') {
+  if (contract.evaluator.mode === 'REVIEW_PENDING' && !(response.kind==='MULTIPART'&&contract.parts)) {
     return {
       status: 'REVIEW_PENDING',
       points: null,
@@ -573,48 +574,15 @@ export function evaluateResponse(
  * Standard implementation of AssessmentEngine runtime contract.
  */
 export class StandardAssessmentEngine implements AssessmentEngine {
-  private readonly contracts = new Map<string, AssessmentContract>();
-
-  constructor(initialContracts?: readonly AssessmentContract[]) {
-    if (initialContracts) {
-      for (const c of initialContracts) {
-        this.registerContract(c);
-      }
-    }
+  private readonly contracts=new Map<string,{ref:Ref<'ASSESSMENT'>;contract:AssessmentContract}>();
+  async registerContract(contract:AssessmentContract,ref:Ref<'ASSESSMENT'>):Promise<void>{
+    const copy=structuredClone(contract);
+    if(ref.type!=='ASSESSMENT'||ref.id!==copy.id||ref.revision!==copy.revision||ref.sha256!==await computeSha256(canonicalJson(copy)))throw new Error('ASSESSMENT_IDENTITY_MISMATCH');
+    this.contracts.set(ref.id,{ref:{...ref},contract:copy});
   }
-
-  registerContract(contract: AssessmentContract): void {
-    this.contracts.set(contract.id, contract);
-    this.contracts.set(contract.task_ref.id, contract);
-  }
-
-  getContract(id: string): AssessmentContract | undefined {
-    return this.contracts.get(id);
-  }
-
-  async evaluate(
-    response: Response,
-    assessment: Ref | AssessmentContract,
-    mode: SessionMode = 'PRACTICE'
-  ): Promise<Grade> {
-    let contract: AssessmentContract | undefined;
-
-    if ('evaluator' in assessment && 'response_kind' in assessment) {
-      contract = assessment as AssessmentContract;
-    } else {
-      const ref = assessment as Ref;
-      contract = this.contracts.get(ref.id);
-    }
-
-    if (!contract) {
-      return {
-        status: 'INVALID',
-        points: null,
-        maxPoints: 0,
-        reasonCode: ReasonCodes.ASSESSMENT_NOT_FOUND,
-      };
-    }
-
-    return evaluateResponse(response, contract, mode);
+  async evaluate(response:Response,assessment:Ref<'ASSESSMENT'>,mode:SessionMode,task:TaskRef):Promise<Grade>{
+    const entry=this.contracts.get(assessment.id);
+    if(!entry||!sameRef(entry.ref,assessment)||!sameRef(entry.contract.task_ref,task))return {status:'INVALID',points:null,maxPoints:0,reasonCode:ReasonCodes.ASSESSMENT_NOT_FOUND};
+    return evaluateResponse(response,entry.contract,mode);
   }
 }
