@@ -111,8 +111,8 @@ export class GcdrExplorerPageController {
   async readAuthorizedTelemetry(binding:Parameters<ReturnType<typeof getModelRegistry>['evaluateAuthorized']>[2]){
     const stage=this.journey.getCurrentStage();
     if(!['MANIPULATE','OBSERVE','CONTRADICT','DECONSTRUCT','RECONSTRUCT','INVARIANT','BOUNDARY'].includes(stage)||!this.journey.isStageCompleted('PREDICT'))return null;
-    const result=await getModelRegistry().evaluateAuthorized('PHYS-MODEL-ENERGY-WELL',this.journey.getModelParameters(),binding);
-    const o=result.outputs;if(result.isMasked||!o)return null;
+    const before=this.journey.getModelParameters(),result=await getModelRegistry().evaluateAuthorized('PHYS-MODEL-ENERGY-WELL',before,binding);
+    const o=result.outputs;if(result.isMasked||!o||this.journey.getCurrentStage()!==stage||this.journey.getModelParameters().x!==before.x)return null;
     return {potentialEnergy:o.U as number,kineticEnergy:o.K as number,speed:o.v as number,isTurningPoint:o.isTurningPoint as boolean};
   }
 

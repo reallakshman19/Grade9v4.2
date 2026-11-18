@@ -144,6 +144,7 @@ export interface PortableWorkbenchState {
   readonly packageIdentity:string; // Exact canonical diagnostic package bytes, not an authority receipt.
   readonly activeEntityId: string | null;
   readonly appliedRuleIds: readonly string[];
+  readonly ruleHistory: readonly {readonly ruleId:string;readonly activeEntityId:string|null}[];
   readonly dynamicEntities: readonly SceneEntity[];
   readonly dynamicProjections: readonly SceneProjection[];
   readonly rotationDegrees: number;

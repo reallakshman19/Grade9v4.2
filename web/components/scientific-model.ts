@@ -73,8 +73,8 @@ export class ScientificModelController {
     if(Object.keys(config.initialParameters??{}).some(k=>!this.adapter.parameters.some(p=>p.id===k))||!this.adapter.validate(this.parameterValues).isValid)throw Error('Invalid initial parameters or noninteractive adapter');
   }
 
-  getAdapter(): ScientificModelAdapter {
-    return this.adapter;
+  getAdapter(): Omit<ScientificModelAdapter,'evaluate'|'validate'> {
+    const {evaluate:_,validate:__,...metadata}=this.adapter;return structuredClone(metadata);
   }
 
   getStage(): CognitiveStage {

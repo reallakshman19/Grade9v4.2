@@ -78,7 +78,7 @@ export interface GcdrStageContext {
   readonly allowedHelpers: readonly ('CHALKBOARD' | 'TRAP_ALERT' | 'INDEPENDENT_CHECK' | 'TAKEAWAY')[];
 }
 
-export const GCDR_STAGE_DEFINITIONS: Readonly<Record<GcdrStage, GcdrStageContext>> = {
+const stageDefinitions:Record<GcdrStage,GcdrStageContext> = {
   PREDICT: {
     stage: 'PREDICT',
     title: '1. Predict Outcome',
@@ -151,6 +151,7 @@ export const GCDR_STAGE_DEFINITIONS: Readonly<Record<GcdrStage, GcdrStageContext
   },
 };
 
+export const GCDR_STAGE_DEFINITIONS:Readonly<Record<GcdrStage,GcdrStageContext>>=Object.freeze(Object.fromEntries(Object.entries(stageDefinitions).map(([k,v])=>[k,Object.freeze({...v,allowedHelpers:Object.freeze([...v.allowedHelpers])})]))) as Readonly<Record<GcdrStage,GcdrStageContext>>;
 // Local diagnostic transcript; no stage field or snapshot is an A48/A49 receipt.
 export interface StageEvidence {readonly stage:GcdrStage;readonly response:string;readonly x:number;}
 export interface GcdrExplorerDraft{

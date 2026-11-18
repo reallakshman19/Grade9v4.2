@@ -30,3 +30,29 @@ it('actual Chromium: hostile explorer title and learner response rendered inert,
  const c=new GcdrExplorerPageController({...config,title:'<img src=x onerror=alert(1)>'});c.getJourney().setStageResponse('PREDICT','"><img src=x onerror=alert(1)>');
  const b=await chromium.launch({headless:true});try{const p=await b.newPage();await p.setContent(c.renderHtml());assert.equal(await p.locator('img,[onerror]').count(),0);assert.equal(await p.locator('#gcdr-stage-input').inputValue(),'"><img src=x onerror=alert(1)>');assert.equal(await p.locator('.gcdr-second-view').textContent(),'Telemetry withheld pending durable reviewed exposure.');assert.equal(await p.locator('.gcdr-stage-step:disabled').count(),9);}finally{await b.close();}
 });
+
+import {MemoryStorageDriver} from '../../web/runtime/storage.ts';
+import {DefaultCognitiveStore} from '../../web/runtime/cognitive-store.ts';
+import {CognitiveController} from '../../web/journeys/cognitive-controller.ts';
+import {sameRef} from '../../web/runtime/loader.ts';
+import type {TaskRef,Ref,Session,JourneyKey,CognitiveEvent,Checkpoint} from '../../web/runtime/types.ts';
+it('A65 governed telemetry needs local prediction and actual A49 event; faded stage masks',async()=>{
+ const driver=new MemoryStorageDriver(),task:TaskRef={type:'QUESTION',id:'que:model:synthetic',revision:1,sha256:'a'.repeat(64)},boundary:TaskRef={...task,type:'FRESH_TASK',id:'que:model:boundary'},asset:Ref={type:'ASSET',id:'PHYS-MODEL-ENERGY-WELL',revision:1,sha256:'b'.repeat(64)};
+ const firstReference:Ref={...task,type:'SOLUTION',id:'sol:model:first'},boundaryReference:Ref={...task,type:'SOLUTION',id:'sol:model:boundary'};
+ const releaseId='rel:model:synthetic',journey:JourneyKey={journeyId:'journey:model',taskInstanceId:'inst:model',task,releaseId};
+ const session:Session={id:'ses:model',item:task,releaseId,mode:'PRACTICE',contentRevision:'r1',origin:null,returnRoute:null,cursor:0,attemptIds:[],draftId:null};
+ await driver.put('sessions',session.id,session);
+ const authority={liveRevision:async()=> 'r1',reviewedContext:async()=>({releaseId,task,boundaryTask:boundary,firstReference,boundaryReference,firstFields:{a:'INTEGER' as const},boundaryFields:{a:'INTEGER' as const},moves:['m']}),allowed:async(_j:any,_s:any,cap:string,a:Ref)=>cap==='MODEL_AUTO_CALCULATE'&&sameRef(a,asset),boundaryAllowed:async()=>false};
+ const controller=new CognitiveController({journey,sessionId:session.id},new DefaultCognitiveStore(driver),driver,authority);
+ let snap=await controller.begin();
+ const event=(cp:Checkpoint,type:CognitiveEvent['event_type'],payload:any):CognitiveEvent=>({schema_version:'g9-cognitive-event/2',event_id:'evt:model:'+String(cp.sequence+1),journey_id:journey.journeyId,task_instance_id:journey.taskInstanceId,release_id:releaseId,task_ref:task,sequence:cp.sequence+1,previous_sha256:cp.sha256,at:'2026-11-18T09:00:00Z',event_type:type,payload} as CognitiveEvent);
+ const c=new GcdrExplorerPageController(config),j=c.getJourney(),binding={controller,asset,checkpoint:snap.checkpoint,exposureId:'evt:model:2',modelId:asset.id};
+ assert.equal(await c.readAuthorizedTelemetry(binding),null);
+ snap=await controller.commit(event(snap.checkpoint,'PREDICTION_COMMITTED',{prediction:'UNSURE',artifact_ids:[]}),snap.checkpoint,[]);
+ const h=event(snap.checkpoint,'HELP_EXPOSED',{capability:'MODEL_AUTO_CALCULATE',asset_ref:asset,ordinal:1});const stale=snap.checkpoint;snap=await controller.commit(h,snap.checkpoint,[]);
+ const valid={...binding,checkpoint:snap.checkpoint};assert.equal(await c.readAuthorizedTelemetry(valid),null);
+ j.setStageResponse('PREDICT','UNSURE');j.advance();j.setModelParameter('x',.2);
+ assert.equal(await c.readAuthorizedTelemetry({...valid,checkpoint:stale}),null);assert.ok(Math.abs((await c.readAuthorizedTelemetry(valid))!.potentialEnergy-2)<1e-12);
+ j.setStageResponse('MANIPULATE','changed');j.advance();for(const stage of GCDR_ORDERED_STAGES.slice(2,8)){j.setStageResponse(stage,'recorded');j.advance();}
+ assert.equal(j.getCurrentStage(),'FADE');assert.equal(await c.readAuthorizedTelemetry(valid),null);
+});
