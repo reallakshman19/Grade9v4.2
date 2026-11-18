@@ -111,17 +111,18 @@ export class IndexedDBStorageDriver implements StorageDriver {
       const fail=(e:unknown)=>{failure=e;done=true;try{tr.abort();}catch{};};
       tr.onabort=()=>reject(failure??new StorageError(tr.error?.name==='QuotaExceededError'?'QUOTA_EXCEEDED':'TRANSACTION_ABORTED',tr.error?.message??'Transaction aborted'));
       tr.onerror=()=>{};tr.oncomplete=()=>{if(done&&!failure)resolve(result);else reject(failure??new StorageError('TRANSACTION_ABORTED','Transaction completed prematurely'));};
-      const req=<T>(r:IDBRequest<T>)=>new Promise<T>((res,rej)=>{r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});
+      const queued:Array<()=>void>=[];
+      const req=<T>(factory:()=>IDBRequest<T>)=>new Promise<T>((res,rej)=>{queued.push(()=>{try{const r=factory();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);}catch(e){rej(e);}});});
       const key=(s:string,k:string,write=false)=>{if(done||!names.includes(s)||write&&mode!=='readwrite')throw new StorageError('TRANSACTION_SCOPE','Invalid transaction operation');return [s,k];};
       const range=(s:string)=>{key(s,'');return IDBKeyRange.bound([s],[s,[]]);};
       const ctx:TransactionContext={
-        get:async <T>(s:string,k:string)=>await req(records.get(key(s,k))) as T|undefined,
-        getAll:async <T>(s:string)=>await req(records.getAll(range(s))) as T[],
-        put:async <T>(s:string,k:string,v:T)=>{await req(records.put(v,key(s,k,true)));},
-        delete:async(s,k)=>{await req(records.delete(key(s,k,true)));},
+        get:async <T>(s:string,k:string)=>await req(()=>records.get(key(s,k))) as T|undefined,
+        getAll:async <T>(s:string)=>await req(()=>records.getAll(range(s))) as T[],
+        put:async <T>(s:string,k:string,v:T)=>{await req(()=>records.put(v,key(s,k,true)));},
+        delete:async(s,k)=>{await req(()=>records.delete(key(s,k,true)));},
       };
       // Keep the transaction active across WebCrypto and other awaited tasks.
-      const keepAlive=()=>{if(done)return;const q=records.get(['__transaction_keepalive__','']);q.onsuccess=keepAlive;};
+      const keepAlive=()=>{if(done)return;for(const fn of queued.splice(0))fn();const q=records.get(['__transaction_keepalive__','']);q.onsuccess=keepAlive;};
       keepAlive();
       Promise.resolve().then(()=>operation(ctx)).then(v=>{result=v;done=true;},fail);
     });

@@ -21,6 +21,14 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: Strict typecheck and build
         run: npm run build
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.13.5'
+      - name: Compile actual public projection fixture
+        run: |
+          python -m pip install -e '.[dev]'
+          python -c 'import json; from grade9build.compile import ReleaseProjectionCompiler; print(json.dumps(ReleaseProjectionCompiler().compile_release(json.load(open("fixtures/synthetic/graph.json"))), ensure_ascii=False))' > "$RUNNER_TEMP/g9-projection.json"
+          echo "G9_COMPILED_PROJECTION=$RUNNER_TEMP/g9-projection.json" >> "$GITHUB_ENV"
       - name: Runtime regression and adversarial tests
         if: always() && !cancelled()
         run: node --experimental-strip-types --test tests/runtime/*.test.ts

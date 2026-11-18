@@ -32,3 +32,12 @@ it('rejects foreign replay and stale checkpoint',async()=>{const s=new DefaultCo
 it('retry preserves parent provenance across child genesis',async()=>{const d=new MemoryStorageDriver(),s=new DefaultCognitiveStore(d),p=journey(),c=journey('jrn:child');const a=await s.append(pred(p),p,zero,[]);const b=await s.append(first(p,a.checkpoint),p,a.checkpoint,[]);assert.deepEqual(await s.retry(p,b.checkpoint,c),createGenesisSnapshot(c));await s.append(pred(c),c,zero,[]);const meta=await d.get<any>('cognitive_journeys',c.journeyId);assert.deepEqual(meta.parentJourney,p);assert.deepEqual(meta.parentCheckpoint,b.checkpoint);assert.deepEqual(await s.replay(p,b.checkpoint),b);});
 it('rejects boundary feedback without boundary commitment',async()=>{const s=new DefaultCognitiveStore(new MemoryStorageDriver()),j=journey(),a=await s.append(pred(j),j,zero,[]);await assert.rejects(s.append(event(j,a.checkpoint,'BOUNDARY_FEEDBACK_VIEWED',{boundary_event_id:'forged',reference_ref:task}),j,a.checkpoint,[]),/INVALID_STAGE/);});
 it('rejects concurrent conflicting appends',async()=>{const s=new DefaultCognitiveStore(new MemoryStorageDriver()),j=journey(),e=pred(j);const outcomes=await Promise.allSettled([s.append(e,j,zero,[]),s.append({...e,event_id:'different'},j,zero,[])]);assert.equal(outcomes.filter(x=>x.status==='fulfilled').length,1);});
+
+import {readFileSync} from 'node:fs';
+it('replays the actual A11 synthetic session and matches its pinned chain head',async()=>{
+ const f=JSON.parse(readFileSync('fixtures/synthetic/session.synthetic.json','utf8'));
+ const j:JourneyKey={journeyId:f.journey_id,taskInstanceId:f.task_instance_id,releaseId:f.release_id,task:f.task_ref};
+ const s=new DefaultCognitiveStore(new MemoryStorageDriver());let snap=createGenesisSnapshot(j);
+ for(const e of f.history)snap=await s.append(e,j,snap.checkpoint,[]);
+ assert.equal(snap.checkpoint.sequence,f.event_count);assert.equal(snap.lastHash,f.chain_head_sha256);assert.equal(snap.stage,'COMPLETE');
+});

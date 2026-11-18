@@ -67,7 +67,7 @@ export class DefaultCognitiveStore implements CognitiveStore {
  async append(event:CognitiveEvent,expected:JourneyKey,checkpoint:Checkpoint,work:readonly WorkArtifact[]):Promise<CognitiveSnapshot>{
    validateEvent(event);guard(sameJourney(identity(event),expected),'IDENTITY_MISMATCH','Wrong journey, task, instance or release');
    const id=expected.journeyId,eventsKey='cog_events:'+id,snapKey='cog_snap:'+id;
-   try{return await this.driver.transaction([eventsKey,snapKey,'artifacts','cognitive_journeys','cognitive_event_ids'],'readwrite',async tx=>{
+   try{return await this.driver.transaction([eventsKey,snapKey,'artifacts','cognitive_journeys','cognitive_event_ids','cognitive_event_work'],'readwrite',async tx=>{
      const meta=await tx.get<JourneyMeta>('cognitive_journeys',id);
      if(meta)guard(sameJourney(meta.journey,expected),'IDENTITY_MISMATCH','Stored journey differs');
      const events=await tx.getAll<CognitiveEvent>(eventsKey);
@@ -75,17 +75,17 @@ export class DefaultCognitiveStore implements CognitiveStore {
      const stored=await tx.get<CognitiveSnapshot>(snapKey,id);
      if(stored)guard(equal(stored,current),'CORRUPT_CHAIN','Stored checkpoint diverges');
      const duplicate=await tx.get<CognitiveEvent>('cognitive_event_ids',event.event_id);
-     if(duplicate){guard(equal(duplicate,event),'EVENT_ID_COLLISION','Duplicate event ID differs');guard(current.eventIds.includes(event.event_id),'IDENTITY_MISMATCH','Event belongs to another journey');return current;}
+     if(duplicate){guard(equal(duplicate,event),'EVENT_ID_COLLISION','Duplicate event ID differs');guard(current.eventIds.includes(event.event_id),'IDENTITY_MISMATCH','Event belongs to another journey');const linked=await tx.get<readonly string[]>('cognitive_event_work',event.event_id);guard(equal(linked??[],work.map(a=>a.id)),'RECORD_CONFLICT','Duplicate event work differs');for(const a of work)guard(equal(await tx.get('artifacts',a.id),a),'RECORD_CONFLICT','Duplicate artifact differs');return current;}
      guard(equal(checkpoint,current.checkpoint),'STALE_HASH','Expected checkpoint differs');
      guard(event.sequence===current.checkpoint.sequence+1,'CHAIN_DIVERGENCE','Sequence gap');
      guard(event.previous_sha256===current.lastHash,'STALE_HASH','Previous hash differs');
      const updated=await rebuild([...events,event],expected);
-     const required=event.event_type==='PREDICTION_COMMITTED'?event.payload.artifact_ids:event.event_type==='FIRST_COMMITTED'||event.event_type==='REPAIR_COMMITTED'||event.event_type==='BOUNDARY_COMMITTED'?event.payload.work:[];
-     guard(work.every(a=>required.includes(a.id)),'INVALID_LINEAGE','Unreferenced artifact');
+     const required=event.event_type==='PREDICTION_COMMITTED'?event.payload.artifact_ids:[];
+     guard(new Set(work.map(a=>a.id)).size===work.length,'INVALID_LINEAGE','Duplicate attached artifact');
      for(const a of work){guard(str(a.id)&&a.version===1&&['NOTE','EQUATION','INK','TABLE','GRAPH','STRUCTURE','ATTACHMENT'].includes(a.kind),'INVALID_EVENT_SCHEMA','Invalid artifact');const old=await tx.get<WorkArtifact>('artifacts',a.id);guard(!old||equal(old,a),'RECORD_CONFLICT','Immutable artifact conflict');if(!old)await tx.put('artifacts',a.id,a);}
      for(const key of required)guard(await tx.get('artifacts',key),'INVALID_LINEAGE','Missing work artifact');
      if(!meta)await tx.put('cognitive_journeys',id,{journey:expected,parentJourney:null,parentCheckpoint:null} satisfies JourneyMeta);
-     await tx.put(eventsKey,String(event.sequence),event);await tx.put('cognitive_event_ids',event.event_id,event);await tx.put(snapKey,id,updated);return updated;
+     await tx.put('cognitive_event_work',event.event_id,work.map(a=>a.id));await tx.put(eventsKey,String(event.sequence),event);await tx.put('cognitive_event_ids',event.event_id,event);await tx.put(snapKey,id,updated);return updated;
    });}catch(e){if(e instanceof CognitiveStoreError){try{const q:QuarantineRecord={id:crypto.randomUUID(),journeyId:id,event,reason:e.message,recordedAt:new Date().toISOString()};await this.driver.put('cognitive_quarantine',q.id,q);}catch{}}throw e;}
  }
  async replay(journey:JourneyKey,expectedCheckpoint:Checkpoint):Promise<CognitiveSnapshot>{

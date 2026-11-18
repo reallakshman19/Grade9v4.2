@@ -498,3 +498,10 @@ describe('StandardAssessmentEngine Integration', () => {
 });
 
 it('does not conflate SI case or round distinct large decimals',()=>{const task={type:'QUESTION' as const,id:'que:test',revision:1,sha256:'a'.repeat(64)};const c:AssessmentContract={id:'asmt:test',task_ref:task,response_kind:'NUMERIC_QUANTITY',evaluator:{mode:'AUTOMATIC',canonical_value:{decimal:'9007199254740992',unit:'m'}},max_points:1};assert.equal(evaluateResponse({kind:'NUMERIC_QUANTITY',value:{decimal:'9007199254740993',unit:'m'}},c).points,0);assert.equal(evaluateResponse({kind:'NUMERIC_QUANTITY',value:{decimal:'9007199254740992',unit:'M'}},c).status,'INVALID');});
+
+import {readFileSync} from 'node:fs';
+it('replays all 26 pinned synthetic scoring vectors',()=>{
+ const vectors=JSON.parse(readFileSync('fixtures/synthetic/scoring-vectors.json','utf8'));
+ const build=(p:any,id:string):AssessmentContract=>({id,task_ref:makeTaskRef(),response_kind:p.kind,max_points:p.max_points,evaluator:{mode:['SINGLE_CHOICE','MULTIPLE_CHOICE','INTEGER','NUMERIC_QUANTITY'].includes(p.kind)?'AUTOMATIC':'REVIEW_PENDING',...(p.correct===undefined?{}:{canonical_value:p.kind==='NUMERIC_QUANTITY'?{decimal:p.correct,unit:p.unit}:p.correct}),...(p.allowed?{allowed_options:p.allowed}:{}),...(p.abs_tol?{numeric_tolerance:Number(p.abs_tol),relative_tolerance:p.rel_tol,unit_factors:p.unit_factors}:{})},...(p.parts?{parts:Object.fromEntries(Object.entries(p.parts).map(([k,v])=>[k,build(v,k)]))}:{})});
+ for(const v of vectors){const g=evaluateResponse(v.response,build(v.policy,v.id));assert.deepEqual({status:g.status,points:g.points,max_points:g.maxPoints},v.expected,v.id);}
+});
