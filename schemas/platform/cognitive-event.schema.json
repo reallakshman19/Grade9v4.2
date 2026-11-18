@@ -4,7 +4,7 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "g9-cognitive-event/1"
+      "enum": ["g9-cognitive-event/1", "g9-cognitive-event/2"]
     },
     "event_id": {
       "type": "string",
