@@ -68,7 +68,7 @@ export async function migrateLegacyExport(raw:any):Promise<ExportBundle>{
   validateBundleData(data);
   return {schema_version:STORAGE_EXPORT_VERSION,exported_at:raw.exported_at??new Date().toISOString(),checksum:await computeSha256(JSON.stringify(data)),data};
 }
-const eq=(a:unknown,b:unknown)=>canonicalJson(a)===canonicalJson(b);
+const eq=(a:unknown,b:unknown)=>a===undefined||b===undefined?a===b:canonicalJson(a)===canonicalJson(b);
 function check(condition:unknown,message:string):asserts condition{if(!condition)throw new StorageError('INVALID_RECORD',message);}
 function refOk(x:any){return x&&Object.keys(x).sort().join(',')==='id,revision,sha256,type'&&typeof x.id==='string'&&x.id.trim().length>0&&typeof x.type==='string'&&Number.isSafeInteger(x.revision)&&x.revision>0&&typeof x.sha256==='string'&&/^[a-f0-9]{64}$/.test(x.sha256);}
 const nonblank=(x:unknown):x is string=>typeof x==='string'&&x.trim().length>0;
@@ -167,7 +167,7 @@ export class DefaultProgressStore implements ProgressStore {
    */
   static readonly attemptStores=['attempts','sessions','artifacts','drafts','artifact_owners','attempt_authority'] as const;
   async appendAttempt(attempt:Attempt):Promise<void>{
-    attempt=structuredClone(attempt);
+    attempt=structuredClone(attempt);check(attempt.cognitive===null,'Cognitive attempts must commit with their event in one transaction');
     await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt));
   }
   // For A48's atomic transaction. The same validated write path is used by both APIs.
@@ -177,6 +177,7 @@ export class DefaultProgressStore implements ProgressStore {
     if(!session||!sameRef(session.item,attempt.item)||session.releaseId!==attempt.releaseId)throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
     const old=await tx.get<Attempt>('attempts',attempt.id);
     if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');return;}
+    check(session.attemptIds.length===0,'Session already contains a committed attempt; use a new exact retry session');
     for(const art of attempt.work){await immutablePut(tx,'artifact_owners',art.id,attempt.sessionId);await immutablePut(tx,'artifacts',art.id,art);}
     await tx.put('attempts',attempt.id,attempt);
     await tx.put('attempt_authority',attempt.id,qualified?'LOCAL_VERIFIED_SCORE':'LOCAL_UNVERIFIED');
@@ -184,6 +185,15 @@ export class DefaultProgressStore implements ProgressStore {
     await tx.delete('drafts',session.id);
   }
 
+  async committedAttempt(sessionId:string,attemptId:string):Promise<Attempt|null>{
+    return this.driver.transaction(DefaultProgressStore.attemptStores,'readonly',async tx=>{
+      const a=await tx.get<Attempt>('attempts',attemptId),session=await tx.get<Session>('sessions',sessionId);
+      if(!a||!session||a.sessionId!==sessionId||a.releaseId!==session.releaseId||!sameRef(a.item,session.item)||!session.attemptIds.includes(attemptId)||await tx.get('attempt_authority',attemptId)!=='LOCAL_VERIFIED_SCORE')return null;
+      if(!await this.qualify(a))return null;
+      for(const w of a.work)if(!eq(await tx.get('artifacts',w.id),w)||await tx.get('artifact_owners',w.id)!==sessionId)return null;
+      return a;
+    });
+  }
   // Shared restore transaction, used by A48. Imports are historical, never disclosure receipts.
   async restoreEmpty(tx:import('./storage.ts').TransactionContext,data:ExportDataPayload):Promise<void>{
     validateBundleData(data);
