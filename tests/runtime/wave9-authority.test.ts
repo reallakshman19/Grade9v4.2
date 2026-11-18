@@ -9,43 +9,7 @@ import {Core1BTransferJourney} from '../../web/journeys/core1b.ts';
 import {CORE1_ORIENTATION_BLUEPRINT_ID,CORE1_ORIENTATION_BLOCKS} from '../../web/journeys/core1.ts';
 import {setupTransfer,throughRepair,firstResponses,boundaryResponses,artifact,ref} from '../fixtures/wave8-synthetic.ts';
 import type {Attempt,CognitiveEvent,Ref,Session,TaskRef,Response} from '../../web/runtime/types.ts';
-const pin=(c:Wave9Catalog)=>computeSha256(canonicalJson(c));
-async function fixture(role:Wave9Catalog['role'],answer='4'){
- const f=await setupTransfer(),b=await f.controller.describeBinding();
- const anchor=ref('QUESTION','question:wave9:anchor','b'.repeat(64)),check=ref('QUESTION','question:wave9:check','c'.repeat(64));
- const as:Session={...f.as,id:'session:wave9:anchor',item:anchor,attemptIds:[],draftId:null};
- const cs:Session={...f.as,id:'session:wave9:check',item:check,origin:f.first,attemptIds:[],draftId:null};
- for(const s of [as,cs])await f.driver.put('sessions',s.id,s);
- const contracts:AssessmentContract[]=[anchor,check].map((task_ref,i)=>({id:'asmt:wave9:'+i,revision:1,task_ref,response_kind:'INTEGER',max_points:1,evaluator:{mode:'AUTOMATIC',canonical_value:'4'}}));
- const refs=await Promise.all(contracts.map(async c=>ref('ASSESSMENT',c.id,await computeSha256(canonicalJson(c)))));
- const engine=new StandardAssessmentEngine(refs.map((assessment,i)=>({assessment,task:contracts[i].task_ref as TaskRef})));
- for(let i=0;i<2;i++)await engine.registerContract(contracts[i],refs[i]);
- const progress=new DefaultProgressStore(f.driver,async a=>{
-  if(!a.assessmentRef||a.releaseId!==f.key.releaseId||a.scoringVersion!==SCORING_VERSION)return false;
-  const e=refs.some(r=>sameRef(r,a.assessmentRef!))?engine:f.binding.engine;
-  return canonicalJson(a.grade)===canonicalJson(await e.evaluate(a.response,a.assessmentRef,'PRACTICE',a.item as TaskRef));
- });
- for(const [i,s] of [as,cs].entries()){
-  const response:Response={kind:'INTEGER',value:i===0?'4':answer};
-  const a:Attempt={id:'att:wave9:'+i,sessionId:s.id,item:s.item,releaseId:s.releaseId,response,work:[artifact('work:wave9:'+i)],hintIds:[],submittedAt:new Date().toISOString(),grade:await engine.evaluate(response,refs[i],'PRACTICE',s.item as TaskRef),cognitive:null,assessmentRef:refs[i],scoringVersion:SCORING_VERSION};
-  await progress.appendQualifiedAttempt(a,0);
- }
- const asset=async(id:string,value:unknown)=>{const bytes=new TextEncoder().encode(JSON.stringify(value));f.bytes.set(id,bytes);return ref('PRESENTATION',id,await computeSha256(bytes));};
- const presentation=await asset('presentation:wave9:en',{source:f.first,locale:'en-US',level:'FORMAL',text:'Synthetic public presentation',symbolsAndUnits:{x:'m'}});
- const orientation=await asset('presentation:wave9:orientation',{blueprint:CORE1_ORIENTATION_BLUEPRINT_ID,source:f.first,topicId:'topic:synthetic',blocks:Object.fromEntries(CORE1_ORIENTATION_BLOCKS.map(k=>[k,'Synthetic '+k]))});
- const hint=f.definition.hints[0].assetRef as Ref;
- const bind=(s:Session):SessionBinding=>({id:s.id,item:s.item,origin:s.origin,mode:'PRACTICE',contentRevision:'r1'});
- const c:Wave9Catalog={schema:'g9-wave9-authority/1',learnerId:'synthetic-learner',role,journey:f.key,sessionId:f.as.id,originSessionId:f.os.id,boundarySessionId:f.bs.id,context:b.context,
- sessions:[f.as,f.os,f.bs,...(role==='CORE2A'?[cs]:role==='CORE2B'?[as]:[])].map(bind),
- grants:[{capability:'VIEW_STIMULUS',asset:f.first},{capability:'VIEW_STIMULUS',asset:f.bs.item},{capability:'VIEW_STIMULUS',asset:presentation},{capability:'VIEW_STIMULUS',asset:orientation},{capability:'REFERENCE_SOLUTION',asset:f.firstRef},{capability:'BOUNDARY_REFERENCE',asset:f.boundaryRef},{capability:'SOURCE_RETURN',asset:f.os.item},{capability:'H1',asset:hint}],
- ...(role==='CORE2A'?{practice:{releaseId:f.key.releaseId,practiceSessionId:f.as.id,practiceTask:f.first as TaskRef,checkSessionId:cs.id,checkTask:check,assessment:refs[1],attemptId:'att:wave9:1',review:ref('APPROVAL','approval:synthetic:check')}}:{}),
- ...(role==='CORE2B'?{transfer:{sessionId:f.as.id,releaseId:f.key.releaseId,task:f.first,origin:f.os.item,anchor,anchorSessionId:as.id,anchorAttemptId:'att:wave9:0',boundary:f.bs.item,dimension:'CONSTRAINT_MUTATION' as const,review:ref('APPROVAL','approval:synthetic:transfer'),capabilities:[{id:'synthetic:capability',teaching:f.os.item as Ref<'LESSON'>,receipt:ref('APPROVAL','approval:synthetic:teaching')}],scaffolds:[{capability:'H1' as const,asset:hint}]}}:{})};
- const digest=await pin(c);let enabled=true,learner='synthetic-learner',reads=0;
- const live=async(s:{learnerId:string;releaseId:string;catalogSha256:string})=>enabled&&s.learnerId===learner&&s.releaseId===f.key.releaseId&&s.catalogSha256===digest;
- const load=async(r:Ref)=>{reads++;return f.binding.loadProtected(r);};
- const compose=(catalog:Wave9Catalog=c,pinned=digest)=>composeWave9(catalog,pinned,f.driver,progress,live,load);
- return {f,c,digest,compose,progress,presentation,orientation,as,cs,hint,reads:()=>reads,revoke:()=>{enabled=false;},switchLearner:()=>{learner='foreign-learner';}};
-}
+import {fixture,pin} from '../fixtures/wave9-synthetic.ts';
 test('W9-INT-02 exact pinned catalog, immutable clone and native presentation positive path',async()=>{
  const x=await fixture('CORE1');
  const altered=structuredClone(x.c);(altered as {learnerId:string}).learnerId='foreign';

@@ -17,12 +17,19 @@ export interface SessionBinding {
  readonly id:string;readonly item:Ref;readonly origin:Ref|null;
  readonly contentRevision:string;readonly mode:'LEARN'|'PRACTICE';
 }
+export interface Wave9PageBinding {
+ readonly resourceId:string;readonly review:Ref<'APPROVAL'>;
+ readonly projection?:Ref<'PRESENTATION'>;
+ readonly transferDefinitionSha256?:string;
+ readonly assessmentA?:Ref<'ASSESSMENT'>;readonly assessmentB?:Ref<'ASSESSMENT'>;
+}
 export interface Wave9Catalog {
  readonly schema:'g9-wave9-authority/1';
  readonly learnerId:string;readonly role:'CORE1'|'CORE2A'|'CORE2B';
  readonly journey:JourneyKey;readonly sessionId:string;readonly originSessionId:string;readonly boundarySessionId:string;
  readonly context:ReviewedTaskContext;readonly sessions:readonly SessionBinding[];
  readonly grants:readonly {readonly capability:DisclosureCapability;readonly asset:Ref}[];
+ readonly page?:Wave9PageBinding;
  readonly practice?:ReviewedPracticeCheck;
  readonly transfer?:ReviewedTransfer;
 }
@@ -54,6 +61,12 @@ function validate(c:Wave9Catalog){
     cap==='SOURCE_RETURN'&&sameRef(a,o.item)||
     ['H1','H2','H3'].includes(cap)&&a.type==='ASSET';
   requireThat(valid,'INVALID_GRANT_BINDING');
+ }
+ if(c.page){
+  const p=c.page;
+  requireThat(/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(p.resourceId)&&refOk(p.review)&&p.review.type==='APPROVAL','INVALID_PAGE_BINDING');
+  if(c.role==='CORE2B')requireThat(!p.projection&&typeof p.transferDefinitionSha256==='string'&&/^[a-f0-9]{64}$/.test(p.transferDefinitionSha256)&&refOk(p.assessmentA)&&p.assessmentA!.type==='ASSESSMENT'&&refOk(p.assessmentB)&&p.assessmentB!.type==='ASSESSMENT','INVALID_TRANSFER_PAGE_BINDING');
+  else requireThat(refOk(p.projection)&&p.projection!.type==='PRESENTATION'&&c.grants.some(g=>g.capability==='VIEW_STIMULUS'&&sameRef(g.asset,p.projection!))&&!p.transferDefinitionSha256&&!p.assessmentA&&!p.assessmentB,'INVALID_PROJECTION_PAGE_BINDING');
  }
  if(c.role==='CORE2A'){
   const p=c.practice,k=p&&binding(p.checkSessionId);
