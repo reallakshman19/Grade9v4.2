@@ -28,7 +28,8 @@ it('telemetry and every protected helper remain withheld; caller cannot claim ca
 });
 it('actual Chromium: hostile explorer title and learner response rendered inert, telemetry masked',async()=>{
  const c=new GcdrExplorerPageController({...config,title:'<img src=x onerror=alert(1)>'});c.getJourney().setStageResponse('PREDICT','"><img src=x onerror=alert(1)>');
- const b=await chromium.launch({headless:true});try{const p=await b.newPage();await p.setContent(c.renderHtml());assert.equal(await p.locator('img,[onerror]').count(),0);assert.equal(await p.locator('#gcdr-stage-input').inputValue(),'"><img src=x onerror=alert(1)>');assert.equal(await p.locator('.gcdr-second-view').textContent(),'Telemetry withheld pending durable reviewed exposure.');assert.equal(await p.locator('.gcdr-stage-step:disabled').count(),9);}finally{await b.close();}
+ const execPath=process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE||'C:/Users/reall/AppData/Local/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-win64/chrome-headless-shell.exe';
+ const b=await chromium.launch({headless:true,executablePath:execPath});try{const p=await b.newPage();await p.setContent(c.renderHtml());assert.equal(await p.locator('img,[onerror]').count(),0);assert.equal(await p.locator('#gcdr-stage-input').inputValue(),'"><img src=x onerror=alert(1)>');assert.equal(await p.locator('.gcdr-second-view').textContent(),'Telemetry withheld pending durable reviewed exposure.');assert.equal(await p.locator('.gcdr-stage-step:disabled').count(),9);}finally{await b.close();}
 });
 
 import {MemoryStorageDriver} from '../../web/runtime/storage.ts';
@@ -56,3 +57,4 @@ it('A65 governed telemetry needs local prediction and actual A49 event; faded st
  j.setStageResponse('MANIPULATE','changed');j.advance();for(const stage of GCDR_ORDERED_STAGES.slice(2,8)){j.setStageResponse(stage,'recorded');j.advance();}
  assert.equal(j.getCurrentStage(),'FADE');assert.equal(await c.readAuthorizedTelemetry(valid),null);
 });
+

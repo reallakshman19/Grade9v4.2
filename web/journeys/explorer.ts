@@ -219,3 +219,4 @@ export class GcdrExplorerJourney {
   this.evidence=structuredClone(d.evidence) as StageEvidence[];this.currentStageIndex=d.currentStageIndex;this.x=d.modelParameters.x;this.pending=pending;this.revision=d.revision;
  }
 }
+
