@@ -77,10 +77,26 @@ test('A54 exact source numerical overlap: sampled wells, instantaneous power, la
  const v=evaluate('RADIAL_FORCE_POTENTIAL',r);eq(v.potential,f.potential_energy_j);eq(v.v_squared,f.speed_squared_m2_s2);eq(v.kinetic,f.kinetic_energy_j);eq(v.total,f.total_energy_j);
  const w=evaluate('RADIAL_FORCE_POTENTIAL',{...r,r:f.boundary_radius_m,f_at_r:f.boundary_local_inward_force_n});eq(w.potential,f.boundary_potential_energy_j);eq(w.v_squared,f.boundary_speed_squared_m2_s2);eq(w.kinetic,f.boundary_kinetic_energy_j);eq(w.total,f.boundary_total_energy_j);
 });
-test('A54 exact source conveyor stationary subset; nonzero arrival is explicitly unsupported',()=>{
+test('A54 exact source conveyor moving arrival, speed-dependent feed and energy ledger',()=>{
  const g=P['WPE-C07'].guide,f=P['WPE-C07'].fresh;
+ const check=(o:any,values:any[])=>[o.mass_rate,o.force,o.motor_power,o.kinetic_rate,o.heat_rate].forEach((v,i)=>eq(v,values[i]));
+ check(evaluate('CONVEYOR_MOMENTUM_POWER',{mass_rate:g.mass_flow_kg_s,speed:g.belt_speed_m_s,incoming_speed:g.incoming_speed_m_s}),[g.mass_flow_kg_s,g.force_n,g.motor_power_w,g.kinetic_gain_w,g.slip_heat_w]);
+ const same=evaluate('CONVEYOR_MOMENTUM_POWER',{mass_rate:g.mass_flow_kg_s,speed:g.belt_speed_m_s,incoming_speed:g.boundary_incoming_speed_m_s});eq(same.force,g.boundary_pickup_force_n);
  const o=evaluate('CONVEYOR_MOMENTUM_POWER',{mass_rate:g.variable_feeder_flow_kg_s,speed:g.variable_feeder_speed_m_s});eq(o.motor_power,g.variable_feeder_power_w);
- assert(f.incoming_speed_m_s>0,'source regime changed');
- assert.throws(()=>evaluate('CONVEYOR_MOMENTUM_POWER',{mass_rate:f.mass_flow_kg_s,speed:f.belt_speed_m_s,incoming_speed:f.incoming_speed_m_s}));
- console.log('A54 exact-source scalar/boolean comparisons: '+comparisons+'; 10 families bounded overlap; full parity NOT_GRANTED');
+ const p={flow_coefficient:f.flow_coefficient_kg_m,speed:f.belt_speed_m_s,incoming_speed:f.incoming_speed_m_s};
+ check(evaluate('CONVEYOR_MOMENTUM_POWER',p),[f.mass_flow_kg_s,f.force_n,f.motor_power_w,f.kinetic_gain_w,f.slip_heat_w]);
+ check(evaluate('CONVEYOR_MOMENTUM_POWER',{...p,speed:f.boundary_belt_speed_m_s}),[f.boundary_mass_flow_kg_s,f.boundary_force_n,f.boundary_motor_power_w,f.boundary_kinetic_gain_w,f.boundary_slip_heat_w]);
+});
+test('A54 exact source repeated bounces, changed first retention and finite travel',()=>{
+ const g=E['WPE-E04'].guide,f=E['WPE-E04'].fresh;
+ const check=(p:any,heights:number[],distance:number,ratio:number)=>{
+  const o=evaluate('DISSIPATIVE_BOUNCES',p);
+  for(let i=0;i<heights.length;i++)eq(o.rebound_heights[i],heights[i]);
+  eq(o.total_distance,distance);eq(o.first_speed_ratio,ratio);
+ };
+ check({initial_height:g.initial_height_m,first_retention:g.retained_energy_fraction,later_retention:g.retained_energy_fraction},g.first_three_rebound_heights_m,g.total_distance_m,g.speed_ratio);
+ check({initial_height:f.initial_height_m,first_retention:f.first_impact_retention,later_retention:f.later_impact_retention},f.first_three_rebound_heights_m,f.total_distance_m,f.first_speed_ratio);
+ const b=evaluate('DISSIPATIVE_BOUNCES',{initial_height:f.initial_height_m,first_retention:f.boundary_all_impacts_retention,later_retention:f.boundary_all_impacts_retention});
+ eq(b.total_distance,f.boundary_total_distance_m);
+ console.log('A54 exact-source scalar/boolean comparisons: '+comparisons+'; bounded overlap only; full parity NOT_GRANTED');
 });
