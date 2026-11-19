@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "workpack_id": "A37",
+  "title": "Technical Golden end-to-end evidence summary",
+  "status": "TECHNICAL_GOLDEN_PASS",
+  "academic_admission": "HOLD",
+  "release_authority": "NONE",
+  "synthetic_target_only": true,
+  "disclaimer": "No academic approval inferred from software validation. Synthetic-only route verification. Dual-source immutability preserved.",
+  "generated_at": "2026-11-18T17:40:00Z",
+  "full_route_event_chain": [
+    {
+      "step": 1,
+      "stage": "SEARCH",
+      "action": "universal_search_query",
+      "query": "elastic launcher",
+      "result_task_id": "task:synthetic:core2:launcher-01",
+      "result_status": "FOUND",
+      "exact_id_boost": 10.0
+    },
+    {
+      "step": 2,
+      "stage": "ATTEMPT",
+      "action": "commit_first_attempt",
+      "task_id": "task:synthetic:core2:launcher-01",
+      "response_kind": "INTEGER",
+      "response_value": "999",
+      "grade_status": "REVIEW_PENDING",
+      "outcome": "WRONG_RESPONSE_RECORDED",
+      "attempt_id": "att-golden-01"
+    },
+    {
+      "step": 3,
+      "stage": "RECOVERY",
+      "action": "diagnostic_comparison_and_routing",
+      "misconception": "Disregarded quadratic velocity dependence in kinetic balance",
+      "failure_mode": "FORMULA_MISCONCEPTION",
+      "diagnostic_hint": "Net work equals delta K = 1/2 m v^2. Equate elastic energy to initial kinetic energy.",
+      "resolved_recovery_route": "/transfer/journey:transfer:golden:01"
+    },
+    {
+      "step": 4,
+      "stage": "TRANSFER",
+      "action": "core2b_changed_demand_application_transfer",
+      "transfer_journey_id": "journey:transfer:golden:01",
+      "protected_move_withheld_pre_attempt": true,
+      "first_attempt_committed": true,
+      "solution_revealed_post_attempt": true,
+      "multi_factor_rubric_evaluated": true
+    },
+    {
+      "step": 5,
+      "stage": "REPAIR",
+      "action": "commit_diagnosis_and_repair",
+      "diagnostic_code": "move:energy-theorem",
+      "repair_statement": "Applied Work-Energy theorem with position-dependent spring restore force integral.",
+      "boundary_task_unlocked": true
+    },
+    {
+      "step": 6,
+      "stage": "BOUNDARY",
+      "action": "solve_and_commit_boundary_condition",
+      "boundary_task_id": "fresh:boundary:launcher-02",
+      "boundary_response_kind": "INTEGER",
+      "boundary_response_value": "8",
+      "boundary_feedback_verified": true,
+      "boundary_feedback_reference": "REVIEWED_BOUNDARY_REFERENCE"
+    },
+    {
+      "step": 7,
+      "stage": "RETURN",
+      "action": "return_to_originating_source",
+      "origin_session_id": "session:origin:core2",
+      "origin_task_id": "task:synthetic:core2:launcher-01",
+      "origin_cursor": 7,
+      "session_state_restored": true,
+      "history_events_count": 9
+    },
+    {
+      "step": 8,
+      "stage": "REATTEMPT",
+      "action": "commit_repaired_second_attempt",
+      "task_id": "task:synthetic:core2:launcher-01",
+      "response_kind": "INTEGER",
+      "response_value": "42",
+      "attempt_id": "att-golden-02",
+      "attempts_total": 2,
+      "durable_ledger_conserved": true
+    }
+  ],
+  "nine_capability_flows": [
+    {
+      "flow_id": "FLOW-01-PHY-E1",
+      "subject": "PHYSICS",
+      "stage": "E1",
+      "archetype": "PHY-E1",
+      "capabilities": ["SINGLE_CHOICE", "MULTIPLE_CHOICE"],
+      "sample_payloads": {
+        "SINGLE_CHOICE": { "kind": "SINGLE_CHOICE", "value": "OPT_B" },
+        "MULTIPLE_CHOICE": { "kind": "MULTIPLE_CHOICE", "value": ["OPT_A", "OPT_C"] }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-02-CHM-E1",
+      "subject": "CHEMISTRY",
+      "stage": "E1",
+      "archetype": "CHM-E1",
+      "capabilities": ["SINGLE_CHOICE", "INTEGER"],
+      "sample_payloads": {
+        "SINGLE_CHOICE": { "kind": "SINGLE_CHOICE", "value": "OPT_C" },
+        "INTEGER": { "kind": "INTEGER", "value": "6" }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-03-MTH-E1",
+      "subject": "MATHEMATICS",
+      "stage": "E1",
+      "archetype": "MTH-E1",
+      "capabilities": ["SINGLE_CHOICE", "INTEGER"],
+      "sample_payloads": {
+        "SINGLE_CHOICE": { "kind": "SINGLE_CHOICE", "value": "OPT_A" },
+        "INTEGER": { "kind": "INTEGER", "value": "-15" }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-04-PHY-E2",
+      "subject": "PHYSICS",
+      "stage": "E2",
+      "archetype": "PHY-E2",
+      "capabilities": ["NUMERIC_QUANTITY", "CONSTRUCTED_RESPONSE"],
+      "sample_payloads": {
+        "NUMERIC_QUANTITY": { "kind": "NUMERIC_QUANTITY", "value": { "decimal": "19.6", "unit": "m/s" } },
+        "CONSTRUCTED_RESPONSE": { "kind": "CONSTRUCTED_RESPONSE", "value": "Total mechanical energy is conserved." }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-05-MTH-E2",
+      "subject": "MATHEMATICS",
+      "stage": "E2",
+      "archetype": "MTH-E2",
+      "capabilities": ["SYMBOLIC_EXPRESSION", "NUMERIC_QUANTITY"],
+      "sample_payloads": {
+        "SYMBOLIC_EXPRESSION": { "kind": "SYMBOLIC_EXPRESSION", "value": "x^2 + 2*x + 1" },
+        "NUMERIC_QUANTITY": { "kind": "NUMERIC_QUANTITY", "value": { "decimal": "3.14159", "unit": "rad" } }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-06-MTH-E3",
+      "subject": "MATHEMATICS",
+      "stage": "E3",
+      "archetype": "MTH-E3",
+      "capabilities": ["MATHEMATICAL_PROOF", "CONSTRUCTED_RESPONSE"],
+      "sample_payloads": {
+        "MATHEMATICAL_PROOF": { "kind": "MATHEMATICAL_PROOF", "value": "Proof by contradiction: Assume sqrt(2) = p/q in lowest terms..." },
+        "CONSTRUCTED_RESPONSE": { "kind": "CONSTRUCTED_RESPONSE", "value": "Hence p and q must both be even, contradicting coprimality." }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-07-CHM-E2",
+      "subject": "CHEMISTRY",
+      "stage": "E2",
+      "archetype": "CHM-E2",
+      "capabilities": ["CHEMICAL_STRUCTURE", "REACTION_MECHANISM"],
+      "sample_payloads": {
+        "CHEMICAL_STRUCTURE": { "kind": "CHEMICAL_STRUCTURE", "value": { "format": "SMILES", "data": "CCO" } },
+        "REACTION_MECHANISM": { "kind": "REACTION_MECHANISM", "value": ["CH3CH2OH + H2SO4 -> CH2=CH2 + H2O"] }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-08-PHY-E3",
+      "subject": "PHYSICS",
+      "stage": "E3",
+      "archetype": "PHY-E3",
+      "capabilities": ["DATA_TABLE", "GRAPH", "EXPERIMENT_ANALYSIS"],
+      "sample_payloads": {
+        "DATA_TABLE": { "kind": "DATA_TABLE", "value": [["t", "v"], ["0", "0"], ["1", "9.8"], ["2", "19.6"]] },
+        "GRAPH": { "kind": "GRAPH", "value": { "points": [["0", "0"], ["1", "9.8"], ["2", "19.6"]] } },
+        "EXPERIMENT_ANALYSIS": { "kind": "EXPERIMENT_ANALYSIS", "value": { "observations": ["Linear v vs t gradient observed"], "conclusion": "Acceleration is uniform at 9.8 m/s^2" } }
+      },
+      "validation": "PASS"
+    },
+    {
+      "flow_id": "FLOW-09-CHM-E3",
+      "subject": "CHEMISTRY",
+      "stage": "E3",
+      "archetype": "CHM-E3",
+      "capabilities": ["DATA_TABLE", "GRAPH", "EXPERIMENT_ANALYSIS"],
+      "sample_payloads": {
+        "DATA_TABLE": { "kind": "DATA_TABLE", "value": [["vol_NaOH", "pH"], ["0.0", "2.1"], ["25.0", "7.0"]] },
+        "GRAPH": { "kind": "GRAPH", "value": { "points": [["0.0", "2.1"], ["25.0", "7.0"], ["50.0", "12.4"]] } },
+        "EXPERIMENT_ANALYSIS": { "kind": "EXPERIMENT_ANALYSIS", "value": { "observations": ["Steep pH inflection at 25.0 mL"], "conclusion": "Equivalence point reached with stoichiometric neutralization" } }
+      },
+      "validation": "PASS"
+    }
+  ],
+  "playwright_http_audit": {
+    "protocol": "HTTP/1.1",
+    "host": "127.0.0.1",
+    "http_logs_recorded": true,
+    "landscape_viewport": {
+      "width": 1600,
+      "height": 1000,
+      "min_touch_target_px": 48,
+      "horizontal_overflow_px": 0,
+      "status": "PASS"
+    },
+    "portrait_viewport": {
+      "width": 1000,
+      "height": 1600,
+      "min_touch_target_px": 48,
+      "horizontal_overflow_px": 0,
+      "status": "PASS"
+    }
+  }
+}
