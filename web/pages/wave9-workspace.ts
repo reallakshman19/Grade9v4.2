@@ -8,6 +8,7 @@ import {CORE1_ORIENTATION_BLOCKS} from '../journeys/core1.ts';
 import {Core1BTransferJourney,transferDefinitionDigest,type Core1BTransferDefinition} from '../journeys/core1b.ts';
 import {SupportedPracticeWorkspace} from '../journeys/supported-practice.ts';
 import {sameRef} from '../runtime/loader.ts';
+import {mountWave9Ink} from '../components/wave9-ink.ts';
 import {structuredKinds,structuredResponseEditor} from '../components/wave9-structured-editors.ts';
 import type {SupportedLocale,PresentationLevel} from '../runtime/presentation.ts';
 import type {AssetLoader} from '../runtime/presentation.ts';
@@ -63,6 +64,7 @@ function responseField(parent:HTMLElement,id:string,kind:Kind,old?:Response,opts
  parent.append(el('p','Unsupported response editor: '+kind));return ()=>{throw Error('EDITOR_UNAVAILABLE');};
 }
 function note(id:string,value:string):WorkArtifact{if(!value.trim())throw Error('WORKING_REQUIRED');return {id,kind:'NOTE',version:1,value};}
+async function captureWork(ink:ReturnType<typeof mountWave9Ink>,sessionId:string,previous:WorkArtifact|undefined,text:string){const work:WorkArtifact[]=text.trim()?[note(previous&&previous.value===text?previous.id:'work:'+crypto.randomUUID(),text)]:[];const drawing=await ink.capture(sessionId);if(drawing)work.push(drawing);if(!work.length)throw Error('WORKING_REQUIRED');return work;}
 export class Wave9WorkspaceHost{
  readonly #root:HTMLElement;readonly #router:Router;readonly #catalog:Wave9Catalog;readonly #runtime:Runtime;readonly #journey:Core1BTransferJourney|null;readonly #practice:SupportedPracticeWorkspace|null;
  #epoch=0;#busy=false;#active=false;#closed=false;#locale:SupportedLocale='en-US';#level:PresentationLevel='FORMAL';
@@ -125,10 +127,11 @@ export class Wave9WorkspaceHost{
    }else if(e.snapshot.stage==='ATTEMPT'){
     const draft=await practice.draft(cp),opts=p.choices?.first??{},editors=Object.entries(e.context.firstFields).map(([id,k])=>[id,responseField(primary,id,k,draft?.responses[id],opts[id])] as const);
     const prev=draft?.work.find(w=>w.kind==='NOTE'),work=field(primary,'Show your working',typeof prev?.value==='string'?prev.value:'',true);work.dataset.field='working';
-    const capture=()=>({values:Object.fromEntries(editors.map(([id,read])=>[id,read()])),work:[note(prev&&prev.value===work.value?prev.id:'work:'+crypto.randomUUID(),work.value)]});
+    const ink=mountWave9Ink(primary,draft?.work.find(w=>w.kind==='INK'));
+    const capture=async()=>({values:Object.fromEntries(editors.map(([id,read])=>[id,read()])),work:await captureWork(ink,e.session.id,prev,work.value)});
     const available=Object.entries(e.context.firstFields).every(([id,k])=>supported(k,opts[id]));
-    this.#button(primary,'Save practice draft','practice-save',epoch,async()=>{const v=capture();await practice.save(cp,v.values,v.work,draft?.revision??0);}).disabled=!available;
-    this.#button(primary,'Commit practice attempt','practice-commit',epoch,async()=>{const v=capture();const saved=await practice.save(cp,v.values,v.work,draft?.revision??0);await practice.commit(cp,v.values,v.work,saved.revision);}).disabled=!available;
+    this.#button(primary,'Save practice draft','practice-save',epoch,async()=>{const v=await capture();await practice.save(cp,v.values,v.work,draft?.revision??0);}).disabled=!available;
+    this.#button(primary,'Commit practice attempt','practice-commit',epoch,async()=>{const v=await capture();const saved=await practice.save(cp,v.values,v.work,draft?.revision??0);await practice.commit(cp,v.values,v.work,saved.revision);}).disabled=!available;
     for(const t of await practice.readSupport(cp))support.append(protect(el('p',t)));
     const count=e.events.filter(v=>v.event_type==='HELP_EXPOSED'&&['H1','H2','H3'].includes(v.payload.capability)).length;
     const cap=(['H1','H2','H3'] as const)[count],grant=c.grants.find(g=>g.capability===cap);
@@ -141,10 +144,11 @@ export class Wave9WorkspaceHost{
     if(!e.snapshot.boundaryAttemptId){
      const draft=await practice.boundaryDraft(cp),opts=p.choices?.boundary??{},editors=Object.entries(e.context.boundaryFields).map(([id,k])=>[id,responseField(primary,id,k,draft?.responses[id],opts[id])] as const);
      const prev=draft?.work.find(w=>w.kind==='NOTE'),work=field(primary,'Show your boundary working',typeof prev?.value==='string'?prev.value:'',true);work.dataset.field='working';
-     const capture=()=>({values:Object.fromEntries(editors.map(([id,read])=>[id,read()])),work:[note(prev&&prev.value===work.value?prev.id:'work:'+crypto.randomUUID(),work.value)]});
+     const ink=mountWave9Ink(primary,draft?.work.find(w=>w.kind==='INK'));
+     const capture=async()=>({values:Object.fromEntries(editors.map(([id,read])=>[id,read()])),work:await captureWork(ink,c.boundarySessionId,prev,work.value)});
      const available=Object.entries(e.context.boundaryFields).every(([id,k])=>supported(k,opts[id]));
-     this.#button(primary,'Save boundary draft','practice-boundary-save',epoch,async()=>{const v=capture();await practice.saveBoundary(cp,v.values,v.work,draft?.revision??0);}).disabled=!available;
-     this.#button(primary,'Commit independent boundary','practice-boundary-commit',epoch,async()=>{const v=capture(),saved=await practice.saveBoundary(cp,v.values,v.work,draft?.revision??0);await practice.commitBoundary(cp,v.values,v.work,saved.revision);}).disabled=!available;
+     this.#button(primary,'Save boundary draft','practice-boundary-save',epoch,async()=>{const v=await capture();await practice.saveBoundary(cp,v.values,v.work,draft?.revision??0);}).disabled=!available;
+     this.#button(primary,'Commit independent boundary','practice-boundary-commit',epoch,async()=>{const v=await capture(),saved=await practice.saveBoundary(cp,v.values,v.work,draft?.revision??0);await practice.commitBoundary(cp,v.values,v.work,saved.revision);}).disabled=!available;
     }else this.#button(primary,'View independent boundary feedback','practice-boundary-feedback',epoch,async()=>{await practice.boundaryFeedback(cp);});
    }else if(inBoundary){reasoning.append(el('p','Repair recorded. New independent boundary assessment remains unavailable; no completion or mastery inferred.'));}
    else if(e.snapshot.stage==='COMPLETE'){
@@ -181,10 +185,11 @@ export class Wave9WorkspaceHost{
    }else if(v.stage==='ATTEMPT'||v.stage==='BOUNDARY_TEST'&&!v.boundaryCommitted){
     const kinds=v.stage==='ATTEMPT'?e.context.firstFields:e.context.boundaryFields,old=j.getResponses(),opts=(v.stage==='ATTEMPT'?p.choices?.first:p.choices?.boundary)??{},editors=Object.entries(kinds).map(([id,k])=>[id,responseField(primary,id,k,old[id],opts[id])] as const);
     const previous=j.getWork().find(x=>x.kind==='NOTE'),work=field(primary,'Show your working',typeof previous?.value==='string'?previous.value:'',true);work.dataset.field='working';
-    const capture=()=>{j.setResponses(Object.fromEntries(editors.map(([id,read])=>[id,read()])),[note(previous&&previous.value===work.value?previous.id:'work:'+crypto.randomUUID(),work.value)]);};
+    const ink=mountWave9Ink(primary,j.getWork().find(w=>w.kind==='INK'));
+    const capture=async()=>{const values=Object.fromEntries(editors.map(([id,read])=>[id,read()]));j.setResponses(values,await captureWork(ink,v.stage==='ATTEMPT'?e.session.id:c.boundarySessionId,previous,work.value));};
     const available=Object.entries(kinds).every(([id,k])=>supported(k,opts[id]));
-    this.#button(controls,'Save draft','save',epoch,async()=>{capture();await j.saveDraft();}).disabled=!available;
-    this.#button(controls,'Commit attempt','commit',epoch,async()=>{capture();await j.saveDraft();await(v.stage==='ATTEMPT'?j.commitFirstAttempt():j.commitBoundaryAttempt());}).disabled=!available;
+    this.#button(controls,'Save draft','save',epoch,async()=>{await capture();await j.saveDraft();}).disabled=!available;
+    this.#button(controls,'Commit attempt','commit',epoch,async()=>{await capture();await j.saveDraft();await(v.stage==='ATTEMPT'?j.commitFirstAttempt():j.commitBoundaryAttempt());}).disabled=!available;
     if(v.stage==='ATTEMPT'){
      const used=j.getExposedHints();for(const h of used){const txt=await j.readHint(h.level);if(txt!==null)support.append(protect(el('p',txt)));}
      const next=d.hints[used.length];if(next&&await r.controller.canRequest(next.level,next.assetRef as Ref,cp))this.#button(support,'Request hint','hint',epoch,async()=>{await j.requestHint();},true);

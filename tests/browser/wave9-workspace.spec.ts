@@ -33,14 +33,16 @@ it('W9-INT-03 actual Chromium: pinned routes, native slots, print hold, durable 
   await page.locator('textarea').nth(0).fill('Repair explanation');await page.locator('textarea').nth(1).fill('New practice working');await page.locator('[data-action=practice-repair]').click();await page.getByText('REVIEWED_BOUNDARY_STIMULUS',{exact:true}).waitFor();
   assert(!await page.locator('body').innerText().then(s=>s.includes('REVIEWED_FIRST_REFERENCE')||s.includes('SYNTHETIC_REVIEWED_CRUX')||s.includes('REVIEWED_BOUNDARY_REFERENCE')));
   await page.locator('[data-field=c]').fill('8');await page.locator('[data-field=working]').fill('Independent practice boundary work');
-  await page.locator('[data-action=practice-boundary-save]').click();await page.waitForFunction(()=>!(document.querySelector('[data-action=practice-boundary-save]') as HTMLButtonElement)?.disabled);
+  const pad=page.locator('[data-ink]');await pad.scrollIntoViewIfNeeded();const rect=await pad.boundingBox();assert(rect);await page.mouse.move(rect.x+rect.width*.2,rect.y+rect.height*.2);await page.mouse.down();await page.mouse.move(rect.x+rect.width*.6,rect.y+rect.height*.6,{steps:5});await page.mouse.up();assert.equal(await pad.locator('polyline').count(),1);
+  await page.locator('[data-action=practice-boundary-save]').click();await page.waitForFunction(()=>!(document.querySelector('[data-action=practice-boundary-save]') as HTMLButtonElement)?.disabled);assert.equal(await page.locator('[data-ink] polyline').count(),1);
   await page.locator('[data-action=practice-boundary-commit]').click();await page.locator('[data-action=practice-boundary-feedback]').waitFor();assert(!await page.locator('body').innerText().then(s=>s.includes('REVIEWED_BOUNDARY_REFERENCE')));
   await page.locator('[data-action=practice-boundary-feedback]').click();await page.getByText('REVIEWED_BOUNDARY_REFERENCE',{exact:true}).waitFor();
+  assert.equal(await page.evaluate(async()=>{const {x}=(window as any).w9;const a=await x.f.driver.getAll('attempts');return a.filter((v:any)=>v.sessionId===x.f.bs.id&&v.work.some((w:any)=>w.kind==='INK')).length;}),1);
   assert.equal((await init('CORE2B')).opened,true);assert(!await page.locator('body').innerText().then(s=>s.includes('REVIEWED_FIRST_REFERENCE')||s.includes('REVIEWED_BOUNDARY_STIMULUS')||s.includes('SECRET')));
   await page.locator('select').selectOption('0');await page.locator('[data-action=predict]').click();await page.locator('[data-field=a]').waitFor();
   await page.locator('[data-field=a]').fill('7');await page.locator('[data-field=b]').fill('independent reasoning');await page.locator('[data-field=working]').fill('separate working');
   for(const [width,height] of [[390,844],[768,1024],[1024,768],[1366,768],[820,1180],[1180,820],[360,640]]){
-   await page.setViewportSize({width,height});const m=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,targets:[...document.querySelectorAll('.g9-w9 button,.g9-w9 input,.g9-w9 textarea')].every(n=>{const r=n.getBoundingClientRect();return r.height>=48&&r.width>=48;})}));assert.equal(m.overflow,false);assert.equal(m.targets,true);assert.equal(await page.locator('[data-field=a]').inputValue(),'7');
+   await page.setViewportSize({width,height});const m=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,targets:[...document.querySelectorAll('.g9-w9 button,.g9-w9 input:not([type=hidden]),.g9-w9 textarea')].every(n=>{const r=n.getBoundingClientRect();return r.height>=48&&r.width>=48;})}));assert.equal(m.overflow,false);assert.equal(m.targets,true);assert.equal(await page.locator('[data-field=a]').inputValue(),'7');
   }
   await page.locator('[data-action=save]').click();await page.waitForFunction(()=>!(document.querySelector('[data-action=save]') as HTMLButtonElement)?.disabled);assert.equal(await page.locator('[data-field=b]').inputValue(),'independent reasoning');
   await page.locator('[data-action=hint]').click();await page.getByText('REVIEWED_HINT_ONE',{exact:true}).waitFor();
@@ -59,5 +61,27 @@ it('W9-INT-03 actual Chromium: pinned routes, native slots, print hold, durable 
   await page.locator('[data-editor=REACTION_MECHANISM]').getByLabel('Step 1').fill('step');
   const exp=page.locator('[data-editor=EXPERIMENT_ANALYSIS]');await exp.getByLabel('Observation 1').fill('Observed');await exp.getByLabel('Conclusion').fill('Conclusion');
   assert.deepEqual(await page.evaluate(()=> (window as any).readEditors()),[{kind:'GRAPH',value:{points:[['0','2'],['1','4']]}},{kind:'DATA_TABLE',value:[['10',null],[null,'20']]},{kind:'CHEMICAL_STRUCTURE',value:{format:'FORMULA',data:'H2O'}},{kind:'REACTION_MECHANISM',value:['step']},{kind:'EXPERIMENT_ANALYSIS',value:{observations:['Observed'],conclusion:'Conclusion'}}]);
+ }finally{await browser.close();await server.close();}
+});
+
+it('W9-INT-06 two actual Chromium tabs: one CAS commit, stale reader denied, restored state and revocation',{timeout:60000},async()=>{
+ const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');
+ const browser=await chromium.launch({headless:true});try{
+  const ctx=await browser.newContext(),one=await ctx.newPage(),two=await ctx.newPage(),url='http://127.0.0.1:'+addr.port+'/',name='w9-cross-tab-'+Date.now(),path='/@fs/'+process.cwd()+'/tests/fixtures/wave9-synthetic.ts';
+  await one.goto(url);await two.goto(url);
+  const prepare=(page:typeof one,initialize:boolean)=>page.evaluate(async({path,name,initialize})=>{
+   const {fixture}=await import(path),{IndexedDBStorageDriver}=await import('/runtime/storage.ts' as string),{SupportedPracticeWorkspace}=await import('/journeys/supported-practice.ts' as string);
+   const driver=new IndexedDBStorageDriver({dbName:name}),x=await fixture('CORE2A','5',driver,initialize),a=await x.compose(),p=new SupportedPracticeWorkspace(a.controller,x.progress,x.f.binding.engine,x.f.binding.assessmentA,x.load,{driver,sessionId:x.f.bs.id,assessment:x.f.binding.assessmentB});
+   (window as any).cross={x,a,p,driver};if(initialize){const cp=(await a.controller.begin()).checkpoint;await p.predict(cp,'prediction');}
+   return (await a.controller.readEvidence()).snapshot.checkpoint;
+  },{path,name,initialize});
+  const first=await prepare(one,true),second=await prepare(two,false);assert.deepEqual(first,second);
+  const save=await one.evaluate(async cp=>{const {p}=(window as any).cross;return p.save(cp,{a:{kind:'INTEGER',value:'7'},b:{kind:'CONSTRUCTED_RESPONSE',value:'work'}},[{id:'work:cross:one',kind:'NOTE',version:1,value:'one'}],0);},first);assert.equal(save.revision,1);
+  const stale=await two.evaluate(async cp=>{const {p}=(window as any).cross;try{await p.save(cp,{a:{kind:'INTEGER',value:'7'},b:{kind:'CONSTRUCTED_RESPONSE',value:'work'}},[{id:'work:cross:two',kind:'NOTE',version:1,value:'two'}],0);return false;}catch{return true;}},second);assert.equal(stale,true);
+  const commit=(page:typeof one)=>page.evaluate(async cp=>{const {p}=(window as any).cross;try{const d=await p.draft(cp);await p.commit(cp,d.responses,d.work,d.revision);return true;}catch{return false;}},first);
+  const outcomes=await Promise.all([commit(one),commit(two)]);assert.equal(outcomes.filter(Boolean).length,1);
+  const result=await two.evaluate(async cp=>{const {a,x,driver}=(window as any).cross;const before=await a.feedback.readFirstReference(cp),fresh=await a.controller.readEvidence(),text=await a.feedback.readFirstReference(fresh.snapshot.checkpoint),n=(await driver.getAll('attempts')).filter((v:any)=>v.sessionId===x.f.as.id).length;x.revoke();return {before,text,n,revoked:await a.feedback.readFirstReference(fresh.snapshot.checkpoint)};},first);
+  assert.deepEqual(result,{before:null,text:'REVIEWED_FIRST_REFERENCE',n:1,revoked:null});
+  for(const p of [one,two])await p.evaluate(async()=>{await (window as any).cross.driver.close();});
  }finally{await browser.close();await server.close();}
 });
