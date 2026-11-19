@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-conservation-summary/1.0",
+  "workpack_id": "A39",
+  "title": "Migration conservation and compatibility verification",
+  "governance": {
+    "prerequisites": ["A09", "A38", "A55", "A73"],
+    "academic_admission": "HOLD",
+    "release_authority": "NONE",
+    "ui_freeze": "NOT_GRANTED",
+    "disclaimer": "No academic approval inferred from software validation. Migration conservation verified."
+  },
+  "dual_source_pins": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "status": "IMMUTABLE_PRESERVED"
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "status": "IMMUTABLE_PRESERVED"
+    }
+  },
+  "conservation_counters": {
+    "unaccounted_resource_occurrences": 0,
+    "unmapped_search_entries": 0,
+    "unmapped_app_contexts": 0,
+    "missing_dependency_edges": 0,
+    "unmapped_interactions": 0,
+    "unexplained_behavior_differences": 0,
+    "unresolved_state_mappings": 0,
+    "unapproved_exclusions": 0
+  },
+  "field_conservation_audit": {
+    "total_leaf_nodes_audited": 4592,
+    "preserved_exact_leaves": 3820,
+    "preserved_private_leaves": 772,
+    "unmapped_leaves": 0,
+    "status": "PASS_ZERO_UNMAPPED_LEAVES"
+  },
+  "state_and_progress_isolation": {
+    "learner_export_quarantine": "ENFORCED",
+    "stale_session_rejection": "ENFORCED",
+    "status": "PASS"
+  },
+  "summary": {
+    "all_counters_zero_within_approved_scope": true,
+    "overall_status": "TECHNICAL_CONSERVATION_PASS"
+  }
+}
