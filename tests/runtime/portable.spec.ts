@@ -244,3 +244,4 @@ it('four independently constructed synthetic semantic analogues (not native cust
   const saved=a.exportState(),b=new PortableWorkbenchAdapter(pkg);b.restoreState(saved);assert.equal(b.getAllEntities().find(x=>x.id==='e2')?.label,z.next);assert.deepEqual(b.getAllProjections().map(x=>x.id),['p2']);assert.throws(()=>b.restoreState({...saved,ruleHistory:[{ruleId:z.rule,activeEntityId:null}]}));
  }
 });
+

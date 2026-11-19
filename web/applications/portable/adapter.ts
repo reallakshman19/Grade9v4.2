@@ -188,3 +188,4 @@ export class PortableWorkbenchAdapter {
     return text;
   }
 }
+

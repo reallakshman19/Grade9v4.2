@@ -150,3 +150,4 @@ export interface PortableWorkbenchState {
   readonly rotationDegrees: number;
   readonly revision: number;
 }
+
