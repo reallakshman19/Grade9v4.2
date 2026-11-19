@@ -19,6 +19,9 @@ export function classifyNativeKey(key:string):string|null{
   if(key.startsWith('grade9v3_atlas_'))return 'V35_ATLAS_STATE';
   if(key==='grade9v3_prompt_composer_handoff_v1')return 'V35_COMPOSER_HANDOFF';
   if(key==='g9-theme')return 'V35_THEME_PREFERENCE';
+  if(key==='imo_grade9_circles_master_v1')return 'V35_CIRCLES_LATEST_RESPONSE';
+  if(key==='imo_theme_pref')return 'V35_CIRCLES_THEME';
+  if(key==='tablet12_theme')return 'V35_MOTION_THEME';
   if(key.startsWith('G9V41:PHYSICS:QUALITY-R2:STUDY:'))return 'V41_GUIDE_EXPOSURE';
   if(key.startsWith('G9V41:PHYSICS:R2:'))return 'V41_PROTECTED_LOCAL_ATTEMPT';
   if(key.startsWith('g9-physics-agent2-core1b-v1:'))return 'V41_CORE1B_LOCAL_STATE';
