@@ -11,18 +11,18 @@ test('A69 pinned native redox: all three blocks, failure/repair, first-attempt m
   for(let i=0;i<3;i++){
    await p.locator('#blockBtn'+i).click();assert(await route()==='CHECKPOINT OPEN');
    const wrong=await p.evaluate('((blocks[current].conceptAnswer+1)%blocks[current].options.length)') as number;
-   await p.locator('#options button').nth(wrong).click();await p.locator('#implementationInput').fill('A69_INVALID_RESPONSE');await p.getByRole('button',{name:'Check implementation',exact:false}).click();
+   await p.locator('#options button').nth(wrong).click();await p.locator('#implementationInput').fill('A69_INVALID_RESPONSE');await p.locator('[onclick="checkImplementation()"]').click();
    assert(await route()==='REBUILD','native rebuild missing');routes++;
    await p.locator('#repairButton').click();assert((await p.locator('#route').innerText()).includes('Focused repair'));await p.locator('#hintButton').click();
    const ok=await p.evaluate('blocks[current].conceptAnswer') as number;
    await p.locator('#options button').nth(ok).click();
    // Set exact answer inside isolated native context; trigger actual control.
    await p.evaluate("document.getElementById('implementationInput').value=blocks[current].implementationAnswers[0]");
-   await p.getByRole('button',{name:'Check implementation',exact:false}).click();assert(await route()==='REBUILD','first response rewritten');
-   await p.getByRole('button',{name:'Reset',exact:false}).click();assert(await route()==='CHECKPOINT OPEN');
+   await p.locator('[onclick="checkImplementation()"]').click();assert(await route()==='REBUILD','first response rewritten');
+   await p.locator('[onclick="resetBlock()"]').click();assert(await route()==='CHECKPOINT OPEN');
    await p.locator('#options button').nth(ok).click();
    await p.evaluate("document.getElementById('implementationInput').value=blocks[current].implementationAnswers[0]");
-   await p.getByRole('button',{name:'Check implementation',exact:false}).click();assert(await route()==='READY','native ready missing');routes++;
+   await p.locator('[onclick="checkImplementation()"]').click();assert(await route()==='READY','native ready missing');routes++;
    await p.locator('#transferButton').click();assert((await p.locator('#route').innerText()).includes('Mapped transfer'));
   }
   const layout=await measure(p,'button,input,select');report('redox',{blocks:3,routeChecks:routes,embeddedAnswerOracle:true,layout,fullNativeBranchMigration:'NOT_IMPLEMENTED',academicAdmission:'HOLD'});
