@@ -21,7 +21,7 @@ const ws=/[\u0009-\u000d\u001c-\u0020\u0085\u00a0\u1680\u2000-\u200a\u2028\u2029
 export function normalizeQuery(s:string){if(typeof s!=='string')throw Error('INVALID_QUERY');return Array.from(s.normalize('NFKC'),fold).join('').replace(ws,' ').replace(/^ | $/g,'');}
 export function tokenize(s:string){return normalizeQuery(s).split(/[ ,;:.!?()\[\]{}"'=]+/u).filter(Boolean);}
 export function safeText(s:unknown,max=1000):s is string{return typeof s==='string'&&Array.from(s).length<=max&&normalizeQuery(s).length>0&&!/[\p{Cc}\p{Cs}\p{Cf}]/u.test(s);}
-export function stringList(s:unknown,p:(x:unknown)=>boolean,max=128):s is string[]{return Array.isArray(s)&&s.length<=max&&s.every(p)&&new Set(s).size===s.length;}
+export function stringList(s:unknown,p:(x:unknown)=>boolean,max=128):s is string[]{return Array.isArray(s)&&s.length<=max&&s.every(v=>p(v))&&new Set(s).size===s.length;}
 export function validateQuery(q:QueryRequest):Required<QueryRequest>{
  if(!q||typeof q.text!=='string'||Array.from(q.text).length>1000||/[\p{Cs}]/u.test(q.text))throw Error('INVALID_SEARCH_QUERY');
  const facets=q.facets??{},limit=q.limit??50,offset=q.offset??0;
