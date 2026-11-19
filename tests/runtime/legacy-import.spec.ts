@@ -24,3 +24,4 @@ it('A72 transaction failure, unknown origin and wrong option fail closed',async(
  await assert.rejects(i.importBundle(JSON.stringify({...envelope,origin:'https://other.invalid'})),/NOT_AUTHORIZED/);
  const bad=await i.importBundle(JSON.stringify({...envelope,attempts:[{...attempt,response:{kind:'SINGLE_CHOICE',value:'B'}}]}));assert.equal(bad.disposition,'QUARANTINED');
 });
+
