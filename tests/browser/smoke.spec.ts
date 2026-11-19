@@ -185,3 +185,12 @@ test('diagnostic text and navigation guard detects unauthorized learner message'
     assert.equal(await page.locator('a[href]').count(), 1);
   } finally { await context.close(); }
 });
+
+test('A38 built-only HTTP server denies traversal, private fixture paths, encoded attacks and symlink escape',async()=>{
+  const {request}=await import('node:http');
+  const raw=(path:string)=>new Promise<number>((resolve,reject)=>{const u=new URL(origin);const req=request({hostname:u.hostname,port:u.port,path,method:'GET'},res=>{res.resume();res.on('end',()=>resolve(res.statusCode!));});req.on('error',reject);req.end();});
+  for(const prefix of ['/',subpath])for(const p of ['../package.json','%2e%2e/package.json','%2e%2e%2fpackage.json','%252e%252e%252fpackage.json','%5c..%5cpackage.json','%00.json','%ZZ','@fs/etc/passwd','.git/config','trust/receipts/receipt.json','tests/fixtures/wave9-synthetic.ts','src/grade9build/compile.py','.source-v35-search/public/data/resource-registry.v1.json','.source-v41-search/data/learner-search-index.v1.json','assets/ordinary-data.json'])assert.equal(await raw(prefix+p),404,p);
+  const {symlink,unlink}=await import('node:fs/promises');const link=join(root,'assets','a38-synthetic-escape.json');
+  const temp=await mkdtemp(join(tmpdir(),'g9-a38-outside-'));try{const outside=join(temp,'sentinel.json');await writeFile(outside,'{"synthetic":"A38_OUTSIDE_SENTINEL"}');await symlink(outside,link);assert.equal(await raw('/assets/a38-synthetic-escape.json'),404);}finally{await unlink(link).catch(()=>{});await rm(temp,{recursive:true,force:true});}
+  await assertDiagnosticDist(root);
+});

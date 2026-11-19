@@ -1,0 +1,25 @@
+{
+  "schema_version": "g9-quality-qa/1.1",
+  "workpack_id": "A38",
+  "status": "CANDIDATE_TESTS_SUBMITTED",
+  "academic_admission": "HOLD",
+  "release_authority": "NONE",
+  "ui_freeze": "NOT_GRANTED",
+  "base": "75d65f00c12b442af326fe34a854f0cde8e19a09",
+  "base_ci": 44468486811,
+  "prerequisites": {
+    "A37": "BOUNDED_SYNTHETIC_PASS",
+    "A54": "PENDING",
+    "A73": "PENDING"
+  },
+  "verification": "Exact-head CI logs required; no predeclared pass counts",
+  "not_run": [
+    "external custody ACLs",
+    "production host",
+    "full WCAG conformance",
+    "physical tablet",
+    "100k search support",
+    "Python vulnerability audit",
+    "external R4"
+  ]
+}

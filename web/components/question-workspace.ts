@@ -167,7 +167,7 @@ export class QuestionWorkspaceController {
       const grade=await b.engine.evaluate(response,b.assessment,s.mode,b.task);
       if(grade.status==='INVALID'||grade.status==='UNSUPPORTED'){this.submissionStatus='DIRTY';return this.result('INVALID',grade.reasonCode,null,grade.maxPoints);}
       const attempt:Attempt={id:b.attemptId,sessionId:s.id,releaseId:s.releaseId,item:b.task,response,work:this.work,hintIds:[],submittedAt:new Date().toISOString(),grade,assessmentRef:b.assessment,scoringVersion:SCORING_VERSION,cognitive:null};
-      const committed=await b.session.appendAttempt(attempt);this.evaluation=await this.displayCommitted(committed);return this.evaluation;
+      const committed=await b.session.appendAttempt(attempt,this.revision);this.evaluation=await this.displayCommitted(committed);return this.evaluation;
     }catch(e){if(!this.getViewState().isLocked)this.submissionStatus='DIRTY';throw e;}finally{this.busy=false;}
   }
   getViewState(): QuestionWorkspaceViewState {
@@ -197,7 +197,7 @@ export class QuestionWorkspaceController {
       missingFigures,
       hasMissingFigures: missingFigures.length > 0,
       keyStatus: this.question.keyStatus,
-      evaluation: this.evaluation,
+      evaluation: structuredClone(this.evaluation),
       canSubmit,
       isLocked,
       hitTargetMinPx: HIT_TARGET_MIN_PX,
