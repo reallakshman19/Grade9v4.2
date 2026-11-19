@@ -26,16 +26,15 @@ test('A38 real router rejects unsafe decoded paths and duplicate query keys; bri
 });
 test('A38 actual A49 precommit fetch denial, quota rollback, stale/revoked evidence',async()=>{
  const d=new MemoryStorageDriver(),x=await fixture('CORE2B','4',d),a=await x.compose();
- let cp=(await a.controller.begin()).checkpoint,reads=x.reads();
- assert.equal(await a.feedback.readFirstReference(cp),null);assert.equal(await a.feedback.readBoundaryReference(cp),null);assert.equal(x.reads(),reads);
+ let cp:import('../../web/runtime/types.ts').Checkpoint;
  const {Core1BTransferJourney}=await import('../../web/journeys/core1b.ts');
  const j=new Core1BTransferJourney(x.f.definition,{controller:a.controller,driver:d,progress:x.progress,engine:x.f.binding.engine,definitionSha256:x.f.binding.definitionSha256,boundarySessionId:x.f.bs.id,assessmentA:x.f.binding.assessmentA,assessmentB:x.f.binding.assessmentB,loadProtected:x.load});
- await j.start();await j.predict(0);j.setResponses(firstResponses,[artifact('work:a38:first')]);await j.saveDraft();cp=j.getCheckpoint()!;
+ await j.start();cp=j.getCheckpoint()!;const reads=x.reads();assert.equal(await a.feedback.readFirstReference(cp),null);assert.equal(await a.feedback.readBoundaryReference(cp),null);assert.equal(x.reads(),reads);await j.predict(0);j.setResponses(firstResponses,[artifact('work:a38:first')]);await j.saveDraft();cp=j.getCheckpoint()!;
  const before=await a.controller.readEvidence(cp);d.setFailureHook((s,op)=>s==='attempts'&&op==='put'?new StorageError('QUOTA_EXCEEDED','synthetic quota fault'):null);
  await assert.rejects(j.commitFirstAttempt());d.setFailureHook(null);
  const after=await a.controller.readEvidence(cp);assert.deepEqual(after.snapshot,before.snapshot);assert.equal(after.attempts.length,0);assert.equal(await a.feedback.readFirstReference(cp),null);
  const restored=new Core1BTransferJourney(x.f.definition,{controller:a.controller,driver:d,progress:x.progress,engine:x.f.binding.engine,definitionSha256:x.f.binding.definitionSha256,boundarySessionId:x.f.bs.id,assessmentA:x.f.binding.assessmentA,assessmentB:x.f.binding.assessmentB,loadProtected:x.load});
- await restored.start();assert.deepEqual(restored.getResponses(),firstResponses);await restored.commitFirstAttempt();
+ await restored.restore();assert.deepEqual(restored.getResponses(),firstResponses);await restored.commitFirstAttempt();
  const next=restored.getCheckpoint()!;assert.equal(await a.feedback.readFirstReference(cp),null);assert.equal(await a.feedback.readFirstReference(next),'REVIEWED_FIRST_REFERENCE');x.revoke();assert.equal(await a.feedback.readFirstReference(next),null);
 });
 test('A38 100k manifest is explicitly unsupported, rejected before loading shards',async()=>{

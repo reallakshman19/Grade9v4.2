@@ -349,3 +349,11 @@ it('A24 actual qualified draft and attempt rollback/restore',async()=>{
  assert.equal((await reopened.submit()).rawPoints,2);assert.equal((await b.driver.getAll('attempts')).length,1);
  const restored=createQuestionWorkspace(STANDARD_QUESTION,undefined,b);await restored.restore();assert.equal(restored.getViewState().isLocked,true);assert.equal(restored.getViewState().evaluation?.rawPoints,2);
 });
+
+it('A38 A24 stale draft submission cannot overwrite the newer durable draft',async()=>{
+ const b=await binding(),one=createQuestionWorkspace(STANDARD_QUESTION,undefined,b),two=createQuestionWorkspace(STANDARD_QUESTION,undefined,b);
+ one.updateResponse({kind:'SINGLE_CHOICE',selectedOptionId:'OPT-A'});await one.saveDraft();await two.restore();
+ two.updateResponse({kind:'SINGLE_CHOICE',selectedOptionId:'OPT-B'});await two.saveDraft();
+ await assert.rejects(one.submit());assert.equal((await b.driver.getAll('attempts')).length,0);assert.equal((await b.progress.loadDraft((await b.session.snapshot()).id))?.revision,2);
+ assert.equal((await two.submit()).status,'INCORRECT');assert.equal((await b.driver.getAll('attempts')).length,1);
+});

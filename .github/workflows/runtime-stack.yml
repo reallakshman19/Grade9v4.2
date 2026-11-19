@@ -43,6 +43,7 @@ jobs:
           echo 'NOT_RUN: test_platform.py requires external G9_R4_KIT; test_portable_compatibility.py requires external G9_V35_PORTABLE_PACKAGES. Full custody-dependent regression is separate.'
           PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release tests/search --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
       - name: Dependency audit (actual advisory response; informational)
+        if: always() && !cancelled()
         run: |
           python -m pip check
           python tests/security/a38_dependency_audit.py
