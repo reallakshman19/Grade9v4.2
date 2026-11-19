@@ -1,0 +1,36 @@
+name: A39 dependency lock probe
+on:
+  push:
+    branches: ['qa/a39-dependency-lock-probe']
+permissions:
+  contents: read
+jobs:
+  resolve:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+      - name: Resolve exact patched packages in disposable directory
+        run: |
+          mkdir -m 700 "$RUNNER_TEMP/a39-lock-probe"
+          cp package.json package-lock.json "$RUNNER_TEMP/a39-lock-probe/"
+          cd "$RUNNER_TEMP/a39-lock-probe"
+          cp package-lock.json original-lock.json
+          npm pkg set overrides.source-map-js=1.2.2
+          npm install --package-lock-only --ignore-scripts --no-audit --no-fund --save-exact --save-dev vite@6.4.6
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          import {createHash} from 'node:crypto';
+          const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
+          const a=read('original-lock.json'),b=read('package-lock.json');
+          const changed=Object.fromEntries(Object.entries(b.packages).filter(([k,v])=>JSON.stringify(v)!==JSON.stringify(a.packages[k])));
+          const removed=Object.keys(a.packages).filter(k=>!(k in b.packages));
+          console.log('LOCK_DELTA '+JSON.stringify({changed,removed,package:read('package.json'),lockSha256:createHash('sha256').update(fs.readFileSync('package-lock.json')).digest('hex')}));
+          JS
+          npm audit --package-lock-only --json > audit-result.json || test "$?" = 1
+          node -e 'const a=require("./audit-result.json");if(!a.metadata)process.exit(1);console.log("CANDIDATE_AUDIT "+JSON.stringify(a.metadata.vulnerabilities));if(a.metadata.vulnerabilities.high||a.metadata.vulnerabilities.critical)process.exit(1)'
