@@ -349,3 +349,4 @@ it('A24 actual qualified draft and attempt rollback/restore',async()=>{
  assert.equal((await reopened.submit()).rawPoints,2);assert.equal((await b.driver.getAll('attempts')).length,1);
  const restored=createQuestionWorkspace(STANDARD_QUESTION,undefined,b);await restored.restore();assert.equal(restored.getViewState().isLocked,true);assert.equal(restored.getViewState().evaluation?.rawPoints,2);
 });
+

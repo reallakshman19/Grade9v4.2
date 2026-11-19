@@ -73,3 +73,4 @@ export interface ResponseInputController<T extends ResponseValue> {
   isLocked(): boolean;
   reset(): void;
 }
+

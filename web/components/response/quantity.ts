@@ -117,3 +117,4 @@ export function createQuantityResponseController(
 ): QuantityResponseController {
   return new QuantityResponseController(allowedUnits, initialValue);
 }
+

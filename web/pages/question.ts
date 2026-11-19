@@ -90,3 +90,4 @@ export function createQuestionPage(
 ): QuestionPageController {
   return new QuestionPageController(subjectCode, topicCode);
 }
+
