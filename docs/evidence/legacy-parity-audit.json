@@ -1,0 +1,37 @@
+{
+  "schema_version": "g9-legacy-parity-audit/2",
+  "workpack_id": "A73",
+  "status": "BOUNDED_CORRECTIONS_SUBMITTED_FULL_PARITY_HOLD",
+  "base": "a0fa9d68148f6a98ee5e464a0538a085354f11fe",
+  "historical_a73": "470de6e0487e57c134f8bd89500602a0754fa374",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "ui_freeze": "NOT_GRANTED",
+  "independent_acceptance": "NOT_GRANTED",
+  "evidence": {
+    "blueprints": "Exact native registry to proposed crosswalk only; target mounted parity not established",
+    "wpe": "Sampled barrier consistency and equality correction; other native domains and education remain incomplete",
+    "portable": "Four package declarative comparison plus normalized binding negatives; full UI and lifecycle not established",
+    "exams": "Structural capability registry including multipart only; original nine R4 fixtures absent"
+  },
+  "blockers": [
+    "Original R4 archive/manifest and authentic reviewer receipts",
+    "Complete A58 context and capability denominator",
+    "Actual native-to-target application migration",
+    "Actual seven-role mounted geometry and browser journeys",
+    "Native WPE learning fixtures and remaining numerical domains",
+    "Real learner export and approved route mappings",
+    "Physical tablet receipt"
+  ],
+  "functional_conservation_counters": {
+    "unaccounted_resource_occurrences": null,
+    "unmapped_search_entries": null,
+    "unmapped_app_contexts": null,
+    "missing_dependency_edges": null,
+    "unmapped_interactions": null,
+    "unexplained_behavior_differences": null,
+    "unresolved_state_mappings": null,
+    "unapproved_exclusions": null
+  },
+  "verification": "Exact-head CI required; no predeclared pass; no protected source or withheld fixtures included"
+}

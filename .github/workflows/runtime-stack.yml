@@ -109,4 +109,4 @@ jobs:
           path: .source-v35-pilots
           persist-credentials: false
       - name: A69 actual isolated native browser and portable parity subset (aggregate only)
-        run: G9_A69_SOURCE_ROOT="$PWD/.source-v35-pilots" node --experimental-strip-types --test --test-concurrency=1 --test-timeout=60000 --test-force-exit tests/parity/motion_plane_parity.spec.ts tests/parity/redox_adaptive_parity.spec.ts tests/parity/circles_master_parity.spec.ts tests/parity/portable_native_parity.spec.ts
+        run: G9_A69_SOURCE_ROOT="$PWD/.source-v35-pilots" node --experimental-strip-types --test --test-concurrency=1 --test-timeout=60000 --test-force-exit tests/parity/motion_plane_parity.spec.ts tests/parity/redox_adaptive_parity.spec.ts tests/parity/circles_master_parity.spec.ts tests/parity/portable_native_parity.spec.ts tests/parity/full-suite/blueprints-parity.spec.ts

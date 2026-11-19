@@ -94,7 +94,9 @@ function calculate(
         accessible_indices.push(i);
       }
     }
-    const crossing = energy >= barrier;
+    // The sampled two-well model reports energetic crossing above the barrier.
+    // Equality at a smooth unstable maximum is not a traversing trajectory.
+    const crossing = energy > barrier;
     return { accessible_indices, crossing };
   }
 
@@ -197,7 +199,17 @@ export function validateWpeModel(family:string,p:Record<string,any>):ModelValida
  else if(!finite(v)||t==='positive'&&v<=0||t==='nonnegative'&&v<0||t==='ratio'&&(v<0||v>1))return fail('Invalid domain: '+k);}
  if(family==='DISTRIBUTED_MASS'&&p.final>p.initial||family==='RADIAL_FORCE_POTENTIAL'&&p.r<p.break_radius||family==='SPRING_PROJECTILE_TRANSITION'&&.5*p.k*p.x*p.x-p.friction*p.x<=0)return fail('Unsupported physical regime');
  if(family==='INSTANTANEOUS_POWER'&&(p.force.length!==p.velocity.length||p.force.length>3))return fail('Vector dimensions differ or exceed 3');
- if(family==='POTENTIAL_WELLS'&&(p.positions.length!==p.potential.length||p.positions.some((x:number,i:number)=>i>0&&x<=p.positions[i-1])))return fail('Invalid sampled potential coordinates');
+ if(family==='POTENTIAL_WELLS'){
+  if(p.positions.length!==p.potential.length||p.positions.length<3||p.positions.some((x:number,i:number)=>i>0&&x<=p.positions[i-1]))return fail('Invalid sampled potential coordinates');
+  // One separating sampled peak (including a plateau) must be present. Do not
+  // infer a continuous potential or accept caller-selected barrier metadata.
+  const u=p.potential as number[],peaks:number[]=[];
+  for(let i=1;i<u.length-1;){let j=i;while(j+1<u.length&&u[j+1]===u[i])j++;
+   if(j<u.length-1&&u[i]!>u[i-1]!&&u[j]!>u[j+1]!)peaks.push(u[i]!);
+   i=j+1;
+  }
+  if(peaks.length!==1||peaks[0]!==p.barrier)return fail('Unsupported or inconsistent sampled separating barrier');
+ }
  return {isValid:true,errors:[]};
 }
 export function evaluateWpeModel(family:string,p:Record<string,any>):Record<string,any>{

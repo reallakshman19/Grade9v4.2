@@ -12,13 +12,19 @@ export const paths={
  circles:'standalone/core2-mathematics-circles-grade9-master.html',
  motionPackage:'public/portable-workbench/packages/portable-motion-shared-clock.json',
  redoxPackage:'public/portable-workbench/packages/portable-redox-electron-equivalence.json',
+ divisionPackage:'public/portable-workbench/packages/portable-long-division.json',
+ riemannPackage:'public/portable-workbench/packages/portable-integration-riemann.json',
+ blueprints:'Shared/web/interactive-page-blueprints.v1.json',
  host:'public/portable-workbench/portable-host.mjs',
  runtime:'public/portable-workbench/runtime.mjs'
 } as const;
 const pins:Record<string,string>={
  [paths.motion]:'53c9072865945170568b5e4c55af114eca958920',[paths.redox]:'f173e1f8f93bc534135174a8d5769cd494f3dbc7',
  [paths.circles]:'ffdedb8c28d0285a5caf6307e2ca057406ca74e0',[paths.motionPackage]:'df9eff909bbca06457ce876dff20446a788f16b0',
- [paths.redoxPackage]:'30cb6104d193f65596e6db43948334ac7cb9e259',[paths.host]:'66d35256de777e8f1c1b450229018048dbb939e5',
+ [paths.redoxPackage]:'30cb6104d193f65596e6db43948334ac7cb9e259',
+ [paths.divisionPackage]:'cd769aa026ed3d2278097ee04492941de7479a55',
+ [paths.riemannPackage]:'46c00013526dd89e530d2c25d8913a6bb11abf87',
+ [paths.blueprints]:'591ba061b8771c30fdffc4506aa720ca9ba89335',[paths.host]:'66d35256de777e8f1c1b450229018048dbb939e5',
  [paths.runtime]:'acc009580e76d092d3b92a7e34b1f576310049f4'
 };
 export function source(){

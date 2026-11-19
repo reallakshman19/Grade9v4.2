@@ -52,7 +52,7 @@ describe('A64 Portable Workbench Fail-Closed Validator: 15 Rejection Rules', () 
     id: 'test-package',
     title: 'Test Package',
     sourceRefs: ['SRC-1'],
-    sceneRefs: ['SCN-1'],
+    sceneRefs: ['test-scene'],
     representationRefs: ['REP-1'],
     assetRefs: [],
     accessibilityRefs: [],
@@ -66,6 +66,8 @@ describe('A64 Portable Workbench Fail-Closed Validator: 15 Rejection Rules', () 
       apiVersion: '0.1.0',
       sceneVersion: '1.0.0',
       id: 'test-scene',
+      targets: [{id:'target',operation:'derive'}],
+      canonicalTransformations: [{id:'transform',sourceEntityRefs:['e1'],targetRef:'target'}],
       grids: [{ id: 'g1', label: 'Grid 1', rows: ['r1'], columns: ['c1'] }],
       entities: [{ id: 'e1', label: 'Entity 1' }],
       projections: [
@@ -86,6 +88,7 @@ describe('A64 Portable Workbench Fail-Closed Validator: 15 Rejection Rules', () 
           id: 'rule-1',
           outcome: 'ACCEPT',
           summary: 'Rule 1 accepted',
+          transformationRef:'transform',sourceEntityRef:'e1',targetRef:'target',operation:'derive',patch:{addEntities:[{id:'e2',label:'Derived'}]},
         },
       ],
     },
@@ -239,8 +242,24 @@ it('four independently constructed synthetic semantic analogues (not native cust
   {id:'riemann',source:'Partition width 0.5',next:'Rectangle contribution',rule:'partition',reason:'Invalid interval'},
   {id:'motion',source:'State at t=2 s',next:'Same instant',rule:'same-time',reason:'Different physical instant'}
  ];
- for(const z of variants){const p=syntheticPackage(),pkg={...p,id:z.id,scene:{...p.scene,entities:[{id:'e',label:z.source}]},adapter:{...p.adapter,rules:[{...p.adapter.rules[0],id:z.rule,patch:{...p.adapter.rules[0].patch,addEntities:[{id:'e2',label:z.next}]}},{id:'reject',outcome:'REJECT' as const,reason:z.reason}]}};
+ for(const z of variants){const p=syntheticPackage(),pkg={...p,id:z.id,scene:{...p.scene,entities:[{id:'e',label:z.source}]},adapter:{...p.adapter,rules:[{...p.adapter.rules[0],id:z.rule,patch:{...p.adapter.rules[0].patch,addEntities:[{id:'e2',label:z.next}]}},{...p.adapter.rules[1],reason:z.reason}]}};
   const a=new PortableWorkbenchAdapter(pkg);assert.equal(a.applyRule('reject').outcome,'REJECT');assert.equal(a.getAppliedRules().length,0);assert.equal(a.applyRule(z.rule).outcome,'ACCEPT');
   const saved=a.exportState(),b=new PortableWorkbenchAdapter(pkg);b.restoreState(saved);assert.equal(b.getAllEntities().find(x=>x.id==='e2')?.label,z.next);assert.deepEqual(b.getAllProjections().map(x=>x.id),['p2']);assert.throws(()=>b.restoreState({...saved,ruleHistory:[{ruleId:z.rule,activeEntityId:null}]}));
  }
+});
+
+it('portable rule bindings do not depend on whether ACCEPT is explicit',()=>{
+ for(const explicit of [true,false]){
+  const make=()=>{const p=structuredClone(syntheticPackage()) as any;if(!explicit)delete p.adapter.rules[0].outcome;return p;};
+  const valid=make();assert(validatePortablePackage(valid).isValid);
+  const adapter=new PortableWorkbenchAdapter(valid);assert.equal(adapter.applyRule('move').outcome,'ACCEPT');
+  for(const k of ['patch','operation','transformationRef','sourceEntityRef','targetRef']){
+   const bad=make();delete bad.adapter.rules[0][k];assert(!validatePortablePackage(bad).isValid,k);assert.throws(()=>new PortableWorkbenchAdapter(bad));
+  }
+  const wrong=make();wrong.adapter.rules[0].operation='different';assert(!validatePortablePackage(wrong).isValid);
+  const empty=make();empty.adapter.rules[0].patch={};assert(!validatePortablePackage(empty).isValid);
+ }
+ const noReason=structuredClone(syntheticPackage()) as any;delete noReason.adapter.rules[1].reason;assert(!validatePortablePackage(noReason).isValid);
+ const noRules=structuredClone(syntheticPackage()) as any;noRules.adapter.rules=[];assert(!validatePortablePackage(noRules).isValid);
+ const wrongScene=structuredClone(syntheticPackage()) as any;wrongScene.sceneRefs=['different'];assert(!validatePortablePackage(wrongScene).isValid);
 });
