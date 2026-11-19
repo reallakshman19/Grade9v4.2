@@ -8,6 +8,7 @@ class InventoryTests(unittest.TestCase):
         git(self.repo,'init','-q'); git(self.repo,'config','user.name','fixture'); git(self.repo,'config','user.email','fixture@example.invalid')
     def commit(self):
         git(self.repo,'add','.'); git(self.repo,'commit','-qm','fixture'); return git(self.repo,'rev-parse','HEAD').decode().strip()
+    @unittest.skipIf(os.name == 'nt', 'NTFS reserved characters and symlinks not supported on Windows user tokens')
     def test_names_binary_symlink_duplicate(self):
         names=[' leading','trailing ','tab\tname','new\nline','é.txt','literal\\backslash']; data=b'\0\xff\n'
         for p in names: (self.repo/p).write_bytes(data)

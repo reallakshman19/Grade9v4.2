@@ -3,6 +3,7 @@ from pathlib import Path
 from grade9build.inventory import git,enumerate_git_snapshot
 from grade9build.restore import *
 
+@unittest.skipIf(os.name == 'nt', 'POSIX symlinks and file modes not supported on Windows')
 class RestoreTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup); self.root=Path(self.tmp.name); self.repo=self.root/'repo'; self.repo.mkdir(); git(self.repo,'init','-q'); git(self.repo,'config','user.name','fixture'); git(self.repo,'config','user.email','fixture@example.invalid'); (self.repo/'x').write_bytes(b'abc'); (self.repo/'x').chmod(0o755); os.symlink('missing',self.repo/'link'); git(self.repo,'add','.'); git(self.repo,'commit','-qm','fixture'); self.rows=enumerate_git_snapshot(self.repo,'HEAD','fixture:one'); self.backup=self.root/'backup'; restore_snapshot_from_git(self.repo,'HEAD',self.rows,self.backup)

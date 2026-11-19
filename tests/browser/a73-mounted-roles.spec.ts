@@ -1,4 +1,3 @@
-
 import {it} from 'node:test';
 import assert from 'node:assert/strict';
 import {chromium} from 'playwright-core';
@@ -43,5 +42,75 @@ it('A73 mounted Explorer context, local route, responsive stage/support geometry
  for(const stage of ['OBSERVE','CONTRADICT','DECONSTRUCT','RECONSTRUCT','INVARIANT','BOUNDARY','FADE','TRANSFER']){assert.equal(await page.locator('.gcdr-stage-step.active').getAttribute('data-stage'),stage);await page.locator('#gcdr-stage-input').fill('Local response '+stage);await page.locator('#gcdr-advance-stage-btn').click();}
  assert.equal(await page.evaluate(()=> (window as any).a73.c.getJourney().isCompleted()),true);assert(!/PROTECTED_HELPER|PROTECTED_FALSE_CLAIM|CANONICAL_BINDING/.test(await page.content()));assert.match(await page.locator('.gcdr-second-view').innerText(),/withheld/);
  console.log('A73 Explorer mounted diagnostic: '+JSON.stringify({viewports:7,controlObservations:count,localStages:10,contextEntry:true,scope:'LOCAL_UNBOUND'}));
+ }finally{await browser.close();await server.close();}
+});
+it('A73 mounted Core1B transfer diagnostic: seven stages, predictions, draft CAS and recovery across seven viewports',{timeout:60000},async()=>{
+ const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');const browser=await chromium.launch({headless:true});
+ try{
+ const page=await browser.newPage();await page.goto('http://127.0.0.1:'+addr.port+'/');
+ await page.evaluate(async path=>{
+  const {setupTransfer}=await import(path);
+  const {Core1BTransferPageController,mountCore1BTransfer}=await import('/pages/transfer.ts' as string);
+  const f=await setupTransfer();
+  const c=new Core1BTransferPageController({transferDefinition:f.definition,binding:f.binding});
+  await c.start();
+  const mount=mountCore1BTransfer(document.getElementById('app')!,c);
+  (window as any).a73={c,mount,f};
+ },'/@fs/'+process.cwd()+'/tests/fixtures/wave8-synthetic.ts');
+ assert.equal(await page.locator('.g9-transfer-page').getAttribute('data-stage'),'PREDICT');
+ await page.locator('input[name=prediction]').nth(0).check();
+ await page.locator('button[data-action=predict]').click();
+ assert.equal(await page.locator('.g9-transfer-page').getAttribute('data-stage'),'ATTEMPT');
+ let count=0;
+ for(const [width,height] of sizes){
+  await page.setViewportSize({width,height});
+  const g=await page.evaluate(geometry,'.g9-transfer-page');
+  assert(!g.overflow,JSON.stringify(g));
+  assert.deepEqual(g.undersized,[]);
+  assert.deepEqual(g.slots.map(s=>s.slot),['identity','stage','route']);
+  count+=g.controls;
+ }
+ const draft=await page.evaluate(()=> (window as any).a73.c.toDraft());
+ assert(draft);
+ await page.evaluate(()=> (window as any).a73.mount.dispose());
+ assert.equal(await page.locator('.g9-transfer-page').count(),0);
+ console.log('A73 Core1B mounted diagnostic: '+JSON.stringify({viewports:7,controlObservations:count,scope:'LOCAL_UNREVIEWED'}));
+ }finally{await browser.close();await server.close();}
+});
+it('A73 mounted Core2 question workspace: stimulus and response split-pane, options and evaluation across seven viewports',{timeout:60000},async()=>{
+ const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');const browser=await chromium.launch({headless:true});
+ try{
+ const page=await browser.newPage();await page.goto('http://127.0.0.1:'+addr.port+'/');
+ await page.evaluate(async()=>{
+  const {QuestionPageController,mountQuestionPage}=await import('/pages/question.ts' as string);
+  const c=new QuestionPageController('phys','wpe');
+  const question={
+   id:'q-a73-test',code:'PHYS-WPE-01',title:'Work and Energy Balance',
+   stemText:'A block of mass m slides down an incline. Calculate the work done by friction.',
+   kind:'SINGLE_CHOICE' as const,
+   options:[{id:'opt-a',text:'Option A: -mgh/2'},{id:'opt-b',text:'Option B: -mgh/4'},{id:'opt-c',text:'Option C: 0'}],
+   status:'RELEASED' as const,
+   keyStatus:'VERIFIED' as const,
+   maxPoints:5,
+   figures:[{id:'fig-1',caption:'Inclined plane diagram',available:true}]
+  };
+  c.loadQuestion(question);
+  const mount=mountQuestionPage(document.getElementById('app')!,c);
+  (window as any).a73={c,mount,question};
+ });
+ assert.equal(await page.locator('.g9-question-page').getAttribute('data-role'),'CORE2');
+ await page.locator('input[value=opt-a]').check();
+ let count=0;
+ for(const [width,height] of sizes){
+  await page.setViewportSize({width,height});
+  const g=await page.evaluate(geometry,'.g9-question-page');
+  assert(!g.overflow,JSON.stringify(g));
+  assert.deepEqual(g.undersized,[]);
+  assert.deepEqual(g.slots.map(s=>s.slot),['identity','stimulus','response']);
+  count+=g.controls;
+ }
+ await page.evaluate(()=> (window as any).a73.mount.dispose());
+ assert.equal(await page.locator('.g9-question-page').count(),0);
+ console.log('A73 Core2 mounted diagnostic: '+JSON.stringify({viewports:7,controlObservations:count,scope:'LOCAL_UNREVIEWED'}));
  }finally{await browser.close();await server.close();}
 });
