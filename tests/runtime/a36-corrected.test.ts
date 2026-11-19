@@ -1,0 +1,45 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {personalFixture} from '../fixtures/a36-synthetic.ts';
+import {MemoryStorageDriver,StorageError} from '../../web/runtime/storage.ts';
+import {Router} from '../../web/app/router.ts';
+test('A36 qualified ordinary/assisted/repair evidence, no inferred correctness or mutable repaired flag',async()=>{
+ const f=await personalFixture(),s=await f.open(),e=await s.evidence();
+ assert.equal(e.rows.filter(r=>r.category==='ORDINARY_ATTEMPT').length,2);
+ assert.equal(e.rows.filter(r=>r.category==='ASSISTED').length,1);
+ assert.equal(e.rows.filter(r=>r.category==='REPAIR').length,1);
+ assert.equal(e.rows.filter(r=>r.category==='BOUNDARY_CHECK').length,0);
+ assert.equal(e.mistakes.find(m=>m.id==='att:wave9:1')?.reason,'INCORRECT_INTEGER');
+ assert.equal(e.mistakes.find(m=>m.diagnosis==='UNSURE')?.repairRecorded,true);
+ assert(!JSON.stringify(e).includes('REVIEWED_FIRST_REFERENCE'));
+ const bad=structuredClone(f.scope);Object.assign(bad,{sessions:bad.sessions.slice(1)});
+ await assert.rejects((await f.open(bad)).evidence(),/FOREIGN_ARCHIVE_SCOPE/);
+ f.revoke();await assert.rejects(s.evidence(),/AUTHORITY/);
+});
+test('A36 bookmark exact revision, withdrawal tombstone, CAS, notes and font bounds',async()=>{
+ const f=await personalFixture(),s=await f.open();let p=await s.addBookmark(0,f.target,'private note');
+ await assert.rejects(s.addBookmark(0,f.target),/STALE_PERSONAL_REVISION/);
+ await assert.rejects(s.addBookmark(1,{...f.target,revision:2}),/NOT_AUTHORIZED/);
+ p=await s.editBookmark(1,p.bookmarks[0].id,'edited note');
+ await assert.rejects(s.setFontStep(2,31),/INVALID_FONT_STEP/);p=await s.setFontStep(2,30);
+ const withdrawn=structuredClone(f.scope);Object.assign(withdrawn,{bookmarks:[]});const w=await f.open(withdrawn);
+ assert.equal((await w.library()).bookmarks[0].available,false);assert.equal((await w.library()).bookmarks[0].notes,'edited note');
+ assert.equal(await w.launch(f.target,new Router()),null);
+ const router=new Router({basePath:'/grade9',useHash:true});assert.equal(await s.launch(f.target,router),'/grade9/#/question/'+encodeURIComponent(f.target.id));
+ assert.equal((await s.profile()).fontStep,30);
+ (f.driver as MemoryStorageDriver).setFailureHook((name:string,op:string)=>name==='personal_a36'&&op==='put'?new StorageError('QUOTA_EXCEEDED','synthetic'):null);
+ await assert.rejects(s.setFontStep(3,20));assert.equal((await s.profile()).fontStep,30);
+});
+test('A36 complete cognitive backup roundtrip, no imported disclosure qualification or nonempty overwrite',async()=>{
+ const f=await personalFixture(),s=await f.open(),before=await s.evidence(),blob=await s.exportProgress();
+ await assert.rejects(s.importProgress(blob));
+ const dest=new MemoryStorageDriver(),restored=await f.restore(dest),receipt=await restored.importProgress(blob);
+ assert.equal(receipt.attempts,3);const after=await restored.evidence();
+ assert.equal(after.rows.filter(r=>r.category==='HISTORICAL_UNVERIFIED').length,3);assert.equal(after.mistakes.length,0);
+ assert.equal((await dest.getAll('attempts')).length,3);assert.equal((await dest.get('attempt_authority','att:wave9:1')),'IMPORTED_UNAUTHENTICATED');
+ await assert.rejects(restored.importProgress(blob));
+ const tampered=JSON.parse(await blob.text());tampered.data.progress.attempts.pop();
+ const empty=await f.restore(new MemoryStorageDriver());await assert.rejects(empty.importProgress(new Blob([JSON.stringify(tampered)])),/INVALID_COGNITIVE_BACKUP/);
+ const p=await s.addBookmark(0,f.target,'notes'),profile=await s.exportProfile();await restored.importProfile(profile);assert.equal((await restored.profile()).bookmarks[0].notes,'notes');await assert.rejects(restored.importProfile(profile),/STALE_PERSONAL_REVISION/);
+ assert.equal(before.rows.filter(r=>r.category==='ASSISTED').length,1);
+});
