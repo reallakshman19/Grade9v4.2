@@ -51,8 +51,9 @@ def authority(tmp_path):
 def test_valid_transitive_synthetic_receipts_and_unchanged_public_manifest(authority):
     a=authority;r=a["audit"]();assert [v["workpack"] for v in r["verified"]]==["A38","A39"]
     assert r["independent_acceptance"]=="NOT_GRANTED"
-    for n in ("graph.json","wpe.json"):
-        raw=(ROOT/"fixtures/synthetic"/n).read_bytes();i=AcademicReleaseIntegrator()
+    for n in ("graph.json","wpe-vertical-slice.json"):
+        source=json.loads((ROOT/"fixtures/synthetic"/n).read_bytes())
+        raw=canonical_bytes(source if isinstance(source,list) else source["objects"]);i=AcademicReleaseIntegrator()
         expected=ReleaseProjectionCompiler().compile_release(json.loads(raw),"RELEASE-ACADEMIC-DEMO-01")
         x=i.compile_with_evidence(raw,repo=a["repo"],external_root=a["ext"],pins=a["pins"],now=NOW)
         assert x.manifest==expected==i.integrate_release(raw)

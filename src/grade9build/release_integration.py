@@ -109,7 +109,7 @@ class ExternalFiles:
         except OSError:raise ReceiptVerificationError("CUSTODY_FILE_UNAVAILABLE") from None
 
 def git(repo,*args):
-    try:r=subprocess.run(["git","-C",str(repo),*args],capture_output=True,timeout=15)
+    try:r=subprocess.run(["git","--no-replace-objects","-C",str(repo),*args],capture_output=True,timeout=15)
     except (OSError,subprocess.TimeoutExpired):raise ReceiptVerificationError("GIT_VERIFICATION_UNAVAILABLE") from None
     require(r.returncode==0,"GIT_SCOPE_MISMATCH");return r.stdout.strip()
 
@@ -163,7 +163,7 @@ class PrerequisiteAuditor:
             for pre in scopes[w]["prerequisites"]:visit(pre)
             visiting.remove(w);visited.add(w);order.append(w)
         visit("A40");require(visited==set(scopes),"UNRELATED_PLAN_SCOPE")
-        require(git(files.repo,"rev-parse","HEAD").decode()==pins.target_commit and not git(files.repo,"status","--porcelain","--untracked-files=all"),"TARGET_CHECKOUT_MISMATCH")
+        require(git(files.repo,"rev-parse","HEAD").decode()==pins.target_commit and not git(files.repo,"status","--porcelain","--untracked-files=all","--ignored=matching"),"TARGET_CHECKOUT_MISMATCH")
         for w in order:
             s=scopes[w]
             for k in ("base_commit","candidate_commit"):require(git(files.repo,"cat-file","-t",s[k])==b"commit","GIT_COMMIT_REQUIRED")
@@ -177,7 +177,7 @@ class PrerequisiteAuditor:
         for w in order[:-1]:
             s=scopes[w];raw=files.read(w+".json",128000);sig=files.read(w+".sig",64);evidence=files.read(w+".evidence",50000000);r=parse(raw)
             require(keys(r,_RECEIPT) and r["schema"]=="g9-a40-synthetic-receipt/1" and r["decision"]=="SYNTHETIC_ACCEPTED" and raw==canonical_bytes(r),"INVALID_SYNTHETIC_RECEIPT")
-            require(r["workpack"]==w and all(r[k]==s[k] for k in ("base_commit","candidate_commit","candidate_tree")) and r["kit_manifest_sha256"]==pins.kit_manifest_sha256 and r["plan_sha256"]==pins.plan_sha256 and r["test_evidence_sha256"]==s["evidence_sha256"]==sha(evidence),"RECEIPT_OR_EVIDENCE_SCOPE_MISMATCH")
+            require(r["workpack"]==w and all(r[k]==s[k] for k in ("base_commit","candidate_commit","candidate_tree")) and r["kit_manifest_sha256"]==pins.kit_manifest_sha256 and r["plan_sha256"]==pins.plan_sha256 and bool(evidence) and r["test_evidence_sha256"]==s["evidence_sha256"]==sha(evidence),"RECEIPT_OR_EVIDENCE_SCOPE_MISMATCH")
             require(ident(r["reviewer_id"]) and r["reviewer_id"] in roster,"UNAUTHORIZED_REVIEWER");reviewer=roster[r["reviewer_id"]]
             require(not reviewer["revoked"] and w in reviewer["workpacks"],"UNAUTHORIZED_REVIEWER")
             require(r["reviewer_id"] not in s["author_ids"],"SELF_APPROVAL_PROHIBITED")
