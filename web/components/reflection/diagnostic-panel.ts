@@ -12,3 +12,4 @@ export class DiagnosticPanelController{
  async renderReviewed(){const j=this.journey;if(!j?.isReady()||j.getStage()!=='DIAGNOSE')return this.render();const moves=[...await j.readReviewMoves(),'UNSURE','NO_DIVERGENCE'];return '<section class="g9-diagnostic-panel">'+moves.map(m=>'<label style="min-height:48px"><input type="radio" name="diagnosis" value="'+e(m)+'">'+e(m)+'</label>').join('')+'<textarea aria-label="Why" style="min-height:48px"></textarea></section>';}
 }
 export type DiagnosticPanelViewState=ReturnType<DiagnosticPanelController['getViewState']>;
+

@@ -16,3 +16,4 @@ export class RepairWorkspaceController{
  render(){return '<section class="g9-repair-workspace"><p>Separate repair; original work is not editable.</p><textarea aria-label="Repair explanation" style="min-height:48px">'+e(this.why)+'</textarea><p>Boundary feedback requires verified durable commitment.</p></section>';}
 }
 export type RepairWorkspaceViewState=ReturnType<RepairWorkspaceController['getViewState']>;
+

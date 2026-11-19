@@ -23,3 +23,4 @@ export class ReflectionPageController{
  async renderReviewed(){if(!this.j?.isReady())return this.render();if(this.tab==='compare')return this.compare.renderReviewed();if(this.tab==='diagnose')return this.diag.renderReviewed();if(this.tab==='history')return '<pre>'+e(JSON.stringify(await this.j.readHistory(),null,2))+'</pre>';return this.repair.render();}
 }
 export type ReflectionPageViewState=ReturnType<ReflectionPageController['getViewState']>;
+

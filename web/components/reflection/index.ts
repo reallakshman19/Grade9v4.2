@@ -13,3 +13,4 @@ export type { DiagnosticPanelConfig, DiagnosticPanelViewState } from './diagnost
 
 export { RepairWorkspaceController } from './repair-workspace.ts';
 export type { RepairWorkspaceConfig, RepairWorkspaceViewState } from './repair-workspace.ts';
+
