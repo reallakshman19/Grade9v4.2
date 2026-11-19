@@ -281,3 +281,4 @@ describe('A73: Performance Benchmarks and Tablet Ergonomics Across Seven Viewpor
     );
   });
 });
+

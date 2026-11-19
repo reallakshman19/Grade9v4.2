@@ -254,3 +254,4 @@ describe('A73: Seven Blueprint Families Parity Audit', () => {
     assert.strictEqual(invalidBlueprint.slots.length, 0);
   });
 });
+

@@ -169,3 +169,4 @@ describe('A69 Redox Adaptive Proof Parity: Branching & Electron Equivalence', ()
     assert.equal(parityStatus.releaseAuthority, 'NONE');
   });
 });
+
