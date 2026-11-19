@@ -230,3 +230,4 @@ export class Core1ATeachingJourney{
   this.activeUnitRole=d.activeUnitRole;this.parameters=structuredClone(d.modelParameters);this.prediction=d.modelPredictionIndex;this.depth=d.depthView;this.notes=d.learnerNotes;this.visited=new Set([d.activeUnitRole]);
  }
 }
+

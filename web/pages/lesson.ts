@@ -27,3 +27,4 @@ export class Core1ALessonPageController{
  return '<main class="g9-lesson-page" data-orientation="'+s.orientation+'"><h1>'+e(l.title)+'</h1><p>Unverified teaching diagnostic; no reviewed route or academic admission.</p><nav>'+CORE1A_ORDERED_ROLES.map(role=>'<button data-role="'+role+'" style="min-height:48px;min-width:48px">'+role+'</button>').join('')+'</nav><div style="'+(s.orientation==='LANDSCAPE'?'display:grid;grid-template-columns:1fr 1fr':'display:flex;flex-direction:column')+'">'+u.render()+m.render()+a.render()+'</div><button disabled>Fresh transfer unavailable</button></main>';}
 }
 export type LessonPageViewState=ReturnType<Core1ALessonPageController['getViewState']>;
+
