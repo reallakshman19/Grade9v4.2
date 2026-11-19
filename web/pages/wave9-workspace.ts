@@ -8,6 +8,8 @@ import {CORE1_ORIENTATION_BLOCKS} from '../journeys/core1.ts';
 import {Core1BTransferJourney,transferDefinitionDigest,type Core1BTransferDefinition} from '../journeys/core1b.ts';
 import {SupportedPracticeWorkspace} from '../journeys/supported-practice.ts';
 import {sameRef} from '../runtime/loader.ts';
+import {structuredKinds,structuredResponseEditor} from '../components/wave9-structured-editors.ts';
+import type {SupportedLocale,PresentationLevel} from '../runtime/presentation.ts';
 import type {AssetLoader} from '../runtime/presentation.ts';
 import {validateResponse} from '../runtime/response.ts';
 import type {Kind,Response,WorkArtifact,JsonObject,Ref} from '../runtime/types.ts';
@@ -45,7 +47,7 @@ function select(parent:HTMLElement,label:string,options:readonly string[]){
 }
 function choice(s:HTMLSelectElement,options:readonly string[]){if(s.value==='')throw Error('SELECTION_REQUIRED');const i=Number(s.value);if(!Number.isInteger(i)||i<0||i>=options.length)throw Error('SELECTION_REQUIRED');return options[i];}
 const strings:readonly Kind[]=['INTEGER','CONSTRUCTED_RESPONSE','SYMBOLIC_EXPRESSION','MATHEMATICAL_PROOF'];
-const structured:readonly Kind[]=['CHEMICAL_STRUCTURE','REACTION_MECHANISM','DATA_TABLE','GRAPH','EXPERIMENT_ANALYSIS'];
+const structured=structuredKinds;
 const supported=(k:Kind,opts?:readonly Option[])=>strings.includes(k)||k==='NUMERIC_QUANTITY'||structured.includes(k)||(['SINGLE_CHOICE','MULTIPLE_CHOICE'].includes(k)&&!!opts?.length);
 function responseField(parent:HTMLElement,id:string,kind:Kind,old?:Response,opts?:readonly Option[]):()=>Response{
  if((kind==='SINGLE_CHOICE'||kind==='MULTIPLE_CHOICE')&&opts?.length){
@@ -55,10 +57,7 @@ function responseField(parent:HTMLElement,id:string,kind:Kind,old?:Response,opts
   for(const opt of opts){const o=el('option',opt.label);o.value=opt.id;if(prior.includes(opt.id))o.selected=true;s.append(o);}
   label.append(s);parent.append(label);return ()=>validateResponse({kind,value:s.multiple?Array.from(s.selectedOptions,o=>o.value):s.value});
  }
- if(structured.includes(kind)){
-  const formats:Partial<Record<Kind,string>>={CHEMICAL_STRUCTURE:'{"format":"…","data":"…"}',REACTION_MECHANISM:'["step"]',DATA_TABLE:'[["cell",null]]',GRAPH:'{"points":[["0","1"]]}',EXPERIMENT_ANALYSIS:'{"observations":["…"],"conclusion":"…"}'};
-  const i=field(parent,id+' — structured response '+formats[kind],old?.kind===kind?JSON.stringify(old.value):'',true);i.dataset.field=id;return ()=>validateResponse({kind,value:JSON.parse(i.value)});
- }
+ if(structured.includes(kind))return structuredResponseEditor(parent,id,kind,old);
  if(strings.includes(kind)){const i=field(parent,id+' ('+kind+')',old?.kind===kind&&typeof old.value==='string'?old.value:'',kind!=='INTEGER');i.dataset.field=id;return ()=>validateResponse({kind,value:i.value});}
  if(kind==='NUMERIC_QUANTITY'){const a=field(parent,id+' — decimal',old?.kind==='NUMERIC_QUANTITY'?old.value.decimal:''),b=field(parent,id+' — unit',old?.kind==='NUMERIC_QUANTITY'?old.value.unit:'');a.dataset.field=id+':decimal';b.dataset.field=id+':unit';return ()=>validateResponse({kind,value:{decimal:a.value,unit:b.value}});}
  parent.append(el('p','Unsupported response editor: '+kind));return ()=>{throw Error('EDITOR_UNAVAILABLE');};
@@ -66,7 +65,7 @@ function responseField(parent:HTMLElement,id:string,kind:Kind,old?:Response,opts
 function note(id:string,value:string):WorkArtifact{if(!value.trim())throw Error('WORKING_REQUIRED');return {id,kind:'NOTE',version:1,value};}
 export class Wave9WorkspaceHost{
  readonly #root:HTMLElement;readonly #router:Router;readonly #catalog:Wave9Catalog;readonly #runtime:Runtime;readonly #journey:Core1BTransferJourney|null;readonly #practice:SupportedPracticeWorkspace|null;
- #epoch=0;#busy=false;#active=false;#closed=false;
+ #epoch=0;#busy=false;#active=false;#closed=false;#locale:SupportedLocale='en-US';#level:PresentationLevel='FORMAL';
  constructor(root:HTMLElement,router:Router,catalog:Wave9Catalog,runtime:Runtime,journey:Core1BTransferJourney|null,practice:SupportedPracticeWorkspace|null){this.#root=root;this.#router=router;this.#catalog=structuredClone(catalog);this.#runtime=runtime;this.#journey=journey;this.#practice=practice;}
  href(){const p=this.#catalog.page;if(!p)throw Error('PAGE_NOT_AUTHORIZED');return this.#router.toHref('/role/'+this.#catalog.role+'/'+encodeURIComponent(p.resourceId));}
  #frame(){const box=el('main');box.className='g9-w9';box.dataset.role=this.#catalog.role;const banner=el('p','Diagnostic workspace · Academic admission HOLD · Review not completed');banner.setAttribute('role','status');const print=el('p','Printing unavailable: no verified exact-output print authorization.');print.className='w9-print-notice';box.append(el('style',css),banner,print);return box;}
@@ -88,7 +87,7 @@ export class Wave9WorkspaceHost{
   const local=preserve?Array.from(view.querySelectorAll<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>('[data-field]'),n=>({key:n.dataset.field!,value:n.value,selected:n instanceof HTMLSelectElement&&n.multiple?Array.from(n.selectedOptions,o=>o.value):null})):[];
   for(const n of view.querySelectorAll<HTMLButtonElement|HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>('button,input,textarea,select'))n.disabled=true;
   for(const n of view.querySelectorAll('[data-protected]'))n.remove();
-  try{await run();if(epoch===this.#epoch&&this.#active){await this.#render(epoch);for(const n of this.#root.querySelectorAll<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>('[data-field]')){const v=local.find(x=>x.key===n.dataset.field);if(v){if(n instanceof HTMLSelectElement&&v.selected)for(const o of n.options)o.selected=v.selected.includes(o.value);else n.value=v.value;}}}}
+  try{await run();if(epoch===this.#epoch&&this.#active){await this.#render(epoch);for(const n of this.#root.querySelectorAll<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>('[data-field]')){const v=local.find(x=>x.key===n.dataset.field);if(v){if(n instanceof HTMLSelectElement&&v.selected)for(const o of n.options)o.selected=v.selected.includes(o.value);else{n.value=v.value;n.dispatchEvent(new Event('w9-restore'));}}}}}
   catch{if(epoch===this.#epoch&&this.#active){for(const n of view.querySelectorAll('[data-protected]'))n.remove();status.textContent='Operation not verified. Feedback withheld. Copy unsaved working before reopening.';const reopen=el('button','Reopen verified route');reopen.type='button';reopen.addEventListener('click',()=>{void this.open(this.href());});view.append(reopen);}}
   finally{this.#busy=false;}
  }
@@ -99,10 +98,23 @@ export class Wave9WorkspaceHost{
    identity.append(el('h1','Topic orientation'));primary.dataset.slot='orientation';
    const o=await r.orientation!.read(p.projection!,cp);if(!o)throw Error('ORIENTATION_UNAVAILABLE');
    for(const key of CORE1_ORIENTATION_BLOCKS){const dest=key==='identity_scope'||key==='learner_metadata'?identity:primary;dest.append(el('h3',key.replaceAll('_',' ')),protect(el('p',o.blocks[key])));}
-   primary.append(el('p','Print and lesson launch are unavailable until exact native authorization is supplied.'));
+   if(p.print)this.#button(primary,'Get reviewed PDF','print-pdf',epoch,async()=>{
+    const bytes=await r.readPrintPDF(cp);if(!bytes||epoch!==this.#epoch||!this.#active)throw Error('PRINT_NOT_AUTHORIZED');
+    const url=URL.createObjectURL(new Blob([new Uint8Array(bytes)],{type:'application/pdf'})),link=el('a');link.href=url;link.download='reviewed-orientation.pdf';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+   });
+   else primary.append(el('p','Print unavailable until exact native authorization is supplied.'));
+   primary.append(el('p','Lesson launch requires separate native authorization.'));
   }else if(c.role==='CORE2A'){
    identity.append(el('h1','Supported application'));primary.dataset.slot='attempt';
-   const text=await r.presentation.read(p.projection!,'en-US','FORMAL',cp);if(!text)throw Error('PRACTICE_UNAVAILABLE');primary.append(protect(el('p',text.text)));
+   const variants=p.presentations??[{locale:'en-US' as const,level:'FORMAL' as const,asset:p.projection!}];
+   const selected=variants.find(v=>v.locale===this.#locale&&v.level===this.#level);
+   const text=selected?await r.presentation.read(selected.asset,this.#locale,this.#level,cp):null;
+   const selector=el('select');selector.setAttribute('aria-label','Reviewed presentation');selector.dataset.presentation='true';
+   for(const [i,v] of variants.entries()){const option=el('option',v.locale+' · '+v.level);option.value=String(i);option.selected=v===selected;selector.append(option);}
+   identity.append(selector);
+   this.#button(identity,'Change presentation','presentation',epoch,async()=>{const v=variants[Number(selector.value)];if(!v)throw Error('PRESENTATION_UNAVAILABLE');this.#locale=v.locale;this.#level=v.level;},true);
+   if(text){const content=protect(el('p',text.text));content.lang=text.locale;primary.append(content);const symbols=el('dl');for(const [symbol,unit] of Object.entries(text.symbolsAndUnits))symbols.append(el('dt',symbol),el('dd',unit));primary.append(protect(symbols));}
+   else primary.append(el('p','Exact reviewed presentation unavailable. No translation or level fallback.'));
    const support=el('aside');support.dataset.slot='support';grid.append(support);
    const reasoning=el('section');reasoning.dataset.slot='reasoning';primary.append(reasoning);
    const practice=this.#practice;
@@ -126,6 +138,18 @@ export class Wave9WorkspaceHost{
     if(crux!==null){reasoning.append(el('h3','Application crux'),protect(el('p',crux)));}if(reference!==null){reasoning.append(el('h3','Reviewed reference'),protect(el('p',reference)));}
     const check=await r.practice!.readIndependentCheck(cp);
     reasoning.append(el('h3','Independent check'),protect(el('p',check.status==='CHECK_PASSED'?'Qualified typed check passed — not mastery.':check.status==='CHECK_DIVERGED'?'Qualified typed check diverged — not mastery.':'Review pending.')));
+    if(check.status==='CHECK_DIVERGED')reasoning.append(el('p','Failure signal: review the mismatch and record a repair. The separate check is not a new post-repair boundary.'));
+    if(e.snapshot.stage==='RECONSTRUCT'&&reference!==null){
+     const original=await practice.original(cp);if(original)reasoning.append(el('h3','Your committed response'),protect(el('pre',JSON.stringify(original.response,null,2))));
+     const inputs=(await practice.moves(cp)).map(m=>[m,field(primary,'Compare '+m,'',true)] as const);
+     this.#button(primary,'Record comparison','practice-compare',epoch,async()=>{await practice.compare(cp,Object.fromEntries(inputs.map(([m,i])=>[m,{observation:i.value} as JsonObject])));});
+    }else if(e.snapshot.stage==='DIAGNOSE'){
+     const opts=[...await practice.moves(cp),'UNSURE','NO_DIVERGENCE'],s=select(primary,'Divergence',opts),why=field(primary,'Why?','',true);
+     this.#button(primary,'Record diagnosis','practice-diagnose',epoch,async()=>{await practice.diagnose(cp,choice(s,opts),why.value);});
+    }else if(e.snapshot.stage==='REPAIR'){
+     const why=field(primary,'Repair explanation','',true),work=field(primary,'New repair working','',true);
+     this.#button(primary,'Record repair','practice-repair',epoch,async()=>{await practice.repair(cp,why.value,[note('work:'+crypto.randomUUID(),work.value)]);});
+    }else if(e.snapshot.stage==='BOUNDARY_TEST')reasoning.append(el('p','Repair recorded. New independent boundary assessment remains unavailable; no completion or mastery inferred.'));
    }
   }else{
    const j=this.#journey!,t=r.transfer!,v=await t.view(cp);
@@ -162,7 +186,7 @@ export class Wave9WorkspaceHost{
     support.append(el('p','Boundary commitment verified.'));this.#button(controls,'View boundary feedback','boundary-feedback',epoch,async()=>{await j.viewBoundaryFeedback();});
    }else if(v.stage==='COMPLETE'){
     const txt=await j.getTaskBSolution();if(txt!==null)support.append(protect(el('p',txt)));const returned=await t.readSourceReturn(cp);
-    if(returned){primary.append(el('p','Source return recorded. Original cursor: '+returned.cursor+'.'));const dest=p.sourceRoute;if(dest&&dest.sessionId===returned.sessionId&&sameRef(dest.origin,returned.ref)&&dest.cursor===returned.cursor){this.#button(controls,'Open authorized source route','open-source',epoch,async()=>{const current=await t.readSourceReturn(cp);if(!current||current.sessionId!==dest.sessionId||!sameRef(current.ref,dest.origin)||current.cursor!==dest.cursor)throw Error('SOURCE_ROUTE_STALE');const href=this.#router.toHref('/role/'+dest.role+'/'+encodeURIComponent(dest.resourceId)),match=this.#router.match(href);if(match.type!=='ROLE'||match.params.coreRole!==dest.role||match.params.resourceId!==dest.resourceId)throw Error('SOURCE_ROUTE_MISMATCH');this.#active=false;this.#epoch++;this.#hold('Authorized source route selected; destination mounting requires the trusted host.');this.#router.navigate(href);});}else primary.append(el('p','No authorized destination route.'));}
+    if(returned){primary.append(el('p','Source return recorded. Original cursor: '+returned.cursor+'.'));const dest=p.sourceRoute;if(dest&&dest.sessionId===returned.sessionId&&sameRef(dest.origin,returned.ref)&&dest.cursor===returned.cursor){this.#button(controls,'Open authorized source route','open-source',epoch,async()=>{const current=await t.readSourceReturn(cp);if(!current||current.sessionId!==dest.sessionId||!sameRef(current.ref,dest.origin)||current.cursor!==dest.cursor)throw Error('SOURCE_ROUTE_STALE');const href=this.#router.toHref('/role/'+dest.role+'/'+encodeURIComponent(dest.resourceId)),match=this.#router.match(href);if(match.type!=='ROLE'||match.params.coreRole!==dest.role||match.params.resourceId!==dest.resourceId)throw Error('SOURCE_ROUTE_MISMATCH');const source=dest.projection?await r.readReturnedSource(cp):null;if(dest.projection&&!source)throw Error('SOURCE_PROJECTION_UNAVAILABLE');if(epoch!==this.#epoch||!this.#active)return;this.#active=false;this.#epoch++;if(source){const frame=this.#frame();frame.dataset.role=source.role;frame.append(el('h1','Returned source'),el('p','Original cursor: '+source.cursor),protect(el('p',source.text)));this.#root.replaceChildren(frame);}else this.#hold('Authorized source route selected; destination mounting requires the trusted host.');this.#router.navigate(href);});}else primary.append(el('p','No authorized destination route.'));}
     else this.#button(controls,'Record source return','return-source',epoch,async()=>{await j.returnToSource();});
    }
   }

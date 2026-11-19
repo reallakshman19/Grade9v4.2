@@ -9,9 +9,9 @@ import type {StorageDriver} from './storage.ts';
 import {CognitiveController,type CognitiveAuthority,type ReviewedTaskContext} from '../journeys/cognitive-controller.ts';
 import {Core2BTransferJourney,type ReviewedTransfer,type TransferAuthority} from '../journeys/core2b.ts';
 import {Core2ASupportedJourney,type ReviewedPracticeCheck,type PracticeCheckAuthority} from '../journeys/core2a.ts';
-import {ProgressivePresentationController,StageGatedFeedbackController,type AssetLoader} from './presentation.ts';
+import {ProgressivePresentationController,StageGatedFeedbackController,strictObject,exactKeys,nonblank,type SupportedLocale,type PresentationLevel,type AssetLoader} from './presentation.ts';
 import {Core1OrientationJourney} from '../journeys/core1.ts';
-import type {DisclosureCapability,JourneyKey,Ref,Session,TaskRef} from './types.ts';
+import type {Checkpoint,DisclosureCapability,JourneyKey,Ref,Session,TaskRef} from './types.ts';
 
 export interface SessionBinding {
  readonly id:string;readonly item:Ref;readonly origin:Ref|null;
@@ -20,11 +20,13 @@ export interface SessionBinding {
 export interface Wave9PageBinding {
  readonly resourceId:string;readonly review:Ref<'APPROVAL'>;
  readonly projection?:Ref<'PRESENTATION'>;
+ readonly presentations?:readonly {readonly locale:SupportedLocale;readonly level:PresentationLevel;readonly asset:Ref<'PRESENTATION'>}[];
+ readonly print?:{readonly projection:Ref<'PRESENTATION'>;readonly pdf:Ref<'ASSET'>;readonly review:Ref<'APPROVAL'>};
  readonly transferDefinitionSha256?:string;
  readonly assessmentA?:Ref<'ASSESSMENT'>;readonly assessmentB?:Ref<'ASSESSMENT'>;
  readonly practiceAssessment?:Ref<'ASSESSMENT'>;
  readonly choices?:{readonly first?:Readonly<Record<string,readonly {readonly id:string;readonly label:string}[]>>;readonly boundary?:Readonly<Record<string,readonly {readonly id:string;readonly label:string}[]>>};
- readonly sourceRoute?:{readonly role:'CORE1'|'CORE1A'|'CORE1B'|'CORE2'|'CORE2A'|'CORE2B';readonly resourceId:string;readonly sessionId:string;readonly origin:Ref;readonly cursor:number};
+ readonly sourceRoute?:{readonly role:'CORE1'|'CORE1A'|'CORE1B'|'CORE2'|'CORE2A'|'CORE2B';readonly resourceId:string;readonly sessionId:string;readonly origin:Ref;readonly cursor:number;readonly projection?:Ref<'ASSET'>;readonly review?:Ref<'APPROVAL'>};
 }
 export interface Wave9Catalog {
  readonly schema:'g9-wave9-authority/1';
@@ -70,6 +72,13 @@ function validate(c:Wave9Catalog){
  if(c.page){
   const p=c.page;
   requireThat(/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(p.resourceId)&&refOk(p.review)&&p.review.type==='APPROVAL','INVALID_PAGE_BINDING');
+  if(p.presentations){
+   requireThat(c.role==='CORE2A'&&Array.isArray(p.presentations)&&p.presentations.length>0&&new Set(p.presentations.map(v=>v.locale+':'+v.level)).size===p.presentations.length&&new Set(p.presentations.map(v=>v.asset.id)).size===p.presentations.length&&p.presentations.every(v=>['en-US','hi-IN'].includes(v.locale)&&['INTUITION','MODEL','FORMAL'].includes(v.level)&&refOk(v.asset)&&v.asset.type==='PRESENTATION'&&c.grants.some(g=>g.capability==='VIEW_STIMULUS'&&sameRef(g.asset,v.asset)))&&p.presentations.some(v=>v.locale==='en-US'&&v.level==='FORMAL'&&sameRef(v.asset,p.projection!)),'INVALID_PRESENTATION_BINDING');
+  }
+  const isolated=(r:Ref)=>refOk(r)&&r.type==='ASSET'&&![j.task,x.boundaryTask,x.firstReference,x.boundaryReference,o.item,...c.grants.map(g=>g.asset)].some(a=>a.id===r.id||a.sha256===r.sha256);
+  if(p.print)requireThat(c.role==='CORE1'&&sameRef(p.print.projection,p.projection!)&&isolated(p.print.pdf)&&refOk(p.print.review)&&p.print.review.type==='APPROVAL','INVALID_PRINT_BINDING');
+  if(p.sourceRoute?.projection)requireThat(isolated(p.sourceRoute.projection)&&refOk(p.sourceRoute.review)&&p.sourceRoute.review!.type==='APPROVAL','INVALID_SOURCE_PROJECTION');
+  else if(p.sourceRoute?.review)throw Error('SOURCE_PROJECTION_REQUIRED');
   if(p.practiceAssessment)requireThat(c.role==='CORE2A'&&refOk(p.practiceAssessment)&&p.practiceAssessment.type==='ASSESSMENT','INVALID_PRACTICE_ASSESSMENT');
   if(p.sourceRoute){const d=p.sourceRoute;requireThat(c.role==='CORE2B'&&['CORE1','CORE1A','CORE1B','CORE2','CORE2A','CORE2B'].includes(d.role)&&/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(d.resourceId)&&d.sessionId===o.id&&sameRef(d.origin,o.item)&&Number.isSafeInteger(d.cursor)&&d.cursor>=0,'INVALID_SOURCE_ROUTE');}
   if(p.choices){for(const side of ['first','boundary'] as const){const fields=side==='first'?x.firstFields:x.boundaryFields;for(const [id,opts] of Object.entries(p.choices[side]??{}))requireThat(Object.hasOwn(fields,id)&&['SINGLE_CHOICE','MULTIPLE_CHOICE'].includes(fields[id])&&Array.isArray(opts)&&opts.length>=2&&opts.every(o=>text(o.id)&&text(o.label))&&new Set(opts.map(o=>o.id)).size===opts.length,'INVALID_CHOICE_BINDING');}}
@@ -124,8 +133,32 @@ export async function composeWave9(
  const controller=new CognitiveController({journey:c.journey,sessionId:c.sessionId,originSessionId:c.originSessionId},new DefaultCognitiveStore(driver,progress),driver,authority);
  // Controller is returned for trusted host composition only; do not expose it or the
  // catalog, loader, driver, or progress store to untrusted learner code.
+ const orientation=c.role==='CORE1'?new Core1OrientationJourney(controller,load):null;
+ const transfer=c.role==='CORE2B'?new Core2BTransferJourney(controller,progress,authority,load):null;
+ // Separate artifact grants are pinned in the catalog and are never general stimulus/help grants.
+ // The trusted asset service must independently enforce this same authorization.
+ const readPrintPDF=async(checkpoint:Checkpoint):Promise<Uint8Array|null>=>{
+  const p=c.page?.print,cp=structuredClone(checkpoint);
+  try{
+   if(!p||!orientation||!await orientation.read(p.projection,cp))return null;
+   const bytes=Uint8Array.from(await load(structuredClone(p.pdf)));
+   if(bytes.length<12||bytes.length>20000000||await computeSha256(bytes)!==p.pdf.sha256||!new TextDecoder().decode(bytes.subarray(0,8)).startsWith('%PDF-')||!new TextDecoder().decode(bytes.subarray(-1024)).trimEnd().endsWith('%%EOF')||!await orientation.read(p.projection,cp))return null;
+   return bytes;
+  }catch{return null;}
+ };
+ const readReturnedSource=async(checkpoint:Checkpoint)=>{
+  const p=c.page?.sourceRoute,cp=structuredClone(checkpoint);
+  try{
+   if(!p?.projection||!transfer)return null;
+   const match=async()=>{const o=await transfer.readSourceReturn(cp);return !!o&&o.sessionId===p.sessionId&&sameRef(o.ref,p.origin)&&o.cursor===p.cursor;};
+   if(!await match())return null;
+   const bytes=Uint8Array.from(await load(structuredClone(p.projection)));
+   if(!bytes.length||bytes.length>2000000||await computeSha256(bytes)!==p.projection.sha256)return null;
+   const raw=strictObject(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
+   if(!exactKeys(raw,['origin','sessionId','cursor','role','resourceId','text'])||!refOk(raw.origin)||!sameRef(raw.origin as Ref,p.origin)||raw.sessionId!==p.sessionId||raw.cursor!==p.cursor||raw.role!==p.role||raw.resourceId!==p.resourceId||!nonblank(raw.text)||!await match())return null;
+   return {text:raw.text,cursor:p.cursor,role:p.role,resourceId:p.resourceId};
+  }catch{return null;}
+ };
  return {controller,presentation:new ProgressivePresentationController(controller,load),feedback:new StageGatedFeedbackController(controller,load),
-  orientation:c.role==='CORE1'?new Core1OrientationJourney(controller,load):null,
-  practice:c.role==='CORE2A'?new Core2ASupportedJourney(controller,progress,authority):null,
-  transfer:c.role==='CORE2B'?new Core2BTransferJourney(controller,progress,authority,load):null};
+  orientation,practice:c.role==='CORE2A'?new Core2ASupportedJourney(controller,progress,authority):null,transfer,readPrintPDF,readReturnedSource};
 }

@@ -7,7 +7,7 @@ import {canonicalJson,computeSha256,sameRef} from '../runtime/loader.ts';
 import {computeEventHash} from '../runtime/cognitive-store.ts';
 import {validateResponse} from '../runtime/response.ts';
 import type {AssetLoader} from '../runtime/presentation.ts';
-import type {Attempt,Checkpoint,CognitiveEvent,CognitiveEventType,CognitivePayloads,CognitiveLineage,Ref,TaskRef,Response,WorkArtifact,HelpCapability} from '../runtime/types.ts';
+import type {Attempt,Checkpoint,CognitiveEvent,CognitiveEventType,CognitivePayloads,CognitiveLineage,Ref,TaskRef,Response,WorkArtifact,HelpCapability,JsonObject} from '../runtime/types.ts';
 type Evidence=Awaited<ReturnType<CognitiveController['readEvidence']>>;
 export class SupportedPracticeWorkspace {
  readonly #c:CognitiveController;readonly #p:DefaultProgressStore;readonly #engine:StandardAssessmentEngine;readonly #assessment:Ref<'ASSESSMENT'>;readonly #load:AssetLoader;
@@ -50,6 +50,15 @@ export class SupportedPracticeWorkspace {
   const text=await this.#c.readProtectedText(capability,asset,verified.snapshot.checkpoint,async()=>bytes,event.event_id);if(text===null)throw Error('SUPPORT_NOT_VERIFIED');return text;
  }
  async readSupport(cp:Checkpoint){const e=await this.#evidence(cp),result:string[]=[];for(const v of e.events)if(v.event_type==='HELP_EXPOSED'){const t=await this.#c.readProtectedText(v.payload.capability,v.payload.asset_ref,cp,this.#load,v.event_id);if(t!==null)result.push(t);}return result;}
+ async original(cp:Checkpoint){const e=await this.#evidence(cp);return e.snapshot.firstAttemptId?structuredClone(e.attempts[0]??null):null;}
+ async moves(cp:Checkpoint){const e=await this.#evidence(cp);return e.snapshot.firstAttemptId?[...e.context.moves]:[];}
+ async compare(cp:Checkpoint,comparison:Readonly<Record<string,JsonObject>>){
+  const e=await this.#evidence(cp);
+  if(e.snapshot.stage!=='RECONSTRUCT'||!e.snapshot.firstAttemptId||Object.keys(comparison).length!==e.context.moves.length||e.context.moves.some(k=>!Object.hasOwn(comparison,k)||typeof comparison[k]?.observation!=='string'||!(comparison[k].observation as string).trim()))throw Error('PRACTICE_COMPARISON_REQUIRED');
+  return this.#append(e,'RECONSTRUCTION_COMMITTED',{first_event_id:e.snapshot.firstAttemptId,comparison,reference_ref:e.context.firstReference});
+ }
+ async diagnose(cp:Checkpoint,move:string,why:string){const e=await this.#evidence(cp);if(e.snapshot.stage!=='DIAGNOSE'||!why.trim())throw Error('PRACTICE_DIAGNOSIS_REQUIRED');return this.#append(e,'DIAGNOSIS_COMMITTED',{move_id:move,why});}
+ async repair(cp:Checkpoint,why:string,work:readonly WorkArtifact[]){const e=await this.#evidence(cp);if(e.snapshot.stage!=='REPAIR'||!e.snapshot.firstAttemptId||!why.trim()||!work.length)throw Error('PRACTICE_REPAIR_REQUIRED');return this.#append(e,'REPAIR_COMMITTED',{first_event_id:e.snapshot.firstAttemptId,why,work:work.map(w=>w.id)},work);}
  async readCrux(cp:Checkpoint){const e=await this.#evidence(cp);return e.context.reasoningCrux?this.#c.readProtectedText('SHOW_REASONING_CRUX',e.context.reasoningCrux,cp,this.#load):null;}
  async readReference(cp:Checkpoint){const e=await this.#evidence(cp);return this.#c.readProtectedText('REFERENCE_SOLUTION',e.context.firstReference,cp,this.#load);}
 }
