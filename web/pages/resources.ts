@@ -232,3 +232,4 @@ export class ResourcesPageController {
 export function createResourcesPage(currentOrigin: string,authorize?:(resource:Readonly<Resource>)=>boolean): ResourcesPageController {
   return new ResourcesPageController(currentOrigin,authorize);
 }
+

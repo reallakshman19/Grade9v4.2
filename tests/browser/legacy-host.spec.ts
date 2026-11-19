@@ -361,7 +361,8 @@ it('actual Chromium opaque sandbox binds source, rejects replay and foreign wind
  const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();
  const address=server.httpServer!.address();assert(address&&typeof address!=='string');
  const app=createHttpServer((_req,res)=>{res.writeHead(200,{'Content-Type':'text/html'});res.end('<script>addEventListener("message",e=>{parent.postMessage(e.data,"*");parent.postMessage(e.data,"*")})</script>');});await new Promise<void>(resolve=>app.listen(0,'127.0.0.1',resolve));const appAddress=app.address();assert(appAddress&&typeof appAddress!=='string');
- const browser=await chromium.launch({headless:true});
+ const execPath=process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE||'C:/Users/reall/AppData/Local/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-win64/chrome-headless-shell.exe';
+ const browser=await chromium.launch({headless:true,executablePath:execPath});
  try{
   const page=await browser.newPage();
   await page.goto('http://127.0.0.1:'+address.port+'/',{waitUntil:'domcontentloaded',timeout:10000});
@@ -378,3 +379,4 @@ it('actual Chromium opaque sandbox binds source, rejects replay and foreign wind
   },'http://127.0.0.1:'+appAddress.port+'/app');assert.deepEqual(result,{foreign:false,seen:[true,false],origins:['null','null'],state:'RUNNING'});
  }finally{await browser.close();app.closeAllConnections();await new Promise<void>((resolve,reject)=>app.close(e=>e?reject(e):resolve()));await server.close();}
 });
+

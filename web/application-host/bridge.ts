@@ -252,3 +252,4 @@ export function resolveCapability(capability: string): CapabilityWarning {
   }
   return { capability, granted: entry.granted, reason: entry.reason };
 }
+

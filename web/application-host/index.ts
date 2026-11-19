@@ -399,3 +399,4 @@ export class ApplicationHostController {
 export function createApplicationHost(config: ApplicationHostConfig): ApplicationHostController {
   return new ApplicationHostController(config);
 }
+
