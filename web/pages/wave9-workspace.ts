@@ -1,6 +1,7 @@
 // W9-INT-03: trusted host only. No static learner release or URL-derived authority.
 import {Router} from '../app/router.ts';
 import {composeWave9,type Wave9Catalog,type LiveAuthorization} from '../runtime/wave9-authority.ts';
+import {CognitiveStoreError} from '../runtime/cognitive-store.ts';
 import type {StorageDriver} from '../runtime/storage.ts';
 import type {DefaultProgressStore} from '../runtime/progress.ts';
 import type {StandardAssessmentEngine} from '../runtime/assessment.ts';
@@ -79,7 +80,7 @@ export class Wave9WorkspaceHost{
   if(!p||route.type!=='ROLE'||route.params.coreRole!==this.#catalog.role||route.params.resourceId!==p.resourceId||Object.keys(route.query).length||route.hash){this.#hold('Route not authorized.');return false;}
   if(this.#busy){this.#hold('A previous operation is resolving. Reopen the reviewed route.');return false;}
   this.#active=true;this.#busy=true;
-  try{if(this.#journey)await this.#journey.start();else await this.#runtime.controller.begin();if(epoch!==this.#epoch||!this.#active)return false;await this.#render(epoch);return epoch===this.#epoch&&this.#active;}
+  try{try{if(this.#journey)await this.#journey.start();else await this.#runtime.controller.begin();}catch(e){if(!(e instanceof CognitiveStoreError)||e.code!=='EVENT_ID_COLLISION')throw e;if(this.#journey)await this.#journey.restore();else await this.#runtime.controller.readEvidence();}if(epoch!==this.#epoch||!this.#active)return false;await this.#render(epoch);return epoch===this.#epoch&&this.#active;}
   catch{if(epoch===this.#epoch){this.#active=false;this.#hold('Reviewed route or durable state unavailable.');}return false;}finally{this.#busy=false;}
  }
  close(){this.#epoch++;this.#active=false;this.#closed=true;this.#root.replaceChildren();}

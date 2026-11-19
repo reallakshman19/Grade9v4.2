@@ -1,0 +1,26 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {fixture} from '../../fixtures/wave9-synthetic.ts';
+import {artifact,firstResponses,boundaryResponses} from '../../fixtures/wave8-synthetic.ts';
+import {Core1BTransferJourney} from '../../../web/journeys/core1b.ts';
+import {MemoryStorageDriver,StorageError} from '../../../web/runtime/storage.ts';
+test('A54 durable negative chain: boundary fault leaves original immutable, retry and exact source return',async()=>{
+ const d=new MemoryStorageDriver(),x=await fixture('CORE2B','4',d),a=await x.compose();
+ const make=()=>new Core1BTransferJourney(x.f.definition,{controller:a.controller,driver:d,progress:x.progress,engine:x.f.binding.engine,definitionSha256:x.f.binding.definitionSha256,boundarySessionId:x.f.bs.id,assessmentA:x.f.binding.assessmentA,assessmentB:x.f.binding.assessmentB,loadProtected:x.load});
+ const j=make();await j.start();let cp=j.getCheckpoint()!;const reads=x.reads();
+ assert.equal(await a.feedback.readFirstReference(cp),null);assert.equal(await a.feedback.readBoundaryReference(cp),null);assert.equal(x.reads(),reads);
+ await j.predict(0);j.setResponses(firstResponses,[artifact('work:a54:first')]);await j.saveDraft();await j.commitFirstAttempt();
+ const first=(await a.controller.readEvidence()).attempts[0];assert(first);
+ await j.completeReconstruction({'move:one':{observation:'one'},'move:two':{observation:'two'}});await j.commitDiagnosis('UNSURE','check');await j.commitRepair('repair',[artifact('work:a54:repair')]);
+ cp=j.getCheckpoint()!;assert.equal(await a.feedback.readFirstReference(cp),null);assert.equal(await a.feedback.readBoundaryReference(cp),null);
+ j.setResponses(boundaryResponses,[artifact('work:a54:boundary')]);await j.saveDraft();
+ const before=await a.controller.readEvidence(cp);
+ d.setFailureHook((store,op)=>store==='attempts'&&op==='put'?new StorageError('QUOTA_EXCEEDED','synthetic boundary fault'):null);
+ await assert.rejects(j.commitBoundaryAttempt());d.setFailureHook(null);
+ const after=await a.controller.readEvidence(cp);assert.deepEqual(after.snapshot,before.snapshot);assert.deepEqual(after.attempts,[first]);assert.equal(await a.feedback.readBoundaryReference(cp),null);
+ const retry=make();await retry.restore();assert.deepEqual(retry.getResponses(),boundaryResponses);await retry.commitBoundaryAttempt();
+ const committed=await a.controller.readEvidence();assert.equal(committed.attempts.length,2);assert.deepEqual(committed.attempts[0],first);assert.notEqual(committed.attempts[1].sessionId,first.sessionId);
+ await retry.viewBoundaryFeedback();await retry.returnToSource();
+ const end=await a.controller.readEvidence(),r=await a.transfer!.readSourceReturn(end.snapshot.checkpoint);assert(r);assert.equal(r.sessionId,x.f.os.id);assert.equal(r.cursor,x.f.os.cursor);assert.deepEqual(end.attempts[0],first);
+ x.revoke();assert.equal(await a.transfer!.readSourceReturn(end.snapshot.checkpoint),null);
+});
