@@ -64,7 +64,7 @@ export class UniversalSearchPageController{
   const e=this.#engine;if(!e||this.#closed||epoch!==this.#epoch)return;
   // Hide metadata while checking live route authority; router subscription closes this host.
   const box=this.#frame();this.#status(box,'Checking exact route…');this.#root.replaceChildren(box);
-  const href=await e.launch(item.source_ref,this.#router);
+  const href=await e.launch(item.source_ref,this.#router,()=>!this.#closed&&epoch===this.#epoch&&e===this.#engine);
   if(!href&&!this.#closed&&epoch===this.#epoch)this.#unavailable();
  }
  close(){if(this.#closed)return;this.#closed=true;this.#epoch++;this.#engine?.close();this.#engine=null;this.#off();this.#state='CLOSED';this.#root.replaceChildren();}

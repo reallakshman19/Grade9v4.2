@@ -52,3 +52,11 @@ test('A35 withdrawal and revocation never reuse old results',async()=>{
  assert.deepEqual(r.results.map(x=>x.id),[...r.results.map(x=>x.id)].sort());
  assert.equal(model.query({text:'enrgy'}).suggestion,'energy');
 });
+
+test('A35 canceled asynchronous route launch does not navigate after host replacement',async()=>{
+ let gate:Promise<boolean>|null=null,releaseGate:((v:boolean)=>void)|null=null;
+ const o=await setup(f.actual,async()=>gate?await gate:true),idx=await VerifiedSearchIndex.open(o),target=(await idx.snapshot())[0].source_ref,router=new Router();
+ let current=true;gate=new Promise<boolean>(resolve=>{releaseGate=resolve;});
+ const launch=idx.launch(target,router,()=>current);current=false;releaseGate!(true);
+ assert.equal(await launch,null);assert.notEqual(router.getCurrent().type,'QUESTION');
+});

@@ -70,7 +70,7 @@ export class VerifiedSearchIndex{
   }
   const verified=new VerifiedSearchIndex(o,rows);await verified.assertLive();return verified;
  }
- async assertLive(){if(this.#loader.getCached(this.#pins.releaseId)!==this.#release||await this.#live(structuredClone(this.#pins))!==true)throw Error('SEARCH_AUTHORITY_REQUIRED');}
+ async assertLive(){if(this.#loader.getCached(this.#pins.releaseId)!==this.#release||await this.#live(structuredClone(this.#pins))!==true||this.#loader.getCached(this.#pins.releaseId)!==this.#release)throw Error('SEARCH_AUTHORITY_REQUIRED');}
  async snapshot(){await this.assertLive();return [...this.#rows.values()].map(v=>structuredClone(v));}
  async facets(){
   await this.assertLive();
@@ -85,13 +85,13 @@ export class VerifiedSearchIndex{
   });
   await this.assertLive();return {results,totalMatches:ranked.totalMatches,suggestion:ranked.suggestion};
  }
- async launch(target:Ref<'QUESTION'>,router:Router){
-  const r=structuredClone(target);await this.assertLive();if(!ref(r))return null;
+ async launch(target:Ref<'QUESTION'>,router:Router,stillCurrent:()=>boolean=()=>true){
+  const r=structuredClone(target);if(!stillCurrent())return null;await this.assertLive();if(!stillCurrent()||!ref(r))return null;
   const item=this.#rows.get(r.id);if(!item||!sameRef(item.source_ref,r))return null;
   this.#loader.resolveItem(this.#release,r,'PRECOMMIT',this.#pins.releaseId);
   const href=router.toHref(item.route),m=router.match(href);
   if(m.type!=='QUESTION'||m.params.questionId!==r.id||Object.keys(m.query).length||m.hash)return null;
-  await this.assertLive();router.navigate(href);return href;
+  await this.assertLive();if(!stillCurrent())return null;router.navigate(href);return href;
  }
 }
 type WorkerReply={id:number;ok:true;result?:RankedIds}|{id:number;ok:false};
@@ -113,6 +113,6 @@ export class SearchEngine{
  }
  async query(raw:QueryRequest){const q=validateQuery(raw);try{await this.#index.assertLive();const r=await this.#send({type:'QUERY',query:q});if(!r.ok||!r.result||this.#closed)throw Error('SEARCH_WORKER_REJECTED');const result=await this.#index.materialize(r.result,q);if(this.#closed)throw Error('SEARCH_WORKER_CLOSED');return result;}catch(e){this.close();throw e;}}
  async facets(){if(this.#closed)throw Error('SEARCH_WORKER_CLOSED');return this.#index.facets();}
- async launch(ref:Ref<'QUESTION'>,router:Router){if(this.#closed)return null;try{return await this.#index.launch(ref,router);}catch{this.close();return null;}}
+ async launch(ref:Ref<'QUESTION'>,router:Router,stillCurrent:()=>boolean=()=>true){if(this.#closed)return null;try{return await this.#index.launch(ref,router,()=>!this.#closed&&stillCurrent());}catch{this.close();return null;}}
  close(){if(this.#closed)return;this.#closed=true;this.#worker.terminate();for(const p of this.#pending.values()){clearTimeout(p.timer);p.reject(Error('SEARCH_WORKER_CLOSED'));}this.#pending.clear();}
 }
