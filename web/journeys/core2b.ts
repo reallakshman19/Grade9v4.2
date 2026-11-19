@@ -380,3 +380,4 @@ export class Core2BTransferJourney {
     return (hash >>> 0).toString(16).padStart(8, '0');
   }
 }
+

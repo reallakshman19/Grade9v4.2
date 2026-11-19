@@ -514,3 +514,4 @@ describe('A68 Core2B Page Controller: Tablet Ergonomics & Screen States', () => 
     assert.equal(controller.getScreenState(), 'repair-phase');
   });
 });
+

@@ -353,3 +353,4 @@ export class Core2BApplicationTransferPageController {
     `.trim();
   }
 }
+
