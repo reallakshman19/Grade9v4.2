@@ -40,9 +40,9 @@ it('A54 actual transfer DOM across seven canonical viewports, durable save reloa
 it('A73 geometry audit rejects a wrong rendered target, overlay and overflow despite correct declaration',async()=>{
  const browser=await chromium.launch({headless:true});try{
   const page=await browser.newPage({viewport:{width:390,height:844}});
-  await page.setContent('<main class="g9-w9"><button data-action="save" style="width:48px;height:48px;transform:scale(.75)">Save</button><div style="position:fixed;inset:0;background:transparent"></div><div style="width:900px"></div></main>');
+  await page.setContent('<!doctype html><main class="g9-w9"><button data-action="save" style="width:48px;height:48px;transform:scale(.75)">Save</button><div style="position:fixed;inset:0;background:transparent;z-index:100"></div><div style="width:900px;height:10px">Overflow witness</div></main>');
   await page.locator('[data-action=save]').focus();
   const result=await page.evaluate(measureWorkspace);
-  assert.equal(result.targets,false);assert.equal(result.overflow,true);assert.equal(await page.evaluate(hitTestSave),false);
+  assert.equal(result.targets,false,'scaled hit target must fail');assert.equal(result.overflow,true,'nonzero-height wide content must overflow');assert.equal(await page.evaluate(hitTestSave),false,'overlay must intercept hit');
  }finally{await browser.close();}
 });
