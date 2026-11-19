@@ -26,6 +26,7 @@ test('A69 actual native and target portable adapter: same-time and redox transfo
    }else{rejected++;assert.deepEqual(target.exportState(),before);}
   }
   const forged=structuredClone(pkg);(forged.adapter.rules[0] as any).outcome='UNKNOWN';assert(!validatePortablePackage(forged).isValid);
+  for(const missing of ['patch','operation','transformationRef']){const bad=structuredClone(pkg);const r=bad.adapter.rules[0] as any;delete r.outcome;delete r[missing];assert(!validatePortablePackage(bad).isValid);}
  }
  assert(accepted===2&&rejected===1,'unexpected portable source scope');
  report('portable',{exactPackages:2,accepted,rejected,patchAndReplay:true,scope:'DECLARATIVE_RULES_ONLY'});
