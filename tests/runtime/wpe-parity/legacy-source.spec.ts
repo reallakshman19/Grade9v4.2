@@ -60,7 +60,8 @@ test('A54 exact source numerical overlap: sampled wells, instantaneous power, la
  yes(evaluate('POTENTIAL_WELLS',{energy:f.total_energy_j,barrier:f.barrier_u_j,positions,potential}).crossing,f.crossing_possible);
  yes(evaluate('POTENTIAL_WELLS',{energy:f.boundary_total_energy_j,barrier:f.barrier_u_j,positions,potential}).crossing,true);
  f=E['WPE-E02'].fresh;
- const force=[f.motor_right_n-f.drag_left_n,-f.drag_back_n];
+ // Legacy drag entries are already signed components, not magnitudes.
+ const force=[f.motor_right_n+f.drag_left_n,f.drag_back_n];
  eq(evaluate('INSTANTANEOUS_POWER',{force,velocity:[f.v_right_m_s,f.v_forward_m_s]}).power,f.net_power_w);
  eq(evaluate('INSTANTANEOUS_POWER',{force,velocity:[f.boundary_v_right_m_s,f.boundary_v_forward_m_s]}).power,f.boundary_net_power_w);
  f=E['WPE-E03'].fresh;
