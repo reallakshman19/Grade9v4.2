@@ -87,7 +87,7 @@ export interface AdapterRule {
   readonly sourceEntityRef?: string;
   readonly targetRef?: string;
   readonly operation?: string;
-  readonly outcome: 'ACCEPT' | 'REJECT';
+  readonly outcome?: 'ACCEPT' | 'REJECT';
   readonly summary?: string;
   readonly reason?: string;
   readonly patch?: AdapterRulePatch;

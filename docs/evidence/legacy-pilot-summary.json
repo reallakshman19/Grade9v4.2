@@ -1,0 +1,43 @@
+{
+  "schema_version": "g9-legacy-pilot-summary/1.1",
+  "workpack_id": "A69",
+  "status": "CANDIDATE_TESTS_SUBMITTED",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "ui_freeze": "NOT_GRANTED",
+  "independent_acceptance": "NOT_GRANTED",
+  "base": "f1fca0c50e8a937e897488f178d2d627e5d0d402",
+  "source": {
+    "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+    "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+    "owner_local_custody": "NOT_RUN"
+  },
+  "pilots": [
+    {
+      "id": "motion",
+      "source": "public/standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+      "blob": "53c9072865945170568b5e4c55af114eca958920",
+      "scope": "Projectile and banking controls, telemetry and complementary range; portable shared-clock declarative subset",
+      "remaining": "Target live trajectory and banking simulator absent; no energy stream parity"
+    },
+    {
+      "id": "redox",
+      "source": "public/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html",
+      "blob": "f173e1f8f93bc534135174a8d5769cd494f3dbc7",
+      "scope": "Three native blocks, first response branch, repair, hint, transfer; portable electron equivalence subset",
+      "remaining": "Native embedded keys; no full target adaptive application"
+    },
+    {
+      "id": "circles",
+      "source": "standalone/core2-mathematics-circles-grade9-master.html",
+      "blob": "ffdedb8c28d0285a5caf6307e2ca057406ca74e0",
+      "scope": "50 actual question cards, search/filter/feedback/local reload; original 120 geometry points claim contradicted",
+      "remaining": "Embedded correct choices, mutable latest response, no approved target corpus mapping"
+    }
+  ],
+  "verification": "No predeclared PASS. Exact-head CI aggregate only. No source text or answer bytes copied into target.",
+  "full_legacy_parity": "HOLD",
+  "physical_tablet": "NOT_RUN",
+  "external_r4": "NOT_RUN",
+  "scope_decision": "Additional portable compatibility paths and CI wiring required to execute actual native semantics; no production route."
+}
