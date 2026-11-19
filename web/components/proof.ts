@@ -222,3 +222,4 @@ export class ProofWorkspaceController {
 export function createProofWorkspace(config: ProofWorkspaceConfig): ProofWorkspaceController {
   return new ProofWorkspaceController(config);
 }
+

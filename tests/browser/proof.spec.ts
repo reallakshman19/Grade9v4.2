@@ -241,3 +241,4 @@ describe('Proof Workspace — Draft Restoration', () => {
 });
 
 it('rejects malformed syntax and foreign proof drafts, exports canonical pending work',async()=>{for(const x of ['1..2','x+','x y','<script>','\\\\evil{x}','()'])assert.equal(parseSymbolicExpression(x).isValid,false,x);const w=createProofWorkspace(SAMPLE_CONFIG);w.addStep('x=x','identity');const d=w.exportDraft();assert.throws(()=>w.importDraft({...d,goalStatement:'foreign'}));assert.throws(()=>w.importDraft({...d,selectedApproachId:'app-homothety'}));assert.equal(w.toResponse().kind,'MATHEMATICAL_PROOF');assert.equal((await w.toWorkArtifact('s')).kind,'NOTE');assert.equal(w.submitProof().points,null);assert.match(w.submitProof().feedbackHtml,/not submitted/);});
+

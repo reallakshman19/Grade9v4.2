@@ -66,3 +66,4 @@ export interface ProofEvaluation {
   readonly reasonCode: 'PROOF_PENDING_HUMAN_EVALUATION';
   readonly feedbackHtml: string;
 }
+

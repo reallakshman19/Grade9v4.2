@@ -70,3 +70,4 @@ export class ProofStepManager {
 export function createProofStepManager(initialSteps?: readonly ProofStep[]): ProofStepManager {
   return new ProofStepManager(initialSteps);
 }
+
