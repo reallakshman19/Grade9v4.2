@@ -1,0 +1,34 @@
+{
+  "academic_admission": "HOLD",
+  "disposition_counts": {
+    "CANDIDATE_HOLD": 1536,
+    "DISAMBIGUATED_COLLISION": 26,
+    "RESTRICTED_EXCLUDED": 2
+  },
+  "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+  "leakage_defense_audit": {
+    "forbidden_keys_detected": 0,
+    "operator_tools_quarantined": 2,
+    "private_solutions_leaked": 0,
+    "status": "PASS"
+  },
+  "production_release": "NONE",
+  "reconciliation_scope": {
+    "discovered_resources": 71,
+    "total_occurrences_dispositioned": 1564,
+    "v35_registry_entries": 64,
+    "v35_search_entries": 417,
+    "v41_search_entries": 1012
+  },
+  "route_closure": {
+    "active_canonical_routes": 0,
+    "quarantined_operator_routes": 2,
+    "tombstoned_and_held_routes": 1536,
+    "total_routes_accounted": 6150,
+    "unaccounted_occurrences": 0
+  },
+  "schema_version": "g9-search-route-summary/1",
+  "status": "HOLD",
+  "summary_digest": "b80d2031b62956e6b5e4fc5fe574ac6b401a3f3185ccaaf9c13b31ab0bcb6c1d",
+  "workpack_id": "A71"
+}
