@@ -63,3 +63,4 @@ export function getGlossaryEntry(termKey: string, locale: string = 'en-US'): Glo
   }
   return entry;
 }
+

@@ -44,3 +44,4 @@ export interface LocaleBundle {
   readonly glossary: Record<string, GlossaryEntry>;
   readonly commonLabels: Record<string, string>;
 }
+
