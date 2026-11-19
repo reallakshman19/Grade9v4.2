@@ -129,7 +129,7 @@ function shape(p:any):boolean{
  if(!record(p)||!idOk(p.id)||!textOk(p.title)||!['sourceRefs','sceneRefs','representationRefs'].every(k=>strings(p[k]))||!['assetRefs','accessibilityRefs','questionBindings'].every(k=>list(p[k]))||!record(p.provenance)||!['CANONICAL_COMPILED_RESOURCE','NON_CANONICAL_COMPILED_PROOF'].includes(p.provenance.authority)||!record(p.scene)||!record(p.adapter))return false;
  if(p.provenance.sourceRefs!==undefined&&!strings(p.provenance.sourceRefs)||p.injections!==undefined&&(!list(p.injections)||p.injections.length>0))return false;
  const s=p.scene,a=p.adapter;
- if(!idOk(s.id)||!list(s.grids)||!s.grids.length||!list(s.entities)||!list(s.projections)||!list(a.rules)||s.targets!==undefined&&!list(s.targets)||s.canonicalTransformations!==undefined&&!list(s.canonicalTransformations))return false;
+ if(!idOk(s.id)||p.sceneRefs.length!==1||p.sceneRefs[0]!==s.id||!list(s.grids)||!s.grids.length||!list(s.entities)||!list(s.projections)||!list(a.rules)||!a.rules.length||s.targets!==undefined&&!list(s.targets)||s.canonicalTransformations!==undefined&&!list(s.canonicalTransformations))return false;
  const unique=(xs:any[])=>xs.every(x=>record(x)&&idOk(x.id))&&new Set(xs.map(x=>x.id)).size===xs.length;
  if(![s.grids,s.entities,s.projections,a.rules,s.canonicalTransformations??[]].every(unique))return false;
  if(!s.grids.every((g:any)=>textOk(g.label)&&strings(g.rows)&&g.rows.length&&strings(g.columns)&&g.columns.length&&g.rows.length*g.columns.length<=10000))return false;
@@ -139,16 +139,18 @@ function shape(p:any):boolean{
  if(!s.entities.every(entity)||!s.projections.every(projection)||s.projections.some((q:any)=>!s.entities.some((e:any)=>e.id===q.entityRef)))return false;
  const targets=s.targets??[],transforms=s.canonicalTransformations??[];
  const targetIds=new Set(targets.filter(record).map((t:any)=>t.id));
- if(targets.some((t:any)=>!record(t)||!idOk(t.id))||targetIds.size!==targets.length||transforms.some((t:any)=>!strings(t.sourceEntityRefs)||!t.sourceEntityRefs.length||t.sourceEntityRefs.some((id:string)=>!s.entities.some((e:any)=>e.id===id))||!targetIds.has(t.targetRef)))return false;
+ if(targets.some((t:any)=>!record(t)||!idOk(t.id)||!textOk(t.operation))||targetIds.size!==targets.length||transforms.some((t:any)=>!strings(t.sourceEntityRefs)||!t.sourceEntityRefs.length||t.sourceEntityRefs.some((id:string)=>!s.entities.some((e:any)=>e.id===id))||!targetIds.has(t.targetRef)))return false;
  for(const r of a.rules){
-  if(!['ACCEPT','REJECT'].includes(r.outcome===undefined?'ACCEPT':r.outcome)||r.transformationRef!==undefined&&!transforms.some((t:any)=>t.id===r.transformationRef)||r.sourceEntityRef!==undefined&&!s.entities.some((e:any)=>e.id===r.sourceEntityRef)||r.targetRef!==undefined&&!targetIds.has(r.targetRef))return false;
-  // Native omitted outcome means ACCEPT only for a complete, bound transformation patch.
-  if(r.outcome===undefined&&(!record(r.patch)||!idOk(r.transformationRef)||!idOk(r.sourceEntityRef)||!idOk(r.targetRef)||!textOk(r.operation)||targets.find((t:any)=>t.id===r.targetRef)?.operation!==r.operation))return false;
-  if(r.transformationRef!==undefined){const t=transforms.find((t:any)=>t.id===r.transformationRef);if(r.sourceEntityRef!==undefined&&!t.sourceEntityRefs.includes(r.sourceEntityRef)||r.targetRef!==undefined&&r.targetRef!==t.targetRef)return false;}
+  const outcome=r.outcome===undefined?'ACCEPT':r.outcome;
+  // Normalize only the outcome; every native rule needs the same exact binding.
+  if(!['ACCEPT','REJECT'].includes(outcome)||!idOk(r.transformationRef)||!idOk(r.sourceEntityRef)||!idOk(r.targetRef)||!textOk(r.operation))return false;
+  const t=transforms.find((t:any)=>t.id===r.transformationRef),target=targets.find((t:any)=>t.id===r.targetRef);
+  if(!t||!target||!t.sourceEntityRefs.includes(r.sourceEntityRef)||t.targetRef!==r.targetRef||target.operation!==r.operation)return false;
   if(r.summary!==undefined&&!textOk(r.summary)||r.reason!==undefined&&!textOk(r.reason))return false;
+  if(outcome==='REJECT'&&(!textOk(r.reason)||r.patch!==undefined)||outcome==='ACCEPT'&&!record(r.patch))return false;
   if(r.patch!==undefined){const q=r.patch;if((r.outcome===undefined?'ACCEPT':r.outcome)!=='ACCEPT'||!record(q)||Object.keys(q).some(k=>!['addEntities','addProjections','removeProjections'].includes(k)))return false;
    const es=q.addEntities??[],ps=q.addProjections??[],rm=q.removeProjections??[];
-   if(!list(es)||!unique(es)||!es.every(entity)||!list(ps)||!unique(ps)||!ps.every(projection)||!strings(rm)||es.some((e:any)=>s.entities.some((x:any)=>x.id===e.id))||ps.some((q:any)=>s.projections.some((x:any)=>x.id===q.id)||![...s.entities,...es].some((e:any)=>e.id===q.entityRef))||rm.some((id:string)=>!s.projections.some((q:any)=>q.id===id)))return false;
+   if(!list(es)||!list(ps)||!list(rm)||es.length+ps.length+rm.length===0||!unique(es)||!es.every(entity)||!list(ps)||!unique(ps)||!ps.every(projection)||!strings(rm)||es.some((e:any)=>s.entities.some((x:any)=>x.id===e.id))||ps.some((q:any)=>s.projections.some((x:any)=>x.id===q.id)||![...s.entities,...es].some((e:any)=>e.id===q.entityRef))||rm.some((id:string)=>!s.projections.some((q:any)=>q.id===id)))return false;
   }
  }
  return true;

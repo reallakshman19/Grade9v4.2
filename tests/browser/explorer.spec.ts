@@ -23,8 +23,8 @@ it('local draft replay rejects foreign identity, missing prefix, false completio
 it('telemetry and every protected helper remain withheld; caller cannot claim canonical fidelity',()=>{
  const c=new GcdrExplorerPageController(config);assert.equal(c.getTelemetry(),null);assert.equal(c.getViewState().exactnessBadge.binding,'UNBOUND_EXTENSION');assert.equal(c.getViewState().exactnessBadge.fidelity,'QUALITATIVE_SYNTHETIC');
  c.toggleHelperDrawer('TAKEAWAY');assert.equal(c.getActiveHelperDrawer(),null);c.toggleHelperDrawer('CHALKBOARD');assert.equal(c.getActiveHelperDrawer(),'CHALKBOARD');
- const html=c.renderHtml();assert(!html.includes('PROTECTED'));assert(!html.includes('12.5'));assert(!html.includes('CANONICAL_BINDING'));assert(html.includes('Telemetry withheld'));assert(html.includes('min-height: 48px'));assert(html.includes('grid-template-columns: 1fr 1fr'));
- c.setOrientation('PORTRAIT');assert(c.renderHtml().includes('flex-direction: column'));
+ const html=c.renderHtml();assert(!html.includes('PROTECTED'));assert(!html.includes('12.5'));assert(!html.includes('CANONICAL_BINDING'));assert(html.includes('Telemetry withheld'));assert(html.includes('min-height: 48px'));assert(html.includes('66fr'));
+ c.setOrientation('PORTRAIT');assert(c.renderHtml().includes('data-orientation="PORTRAIT"'));
 });
 it('actual Chromium: hostile explorer title and learner response rendered inert, telemetry masked',async()=>{
  const c=new GcdrExplorerPageController({...config,title:'<img src=x onerror=alert(1)>'});c.getJourney().setStageResponse('PREDICT','"><img src=x onerror=alert(1)>');

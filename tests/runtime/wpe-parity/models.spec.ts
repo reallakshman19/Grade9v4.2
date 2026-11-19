@@ -31,7 +31,7 @@ test('A54 actual physical limit/unsupported-domain regressions',()=>{
  ['POTENTIAL_WELLS',{energy:2,barrier:3,positions:[1,1],potential:[0,1]}],
  ['SPRING_PROJECTILE_TRANSITION',{k:1,x:1,friction:2,m:1,g:10,height:1}],
  ['RADIAL_FORCE_POTENTIAL',{break_radius:2,f0:1,r:1,f_at_r:1,mass:1}],
- ['CONVEYOR_MOMENTUM_POWER',{mass_rate:2,speed:4,incoming_speed:1}],
+ ['CONVEYOR_MOMENTUM_POWER',{mass_rate:2,speed:4,incoming_speed:5}],
  ['DISSIPATIVE_BOUNCES',{mass:1,impact_speed:1,restitution:1.1}]
  ] as const)assert.throws(()=>ev(family,p));
  assert.throws(()=>ev('toString',{}));
