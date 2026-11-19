@@ -36,5 +36,6 @@
     "A55 physical tablet",
     "A69 legacy functional pilots",
     "A73 complete audit"
-  ]
+  ],
+  "integration_correction": "Wave9 host open restores existing journey only after EVENT_ID_COLLISION; exact authority, identity and replay still required. Browser reload exercises actual fix."
 }
