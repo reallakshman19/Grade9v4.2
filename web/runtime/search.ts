@@ -56,7 +56,7 @@ export class VerifiedSearchIndex{
   if(m.schema_version!=='g9-search-index/1.1'||m.release_id!==p.releaseId||m.release_digest!==p.releaseDigest||m.catalog_digest!==p.catalogDigest||m.target_mode!=='DEMO'||m.demo_banner!==true||m.learner_release!==false||m.artifact_scope!=='PUBLIC_SAFE_DIAGNOSTIC_ONLY'||m.academic_admission!=='HOLD'||m.production_release!=='NONE'||m.normalization!=='UNICODE_NFKC_CASEFOLD'||!eq(m.boost_rules,BOOST)||!count(m.total_items)||!Array.isArray(m.shards)||m.shards.length>3)throw Error('N26_SEARCH_SCOPE_MISMATCH');
   const seenShards=new Set<string>(),seenIds=new Set<string>(),rows:SearchItem[]=[];
   for(const meta of m.shards){
-   if(!keys(meta,['shard_id','subject_id','item_count','sha256'])||!subjects.includes(meta.subject_id)||meta.shard_id!=='shard-'+meta.subject_id.toLowerCase()||seenShards.has(meta.shard_id)||!count(meta.item_count)||meta.item_count===0||!digest(meta.sha256))throw Error('INVALID_SEARCH_SHARD_META');
+   if(!keys(meta,['shard_id','subject_id','item_count','sha256'])||typeof meta.subject_id!=='string'||!subjects.includes(meta.subject_id)||meta.shard_id!=='shard-'+meta.subject_id.toLowerCase()||seenShards.has(meta.shard_id)||!count(meta.item_count)||meta.item_count===0||!digest(meta.sha256))throw Error('INVALID_SEARCH_SHARD_META');
    seenShards.add(meta.shard_id);
   }
   // Complete verification is atomic: never expose partial results from good shards
