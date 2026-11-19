@@ -236,3 +236,4 @@ describe('A66 Core1 Orientation Page Controller & Tablet Ergonomics', () => {
     assert.ok(html.includes(`min-width: ${HIT_TARGET_MIN_PX}px`));
   });
 });
+
