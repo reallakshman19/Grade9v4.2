@@ -277,3 +277,4 @@ describe('Scratchpad — Export/Import Roundtrip & 48px Hit Targets', () => {
 });
 
 it('canceled eraser is non-destructive; immutable export and normalized rotation',async()=>{const i=createInkEngine(800,600);i.pointerDown(100,100);i.pointerUp();const a=i.exportArtifact('a');i.setTool('eraser');i.pointerDown(100,100);i.pointerCancel();assert.deepEqual(i.getStrokes(),a.strokes);const s=i.getStrokes();(s[0].points[0] as any).x=0;assert.equal(i.getStrokes()[0].points[0].x,.125);i.resizeViewport(400,300);assert.equal(i.getStrokes()[0].points[0].x,.125);assert.throws(()=>i.importArtifact({...a,strokes:[{...a.strokes[0],color:'" onload="bad'}]}));assert.deepEqual(i.getStrokes(),a.strokes);assert.deepEqual(await i.toWorkArtifact('s'),await i.toWorkArtifact('s'));assert.notEqual((await i.toWorkArtifact('s')).id,(await i.toWorkArtifact('t')).id);});
+

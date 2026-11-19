@@ -170,3 +170,4 @@ export class ScratchpadController {
 export function createScratchpad(width?: number, height?: number): ScratchpadController {
   return new ScratchpadController(width, height);
 }
+

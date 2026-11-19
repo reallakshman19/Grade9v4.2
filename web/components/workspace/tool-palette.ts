@@ -111,3 +111,4 @@ export class ToolPaletteController {
 export function createToolPalette(initialTool?: InkTool, initialMode?: WorkspaceMode): ToolPaletteController {
   return new ToolPaletteController(initialTool, initialMode);
 }
+

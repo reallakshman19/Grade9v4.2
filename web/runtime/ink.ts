@@ -359,3 +359,4 @@ export class InkEngine {
 export function createInkEngine(width?: number, height?: number): InkEngine {
   return new InkEngine(width, height);
 }
+

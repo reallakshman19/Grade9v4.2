@@ -28,3 +28,4 @@ export interface ToolButtonDescriptor {
   readonly isEnabled: boolean;
   readonly minHitTargetPx: number;
 }
+
