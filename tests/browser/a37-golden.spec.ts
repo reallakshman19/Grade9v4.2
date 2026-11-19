@@ -10,7 +10,7 @@ it('A37 Golden actual shared-store QRT/search/source/transfer/return/reattempt/p
   page.on('request',r=>{if(r.url().startsWith(origin+'/'))requests.push(r.url());});page.on('response',r=>{if(r.url().startsWith(origin+'/'))responses.push(r.status());});
   await page.goto(origin+'/');
   await page.evaluate(async({wire,path})=>{const {mountGolden}=await import(path);(window as any).golden=await mountGolden(document.getElementById('app')!,wire,'golden-'+Date.now());},{wire,path:'/ @fs/'.replace(' ','')+process.cwd()+'/tests/fixtures/a37-golden.ts'});
-  await page.locator('[data-coord="APPLY:D2"]').click();await page.getByRole('button',{name:'Open main question'}).waitFor();
+  await page.locator('[data-coord="APPLY:D2"]').click();await page.getByRole('button',{name:'Open main question'}).click();await page.getByText('Source question',{exact:true}).waitFor();
   await page.evaluate(()=> (window as any).golden.openSearch());
   await page.locator('[data-search]').fill('energy');await page.locator('[data-action=search]').click();await page.locator('[data-action=open-question]').click();
   await page.getByText('Source question',{exact:true}).waitFor();await page.getByLabel('Choose response').selectOption('A');await page.locator('[data-golden=source-commit]').click();await page.getByText('Source result: INCORRECT').waitFor();

@@ -82,12 +82,12 @@ export async function mountGolden(root:HTMLElement,wire:WireFixture,db:string){
   }
  });
  const makeSearch=()=>SearchEngine.open({pins:wire.pins,releaseLoader:loader,release,manifestBytes:wire.manifest,loadShard:async m=>wire.shards[m.shard_id],live:async p=>active&&canonicalJson(p)===canonicalJson(wire.pins)});
- async function openSearch(){qrtHost?.close();router.navigate(router.toHref('/search'));search=new UniversalSearchPageController(root,router,makeSearch);await search.open(router.toHref('/search'));}
+ async function openSearch(){qrtHost?.close();router.navigate(router.toHref('/search'));const mount=el('div');root.replaceChildren(mount);search=new UniversalSearchPageController(mount,router,makeSearch);await search.open(router.toHref('/search'));}
  async function openQrt(){
   const topic=ref('CONCEPT','topic:golden'),review=ref('APPROVAL','approval:golden:qrt'),cell:ReasoningCell={schema_version:'g9-reasoning-cell/1',cell_id:'cell:golden',subject_id:'PHYSICS',topic_ref:topic,operation:'APPLY',demand_band:'D2',native_contract_ref:ref('QRT','qrt:golden'),main:task,instances:[ref('QUESTION','question:golden:i1','1'.repeat(64)),ref('FRESH_TASK','fresh:golden:i2','2'.repeat(64))],status:'SYNTHETIC',c06_v11:true};
   const c:ReasoningCatalog={schema:'g9-a53-diagnostic/1',learnerId:scope.learnerId,releaseId:scope.releaseId,subjectId:'PHYSICS',topic,title:'Golden QRT diagnostic',cells:[cell],routes:[{cellId:cell.cell_id,task,review}]};
   const pin=await computeSha256(canonicalJson(c)),ctrl=await ReasoningPageController.create(c,pin,loader,release,router,async s=>active&&s.catalogSha256===pin&&s.learnerId===scope.learnerId&&s.releaseId===scope.releaseId);
-  qrtHost=mountReasoningPage(root,ctrl);await qrtHost.refresh();
+  const mount=el('div');root.replaceChildren(mount);qrtHost=mountReasoningPage(mount,ctrl);await qrtHost.refresh();
  }
  await openQrt();
  return {x,driver,router,routed,personal,scope,openSearch,runtime,task,originalId,retryId,
