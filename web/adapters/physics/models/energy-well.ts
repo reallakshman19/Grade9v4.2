@@ -132,3 +132,4 @@ export function calculateEnergyWell(x: number): { U: number; K: number; v: numbe
   const v = Math.sqrt(2 * K);
   return { U, K, v };
 }
+

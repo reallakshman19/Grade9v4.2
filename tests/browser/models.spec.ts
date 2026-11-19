@@ -139,3 +139,4 @@ describe('A50 Scientific Model Component: Representation & Pre-Commit Masking', 
 });
 
 it('rejects foreign or nonfinite snapshots and masks all render surfaces',()=>{const c=new ScientificModelController({modelIdOrFamily:'PHYS-MODEL-ENERGY-WELL',stage:'COMPLETE',allowedCapabilities:['MODEL_AUTO_CALCULATE']});assert.throws(()=>c.restoreState({...c.exportState(),modelId:'foreign'}));assert.throws(()=>c.restoreState({...c.exportState(),parameterValues:{x:NaN}}));assert.equal(c.getViewState().evaluation.outputs,null);assert.ok(!c.renderHtml().includes('12.5 J'));});
+

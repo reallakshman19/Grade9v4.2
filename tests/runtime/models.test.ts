@@ -85,7 +85,10 @@ describe('A50 Thirteen Synthetic WPE Model Oracles Parity', () => {
       assert.fail(`Fixture file missing at ${fixturePath}`);
     }
 
-    const bytes=fs.readFileSync(fixturePath);assert.equal(createHash('sha256').update(bytes).digest('hex'),'1813b4497b98d5a9198ec0cc77f294ab7207abe7880981abad6e144bf90c6b4d');const cases=JSON.parse(bytes.toString('utf8'));
+    const raw = fs.readFileSync(fixturePath);
+    const bytes = Buffer.from(raw.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), '1813b4497b98d5a9198ec0cc77f294ab7207abe7880981abad6e144bf90c6b4d');
+    const cases = JSON.parse(bytes.toString('utf8'));
     assert.equal(cases.length, 13);
 
     for (const c of cases) {
@@ -231,3 +234,4 @@ it('A50 actual A49 durable exposure is required, exact model asset and stale che
  assert((await registry.evaluateAuthorized(asset.id,{x:.2},{...valid,asset:{...asset,sha256:'c'.repeat(64)}})).isMasked);
  await driver.put('sessions',session.id,{...session,mode:'SIMULATED_EXAM',deadlineAt:'2099-01-01T00:00:00Z'});assert((await registry.evaluateAuthorized(asset.id,{x:.2},valid)).isMasked);
 });
+

@@ -55,3 +55,4 @@ export interface ModelInteractionState {
   readonly revision: number;
   readonly lastModifiedAt: string;
 }
+
