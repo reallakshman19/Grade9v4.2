@@ -1,0 +1,30 @@
+{
+  "schema_version": "g9-conservation-summary/1.1",
+  "workpack_id": "A39",
+  "status": "CANDIDATE_TESTS_SUBMITTED",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "ui_freeze": "NOT_GRANTED",
+  "base": "9c9ec70675c143f6992aeb69ff845cd6b9f3ed07",
+  "base_ci": 44471057513,
+  "conservation_counters": {
+    "unaccounted_resource_occurrences": null,
+    "unmapped_search_entries": null,
+    "unmapped_app_contexts": null,
+    "missing_dependency_edges": null,
+    "unmapped_interactions": null,
+    "unexplained_behavior_differences": null,
+    "unresolved_state_mappings": null,
+    "unapproved_exclusions": null
+  },
+  "verification": "Exact-head CI aggregate only; no predeclared full conservation pass",
+  "scope": "Full pinned Git blob restore; private leaf replay of three pinned source JSON documents; synthetic migration negatives",
+  "not_run": [
+    "actual approved target mappings",
+    "full R4 kit",
+    "owner-local ignored scope",
+    "permanent custody ACL",
+    "native behavioral/state equivalence",
+    "A55/A73 acceptance"
+  ]
+}

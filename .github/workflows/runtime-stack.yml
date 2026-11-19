@@ -40,8 +40,8 @@ jobs:
       - name: Self-contained Python contract and release regression
         if: always() && !cancelled()
         run: |
-          echo 'NOT_RUN: test_platform.py requires external G9_R4_KIT; test_portable_compatibility.py requires external G9_V35_PORTABLE_PACKAGES. Full custody-dependent regression is separate.'
-          PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release tests/search --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
+          echo 'NOT_RUN: test_platform.py requires external G9_R4_KIT; test_portable_compatibility.py requires external G9_V35_PORTABLE_PACKAGES. test_ui_audit.py and test_reference_field_fixture require G9_R4_KIT. Full custody-dependent regression is separate.'
+          PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release tests/search tests/migration --ignore=tests/migration/test_ui_audit.py -k 'not test_reference_field_fixture' --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
       - name: Dependency audit (actual advisory response; informational)
         if: always() && !cancelled()
         run: |
@@ -54,10 +54,6 @@ jobs:
           ref: 8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b
           path: .source-v35-search
           persist-credentials: false
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /public/data/resource-registry.v1.json
-            /public/data/learner-search-index.v1.json
       - name: Checkout exact v4.1 public search sources (read-only)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -65,9 +61,6 @@ jobs:
           ref: 564ad2a07fddc0fdd30d103674b3eca61235a54b
           path: .source-v41-search
           persist-credentials: false
-          sparse-checkout-cone-mode: false
-          sparse-checkout: |
-            /data/learner-search-index.v1.json
       - name: Actual pinned source occurrence accounting (aggregate only)
         run: |
           test "$(git -C .source-v35-search rev-parse HEAD)" = "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b"
@@ -77,6 +70,9 @@ jobs:
           git -C .source-v35-search diff --exit-code HEAD
           git -C .source-v41-search diff --exit-code HEAD
           python -m grade9build.search_reconcile --v35-root .source-v35-search --v41-root .source-v41-search
+
+      - name: Actual full pinned Git backup and restore conservation (aggregate only)
+        run: python -m grade9build.verify --v35-root .source-v35-search --v41-root .source-v41-search --temp-parent "$RUNNER_TEMP"
 
   browser:
     runs-on: ubuntu-24.04
