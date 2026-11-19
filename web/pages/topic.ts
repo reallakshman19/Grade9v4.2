@@ -123,3 +123,4 @@ export class TopicScreenController {
 export function createTopicScreen(topic?: TopicDetail): TopicScreenController {
   return new TopicScreenController(topic);
 }
+

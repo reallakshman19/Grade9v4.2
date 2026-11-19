@@ -166,3 +166,4 @@ export class DashboardScreenController {
 export function createDashboardScreen(registry?: RegistrySnapshot): DashboardScreenController {
   return new DashboardScreenController(registry);
 }
+
