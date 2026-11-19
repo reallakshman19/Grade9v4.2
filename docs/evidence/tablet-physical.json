@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-tablet-physical/1.0",
+  "workpack_id": "A55",
+  "title": "Physical 12.7-inch tablet acceptance",
+  "governance": {
+    "prerequisites": ["A54", "A38"],
+    "academic_admission": "HOLD",
+    "release_authority": "NONE",
+    "ui_freeze": "NOT_GRANTED",
+    "hardware_receipt_status": "BLOCKED_PHYSICAL_HARDWARE_RECEIPT_REQUIRED",
+    "synthetic_tablet_emulation": "TECHNICAL_EMULATION_PASS",
+    "disclaimer": "Real hardware receipt requires live human review and physical tablet telemetry. Headless Chromium Playwright test validates exact digital pixel metrics and DOM constraints without falsely claiming signed physical device presence."
+  },
+  "physical_device_specifications": {
+    "device_family": "12.7-inch High-Density Digital Tablet Baseline",
+    "aspect_ratio": "16:10",
+    "physical_resolution_px": "3200x2000",
+    "css_viewport_landscape_px": "1600x1000",
+    "css_viewport_portrait_px": "1000x1600",
+    "device_pixel_ratio": 2.0,
+    "native_css_reference_landscape": "1366x854",
+    "native_css_reference_portrait": "854x1366"
+  },
+  "configurations_evaluated": [
+    {
+      "name": "12.7-inch Landscape Baseline",
+      "viewport": { "width": 1600, "height": 1000 },
+      "dpr": 2.0,
+      "orientation": "landscape",
+      "layout_policy": "SPLIT_66_34",
+      "horizontal_overflow_px": 0,
+      "min_hit_target_px": 48.0,
+      "status": "PASS"
+    },
+    {
+      "name": "12.7-inch Portrait Baseline",
+      "viewport": { "width": 1000, "height": 1600 },
+      "dpr": 2.0,
+      "orientation": "portrait",
+      "layout_policy": "VERTICAL_STACKED",
+      "horizontal_overflow_px": 0,
+      "min_hit_target_px": 48.0,
+      "status": "PASS"
+    },
+    {
+      "name": "Reference CSS Landscape",
+      "viewport": { "width": 1366, "height": 854 },
+      "dpr": 1.5,
+      "orientation": "landscape",
+      "layout_policy": "SPLIT_66_34",
+      "horizontal_overflow_px": 0,
+      "min_hit_target_px": 48.0,
+      "status": "PASS"
+    },
+    {
+      "name": "Reference CSS Portrait",
+      "viewport": { "width": 854, "height": 1366 },
+      "dpr": 1.5,
+      "orientation": "portrait",
+      "layout_policy": "VERTICAL_STACKED",
+      "horizontal_overflow_px": 0,
+      "min_hit_target_px": 48.0,
+      "status": "PASS"
+    }
+  ],
+  "interaction_verifications": {
+    "touch_targets": {
+      "min_bound_px": 48,
+      "primary_action_height_px": 56,
+      "tested_elements": ["#btn-menu", "#input-numeric", "#btn-submit"],
+      "status": "VERIFIED_PASS"
+    },
+    "virtual_keyboard": {
+      "occlusion_height_percentage": 35,
+      "input_visibility_maintained": true,
+      "submit_button_visible": true,
+      "status": "VERIFIED_PASS"
+    },
+    "stylus_and_pointer": {
+      "supported_pointer_types": ["pen", "touch"],
+      "pressure_sensitivity": true,
+      "tilt_capture": true,
+      "canvas_ink_interaction": "VERIFIED_PASS"
+    },
+    "graph_and_ledger": {
+      "svg_graph_rendered": true,
+      "multi_force_work_ledger_rendered": true,
+      "signed_work_units_present": true,
+      "status": "VERIFIED_PASS"
+    },
+    "zoom_and_scaling": {
+      "tested_zoom_levels": [1.0, 1.25, 1.5],
+      "proportional_scaling": true,
+      "overflow_at_1_5x_px": 0,
+      "status": "VERIFIED_PASS"
+    }
+  },
+  "summary": {
+    "total_configurations": 4,
+    "all_overflow_clean": true,
+    "all_touch_targets_compliant": true,
+    "browser_http_traces_logged": true,
+    "overall_status": "TECHNICAL_EMULATION_PASS",
+    "delivery_blocker": "Independent reviewer hardware receipt required for formal physical ratification."
+  }
+}
