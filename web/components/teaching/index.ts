@@ -18,3 +18,4 @@ export type { AnchorViewState, AnchorViewConfig } from './anchor-view.ts';
 
 export { Core1AModelStageController } from './model-stage.ts';
 export type { ModelStageViewState } from './model-stage.ts';
+

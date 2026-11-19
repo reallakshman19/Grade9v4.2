@@ -14,3 +14,4 @@ export class Core1AModelStageController{
  render(){return '<section class="g9-model-stage-component"><h3>'+e(this.config.modelName)+'</h3><p>Unbound diagnostic — outputs withheld</p><p>'+e(this.config.qualitativePredictionPrompt)+'</p>'+this.config.predictionOptions.map((o,i)=>'<label style="min-height:48px"><input type="radio" name="prediction" value="'+i+'" '+(this.prediction===i?'checked':'')+'>'+e(o)+'</label>').join('')+Object.entries(this.config.parameterBounds).map(([k,b])=>'<label>'+e(k)+'<input type="range" style="min-height:48px" min="'+b.min+'" max="'+b.max+'" value="'+this.params[k]+'"></label>').join('')+'<button disabled>Reviewed exposure required</button></section>';}
 }
 export type ModelStageViewState=ReturnType<Core1AModelStageController['getViewState']>;
+

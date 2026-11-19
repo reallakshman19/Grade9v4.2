@@ -12,3 +12,4 @@ export class Core1AUnitViewController{
  return '<article class="g9-unit-view" data-role="'+u.role+'"><h2>'+e(u.title)+'</h2><p>'+e(u.summary)+'</p><p>'+e(u.bodyText)+'</p>'+list(u.conventions??[])+list((u.representationBridge??[]).map(x=>x.pictureElement+' — '+x.symbol+' — '+x.inWords))+list((u.derivationSteps??[]).map(x=>x.expression+' — '+x.whyValid))+list(u.boundaryConditions??[])+(u.workedExample?'<p>'+e(u.workedExample.problemPrompt)+'</p><button disabled style="min-height:48px">Reviewed reasoning unavailable</button>':'')+(u.misconception?'<p>'+e(u.misconception.diagnosticPrompt)+'</p>':'')+'<p>'+e(u.selfCheckPrompt??'')+'</p><p>Block refs: '+e(u.blockRefs.map(r=>r.id).join(', '))+'</p><p>Warrants: '+e(u.evidenceRefs.map(r=>r.id).join(', '))+'</p></article>';}
 }
 export type UnitViewState=ReturnType<Core1AUnitViewController['getViewState']>;
+

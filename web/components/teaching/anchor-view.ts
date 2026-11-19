@@ -10,3 +10,4 @@ export class Core1AAnchorViewController{
  render(){const a=this.anchors.find(a=>a.level===this.level)!;return '<section class="g9-anchors-component"><nav>'+ANCHOR_LEVELS.map(l=>'<button data-level="'+l+'" style="min-height:48px;min-width:48px">'+l+'</button>').join('')+'</nav><h3>'+e(a.title)+'</h3><p>'+e(a.prompt)+'</p><p>Warrants: '+e(a.warrantRefs.map(w=>w.id).join(', '))+'</p><button disabled>Reviewed solution unavailable</button><h3>Distinct unassisted synthesis</h3><p>'+e(this.prompt)+'</p></section>';}
 }
 export type AnchorViewState=ReturnType<Core1AAnchorViewController['getViewState']>;
+
