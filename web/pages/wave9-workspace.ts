@@ -33,6 +33,7 @@ const css=`
 .g9-w9 button:disabled{opacity:.6;cursor:not-allowed}
 .g9-w9 label{display:block;margin:8px 0}
 .g9-w9 input,.g9-w9 textarea,.g9-w9 select{display:block;width:100%}
+.g9-w9 button[data-action=commit],.g9-w9 button[data-action=practice-commit],.g9-w9 button[data-action=practice-boundary-commit]{min-height:56px}
 .g9-w9 textarea{min-height:100px;resize:vertical}
 .g9-w9 :focus-visible{outline:3px solid #125d82;outline-offset:2px}
 .g9-w9 .w9-print-notice{display:none}

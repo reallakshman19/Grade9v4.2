@@ -1,5 +1,6 @@
 """Emit in-memory synthetic compiler bytes for cross-language/browser tests only."""
 import copy
+import sys
 import json
 from pathlib import Path
 from grade9build.compile import ReleaseProjectionCompiler
@@ -35,7 +36,7 @@ def main():
     # Stress fixture only: 1493 generated synthetic public question shapes, not
     # source data, not an A14 released graph, no actual learner authorization.
     bench=copy.deepcopy(release);bench["release_id"]="RELEASE-SYNTHETIC-BENCH";bench.pop("fixture_id",None);bench.pop("graph_digest",None);bench.pop("total_objects",None)
-    bench["projections"]["learner_precommit"]=[{"type":"QUESTION","id":f"question:bench:{i:04}","revision":1,"sha256":canonical_json_digest(["synthetic",i]),"stem":"Synthetic benchmark prompt","subject_id":["PHYSICS","CHEMISTRY","MATHEMATICS"][i%3],"demo":True,"asset_refs":[]} for i in range(1493)]
+    bench["projections"]["learner_precommit"]=[{"type":"QUESTION","id":f"question:bench:{i:04}","revision":1,"sha256":canonical_json_digest(["synthetic",i]),"stem":"Synthetic benchmark prompt","subject_id":["PHYSICS","CHEMISTRY","MATHEMATICS"][i%3],"demo":True,"asset_refs":[]} for i in range(10000 if '--scale' in sys.argv else 1493)]
     bench["release_digest"]=canonical_json_digest({k:v for k,v in bench.items() if k!="release_digest"})
     vectors=[(c,normalize_query(c)) for i in range(0x110000) if (c:=chr(i)).lower()!=c.casefold()]
     vectors.extend((v,normalize_query(v)) for v in ["Straße H₂O","ΟΣ","Δ E = ½mv²","गति","a\u0085b","ＡＢＣ","\ufeffx"])
