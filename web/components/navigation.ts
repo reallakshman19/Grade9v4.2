@@ -1,6 +1,6 @@
 /**
  * web/components/navigation.ts
- * A21 – Navigation component contracts
+ * A21 â€“ Navigation component contracts
  *
  * Defines the navigation drawer, tab bar, and back-stack contracts for the
  * Grade9 tablet app shell. All interactive elements must meet the 48px
@@ -68,14 +68,14 @@ export interface NavItem {
   readonly icon: string;
   readonly routeId: string;
   readonly disabled: boolean;
-  /** Rendered touch target dimensions in px. Must be ≥ HIT_TARGET_MIN_PX. */
+  /** Rendered touch target dimensions in px. Must be â‰¥ HIT_TARGET_MIN_PX. */
   readonly hitTargetW: number;
   readonly hitTargetH: number;
 }
 
 export function validateNavItem(item: NavItem): string | null {
   if (item.hitTargetW < HIT_TARGET_MIN_PX || item.hitTargetH < HIT_TARGET_MIN_PX) {
-    return `Nav item "${item.label}" hit target ${item.hitTargetW}×${item.hitTargetH}px below ${HIT_TARGET_MIN_PX}px minimum`;
+    return `Nav item "${item.label}" hit target ${item.hitTargetW}Ã—${item.hitTargetH}px below ${HIT_TARGET_MIN_PX}px minimum`;
   }
   return null;
 }
@@ -201,3 +201,4 @@ export function createNavigationController(
 ): NavigationController {
   return new NavigationController(routes, mode);
 }
+

@@ -190,3 +190,4 @@ export function generateCssVarBlock(): string {
   const vars = CSS_VARS.map(([name, val]) => `  ${name}: ${val};`).join("\n");
   return `:root {\n${vars}\n}`;
 }
+

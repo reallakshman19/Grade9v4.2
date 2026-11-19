@@ -154,3 +154,4 @@ export class SubjectScreenController {
 export function createSubjectScreen(subject?: SubjectDetail): SubjectScreenController {
   return new SubjectScreenController(subject);
 }
+

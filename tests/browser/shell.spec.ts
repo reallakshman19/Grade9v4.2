@@ -1,8 +1,8 @@
 /**
  * tests/browser/shell.spec.ts
- * A21 – Shell and navigation contract tests
+ * A21 â€“ Shell and navigation contract tests
  *
- * Validates: all viewports (portrait 1000×1600, landscape 1600×1000, compact 800×*),
+ * Validates: all viewports (portrait 1000Ã—1600, landscape 1600Ã—1000, compact 800Ã—*),
  * 48px minimum hit targets, 56px primary actions, no page overflow, keyboard/touch
  * parity, drawer states, focus trap, font scale/zoom bounds, error states,
  * orientation detection, CSS var block generation.
@@ -51,7 +51,7 @@ const SAMPLE_ROUTES: NavRoute[] = [
 // Design token constraints
 // ---------------------------------------------------------------------------
 
-describe("Design tokens – hit target constants", () => {
+describe("Design tokens â€“ hit target constants", () => {
   it("HIT_TARGET_MIN_PX is 48", () => {
     assert.equal(HIT_TARGET_MIN_PX, 48);
   });
@@ -60,28 +60,28 @@ describe("Design tokens – hit target constants", () => {
     assert.equal(HIT_TARGET_PRIMARY_PX, 56);
   });
 
-  it("validateHitTarget passes for 48×48", () => {
+  it("validateHitTarget passes for 48Ã—48", () => {
     const r = validateHitTarget(48, 48);
     assert.equal(r.valid, true);
   });
 
-  it("validateHitTarget fails for 47×48 (width too small)", () => {
+  it("validateHitTarget fails for 47Ã—48 (width too small)", () => {
     const r = validateHitTarget(47, 48);
     assert.equal(r.valid, false);
     assert.ok(r.reason.includes("47"));
   });
 
-  it("validateHitTarget fails for 48×47 (height too small)", () => {
+  it("validateHitTarget fails for 48Ã—47 (height too small)", () => {
     const r = validateHitTarget(48, 47);
     assert.equal(r.valid, false);
   });
 
-  it("validateHitTarget primary: passes for 56×56", () => {
+  it("validateHitTarget primary: passes for 56Ã—56", () => {
     const r = validateHitTarget(56, 56, true);
     assert.equal(r.valid, true);
   });
 
-  it("validateHitTarget primary: fails for 48×48 (below 56px primary)", () => {
+  it("validateHitTarget primary: fails for 48Ã—48 (below 56px primary)", () => {
     const r = validateHitTarget(48, 48, true);
     assert.equal(r.valid, false);
     assert.ok(r.reason.includes("56"));
@@ -96,24 +96,24 @@ describe("Design tokens – hit target constants", () => {
 // Viewport overflow constraint
 // ---------------------------------------------------------------------------
 
-describe("Design tokens – viewport overflow", () => {
-  it("portrait 1000×1600: no overflow for 1000×1600 content", () => {
+describe("Design tokens â€“ viewport overflow", () => {
+  it("portrait 1000Ã—1600: no overflow for 1000Ã—1600 content", () => {
     const r = validateViewport(1000, 1600, 1000, 1600);
     assert.equal(r.valid, true);
   });
 
-  it("portrait 1000×1600: overflow if content is 1001 wide", () => {
+  it("portrait 1000Ã—1600: overflow if content is 1001 wide", () => {
     const r = validateViewport(1000, 1600, 1001, 1600);
     assert.equal(r.valid, false);
     assert.ok(r.reason.includes("overflow"));
   });
 
-  it("landscape 1600×1000: no overflow for 1600×1000 content", () => {
+  it("landscape 1600Ã—1000: no overflow for 1600Ã—1000 content", () => {
     const r = validateViewport(1600, 1000, 1600, 1000);
     assert.equal(r.valid, true);
   });
 
-  it("compact 800×*: no overflow for 800-wide content", () => {
+  it("compact 800Ã—*: no overflow for 800-wide content", () => {
     const r = validateViewport(800, 1200, 800, 1200);
     assert.equal(r.valid, true);
   });
@@ -129,7 +129,7 @@ describe("Design tokens – viewport overflow", () => {
 // CSS var block generation
 // ---------------------------------------------------------------------------
 
-describe("Design tokens – CSS var block", () => {
+describe("Design tokens â€“ CSS var block", () => {
   it("generateCssVarBlock produces :root block", () => {
     const css = generateCssVarBlock();
     assert.ok(css.startsWith(":root {"));
@@ -154,10 +154,10 @@ describe("Design tokens – CSS var block", () => {
 });
 
 // ---------------------------------------------------------------------------
-// NavigationController – routes and back-stack
+// NavigationController â€“ routes and back-stack
 // ---------------------------------------------------------------------------
 
-describe("NavigationController – route navigation", () => {
+describe("NavigationController â€“ route navigation", () => {
   it("push navigates to a route and updates activeRouteId", () => {
     const nav = createNavigationController(SAMPLE_ROUTES);
     nav.push("home");
@@ -216,10 +216,10 @@ describe("NavigationController – route navigation", () => {
 });
 
 // ---------------------------------------------------------------------------
-// NavigationController – drawer states
+// NavigationController â€“ drawer states
 // ---------------------------------------------------------------------------
 
-describe("NavigationController – drawer states", () => {
+describe("NavigationController â€“ drawer states", () => {
   it("initial drawerState is CLOSED", () => {
     const nav = createNavigationController(SAMPLE_ROUTES);
     assert.equal(nav.getState().drawerState, "CLOSED");
@@ -255,10 +255,10 @@ describe("NavigationController – drawer states", () => {
 });
 
 // ---------------------------------------------------------------------------
-// NavigationController – focus (keyboard/touch parity)
+// NavigationController â€“ focus (keyboard/touch parity)
 // ---------------------------------------------------------------------------
 
-describe("NavigationController – focus management", () => {
+describe("NavigationController â€“ focus management", () => {
   it("setFocus updates focusedItemId", () => {
     const nav = createNavigationController(SAMPLE_ROUTES);
     nav.setFocus("home-item");
@@ -284,25 +284,25 @@ describe("NavigationController – focus management", () => {
 // NavItem hit target validation
 // ---------------------------------------------------------------------------
 
-describe("NavItem – hit target validation (48px minimum)", () => {
-  it("valid item: 56×56 passes", () => {
+describe("NavItem â€“ hit target validation (48px minimum)", () => {
+  it("valid item: 56Ã—56 passes", () => {
     const item: NavItem = { id: "i1", label: "Home", icon: "home", routeId: "home", disabled: false, hitTargetW: 56, hitTargetH: 56 };
     assert.equal(validateNavItem(item), null);
   });
 
-  it("valid item: exactly 48×48 passes", () => {
+  it("valid item: exactly 48Ã—48 passes", () => {
     const item: NavItem = { id: "i2", label: "Home", icon: "home", routeId: "home", disabled: false, hitTargetW: 48, hitTargetH: 48 };
     assert.equal(validateNavItem(item), null);
   });
 
-  it("invalid item: 44×48 (width below 48px) fails", () => {
+  it("invalid item: 44Ã—48 (width below 48px) fails", () => {
     const item: NavItem = { id: "i3", label: "Home", icon: "home", routeId: "home", disabled: false, hitTargetW: 44, hitTargetH: 48 };
     const err = validateNavItem(item);
     assert.ok(err !== null);
     assert.ok(err.includes("48px minimum"));
   });
 
-  it("invalid item: 48×44 (height below 48px) fails", () => {
+  it("invalid item: 48Ã—44 (height below 48px) fails", () => {
     const item: NavItem = { id: "i4", label: "Home", icon: "home", routeId: "home", disabled: false, hitTargetW: 48, hitTargetH: 44 };
     const err = validateNavItem(item);
     assert.ok(err !== null);
@@ -310,21 +310,21 @@ describe("NavItem – hit target validation (48px minimum)", () => {
 });
 
 // ---------------------------------------------------------------------------
-// AppShell – viewport and orientation
+// AppShell â€“ viewport and orientation
 // ---------------------------------------------------------------------------
 
-describe("AppShell – viewport and orientation", () => {
-  it("portrait 1000×1600 → PORTRAIT orientation", () => {
+describe("AppShell â€“ viewport and orientation", () => {
+  it("portrait 1000Ã—1600 â†’ PORTRAIT orientation", () => {
     const shell = createAppShell(1000, 1600, SAMPLE_ROUTES);
     assert.equal(shell.orientation(), "PORTRAIT");
   });
 
-  it("landscape 1600×1000 → LANDSCAPE orientation", () => {
+  it("landscape 1600Ã—1000 â†’ LANDSCAPE orientation", () => {
     const shell = createAppShell(1600, 1000, SAMPLE_ROUTES);
     assert.equal(shell.orientation(), "LANDSCAPE");
   });
 
-  it("compact 800×1200 → COMPACT orientation", () => {
+  it("compact 800Ã—1200 â†’ COMPACT orientation", () => {
     const shell = createAppShell(800, 1200, SAMPLE_ROUTES);
     assert.equal(shell.orientation(), "COMPACT");
   });
@@ -363,10 +363,10 @@ describe("AppShell – viewport and orientation", () => {
 });
 
 // ---------------------------------------------------------------------------
-// AppShell – status / error states
+// AppShell â€“ status / error states
 // ---------------------------------------------------------------------------
 
-describe("AppShell – status and error states", () => {
+describe("AppShell â€“ status and error states", () => {
   it("initial status is LOADING", () => {
     const shell = createAppShell(1000, 1600, SAMPLE_ROUTES);
     assert.equal(shell.snapshot().status, "LOADING");
@@ -411,10 +411,10 @@ describe("AppShell – status and error states", () => {
 });
 
 // ---------------------------------------------------------------------------
-// AppShell – font scale / zoom
+// AppShell â€“ font scale / zoom
 // ---------------------------------------------------------------------------
 
-describe("AppShell – font scale and zoom bounds", () => {
+describe("AppShell â€“ font scale and zoom bounds", () => {
   it("default font scale is 1.0", () => {
     const shell = createAppShell(1000, 1600, SAMPLE_ROUTES);
     assert.equal(shell.getFontScale(), FONT_SCALE_DEFAULT);
@@ -466,10 +466,10 @@ describe("AppShell – font scale and zoom bounds", () => {
 });
 
 // ---------------------------------------------------------------------------
-// AppShell – focus trap
+// AppShell â€“ focus trap
 // ---------------------------------------------------------------------------
 
-describe("AppShell – focus trap (drawer/modal)", () => {
+describe("AppShell â€“ focus trap (drawer/modal)", () => {
   it("focusTrapActive is false by default", () => {
     const shell = createAppShell(1000, 1600, SAMPLE_ROUTES);
     assert.equal(shell.snapshot().focusTrapActive, false);
@@ -490,10 +490,10 @@ describe("AppShell – focus trap (drawer/modal)", () => {
 });
 
 // ---------------------------------------------------------------------------
-// AppShell – snapshot CSS var block
+// AppShell â€“ snapshot CSS var block
 // ---------------------------------------------------------------------------
 
-describe("AppShell – snapshot includes CSS var block", () => {
+describe("AppShell â€“ snapshot includes CSS var block", () => {
   it("snapshot.cssVarBlock is a non-empty string starting with :root", () => {
     const shell = createAppShell(1000, 1600, SAMPLE_ROUTES);
     const snap = shell.snapshot();
@@ -501,3 +501,4 @@ describe("AppShell – snapshot includes CSS var block", () => {
     assert.ok(snap.cssVarBlock.startsWith(":root {"));
   });
 });
+

@@ -1,9 +1,9 @@
 /**
  * web/app/shell.ts
- * A21 – App shell with routing, error states, zoom, and focus management
+ * A21 â€“ App shell with routing, error states, zoom, and focus management
  *
  * Implements the Grade9 tablet app shell contract:
- * - Viewport management (portrait 1000×1600, landscape 1600×1000, compact 800×*)
+ * - Viewport management (portrait 1000Ã—1600, landscape 1600Ã—1000, compact 800Ã—*)
  * - Error state machine (loading, error, populated, offline)
  * - Font scale / zoom control within bounds [0.85, 1.5]
  * - Focus trap for modal/drawer states
@@ -109,7 +109,7 @@ export class AppShell {
 
   /**
    * Notify shell of a viewport resize. Automatically updates nav mode and
-   * orientation. No page overflow is introduced — content is clamped to
+   * orientation. No page overflow is introduced â€” content is clamped to
    * viewport bounds.
    */
   resize(w: number, h: number): void {
@@ -243,3 +243,4 @@ export function createAppShell(
 ): AppShell {
   return new AppShell(viewportW, viewportH, routes);
 }
+
