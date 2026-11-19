@@ -22,6 +22,9 @@ export interface Wave9PageBinding {
  readonly projection?:Ref<'PRESENTATION'>;
  readonly transferDefinitionSha256?:string;
  readonly assessmentA?:Ref<'ASSESSMENT'>;readonly assessmentB?:Ref<'ASSESSMENT'>;
+ readonly practiceAssessment?:Ref<'ASSESSMENT'>;
+ readonly choices?:{readonly first?:Readonly<Record<string,readonly {readonly id:string;readonly label:string}[]>>;readonly boundary?:Readonly<Record<string,readonly {readonly id:string;readonly label:string}[]>>};
+ readonly sourceRoute?:{readonly role:'CORE1'|'CORE1A'|'CORE1B'|'CORE2'|'CORE2A'|'CORE2B';readonly resourceId:string;readonly sessionId:string;readonly origin:Ref;readonly cursor:number};
 }
 export interface Wave9Catalog {
  readonly schema:'g9-wave9-authority/1';
@@ -52,11 +55,13 @@ function validate(c:Wave9Catalog){
  const binding=(id:string)=>c.sessions.find(s=>s.id===id);
  const s=binding(c.sessionId),o=binding(c.originSessionId),b=binding(c.boundarySessionId);
  requireThat(s&&o&&b&&new Set([s.id,o.id,b.id]).size===3&&sameRef(s.item,j.task)&&sameRef(b.item,x.boundaryTask)&&s.origin&&sameRef(s.origin,o.item)&&b.origin&&sameRef(b.origin,o.item),'INVALID_ORIGIN_BOUNDARY');
+ if(x.reasoningCrux)requireThat(c.role==='CORE2A'&&refOk(x.reasoningCrux)&&x.reasoningCrux.type==='ASSET'&&![j.task,x.boundaryTask,x.firstReference,x.boundaryReference].some(r=>r.id===x.reasoningCrux!.id||r.sha256===x.reasoningCrux!.sha256)&&!c.grants.some(g=>sameRef(g.asset,x.reasoningCrux!)&&g.capability!=='SHOW_REASONING_CRUX'),'INVALID_CRUX');
  requireThat(Array.isArray(c.grants)&&c.grants.every(g=>refOk(g.asset))&&new Set(c.grants.map(g=>canonicalJson(g))).size===c.grants.length,'INVALID_GRANTS');
  for(const g of c.grants){
   const a=g.asset,cap=g.capability;
   const valid=cap==='VIEW_STIMULUS'&&(sameRef(a,j.task)||sameRef(a,x.boundaryTask)||a.type==='PRESENTATION')||
-    (cap==='REFERENCE_SOLUTION'||cap==='SHOW_REASONING_CRUX')&&sameRef(a,x.firstReference)||
+    cap==='REFERENCE_SOLUTION'&&sameRef(a,x.firstReference)||
+    cap==='SHOW_REASONING_CRUX'&&!!x.reasoningCrux&&sameRef(a,x.reasoningCrux)||
     cap==='BOUNDARY_REFERENCE'&&sameRef(a,x.boundaryReference)||
     cap==='SOURCE_RETURN'&&sameRef(a,o.item)||
     ['H1','H2','H3'].includes(cap)&&a.type==='ASSET';
@@ -65,6 +70,9 @@ function validate(c:Wave9Catalog){
  if(c.page){
   const p=c.page;
   requireThat(/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(p.resourceId)&&refOk(p.review)&&p.review.type==='APPROVAL','INVALID_PAGE_BINDING');
+  if(p.practiceAssessment)requireThat(c.role==='CORE2A'&&refOk(p.practiceAssessment)&&p.practiceAssessment.type==='ASSESSMENT','INVALID_PRACTICE_ASSESSMENT');
+  if(p.sourceRoute){const d=p.sourceRoute;requireThat(c.role==='CORE2B'&&['CORE1','CORE1A','CORE1B','CORE2','CORE2A','CORE2B'].includes(d.role)&&/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(d.resourceId)&&d.sessionId===o.id&&sameRef(d.origin,o.item)&&Number.isSafeInteger(d.cursor)&&d.cursor>=0,'INVALID_SOURCE_ROUTE');}
+  if(p.choices){for(const side of ['first','boundary'] as const){const fields=side==='first'?x.firstFields:x.boundaryFields;for(const [id,opts] of Object.entries(p.choices[side]??{}))requireThat(Object.hasOwn(fields,id)&&['SINGLE_CHOICE','MULTIPLE_CHOICE'].includes(fields[id])&&Array.isArray(opts)&&opts.length>=2&&opts.every(o=>text(o.id)&&text(o.label))&&new Set(opts.map(o=>o.id)).size===opts.length,'INVALID_CHOICE_BINDING');}}
   if(c.role==='CORE2B')requireThat(!p.projection&&typeof p.transferDefinitionSha256==='string'&&/^[a-f0-9]{64}$/.test(p.transferDefinitionSha256)&&refOk(p.assessmentA)&&p.assessmentA!.type==='ASSESSMENT'&&refOk(p.assessmentB)&&p.assessmentB!.type==='ASSESSMENT','INVALID_TRANSFER_PAGE_BINDING');
   else requireThat(refOk(p.projection)&&p.projection!.type==='PRESENTATION'&&c.grants.some(g=>g.capability==='VIEW_STIMULUS'&&sameRef(g.asset,p.projection!))&&!p.transferDefinitionSha256&&!p.assessmentA&&!p.assessmentB,'INVALID_PROJECTION_PAGE_BINDING');
  }

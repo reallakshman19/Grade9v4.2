@@ -10,7 +10,7 @@ import {permittedStage} from '../runtime/cognitive-policy.ts';
 export interface ControllerConfig{readonly journey:JourneyKey;readonly sessionId:string;readonly originSessionId?:string}
 export interface ReviewedTaskContext {
   readonly releaseId:string;readonly task:Ref;readonly boundaryTask:Ref;
-  readonly firstReference:Ref;readonly boundaryReference:Ref;
+  readonly firstReference:Ref;readonly boundaryReference:Ref;readonly reasoningCrux?:Ref;
   readonly firstFields:Readonly<Record<string,Kind>>;readonly boundaryFields:Readonly<Record<string,Kind>>;
   readonly moves:readonly string[];
 }
@@ -34,12 +34,14 @@ export class CognitiveController{
   private async context(session:Session):Promise<ReviewedTaskContext>{
     const j=this.config.journey,x=await this.authority.reviewedContext(j,session);
     if(!x||x.releaseId!==j.releaseId||!sameRef(x.task,j.task)||!refOk(x.boundaryTask)||!['QUESTION','FRESH_TASK'].includes(x.boundaryTask.type)||x.boundaryTask.id===j.task.id||!refOk(x.firstReference)||!refOk(x.boundaryReference)||x.firstReference.type!=='SOLUTION'||x.boundaryReference.type!=='SOLUTION'||!Object.keys(x.firstFields).length||!Object.keys(x.boundaryFields).length||!x.moves.length||new Set(x.moves).size!==x.moves.length)throw new ControllerError('REVIEWED_CONTEXT_REQUIRED');
+    if(x.reasoningCrux&&(!refOk(x.reasoningCrux)||x.reasoningCrux.type!=='ASSET'||[x.task,x.boundaryTask,x.firstReference,x.boundaryReference].some(r=>r.id===x.reasoningCrux!.id||r.sha256===x.reasoningCrux!.sha256)))throw new ControllerError('CRUX_BINDING_INVALID');
     return structuredClone(x);
   }
   async describeBinding(){const session=await this.session(),context=await this.context(session),originId=this.config.originSessionId??session.id,origin=await this.driver.get<Session>('sessions',originId);if(!origin||origin.releaseId!==session.releaseId||origin.mode==='SIMULATED_EXAM'||!origin.contentRevision||origin.contentRevision!==await this.authority.liveRevision(origin)||originId!==session.id&&(!session.origin||!sameRef(session.origin,origin.item)))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');return {session,context,origin,journey:structuredClone(this.config.journey)};}
   async begin():Promise<CognitiveSnapshot>{const e=await this.describeBinding();return this.store.begin(e.journey,e.origin.id);}
   private assetPermitted(ctx:ReviewedTaskContext,snap:Pick<CognitiveSnapshot,'stage'>,cap:DisclosureCapability,asset:Ref):boolean{
     if(!refOk(asset))return false;
+    if(ctx.reasoningCrux&&sameRef(asset,ctx.reasoningCrux)&&cap!=='SHOW_REASONING_CRUX')return false;
     if(sameRef(asset,ctx.boundaryReference)&&cap!=='BOUNDARY_REFERENCE')return false;
     if(ctx.task.type==='FRESH_TASK'&&sameRef(asset,ctx.firstReference)&&!['REFERENCE_SOLUTION','SHOW_REASONING_CRUX'].includes(cap))return false;
     if(sameRef(asset,ctx.boundaryTask)&&!['BOUNDARY_TEST','COMPLETE'].includes(snap.stage))return false;
@@ -81,7 +83,7 @@ export class CognitiveController{
     try{
       const evidence=await this.readEvidence(checkpoint),snap=evidence.snapshot,s=evidence.session,j=snap.journey,ctx=evidence.context;
       if(!this.assetPermitted(ctx,snap,cap,asset)||!permittedStage(snap,s.mode,cap)||!await this.authority.allowed(j,s,cap,asset))return false;
-      if((cap==='REFERENCE_SOLUTION'||cap==='SHOW_REASONING_CRUX')&&!sameRef(asset,ctx.firstReference)||cap==='BOUNDARY_REFERENCE'&&!sameRef(asset,ctx.boundaryReference))return false;
+      if(cap==='REFERENCE_SOLUTION'&&!sameRef(asset,ctx.firstReference)||cap==='SHOW_REASONING_CRUX'&&!sameRef(asset,ctx.reasoningCrux??ctx.firstReference)||cap==='BOUNDARY_REFERENCE'&&!sameRef(asset,ctx.boundaryReference))return false;
       if(['H1','H2','H3','READ_ANCHOR','MODEL_AUTO_CALCULATE','MODEL_MANIPULATE'].includes(cap))return evidence.events.some(e=>e.event_type==='HELP_EXPOSED'&&e.event_id===exposureId&&e.payload.capability===cap&&sameRef(e.payload.asset_ref,asset));
       if(cap==='SOURCE_RETURN')return evidence.events.some(e=>e.event_type==='SOURCE_RETURNED'&&sameRef(e.payload.origin_ref,asset));
       return true;
