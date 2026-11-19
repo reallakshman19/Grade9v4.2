@@ -130,3 +130,4 @@ export interface ExperimentEvaluation {
 
 export const LAB_COMPETENCE_DISCLAIMER =
   'No actual laboratory competence or physical equipment safety qualification is claimed, certified, or inferred from software simulator evaluation.';
+

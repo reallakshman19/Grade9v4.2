@@ -359,3 +359,4 @@ describe('A29 Experiment Workspace: Invariants, Restoration & Safety', () => {
 });
 
 it('rejects malformed data and forged regression; remains finite for offset data',()=>{const t=new DataTableController();assert.throws(()=>t.addRow({'col-x':NaN}));assert.throws(()=>t.addColumn({id:'col-x',name:'duplicate',symbol:'x',unit:'m'}));const a=t.getColumns();(a[0] as any).unit='foreign';assert.equal(t.getColumns()[0].unit,'m');const f=computeBestFitLine([{x:1e9,y:2},{x:1e9+1,y:4},{x:1e9+2,y:6}]);assert.equal(f?.slope,2);assert.throws(()=>propagateQuadratureUncertainty([-1]));const g=new GraphController({xAxis:{label:'x',symbol:'x',unit:'m',min:0,max:3},yAxis:{label:'y',symbol:'y',unit:'N',min:0,max:3},initialSeries:[{id:'s',name:'data',dataPoints:[{x:1,y:1},{x:2,y:2}],bestFitLine:{slope:99,intercept:99,rSquared:1}}]});assert.equal(g.getSeries()[0].bestFitLine?.slope,1);assert.throws(()=>g.zoom(NaN));});
+
