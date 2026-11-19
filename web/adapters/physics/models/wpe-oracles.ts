@@ -47,8 +47,17 @@ function calculate(
     const release_energy = 0.5 * k * x * x;
     const final_energy = Math.max(0, release_energy - friction * distance);
     // A smooth track has no finite friction-induced stop. Never emit Infinity.
-    if(friction===0&&release_energy>0)return {release_energy,final_energy,stops:false};
-    const boundary_distance=release_energy===0?0:release_energy/friction;
+    const stopping=release_energy===0||friction>0;
+    const boundary_distance=release_energy===0?0:friction>0?release_energy/friction:null;
+    if(params.mode==='TWO_REGION'){
+      const travelled=boundary_distance===null?distance:Math.min(distance,boundary_distance);
+      const reaches_end=boundary_distance===null||distance<=boundary_distance;
+      const friction_work=travelled===0||friction===0?0:-friction*travelled;
+      const final_kinetic=Math.max(0,release_energy+friction_work);
+      const phase={release_energy,release_speed:Math.sqrt(2*release_energy/params.m),friction_work,final_energy:final_kinetic,final_speed:Math.sqrt(2*final_kinetic/params.m),travelled,reaches_end};
+      return stopping?{...phase,boundary_distance}:{...phase,stops:false};
+    }
+    if(boundary_distance===null)return {release_energy,final_energy,stops:false};
     return {release_energy,final_energy,boundary_distance};
   }
 
@@ -230,6 +239,11 @@ export function validateWpeModel(family:string,p:Record<string,any>):ModelValida
  if(family==='GRAPH_OPERATION'&&Object.hasOwn(p,'operation')){
   if(!exact(['operation','span','start','end'])||!['FORCE_POSITION_AREA','FORCE_TIME_AREA','POTENTIAL_POSITION_SLOPE','DISPLACEMENT_TIME_SLOPE'].includes(p.operation)||!finite(p.span)||p.span<=0||!finite(p.start)||!finite(p.end))return fail('Invalid graph axes or linear segment');
   return {isValid:true,errors:[]};
+ }
+ if(family==='SPRING_CONTACT'&&Object.hasOwn(p,'mode')){
+  if(p.mode!=='TWO_REGION'||!exact(['mode','k','x','m','friction','distance']))return fail('Invalid two-region spring parameters');
+  const {mode,...numeric}=p;
+  return validateWpeModel(family,numeric);
  }
  if(family==='MULTIFORCE_LEDGER'&&Object.hasOwn(p,'mass'))spec={works:'vector',mass:'positive',initial_speed:'nonnegative'};
  if(family==='CONVEYOR_MOMENTUM_POWER'&&Object.hasOwn(p,'incoming_speed')){

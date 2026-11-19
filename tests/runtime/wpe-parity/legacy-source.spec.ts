@@ -98,5 +98,64 @@ test('A54 exact source repeated bounces, changed first retention and finite trav
  check({initial_height:f.initial_height_m,first_retention:f.first_impact_retention,later_retention:f.later_impact_retention},f.first_three_rebound_heights_m,f.total_distance_m,f.first_speed_ratio);
  const b=evaluate('DISSIPATIVE_BOUNCES',{initial_height:f.initial_height_m,first_retention:f.boundary_all_impacts_retention,later_retention:f.boundary_all_impacts_retention});
  eq(b.total_distance,f.boundary_total_distance_m);
- console.log('A54 exact-source scalar/boolean comparisons: '+comparisons+'; bounded overlap only; full parity NOT_GRANTED');
+});
+
+// Extract only numerical data at runtime from exact, separately checked-out
+// author packs. No source prompt, answer key or native numerical fixture is copied
+// into target files. A changed extraction fails closed instead of guessing.
+const pack=(family:string)=>exact(prefix+family+'_LEARNING_PACK.md',pins[family]!);
+function numbers(s:string,pattern:RegExp,count:number):number[]{
+ const m=pattern.exec(s);assert(m&&m.length===count+1,'pinned source numerical extraction failed');
+ const values=m.slice(1).map(Number);assert(values.every(Number.isFinite),'invalid source numeral');return values;
+}
+function sections(s:string){
+ const guide=s.split('## Core1A')[1]?.split('## Core1B')[0];
+ const fresh=s.split('## Core1B')[1]?.split('## Author-only reference')[0];
+ const answer=s.split('## Author-only reference')[1];assert(guide&&fresh&&answer,'source sections missing');
+ return {guide,fresh,answer};
+}
+test('A54 exact-source multi-force guide, fresh ramp and insufficient-energy boundary',()=>{
+ const {guide,fresh,answer}=sections(pack('MULTIFORCE_LEDGER'));
+ const [m,u,pull,friction,d]=numbers(guide,/A (\d+) kg box is already moving right at (\d+) m\/s[\s\S]*?constant (\d+) N force, while friction is (\d+) N[\s\S]*?travels (\d+) m/,5);
+ const [net,k]=numbers(guide,/W_\{\\mathrm\{net\}\}=[^=]+=\+(\d+)\\text\{ J\}[\s\S]*?K_f=[^=]+=(\d+)\\text\{ J\}/,2);
+ const a=evaluate('MULTIFORCE_LEDGER',{works:[pull*d,-friction*d,0,0],mass:m,initial_speed:u});eq(a.net,net);eq(a.final_kinetic,k);eq(a.final_speed,Math.sqrt(2*k/m));
+ const [fm,fd,h,drive,drag,g]=numbers(fresh,/A (\d+) kg model scooter starts from rest at the bottom of a (\d+) m slope\. The top is ([\d.]+) m higher[\s\S]*?\*\*(\d+) N uphill\*\*[\s\S]*?\*\*(\d+) N downhill\*\*[\s\S]*?g=(\d+)\\text/,6);
+ const [fn,fk]=numbers(answer,/W_\{\\mathrm\{net\}\}=[^=]+=\+(\d+)\\text\{ J\}[\s\S]*?K_f=(\d+)\\text\{ J\}/,2);
+ const works=(force:number)=>[force*fd,-drag*fd,-fm*g*h,0];
+ const o=evaluate('MULTIFORCE_LEDGER',{works:works(drive),mass:fm,initial_speed:0});eq(o.net,fn);eq(o.final_kinetic,fk);eq(o.final_speed,Math.sqrt(2*fk/fm));yes(o.endpoint_energy_feasible,true);
+ const [boundary]=numbers(fresh,/drops from \*\*\d+ N to (\d+) N\*\*/,1);
+ const [deficit]=numbers(answer,/total work would be -(\d+) J/,1);
+ const b=evaluate('MULTIFORCE_LEDGER',{works:works(boundary),mass:fm,initial_speed:0});eq(b.net,-deficit);eq(b.energy_deficit,deficit);yes(b.endpoint_energy_feasible,false);assert(!Object.hasOwn(b,'final_speed'));
+});
+test('A54 exact-source unattached spring smooth release, rough strip and stopping boundary',()=>{
+ const {guide,fresh,answer}=sections(pack('SPRING_CONTACT'));
+ const [m,x,k]=numbers(guide,/A (\d+) kg cart starts at rest[\s\S]*?compressed by ([\d.]+) m\. The spring stiffness is (\d+) N\/m/,3);
+ const [energy,speed]=numbers(guide,/K=(\d+)\\text\{ J\}[\s\S]*?giving \\\(v=(\d+)\\text/,2);
+ const a=evaluate('SPRING_CONTACT',{mode:'TWO_REGION',m,x,k,friction:0,distance:1});eq(a.release_energy,energy);eq(a.release_speed,speed);eq(a.final_speed,speed);yes(a.reaches_end,true);yes(a.stops,false);
+ const [fm,fk,fx,fd,fr]=numbers(fresh,/A (\d+) kg toy cart[\s\S]*?stiffness (\d+) N\/m compressed by ([\d.]+) m[\s\S]*?\*\*([\d.]+) m rough strip\*\*[\s\S]*?constant (\d+) N friction/,5);
+ const [re,rs,fw,fe]=numbers(answer,/K_\{\\mathrm\{release\}\}=([\d.]+)\\text\{ J\}[\s\S]*?=\s*([\d.]+)\\text\{ m\/s\}[\s\S]*?W_f=[^=]+=-([\d.]+)\\text\{ J\}[\s\S]*?K_f=([\d.]+)\\text\{ J\}/,4);
+ const p={mode:'TWO_REGION',m:fm,x:fx,k:fk,friction:fr,distance:fd};const o=evaluate('SPRING_CONTACT',p);
+ eq(o.release_energy,re);eq(o.release_speed,rs);eq(o.friction_work,-fw);eq(o.final_energy,fe);eq(o.final_speed,Math.sqrt(2*fe/fm));yes(o.reaches_end,true);
+ const [stop]=numbers(fresh,/strip's length to \*\*([\d.]+) m\*\*/,1);
+ const b=evaluate('SPRING_CONTACT',{...p,distance:stop});eq(b.boundary_distance,stop);eq(b.final_speed,0);yes(b.reaches_end,true);
+ const beyond=evaluate('SPRING_CONTACT',{...p,distance:stop*2});eq(beyond.travelled,stop);eq(beyond.final_speed,0);yes(beyond.reaches_end,false);
+});
+test('A54 exact-source graph axes, signed linear operations and selected interval',()=>{
+ const {guide,fresh}=sections(pack('GRAPH_OPERATION'));const g=P['WPE-C05'].guide,f=P['WPE-C05'].fresh;
+ const [force,x0,x1]=numbers(guide,/horizontal at \\\(\+(\d+)\\text\{ N\}\\\) from \\\(x=(\d+)\\\) to \\\(x=(\d+)\\text\{ m\}/,3);
+ const graph=(operation:string,span:number,start:number,end:number)=>evaluate('GRAPH_OPERATION',{operation,span,start,end});
+ eq(graph('FORCE_POSITION_AREA',x1-x0,force,force).work,g.force_rectangle_work_j);
+ const points=(s:string,pattern:RegExp)=>numbers(s,pattern,4);
+ const [a,u,b,v]=points(guide,/runs from \\\(\((\d+)\\text\{ m\},(\d+)\\text\{ J\}\)\\\) to \\\(\((\d+)\\text\{ m\},(\d+)\\text\{ J\}\)/);
+ eq(graph('POTENTIAL_POSITION_SLOPE',b-a,u,v).force,g.potential_force_n);
+ const [c,s0,d,s1]=points(guide,/runs from \\\(\((\d+)\\text\{ s\},(\d+)\\text\{ m\}\)\\\) to \\\(\((\d+)\\text\{ s\},(\d+)\\text\{ m\}\)/);
+ eq(graph('DISPLACEMENT_TIME_SLOPE',d-c,s0,s1).velocity,g.displacement_time_velocity_m_s);
+ const [r0,y0,r1,y1]=points(fresh,/from \\\(\(x=(\d+)\\text\{ m\},F_x=(\d+)\\text\{ N\}\)\\\) to \\\(\(x=(\d+)\\text\{ m\},F_x=(\d+)\\text\{ N\}\)/);
+ eq(graph('FORCE_POSITION_AREA',r1-r0,y0,y1).work,f.force_position_triangle_work_j);
+ eq(graph('FORCE_TIME_AREA',r1-r0,y0,y1).impulse,f.boundary_force_time_impulse_n_s);
+ const [z0,p0,z1,p1]=points(fresh,/Potential rises linearly from \\\(\((\d+)\\text\{ m\},(\d+)\\text\{ J\}\)\\\) to \\\(\((\d+)\\text\{ m\},(\d+)\\text\{ J\}\)/);
+ eq(graph('POTENTIAL_POSITION_SLOPE',z1-z0,p0,p1).force,f.potential_position_force_n);
+ const [t0,q0,t1,q1,t2,q2]=numbers(fresh,/through \\\(\((\d+)\\text\{ s\},(\d+)\\text\{ m\}\)\\\), \\\(\((\d+)\\text\{ s\},(\d+)\\text\{ m\}\)\\\), \\\(\((\d+)\\text\{ s\},(\d+)\\text\{ m\}\)/,6);
+ assert(t0<t1&&t1<t2);eq(graph('DISPLACEMENT_TIME_SLOPE',t2-t1,q1,q2).velocity,f.second_interval_velocity_m_s);
+ console.log('A54 exact-source scalar/boolean comparisons: '+comparisons+'; 13-family bounded numerical overlap only; full parity NOT_GRANTED');
 });

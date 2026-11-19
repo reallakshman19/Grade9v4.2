@@ -50,3 +50,13 @@ test('repeated bounce energy retention differs from speed ratio; divergent tails
  assert.deepEqual(evaluate('DISSIPATIVE_BOUNCES',{...p,first_retention:0,later_retention:1}),{rebound_heights:[0,0,0],total_distance:4,first_speed_ratio:0});
  for(const bad of [{...p,later_retention:1},{...p,first_retention:1.1},{...p,initial_height:-1},{...p,restitution:.5}])assert.throws(()=>evaluate('DISSIPATIVE_BOUNCES',bad));
 });
+
+test('two-region spring tracks actual travelled distance, signed friction work and endpoint feasibility',()=>{
+ const p={mode:'TWO_REGION',k:80,x:.5,m:2,friction:4,distance:1};
+ assert.deepEqual(evaluate('SPRING_CONTACT',p),{release_energy:10,release_speed:Math.sqrt(10),friction_work:-4,final_energy:6,final_speed:Math.sqrt(6),travelled:1,reaches_end:true,boundary_distance:2.5});
+ const stopped=evaluate('SPRING_CONTACT',{...p,distance:3});assert.equal(stopped.travelled,2.5);assert.equal(stopped.friction_work,-10);assert.equal(stopped.final_speed,0);assert.equal(stopped.reaches_end,false);
+ const at=evaluate('SPRING_CONTACT',{...p,distance:2.5});assert.equal(at.reaches_end,true);assert.equal(at.final_speed,0);
+ const smooth=evaluate('SPRING_CONTACT',{...p,friction:0,distance:3});assert.equal(smooth.final_speed,smooth.release_speed);assert.equal(smooth.friction_work,0);assert.equal(smooth.stops,false);
+ const rest=evaluate('SPRING_CONTACT',{...p,x:0,friction:0});assert.equal(rest.travelled,0);assert.equal(rest.reaches_end,false);
+ for(const bad of [{...p,mode:'unknown'},{...p,extra:1},{...p,m:0},{...p,friction:-1}])assert.throws(()=>evaluate('SPRING_CONTACT',bad));
+});
