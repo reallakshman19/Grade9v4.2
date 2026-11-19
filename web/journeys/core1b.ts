@@ -233,3 +233,4 @@ export class Core1BTransferJourney{
  toDraft():Core1BDraft|null{const e=this.evidence;return e&&this.editable(e)?{journeyId:this.definition.journeyId,checkpoint:structuredClone(e.snapshot.checkpoint),responses:this.getResponses(),work:this.getWork(),revision:this.draftRevision}:null;}
  restoreDraft(_d:Core1BDraft):never{throw Error('USE_DURABLE_RESTORE');}
 }
+
