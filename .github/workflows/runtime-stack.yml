@@ -101,3 +101,12 @@ jobs:
       - name: Diagnostic shell smoke
         if: always() && !cancelled()
         run: npm run test:smoke
+      - name: Checkout exact v3.5 native pilot sources (read-only, no credentials)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: reallakshman19/Grade9v3.5
+          ref: 8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b
+          path: .source-v35-pilots
+          persist-credentials: false
+      - name: A69 actual isolated native browser and portable parity subset (aggregate only)
+        run: G9_A69_SOURCE_ROOT="$PWD/.source-v35-pilots" node --experimental-strip-types --test --test-concurrency=1 --test-timeout=60000 --test-force-exit tests/parity/motion_plane_parity.spec.ts tests/parity/redox_adaptive_parity.spec.ts tests/parity/circles_master_parity.spec.ts tests/parity/portable_native_parity.spec.ts
