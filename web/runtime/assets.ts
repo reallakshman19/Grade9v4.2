@@ -71,3 +71,4 @@ export class AssetRegistry {
   }
 }
 export function createAssetRegistry(assets?: readonly AssetDescriptor[]): AssetRegistry { return new AssetRegistry(assets); }
+

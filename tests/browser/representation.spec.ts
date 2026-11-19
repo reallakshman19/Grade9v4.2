@@ -261,7 +261,8 @@ it('rejects hash mismatch, unsafe mime, forged verified result and mutable descr
   assert.throws(()=>registry.registerAsset(desc));
 });
 it('actual Chromium: hostile markup and attribute labels cannot create active elements', async () => {
-  const browser = await chromium.launch({headless:true});
+  const execPath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE || 'C:/Users/reall/AppData/Local/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-win64/chrome-headless-shell.exe';
+  const browser = await chromium.launch({ headless: true, executablePath: execPath });
   try {
     const page = await browser.newPage();
     const hostile = '<svg/onload=alert(1)><a href="javascript:alert(1)">bad</a><img src=x onerror=alert(1)><p>safe</p>';

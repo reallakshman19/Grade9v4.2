@@ -98,3 +98,4 @@ export class SharedStimulusRenderer {
 export function createSharedStimulusRenderer(stimulus: SharedStimulusDescriptor): SharedStimulusRenderer {
   return new SharedStimulusRenderer(stimulus);
 }
+

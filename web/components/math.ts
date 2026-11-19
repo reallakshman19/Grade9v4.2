@@ -62,3 +62,4 @@ export function createMathRenderer(
 ): MathRendererController {
   return new MathRendererController({ rawText, isBlock, label });
 }
+

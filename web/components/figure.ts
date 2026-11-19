@@ -130,3 +130,4 @@ export class FigureController {
 export function createFigureController(resolvedAsset: ResolvedAsset, caption?: string): FigureController {
   return new FigureController(resolvedAsset, caption);
 }
+
