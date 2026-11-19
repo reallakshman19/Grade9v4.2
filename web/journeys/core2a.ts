@@ -226,3 +226,4 @@ export class Core2ASupportedJourney {
     this.repairApplied = draft.repairApplied;
   }
 }
+

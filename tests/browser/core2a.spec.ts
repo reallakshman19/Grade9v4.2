@@ -216,3 +216,4 @@ describe('A67 Core2A Guided Practice Page Controller & Tablet Ergonomics', () =>
     assert.ok(html.includes(`min-width: ${HIT_TARGET_MIN_PX}px`));
   });
 });
+
