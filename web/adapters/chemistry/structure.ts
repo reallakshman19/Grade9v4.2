@@ -285,3 +285,4 @@ export function renderStructureSvg(
   <text x="20" y="180" font-family="system-ui, sans-serif" font-size="11" fill="#475569">${escapeHtml(accessibleText.slice(0,60))}${accessibleText.length > 60 ? '...' : ''}</text>
 </svg>`;
 }
+

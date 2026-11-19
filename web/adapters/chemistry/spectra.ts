@@ -148,3 +148,4 @@ export function renderSpectrumSvg(
   ${peakSvgLines}
 </svg>`;
 }
+

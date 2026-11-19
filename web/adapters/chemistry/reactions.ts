@@ -237,3 +237,4 @@ export class ReactionMechanismManager {
     return `Reaction mechanism consisting of ${this.steps.length} sequential steps:\n` + summaries.join('\n');
   }
 }
+

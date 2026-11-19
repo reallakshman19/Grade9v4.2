@@ -86,3 +86,4 @@ export interface ChemicalEvaluation {
   readonly isAutoGraded: boolean;
   readonly rubricCriteria?: readonly ChemicalEvaluationRubricCriterion[];
 }
+
