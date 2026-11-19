@@ -1,0 +1,32 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {fixture,pin} from '../fixtures/wave9-synthetic.ts';
+import {SupportedPracticeWorkspace} from '../../web/journeys/supported-practice.ts';
+import {artifact,firstResponses,boundaryResponses} from '../fixtures/wave8-synthetic.ts';
+test('W9-INT-06 independent practice boundary: stage gates, separate draft, exact assessment, immutable first attempt',async()=>{
+ const x=await fixture('CORE2A','5'),a=await x.compose(),p=new SupportedPracticeWorkspace(a.controller,x.progress,x.f.binding.engine,x.f.binding.assessmentA,x.load,{driver:x.f.driver,sessionId:x.f.bs.id,assessment:x.f.binding.assessmentB});
+ let cp=(await a.controller.begin()).checkpoint;
+ assert.equal(await p.boundaryStimulus(cp),null);
+ cp=(await p.predict(cp,'prediction')).verified.snapshot.checkpoint;
+ await p.save(cp,firstResponses,[artifact('work:practice:first')],0);
+ cp=(await p.commit(cp,firstResponses,[artifact('work:practice:first')],1)).verified.snapshot.checkpoint;
+ const original=await p.original(cp);assert(original);
+ cp=(await p.compare(cp,{'move:one':{observation:'one'},'move:two':{observation:'two'}})).verified.snapshot.checkpoint;
+ cp=(await p.diagnose(cp,'UNSURE','check')).verified.snapshot.checkpoint;
+ cp=(await p.repair(cp,'repair',[artifact('work:practice:repair')])).verified.snapshot.checkpoint;
+ assert.equal(await p.boundaryStimulus(cp),'REVIEWED_BOUNDARY_STIMULUS');assert.equal(await p.readReference(cp),null);assert.equal(await p.readCrux(cp),null);
+ assert.equal(await a.feedback.readBoundaryReference(cp),null);await assert.rejects(p.boundaryFeedback(cp));
+ const d=await p.saveBoundary(cp,boundaryResponses,[artifact('work:practice:boundary')],0);assert.equal(d.revision,1);
+ await assert.rejects(p.saveBoundary(cp,boundaryResponses,[artifact('work:practice:stale')],0));
+ cp=(await p.commitBoundary(cp,boundaryResponses,[artifact('work:practice:boundary')],1)).verified.snapshot.checkpoint;
+ assert.equal(await p.readBoundaryReference(cp),null);assert.equal(await p.boundaryFeedback(cp),'REVIEWED_BOUNDARY_REFERENCE');
+ cp=(await a.controller.readEvidence()).snapshot.checkpoint;assert.equal(await p.readBoundaryReference(cp),'REVIEWED_BOUNDARY_REFERENCE');assert.deepEqual(await p.original(cp),original);
+ x.revoke();assert.equal(await p.readBoundaryReference(cp),null);
+});
+test('W9-INT-06 boundary assessment and alternate grant alias fail closed',async()=>{
+ const x=await fixture('CORE2A'),bad=structuredClone(x.c);
+ Object.assign(bad.page!.practiceBoundary!,{assessment:bad.page!.practiceAssessment});
+ await assert.rejects(x.compose(bad,await pin(bad)),/INVALID_PRACTICE_BOUNDARY/);
+ const alias=structuredClone(x.c);(alias.grants as any[]).push({capability:'VIEW_STIMULUS',asset:{...x.f.boundaryRef,type:'PRESENTATION',id:'presentation:alias'}});
+ await assert.rejects(x.compose(alias,await pin(alias)),/ASSET_ALIAS_NOT_AUTHORIZED/);
+});

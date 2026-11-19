@@ -1,5 +1,6 @@
 import {composeWave9,type Wave9Catalog,type SessionBinding} from '../../web/runtime/wave9-authority.ts';
 import {computeSha256,canonicalJson,sameRef} from '../../web/runtime/loader.ts';
+import type {StorageDriver} from '../../web/runtime/storage.ts';
 import {DefaultProgressStore} from '../../web/runtime/progress.ts';
 import {StandardAssessmentEngine,SCORING_VERSION,type AssessmentContract} from '../../web/runtime/assessment.ts';
 import {Core1BTransferJourney} from '../../web/journeys/core1b.ts';
@@ -7,12 +8,12 @@ import {CORE1_ORIENTATION_BLUEPRINT_ID,CORE1_ORIENTATION_BLOCKS} from '../../web
 import {setupTransfer,throughRepair,firstResponses,boundaryResponses,artifact,ref} from './wave8-synthetic.ts';
 import type {Attempt,CognitiveEvent,Ref,Session,TaskRef,Response} from '../../web/runtime/types.ts';
 export const pin=(c:Wave9Catalog)=>computeSha256(canonicalJson(c));
-export async function fixture(role:Wave9Catalog['role'],answer='4'){
- const f=await setupTransfer(),b=await f.controller.describeBinding();
+export async function fixture(role:Wave9Catalog['role'],answer='4',driver?:StorageDriver,initialize=true){
+ const f=await setupTransfer(driver,initialize),b=await f.controller.describeBinding();
  const anchor=ref('QUESTION','question:wave9:anchor','b'.repeat(64)),check=ref('QUESTION','question:wave9:check','c'.repeat(64));
  const as:Session={...f.as,id:'session:wave9:anchor',item:anchor,attemptIds:[],draftId:null};
  const cs:Session={...f.as,id:'session:wave9:check',item:check,origin:f.first,attemptIds:[],draftId:null};
- for(const s of [as,cs])await f.driver.put('sessions',s.id,s);
+ if(initialize)for(const s of [as,cs])await f.driver.put('sessions',s.id,s);
  const contracts:AssessmentContract[]=[anchor,check].map((task_ref,i)=>({id:'asmt:wave9:'+i,revision:1,task_ref,response_kind:'INTEGER',max_points:1,evaluator:{mode:'AUTOMATIC',canonical_value:'4'}}));
  const refs=await Promise.all(contracts.map(async c=>ref('ASSESSMENT',c.id,await computeSha256(canonicalJson(c)))));
  const engine=new StandardAssessmentEngine(refs.map((assessment,i)=>({assessment,task:contracts[i].task_ref as TaskRef})));
@@ -22,7 +23,7 @@ export async function fixture(role:Wave9Catalog['role'],answer='4'){
   const e=refs.some(r=>sameRef(r,a.assessmentRef!))?engine:f.binding.engine;
   return canonicalJson(a.grade)===canonicalJson(await e.evaluate(a.response,a.assessmentRef,'PRACTICE',a.item as TaskRef));
  });
- for(const [i,s] of [as,cs].entries()){
+ if(initialize)for(const [i,s] of [as,cs].entries()){
   const response:Response={kind:'INTEGER',value:i===0?'4':answer};
   const a:Attempt={id:'att:wave9:'+i,sessionId:s.id,item:s.item,releaseId:s.releaseId,response,work:[artifact('work:wave9:'+i)],hintIds:[],submittedAt:new Date().toISOString(),grade:await engine.evaluate(response,refs[i],'PRACTICE',s.item as TaskRef),cognitive:null,assessmentRef:refs[i],scoringVersion:SCORING_VERSION};
   await progress.appendQualifiedAttempt(a,0);
@@ -46,7 +47,7 @@ export async function fixture(role:Wave9Catalog['role'],answer='4'){
  grants:[{capability:'VIEW_STIMULUS',asset:f.first},{capability:'VIEW_STIMULUS',asset:f.bs.item},{capability:'VIEW_STIMULUS',asset:presentation},{capability:'VIEW_STIMULUS',asset:hindi},{capability:'VIEW_STIMULUS',asset:intuition},{capability:'VIEW_STIMULUS',asset:orientation},{capability:'REFERENCE_SOLUTION',asset:f.firstRef},{capability:'BOUNDARY_REFERENCE',asset:f.boundaryRef},{capability:'SOURCE_RETURN',asset:f.os.item},{capability:'H1',asset:hint},...(role==='CORE2A'?[{capability:'SHOW_REASONING_CRUX' as const,asset:crux}]:[])],
  ...(role==='CORE2A'?{practice:{releaseId:f.key.releaseId,practiceSessionId:f.as.id,practiceTask:f.first as TaskRef,checkSessionId:cs.id,checkTask:check,assessment:refs[1],attemptId:'att:wave9:1',review:ref('APPROVAL','approval:synthetic:check')}}:{}),
  ...(role==='CORE2B'?{transfer:{sessionId:f.as.id,releaseId:f.key.releaseId,task:f.first,origin:f.os.item,anchor,anchorSessionId:as.id,anchorAttemptId:'att:wave9:0',boundary:f.bs.item,dimension:'CONSTRAINT_MUTATION' as const,review:ref('APPROVAL','approval:synthetic:transfer'),capabilities:[{id:'synthetic:capability',teaching:f.os.item as Ref<'LESSON'>,receipt:ref('APPROVAL','approval:synthetic:teaching')}],scaffolds:[{capability:'H1' as const,asset:hint}]}}:{})};
- Object.assign(c,{page:{resourceId:'resource:wave9:'+role.toLowerCase(),review:ref('APPROVAL','approval:synthetic:page'),...(role==='CORE2B'?{transferDefinitionSha256:f.binding.definitionSha256,assessmentA:f.binding.assessmentA,assessmentB:f.binding.assessmentB,sourceRoute:{role:'CORE1A',resourceId:'resource:synthetic:origin',sessionId:f.os.id,origin:f.os.item,cursor:f.os.cursor,projection:source,review:ref('APPROVAL','approval:synthetic:source')}}:{projection:role==='CORE1'?orientation:presentation,...(role==='CORE2A'?{practiceAssessment:f.binding.assessmentA,presentations:[{locale:'en-US',level:'FORMAL',asset:presentation},{locale:'hi-IN',level:'FORMAL',asset:hindi},{locale:'en-US',level:'INTUITION',asset:intuition}]}:{print:{projection:orientation,pdf:pdfRef,review:ref('APPROVAL','approval:synthetic:pdf')}})})}});
+ Object.assign(c,{page:{resourceId:'resource:wave9:'+role.toLowerCase(),review:ref('APPROVAL','approval:synthetic:page'),...(role==='CORE2B'?{transferDefinitionSha256:f.binding.definitionSha256,assessmentA:f.binding.assessmentA,assessmentB:f.binding.assessmentB,sourceRoute:{role:'CORE1A',resourceId:'resource:synthetic:origin',sessionId:f.os.id,origin:f.os.item,cursor:f.os.cursor,projection:source,review:ref('APPROVAL','approval:synthetic:source')}}:{projection:role==='CORE1'?orientation:presentation,...(role==='CORE2A'?{practiceAssessment:f.binding.assessmentA,practiceBoundary:{assessment:f.binding.assessmentB,review:ref('APPROVAL','approval:synthetic:practice-boundary')},presentations:[{locale:'en-US',level:'FORMAL',asset:presentation},{locale:'hi-IN',level:'FORMAL',asset:hindi},{locale:'en-US',level:'INTUITION',asset:intuition}]}:{print:{projection:orientation,pdf:pdfRef,review:ref('APPROVAL','approval:synthetic:pdf')}})})}});
  const digest=await pin(c);let enabled=true,learner='synthetic-learner',reads=0;
  const live=async(s:{learnerId:string;releaseId:string;catalogSha256:string})=>enabled&&s.learnerId===learner&&s.releaseId===f.key.releaseId&&s.catalogSha256===digest;
  const load=async(r:Ref)=>{reads++;return f.binding.loadProtected(r);};

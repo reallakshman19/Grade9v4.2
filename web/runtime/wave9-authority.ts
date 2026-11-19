@@ -25,6 +25,7 @@ export interface Wave9PageBinding {
  readonly transferDefinitionSha256?:string;
  readonly assessmentA?:Ref<'ASSESSMENT'>;readonly assessmentB?:Ref<'ASSESSMENT'>;
  readonly practiceAssessment?:Ref<'ASSESSMENT'>;
+ readonly practiceBoundary?:{readonly assessment:Ref<'ASSESSMENT'>;readonly review:Ref<'APPROVAL'>};
  readonly choices?:{readonly first?:Readonly<Record<string,readonly {readonly id:string;readonly label:string}[]>>;readonly boundary?:Readonly<Record<string,readonly {readonly id:string;readonly label:string}[]>>};
  readonly sourceRoute?:{readonly role:'CORE1'|'CORE1A'|'CORE1B'|'CORE2'|'CORE2A'|'CORE2B';readonly resourceId:string;readonly sessionId:string;readonly origin:Ref;readonly cursor:number;readonly projection?:Ref<'ASSET'>;readonly review?:Ref<'APPROVAL'>};
 }
@@ -61,6 +62,7 @@ function validate(c:Wave9Catalog){
  requireThat(Array.isArray(c.grants)&&c.grants.every(g=>refOk(g.asset))&&new Set(c.grants.map(g=>canonicalJson(g))).size===c.grants.length,'INVALID_GRANTS');
  for(const g of c.grants){
   const a=g.asset,cap=g.capability;
+  requireThat(![j.task,x.boundaryTask,x.firstReference,x.boundaryReference,...(x.reasoningCrux?[x.reasoningCrux]:[])].some(r=>(r.id===a.id||r.sha256===a.sha256)&&!sameRef(r,a)),'ASSET_ALIAS_NOT_AUTHORIZED');
   const valid=cap==='VIEW_STIMULUS'&&(sameRef(a,j.task)||sameRef(a,x.boundaryTask)||a.type==='PRESENTATION')||
     cap==='REFERENCE_SOLUTION'&&sameRef(a,x.firstReference)||
     cap==='SHOW_REASONING_CRUX'&&!!x.reasoningCrux&&sameRef(a,x.reasoningCrux)||
@@ -80,6 +82,7 @@ function validate(c:Wave9Catalog){
   if(p.sourceRoute?.projection)requireThat(isolated(p.sourceRoute.projection)&&refOk(p.sourceRoute.review)&&p.sourceRoute.review!.type==='APPROVAL','INVALID_SOURCE_PROJECTION');
   else if(p.sourceRoute?.review)throw Error('SOURCE_PROJECTION_REQUIRED');
   if(p.practiceAssessment)requireThat(c.role==='CORE2A'&&refOk(p.practiceAssessment)&&p.practiceAssessment.type==='ASSESSMENT','INVALID_PRACTICE_ASSESSMENT');
+  if(p.practiceBoundary)requireThat(c.role==='CORE2A'&&p.practiceAssessment&&refOk(p.practiceBoundary.assessment)&&p.practiceBoundary.assessment.type==='ASSESSMENT'&&p.practiceBoundary.assessment.id!==p.practiceAssessment.id&&p.practiceBoundary.assessment.sha256!==p.practiceAssessment.sha256&&refOk(p.practiceBoundary.review)&&p.practiceBoundary.review.type==='APPROVAL'&&c.grants.some(g=>g.capability==='VIEW_STIMULUS'&&sameRef(g.asset,x.boundaryTask))&&c.grants.some(g=>g.capability==='BOUNDARY_REFERENCE'&&sameRef(g.asset,x.boundaryReference)),'INVALID_PRACTICE_BOUNDARY');
   if(p.sourceRoute){const d=p.sourceRoute;requireThat(c.role==='CORE2B'&&['CORE1','CORE1A','CORE1B','CORE2','CORE2A','CORE2B'].includes(d.role)&&/^[A-Za-z][A-Za-z0-9._:-]{2,127}$/.test(d.resourceId)&&d.sessionId===o.id&&sameRef(d.origin,o.item)&&Number.isSafeInteger(d.cursor)&&d.cursor>=0,'INVALID_SOURCE_ROUTE');}
   if(p.choices){for(const side of ['first','boundary'] as const){const fields=side==='first'?x.firstFields:x.boundaryFields;for(const [id,opts] of Object.entries(p.choices[side]??{}))requireThat(Object.hasOwn(fields,id)&&['SINGLE_CHOICE','MULTIPLE_CHOICE'].includes(fields[id])&&Array.isArray(opts)&&opts.length>=2&&opts.every(o=>text(o.id)&&text(o.label))&&new Set(opts.map(o=>o.id)).size===opts.length,'INVALID_CHOICE_BINDING');}}
   if(c.role==='CORE2B')requireThat(!p.projection&&typeof p.transferDefinitionSha256==='string'&&/^[a-f0-9]{64}$/.test(p.transferDefinitionSha256)&&refOk(p.assessmentA)&&p.assessmentA!.type==='ASSESSMENT'&&refOk(p.assessmentB)&&p.assessmentB!.type==='ASSESSMENT','INVALID_TRANSFER_PAGE_BINDING');
@@ -111,9 +114,9 @@ class BoundAuthority implements CognitiveAuthority,PracticeCheckAuthority,Transf
  }
  async #bound(j:JourneyKey,s:Session){return eq(j,this.#c.journey)&&s.id===this.#c.sessionId&&this.#matches(s,this.#c.sessions.find(b=>b.id===s.id)!)&&await this.#current();}
  async liveRevision(s:Session){const b=this.#c.sessions.find(b=>b.id===s.id);return b&&this.#matches(s,b)&&await this.#current()?b.contentRevision:'';}
- async reviewedContext(j:JourneyKey,s:Session){return await this.#bound(j,s)?structuredClone(this.#c.context):null;}
+ async reviewedContext(j:JourneyKey,s:Session){const c=this.#c,p=c.page;if(!await this.#bound(j,s))return null;const first=c.role==='CORE2A'?p?.practiceAssessment:p?.assessmentA,boundary=c.role==='CORE2A'?p?.practiceBoundary?.assessment:p?.assessmentB;return structuredClone({...c.context,...(first?{firstAssessment:first}:{}),...(boundary?{boundaryAssessment:boundary}:{}),boundarySessionId:c.boundarySessionId,sealFirstDuringBoundary:c.role==='CORE2A'||c.role==='CORE2B'});}
  async allowed(j:JourneyKey,s:Session,capability:DisclosureCapability,asset:Ref){return await this.#bound(j,s)&&this.#c.grants.some(g=>g.capability===capability&&sameRef(g.asset,asset));}
- async boundaryAllowed(j:JourneyKey,boundary:Ref){return eq(j,this.#c.journey)&&sameRef(boundary,this.#c.context.boundaryTask)&&await this.#current();}
+ async boundaryAllowed(j:JourneyKey,boundary:Ref){return (this.#c.role!=='CORE2A'||!!this.#c.page?.practiceBoundary)&&eq(j,this.#c.journey)&&sameRef(boundary,this.#c.context.boundaryTask)&&await this.#current();}
  async reviewedCheck(sessionId:string,task:TaskRef,releaseId:string){
   const p=this.#c.practice;
   return p&&p.practiceSessionId===sessionId&&p.releaseId===releaseId&&sameRef(p.practiceTask,task)&&await this.#current()?structuredClone(p):null;
@@ -150,7 +153,7 @@ export async function composeWave9(
   const p=c.page?.sourceRoute,cp=structuredClone(checkpoint);
   try{
    if(!p?.projection||!transfer)return null;
-   const match=async()=>{const o=await transfer.readSourceReturn(cp);return !!o&&o.sessionId===p.sessionId&&sameRef(o.ref,p.origin)&&o.cursor===p.cursor;};
+   const match=async()=>{const o=await transfer.readSourceReturn(cp),s=await driver.get<Session>('sessions',p.sessionId);return !!o&&!!s&&o.sessionId===p.sessionId&&sameRef(o.ref,p.origin)&&o.cursor===p.cursor&&s.releaseId===c.journey.releaseId&&sameRef(s.item,p.origin)&&s.cursor===p.cursor;};
    if(!await match())return null;
    const bytes=Uint8Array.from(await load(structuredClone(p.projection)));
    if(!bytes.length||bytes.length>2000000||await computeSha256(bytes)!==p.projection.sha256)return null;

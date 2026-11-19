@@ -106,15 +106,16 @@ export class Wave9WorkspaceHost{
    primary.append(el('p','Lesson launch requires separate native authorization.'));
   }else if(c.role==='CORE2A'){
    identity.append(el('h1','Supported application'));primary.dataset.slot='attempt';
+   const inBoundary=e.snapshot.stage==='BOUNDARY_TEST';
    const variants=p.presentations??[{locale:'en-US' as const,level:'FORMAL' as const,asset:p.projection!}];
    const selected=variants.find(v=>v.locale===this.#locale&&v.level===this.#level);
-   const text=selected?await r.presentation.read(selected.asset,this.#locale,this.#level,cp):null;
+   const text=!inBoundary&&selected?await r.presentation.read(selected.asset,this.#locale,this.#level,cp):null;
    const selector=el('select');selector.setAttribute('aria-label','Reviewed presentation');selector.dataset.presentation='true';
    for(const [i,v] of variants.entries()){const option=el('option',v.locale+' · '+v.level);option.value=String(i);option.selected=v===selected;selector.append(option);}
-   identity.append(selector);
-   this.#button(identity,'Change presentation','presentation',epoch,async()=>{const v=variants[Number(selector.value)];if(!v)throw Error('PRESENTATION_UNAVAILABLE');this.#locale=v.locale;this.#level=v.level;},true);
+   if(!inBoundary)identity.append(selector);
+   if(!inBoundary)this.#button(identity,'Change presentation','presentation',epoch,async()=>{const v=variants[Number(selector.value)];if(!v)throw Error('PRESENTATION_UNAVAILABLE');this.#locale=v.locale;this.#level=v.level;},true);
    if(text){const content=protect(el('p',text.text));content.lang=text.locale;primary.append(content);const symbols=el('dl');for(const [symbol,unit] of Object.entries(text.symbolsAndUnits))symbols.append(el('dt',symbol),el('dd',unit));primary.append(protect(symbols));}
-   else primary.append(el('p','Exact reviewed presentation unavailable. No translation or level fallback.'));
+   else if(!inBoundary)primary.append(el('p','Exact reviewed presentation unavailable. No translation or level fallback.'));
    const support=el('aside');support.dataset.slot='support';grid.append(support);
    const reasoning=el('section');reasoning.dataset.slot='reasoning';primary.append(reasoning);
    const practice=this.#practice;
@@ -133,6 +134,22 @@ export class Wave9WorkspaceHost{
     const cap=(['H1','H2','H3'] as const)[count],grant=c.grants.find(g=>g.capability===cap);
     if(grant&&cap&&await r.controller.canRequest(cap,grant.asset,cp))this.#button(support,'Request practice support','practice-hint',epoch,async()=>{await practice.request(cp,cap,grant.asset);},true);
     reasoning.append(el('p','Independent check and reviewed reference remain withheld until the first attempt is committed.'));
+   }else if(inBoundary&&practice.hasBoundary()){
+    const stimulus=await practice.boundaryStimulus(cp);if(stimulus===null)throw Error('PRACTICE_BOUNDARY_UNAVAILABLE');
+    primary.append(el('h2','Independent post-repair boundary'),protect(el('p',stimulus)));
+    reasoning.append(el('p','Prior references and crux withheld during the independent boundary. No help is available.'));
+    if(!e.snapshot.boundaryAttemptId){
+     const draft=await practice.boundaryDraft(cp),opts=p.choices?.boundary??{},editors=Object.entries(e.context.boundaryFields).map(([id,k])=>[id,responseField(primary,id,k,draft?.responses[id],opts[id])] as const);
+     const prev=draft?.work.find(w=>w.kind==='NOTE'),work=field(primary,'Show your boundary working',typeof prev?.value==='string'?prev.value:'',true);work.dataset.field='working';
+     const capture=()=>({values:Object.fromEntries(editors.map(([id,read])=>[id,read()])),work:[note(prev&&prev.value===work.value?prev.id:'work:'+crypto.randomUUID(),work.value)]});
+     const available=Object.entries(e.context.boundaryFields).every(([id,k])=>supported(k,opts[id]));
+     this.#button(primary,'Save boundary draft','practice-boundary-save',epoch,async()=>{const v=capture();await practice.saveBoundary(cp,v.values,v.work,draft?.revision??0);}).disabled=!available;
+     this.#button(primary,'Commit independent boundary','practice-boundary-commit',epoch,async()=>{const v=capture(),saved=await practice.saveBoundary(cp,v.values,v.work,draft?.revision??0);await practice.commitBoundary(cp,v.values,v.work,saved.revision);}).disabled=!available;
+    }else this.#button(primary,'View independent boundary feedback','practice-boundary-feedback',epoch,async()=>{await practice.boundaryFeedback(cp);});
+   }else if(inBoundary){reasoning.append(el('p','Repair recorded. New independent boundary assessment remains unavailable; no completion or mastery inferred.'));}
+   else if(e.snapshot.stage==='COMPLETE'){
+    const txt=await practice.readBoundaryReference(cp);if(txt===null)throw Error('BOUNDARY_REFERENCE_UNAVAILABLE');
+    reasoning.append(el('h2','Independent boundary feedback'),protect(el('p',txt)),el('p','Durable repair and boundary recorded. No mastery or academic approval inferred.'));
    }else if(e.snapshot.firstAttemptId){
     reasoning.append(el('h2','Reviewed reasoning'));const crux=await practice.readCrux(cp),reference=await practice.readReference(cp);
     if(crux!==null){reasoning.append(el('h3','Application crux'),protect(el('p',crux)));}if(reference!==null){reasoning.append(el('h3','Reviewed reference'),protect(el('p',reference)));}
@@ -201,6 +218,6 @@ export async function createWave9WorkspaceHost(root:HTMLElement,router:Router,ca
   // Constructor validates and strips protected fields exactly once. Never revalidate a sealed projection as raw input.
   j=new Core1BTransferJourney(definition,{controller:runtime.controller,driver:deps.driver,progress:deps.progress,engine:deps.engine,definitionSha256:c.page.transferDefinitionSha256!,boundarySessionId:c.boundarySessionId,assessmentA:c.page.assessmentA!,assessmentB:c.page.assessmentB!,loadProtected:deps.load});
  }
- const practice=c.role==='CORE2A'&&c.page.practiceAssessment&&deps.engine?new SupportedPracticeWorkspace(runtime.controller,deps.progress,deps.engine,c.page.practiceAssessment,deps.load):null;
+ const practice=c.role==='CORE2A'&&c.page.practiceAssessment&&deps.engine?new SupportedPracticeWorkspace(runtime.controller,deps.progress,deps.engine,c.page.practiceAssessment,deps.load,c.page.practiceBoundary?{driver:deps.driver,sessionId:c.boundarySessionId,assessment:c.page.practiceBoundary.assessment}:undefined):null;
  return new Wave9WorkspaceHost(root,router,c,runtime,j,practice);
 }

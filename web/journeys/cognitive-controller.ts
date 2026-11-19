@@ -13,6 +13,7 @@ export interface ReviewedTaskContext {
   readonly firstReference:Ref;readonly boundaryReference:Ref;readonly reasoningCrux?:Ref;
   readonly firstFields:Readonly<Record<string,Kind>>;readonly boundaryFields:Readonly<Record<string,Kind>>;
   readonly moves:readonly string[];
+  readonly firstAssessment?:Ref<'ASSESSMENT'>;readonly boundaryAssessment?:Ref<'ASSESSMENT'>;readonly boundarySessionId?:string;readonly sealFirstDuringBoundary?:boolean;
 }
 export interface CognitiveAuthority{
   // Trusted release bootstrap supplies the reviewed task context, never learner flags.
@@ -35,12 +36,14 @@ export class CognitiveController{
     const j=this.config.journey,x=await this.authority.reviewedContext(j,session);
     if(!x||x.releaseId!==j.releaseId||!sameRef(x.task,j.task)||!refOk(x.boundaryTask)||!['QUESTION','FRESH_TASK'].includes(x.boundaryTask.type)||x.boundaryTask.id===j.task.id||!refOk(x.firstReference)||!refOk(x.boundaryReference)||x.firstReference.type!=='SOLUTION'||x.boundaryReference.type!=='SOLUTION'||!Object.keys(x.firstFields).length||!Object.keys(x.boundaryFields).length||!x.moves.length||new Set(x.moves).size!==x.moves.length)throw new ControllerError('REVIEWED_CONTEXT_REQUIRED');
     if(x.reasoningCrux&&(!refOk(x.reasoningCrux)||x.reasoningCrux.type!=='ASSET'||[x.task,x.boundaryTask,x.firstReference,x.boundaryReference].some(r=>r.id===x.reasoningCrux!.id||r.sha256===x.reasoningCrux!.sha256)))throw new ControllerError('CRUX_BINDING_INVALID');
+    if([x.firstAssessment,x.boundaryAssessment].some(a=>a!==undefined&&(!refOk(a)||a.type!=='ASSESSMENT')))throw new ControllerError('ASSESSMENT_BINDING_INVALID');
     return structuredClone(x);
   }
   async describeBinding(){const session=await this.session(),context=await this.context(session),originId=this.config.originSessionId??session.id,origin=await this.driver.get<Session>('sessions',originId);if(!origin||origin.releaseId!==session.releaseId||origin.mode==='SIMULATED_EXAM'||!origin.contentRevision||origin.contentRevision!==await this.authority.liveRevision(origin)||originId!==session.id&&(!session.origin||!sameRef(session.origin,origin.item)))throw new ControllerError('ORIGIN_NOT_AUTHORIZED');return {session,context,origin,journey:structuredClone(this.config.journey)};}
   async begin():Promise<CognitiveSnapshot>{const e=await this.describeBinding();return this.store.begin(e.journey,e.origin.id);}
   private assetPermitted(ctx:ReviewedTaskContext,snap:Pick<CognitiveSnapshot,'stage'>,cap:DisclosureCapability,asset:Ref):boolean{
     if(!refOk(asset))return false;
+    if(ctx.sealFirstDuringBoundary&&snap.stage==='BOUNDARY_TEST'&&(cap==='REFERENCE_SOLUTION'||cap==='SHOW_REASONING_CRUX'||cap==='VIEW_STIMULUS'&&!sameRef(asset,ctx.boundaryTask)))return false;
     if(ctx.reasoningCrux&&sameRef(asset,ctx.reasoningCrux)&&cap!=='SHOW_REASONING_CRUX')return false;
     if(sameRef(asset,ctx.boundaryReference)&&cap!=='BOUNDARY_REFERENCE')return false;
     if(ctx.task.type==='FRESH_TASK'&&sameRef(asset,ctx.firstReference)&&!['REFERENCE_SOLUTION','SHOW_REASONING_CRUX'].includes(cap))return false;
@@ -65,9 +68,10 @@ export class CognitiveController{
     if(event.event_type==='BOUNDARY_COMMITTED'&&(!sameRef(event.payload.boundary_task_ref,ctx.boundaryTask)||!fieldsMatch(event.payload.responses,ctx.boundaryFields)))throw new ControllerError('BOUNDARY_NOT_AUTHORIZED');
     if(event.event_type==='BOUNDARY_FEEDBACK_VIEWED'&&!sameRef(event.payload.reference_ref,ctx.boundaryReference))throw new ControllerError('BOUNDARY_REFERENCE_NOT_AUTHORIZED');
     if(event.event_type==='FIRST_COMMITTED'&&attempt?.sessionId!==s.id)throw new ControllerError('FIRST_ATTEMPT_SESSION_MISMATCH');
+    if(event.event_type==='FIRST_COMMITTED'&&ctx.firstAssessment&&(!attempt?.assessmentRef||!sameRef(attempt.assessmentRef,ctx.firstAssessment)))throw new ControllerError('FIRST_ASSESSMENT_MISMATCH');
     if(event.event_type==='BOUNDARY_COMMITTED'){
       const boundary=attempt&&await this.driver.get<Session>('sessions',attempt.sessionId);
-      if(!boundary||boundary.mode==='SIMULATED_EXAM'||boundary.releaseId!==j.releaseId||!sameRef(boundary.item,event.payload.boundary_task_ref)||!boundary.contentRevision||boundary.contentRevision!==await this.authority.liveRevision(boundary)||!await this.authority.boundaryAllowed(j,event.payload.boundary_task_ref))throw new ControllerError('BOUNDARY_NOT_AUTHORIZED');
+      if(!boundary||ctx.boundarySessionId&&boundary.id!==ctx.boundarySessionId||ctx.boundaryAssessment&&(!attempt?.assessmentRef||!sameRef(attempt.assessmentRef,ctx.boundaryAssessment))||boundary.mode==='SIMULATED_EXAM'||boundary.releaseId!==j.releaseId||!sameRef(boundary.item,event.payload.boundary_task_ref)||!boundary.contentRevision||boundary.contentRevision!==await this.authority.liveRevision(boundary)||!await this.authority.boundaryAllowed(j,event.payload.boundary_task_ref))throw new ControllerError('BOUNDARY_NOT_AUTHORIZED');
     }
     if(event.event_type==='HELP_EXPOSED'&&(!this.assetPermitted(ctx,{stage:'ATTEMPT'},event.payload.capability,event.payload.asset_ref)||!await this.authority.allowed(j,s,event.payload.capability,event.payload.asset_ref)))throw new ControllerError('HELP_NOT_AUTHORIZED');
     if(event.event_type==='RECONSTRUCTION_COMMITTED'&&!await this.authority.allowed(j,s,'REFERENCE_SOLUTION',event.payload.reference_ref))throw new ControllerError('REFERENCE_NOT_AUTHORIZED');
