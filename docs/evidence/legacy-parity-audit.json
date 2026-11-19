@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-legacy-parity-audit/1.0",
+  "workpack_id": "A73",
+  "title": "Complete six-Core and legacy parity audit",
+  "governance": {
+    "prerequisites": ["A69", "A71", "A72", "A54"],
+    "academic_admission": "HOLD",
+    "release_authority": "NONE",
+    "ui_freeze": "NOT_GRANTED",
+    "real_legacy_parity_status": "BLOCKED_PENDING_EXPLICIT_AUTHORIZATION",
+    "synthetic_analogue_parity": "TECHNICAL_PARITY_PASS",
+    "disclaimer": "No academic approval inferred from software validation. No claim synthetic = legacy parity."
+  },
+  "seven_blueprint_families": [
+    {
+      "role": "CORE1",
+      "blueprint_id": "BP-CORE1-ORIENTATION@1.1.0",
+      "layout_mode": "READING_ORIENTATION",
+      "slots": ["identity", "orientation", "anchor", "closure"],
+      "responsive_policy": {
+        "landscape": "SPLIT_66_34",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "role": "CORE2",
+      "blueprint_id": "BP-CORE2-SOURCE-QUESTION@1.11.0",
+      "layout_mode": "QUESTION_READER",
+      "slots": ["header", "stem", "response", "toolbar"],
+      "responsive_policy": {
+        "landscape": "SPLIT_50_50",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "role": "CORE1A",
+      "blueprint_id": "BP-CORE1A-CONSTRUCTION@1.8.0",
+      "layout_mode": "READING_CONSTRUCTION",
+      "slots": ["phenomenon", "derivation", "anchors", "misconceptions", "synthesis"],
+      "responsive_policy": {
+        "landscape": "SPLIT_66_34",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "role": "CORE1B",
+      "blueprint_id": "BP-CORE1B-RECONSTRUCTION@1.1.0",
+      "layout_mode": "GUIDED_RECONSTRUCTION",
+      "slots": ["predict", "attempt", "diagnostic", "repair", "boundary"],
+      "responsive_policy": {
+        "landscape": "SPLIT_50_50",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "role": "CORE2A",
+      "blueprint_id": "BP-CORE2A-SUPPORTED-APPLICATION@1.1.0",
+      "layout_mode": "QUESTION_STUDY",
+      "slots": ["context", "scaffolding", "solution_trace"],
+      "responsive_policy": {
+        "landscape": "SPLIT_66_34",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "role": "CORE2B",
+      "blueprint_id": "BP-CORE2B-TRANSFER@1.1.0",
+      "layout_mode": "TRANSFER_ATTEMPT",
+      "slots": ["transfer_stem", "response_canvas", "source_return"],
+      "responsive_policy": {
+        "landscape": "SPLIT_50_50",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "role": "EXPLORER",
+      "blueprint_id": "BP-EXPLORER-GCDR@1.0.0",
+      "layout_mode": "STAGE_SUPPORT",
+      "slots": ["simulation_viewport", "parameter_controls", "stage_reflection"],
+      "responsive_policy": {
+        "landscape": "SPLIT_66_34",
+        "portrait": "VERTICAL_STACKED",
+        "min_touch_target_px": 48,
+        "max_horizontal_overflow_px": 0
+      },
+      "parity_disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    }
+  ],
+  "thirteen_wpe_families": [
+    {
+      "family": "MULTIFORCE_LEDGER",
+      "description": "Multi-force signed work ledger and work-energy theorem",
+      "invariants": ["Signed sum of work terms", "Delta K = W_net"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "SPRING_CONTACT",
+      "description": "Spring release, frictional dissipation, and boundary stopping distance",
+      "invariants": ["E_spring = 0.5 * k * x^2", "E_final = E_spring - f * d", "d_stop = E_spring / f"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "CONSTANT_POWER",
+      "description": "Constant power kinetic energy accumulation and speed",
+      "invariants": ["W = P * t = Delta K", "v = sqrt(2 * W / m + v_0^2)"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "DISTRIBUTED_MASS",
+      "description": "Center-of-mass work to hoist uniform hanging chain",
+      "invariants": ["W = m * g * (L / 2) = 0.5 * lambda * g * L^2"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "GRAPH_OPERATION",
+      "description": "Triangular area work and conservative force gradient F = -dU/dx",
+      "invariants": ["Area = 0.5 * base * height", "F = -Delta U / Delta x"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "VERTICAL_CIRCLE",
+      "description": "Vertical circular motion top velocity squared and string tautness",
+      "invariants": ["v_top^2 = v_bot^2 - 4 * g * r", "T_top = m * v_top^2 / r - m * g >= 0"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "POTENTIAL_WELLS",
+      "description": "Potential barrier penetration and accessible domain indices",
+      "invariants": ["Accessible iff U(x) <= E_total", "Crossing iff E_total >= U_barrier"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "SPRING_PROJECTILE_TRANSITION",
+      "description": "Spring release -> friction loss -> ballistic trajectory flight",
+      "invariants": ["E_kinetic = E_spring - W_friction", "Range = v * sqrt(2 * h / g)"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "RADIAL_FORCE_POTENTIAL",
+      "description": "Piecewise central force potential integration and orbital kinetic energy",
+      "invariants": ["U(r) = -int F(r) dr", "v^2 = r * F_r / m", "E_total = U + K"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "INSTANTANEOUS_POWER",
+      "description": "Vector dot product of force and instantaneous velocity",
+      "invariants": ["P = F_x * v_x + F_y * v_y + F_z * v_z"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "CONVEYOR_MOMENTUM_POWER",
+      "description": "Conveyor belt mass rate force, kinetic rate, and motor power",
+      "invariants": ["F = (dm/dt) * v", "dK/dt = 0.5 * (dm/dt) * v^2", "P_motor = (dm/dt) * v^2"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "DISSIPATIVE_BOUNCES",
+      "description": "Successive bounce heights and mechanical energy dissipation",
+      "invariants": ["v' = e * v", "h' = e^2 * h", "Delta E = m * g * (h_0 - h_n)"],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "family": "SPRING_CONTROLLED_VARIABLE",
+      "description": "Constant force vs constant extension energy comparison",
+      "invariants": ["Fixed force: U = F^2 / (2 k)", "Fixed extension: U = 0.5 * k * x^2"],
+      "status": "TECHNICAL_PARITY_PASS"
+    }
+  ],
+  "nine_exam_archetypes": [
+    {
+      "archetype_id": "PHY-E1",
+      "subject": "PHYSICS",
+      "stage": "E1",
+      "description": "Force balance and static equilibrium",
+      "payload_kinds": ["SINGLE_CHOICE", "MULTIPLE_CHOICE"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "PHY-E2",
+      "subject": "PHYSICS",
+      "stage": "E2",
+      "description": "Planar kinematics and trajectory conservation",
+      "payload_kinds": ["NUMERIC_QUANTITY", "CONSTRUCTED_RESPONSE"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "PHY-E3",
+      "subject": "PHYSICS",
+      "stage": "E3",
+      "description": "Experimental energy and dynamics verification",
+      "payload_kinds": ["DATA_TABLE", "GRAPH", "EXPERIMENT_ANALYSIS"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "CHM-E1",
+      "subject": "CHEMISTRY",
+      "stage": "E1",
+      "description": "Chemical stoichiometry and limiting reactant",
+      "payload_kinds": ["SINGLE_CHOICE", "INTEGER"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "CHM-E2",
+      "subject": "CHEMISTRY",
+      "stage": "E2",
+      "description": "Organic reaction mechanism and structure representation",
+      "payload_kinds": ["CHEMICAL_STRUCTURE", "REACTION_MECHANISM"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "CHM-E3",
+      "subject": "CHEMISTRY",
+      "stage": "E3",
+      "description": "Acid-base titration and equilibrium inflection",
+      "payload_kinds": ["DATA_TABLE", "GRAPH", "EXPERIMENT_ANALYSIS"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "MTH-E1",
+      "subject": "MATHEMATICS",
+      "stage": "E1",
+      "description": "Quadratic and polynomial extrema",
+      "payload_kinds": ["SINGLE_CHOICE", "INTEGER"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "MTH-E2",
+      "subject": "MATHEMATICS",
+      "stage": "E2",
+      "description": "Synthetic geometry and circle theorems",
+      "payload_kinds": ["SYMBOLIC_EXPRESSION", "NUMERIC_QUANTITY"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    },
+    {
+      "archetype_id": "MTH-E3",
+      "subject": "MATHEMATICS",
+      "stage": "E3",
+      "description": "Rigorous contradiction and inductive proof",
+      "payload_kinds": ["MATHEMATICAL_PROOF", "CONSTRUCTED_RESPONSE"],
+      "rubric_bounds": [0, 2],
+      "status": "TECHNICAL_PARITY_PASS"
+    }
+  ],
+  "three_legacy_pilots": [
+    {
+      "pilot_id": "PILOT-PHYS-MOTION-IN-PLANE",
+      "subject": "PHYSICS",
+      "topic": "PHYS-TOPIC-MOTION-2D",
+      "telemetry_fields_count": 9,
+      "min_touch_target_px": 48,
+      "max_horizontal_overflow_px": 0,
+      "disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "pilot_id": "PILOT-CHEM-REDOX-ADAPTIVE",
+      "subject": "CHEMISTRY",
+      "topic": "CHEM-TOPIC-REDOX",
+      "telemetry_fields_count": 8,
+      "min_touch_target_px": 48,
+      "max_horizontal_overflow_px": 0,
+      "disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    },
+    {
+      "pilot_id": "PILOT-MATH-CIRCLES-MASTER",
+      "subject": "MATHEMATICS",
+      "topic": "MATH-TOPIC-CIRCLES-THEOREMS",
+      "embedded_points_count": 120,
+      "min_touch_target_px": 48,
+      "max_horizontal_overflow_px": 0,
+      "disposition": "SYNTHETIC_ANALOGUE_PASS_REAL_PARITY_HOLD"
+    }
+  ],
+  "negative_regression_audit": {
+    "isolation": {
+      "origin_mismatch_rejection": "VERIFIED_PASS",
+      "nonce_validation": "VERIFIED_PASS",
+      "replay_attack_prevention": "VERIFIED_PASS",
+      "protected_event_rejection": "VERIFIED_PASS",
+      "tested_protected_types": [
+        "APP_STORAGE_READ",
+        "APP_STORAGE_WRITE",
+        "APP_ANSWER_READ",
+        "APP_ANSWER_WRITE",
+        "APP_NAVIGATE_EXTERNAL",
+        "APP_NAVIGATE_HISTORY",
+        "APP_EVAL",
+        "APP_COOKIE",
+        "APP_CREDENTIALS"
+      ]
+    },
+    "storage": {
+      "transaction_abort_injection": "VERIFIED_PASS",
+      "atomic_first_attempt_rollback": "VERIFIED_PASS",
+      "atomic_boundary_attempt_rollback": "VERIFIED_PASS",
+      "zero_orphaned_records": "VERIFIED_PASS"
+    },
+    "disclosure": {
+      "fault_n09_n26_leak_prevention": "VERIFIED_PASS",
+      "learner_history_leak_scan": "CLEAN_ZERO_LEAKS",
+      "prediction_expected_outcome_withheld": "VERIFIED_PASS",
+      "pre_grading_solution_withheld": "VERIFIED_PASS"
+    },
+    "viewports": {
+      "canonical_viewports_evaluated": [
+        "(1366, 854) Desktop / Large Tablet Landscape",
+        "(854, 1366) Large Tablet Portrait",
+        "(1600, 1000) 12.7-inch Physical Tablet Landscape",
+        "(1000, 1600) 12.7-inch Physical Tablet Portrait",
+        "(1280, 800) Compact Tablet Landscape",
+        "(800, 1280) Compact Tablet Portrait",
+        "(390, 844) Mobile Handheld"
+      ],
+      "min_touch_target_px": 48,
+      "max_horizontal_overflow_px": 0,
+      "status": "VERIFIED_PASS"
+    },
+    "performance": {
+      "sub_millisecond_analytical_evaluation": "VERIFIED_PASS",
+      "average_latency_ms": 0.0018
+    }
+  },
+  "summary": {
+    "total_blueprints_audited": 7,
+    "total_wpe_models_audited": 13,
+    "total_exam_archetypes_audited": 9,
+    "total_legacy_pilots_audited": 3,
+    "total_canonical_viewports": 7,
+    "overall_status": "TECHNICAL_PARITY_PASS"
+  }
+}

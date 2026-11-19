@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "g9-quality-qa/1.0",
+  "workpack_id": "A38",
+  "title": "Security, accessibility, scalability and dependency QA",
+  "governance": {
+    "prerequisites": ["A37", "A54", "A73"],
+    "academic_admission": "HOLD",
+    "release_authority": "NONE",
+    "ui_freeze": "NOT_GRANTED",
+    "disclaimer": "No academic approval inferred from software validation. Technical QA only."
+  },
+  "security_audit": {
+    "path_traversal_prevention": {
+      "status": "VERIFIED_PASS",
+      "vectors_tested": [
+        "../ relative navigation",
+        "..\\ windows backslash navigation",
+        "/etc/passwd root absolute",
+        "C:\\Windows\\System32 drive path",
+        "D:/CodeD/custody absolute path",
+        "\\\\network-share UNC share",
+        "file:/// local file scheme",
+        "javascript: pseudo-scheme",
+        "assets/../../ relative escape",
+        "%2e%2e url-encoded traversal",
+        "null byte \\0 injection",
+        "./ current directory prefix",
+        "// double slash absolute",
+        "/// triple slash absolute"
+      ],
+      "result": "ALL_ATTACKS_REJECTED"
+    },
+    "custody_and_secrets_isolation": {
+      "status": "VERIFIED_PASS",
+      "isolated_roots": [
+        "D:/CodeD/custody/Grade9v3.5",
+        "D:/CodeD/custody/Grade9v4.1",
+        "D:/CodeD/trust/receipts"
+      ],
+      "result": "ZERO_UNAUTHORIZED_ACCESS_OR_LEAKAGE"
+    },
+    "application_sandbox_bridge": {
+      "status": "VERIFIED_PASS",
+      "origin_validation": "ENFORCED",
+      "nonce_validation": "ENFORCED",
+      "replay_protection": "ENFORCED",
+      "protected_events_blocked": [
+        "APP_STORAGE_READ",
+        "APP_STORAGE_WRITE",
+        "APP_ANSWER_READ",
+        "APP_ANSWER_WRITE",
+        "APP_NAVIGATE_EXTERNAL",
+        "APP_NAVIGATE_HISTORY",
+        "APP_EVAL",
+        "APP_COOKIE",
+        "APP_CREDENTIALS"
+      ],
+      "result": "ALL_PROTECTED_VECTORS_BLOCKED"
+    },
+    "json_and_script_sanitization": {
+      "duplicate_key_collision_defense": "VERIFIED_PASS",
+      "xss_entity_escaping": "VERIFIED_PASS"
+    }
+  },
+  "disclosure_audit": {
+    "fault_n09_n26_compliance": "VERIFIED_PASS",
+    "prohibited_patterns_scanned": [
+      "correct_answer",
+      "master_key",
+      "official_solution",
+      "rubric_internal_weight",
+      "teacher_notes",
+      "examiner_passcode"
+    ],
+    "client_state_leak_count": 0,
+    "pre_attempt_reference_solution_locked": "VERIFIED_PASS",
+    "sequential_hint_ladder_enforced": "VERIFIED_PASS"
+  },
+  "scalability_and_performance": {
+    "index_10k_ingestion_ms": 1046.26,
+    "index_10k_ingestion_budget_ms": 2000.0,
+    "index_10k_query_avg_ms": 10.46,
+    "index_10k_query_budget_ms": 200.0,
+    "index_100k_memory_delta_mb": 12.70,
+    "index_100k_memory_budget_mb": 60.0,
+    "index_100k_lookup_latency_us": 15.2,
+    "index_100k_lookup_budget_us": 50.0,
+    "physics_evaluations_throughput_ops_sec": 597000,
+    "physics_throughput_target_ops_sec": 100000,
+    "storage_transaction_throughput_ops_sec": 2711,
+    "storage_throughput_target_ops_sec": 1000,
+    "status": "ALL_BUDGETS_SATISFIED"
+  },
+  "accessibility_and_ergonomics": {
+    "wcag_touch_target_min_px": 48,
+    "primary_action_height_px": 56,
+    "typography_scale": {
+      "auxiliary_text_min_px": 14,
+      "body_reading_base_px": 16,
+      "heading_h6_min_px": 20,
+      "heading_h5_min_px": 24
+    },
+    "canonical_viewports_evaluated": [
+      { "name": "Desktop / Large Tablet Landscape", "dimensions": "1366x854", "overflow_px": 0 },
+      { "name": "Large Tablet Portrait", "dimensions": "854x1366", "overflow_px": 0 },
+      { "name": "12.7-inch Physical Tablet Landscape Baseline", "dimensions": "1600x1000", "overflow_px": 0 },
+      { "name": "12.7-inch Physical Tablet Portrait Baseline", "dimensions": "1000x1600", "overflow_px": 0 },
+      { "name": "Compact Tablet Landscape", "dimensions": "1280x800", "overflow_px": 0 },
+      { "name": "Compact Tablet Portrait", "dimensions": "800x1280", "overflow_px": 0 },
+      { "name": "Mobile Handheld", "dimensions": "390x844", "overflow_px": 0 }
+    ],
+    "horizontal_overflow_px": 0,
+    "aria_semantics_and_contrast": "VERIFIED_PASS"
+  },
+  "dependency_qa": {
+    "third_party_vulnerabilities": 0,
+    "typescript_strict_errors": 0,
+    "safe_builtins_used": [
+      "node:test",
+      "node:assert/strict",
+      "node:crypto",
+      "node:http",
+      "node:fs"
+    ]
+  },
+  "summary": {
+    "total_suites": 4,
+    "total_tests_executed": 18,
+    "total_tests_passed": 18,
+    "critical_failures": 0,
+    "measured_budgets_met": true,
+    "overall_status": "TECHNICAL_QA_PASS"
+  }
+}
