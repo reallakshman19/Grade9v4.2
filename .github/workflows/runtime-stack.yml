@@ -42,11 +42,11 @@ jobs:
         run: |
           echo 'NOT_RUN: test_platform.py requires external G9_R4_KIT; test_portable_compatibility.py requires external G9_V35_PORTABLE_PACKAGES. test_ui_audit.py and test_reference_field_fixture require G9_R4_KIT. Full custody-dependent regression is separate.'
           PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release tests/search tests/migration --ignore=tests/migration/test_ui_audit.py -k 'not test_reference_field_fixture' --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
-      - name: Dependency audit (actual advisory response; informational)
+      - name: Dependency audit (fail closed on high/critical or unavailable)
         if: always() && !cancelled()
         run: |
           python -m pip check
-          python tests/security/a38_dependency_audit.py
+          python tests/security/a38_dependency_audit.py --gate
       - name: Checkout exact v3.5 public search sources (read-only)
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
