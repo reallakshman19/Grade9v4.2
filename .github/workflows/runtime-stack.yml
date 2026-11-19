@@ -41,7 +41,38 @@ jobs:
         if: always() && !cancelled()
         run: |
           echo 'NOT_RUN: test_platform.py requires external G9_R4_KIT; test_portable_compatibility.py requires external G9_V35_PORTABLE_PACKAGES. Full custody-dependent regression is separate.'
-          PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
+          PATH="$PWD/node_modules/.bin:$PATH" python -m pytest tests/contracts tests/build tests/release tests/search --ignore=tests/contracts/test_platform.py --ignore=tests/contracts/test_portable_compatibility.py -q
+      - name: Checkout exact v3.5 public search sources (read-only)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: reallakshman19/Grade9v3.5
+          ref: 8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b
+          path: .source-v35-search
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /public/data/resource-registry.v1.json
+            /public/data/learner-search-index.v1.json
+      - name: Checkout exact v4.1 public search sources (read-only)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: reallakshman19/Grade9v4.1
+          ref: 564ad2a07fddc0fdd30d103674b3eca61235a54b
+          path: .source-v41-search
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /data/learner-search-index.v1.json
+      - name: Actual pinned source occurrence accounting (aggregate only)
+        run: |
+          test "$(git -C .source-v35-search rev-parse HEAD)" = "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b"
+          test "$(git -C .source-v35-search rev-parse HEAD^{tree})" = "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
+          test "$(git -C .source-v41-search rev-parse HEAD)" = "564ad2a07fddc0fdd30d103674b3eca61235a54b"
+          test "$(git -C .source-v41-search rev-parse HEAD^{tree})" = "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
+          git -C .source-v35-search diff --exit-code HEAD
+          git -C .source-v41-search diff --exit-code HEAD
+          python -m grade9build.search_reconcile --v35-root .source-v35-search --v41-root .source-v41-search
+
   browser:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
