@@ -130,3 +130,4 @@ export class FilterPanelController {
 export function createFilterPanel(initialFilter?: BankFilterCriteria): FilterPanelController {
   return new FilterPanelController(initialFilter);
 }
+

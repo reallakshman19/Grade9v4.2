@@ -88,3 +88,4 @@ export class QuestionCardController {
 export function createQuestionCard(rawQuestion: any,authorized?:(item:PublicQuestionSummary)=>boolean): QuestionCardController {
   return new QuestionCardController(rawQuestion,authorized);
 }
+
