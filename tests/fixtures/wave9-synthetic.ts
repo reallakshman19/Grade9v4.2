@@ -8,8 +8,8 @@ import {CORE1_ORIENTATION_BLUEPRINT_ID,CORE1_ORIENTATION_BLOCKS} from '../../web
 import {setupTransfer,throughRepair,firstResponses,boundaryResponses,artifact,ref} from './wave8-synthetic.ts';
 import type {Attempt,CognitiveEvent,Ref,Session,TaskRef,Response} from '../../web/runtime/types.ts';
 export const pin=(c:Wave9Catalog)=>computeSha256(canonicalJson(c));
-export async function fixture(role:Wave9Catalog['role'],answer='4',driver?:StorageDriver,initialize=true){
- const f=await setupTransfer(driver,initialize),b=await f.controller.describeBinding();
+export async function fixture(role:Wave9Catalog['role'],answer='4',driver?:StorageDriver,initialize=true,options?:{origin:TaskRef;releaseId:string;extra:{engine:StandardAssessmentEngine;assessment:Ref<'ASSESSMENT'>}}){
+ const f=await setupTransfer(driver,initialize,options),b=await f.controller.describeBinding();
  const anchor=ref('QUESTION','question:wave9:anchor','b'.repeat(64)),check=ref('QUESTION','question:wave9:check','c'.repeat(64));
  const as:Session={...f.as,id:'session:wave9:anchor',item:anchor,attemptIds:[],draftId:null};
  const cs:Session={...f.as,id:'session:wave9:check',item:check,origin:f.first,attemptIds:[],draftId:null};
@@ -18,11 +18,12 @@ export async function fixture(role:Wave9Catalog['role'],answer='4',driver?:Stora
  const refs=await Promise.all(contracts.map(async c=>ref('ASSESSMENT',c.id,await computeSha256(canonicalJson(c)))));
  const engine=new StandardAssessmentEngine(refs.map((assessment,i)=>({assessment,task:contracts[i].task_ref as TaskRef})));
  for(let i=0;i<2;i++)await engine.registerContract(contracts[i],refs[i]);
- const progress=new DefaultProgressStore(f.driver,async a=>{
+ const verify=async(a:Attempt)=>{
   if(!a.assessmentRef||a.releaseId!==f.key.releaseId||a.scoringVersion!==SCORING_VERSION)return false;
-  const e=refs.some(r=>sameRef(r,a.assessmentRef!))?engine:f.binding.engine;
+  const e=options&&sameRef(options.extra.assessment,a.assessmentRef)?options.extra.engine:refs.some(r=>sameRef(r,a.assessmentRef!))?engine:f.binding.engine;
   return canonicalJson(a.grade)===canonicalJson(await e.evaluate(a.response,a.assessmentRef,'PRACTICE',a.item as TaskRef));
- });
+ };
+ const progress=new DefaultProgressStore(f.driver,verify);
  if(initialize)for(const [i,s] of [as,cs].entries()){
   const response:Response={kind:'INTEGER',value:i===0?'4':answer};
   const a:Attempt={id:'att:wave9:'+i,sessionId:s.id,item:s.item,releaseId:s.releaseId,response,work:[artifact('work:wave9:'+i)],hintIds:[],submittedAt:new Date().toISOString(),grade:await engine.evaluate(response,refs[i],'PRACTICE',s.item as TaskRef),cognitive:null,assessmentRef:refs[i],scoringVersion:SCORING_VERSION};
@@ -36,7 +37,7 @@ export async function fixture(role:Wave9Catalog['role'],answer='4',driver?:Stora
  const hint=f.definition.hints[0].assetRef as Ref;
  const cruxBytes=new TextEncoder().encode('SYNTHETIC_REVIEWED_CRUX');const crux=ref('ASSET','asset:wave9:crux',await computeSha256(cruxBytes));f.bytes.set(crux.id,cruxBytes);
  const bind=(s:Session):SessionBinding=>({id:s.id,item:s.item,origin:s.origin,mode:'PRACTICE',contentRevision:'r1'});
- const sourceBytes=new TextEncoder().encode(JSON.stringify({origin:f.os.item,sessionId:f.os.id,cursor:f.os.cursor,role:'CORE1A',resourceId:'resource:synthetic:origin',text:'Synthetic returned source at original cursor'}));
+ const sourceBytes=new TextEncoder().encode(JSON.stringify({origin:f.os.item,sessionId:f.os.id,cursor:f.os.cursor,role:options?'CORE2':'CORE1A',resourceId:'resource:synthetic:origin',text:'Synthetic returned source at original cursor'}));
  const source=ref('ASSET','asset:wave9:source',await computeSha256(sourceBytes));f.bytes.set(source.id,sourceBytes);
  // Small real, synthetic one-page PDF with a correct xref table; not a production receipt.
  const parts=['<< /Type /Catalog /Pages 2 0 R >>','<< /Type /Pages /Kids [3 0 R] /Count 1 >>','<< /Type /Page /Parent 2 0 R /MediaBox [0 0 300 200] /Contents 4 0 R >>','<< /Length 0 >>\nstream\nendstream'];let pdf='%PDF-1.4\n',offsets=[0];
@@ -46,11 +47,11 @@ export async function fixture(role:Wave9Catalog['role'],answer='4',driver?:Stora
  sessions:[f.as,f.os,f.bs,...(role==='CORE2A'?[cs]:role==='CORE2B'?[as]:[])].map(bind),
  grants:[{capability:'VIEW_STIMULUS',asset:f.first},{capability:'VIEW_STIMULUS',asset:f.bs.item},{capability:'VIEW_STIMULUS',asset:presentation},{capability:'VIEW_STIMULUS',asset:hindi},{capability:'VIEW_STIMULUS',asset:intuition},{capability:'VIEW_STIMULUS',asset:orientation},{capability:'REFERENCE_SOLUTION',asset:f.firstRef},{capability:'BOUNDARY_REFERENCE',asset:f.boundaryRef},{capability:'SOURCE_RETURN',asset:f.os.item},{capability:'H1',asset:hint},...(role==='CORE2A'?[{capability:'SHOW_REASONING_CRUX' as const,asset:crux}]:[])],
  ...(role==='CORE2A'?{practice:{releaseId:f.key.releaseId,practiceSessionId:f.as.id,practiceTask:f.first as TaskRef,checkSessionId:cs.id,checkTask:check,assessment:refs[1],attemptId:'att:wave9:1',review:ref('APPROVAL','approval:synthetic:check')}}:{}),
- ...(role==='CORE2B'?{transfer:{sessionId:f.as.id,releaseId:f.key.releaseId,task:f.first,origin:f.os.item,anchor,anchorSessionId:as.id,anchorAttemptId:'att:wave9:0',boundary:f.bs.item,dimension:'CONSTRAINT_MUTATION' as const,review:ref('APPROVAL','approval:synthetic:transfer'),capabilities:[{id:'synthetic:capability',teaching:f.os.item as Ref<'LESSON'>,receipt:ref('APPROVAL','approval:synthetic:teaching')}],scaffolds:[{capability:'H1' as const,asset:hint}]}}:{})};
- Object.assign(c,{page:{resourceId:'resource:wave9:'+role.toLowerCase(),review:ref('APPROVAL','approval:synthetic:page'),...(role==='CORE2B'?{transferDefinitionSha256:f.binding.definitionSha256,assessmentA:f.binding.assessmentA,assessmentB:f.binding.assessmentB,sourceRoute:{role:'CORE1A',resourceId:'resource:synthetic:origin',sessionId:f.os.id,origin:f.os.item,cursor:f.os.cursor,projection:source,review:ref('APPROVAL','approval:synthetic:source')}}:{projection:role==='CORE1'?orientation:presentation,...(role==='CORE2A'?{practiceAssessment:f.binding.assessmentA,practiceBoundary:{assessment:f.binding.assessmentB,review:ref('APPROVAL','approval:synthetic:practice-boundary')},presentations:[{locale:'en-US',level:'FORMAL',asset:presentation},{locale:'hi-IN',level:'FORMAL',asset:hindi},{locale:'en-US',level:'INTUITION',asset:intuition}]}:{print:{projection:orientation,pdf:pdfRef,review:ref('APPROVAL','approval:synthetic:pdf')}})})}});
+ ...(role==='CORE2B'?{transfer:{sessionId:f.as.id,releaseId:f.key.releaseId,task:f.first,origin:f.os.item,anchor,anchorSessionId:as.id,anchorAttemptId:'att:wave9:0',boundary:f.bs.item,dimension:'CONSTRAINT_MUTATION' as const,review:ref('APPROVAL','approval:synthetic:transfer'),capabilities:[{id:'synthetic:capability',teaching:options?ref('LESSON','lesson:golden:teaching'):f.os.item as Ref<'LESSON'>,receipt:ref('APPROVAL','approval:synthetic:teaching')}],scaffolds:[{capability:'H1' as const,asset:hint}]}}:{})};
+ Object.assign(c,{page:{resourceId:'resource:wave9:'+role.toLowerCase(),review:ref('APPROVAL','approval:synthetic:page'),...(role==='CORE2B'?{transferDefinitionSha256:f.binding.definitionSha256,assessmentA:f.binding.assessmentA,assessmentB:f.binding.assessmentB,sourceRoute:{role:options?'CORE2':'CORE1A',resourceId:'resource:synthetic:origin',sessionId:f.os.id,origin:f.os.item,cursor:f.os.cursor,projection:source,review:ref('APPROVAL','approval:synthetic:source')}}:{projection:role==='CORE1'?orientation:presentation,...(role==='CORE2A'?{practiceAssessment:f.binding.assessmentA,practiceBoundary:{assessment:f.binding.assessmentB,review:ref('APPROVAL','approval:synthetic:practice-boundary')},presentations:[{locale:'en-US',level:'FORMAL',asset:presentation},{locale:'hi-IN',level:'FORMAL',asset:hindi},{locale:'en-US',level:'INTUITION',asset:intuition}]}:{print:{projection:orientation,pdf:pdfRef,review:ref('APPROVAL','approval:synthetic:pdf')}})})}});
  const digest=await pin(c);let enabled=true,learner='synthetic-learner',reads=0;
  const live=async(s:{learnerId:string;releaseId:string;catalogSha256:string})=>enabled&&s.learnerId===learner&&s.releaseId===f.key.releaseId&&s.catalogSha256===digest;
  const load=async(r:Ref)=>{reads++;return f.binding.loadProtected(r);};
  const compose=(catalog:Wave9Catalog=c,pinned=digest)=>composeWave9(catalog,pinned,f.driver,progress,live,load);
- return {f,c,digest,compose,progress,live,load,presentation,orientation,pdfRef,pdfBytes,source,as,cs,hint,reads:()=>reads,revoke:()=>{enabled=false;},switchLearner:()=>{learner='foreign-learner';}};
+ return {f,c,digest,compose,progress,verify,live,load,presentation,orientation,pdfRef,pdfBytes,source,as,cs,hint,reads:()=>reads,revoke:()=>{enabled=false;},switchLearner:()=>{learner='foreign-learner';}};
 }

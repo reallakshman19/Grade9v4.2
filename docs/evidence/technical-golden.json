@@ -1,0 +1,25 @@
+{
+  "workpack_id": "A37",
+  "status": "CANDIDATE_TESTS_SUBMITTED",
+  "academic_admission": "HOLD",
+  "release_authority": "NONE",
+  "synthetic_target_only": true,
+  "source_pr": 90,
+  "source_head": "c313e49409610b2d0b6f4ec228e9e5b7c0231279",
+  "base": "5f99955fd2249e8b010c32bfc1d793e80324e8a3",
+  "base_ci": 44461679129,
+  "verification": "CI exact-head results required; this file is a test plan, not a pass receipt",
+  "scope": {
+    "browser": "tests/browser/a37-golden.spec.ts",
+    "runtime": "tests/runtime/a37-archetypes.test.ts",
+    "route": "Actual A35/A24/A19/A48/A49/A36 with test-only host composition, shared IndexedDB",
+    "archetypes": "Nine original producer groupings, typed synthetic qualified commitments only",
+    "not_run": [
+      "R4 immutable kit and independent controls",
+      "actual academic content and canonical exam parity",
+      "real production authentication and complete native destination host",
+      "A69 real legacy parity",
+      "A54 exact-source WPE parity"
+    ]
+  }
+}
