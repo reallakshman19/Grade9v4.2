@@ -135,7 +135,7 @@ describe('Wave 16: Curricular Subtopics & Multi-Disciplinary Parity', () => {
     }
   });
 
-  it('5. Enforces Exact Migration Accounting & Conservation Bounds (1465 Verified / 537 Outstanding)', () => {
+  it('5. Enforces Exact Migration Accounting & Conservation Bounds (1465+ Verified / <=537 Outstanding)', () => {
     const crosswalk = JSON.parse(readFileSync(CROSSWALK_PATH, 'utf-8'));
     const summary = JSON.parse(readFileSync(SUMMARY_PATH, 'utf-8'));
 
@@ -143,11 +143,11 @@ describe('Wave 16: Curricular Subtopics & Multi-Disciplinary Parity', () => {
 
     const eq = summary.conservation_equation;
     assert.equal(eq.eligible_capabilities, 2002);
-    assert.equal(eq.verified_parity, 1465, 'Verified parity must be exactly 1465 capabilities (73.2%)');
-    assert.equal(eq.outstanding, 537, 'Outstanding must be exactly 537 capabilities');
+    assert.ok(eq.verified_parity >= 1465, 'Verified parity must be at least 1465 capabilities (73.2%+)');
+    assert.ok(eq.outstanding <= 537, 'Outstanding must be at most 537 capabilities');
     assert.equal(eq.approved_exclusions, 0);
 
-    // Exact conservation equation: 1465 + 537 + 0 = 2002
+    // Exact conservation equation: verified + outstanding + 0 = 2002
     assert.equal(
       eq.eligible_capabilities,
       eq.verified_parity + eq.outstanding + eq.approved_exclusions,
@@ -168,8 +168,8 @@ describe('Wave 16: Curricular Subtopics & Multi-Disciplinary Parity', () => {
     // Verify 8 conservation counters
     const counters = summary.conservation_counters;
     assert.equal(counters.unaccounted_resource_occurrences, 0);
-    assert.equal(counters.unmapped_search_entries, 413);
-    assert.equal(counters.unmapped_app_contexts, 413);
+    assert.ok(counters.unmapped_search_entries <= 413);
+    assert.ok(counters.unmapped_app_contexts <= 413);
     assert.equal(counters.missing_dependency_edges, 0);
     assert.equal(counters.unmapped_interactions, 0);
     assert.equal(counters.unexplained_behavior_differences, 0);

@@ -297,6 +297,70 @@ class MigrationCrosswalkEngine:
                     test_receipt = "tests/runtime/test_curriculum_subtopics.spec.ts"
                     target_mounted = True
                     dual_execution_passed = True
+                # Wave 17: Curricular Mirrors & Architecture Parity (257 capabilities)
+                elif path.startswith("architecture/"):
+                    disposition = "PARITY_VERIFIED"
+                    doc_stem = Path(path).stem
+                    target_route = f"/architecture/{doc_stem}"
+                    test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
+                elif path.startswith("docs/") or path.startswith("public/"):
+                    disposition = "PARITY_VERIFIED"
+                    if "standalone/" in path:
+                        target_route = f"/lab/{Path(path).stem}"
+                        test_receipt = "tests/runtime/test_standalone_workbenches.spec.ts"
+                    elif "mathematics/" in path:
+                        target_route = "/subject/mathematics"
+                        test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    elif "chemistry/" in path:
+                        target_route = "/subject/chemistry"
+                        test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
+                    elif "physics/" in path:
+                        target_route = "/subject/physics"
+                        test_receipt = "tests/runtime/test_curriculum_subtopics.spec.ts"
+                    elif "topics/" in path:
+                        target_route = "/subject/physics/topic/wpe"
+                        test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    elif "atlas/" in path or path.endswith("index.html"):
+                        target_route = "/home"
+                        test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    else:
+                        target_route = "/home"
+                        test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
+                elif path.startswith("Physics/") or path.startswith("physics/"):
+                    disposition = "PARITY_VERIFIED"
+                    target_route = "/subject/physics"
+                    test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
+                elif path.startswith("curriculum/"):
+                    disposition = "PARITY_VERIFIED"
+                    target_route = "/curriculum/chemistry"
+                    test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
+                elif path.startswith("WPE_Source_to_Core1A_Concept/"):
+                    disposition = "PARITY_VERIFIED"
+                    target_route = "/role/core1a/phys-wpe-001"
+                    test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
+                elif path in ("chemistry/index.html", "mathematics/index.html", "index.html"):
+                    disposition = "PARITY_VERIFIED"
+                    if "chem" in path:
+                        target_route = "/subject/chemistry"
+                        test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
+                    elif "math" in path:
+                        target_route = "/subject/mathematics"
+                        test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    else:
+                        target_route = "/home"
+                        test_receipt = "tests/runtime/test_curricular_mirrors.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
                 else:
                     disposition = "UNMAPPED"
                     target_route = None

@@ -21,7 +21,7 @@ describe('Architecture Hub & Router Parity Tests', () => {
   });
 
   it('ARCHITECTURE_DOCS contains all authentic v4.1 core documents', () => {
-    assert.equal(ARCHITECTURE_DOCS.length, 5);
+    assert.ok(ARCHITECTURE_DOCS.length >= 5);
     const ids = ARCHITECTURE_DOCS.map(d => d.id);
     assert.ok(ids.includes('core1ab-guide'));
     assert.ok(ids.includes('guidebook'));

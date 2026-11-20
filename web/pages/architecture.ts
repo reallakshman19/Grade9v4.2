@@ -108,6 +108,63 @@ export const ARCHITECTURE_DOCS: readonly ArchitectureDocDescriptor[] = [
       </ul>
     `,
   },
+  {
+    id: 'manifesto',
+    title: 'Grade9 Engineering & Curriculum Architecture Manifesto',
+    subtitle: 'Foundational principles governing dual-route learning, cognitive demand, and immutable evidence bounds',
+    category: 'GUIDE',
+    sourcePath: 'architecture/manifesto.html',
+    summaryHtml: `
+      <p>The philosophical and technical charter of the Grade9 project:</p>
+      <ul>
+        <li><strong>Truthful Exactness:</strong> Never invent scientific or historical truths; fail closed on missing custody.</li>
+        <li><strong>Cognitive Separation:</strong> Keep student-facing scaffolding distinct from raw examination test keys.</li>
+        <li><strong>Dual-Engine Audits:</strong> Require simultaneous headless test assertions and live viewport visual proofs.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'pipeline',
+    title: 'Curriculum Generation & Authoring Pipeline Architecture',
+    subtitle: 'End-to-end transformation workflow from authentic source intake to interactive tablet workbenches',
+    category: 'PIPELINE',
+    sourcePath: 'architecture/pipeline.html',
+    summaryHtml: `
+      <p>Stage-by-stage architecture of the authoring toolchain:</p>
+      <ul>
+        <li>Source intake &amp; SHA-256 fingerprinting.</li>
+        <li>QRT cognitive demand factorization across 7 core operations.</li>
+        <li>Commit-first inert derivation binding and pedagogical hints.</li>
+        <li>Multi-engine packaging into single-file portable packages and reactive HTML5 components.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'roadmap',
+    title: 'Architecture & Migration Multi-Wave Roadmap',
+    subtitle: 'Stepwise progression across 17 engineering waves to achieve full parity and verifiable closure',
+    category: 'PIPELINE',
+    sourcePath: 'architecture/roadmap.html',
+    summaryHtml: `
+      <p>The engineering roadmap to complete legacy migration parity:</p>
+      <ul>
+        <li>Wave 1–10: Foundation, Core 1A/1B, Core 2A/2B, and GCDR Explorers.</li>
+        <li>Wave 11–13: NSEJS Physics 12-Chapter syllabus and Chemistry 14-Topic adapters.</li>
+        <li>Wave 14–16: Core 2 Question Bank, Standalone Labs, and Curricular Subtopics.</li>
+        <li>Wave 17–19: Curricular mirrors, developer collateral reconciliation, and authoring gap conservation.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'overview',
+    title: 'Architecture & System Overview Index',
+    subtitle: 'Central directory and navigation hub for all Grade9 technical specifications and operational runbooks',
+    category: 'GUIDE',
+    sourcePath: 'architecture/index.html',
+    summaryHtml: `
+      <p>Complete index of all architectural standards, runbooks, and design specifications across the Grade9 platform.</p>
+    `,
+  },
 ];
 
 export const BLUEPRINT_CARDS = [
@@ -131,7 +188,12 @@ export class ArchitecturePageController {
 
   getActiveDoc(): ArchitectureDocDescriptor | null {
     if (!this.activeDocId) return null;
-    return ARCHITECTURE_DOCS.find(d => d.id === this.activeDocId) || null;
+    const clean = this.activeDocId.toLowerCase();
+    return ARCHITECTURE_DOCS.find(d => 
+      d.id === this.activeDocId || 
+      d.id.toLowerCase() === clean ||
+      d.sourcePath.toLowerCase().includes(clean)
+    ) || null;
   }
 }
 
