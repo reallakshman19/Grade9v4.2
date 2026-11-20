@@ -19,6 +19,9 @@ import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import { QuestionPageController, mountQuestionPage } from './question.ts';
 import { Core1ALessonPageController, mountCore1ALesson, createDefaultLesson } from './lesson.ts';
 import { Core1BTransferPageController, mountCore1BTransfer, createDefaultTransferDefinition } from './transfer.ts';
+import { Core1OrientationPageController, mountCore1Orientation } from './orientation.ts';
+import { Core2ASupportedPageController, mountCore2ASupported } from './supported-practice.ts';
+import { Core2BTransferPageController, mountCore2BTransfer } from './transfer-changed-demand.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from './explorer.ts';
 import { WPE_DIAGNOSTIC_DECK, getAuthorizedWpeEntry, WPE_RELEASE_ID } from '../runtime/wpe-deck.ts';
 import { createAuthorizedQuestionSession } from '../runtime/question-session.ts';
@@ -157,7 +160,8 @@ export function mountTopicWorkspace(
   let active = true;
   let activeSubDisposer: (() => void) | null = null;
   let selectedQuestionId: string | null = null;
-  let learnTrySubRole: 'CORE1A' | 'CORE1B' | 'CORE2A' | 'CORE2B' = 'CORE1A';
+  let activeQuestionMode: 'CORE2' | 'CORE2A' | 'CORE2B' = 'CORE2';
+  let learnTrySubRole: 'CORE1' | 'CORE1A' | 'CORE1B' = 'CORE1A';
   let energyWellDisplacement = 0.0;
 
   const currentTab = ['questions', 'learn-try', 'explorer', 'labs'].includes(activeTab) ? activeTab : 'questions';
@@ -238,7 +242,7 @@ export function mountTopicWorkspace(
   };
 
   // -------------------------------------------------------------------------
-  // Tab 1: Question Bank (Core 2)
+  // Tab 1: Question Bank (Core 2 / 2A / 2B)
   // -------------------------------------------------------------------------
   const mountQuestionBankTab = (container: HTMLElement) => {
     if (!selectedQuestionId) {
@@ -266,56 +270,78 @@ export function mountTopicWorkspace(
                     ${q.figures && q.figures.length ? `<span style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">🖼️ Figure</span>` : ''}
                   </div>
                 </div>
-                <button type="button" data-action="open-question" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 16px;background:${q.status === 'RELEASED' ? '#0284c7' : '#475569'};color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">${q.status === 'RELEASED' ? 'Launch Question Workspace →' : 'View Question (Academic HOLD)'}</button>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <button type="button" data-action="open-question" data-mode="CORE2" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 14px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">Launch Question (Core 2) →</button>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                    <button type="button" data-action="open-question" data-mode="CORE2A" data-qid="${escapeHtml(q.id)}" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f8fafc;color:#0369a1;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.85rem;">Core 2A: Practice</button>
+                    <button type="button" data-action="open-question" data-mode="CORE2B" data-qid="${escapeHtml(q.id)}" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#fdf4ff;color:#7e22ce;border:1px solid #e9d5ff;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.85rem;">Core 2B: Transfer</button>
+                  </div>
+                </div>
               </div>
             `).join('')}
           </div>
         </div>
       `;
     } else {
-      // Mount Active Question Workspace
+      // Mount Active Question Workspace with Mode Switcher
       container.innerHTML = `
-        <div style="margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center;">
-          <button type="button" id="g9-back-deck-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">← Back to WPE Question Deck</button>
+        <div style="margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            <button type="button" id="g9-back-deck-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">← Back to WPE Question Deck</button>
+            <div style="display:flex;gap:6px;background:#f1f5f9;padding:4px;border-radius:6px;" role="group" aria-label="Question Mode">
+              <button type="button" data-switch-qmode="CORE2" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2: Question</button>
+              <button type="button" data-switch-qmode="CORE2A" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2A' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2A' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2A: Supported</button>
+              <button type="button" data-switch-qmode="CORE2B" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2B' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2B' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2B: Transfer</button>
+            </div>
+          </div>
           <span style="font-size:0.85rem;color:#64748b;">Durable Session Bound (IndexedDB)</span>
         </div>
         <div id="g9-question-mount-root"></div>
       `;
 
       const qRoot = container.querySelector<HTMLElement>('#g9-question-mount-root')!;
-      const qController = new QuestionPageController('phys', 'wpe');
-      const qDesc = WPE_DIAGNOSTIC_DECK.find(q => q.id === selectedQuestionId)!;
 
-      // Authorize question session asynchronously
-      void (async () => {
-        try {
-          const entry = await getAuthorizedWpeEntry(selectedQuestionId!);
-          const binding = await createAuthorizedQuestionSession(WPE_RELEASE_ID, entry);
-          qController.loadQuestion(qDesc, binding);
-          const m = mountQuestionPage(qRoot, qController);
-          activeSubDisposer = () => m.dispose();
-        } catch (e: any) {
-          // If authorization fails closed or question on HOLD
-          qController.loadQuestion(qDesc);
-          const m = mountQuestionPage(qRoot, qController);
-          activeSubDisposer = () => m.dispose();
-        }
-      })();
+      if (activeQuestionMode === 'CORE2A') {
+        const c = new Core2ASupportedPageController({ returnRoute: '#/subject/physics/topic/wpe/questions' });
+        const m = mountCore2ASupported(qRoot, c);
+        activeSubDisposer = () => m.dispose();
+      } else if (activeQuestionMode === 'CORE2B') {
+        const c = new Core2BTransferPageController({ returnRoute: '#/subject/physics/topic/wpe/questions' });
+        const m = mountCore2BTransfer(qRoot, c);
+        activeSubDisposer = () => m.dispose();
+      } else {
+        const qController = new QuestionPageController('phys', 'wpe');
+        const qDesc = WPE_DIAGNOSTIC_DECK.find(q => q.id === selectedQuestionId)!;
+
+        // Authorize question session asynchronously
+        void (async () => {
+          try {
+            const entry = await getAuthorizedWpeEntry(selectedQuestionId!);
+            const binding = await createAuthorizedQuestionSession(WPE_RELEASE_ID, entry);
+            qController.loadQuestion(qDesc, binding);
+            const m = mountQuestionPage(qRoot, qController);
+            activeSubDisposer = () => m.dispose();
+          } catch (e: any) {
+            qController.loadQuestion(qDesc);
+            const m = mountQuestionPage(qRoot, qController);
+            activeSubDisposer = () => m.dispose();
+          }
+        })();
+      }
     }
   };
 
   // -------------------------------------------------------------------------
-  // Tab 2: Learn & Try (Core 1A / 1B / 2A / 2B)
+  // Tab 2: Learn & Try (Core 1 / 1A / 1B)
   // -------------------------------------------------------------------------
   const mountLearnTryTab = (container: HTMLElement) => {
     container.innerHTML = `
       <div class="g9-learn-try-hub">
-        <!-- Sub-Role Navigation Pills -->
-        <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;">
-          <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">Core 1A: Concept Construction (9 Units)</button>
-          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">Core 1B: Phenomenological Reconstruction (7 Stages)</button>
-          <button type="button" data-subrole="CORE2A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE2A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE2A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">Core 2A: Supported Practice</button>
-          <button type="button" data-subrole="CORE2B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE2B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE2B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">Core 2B: Changed-Demand Transfer</button>
+        <!-- 3-Role Segmented Selector (Learn & Try Family) -->
+        <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;" role="tablist" aria-label="Learn & Try Subroles">
+          <button type="button" data-subrole="CORE1" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">1. Core 1: Reading Orientation</button>
+          <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">2. Core 1A: Concept Construction (9 Units)</button>
+          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: Phenomenological Reconstruction (7 Stages)</button>
         </div>
 
         <div id="g9-learn-try-mount-root"></div>
@@ -324,10 +350,9 @@ export function mountTopicWorkspace(
 
     const subRoot = container.querySelector<HTMLElement>('#g9-learn-try-mount-root')!;
 
-    if (learnTrySubRole === 'CORE1A') {
-      const lessonDef = createDefaultLesson();
-      const c = new Core1ALessonPageController({ lessonDefinition: lessonDef });
-      const m = mountCore1ALesson(subRoot, c);
+    if (learnTrySubRole === 'CORE1') {
+      const c = new Core1OrientationPageController({ returnRoute: '#/subject/physics/topic/wpe/learn-try' });
+      const m = mountCore1Orientation(subRoot, c);
       activeSubDisposer = () => m.dispose();
     } else if (learnTrySubRole === 'CORE1B') {
       void createAuthorizedTransferSession().then(async ({ definition, binding }) => {
@@ -336,43 +361,12 @@ export function mountTopicWorkspace(
         const m = mountCore1BTransfer(subRoot, c);
         activeSubDisposer = () => m.dispose();
       });
-    } else if (learnTrySubRole === 'CORE2A') {
-      subRoot.innerHTML = `
-        <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:2rem;">
-          <h3 style="margin:0 0 0.5rem;font-size:1.35rem;color:#0f172a;">Core 2A: Supported Practice &amp; Scaffolding</h3>
-          <p style="color:#475569;margin-bottom:1.5rem;">Guided practice with staged problem prompts and audited hint deductions.</p>
-          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;margin-bottom:1rem;">
-            <h4 style="margin:0 0 0.5rem;font-size:1.1rem;color:#0f172a;">Guided Problem: Spring-Mass Energy Transformation</h4>
-            <p style="color:#334155;">A spring with k = 200 N/m is compressed by 0.1 m. Calculate maximum velocity of a 0.5 kg block.</p>
-            <div style="display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;">
-              <button type="button" id="g9-hint-stage-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">Request Stage 1 Hint (-10% penalty)</button>
-              <button type="button" id="g9-check-step-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">Check Intermediate Step</button>
-            </div>
-            <div id="g9-hint-display" style="margin-top:12px;font-size:0.95rem;color:#0369a1;"></div>
-          </div>
-        </div>
-      `;
-      const hintBtn = subRoot.querySelector<HTMLButtonElement>('#g9-hint-stage-btn');
-      const hintDisplay = subRoot.querySelector<HTMLElement>('#g9-hint-display');
-      if (hintBtn && hintDisplay) {
-        hintBtn.addEventListener('click', () => {
-          hintDisplay.textContent = 'Hint 1: Initial elastic potential energy U = 0.5 * k * x^2 is entirely converted to kinetic energy K = 0.5 * m * v^2 at equilibrium.';
-          hintBtn.disabled = true;
-        });
-      }
     } else {
-      subRoot.innerHTML = `
-        <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:2rem;">
-          <h3 style="margin:0 0 0.5rem;font-size:1.35rem;color:#0f172a;">Core 2B: Changed-Demand Transfer</h3>
-          <p style="color:#475569;margin-bottom:1.5rem;">Novel context transfer: Quadratic aerodynamic drag along vertical descent.</p>
-          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;">
-            <p style="color:#334155;line-height:1.5;">Perturbation condition: Quadratic aerodynamic drag F_d = -c * v^2 opposes motion. Evaluate terminal velocity boundary and total energy dissipation.</p>
-            <div style="display:flex;gap:8px;margin-top:1rem;">
-              <button type="button" onclick="window.location.hash='#/subject/physics/topic/wpe/questions'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">Return to Question Deck</button>
-            </div>
-          </div>
-        </div>
-      `;
+      // Default: Core 1A
+      const lessonDef = createDefaultLesson();
+      const c = new Core1ALessonPageController({ lessonDefinition: lessonDef });
+      const m = mountCore1ALesson(subRoot, c);
+      activeSubDisposer = () => m.dispose();
     }
   };
 
@@ -514,6 +508,15 @@ export function mountTopicWorkspace(
     const openQBtn = target.closest<HTMLButtonElement>('[data-action=open-question]');
     if (openQBtn && openQBtn.dataset.qid) {
       selectedQuestionId = openQBtn.dataset.qid;
+      activeQuestionMode = (openQBtn.dataset.mode as any) || 'CORE2';
+      renderShell();
+      return;
+    }
+
+    // Switch Question Workspace Mode (CORE2 / CORE2A / CORE2B)
+    const switchModeBtn = target.closest<HTMLButtonElement>('[data-switch-qmode]');
+    if (switchModeBtn && switchModeBtn.dataset.switchQmode) {
+      activeQuestionMode = switchModeBtn.dataset.switchQmode as any;
       renderShell();
       return;
     }

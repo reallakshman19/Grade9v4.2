@@ -2,6 +2,9 @@
 import { createDashboardScreen, mountDashboard, DEFAULT_CURRICULUM_REGISTRY } from '../pages/home.ts';
 import { Core1ALessonPageController, mountCore1ALesson } from '../pages/lesson.ts';
 import { Core1BTransferPageController, mountCore1BTransfer } from '../pages/transfer.ts';
+import { Core1OrientationPageController, mountCore1Orientation } from '../pages/orientation.ts';
+import { Core2ASupportedPageController, mountCore2ASupported } from '../pages/supported-practice.ts';
+import { Core2BTransferPageController, mountCore2BTransfer } from '../pages/transfer-changed-demand.ts';
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
 import { createTopicScreen, mountTopicWorkspace } from '../pages/topic.ts';
@@ -105,19 +108,31 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     } else {
       renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
     }
-  } else if (clean.includes('core1a') || (match.type === 'ROLE' && match.params.coreRole === 'CORE1A')) {
+  } else if (clean.includes('core1a') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1A')) {
     const controller = new Core1ALessonPageController();
     const m = mountCore1ALesson(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('core1b') || (match.type === 'ROLE' && match.params.coreRole === 'CORE1B')) {
+  } else if (clean.includes('core1b') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1B')) {
     const controller = new Core1BTransferPageController();
     const m = mountCore1BTransfer(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (match.type === 'QUESTION' || clean.startsWith('question/') || clean === 'question' || clean.includes('core2') || (match.type === 'ROLE' && match.params.coreRole === 'CORE2')) {
+  } else if ((clean.includes('core1') && !clean.includes('core1a') && !clean.includes('core1b')) || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1')) {
+    const controller = new Core1OrientationPageController();
+    const m = mountCore1Orientation(content, controller);
+    activeDisposer = () => m.dispose();
+  } else if (clean.includes('core2a') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2A')) {
+    const controller = new Core2ASupportedPageController();
+    const m = mountCore2ASupported(content, controller);
+    activeDisposer = () => m.dispose();
+  } else if (clean.includes('core2b') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2B')) {
+    const controller = new Core2BTransferPageController();
+    const m = mountCore2BTransfer(content, controller);
+    activeDisposer = () => m.dispose();
+  } else if (match.type === 'QUESTION' || clean.startsWith('question/') || clean === 'question' || (clean.includes('core2') && !clean.includes('core2a') && !clean.includes('core2b')) || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2')) {
     const controller = new QuestionPageController('phys', 'wpe');
     const m = mountQuestionPage(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('explorer') || (match.type === 'ROLE' && match.params.coreRole === 'EXPLORER')) {
+  } else if (clean.includes('explorer') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'EXPLORER')) {
     const controller = new GcdrExplorerPageController({
       explorerId: 'wpe-explorer-01',
       title: 'Work, Power & Energy — Interactive Explorer',
