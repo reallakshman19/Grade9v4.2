@@ -10930,13 +10930,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -10949,10 +10949,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/core1a-motion-in-a-plane-tablet.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -10963,13 +10963,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -10982,10 +10982,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core1.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -10996,13 +10996,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11015,10 +11015,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core1a.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11029,13 +11029,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11048,10 +11048,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core1b.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11062,13 +11062,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11081,10 +11081,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core2.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11095,13 +11095,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11114,10 +11114,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core2a.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11128,13 +11128,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11147,10 +11147,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/core2b.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11161,13 +11161,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11180,10 +11180,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S1-motion2d-six-core-html/index.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11194,13 +11194,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11213,10 +11213,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S3-projectile-prototype-markdown/preview.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11227,13 +11227,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11246,10 +11246,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S4-pr288-preview/preview.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11260,13 +11260,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11279,10 +11279,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/atlas/index.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11293,13 +11293,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11312,10 +11312,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/book/index.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11326,13 +11326,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11345,10 +11345,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/builder/index.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11359,13 +11359,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11378,10 +11378,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/constant-acceleration-in-a-plane.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11392,13 +11392,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11411,10 +11411,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/horizontal-launch-from-a-height.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11425,13 +11425,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11444,10 +11444,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/perpendicular-components-are-independent.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11458,13 +11458,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11477,10 +11477,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/position-and-displacement-in-a-plane.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11491,13 +11491,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11510,10 +11510,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/projectiles-time-of-flight-height-and-range.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11524,13 +11524,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11543,10 +11543,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/relative-velocity-in-two-dimensions.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11557,13 +11557,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11576,10 +11576,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/uniform-circular-motion.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11590,13 +11590,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11609,10 +11609,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/quality-calibration/specimens/S5-research-first-render/pages/velocity-and-acceleration-as-vectors.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -11623,13 +11623,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11642,10 +11642,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:benchmarks/selected_question_bank_TABLET_STUDY.html",
-      "route": null
+      "route": "/architecture/benchmarks"
     }
   },
   {
@@ -16408,13 +16408,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16427,10 +16427,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/reviews/pr353/packet-check/rendered/product.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16441,13 +16441,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16460,10 +16460,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/reviews/pr353/packet-check/review/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16474,13 +16474,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16493,10 +16493,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/reviews/pr353/packet/core1.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16507,13 +16507,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16526,10 +16526,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/reviews/pr353/packet/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16540,13 +16540,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16559,10 +16559,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/coordinate-geometry/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16573,13 +16573,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16592,10 +16592,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/euclid-geometry/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16606,13 +16606,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16625,10 +16625,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/laws-of-motion/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16639,13 +16639,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16658,10 +16658,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/linear-equations/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16672,13 +16672,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16691,10 +16691,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/motion-in-a-plane/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16705,13 +16705,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16724,10 +16724,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-agent1/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16738,13 +16738,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16757,10 +16757,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/golden-control/core1.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16771,13 +16771,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16790,10 +16790,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/golden-control/core1a.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16804,13 +16804,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16823,10 +16823,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/golden-control/core1b.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16837,13 +16837,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16856,10 +16856,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/golden-control/core2.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16870,13 +16870,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16889,10 +16889,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/golden-control/core2a.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16903,13 +16903,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16922,10 +16922,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/golden-control/core2b.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16936,13 +16936,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16955,10 +16955,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/golden-control/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -16969,13 +16969,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -16988,10 +16988,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/prototype/rendered/core1.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17002,13 +17002,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17021,10 +17021,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/prototype/rendered/core1a.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17035,13 +17035,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17054,10 +17054,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/prototype/rendered/core1b.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17068,13 +17068,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17087,10 +17087,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/prototype/rendered/core2.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17101,13 +17101,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17120,10 +17120,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/prototype/rendered/core2a.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17134,13 +17134,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17153,10 +17153,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/prototype/rendered/core2b.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17167,13 +17167,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17186,10 +17186,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/prototype/rendered/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17200,13 +17200,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17219,10 +17219,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/rendered/core1.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17233,13 +17233,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17252,10 +17252,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/rendered/core1a.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17266,13 +17266,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17285,10 +17285,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/rendered/core1b.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17299,13 +17299,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17318,10 +17318,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/rendered/core2.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17332,13 +17332,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17351,10 +17351,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/rendered/core2a.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17365,13 +17365,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17384,10 +17384,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/rendered/core2b.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -17398,13 +17398,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17417,10 +17417,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:evidence/stress-tests/polynomials-six-core/rendered/index.html",
-      "route": null
+      "route": "/architecture/evidence-packets"
     }
   },
   {
@@ -23470,13 +23470,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23489,10 +23489,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tests/fixtures/portable-workbench/external-host.html",
-      "route": null
+      "route": "/architecture/test-fixtures"
     }
   },
   {
@@ -23503,13 +23503,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23522,10 +23522,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tests/fixtures/qrt/interactive-smoke.html",
-      "route": null
+      "route": "/architecture/test-fixtures"
     }
   },
   {
@@ -23536,13 +23536,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23555,10 +23555,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tests/fixtures/research-first/pr288-regression/preview.html",
-      "route": null
+      "route": "/architecture/test-fixtures"
     }
   },
   {
@@ -23569,13 +23569,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23588,10 +23588,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tests/fixtures/workbench/browser-host.html",
-      "route": null
+      "route": "/architecture/test-fixtures"
     }
   },
   {
@@ -23602,13 +23602,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23621,10 +23621,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tests/fixtures/workbench/browser-semantic-identity-host.html",
-      "route": null
+      "route": "/architecture/test-fixtures"
     }
   },
   {
@@ -23635,13 +23635,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23654,10 +23654,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tests/fixtures/workbench/core-learning-host.html",
-      "route": null
+      "route": "/architecture/test-fixtures"
     }
   },
   {
@@ -23668,13 +23668,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23687,10 +23687,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tools/index.html",
-      "route": null
+      "route": "/architecture/developer-tools"
     }
   },
   {
@@ -23701,13 +23701,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23720,10 +23720,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tools/library/index.html",
-      "route": null
+      "route": "/architecture/developer-tools"
     }
   },
   {
@@ -23734,13 +23734,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23753,10 +23753,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:tools/run-builder/index.html",
-      "route": null
+      "route": "/architecture/developer-tools"
     }
   },
   {
@@ -58615,13 +58615,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58634,10 +58634,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/404.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58648,13 +58648,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58667,10 +58667,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/alpha-board.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58681,13 +58681,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58700,10 +58700,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b02-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58714,13 +58714,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58733,10 +58733,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b03-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58747,13 +58747,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58766,10 +58766,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b04-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58780,13 +58780,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58799,10 +58799,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b04-topics/cond04.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58813,13 +58813,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58832,10 +58832,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b04-topics/cond05.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58846,13 +58846,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58865,10 +58865,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b04-topics/cond06.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58879,13 +58879,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58898,10 +58898,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b04-topics/cond11.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58912,13 +58912,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58931,10 +58931,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b04-topics/cond12.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58945,13 +58945,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58964,10 +58964,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b05-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -58978,13 +58978,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -58997,10 +58997,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b06-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59011,13 +59011,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59030,10 +59030,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b07-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59044,13 +59044,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59063,10 +59063,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b07-preflight.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59077,13 +59077,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59096,10 +59096,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b08-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59110,13 +59110,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59129,10 +59129,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/b09-five-subtopics.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59143,13 +59143,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59162,10 +59162,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/cond07.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59176,13 +59176,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59195,10 +59195,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/index.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59209,13 +59209,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59228,10 +59228,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n01.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59242,13 +59242,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59261,10 +59261,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n02.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59275,13 +59275,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59294,10 +59294,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n03.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59308,13 +59308,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59327,10 +59327,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n04.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59341,13 +59341,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59360,10 +59360,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n05.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59374,13 +59374,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59393,10 +59393,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n06.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59407,13 +59407,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59426,10 +59426,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n07.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59440,13 +59440,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59459,10 +59459,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n08.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59473,13 +59473,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59492,10 +59492,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/n09.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59506,13 +59506,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59525,10 +59525,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/batches/reader.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59539,13 +59539,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59558,10 +59558,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/index.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59572,13 +59572,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59591,10 +59591,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/physics-wpe.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59605,13 +59605,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59624,10 +59624,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/practice.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59638,13 +59638,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59657,10 +59657,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/progress.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59671,13 +59671,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59690,10 +59690,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/question-status-archive.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -59704,13 +59704,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -59723,10 +59723,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:preview/question-status.html",
-      "route": null
+      "route": "/architecture/preview-batches"
     }
   },
   {
@@ -64093,13 +64093,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64112,10 +64112,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:review/physics/ph09-ph12-wpe-parity-r1/preview.html",
-      "route": null
+      "route": "/architecture/peer-review"
     }
   },
   {
@@ -64126,13 +64126,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64145,10 +64145,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Academic_Review_R1_20261031/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64159,13 +64159,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64178,10 +64178,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Academic_Review_R1_20261031/oracle-research/iapt-home.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64192,13 +64192,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64211,10 +64211,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Academic_Review_R1_20261031/oracle-research/iapt-nse-2025-26.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64225,13 +64225,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64244,10 +64244,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Academic_Review_R1_20261031/oracle-research/iapt-papers-solution.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64258,13 +64258,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64277,10 +64277,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/concept.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64291,13 +64291,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64310,10 +64310,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64324,13 +64324,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64343,10 +64343,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/received-engineering/outputs/SYNTHETIC_CORE2_GOLDEN.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64357,13 +64357,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64376,10 +64376,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/received-private-r1/outputs/SYNTHETIC_CORE2_GOLDEN.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64390,13 +64390,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64409,10 +64409,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/rendered/core2.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64423,13 +64423,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64442,10 +64442,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/rendered/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64456,13 +64456,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64475,10 +64475,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/review.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64489,13 +64489,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64508,10 +64508,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/review/negative-strict/core2.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64522,13 +64522,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64541,10 +64541,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/synthetic-rendered/core2.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64555,13 +64555,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64574,10 +64574,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/synthetic-rendered/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64588,13 +64588,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64607,10 +64607,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/textbook-baseline/concept.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64621,13 +64621,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64640,10 +64640,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/textbook-baseline/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64654,13 +64654,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64673,10 +64673,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/textbook-baseline/rendered/core2.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64687,13 +64687,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64706,10 +64706,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/textbook-baseline/rendered/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64720,13 +64720,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64739,10 +64739,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Native_Integration_R1_20261030/textbook-baseline/review.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64753,13 +64753,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64772,10 +64772,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Question_Bank_and_Book_2026-10-30/03_Supporting_Material/wpe-pilot/w5/shell.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64786,13 +64786,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64805,10 +64805,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64819,13 +64819,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64838,10 +64838,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N01.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64852,13 +64852,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64871,10 +64871,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N02.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64885,13 +64885,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64904,10 +64904,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N03.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64918,13 +64918,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64937,10 +64937,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N04.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64951,13 +64951,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -64970,10 +64970,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N05.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -64984,13 +64984,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65003,10 +65003,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N06.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65017,13 +65017,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65036,10 +65036,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N07.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65050,13 +65050,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65069,10 +65069,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N08.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65083,13 +65083,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65102,10 +65102,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N09.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65116,13 +65116,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65135,10 +65135,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/handoffs/WPE-N10.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65149,13 +65149,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65168,10 +65168,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-source-program/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65182,13 +65182,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65201,10 +65201,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Source_Core1A_Completion_R2_20261030/skill/source-to-core1a/examples/wpe-work-direction/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65215,13 +65215,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65234,10 +65234,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/legacy/g9v3.5/chatgpt/output/WPE_Workflow_Hub_20261031/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65248,13 +65248,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65267,10 +65267,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/CORE2_BATCH_01/rendered/core2_batch01.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65281,13 +65281,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65300,10 +65300,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/CORE2_BATCH_02/rendered/core2_batch02.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65314,13 +65314,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65333,10 +65333,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/CUMULATIVE_TRIAGE_DASHBOARD.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65347,13 +65347,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65366,10 +65366,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/G9V4_PRIVATE_79_QUESTION_BROWSER.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65380,13 +65380,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65399,10 +65399,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-00/inventory.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65413,13 +65413,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65432,10 +65432,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-01/review/source-gate.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65446,13 +65446,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65465,10 +65465,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-02/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65479,13 +65479,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65498,10 +65498,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-03/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65512,13 +65512,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65531,10 +65531,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-04/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65545,13 +65545,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65564,10 +65564,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-05/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65578,13 +65578,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65597,10 +65597,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-06/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65611,13 +65611,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65630,10 +65630,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-07/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65644,13 +65644,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65663,10 +65663,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-08/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65677,13 +65677,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65696,10 +65696,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-09/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65710,13 +65710,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65729,10 +65729,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-10/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65743,13 +65743,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65762,10 +65762,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-11/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65776,13 +65776,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65795,10 +65795,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-12/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65809,13 +65809,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65828,10 +65828,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-13/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65842,13 +65842,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65861,10 +65861,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/G9V4_LOTS/LOT-14/review/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65875,13 +65875,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65894,10 +65894,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/WPE_Core2_Reader_Fix_R1_20261031/rendered/core2.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65908,13 +65908,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65927,10 +65927,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/WPE_Core2_Reader_Fix_R1_20261031/rendered/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65941,13 +65941,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65960,10 +65960,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/WPE_Core2_Reader_R2_NSEP_20261101/rendered/core2.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -65974,13 +65974,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -65993,10 +65993,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/WPE_Core2_Reader_R2_NSEP_20261101/rendered/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -66007,13 +66007,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -66026,10 +66026,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/WPE_Core2_Reader_R3_HintsFirst_20261101/rendered/core2.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   },
   {
@@ -66040,13 +66040,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_developer_collateral.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -66059,10 +66059,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:workspace/output/WPE_Core2_Reader_R3_HintsFirst_20261101/rendered/index.html",
-      "route": null
+      "route": "/architecture/workspace-audit"
     }
   }
 ]

@@ -165,6 +165,105 @@ export const ARCHITECTURE_DOCS: readonly ArchitectureDocDescriptor[] = [
       <p>Complete index of all architectural standards, runbooks, and design specifications across the Grade9 platform.</p>
     `,
   },
+  {
+    id: 'benchmarks',
+    title: 'Quality Calibration Specimens & Tablet Benchmarks',
+    subtitle: '22 historical calibration specimens, tablet benchmark specifications, and S1-motion2d multi-core test fixtures',
+    category: 'CHECKLIST',
+    sourcePath: 'benchmarks/core1a-motion-in-a-plane-tablet.html',
+    summaryHtml: `
+      <p>Quality calibration specimens and tablet benchmark specifications:</p>
+      <ul>
+        <li>Core 1A Motion in a Plane tablet baseline specimens.</li>
+        <li>S1-motion2d six-core calibration HTML suites (Core1, Core1A, Core1B, Core2, Core2A, Core2B).</li>
+        <li>12.7" tablet responsive geometry and sub-200ms rendering performance criteria.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'workspace-audit',
+    title: 'Workspace Legacy ChatGPT & Scraped Olympiad Research Logs',
+    subtitle: '59 historical developer transcripts, prompt runs, and IAPT olympiad oracle research snapshots',
+    category: 'REVIEW',
+    sourcePath: 'workspace/legacy/g9v3.5/chatgpt/output/WPE_Core2_Academic_Review_R1_20261031/index.html',
+    summaryHtml: `
+      <p>Developer review logs and scraped official olympiad research:</p>
+      <ul>
+        <li>WPE Core 2 Academic Review research runs from October 2026.</li>
+        <li>IAPT official website mirrors and Junior Science Olympiad syllabus references.</li>
+        <li>Prompt composer transcripts and derivation proofs preserved under custody isolation.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'evidence-packets',
+    title: 'Historical Review Evidence Packets & Verification Checkers',
+    subtitle: '31 review packets, correspondence check outputs, and PR353 audit artifacts',
+    category: 'REVIEW',
+    sourcePath: 'evidence/reviews/pr353/packet-check/review/index.html',
+    summaryHtml: `
+      <p>Historical PR review evidence packets and check outputs:</p>
+      <ul>
+        <li>PR353 packet checks: product, review, and rendered core receipts.</li>
+        <li>B1–B7 correspondence witnesses and independent review handoffs.</li>
+        <li>Automated packet verification receipts and cryptographic digests.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'preview-batches',
+    title: 'Ephemeral Build Previews & Alpha Boards',
+    subtitle: '34 build batch previews, alpha boards, and temporary test containers',
+    category: 'GUIDE',
+    sourcePath: 'preview/alpha-board.html',
+    summaryHtml: `
+      <p>Development preview containers and batch testing harnesses:</p>
+      <ul>
+        <li>Alpha board development layouts and route monitors.</li>
+        <li>Batch preview containers (b02, b03, etc.) for multi-subtopic validation.</li>
+        <li>Diagnostic fallback containers and 404 test pages.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'test-fixtures',
+    title: 'Test Harness Fixtures & Browser Host Containers',
+    subtitle: '6 test harness fixtures for portable workbenches and QRT smoke tests',
+    category: 'CHECKLIST',
+    sourcePath: 'tests/fixtures/portable-workbench/external-host.html',
+    summaryHtml: `
+      <p>Test harness fixtures used by headless Playwright and Node test runners:</p>
+      <ul>
+        <li>External host test harnesses for standalone portable workbenches.</li>
+        <li>QRT cognitive demand interactive smoke test runners.</li>
+        <li>Research-first regression preview fixtures.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'developer-tools',
+    title: 'Developer Diagnostic Tools & Run Builders',
+    subtitle: '3 builder and runtime inspection tools',
+    category: 'PIPELINE',
+    sourcePath: 'tools/run-builder/index.html',
+    summaryHtml: `
+      <p>Developer tooling and pipeline builders:</p>
+      <ul>
+        <li>Curriculum run builder and execution pipeline monitor.</li>
+        <li>Library question indexer and asset registry browser.</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'peer-review',
+    title: 'Physics & Multi-Disciplinary Parity Review',
+    subtitle: 'Independent peer review notes and preview validations',
+    category: 'REVIEW',
+    sourcePath: 'review/physics/ph09-ph12-wpe-parity-r1/preview.html',
+    summaryHtml: `
+      <p>Physics syllabus review notes and validation checkpoints for chapters PH09 through PH12.</p>
+    `,
+  },
 ];
 
 export const BLUEPRINT_CARDS = [
