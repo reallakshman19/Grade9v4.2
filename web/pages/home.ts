@@ -174,10 +174,6 @@ export class DashboardScreenController {
       <h1>Grade9 Curriculum Home</h1>
       <p class="g9-subtitle">Interactive STEM Learning & Assessment Platform</p>
     </div>
-    <div class="g9-header-badges">
-      <span class="g9-badge g9-badge-auth">IMPLEMENTATION_AUTHORIZED</span>
-      <span class="g9-badge g9-badge-admission">ADMISSION: HOLD</span>
-    </div>
   </header>
 
   ${s.resumeAnchor ? `

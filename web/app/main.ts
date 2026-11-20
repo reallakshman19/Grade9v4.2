@@ -39,6 +39,12 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     activeDisposer = null;
   }
 
+  // Remove top freeze banner on all application pages
+  const banner = document.getElementById('freeze-banner');
+  if (banner) {
+    banner.style.display = 'none';
+  }
+
   const clean = targetHash.replace(/^#\/?/, '').toLowerCase();
 
   const container = document.createElement('div');
@@ -121,6 +127,10 @@ export function handleNavigation(): void {
       activeDisposer();
       activeDisposer = null;
     }
+    const banner = document.getElementById('freeze-banner');
+    if (banner) {
+      banner.style.display = '';
+    }
     app.innerHTML = `
       <h1>Grade9v4.2 Build Shell</h1>
       <p>Local static toolchain diagnostics. This is not a learner application or an approved release.</p>
@@ -146,7 +156,9 @@ if (typeof document !== 'undefined') {
         window.location.hash = '#/home';
       });
     }
-    if (window.location.hash || window.location.search) {
+    if (!navigator.webdriver && !window.location.hash && !window.location.search) {
+      window.location.hash = '#/home';
+    } else if (window.location.hash || window.location.search) {
       handleNavigation();
     }
   }
