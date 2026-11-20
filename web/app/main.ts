@@ -4,6 +4,7 @@ import { Core1ALessonPageController, mountCore1ALesson } from '../pages/lesson.t
 import { Core1BTransferPageController, mountCore1BTransfer } from '../pages/transfer.ts';
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
+import { createTopicScreen, mountTopicWorkspace } from '../pages/topic.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
 import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
 import { Router } from './router.ts';
@@ -93,7 +94,18 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   root.replaceChildren(container);
 
   // Dispatch route based on Router match
-  if (clean.includes('core1a') || (match.type === 'ROLE' && match.params.coreRole === 'CORE1A')) {
+  if (match.type === 'TOPIC' || match.type === 'TOPIC_TAB') {
+    if (match.params.subjectId?.toLowerCase() === 'physics' && match.params.topicId?.toLowerCase() === 'wpe') {
+      const topicController = createTopicScreen();
+      const activeTab = match.params.tab || 'questions';
+      const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
+    } else {
+      renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
+    }
+  } else if (clean.includes('core1a') || (match.type === 'ROLE' && match.params.coreRole === 'CORE1A')) {
     const controller = new Core1ALessonPageController();
     const m = mountCore1ALesson(content, controller);
     activeDisposer = () => m.dispose();
@@ -124,8 +136,6 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     activeDisposer = () => m.dispose();
   } else if (match.type === 'SUBJECT') {
     renderSubjectPlaceholder(content, match.params.subjectId);
-  } else if (match.type === 'TOPIC' || match.type === 'TOPIC_TAB') {
-    renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
   } else if (match.type === 'COMPETITIVE') {
     renderCompetitiveExamPlaceholder(content, match.params.examId);
   } else if (match.type === 'PRACTICE') {

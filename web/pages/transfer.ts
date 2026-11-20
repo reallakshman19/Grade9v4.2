@@ -62,7 +62,7 @@ export class Core1BTransferPageController{
  actionDiagnose(move:string,why:string){return this.getJourney().commitDiagnosis(move,why);}
  actionRepair(why:string,work:readonly WorkArtifact[]){return this.getJourney().commitRepair(why,work);}
  actionCommitBoundary(){return this.getJourney().commitBoundaryAttempt();}actionBoundaryFeedback(){return this.getJourney().viewBoundaryFeedback();}
- actionReturnSource(){return this.getJourney().returnToSource();}actionReturn(){return '/home';}requestHint(){return this.getJourney().requestHint();}
+ actionReturnSource(){return this.getJourney().returnToSource();}actionReturn(){return '#/subject/physics/topic/wpe/learn-try';}requestHint(){return this.getJourney().requestHint();}
  setOrientation(o:DisplayOrientation){if(!['LANDSCAPE','PORTRAIT'].includes(o))throw Error('Invalid orientation');this.orientation=o;}getOrientation(){return this.orientation;}
  toDraft(){return this.journey?.toDraft()??null;}restoreDraft(d:Core1BDraft){return this.getJourney().restoreDraft(d);}
  getViewState(){const j=this.journey,d=j?.getDefinition();return {screenState:(!j?'loading':j.isSaveBlocked()?'save blocked':!j.isReady()?'pending review':j.isAssistedAttempt()?'assisted':'populated') as TransferScreenState,journeyId:d?.journeyId??'',currentStage:j?.getStage()??'PREDICT' as TransferStage,orientation:this.orientation,isAssisted:j?.isAssistedAttempt()??false,isFirstAttemptCommitted:j?.isFirstAttemptCommitted()??false,isBoundaryCommitted:j?.isBoundaryCommitted()??false,exposedHints:j?.getExposedHints()??[],originId:d?.originRef.id??'',ready:j?.isReady()??false,minHitTargetPx:48};}

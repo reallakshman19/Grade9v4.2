@@ -138,10 +138,10 @@ test('Phase 1 - 12.7" Tablet Touch Interface & Router Verification', async (t) =
     await page.screenshot({ path: `${EVIDENCE_DIR}/phase1_nav_subject_physics.png` });
 
     // 3.4 Navigate to Topic Tab (Question Bank)
-    await page.goto(`${BASE_URL}/#/subject/physics/topic/wpe/questions`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${BASE_URL}/#/subject/math/topic/algebra/questions`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.placeholder-title', { timeout: 10000 });
     const tabHeader = await page.locator('.placeholder-title').textContent();
-    assert.match(tabHeader ?? '', /Topic Workspace: WPE/);
+    assert.match(tabHeader ?? '', /Topic Workspace: ALGEBRA/);
     const tabContent = await page.locator('.placeholder-box').textContent();
     assert.match(tabContent ?? '', /Active Tab: QUESTIONS/);
     await page.screenshot({ path: `${EVIDENCE_DIR}/phase1_nav_topic_tab_questions.png` });

@@ -97,7 +97,7 @@ export class QuestionPageController {
   }
 
   getViewState(): QuestionPageViewState {
-    const returnRoute = `/topic/${this.subjectCode.toLowerCase()}/${this.topicCode.toLowerCase()}`;
+    const returnRoute = `/subject/${this.subjectCode.toLowerCase()}/topic/${this.topicCode.toLowerCase()}/questions`;
     return {
       pageStatus: this.status,
       workspaceState: this.workspace ? this.workspace.getViewState() : null,
@@ -130,7 +130,16 @@ export class QuestionPageController {
     } else if (q.kind === 'MULTIPLE_CHOICE' && q.options) {
       responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;">Select all that apply:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="checkbox" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span>${escapeHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
     } else {
-      responseHtml += `<div style="margin-bottom:16px;"><label style="display:block;margin-bottom:6px;font-weight:600;">Your answer:</label><input type="text" id="g9-quantity-input" placeholder="Value..." style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;width:100%;max-width:320px;" ${ws.isLocked ? 'disabled' : ''}></div>`;
+      const units = q.allowedUnits && q.allowedUnits.length > 0 ? q.allowedUnits : ['J'];
+      responseHtml += `<div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:6px;font-weight:600;">Your answer:</label>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <input type="text" id="g9-quantity-input" placeholder="Value..." style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;width:100%;max-width:240px;font-size:16px;" ${ws.isLocked ? 'disabled' : ''}>
+          <select id="g9-unit-select" style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:16px;background:#f8fafc;" ${ws.isLocked ? 'disabled' : ''}>
+            ${units.map((u: string) => `<option value="${escapeHtml(u)}">${escapeHtml(u)}</option>`).join('')}
+          </select>
+        </div>
+      </div>`;
     }
 
     responseHtml += `<div class="g9-workspace-actions" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;">
@@ -201,12 +210,25 @@ export function mountQuestionPage(root: HTMLElement, c: QuestionPageController) 
       }
     }
   };
+  const updateQuantity = () => {
+    const inp = root.querySelector<HTMLInputElement>('#g9-quantity-input');
+    const sel = root.querySelector<HTMLSelectElement>('#g9-unit-select');
+    const ws = c.getWorkspace();
+    if (!inp || !ws) return;
+    const unit = sel ? sel.value : (ws.getViewState().question.allowedUnits?.[0] || 'J');
+    const val = inp.value.trim();
+    if (val.length > 0) {
+      ws.updateResponse({ kind: 'NUMERIC_QUANTITY', quantity: { decimal: val, magnitude: Number(val), unit } });
+    }
+    const submitBtn = root.querySelector<HTMLButtonElement>('#g9-submit-btn');
+    if (submitBtn) submitBtn.disabled = !ws.getViewState().canSubmit;
+  };
   const change = (event: Event) => {
     const n = event.target;
-    if (!active || !(n instanceof HTMLInputElement) || !root.contains(n)) return;
+    if (!active || !n || !root.contains(n as Node)) return;
     const ws = c.getWorkspace();
     if (!ws) return;
-    if (n.name === 'response-option') {
+    if (n instanceof HTMLInputElement && n.name === 'response-option') {
       if (n.type === 'radio') {
         ws.updateResponse({ kind: 'SINGLE_CHOICE', selectedOptionId: n.value });
       } else if (n.type === 'checkbox') {
@@ -215,15 +237,15 @@ export function mountQuestionPage(root: HTMLElement, c: QuestionPageController) 
       }
       const submitBtn = root.querySelector<HTMLButtonElement>('#g9-submit-btn');
       if (submitBtn) submitBtn.disabled = !ws.getViewState().canSubmit;
+    } else if (n instanceof HTMLSelectElement && n.id === 'g9-unit-select') {
+      updateQuantity();
     }
   };
   const input = (event: Event) => {
     const n = event.target;
     if (!active || !(n instanceof HTMLInputElement) || !root.contains(n)) return;
-    const ws = c.getWorkspace();
-    if (!ws) return;
     if (n.id === 'g9-quantity-input') {
-      ws.updateResponse({ kind: 'NUMERIC_QUANTITY', quantity: { decimal: n.value, magnitude: Number(n.value), unit: '' } });
+      updateQuantity();
     }
   };
   root.addEventListener('click', click);
