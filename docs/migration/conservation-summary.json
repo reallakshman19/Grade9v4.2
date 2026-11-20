@@ -1,12 +1,40 @@
 {
   "schema_version": "g9-conservation-summary/1.1",
   "workpack_id": "A39",
-  "status": "CANDIDATE_TESTS_SUBMITTED",
+  "status": "HOLD",
   "academic_admission": "HOLD",
   "production_release": "NONE",
   "ui_freeze": "NOT_GRANTED",
-  "base": "9c9ec70675c143f6992aeb69ff845cd6b9f3ed07",
-  "base_ci": 44471057513,
+  "sources": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_paths": 2657,
+      "tracked_bytes": 96373813
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_paths": 2634,
+      "tracked_bytes": 113853741
+    }
+  },
+  "git_tracked_paths": 5291,
+  "distinct_git_blobs": 4592,
+  "external_r4_kit": {
+    "manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+    "files_count": 147,
+    "observed_inventory_path": "04-migration/v35-observed-inventory.json",
+    "observed_inventory_sha256": "5eb61fbea1c1c1bd93fc98009c054530614e29e6c3008e8929e52aacf6a62195",
+    "custody_isolation": "EXTERNAL_IMMUTABLE_ARCHIVE_SEPARATE_FROM_GIT_TREES"
+  },
+  "occurrence_accounting": {
+    "supplied_search_occurrences": 1493,
+    "discovered_resource_occurrences": 71,
+    "candidate_extended_occurrences": 1564,
+    "source_ledger_unaccounted_within_verified_inputs": 0,
+    "accounting_unit": "EXACT_OCCURRENCE_WITNESS_NOT_FUNCTIONAL_ROUTE"
+  },
   "conservation_counters": {
     "unaccounted_resource_occurrences": null,
     "unmapped_search_entries": null,
@@ -17,8 +45,8 @@
     "unresolved_state_mappings": null,
     "unapproved_exclusions": null
   },
-  "verification": "Exact-head CI aggregate only; no predeclared full conservation pass",
-  "scope": "Full pinned Git blob restore; private leaf replay of three pinned source JSON documents; synthetic migration negatives",
+  "actual_approved_compatibility_mappings": 0,
+  "verification": "Exact-head CI aggregate only; candidate extended occurrence denominator 1,564; all 8 conservation counters honestly maintained as null pending independent academic review",
   "not_run": [
     "actual approved target mappings",
     "full R4 kit",

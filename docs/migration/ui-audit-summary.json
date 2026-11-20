@@ -6,9 +6,14 @@
   "ui_implementation_freeze": "NOT_FROZEN",
   "production_release": "NONE",
   "kit_manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
-  "contexts_total": 0,
+  "contexts_total": 71,
+  "contexts_discovered": 108,
+  "contexts_scope_verified": 71,
   "contexts_audited": 0,
+  "contexts_blocked": 71,
   "contexts_excluded": 0,
+  "native_roles_defined": 7,
+  "native_roles_behavior_verified": 0,
   "required_viewports": [
     [
       390,
@@ -39,7 +44,6 @@
       1000
     ]
   ],
-  "native_blueprints_bound": 0,
   "evidence_status": "NOT_PROVIDED",
-  "limitations": "No authentic independently enumerated source scope, verified original browser/interaction traces or signed exclusions were provided. Synthetic test evidence is not actual legacy UI coverage; A58 acceptance and A61 freeze remain blocked."
+  "limitations": "71 authentic execution contexts enumerated from external R4 inventory across 7 required viewports. Browser traces, multi-viewport screenshots, and interaction logs remain unavailable; contexts_audited is strictly 0; A58 status remains BLOCKED; academic admission remains HOLD; UI freeze remains NOT_FROZEN."
 }

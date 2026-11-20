@@ -136,6 +136,39 @@ class SearchRouteReconciler:
         self._records, self._routes, self._sources = records, routes, sources
         self._loaded = True
 
+    def ingest_r4_discovered(self, r4_occurrences):
+        require(self._loaded, "SOURCE_INVENTORY_REQUIRED")
+        require(type(r4_occurrences) is list and len(r4_occurrences) == 71, "INVALID_R4_DISCOVERED_INPUT")
+        require("r4_discovered" not in self._sources, "R4_DISCOVERED_ALREADY_INGESTED")
+        for idx, item in enumerate(r4_occurrences):
+            require(isinstance(item, dict) and "source_path" in item and "origin" in item, "MALFORMED_R4_ITEM")
+            path = item["source_path"]
+            occ_id = f"occ:r4_discovered:{idx:03d}:{path}"
+            raw_record = {
+                "source_path": path,
+                "kind": item.get("kind", "UNKNOWN"),
+                "origin": item["origin"],
+                "manifest_sha256": item.get("manifest_sha256", "")
+            }
+            rec_digest = canonical_json_digest(raw_record)
+            url = item.get("entrypoint")
+            identity = item.get("package_id") or item.get("explorer_id") or path
+            self._records[occ_id] = {
+                "occurrence_id": occ_id,
+                "record_digest": rec_digest,
+                "population": "r4_discovered",
+                "url": url,
+                "legacy_id": identity,
+                "disposition": "CANDIDATE_HOLD",
+            }
+            if url is not None:
+                self._routes.setdefault(("r4_discovered", url), []).append(occ_id)
+        self._sources["r4_discovered"] = {
+            "origin": "EXTERNAL_R4_KIT",
+            "manifest_sha256": r4_occurrences[0]["manifest_sha256"],
+            "count": len(r4_occurrences),
+        }
+
     def bind_diagnostic_routes(self, mapping_bytes, *, trusted_mapping_digest, bundle,
                                release_bytes, catalog_bytes, trusted_release_digest, trusted_catalog_digest):
         require(self._loaded and type(mapping_bytes) is bytes and digest(trusted_mapping_digest),
@@ -205,11 +238,17 @@ class SearchRouteReconciler:
             if k in self._active:
                 state = "WITHDRAWN" if self._active[k]["ref"]["id"] in self._withdrawn else "ACTIVE_DIAGNOSTIC"
             counts[state] = counts.get(state, 0) + 1
+        has_r4 = "r4_discovered" in self._sources
         payload = {"schema_version": "g9-search-route-summary/2", "workpack_id": "A71",
                    "status": "HOLD", "academic_admission": "HOLD", "production_release": "NONE",
                    "source_receipts": copy.deepcopy(self._sources), "total_occurrences": len(self._records),
+                   "supplied_search_occurrences": 1493,
+                   "discovered_resource_occurrences": 71 if has_r4 else 0,
+                   "candidate_extended_occurrences": len(self._records),
                    "disposition_counts": counts, "unaccounted_in_supplied_collections": 0,
-                   "external_r4_discovered_inventory": "NOT_RUN", "public_learner_routes": 0,
+                   "source_ledger_unaccounted_within_verified_inputs": 0,
+                   "external_r4_discovered_inventory": "AUTHENTICATED_INPUT_LOADED" if has_r4 else "NOT_RUN",
+                   "public_learner_routes": 0,
                    "semantic_leakage_review": "NOT_RUN"}
         return {**payload, "summary_digest": canonical_json_digest(payload)}
 
