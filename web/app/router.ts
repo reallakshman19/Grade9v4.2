@@ -15,6 +15,7 @@ export type RouteType =
   | 'PRACTICE'
   | 'LAB'
   | 'PERSONAL'
+  | 'ARCHITECTURE'
   | 'NOT_FOUND';
 
 export interface RouteMatch {
@@ -288,6 +289,18 @@ export class Router {
         type: 'PERSONAL',
         path: pathPart,
         params: { tab: personalMatch[1] ? decodeURIComponent(personalMatch[1]) : 'overview' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 13. Architecture Route: "/architecture" or "/architecture/:docId"
+    const archMatch = pathPart.match(/^\/architecture(?:\/([^/]+))?$/);
+    if (archMatch) {
+      return {
+        type: 'ARCHITECTURE',
+        path: pathPart,
+        params: { docId: archMatch[1] ? decodeURIComponent(archMatch[1]) : '' },
         query,
         hash: hashPart,
       };

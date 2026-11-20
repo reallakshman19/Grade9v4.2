@@ -15,6 +15,7 @@ import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
 import { mountStandaloneLab } from '../pages/resources.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
 import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
+import { mountArchitectureHub } from '../pages/architecture.ts';
 import { Router } from './router.ts';
 import { DEFAULT_APP_REGISTRY } from '../runtime/registry/index.ts';
 import { escapeHtml } from '../runtime/rendering.ts';
@@ -121,6 +122,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   const isExam = match.type === 'COMPETITIVE' || clean.includes('competitive');
   const isLab = match.type === 'LAB' || clean.includes('labs');
   const isPersonal = match.type === 'PERSONAL' || clean.includes('personal');
+  const isArch = match.type === 'ARCHITECTURE' || clean.includes('architecture');
   const isSearch = match.type === 'SEARCH' || clean.includes('search');
 
   nav.innerHTML = `
@@ -130,6 +132,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     <button type="button" data-route="#/competitive/exam:nsejs" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isExam ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isExam ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🏆 Competitive Exams</button>
     <button type="button" data-route="#/labs/lab:circles-master" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isLab ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isLab ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🔬 Standalone Labs</button>
     <button type="button" data-route="#/personal" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isPersonal ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isPersonal ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">📈 Personal Study</button>
+    <button type="button" data-route="#/architecture" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isArch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isArch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🧭 Architecture</button>
     <button type="button" data-route="#/search" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isSearch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isSearch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;margin-left:auto;">🔍 Search</button>
   `;
 
@@ -283,6 +286,11 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     activeDisposer = () => m.dispose();
   } else if (match.type === 'PERSONAL') {
     renderPersonalStudyPlaceholder(content, match.params.tab);
+  } else if (match.type === 'ARCHITECTURE') {
+    const m = mountArchitectureHub(content, match.params.docId, (route) => {
+      window.location.hash = '#' + route;
+    });
+    activeDisposer = () => m.dispose();
   } else if (match.type === 'SEARCH') {
     const factory = createDiagnosticSearchEngineFactory();
     const searchController = new UniversalSearchPageController(content, appRouter, factory);

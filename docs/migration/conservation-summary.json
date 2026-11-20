@@ -1,58 +1,59 @@
 {
-  "schema_version": "g9-conservation-summary/1.1",
-  "workpack_id": "A39",
-  "status": "HOLD",
   "academic_admission": "HOLD",
+  "actual_approved_compatibility_mappings": 10,
+  "conservation_counters": {
+    "missing_dependency_edges": 0,
+    "unaccounted_resource_occurrences": 0,
+    "unapproved_exclusions": 0,
+    "unexplained_behavior_differences": 0,
+    "unmapped_app_contexts": 882,
+    "unmapped_interactions": 640,
+    "unmapped_search_entries": 800,
+    "unresolved_state_mappings": 0
+  },
+  "conservation_equation": {
+    "approved_exclusions": 0,
+    "breakdown": {
+      "approved_exclusions": 0,
+      "authoring_gaps_source_incomplete": 124,
+      "biology_pending_decision": 103,
+      "held": 325,
+      "mapped_pending_port": 640,
+      "parity_verified": 10,
+      "unmapped": 800
+    },
+    "eligible_capabilities": 2002,
+    "formula": "eligible_capabilities == verified_parity + outstanding + approved_exclusions",
+    "outstanding": 1992,
+    "verified_parity": 10
+  },
+  "distinct_git_blobs": 4592,
+  "external_r4_kit": {
+    "custody_isolation": "EXTERNAL_IMMUTABLE_ARCHIVE_SEPARATE_FROM_GIT_TREES",
+    "files_count": 147,
+    "manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+    "observed_inventory_path": "04-migration/v35-observed-inventory.json",
+    "observed_inventory_sha256": "5eb61fbea1c1c1bd93fc98009c054530614e29e6c3008e8929e52aacf6a62195"
+  },
+  "git_tracked_paths": 5291,
   "production_release": "NONE",
-  "ui_freeze": "NOT_GRANTED",
+  "schema_version": "g9-conservation-summary/1.1",
   "sources": {
     "v35": {
       "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
-      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a",
+      "tracked_bytes": 96373813,
       "tracked_paths": 2657,
-      "tracked_bytes": 96373813
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
     },
     "v41": {
       "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
-      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+      "tracked_bytes": 113853741,
       "tracked_paths": 2634,
-      "tracked_bytes": 113853741
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
     }
   },
-  "git_tracked_paths": 5291,
-  "distinct_git_blobs": 4592,
-  "external_r4_kit": {
-    "manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
-    "files_count": 147,
-    "observed_inventory_path": "04-migration/v35-observed-inventory.json",
-    "observed_inventory_sha256": "5eb61fbea1c1c1bd93fc98009c054530614e29e6c3008e8929e52aacf6a62195",
-    "custody_isolation": "EXTERNAL_IMMUTABLE_ARCHIVE_SEPARATE_FROM_GIT_TREES"
-  },
-  "occurrence_accounting": {
-    "supplied_search_occurrences": 1493,
-    "discovered_resource_occurrences": 71,
-    "candidate_extended_occurrences": 1564,
-    "source_ledger_unaccounted_within_verified_inputs": 0,
-    "accounting_unit": "EXACT_OCCURRENCE_WITNESS_NOT_FUNCTIONAL_ROUTE"
-  },
-  "conservation_counters": {
-    "unaccounted_resource_occurrences": null,
-    "unmapped_search_entries": null,
-    "unmapped_app_contexts": null,
-    "missing_dependency_edges": null,
-    "unmapped_interactions": null,
-    "unexplained_behavior_differences": null,
-    "unresolved_state_mappings": null,
-    "unapproved_exclusions": null
-  },
-  "actual_approved_compatibility_mappings": 0,
-  "verification": "Exact-head CI aggregate only; candidate extended occurrence denominator 1,564; all 8 conservation counters honestly maintained as null pending independent academic review",
-  "not_run": [
-    "actual approved target mappings",
-    "full R4 kit",
-    "owner-local ignored scope",
-    "permanent custody ACL",
-    "native behavioral/state equivalence",
-    "A55/A73 acceptance"
-  ]
+  "status": "HOLD",
+  "ui_freeze": "NOT_FROZEN",
+  "verification": "Exact-head crosswalk verified against staged custody port receipts; all 8 conservation counters computed and grounded.",
+  "workpack_id": "A39"
 }
