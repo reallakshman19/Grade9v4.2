@@ -49,7 +49,13 @@ async function assertDiagnosticDist(dir: string): Promise<void> {
     }
   }
   await walk(dir);
-  assert.deepEqual(files.sort(), ['index.html', entry.slice(2)].sort(), 'unexpected diagnostic artifact');
+  const allowed = ['index.html', entry.slice(2)];
+  for (const f of files) {
+    if (/^assets\/search-worker-[A-Za-z0-9_-]+\.js$/.test(f)) {
+      allowed.push(f);
+    }
+  }
+  assert.deepEqual(files.sort(), allowed.sort(), 'unexpected diagnostic artifact');
 }
 
 const expectedBody = [

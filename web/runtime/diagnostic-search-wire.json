@@ -1,0 +1,56 @@
+{
+  "release": "{\"schema_version\": \"g9-release-projection/1.1\", \"release_id\": \"RELEASE-DEMO-01\", \"target_mode\": \"DEMO\", \"demo_banner\": true, \"academic_admission\": \"HOLD\", \"production_release\": \"NONE\", \"ui_freeze\": \"NOT_GRANTED\", \"artifact_scope\": \"PUBLIC_SAFE_DIAGNOSTIC_ONLY\", \"learner_release\": false, \"fixture_id\": \"R4-GRAPH\", \"graph_digest\": \"eb0a02d04fb43c6f23b634d3fd2367972272c3a364b69de9c6e8f20fbb64e61f\", \"total_objects\": 8, \"projections\": {\"learner_precommit\": [{\"type\": \"FRESH_TASK\", \"id\": \"demo:f:001\", \"revision\": 1, \"sha256\": \"d366d6197aec8a1d556d9a27a23e7c5c655a1c470cc072e99a5344ad55da6b23\", \"stem\": \"A force perpendicular to motion acts on a moving object. Explain the work done.\", \"subject_id\": \"PHYSICS\", \"demo\": true, \"asset_refs\": [], \"response_kind\": \"CONSTRUCTED_RESPONSE\"}, {\"type\": \"QUESTION\", \"id\": \"demo:q:001\", \"revision\": 1, \"sha256\": \"b0c6ae0d9e56b0d079e896eeb2981839fa190a871b513e421ec918b70bf27ed0\", \"stem\": \"A force of 2 N acts along a displacement of 3 m. What work is done?\", \"subject_id\": \"PHYSICS\", \"demo\": true, \"asset_refs\": [], \"response_kind\": \"SINGLE_CHOICE\", \"options\": [{\"id\": \"A\", \"text\": \"5 J\"}, {\"id\": \"B\", \"text\": \"6 J\"}]}], \"learner_postcommit\": [], \"search_index\": [], \"assessment_contracts\": []}, \"search_status\": \"NO_REGISTERED_ELIGIBLE_LEARNER_ROUTES\", \"protected_projection_status\": \"SEPARATE_OPERATOR_DIAGNOSTIC_ONLY\", \"visibility_policy\": {\"stages\": [\"PREDICT\", \"ATTEMPT\", \"RECONSTRUCT\", \"DIAGNOSE\", \"REPAIR\", \"BOUNDARY_TEST\", \"COMPLETE\"], \"capabilities\": [\"VIEW_STIMULUS\", \"EDIT_WORK\", \"MODEL_MANIPULATE\", \"MODEL_AUTO_CALCULATE\", \"H1\", \"H2\", \"H3\", \"REFERENCE_SOLUTION\", \"BOUNDARY_REFERENCE\", \"SOURCE_RETURN\", \"READ_ANCHOR\", \"SHOW_REASONING_CRUX\"], \"scope\": \"STAGE_CONSTRAINTS_ONLY_NOT_AUTHORIZATION\", \"protected_content_in_static_bundle\": false, \"runtime_disclosure_service\": \"NOT_IMPLEMENTED\"}, \"release_digest\": \"4dc11643b43fe25c957f3c73e8bb6ff875c4c2d78e3ff1870244eb5aa8000d2f\"}",
+  "manifest": "{\"schema_version\": \"g9-search-index/1.1\", \"release_id\": \"RELEASE-DEMO-01\", \"release_digest\": \"4dc11643b43fe25c957f3c73e8bb6ff875c4c2d78e3ff1870244eb5aa8000d2f\", \"catalog_digest\": \"5fad0b0e17d087e5396967c48ad28e4c7f58609d41261e7b15efb78a75c56221\", \"target_mode\": \"DEMO\", \"demo_banner\": true, \"learner_release\": false, \"artifact_scope\": \"PUBLIC_SAFE_DIAGNOSTIC_ONLY\", \"academic_admission\": \"HOLD\", \"production_release\": \"NONE\", \"total_items\": 1, \"boost_rules\": {\"exact_id\": 10, \"exact_title\": 8, \"title_tokens\": 5, \"concept_aliases\": 3, \"summary_tokens\": 1}, \"normalization\": \"UNICODE_NFKC_CASEFOLD\", \"shards\": [{\"shard_id\": \"shard-physics\", \"subject_id\": \"PHYSICS\", \"item_count\": 1, \"sha256\": \"15d9458cd64a10decc6f0b8b1a6596d05b57bcc534b3e70db282e78a50a338a3\"}], \"manifest_digest\": \"33a1b9814b76d738aab1844246a00084e31fe25a518e93cbca2b3f9c2ef285e3\"}",
+  "shards": {
+    "shard-physics": "{\"shard_id\": \"shard-physics\", \"release_id\": \"RELEASE-DEMO-01\", \"release_digest\": \"4dc11643b43fe25c957f3c73e8bb6ff875c4c2d78e3ff1870244eb5aa8000d2f\", \"catalog_digest\": \"5fad0b0e17d087e5396967c48ad28e4c7f58609d41261e7b15efb78a75c56221\", \"item_count\": 1, \"items\": [{\"id\": \"demo:q:001\", \"revision\": 1, \"source_ref\": {\"type\": \"QUESTION\", \"id\": \"demo:q:001\", \"revision\": 1, \"sha256\": \"b0c6ae0d9e56b0d079e896eeb2981839fa190a871b513e421ec918b70bf27ed0\"}, \"releaseId\": \"RELEASE-DEMO-01\", \"route\": \"/question/demo%3Aq%3A001\", \"kind\": \"QUESTION\", \"subjectIds\": [\"PHYSICS\"], \"title\": \"Synthetic Straße energy H₂O demo:q:001\", \"summary\": \"Diagnostic text <img src=x onerror=alert(1)>\", \"reviewedTerms\": [\"energy\", \"h2o\", \"strasse\", \"गति\"], \"programmeIds\": [\"programme:synthetic\"], \"editionIds\": [\"edition:synthetic\"], \"conceptIds\": [\"concept:synthetic\"], \"publicFacets\": {\"subject\": [\"PHYSICS\"], \"kind\": [\"QUESTION\"], \"programme\": [\"programme:synthetic\"], \"edition\": [\"edition:synthetic\"], \"concept\": [\"concept:synthetic\"]}}]}"
+  },
+  "pins": {
+    "learnerId": "synthetic-learner",
+    "releaseId": "RELEASE-DEMO-01",
+    "releaseDigest": "4dc11643b43fe25c957f3c73e8bb6ff875c4c2d78e3ff1870244eb5aa8000d2f",
+    "catalogDigest": "5fad0b0e17d087e5396967c48ad28e4c7f58609d41261e7b15efb78a75c56221",
+    "manifestDigest": "33a1b9814b76d738aab1844246a00084e31fe25a518e93cbca2b3f9c2ef285e3"
+  },
+  "expected": [
+    {
+      "text": "ＥＮＥＲＧＹ",
+      "ids": [
+        "demo:q:001"
+      ]
+    },
+    {
+      "text": "STRASSE",
+      "ids": [
+        "demo:q:001"
+      ]
+    },
+    {
+      "text": "H₂O",
+      "ids": [
+        "demo:q:001"
+      ]
+    },
+    {
+      "text": "गति",
+      "ids": [
+        "demo:q:001"
+      ]
+    },
+    {
+      "text": "unmatched",
+      "ids": []
+    },
+    {
+      "text": "",
+      "ids": [
+        "demo:q:001"
+      ]
+    },
+    {
+      "text": "demo:q:001",
+      "ids": [
+        "demo:q:001"
+      ]
+    }
+  ]
+}

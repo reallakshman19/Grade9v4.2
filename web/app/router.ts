@@ -332,6 +332,20 @@ export class Router {
       this.historyStack.push(this.currentMatch);
     }
     this.currentMatch = nextMatch;
+    if (typeof window !== 'undefined' && window.location) {
+      if (this.useHash) {
+        let clean = targetPath;
+        if (clean.startsWith('/#/')) clean = clean.slice(2);
+        else if (clean.startsWith('/#')) clean = clean.slice(2);
+        else if (clean.startsWith('#/')) clean = clean.slice(1);
+        else if (clean.startsWith('#')) clean = clean.slice(1);
+        if (!clean.startsWith('/')) clean = '/' + clean;
+        const hashPart = '#' + clean;
+        if (window.location.hash !== hashPart) {
+          window.location.hash = hashPart;
+        }
+      }
+    }
     this.notify();
     return nextMatch;
   }

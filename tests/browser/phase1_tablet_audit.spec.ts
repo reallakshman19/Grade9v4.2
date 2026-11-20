@@ -118,9 +118,9 @@ test('Phase 1 - 12.7" Tablet Touch Interface & Router Verification', async (t) =
 
     // 3.1 Navigate to Universal Search
     await page.goto(`${BASE_URL}/#/search`, { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('.placeholder-title', { timeout: 10000 });
-    const searchHeader = await page.locator('.placeholder-title').textContent();
-    assert.match(searchHeader ?? '', /Universal Search/);
+    await page.waitForSelector('.g9-search', { timeout: 10000 });
+    const searchHeader = await page.locator('.g9-search h1').textContent();
+    assert.match(searchHeader ?? '', /Find a question/);
     await page.screenshot({ path: `${EVIDENCE_DIR}/phase1_nav_search.png` });
 
     // 3.2 Navigate to Personal Study Hub

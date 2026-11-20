@@ -17,7 +17,12 @@ export class UniversalSearchPageController{
  #unavailable(){this.#state='STALE_OR_UNAVAILABLE';this.#engine?.close();this.#engine=null;const box=this.#frame();this.#status(box,'Search index unavailable, stale or unauthorized. No cached results are displayed.');this.#button(box,'Reload verified search',()=>{void this.open(this.#router.toHref('/search'));},'reload');this.#root.replaceChildren(box);}
  async open(path:string){
   if(this.#closed)return false;const m=this.#router.match(path);
-  if(m.type!=='SEARCH'||Object.keys(m.query).length||m.hash){this.#epoch++;this.#unavailable();return false;}
+  if(m.type!=='SEARCH'||m.hash||Object.keys(m.query).some(k=>k!=='q')){this.#epoch++;this.#unavailable();return false;}
+  const rawQ=m.query.q;
+  if(rawQ!==undefined){
+   if(typeof rawQ!=='string'||rawQ.length>1000||/[\p{Cs}]/u.test(rawQ)){this.#epoch++;this.#unavailable();return false;}
+   this.#query=rawQ.trim();
+  }else{this.#query='';}
   const epoch=++this.#epoch;this.#engine?.close();this.#engine=null;this.#state='LOADING';const box=this.#frame();this.#status(box,'Verifying search index…');this.#root.replaceChildren(box);
   try{
    const e=await this.#factory();if(this.#closed||epoch!==this.#epoch){e.close();return false;}
@@ -34,16 +39,16 @@ export class UniversalSearchPageController{
    const box=this.#frame(),form=el('form'),label=el('label','Search reviewed questions by topic, term or formula'),input=el('input');input.type='search';input.value=query;input.maxLength=1000;input.dataset.search='true';label.append(input);form.append(label);
    const tools=el('div');tools.className='controls';
    const submit=el('button','Search');submit.type='submit';submit.dataset.action='search';tools.append(submit);
-   this.#button(tools,'Clear',()=>{this.#query='';this.#offset=0;void this.#render();},'clear');form.append(tools);
+   this.#button(tools,'Clear',()=>{this.#query='';this.#offset=0;if(typeof window!=='undefined'&&window.location){if(window.location.hash!=='#/search')window.history.replaceState(null,'','#/search');}void this.#render();},'clear');form.append(tools);
    const symbols=el('div');symbols.className='controls';symbols.setAttribute('aria-label','Formula symbols');
    for(const symbol of ['+','−','=','·','²','³','√','Δ','θ','π','→','λ'])this.#button(symbols,symbol,()=>{const start=input.selectionStart??input.value.length,end=input.selectionEnd??start;input.setRangeText(symbol,start,end,'end');this.#query=input.value;input.focus();});
-   form.append(symbols);form.addEventListener('submit',ev=>{ev.preventDefault();this.#query=input.value;this.#offset=0;void this.#render();});
+   form.append(symbols);form.addEventListener('submit',ev=>{ev.preventDefault();this.#query=input.value.trim();this.#offset=0;if(typeof window!=='undefined'&&window.location){const th=this.#query?'#/search?q='+encodeURIComponent(this.#query):'#/search';if(window.location.hash!==th)window.history.replaceState(null,'',th);}void this.#render();});
    input.addEventListener('input',()=>{this.#query=input.value;});box.append(form);
    const layout=el('div');layout.className='layout';box.append(layout);
    const result=el('section');result.setAttribute('aria-label','Search results');result.dataset.results='true';layout.append(result);
    this.#state=r.totalMatches?'RESULTS':'ZERO_RESULTS';
    this.#status(result,r.totalMatches?r.totalMatches+' matching diagnostic question(s).':'No matching reviewed diagnostic questions.');
-   if(r.suggestion){const suggestion=r.suggestion;this.#button(result,'Did you mean: '+suggestion+'?',()=>{this.#query=suggestion;this.#offset=0;void this.#render();},'suggestion');}
+   if(r.suggestion){const suggestion=r.suggestion;this.#button(result,'Did you mean: '+suggestion+'?',()=>{this.#query=suggestion;this.#offset=0;if(typeof window!=='undefined'&&window.location){window.history.replaceState(null,'','#/search?q='+encodeURIComponent(suggestion));}void this.#render();},'suggestion');}
    for(const row of r.results){
     const item=row.item,article=el('article');article.append(el('h2',item.title),el('p',item.summary),el('p','Practice question · '+item.subjectIds.join(', ')));
     this.#button(article,'Open diagnostic question',()=>{void this.#launch(item,epoch);},'open-question');result.append(article);

@@ -4,6 +4,8 @@ import { Core1ALessonPageController, mountCore1ALesson } from '../pages/lesson.t
 import { Core1BTransferPageController, mountCore1BTransfer } from '../pages/transfer.ts';
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
+import { UniversalSearchPageController } from '../pages/search.ts';
+import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
 import { Router } from './router.ts';
 import { DEFAULT_APP_REGISTRY } from '../runtime/registry/index.ts';
 import { escapeHtml } from '../runtime/rendering.ts';
@@ -99,7 +101,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     const controller = new Core1BTransferPageController();
     const m = mountCore1BTransfer(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('core2') || (match.type === 'ROLE' && match.params.coreRole === 'CORE2')) {
+  } else if (match.type === 'QUESTION' || clean.startsWith('question/') || clean === 'question' || clean.includes('core2') || (match.type === 'ROLE' && match.params.coreRole === 'CORE2')) {
     const controller = new QuestionPageController('phys', 'wpe');
     const m = mountQuestionPage(content, controller);
     activeDisposer = () => m.dispose();
@@ -133,7 +135,13 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   } else if (match.type === 'PERSONAL') {
     renderPersonalStudyPlaceholder(content, match.params.tab);
   } else if (match.type === 'SEARCH') {
-    renderSearchPlaceholder(content, match.query.q || '');
+    const factory = createDiagnosticSearchEngineFactory();
+    const searchController = new UniversalSearchPageController(content, appRouter, factory);
+    activeDisposer = () => {
+      searchController.close();
+    };
+    const targetPath = appRouter.toHref('/search' + (match.query.q !== undefined ? '?q=' + encodeURIComponent(match.query.q) : ''));
+    void searchController.open(targetPath);
   } else if (match.type === 'NOT_FOUND') {
     renderNotFoundScreen(content, match.path);
   } else {
