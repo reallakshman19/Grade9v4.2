@@ -15,6 +15,7 @@ export type RouteType =
   | 'PRACTICE'
   | 'LAB'
   | 'LAB_HUB'
+  | 'EXPLORER'
   | 'PERSONAL'
   | 'ARCHITECTURE'
   | 'NOT_FOUND';
@@ -271,7 +272,7 @@ export class Router {
       };
     }
 
-    // 11. Standalone Lab Route: "/labs" (Catalog Hub) or "/labs/:labId" (Workbench View)
+    // 11. Standalone Lab Route: "/labs" (Catalog Hub) or "/labs/:labId" / "/lab/:labId" (Workbench View)
     const labHubMatch = pathPart.match(/^\/(?:labs|resources)\/?$/);
     if (labHubMatch) {
       return {
@@ -283,12 +284,24 @@ export class Router {
       };
     }
 
-    const labMatch = pathPart.match(/^\/(?:labs|resources)\/([^/]+)$/);
+    const labMatch = pathPart.match(/^\/(?:labs|lab|resources)\/([^/]+)$/);
     if (labMatch) {
       return {
         type: 'LAB',
         path: pathPart,
         params: { labId: decodeURIComponent(labMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 11b. Interactive Explorer Route: "/explorer/:explorerId"
+    const explorerMatch = pathPart.match(/^\/explorer\/([^/]+)$/);
+    if (explorerMatch) {
+      return {
+        type: 'EXPLORER',
+        path: pathPart,
+        params: { explorerId: decodeURIComponent(explorerMatch[1]) },
         query,
         hash: hashPart,
       };

@@ -251,14 +251,20 @@ class MigrationCrosswalkEngine:
                 test_receipt = "tests/runtime/test_nsejs_core2.spec.ts"
                 target_mounted = True
                 dual_execution_passed = True
-            # 7. Remaining HTML execution context candidates
+            # 7. Wave 15: Reconciled HTML execution context candidates (GCDR Explorers & Standalone Labs)
             elif pop == "HTML_EXECUTION_CONTEXT_CANDIDATE":
                 if path.startswith("standalone/"):
-                    disposition = "MAPPED_PENDING_PORT"
+                    disposition = "PARITY_VERIFIED"
                     target_route = f"/lab/{Path(path).stem}"
+                    test_receipt = "tests/runtime/test_standalone_workbenches.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
                 elif "/explorers/" in path:
-                    disposition = "MAPPED_PENDING_PORT"
+                    disposition = "PARITY_VERIFIED"
                     target_route = f"/explorer/{Path(path).parent.name}"
+                    test_receipt = "tests/runtime/test_standalone_workbenches.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
                 else:
                     disposition = "UNMAPPED"
                     target_route = None

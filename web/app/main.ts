@@ -7,6 +7,7 @@ import { Core2ASupportedPageController, mountCore2ASupported } from '../pages/su
 import { Core2BTransferPageController, mountCore2BTransfer } from '../pages/transfer-changed-demand.ts';
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
+import { getExplorerConfig } from '../pages/explorer-catalog.ts';
 import { createTopicScreen, mountTopicWorkspace, WPE_PHYSICS_TOPIC, PHY_MOTION_PLANE_TOPIC, PHY_CIRCULAR_BANKING_TOPIC, PHY_GRAVITATION_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC, CHEM_REDOX_TOPIC, CHEM_BONDING_TOPIC, CHEM_STOICHIOMETRY_TOPIC } from '../pages/topic.ts';
 import { createSubjectScreen, mountSubjectScreen, CHEMISTRY_SUBJECT_DETAIL, PHYSICS_SUBJECT_DETAIL, type SubjectDetail } from '../pages/subject.ts';
 import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/competitive.ts';
@@ -227,21 +228,10 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     const controller = new QuestionPageController('phys', 'wpe');
     const m = mountQuestionPage(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('explorer') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'EXPLORER')) {
-    const controller = new GcdrExplorerPageController({
-      explorerId: 'wpe-explorer-01',
-      title: 'Work, Power & Energy — Interactive Explorer',
-      subject: 'Physics',
-      topic: 'Work, Power and Energy',
-      helpers: {
-        exactnessBadge: {
-          fidelity: 'NUMERICAL_EXACT',
-          binding: 'CANONICAL_BINDING',
-          academicClaimDisclaimer: 'PROTECTED_FALSE_CLAIM',
-        },
-        chalkboardNote: 'PROTECTED_HELPER',
-      },
-    });
+  } else if (match.type === 'EXPLORER' || clean.includes('explorer') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'EXPLORER')) {
+    const explorerId = match.params.explorerId || (clean.startsWith('explorer/') ? clean.replace(/^explorer\//, '') : 'wpe-explorer-01');
+    const config = getExplorerConfig(explorerId);
+    const controller = new GcdrExplorerPageController(config);
     const m = mountGcdrExplorer(content, controller);
     activeDisposer = () => m.dispose();
   } else if (clean.includes('curriculum/chemistry') || clean.includes('chemistry-curriculum') || clean === 'chemistry') {

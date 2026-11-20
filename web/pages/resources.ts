@@ -477,7 +477,7 @@ export function mountStandaloneLab(
 ): { dispose: () => void } {
   const labId = (rawLabId || '').toLowerCase();
 
-  if (labId.includes('circles')) {
+  if (labId.includes('circles') || labId.includes('imo')) {
     const c = new CirclesMasterController();
     return mountCirclesMaster(root, c, onNavigate);
   }
@@ -506,11 +506,6 @@ export function mountStandaloneLab(
     );
   }
 
-  if (labId.includes('redox-adaptive') || labId === 'lab:redox-adaptive') {
-    const c = new RedoxAdaptiveController();
-    return mountRedoxAdaptive(root, c, onNavigate);
-  }
-
   if (labId.includes('redox-equivalence') || labId === 'lab:redox-equivalence') {
     return mountPortableLab(
       root,
@@ -519,6 +514,16 @@ export function mountStandaloneLab(
       '#/subject/chemistry/topic/chem-redox/labs',
       onNavigate
     );
+  }
+
+  if (
+    labId.includes('redox-adaptive') ||
+    labId.includes('redox-reactions') ||
+    labId.includes('redox') ||
+    labId === 'lab:redox-adaptive'
+  ) {
+    const c = new RedoxAdaptiveController();
+    return mountRedoxAdaptive(root, c, onNavigate);
   }
 
   if (labId.includes('titrat') || labId === 'lab:titration-simulator') {
@@ -538,11 +543,23 @@ export function mountStandaloneLab(
     return mountMoleConceptWorkbench(root, undefined, onNavigate);
   }
 
-  if (labId.includes('motion-1d-suite') || labId === 'lab:motion-1d-suite') {
+  if (
+    labId.includes('motion-1d') ||
+    labId.includes('straight-line') ||
+    labId.includes('nlm') ||
+    labId.includes('first-law') ||
+    labId.includes('motion-in-2d-master') ||
+    labId.includes('consolidated') ||
+    labId.includes('core-learning') ||
+    labId === 'index' ||
+    labId === 'lab:index' ||
+    labId.includes('motion-1d-suite') ||
+    labId === 'lab:motion-1d-suite'
+  ) {
     return mountMotionSuite(root, undefined, onNavigate);
   }
 
-  if (labId.includes('vector-algebra') || labId === 'lab:vector-algebra-3d') {
+  if (labId.includes('vector') || labId.includes('vector-algebra') || labId === 'lab:vector-algebra-3d') {
     return mountVectorAlgebraWorkbench(root, undefined, onNavigate);
   }
 
@@ -550,7 +567,14 @@ export function mountStandaloneLab(
     return mountFluidPressureWorkbench(root, undefined, onNavigate);
   }
 
-  if (labId.includes('motion-in-a-plane') || labId === 'lab:motion-in-a-plane') {
+  if (
+    labId.includes('motion-in-a-plane') ||
+    labId.includes('motion-2d') ||
+    labId.includes('kin-2d') ||
+    labId.includes('projectile') ||
+    labId.includes('trajectory') ||
+    labId === 'lab:motion-in-a-plane'
+  ) {
     const c = new MotionPlaneController();
     return mountMotionPlane(root, c, onNavigate);
   }

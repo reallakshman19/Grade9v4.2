@@ -11755,13 +11755,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11774,7 +11774,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/chemistry/bonding/explorers/chemical_bonding/index.html",
       "route": "/explorer/chemical_bonding"
@@ -11887,13 +11887,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -11906,7 +11906,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/chemistry/gases/explorers/behaviour_of_gases/index.html",
       "route": "/explorer/behaviour_of_gases"
@@ -12085,13 +12085,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -12104,7 +12104,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html",
       "route": "/explorer/redox_reactions"
@@ -12118,13 +12118,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -12137,7 +12137,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/chemistry/redox/explorers/redox_reactions/index.html",
       "route": "/explorer/redox_reactions"
@@ -12250,13 +12250,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -12269,7 +12269,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/chemistry/some-basic-concepts/explorers/mole_concept/index.html",
       "route": "/explorer/mole_concept"
@@ -13009,13 +13009,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13028,7 +13028,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/mathematics/vectors/explorers/vector_algebra/index.html",
       "route": "/explorer/vector_algebra"
@@ -13339,13 +13339,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13358,7 +13358,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-1d/explorers/circular-dynamics/index.html",
       "route": "/explorer/circular-dynamics"
@@ -13372,13 +13372,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13391,7 +13391,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-1d/explorers/motion_in_1d/index.html",
       "route": "/explorer/motion_in_1d"
@@ -13504,13 +13504,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13523,7 +13523,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-2d/explorers/apex-fallacy/index.html",
       "route": "/explorer/apex-fallacy"
@@ -13537,13 +13537,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13556,7 +13556,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-2d/explorers/equal-height-state/index.html",
       "route": "/explorer/equal-height-state"
@@ -13570,13 +13570,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13589,7 +13589,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-2d/explorers/event-clock/index.html",
       "route": "/explorer/event-clock"
@@ -13603,13 +13603,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13622,7 +13622,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-2d/explorers/landing-geometry/index.html",
       "route": "/explorer/landing-geometry"
@@ -13636,13 +13636,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13655,7 +13655,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-2d/explorers/motion-in-a-plane/index.html",
       "route": "/explorer/motion-in-a-plane"
@@ -13669,13 +13669,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13688,7 +13688,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-2d/explorers/projectile-model/index.html",
       "route": "/explorer/projectile-model"
@@ -13702,13 +13702,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13721,7 +13721,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-2d/explorers/shared-clock/index.html",
       "route": "/explorer/shared-clock"
@@ -13768,13 +13768,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13787,7 +13787,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-in-2d/explorers/independent_components_shared_clock/index.html",
       "route": "/explorer/independent_components_shared_clock"
@@ -13801,13 +13801,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13820,7 +13820,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-in-2d/explorers/is_it_really_a_projectile/index.html",
       "route": "/explorer/is_it_really_a_projectile"
@@ -13834,13 +13834,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13853,7 +13853,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-in-2d/explorers/motions_in_2d/index.html",
       "route": "/explorer/motions_in_2d"
@@ -13867,13 +13867,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13886,7 +13886,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-in-2d/explorers/same_height_same_speed/index.html",
       "route": "/explorer/same_height_same_speed"
@@ -13900,13 +13900,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13919,7 +13919,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-in-2d/explorers/the_apex_fallacy/index.html",
       "route": "/explorer/the_apex_fallacy"
@@ -13933,13 +13933,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -13952,7 +13952,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/motion-in-2d/explorers/the_event_clock/index.html",
       "route": "/explorer/the_event_clock"
@@ -14032,13 +14032,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14051,7 +14051,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/nlm/explorers/accelerated-frames/index.html",
       "route": "/explorer/accelerated-frames"
@@ -14065,13 +14065,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14084,7 +14084,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/nlm/explorers/atwood-pulleys/index.html",
       "route": "/explorer/atwood-pulleys"
@@ -14098,13 +14098,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14117,7 +14117,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/nlm/explorers/connected-blocks/index.html",
       "route": "/explorer/connected-blocks"
@@ -14131,13 +14131,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14150,7 +14150,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/physics/nlm/explorers/friction-threshold/index.html",
       "route": "/explorer/friction-threshold"
@@ -17530,13 +17530,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17549,7 +17549,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/chemistry/bonding/explorers/chemical_bonding/index.html",
       "route": "/explorer/chemical_bonding"
@@ -17662,13 +17662,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17681,7 +17681,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/chemistry/gases/explorers/behaviour_of_gases/index.html",
       "route": "/explorer/behaviour_of_gases"
@@ -17893,13 +17893,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -17912,7 +17912,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/chemistry/redox/explorers/redox_reactions/index.html",
       "route": "/explorer/redox_reactions"
@@ -18025,13 +18025,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -18044,7 +18044,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/chemistry/some-basic-concepts/explorers/mole_concept/index.html",
       "route": "/explorer/mole_concept"
@@ -18784,13 +18784,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -18803,7 +18803,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/mathematics/vectors/explorers/vector_algebra/index.html",
       "route": "/explorer/vector_algebra"
@@ -19114,13 +19114,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19133,7 +19133,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-1d/explorers/circular-dynamics/index.html",
       "route": "/explorer/circular-dynamics"
@@ -19147,13 +19147,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19166,7 +19166,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-1d/explorers/motion_in_1d/index.html",
       "route": "/explorer/motion_in_1d"
@@ -19279,13 +19279,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19298,7 +19298,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-2d/explorers/apex-fallacy/index.html",
       "route": "/explorer/apex-fallacy"
@@ -19312,13 +19312,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19331,7 +19331,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-2d/explorers/equal-height-state/index.html",
       "route": "/explorer/equal-height-state"
@@ -19345,13 +19345,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19364,7 +19364,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-2d/explorers/event-clock/index.html",
       "route": "/explorer/event-clock"
@@ -19378,13 +19378,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19397,7 +19397,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-2d/explorers/landing-geometry/index.html",
       "route": "/explorer/landing-geometry"
@@ -19411,13 +19411,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19430,7 +19430,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-2d/explorers/motion-in-a-plane/index.html",
       "route": "/explorer/motion-in-a-plane"
@@ -19444,13 +19444,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19463,7 +19463,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-2d/explorers/projectile-model/index.html",
       "route": "/explorer/projectile-model"
@@ -19477,13 +19477,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19496,7 +19496,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-2d/explorers/shared-clock/index.html",
       "route": "/explorer/shared-clock"
@@ -19543,13 +19543,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19562,7 +19562,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-in-2d/explorers/independent_components_shared_clock/index.html",
       "route": "/explorer/independent_components_shared_clock"
@@ -19576,13 +19576,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19595,7 +19595,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-in-2d/explorers/is_it_really_a_projectile/index.html",
       "route": "/explorer/is_it_really_a_projectile"
@@ -19609,13 +19609,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19628,7 +19628,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-in-2d/explorers/motions_in_2d/index.html",
       "route": "/explorer/motions_in_2d"
@@ -19642,13 +19642,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19661,7 +19661,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-in-2d/explorers/same_height_same_speed/index.html",
       "route": "/explorer/same_height_same_speed"
@@ -19675,13 +19675,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19694,7 +19694,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-in-2d/explorers/the_apex_fallacy/index.html",
       "route": "/explorer/the_apex_fallacy"
@@ -19708,13 +19708,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19727,7 +19727,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/motion-in-2d/explorers/the_event_clock/index.html",
       "route": "/explorer/the_event_clock"
@@ -19807,13 +19807,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19826,7 +19826,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/nlm/explorers/accelerated-frames/index.html",
       "route": "/explorer/accelerated-frames"
@@ -19840,13 +19840,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19859,7 +19859,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/nlm/explorers/atwood-pulleys/index.html",
       "route": "/explorer/atwood-pulleys"
@@ -19873,13 +19873,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19892,7 +19892,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/nlm/explorers/connected-blocks/index.html",
       "route": "/explorer/connected-blocks"
@@ -19906,13 +19906,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -19925,7 +19925,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/physics/nlm/explorers/friction-threshold/index.html",
       "route": "/explorer/friction-threshold"
@@ -22315,13 +22315,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22334,7 +22334,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/chemistry-redox-adaptive-hard-concept-proof.html",
       "route": "/lab/chemistry-redox-adaptive-hard-concept-proof"
@@ -22348,13 +22348,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22367,7 +22367,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/chemistry-redox-reactions-master-suite.html",
       "route": "/lab/chemistry-redox-reactions-master-suite"
@@ -22381,13 +22381,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22400,7 +22400,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core-learning/index.html",
       "route": "/lab/index"
@@ -22414,13 +22414,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22433,7 +22433,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core1a-motion-1d-straight-line-tablet.html",
       "route": "/lab/core1a-motion-1d-straight-line-tablet"
@@ -22447,13 +22447,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22466,7 +22466,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core1a-motion-in-a-plane-tablet.html",
       "route": "/lab/core1a-motion-in-a-plane-tablet"
@@ -22480,13 +22480,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22499,7 +22499,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core1a-physics-nlm-tablet.html",
       "route": "/lab/core1a-physics-nlm-tablet"
@@ -22513,13 +22513,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22532,7 +22532,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core1a-vector-add-sub-tablet.html",
       "route": "/lab/core1a-vector-add-sub-tablet"
@@ -22546,13 +22546,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22565,7 +22565,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core2-mathematics-circles-grade9-master.html",
       "route": "/lab/core2-mathematics-circles-grade9-master"
@@ -22579,13 +22579,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22598,7 +22598,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core2-motion-in-a-plane-tablet.html",
       "route": "/lab/core2-motion-in-a-plane-tablet"
@@ -22645,13 +22645,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22664,7 +22664,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core2a-projectile-study.html",
       "route": "/lab/core2a-projectile-study"
@@ -22678,13 +22678,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22697,7 +22697,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/mathematics-imo-grade9-master-suite (2).html",
       "route": "/lab/mathematics-imo-grade9-master-suite (2)"
@@ -22777,13 +22777,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22796,7 +22796,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/motion-in-2d-master-suite.html",
       "route": "/lab/motion-in-2d-master-suite"
@@ -22810,13 +22810,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22829,7 +22829,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/motion-session/index.html",
       "route": "/lab/index"
@@ -22843,13 +22843,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22862,7 +22862,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/physics-motion-in-a-plane-interactive-suite.html",
       "route": "/lab/physics-motion-in-a-plane-interactive-suite"
@@ -22876,13 +22876,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22895,7 +22895,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/portable-workbench/index.html",
       "route": "/lab/index"
@@ -22909,13 +22909,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22928,7 +22928,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core1a-physics-motion-2d-ncert-tablet.html",
       "route": "/lab/core1a-physics-motion-2d-ncert-tablet"
@@ -22942,13 +22942,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22961,7 +22961,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core1a-physics-nlm-tablet.html",
       "route": "/lab/core1a-physics-nlm-tablet"
@@ -22975,13 +22975,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22994,7 +22994,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core1a-physics-vectors-tablet.html",
       "route": "/lab/core1a-physics-vectors-tablet"
@@ -23008,13 +23008,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23027,7 +23027,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core1a-sba-06-07-trajectory-and-height-tablet.html",
       "route": "/lab/core1a-sba-06-07-trajectory-and-height-tablet"
@@ -23041,13 +23041,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23060,7 +23060,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core1a-sba-motion-in-a-plane-master-tablet.html",
       "route": "/lab/core1a-sba-motion-in-a-plane-master-tablet"
@@ -23074,13 +23074,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23093,7 +23093,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core2-motion-1d-straight-line-tablet.html",
       "route": "/lab/core2-motion-1d-straight-line-tablet"
@@ -23107,13 +23107,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23126,7 +23126,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core2-motion-consolidated-practice-tablet.html",
       "route": "/lab/core2-motion-consolidated-practice-tablet"
@@ -23140,13 +23140,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23159,7 +23159,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core2-motion-in-a-plane-tablet.html",
       "route": "/lab/core2-motion-in-a-plane-tablet"
@@ -23206,13 +23206,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23225,7 +23225,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core2a-projectile-study.html",
       "route": "/lab/core2a-projectile-study"
@@ -23239,13 +23239,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23258,7 +23258,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/index.html",
       "route": "/lab/index"
@@ -23305,13 +23305,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23324,7 +23324,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/motion-in-2d-master-suite.html",
       "route": "/lab/motion-in-2d-master-suite"
@@ -23371,13 +23371,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23390,7 +23390,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/products/physics/phy-kin-2d-motion.html",
       "route": "/lab/phy-kin-2d-motion"
@@ -23404,13 +23404,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_standalone_workbenches.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23423,7 +23423,7 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/products/physics/phy-nlm-first-law.html",
       "route": "/lab/phy-nlm-first-law"

@@ -229,10 +229,276 @@ export const STANDALONE_LABS_CATALOG: readonly StandaloneLabDescriptor[] = [
   },
 ];
 
+// --- Wave 15 Reconciled Standalone Interactive Workbenches & Suites (21 items) ---
+export const RECONCILED_STANDALONE_LABS_CATALOG: readonly StandaloneLabDescriptor[] = [
+  {
+    id: 'chemistry-redox-adaptive-hard-concept-proof',
+    labRouteId: 'chemistry-redox-adaptive-hard-concept-proof',
+    title: 'Redox Adaptive Concept Proof (Hard Tier)',
+    subtitle: 'Advanced Disproportionation & Electron Transfer',
+    discipline: 'CHEMISTRY',
+    modality: 'PROOF',
+    icon: '⚡',
+    formulaBadge: 'E°_cell = E°_red - E°_ox',
+    description: 'High-rigor electrochemical half-reaction balancing workbench with strict valence conservation checks.',
+    status: 'HOLD',
+  },
+  {
+    id: 'chemistry-redox-reactions-master-suite',
+    labRouteId: 'chemistry-redox-reactions-master-suite',
+    title: 'Chemistry Redox Reactions Master Suite',
+    subtitle: 'Comprehensive Oxidation-Reduction Laboratory',
+    discipline: 'CHEMISTRY',
+    modality: 'SIMULATOR',
+    icon: '🧪',
+    formulaBadge: 'Σ Δ(O.N.) = 0',
+    description: 'Full-spectrum redox modeling environment covering oxidation numbers, galvanic cells, and equivalence points.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core2-mathematics-circles-grade9-master',
+    labRouteId: 'core2-mathematics-circles-grade9-master',
+    title: 'Core 2 Circles Master Suite',
+    subtitle: 'Advanced Circle Theorems & Inscribed Polygons',
+    discipline: 'MATHEMATICS',
+    modality: 'PROOF',
+    icon: '⭕',
+    formulaBadge: 'PT² = PA · PB',
+    description: 'Interactive geometry suite proving power of a point, cyclic quadrilaterals, and tangent secant relationships.',
+    status: 'HOLD',
+  },
+  {
+    id: 'mathematics-imo-grade9-master-suite',
+    labRouteId: 'mathematics-imo-grade9-master-suite',
+    title: 'Mathematics IMO Grade 9 Master Suite',
+    subtitle: 'Olympiad Proof & Combinatorial Geometry',
+    discipline: 'MATHEMATICS',
+    modality: 'PROOF',
+    icon: '🏆',
+    formulaBadge: 'IMO Grade 9 Core',
+    description: 'Championship-level problem solving workbench focusing on geometric loci, synthetic proofs, and polynomial roots.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-physics-motion-2d-ncert-tablet',
+    labRouteId: 'core1a-physics-motion-2d-ncert-tablet',
+    title: 'Core 1A Motion in 2D (NCERT Tablet Edition)',
+    subtitle: 'Standardized 2D Kinematics Laboratory',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '📱',
+    formulaBadge: 'r = xi + yj',
+    description: 'NCERT Grade 9 aligned planar kinematics workbench with vector components and trajectory plotting.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-physics-nlm-tablet',
+    labRouteId: 'core1a-physics-nlm-tablet',
+    title: 'Core 1A Newton Laws of Motion Tablet Lab',
+    subtitle: 'Inertia, Momentum & Action-Reaction Dynamics',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '⚖️',
+    formulaBadge: 'F = dp/dt',
+    description: 'Interactive force workbench examining Newton three laws with variable mass, friction, and impulse graphs.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-physics-vectors-tablet',
+    labRouteId: 'core1a-physics-vectors-tablet',
+    title: 'Core 1A Physics Vectors Tablet Workbench',
+    subtitle: 'Vector Decomposition & Resultant Calculation',
+    discipline: 'PHYSICS',
+    modality: 'EXPLORER',
+    icon: '📐',
+    formulaBadge: 'R = √(A² + B² + 2AB cosθ)',
+    description: 'Touch-optimized vector laboratory for polygon law of addition, resolution into rectangular axes, and dot products.',
+    status: 'HOLD',
+  },
+  {
+    id: 'phy-kin-2d-motion',
+    labRouteId: 'phy-kin-2d-motion',
+    title: 'Physics Kinematics: 2D Planar Motion',
+    subtitle: 'Parabolic Flight & Relative Velocity',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🎯',
+    formulaBadge: 'y = x tanθ - gx²/(2u²cos²θ)',
+    description: 'High-fidelity simulation of 2D trajectories with air resistance toggle and real-time velocity vector decomposition.',
+    status: 'HOLD',
+  },
+  {
+    id: 'phy-nlm-first-law',
+    labRouteId: 'phy-nlm-first-law',
+    title: 'Newton First Law & Equilibrium Simulator',
+    subtitle: 'Inertial Rest & Uniform Straight Motion',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🛑',
+    formulaBadge: 'Σ F = 0 ⇒ dv/dt = 0',
+    description: 'Galilean frictionless horizontal plane simulator testing balanced forces and conservation of momentum.',
+    status: 'HOLD',
+  },
+  {
+    id: 'physics-motion-in-a-plane-interactive-suite',
+    labRouteId: 'physics-motion-in-a-plane-interactive-suite',
+    title: 'Physics Motion in a Plane Interactive Suite',
+    subtitle: 'Comprehensive Projectile & Circular Kinematics',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🚀',
+    formulaBadge: 'a_c = v² / R',
+    description: 'Unified kinematics workbench bridging uniform circular motion and two-dimensional free-fall flight paths.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-motion-1d-straight-line-tablet',
+    labRouteId: 'core1a-motion-1d-straight-line-tablet',
+    title: 'Core 1A Motion in 1D Straight Line Tablet',
+    subtitle: 'Rectilinear Uniform & Accelerated Motion',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🛤️',
+    formulaBadge: 's = ut + ½at²',
+    description: 'Step-by-step graphical kinematics explorer computing displacement, velocity, and jerk across multi-stage journeys.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-motion-in-a-plane-tablet',
+    labRouteId: 'core1a-motion-in-a-plane-tablet',
+    title: 'Core 1A Motion in a Plane Tablet Lab',
+    subtitle: 'Orthogonal Trajectory Discovery',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🎯',
+    formulaBadge: 'v² = u² + 2as',
+    description: 'Tablet-optimized two-dimensional kinematic flight simulator with real-time launch angle and muzzle velocity controls.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-sba-06-07-trajectory-and-height-tablet',
+    labRouteId: 'core1a-sba-06-07-trajectory-and-height-tablet',
+    title: 'Core 1A SBA 06-07: Trajectory & Maximum Height',
+    subtitle: 'Standardized School-Based Assessment Workbench',
+    discipline: 'PHYSICS',
+    modality: 'EXPERIMENT',
+    icon: '📊',
+    formulaBadge: 'H = u² sin²θ / (2g)',
+    description: 'SBA rubric-aligned experimental module investigating gravitational apogee and trajectory symmetry with virtual calipers.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-sba-motion-in-a-plane-master-tablet',
+    labRouteId: 'core1a-sba-motion-in-a-plane-master-tablet',
+    title: 'Core 1A SBA Motion in a Plane Master Tablet',
+    subtitle: 'Complete 2D Kinematics SBA Evaluation',
+    discipline: 'PHYSICS',
+    modality: 'EXPERIMENT',
+    icon: '📋',
+    formulaBadge: 'T = 2u sinθ / g',
+    description: 'Master assessment workbench containing automated data acquisition, time-of-flight sensors, and error margin estimation.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core1a-vector-add-sub-tablet',
+    labRouteId: 'core1a-vector-add-sub-tablet',
+    title: 'Core 1A Vector Addition & Subtraction Tablet',
+    subtitle: 'Head-to-Tail & Parallelogram Geometry',
+    discipline: 'PHYSICS',
+    modality: 'EXPLORER',
+    icon: '📐',
+    formulaBadge: 'A + B vs A - B',
+    description: 'Direct manipulation of 2D vectors on a Cartesian grid with dynamic resultant readout and component decomposition.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core2-motion-1d-straight-line-tablet',
+    labRouteId: 'core2-motion-1d-straight-line-tablet',
+    title: 'Core 2 Motion in 1D Straight Line Tablet',
+    subtitle: 'Rigor-Enhanced Rectilinear Dynamics',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🏎️',
+    formulaBadge: 'v(t) = ∫ a(t) dt',
+    description: 'Advanced 1D motion modeling with time-varying acceleration profiles and stopping distance optimization.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core2-motion-consolidated-practice-tablet',
+    labRouteId: 'core2-motion-consolidated-practice-tablet',
+    title: 'Core 2 Motion Consolidated Practice Tablet',
+    subtitle: 'Integrated Kinematics & Work-Energy Practice',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '📝',
+    formulaBadge: 'W_net = ΔK',
+    description: 'Multi-part problem solving workbench combining kinematics trajectories with mechanical work and energy theorems.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core2-motion-in-a-plane-tablet',
+    labRouteId: 'core2-motion-in-a-plane-tablet',
+    title: 'Core 2 Motion in a Plane Tablet Lab',
+    subtitle: 'High-Demand 2D Trajectories & Relative Wind',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🛩️',
+    formulaBadge: 'v_rel = v_obj - v_medium',
+    description: 'Advanced projectile dynamics including crosswind drift, moving target interception, and angle-of-elevation tracking.',
+    status: 'HOLD',
+  },
+  {
+    id: 'core2a-projectile-study',
+    labRouteId: 'core2a-projectile-study',
+    title: 'Core 2A Projectile Deep-Dive Study',
+    subtitle: 'Trajectory Optimization & Invariant Analysis',
+    discipline: 'PHYSICS',
+    modality: 'EXPLORER',
+    icon: '🔬',
+    formulaBadge: 'Envelope: y = u²/(2g) - gx²/(2u²)',
+    description: 'Deep mathematical analysis of maximum reachable safety parabolas, boundary envelopes, and launch optimization.',
+    status: 'HOLD',
+  },
+  {
+    id: 'motion-in-2d-master-suite',
+    labRouteId: 'motion-in-2d-master-suite',
+    title: 'Motion in 2D Master Suite',
+    subtitle: 'Unified Kinematics & Dynamics Workbench',
+    discipline: 'PHYSICS',
+    modality: 'SIMULATOR',
+    icon: '🌌',
+    formulaBadge: '2D Master Suite',
+    description: 'Comprehensive multi-modal laboratory combining 1D acceleration, projectile envelopes, and Galilean reference frames.',
+    status: 'HOLD',
+  },
+  {
+    id: 'standalone-core-learning',
+    labRouteId: 'index',
+    title: 'Core Learning Interactive Workbench',
+    subtitle: 'Integrated STEM Multi-Subject Laboratory',
+    discipline: 'PHYSICS',
+    modality: 'EXPLORER',
+    icon: '🎓',
+    formulaBadge: 'Grade 9 Core STEM',
+    description: 'Foundational multi-disciplinary workbench providing unified access to physics, chemistry, and mathematics explorations.',
+    status: 'HOLD',
+  },
+];
+
+export const UNIFIED_STANDALONE_LABS_CATALOG: readonly StandaloneLabDescriptor[] = [
+  ...STANDALONE_LABS_CATALOG,
+  ...RECONCILED_STANDALONE_LABS_CATALOG,
+];
+
 export class LabsHubController {
   private searchQuery: string = '';
   private selectedDiscipline: 'ALL' | LabDiscipline = 'ALL';
   private selectedModality: 'ALL' | LabModality = 'ALL';
+  private readonly catalog: readonly StandaloneLabDescriptor[];
+
+  constructor(catalog: readonly StandaloneLabDescriptor[] = STANDALONE_LABS_CATALOG) {
+    this.catalog = catalog;
+  }
 
   setSearchQuery(q: string): void {
     this.searchQuery = q.trim().toLowerCase();
@@ -247,7 +513,7 @@ export class LabsHubController {
   }
 
   getFilteredLabs(): readonly StandaloneLabDescriptor[] {
-    return STANDALONE_LABS_CATALOG.filter(lab => {
+    return this.catalog.filter(lab => {
       if (this.selectedDiscipline !== 'ALL' && lab.discipline !== this.selectedDiscipline) {
         return false;
       }
@@ -266,10 +532,10 @@ export class LabsHubController {
 
   getCounts(): { all: number; physics: number; chemistry: number; mathematics: number } {
     return {
-      all: STANDALONE_LABS_CATALOG.length,
-      physics: STANDALONE_LABS_CATALOG.filter(l => l.discipline === 'PHYSICS').length,
-      chemistry: STANDALONE_LABS_CATALOG.filter(l => l.discipline === 'CHEMISTRY').length,
-      mathematics: STANDALONE_LABS_CATALOG.filter(l => l.discipline === 'MATHEMATICS').length,
+      all: this.catalog.length,
+      physics: this.catalog.filter(l => l.discipline === 'PHYSICS').length,
+      chemistry: this.catalog.filter(l => l.discipline === 'CHEMISTRY').length,
+      mathematics: this.catalog.filter(l => l.discipline === 'MATHEMATICS').length,
     };
   }
 
@@ -283,7 +549,7 @@ export function mountLabsHub(
   controller?: LabsHubController,
   onNavigate?: (route: string) => void
 ): { dispose: () => void } {
-  const ctrl = controller ?? new LabsHubController();
+  const ctrl = controller ?? new LabsHubController(UNIFIED_STANDALONE_LABS_CATALOG);
   let active = true;
 
   const render = () => {
