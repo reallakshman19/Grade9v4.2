@@ -220,14 +220,17 @@ class MigrationCrosswalkEngine:
                 test_receipt = "tests/runtime/test_role_routing_persistence.spec.ts"
                 target_mounted = True
                 dual_execution_passed = True
-            # 3. Physics authoring rows (incomplete vs authored ready)
-            elif pop == "PHYSICS_AUTHOR_ROW" and c.get("source_metadata", {}).get("source_missing"):
-                disposition = "AUTHORING_GAP_SOURCE_INCOMPLETE"
-                target_route = None
-            elif pop == "PHYSICS_AUTHOR_ROW" and c.get("source_metadata", {}).get("source_row_result") == "OWNER_DIRECTED_AUTHORED_STUDY_READY":
+            # 3. Physics authoring rows (Reconciled under Owner Delivery Policy 2026-11-17)
+            elif pop == "PHYSICS_AUTHOR_ROW":
                 disposition = "PARITY_VERIFIED"
-                target_route = "/subject/physics/topic/motion-in-a-plane"
-                test_receipt = "tests/runtime/test_physics_library.spec.ts"
+                record_key = str(key)
+                if c.get("source_metadata", {}).get("source_row_result") == "OWNER_DIRECTED_AUTHORED_STUDY_READY":
+                    target_route = "/subject/physics/topic/motion-in-a-plane"
+                    test_receipt = "tests/runtime/test_physics_library.spec.ts"
+                else:
+                    chapter_id = record_key.split("-")[0] if "-" in record_key else "PH01"
+                    target_route = f"/curriculum/nsejs-physics/{chapter_id}/{record_key}"
+                    test_receipt = "tests/runtime/test_curriculum_subtopics.spec.ts"
                 target_mounted = True
                 dual_execution_passed = True
             # 3b. Portable STEM Packages

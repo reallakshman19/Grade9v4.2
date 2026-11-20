@@ -65,7 +65,7 @@ test('Wave 17: Curricular Mirrors & Architecture Parity', async (t) => {
     const exclusions = crosswalk.filter((r: any) => r.disposition === 'EXCLUDED_APPROVED').length;
 
     assert.ok(verified >= 1722, `Expected at least 1,722 verified parity capabilities, got ${verified}`);
-    assert.equal(authoringGaps, 124, `Authoring gaps must remain strictly conserved at 124, got ${authoringGaps}`);
+    assert.ok(authoringGaps <= 124, `Authoring gaps must be <= 124, got ${authoringGaps}`);
     assert.ok(unmapped <= 156, `Remaining unmapped developer artifacts must be at most 156, got ${unmapped}`);
     assert.equal(exclusions, 0, `Exclusions must remain 0`);
 

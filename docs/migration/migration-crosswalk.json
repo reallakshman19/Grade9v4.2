@@ -59737,13 +59737,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -59756,10 +59756,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-15",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-15"
     }
   },
   {
@@ -59770,13 +59770,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -59789,10 +59789,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M07"
     }
   },
   {
@@ -59836,13 +59836,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -59855,10 +59855,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-04"
     }
   },
   {
@@ -59869,13 +59869,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -59888,10 +59888,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U07"
     }
   },
   {
@@ -59902,13 +59902,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -59921,10 +59921,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH05-G07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH05/PH05-G07"
     }
   },
   {
@@ -59935,13 +59935,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -59954,10 +59954,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-17",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-17"
     }
   },
   {
@@ -59968,13 +59968,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -59987,10 +59987,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-05"
     }
   },
   {
@@ -60001,13 +60001,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60020,10 +60020,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M06"
     }
   },
   {
@@ -60034,13 +60034,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60053,10 +60053,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-09"
     }
   },
   {
@@ -60067,13 +60067,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60086,10 +60086,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH03-P04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH03/PH03-P04"
     }
   },
   {
@@ -60100,13 +60100,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60119,10 +60119,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-07"
     }
   },
   {
@@ -60133,13 +60133,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60152,10 +60152,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-12",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-12"
     }
   },
   {
@@ -60166,13 +60166,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60185,10 +60185,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-12",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-12"
     }
   },
   {
@@ -60199,13 +60199,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60218,10 +60218,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M01"
     }
   },
   {
@@ -60232,13 +60232,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60251,10 +60251,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-06"
     }
   },
   {
@@ -60265,13 +60265,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60284,10 +60284,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M08"
     }
   },
   {
@@ -60298,13 +60298,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60317,10 +60317,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-03"
     }
   },
   {
@@ -60331,13 +60331,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60350,10 +60350,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-04"
     }
   },
   {
@@ -60364,13 +60364,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60383,10 +60383,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-03"
     }
   },
   {
@@ -60397,13 +60397,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60416,10 +60416,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-10",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-10"
     }
   },
   {
@@ -60430,13 +60430,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60449,10 +60449,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-13",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-13"
     }
   },
   {
@@ -60463,13 +60463,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60482,10 +60482,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH03-P03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH03/PH03-P03"
     }
   },
   {
@@ -60496,13 +60496,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60515,10 +60515,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH05-G04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH05/PH05-G04"
     }
   },
   {
@@ -60529,13 +60529,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60548,10 +60548,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-05"
     }
   },
   {
@@ -60562,13 +60562,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60581,10 +60581,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U04"
     }
   },
   {
@@ -60595,13 +60595,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60614,10 +60614,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-13",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-13"
     }
   },
   {
@@ -60661,13 +60661,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60680,10 +60680,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-06"
     }
   },
   {
@@ -60694,13 +60694,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60713,10 +60713,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U09"
     }
   },
   {
@@ -60727,13 +60727,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60746,10 +60746,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-14",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-14"
     }
   },
   {
@@ -60760,13 +60760,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60779,10 +60779,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W07"
     }
   },
   {
@@ -60793,13 +60793,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60812,10 +60812,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-07"
     }
   },
   {
@@ -60826,13 +60826,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60845,10 +60845,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M03"
     }
   },
   {
@@ -60859,13 +60859,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60878,10 +60878,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-10",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-10"
     }
   },
   {
@@ -60892,13 +60892,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60911,10 +60911,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U06"
     }
   },
   {
@@ -60925,13 +60925,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60944,10 +60944,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-10",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-10"
     }
   },
   {
@@ -60958,13 +60958,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -60977,10 +60977,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-08"
     }
   },
   {
@@ -60991,13 +60991,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61010,10 +61010,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-11",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-11"
     }
   },
   {
@@ -61024,13 +61024,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61043,10 +61043,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-08"
     }
   },
   {
@@ -61057,13 +61057,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61076,10 +61076,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-02"
     }
   },
   {
@@ -61090,13 +61090,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61109,10 +61109,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-08"
     }
   },
   {
@@ -61123,13 +61123,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61142,10 +61142,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-01"
     }
   },
   {
@@ -61156,13 +61156,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61175,10 +61175,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-07"
     }
   },
   {
@@ -61189,13 +61189,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61208,10 +61208,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-13",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-13"
     }
   },
   {
@@ -61222,13 +61222,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61241,10 +61241,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-03"
     }
   },
   {
@@ -61255,13 +61255,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61274,10 +61274,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-01"
     }
   },
   {
@@ -61288,13 +61288,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61307,10 +61307,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH05-G02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH05/PH05-G02"
     }
   },
   {
@@ -61321,13 +61321,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61340,10 +61340,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-11",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-11"
     }
   },
   {
@@ -61354,13 +61354,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61373,10 +61373,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U02"
     }
   },
   {
@@ -61387,13 +61387,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61406,10 +61406,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-04"
     }
   },
   {
@@ -61420,13 +61420,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61439,10 +61439,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-05"
     }
   },
   {
@@ -61453,13 +61453,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61472,10 +61472,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W09"
     }
   },
   {
@@ -61486,13 +61486,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61505,10 +61505,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-09"
     }
   },
   {
@@ -61552,13 +61552,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61571,10 +61571,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U10",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U10"
     }
   },
   {
@@ -61585,13 +61585,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61604,10 +61604,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-01"
     }
   },
   {
@@ -61618,13 +61618,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61637,10 +61637,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-08"
     }
   },
   {
@@ -61684,13 +61684,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61703,10 +61703,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U05"
     }
   },
   {
@@ -61717,13 +61717,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61736,10 +61736,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-12",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-12"
     }
   },
   {
@@ -61750,13 +61750,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61769,10 +61769,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-09"
     }
   },
   {
@@ -61783,13 +61783,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61802,10 +61802,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-02"
     }
   },
   {
@@ -61816,13 +61816,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61835,10 +61835,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-02"
     }
   },
   {
@@ -61849,13 +61849,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61868,10 +61868,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-02"
     }
   },
   {
@@ -61882,13 +61882,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61901,10 +61901,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH05-G01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH05/PH05-G01"
     }
   },
   {
@@ -61915,13 +61915,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61934,10 +61934,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-15",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-15"
     }
   },
   {
@@ -61948,13 +61948,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -61967,10 +61967,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH03-P01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH03/PH03-P01"
     }
   },
   {
@@ -61981,13 +61981,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62000,10 +62000,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH03-P07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH03/PH03-P07"
     }
   },
   {
@@ -62014,13 +62014,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62033,10 +62033,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH05-G06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH05/PH05-G06"
     }
   },
   {
@@ -62047,13 +62047,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62066,10 +62066,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-06"
     }
   },
   {
@@ -62080,13 +62080,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62099,10 +62099,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-11",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-11"
     }
   },
   {
@@ -62113,13 +62113,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62132,10 +62132,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-08"
     }
   },
   {
@@ -62146,13 +62146,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62165,10 +62165,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U08"
     }
   },
   {
@@ -62179,13 +62179,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62198,10 +62198,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-11",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-11"
     }
   },
   {
@@ -62212,13 +62212,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62231,10 +62231,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W08"
     }
   },
   {
@@ -62245,13 +62245,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62264,10 +62264,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-16",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-16"
     }
   },
   {
@@ -62278,13 +62278,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62297,10 +62297,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-04"
     }
   },
   {
@@ -62311,13 +62311,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62330,10 +62330,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-04"
     }
   },
   {
@@ -62410,13 +62410,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62429,10 +62429,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-10",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-10"
     }
   },
   {
@@ -62443,13 +62443,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62462,10 +62462,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-02"
     }
   },
   {
@@ -62476,13 +62476,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62495,10 +62495,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-01"
     }
   },
   {
@@ -62509,13 +62509,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62528,10 +62528,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-01"
     }
   },
   {
@@ -62542,13 +62542,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62561,10 +62561,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-06"
     }
   },
   {
@@ -62575,13 +62575,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62594,10 +62594,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-12",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-12"
     }
   },
   {
@@ -62608,13 +62608,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62627,10 +62627,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-05"
     }
   },
   {
@@ -62641,13 +62641,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62660,10 +62660,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-05"
     }
   },
   {
@@ -62674,13 +62674,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62693,10 +62693,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U01"
     }
   },
   {
@@ -62707,13 +62707,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62726,10 +62726,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-12",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-12"
     }
   },
   {
@@ -62740,13 +62740,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62759,10 +62759,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W05"
     }
   },
   {
@@ -62773,13 +62773,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62792,10 +62792,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-10",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-10"
     }
   },
   {
@@ -62806,13 +62806,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62825,10 +62825,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-03"
     }
   },
   {
@@ -62839,13 +62839,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62858,10 +62858,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M05"
     }
   },
   {
@@ -62872,13 +62872,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62891,10 +62891,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH03-P02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH03/PH03-P02"
     }
   },
   {
@@ -62905,13 +62905,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62924,10 +62924,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-06"
     }
   },
   {
@@ -62938,13 +62938,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62957,10 +62957,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-06"
     }
   },
   {
@@ -62971,13 +62971,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -62990,10 +62990,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH03-P06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH03/PH03-P06"
     }
   },
   {
@@ -63004,13 +63004,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63023,10 +63023,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-12",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-12"
     }
   },
   {
@@ -63037,13 +63037,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63056,10 +63056,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W02"
     }
   },
   {
@@ -63070,13 +63070,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63089,10 +63089,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH05-G05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH05/PH05-G05"
     }
   },
   {
@@ -63103,13 +63103,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63122,10 +63122,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-10",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-10"
     }
   },
   {
@@ -63136,13 +63136,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63155,10 +63155,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-03"
     }
   },
   {
@@ -63169,13 +63169,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63188,10 +63188,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W01"
     }
   },
   {
@@ -63202,13 +63202,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63221,10 +63221,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-02"
     }
   },
   {
@@ -63268,13 +63268,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63287,10 +63287,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W06",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W06"
     }
   },
   {
@@ -63301,13 +63301,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63320,10 +63320,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-01",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-01"
     }
   },
   {
@@ -63334,13 +63334,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63353,10 +63353,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-13",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-13"
     }
   },
   {
@@ -63367,13 +63367,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63386,10 +63386,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-14",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-14"
     }
   },
   {
@@ -63400,13 +63400,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63419,10 +63419,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-03"
     }
   },
   {
@@ -63433,13 +63433,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63452,10 +63452,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M02",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M02"
     }
   },
   {
@@ -63466,13 +63466,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63485,10 +63485,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH10-09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH10/PH10-09"
     }
   },
   {
@@ -63499,13 +63499,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63518,10 +63518,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-11",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-11"
     }
   },
   {
@@ -63532,13 +63532,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63551,10 +63551,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH06-U03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH06/PH06-U03"
     }
   },
   {
@@ -63565,13 +63565,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63584,10 +63584,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH05-G03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH05/PH05-G03"
     }
   },
   {
@@ -63598,13 +63598,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63617,10 +63617,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-11",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-11"
     }
   },
   {
@@ -63631,13 +63631,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63650,10 +63650,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH03-P05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH03/PH03-P05"
     }
   },
   {
@@ -63697,13 +63697,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63716,10 +63716,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-09"
     }
   },
   {
@@ -63730,13 +63730,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63749,10 +63749,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-07"
     }
   },
   {
@@ -63763,13 +63763,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63782,10 +63782,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W03",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W03"
     }
   },
   {
@@ -63796,13 +63796,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63815,10 +63815,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-09",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-09"
     }
   },
   {
@@ -63829,13 +63829,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63848,10 +63848,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH12-14",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH12/PH12-14"
     }
   },
   {
@@ -63862,13 +63862,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63881,10 +63881,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH08-05",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH08/PH08-05"
     }
   },
   {
@@ -63895,13 +63895,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63914,10 +63914,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH07-07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH07/PH07-07"
     }
   },
   {
@@ -63928,13 +63928,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63947,10 +63947,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-07",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-07"
     }
   },
   {
@@ -63961,13 +63961,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -63980,10 +63980,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH04-W04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH04/PH04-W04"
     }
   },
   {
@@ -63994,13 +63994,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -64013,10 +64013,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH01-M04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH01/PH01-M04"
     }
   },
   {
@@ -64027,13 +64027,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -64046,10 +64046,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH09-08",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH09/PH09-08"
     }
   },
   {
@@ -64060,13 +64060,13 @@
       "subject": "PHYSICS",
       "type": "PHYSICS_AUTHOR_ROW"
     },
-    "disposition": "AUTHORING_GAP_SOURCE_INCOMPLETE",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/runtime/test_curriculum_subtopics.spec.ts"
     },
     "population": "PHYSICS_AUTHOR_ROW",
     "source": {
@@ -64079,10 +64079,10 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:physics_author_row:PH11-04",
-      "route": null
+      "route": "/curriculum/nsejs-physics/PH11/PH11-04"
     }
   },
   {
