@@ -149,7 +149,7 @@ describe('Dashboard Screen — Curriculum Facets & Real Counts', () => {
 
     assert.equal(state.coreRoles.length, 6);
     const roles = state.coreRoles.map((r) => r.role);
-    assert.deepEqual(roles, ['CORE1A', 'CORE1B', 'CORE2A', 'CORE2B', 'CORE3A', 'CORE3B']);
+    assert.deepEqual(roles, ['CORE1', 'CORE1A', 'CORE1B', 'CORE2', 'CORE2A', 'CORE2B']);
     assert.ok(state.explorerRoute.length > 0);
     assert.ok(state.resourceCatalogueRoute.length > 0);
   });
@@ -211,8 +211,8 @@ describe('Subject Screen — Real Topics & Filtering', () => {
     const state = screen.getViewState();
 
     assert.equal(state.coreRoles.length, 6);
-    assert.equal(state.coreRoles[0].path, '/subject/phys/core1a');
-    assert.equal(state.coreRoles[1].path, '/subject/phys/core1b');
+    assert.equal(state.coreRoles[0].path, '/subject/phys/core1');
+    assert.equal(state.coreRoles[1].path, '/subject/phys/core1a');
   });
 });
 
@@ -240,8 +240,9 @@ describe('Topic Screen — Scoped Actions & Safe States', () => {
     assert.equal(state.status, 'POPULATED');
     assert.equal(state.topic?.verifiedQuestionCount, 42);
     assert.equal(state.coreRoleActions.length, 6);
-    assert.equal(state.coreRoleActions[0].path, '/topic/phys/wpe/core1a');
-    assert.equal(state.coreRoleActions[2].path, '/topic/phys/wpe/core2a');
+    assert.equal(state.coreRoleActions[0].path, '/topic/phys/wpe/core1');
+    assert.equal(state.coreRoleActions[1].path, '/topic/phys/wpe/core1a');
+    assert.equal(state.coreRoleActions[4].path, '/topic/phys/wpe/core2a');
     assert.equal(state.explorerRoute, '/explorer?topic=wpe');
     assert.equal(state.resourceCatalogueRoute, '/resources?topic=wpe');
   });

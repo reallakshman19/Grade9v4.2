@@ -6,10 +6,15 @@ export type RouteType =
   | 'HOME'
   | 'SUBJECT'
   | 'TOPIC'
+  | 'TOPIC_TAB'
   | 'QUESTION'
   | 'ROLE'
   | 'SEARCH'
   | 'EXAM'
+  | 'COMPETITIVE'
+  | 'PRACTICE'
+  | 'LAB'
+  | 'PERSONAL'
   | 'NOT_FOUND';
 
 export interface RouteMatch {
@@ -100,7 +105,12 @@ export class Router {
       try{const u=new URL(pathWithQueryAndHash);if(!this.origin||u.origin!==this.origin||!['http:','https:'].includes(u.protocol)||u.username||u.password)return invalid();if(this.basePath&&!(u.pathname===this.basePath||u.pathname.startsWith(this.basePath+'/')))return invalid();}catch{return invalid();}
     }
     let stripped = this.stripBasePath(pathWithQueryAndHash);
-    if(this.useHash && stripped.startsWith('/#/')) stripped=stripped.slice(2);
+    if(this.useHash) {
+      if (stripped.startsWith('/#/')) stripped = stripped.slice(2);
+      else if (stripped.startsWith('/#')) stripped = '/' + stripped.slice(2);
+      else if (stripped.startsWith('#/')) stripped = stripped.slice(1);
+      else if (stripped.startsWith('#')) stripped = '/' + stripped.slice(1);
+    }
     try { decodeURIComponent(stripped); } catch { return {type:'NOT_FOUND',path:stripped,params:{},query:{},hash:''}; }
 
     // Split pathname, query, and hash
@@ -131,8 +141,8 @@ export class Router {
     const seen=new Set<string>();for(const [key] of new URLSearchParams(queryPart)){if(seen.has(key)||['__proto__','constructor','prototype'].includes(key))return invalid();seen.add(key);}
     const query = Router.parseQuery(queryPart);
 
-    // 1. Home Route: "/"
-    if (pathPart === '' || pathPart === '/') {
+    // 1. Home Route: "/" or "/home"
+    if (pathPart === '' || pathPart === '/' || pathPart === '/home') {
       return {
         type: 'HOME',
         path: '/',
@@ -165,7 +175,23 @@ export class Router {
       };
     }
 
-    // 4. Topic Route: "/subject/:subjectId/topic/:topicId"
+    // 4. Topic Tab Route: "/subject/:subjectId/topic/:topicId/:tab"
+    const topicTabMatch = pathPart.match(/^\/subject\/([^/]+)\/topic\/([^/]+)\/([^/]+)$/);
+    if (topicTabMatch) {
+      return {
+        type: 'TOPIC_TAB',
+        path: pathPart,
+        params: {
+          subjectId: decodeURIComponent(topicTabMatch[1]),
+          topicId: decodeURIComponent(topicTabMatch[2]),
+          tab: decodeURIComponent(topicTabMatch[3]),
+        },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 5. Topic Route: "/subject/:subjectId/topic/:topicId"
     const topicMatch = pathPart.match(/^\/subject\/([^/]+)\/topic\/([^/]+)$/);
     if (topicMatch) {
       return {
@@ -180,7 +206,7 @@ export class Router {
       };
     }
 
-    // 5. Subject Route: "/subject/:subjectId"
+    // 6. Subject Route: "/subject/:subjectId"
     const subjectMatch = pathPart.match(/^\/subject\/([^/]+)$/);
     if (subjectMatch) {
       return {
@@ -192,7 +218,7 @@ export class Router {
       };
     }
 
-    // 6. Role Route: "/role/:coreRole/:resourceId"
+    // 7. Role Route: "/role/:coreRole/:resourceId"
     const roleMatch = pathPart.match(/^\/role\/([^/]+)\/([^/]+)$/);
     if (roleMatch) {
       return {
@@ -207,13 +233,61 @@ export class Router {
       };
     }
 
-    // 7. Exam Route: "/exam/:paperId"
+    // 8. Exam Route: "/exam/:paperId"
     const examMatch = pathPart.match(/^\/exam\/([^/]+)$/);
     if (examMatch) {
       return {
         type: 'EXAM',
         path: pathPart,
         params: { paperId: decodeURIComponent(examMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 9. Competitive Exam Route: "/competitive/:examId"
+    const compMatch = pathPart.match(/^\/competitive\/([^/]+)$/);
+    if (compMatch) {
+      return {
+        type: 'COMPETITIVE',
+        path: pathPart,
+        params: { examId: decodeURIComponent(compMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 10. Practice Paper Route: "/practice/:paperId"
+    const practiceMatch = pathPart.match(/^\/practice\/([^/]+)$/);
+    if (practiceMatch) {
+      return {
+        type: 'PRACTICE',
+        path: pathPart,
+        params: { paperId: decodeURIComponent(practiceMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 11. Standalone Lab Route: "/labs/:labId"
+    const labMatch = pathPart.match(/^\/labs\/([^/]+)$/);
+    if (labMatch) {
+      return {
+        type: 'LAB',
+        path: pathPart,
+        params: { labId: decodeURIComponent(labMatch[1]) },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 12. Personal Study Route: "/personal" or "/personal/:tab"
+    const personalMatch = pathPart.match(/^\/personal(?:\/([^/]+))?$/);
+    if (personalMatch) {
+      return {
+        type: 'PERSONAL',
+        path: pathPart,
+        params: { tab: personalMatch[1] ? decodeURIComponent(personalMatch[1]) : 'overview' },
         query,
         hash: hashPart,
       };
