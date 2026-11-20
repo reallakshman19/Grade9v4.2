@@ -44,6 +44,7 @@ export interface NsejsCurriculumViewState {
   readonly subtopicFilter: NsejsSubtopicFilter;
   readonly searchQuery: string;
   readonly selectedQuestionId: string | null;
+  readonly selectedSubtopicId: string | null;
   readonly expandedHints: ReadonlySet<string>;
   readonly expandedSteps: ReadonlySet<string>;
 }
@@ -54,6 +55,7 @@ export class NsejsCurriculumController {
   private subtopicFilter: NsejsSubtopicFilter = 'ALL';
   private searchQuery: string = '';
   private selectedQuestionId: string | null = null;
+  private selectedSubtopicId: string | null = null;
   private expandedHints = new Set<string>();
   private expandedSteps = new Set<string>();
 
@@ -70,7 +72,16 @@ export class NsejsCurriculumController {
     if (NSEJS_CHAPTERS.some((c) => c.id === id)) {
       this.selectedChapterId = id;
       this.selectedQuestionId = null;
+      this.selectedSubtopicId = null;
     }
+  }
+
+  getSelectedSubtopicId(): string | null {
+    return this.selectedSubtopicId;
+  }
+
+  setSelectedSubtopicId(id: string | null): void {
+    this.selectedSubtopicId = id;
   }
 
   getActiveTab(): NsejsViewTab {
@@ -197,6 +208,7 @@ export class NsejsCurriculumController {
       subtopicFilter: this.subtopicFilter,
       searchQuery: this.searchQuery,
       selectedQuestionId: this.selectedQuestionId,
+      selectedSubtopicId: this.selectedSubtopicId,
       expandedHints: new Set(this.expandedHints),
       expandedSteps: new Set(this.expandedSteps),
     };
@@ -236,7 +248,7 @@ export function mountNsejsChapterExplorer(
                 <span style="font-size: 0.8rem; font-weight: 700; background: #334155; color: #f8fafc; padding: 3px 8px; border-radius: 4px;">IAPT Junior Science Olympiad</span>
                 <span style="font-size: 0.8rem; font-weight: 700; background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px;">Fault N09 Answer Isolation Active</span>
               </div>
-              <h2 style="margin: 0 0 0.5rem; font-size: 1.75rem; font-weight: 800; color: #ffffff;">⚛️ NSEJS Physics 12-Chapter Curriculum Navigator</h2>
+              <h1 style="margin: 0 0 0.5rem; font-size: 1.75rem; font-weight: 800; color: #ffffff;">⚛️ NSEJS Physics 12-Chapter Curriculum Navigator</h1>
               <p style="margin: 0; color: #cbd5e1; font-size: 1rem; max-width: 900px; line-height: 1.5;">
                 Comprehensive curriculum coverage from the Grade9v4.1 NSEJS Physics programme. All 12 chapters, 132 syllabus subtopics, 50 authentic question identities, and 59 circuit practice modules mounted natively in diagnostic mode.
               </p>
@@ -362,29 +374,44 @@ export function mountNsejsChapterExplorer(
                   <div style="padding: 2rem; text-align: center; color: #64748b; background: #f8fafc; border-radius: 8px;">
                     No subtopics match the current filter or search criteria.
                   </div>
-                ` : subtopics.map((s) => `
-                  <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; flex-wrap: wrap; gap: 8px;">
-                    <div style="display: flex; gap: 12px; align-items: center;">
-                      <span style="font-family: monospace; font-size: 0.85rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; min-width: 80px; text-align: center;">
-                        ${s.subtopicId}
-                      </span>
-                      <div>
-                        <strong style="color: #0f172a; font-size: 1rem;">${escapeHtml(s.title)}</strong>
+                ` : subtopics.map((s) => {
+                  const isSelected = state.selectedSubtopicId === s.subtopicId;
+                  return `
+                  <div class="subtopic-card-item" data-subtopic-id="${s.subtopicId}" style="display: flex; flex-direction: column; padding: 12px 16px; background: ${isSelected ? '#f0f9ff' : '#f8fafc'}; border: 1px solid ${isSelected ? '#0284c7' : '#e2e8f0'}; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                      <div style="display: flex; gap: 12px; align-items: center;">
+                        <span style="font-family: monospace; font-size: 0.85rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; min-width: 80px; text-align: center;">
+                          ${s.subtopicId}
+                        </span>
+                        <div>
+                          <strong style="color: #0f172a; font-size: 1rem;">${escapeHtml(s.title)}</strong>
+                        </div>
+                      </div>
+
+                      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <span style="font-size: 0.75rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ${s.priority === 'P0' ? '#fee2e2' : s.priority === 'P1' ? '#fef3c7' : '#f1f5f9'}; color: ${s.priority === 'P0' ? '#991b1b' : s.priority === 'P1' ? '#92400e' : '#475569'};">
+                          Tier ${s.priority}
+                        </span>
+                        ${s.qrtOperations.map((op) => `
+                          <span style="font-size: 0.7rem; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 3px;">
+                            ${escapeHtml(op)}
+                          </span>
+                        `).join('')}
                       </div>
                     </div>
 
-                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                      <span style="font-size: 0.75rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ${s.priority === 'P0' ? '#fee2e2' : s.priority === 'P1' ? '#fef3c7' : '#f1f5f9'}; color: ${s.priority === 'P0' ? '#991b1b' : s.priority === 'P1' ? '#92400e' : '#475569'};">
-                        Tier ${s.priority}
-                      </span>
-                      ${s.qrtOperations.map((op) => `
-                        <span style="font-size: 0.7rem; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 3px;">
-                          ${escapeHtml(op)}
-                        </span>
-                      `).join('')}
-                    </div>
+                    ${isSelected ? `
+                      <div class="subtopic-detail-drawer" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #bae6fd; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <div style="font-size: 0.85rem; color: #0369a1;">
+                          <strong>Cognitive Focus:</strong> ${s.qrtOperations.join(', ')} · <strong>Priority Tier:</strong> ${s.priority}
+                        </div>
+                        <button type="button" class="btn-jump-questions" data-chapter="${s.chapterId}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem;">
+                          Jump to Chapter Questions →
+                        </button>
+                      </div>
+                    ` : ''}
                   </div>
-                `).join('')}
+                `;}).join('')}
               </div>
             </div>
           ` : ''}
@@ -579,6 +606,28 @@ export function mountNsejsChapterExplorer(
           controller.setSubtopicFilter(f);
           render();
         }
+      });
+    });
+
+    // Subtopic Card Click & Jump Actions
+    root.querySelectorAll<HTMLElement>('.subtopic-card-item').forEach((item) => {
+      item.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('.btn-jump-questions')) return;
+        const sid = item.dataset.subtopicId;
+        if (sid) {
+          controller.setSelectedSubtopicId(
+            controller.getSelectedSubtopicId() === sid ? null : sid
+          );
+          render();
+        }
+      });
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('.btn-jump-questions').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        controller.setActiveTab('AUTHENTIC_QUESTIONS');
+        render();
       });
     });
 

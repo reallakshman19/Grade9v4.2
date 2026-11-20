@@ -220,10 +220,30 @@ class MigrationCrosswalkEngine:
                 test_receipt = "tests/runtime/test_role_routing_persistence.spec.ts"
                 target_mounted = True
                 dual_execution_passed = True
-            # 3. Incomplete Physics authoring rows (62 missing pairs)
+            # 3. Physics authoring rows (incomplete vs authored ready)
             elif pop == "PHYSICS_AUTHOR_ROW" and c.get("source_metadata", {}).get("source_missing"):
                 disposition = "AUTHORING_GAP_SOURCE_INCOMPLETE"
                 target_route = None
+            elif pop == "PHYSICS_AUTHOR_ROW" and c.get("source_metadata", {}).get("source_row_result") == "OWNER_DIRECTED_AUTHORED_STUDY_READY":
+                disposition = "PARITY_VERIFIED"
+                target_route = "/subject/physics/topic/motion-in-a-plane"
+                test_receipt = "tests/runtime/test_physics_library.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
+            # 3b. Portable STEM Packages
+            elif pop == "PORTABLE_PACKAGE":
+                disposition = "PARITY_VERIFIED"
+                if "riemann" in path:
+                    target_route = "/subject/mathematics/topic/riemann/labs"
+                elif "long-division" in path:
+                    target_route = "/subject/mathematics/topic/polynomials/labs"
+                elif "redox" in path:
+                    target_route = "/subject/chemistry/topic/chem-redox/labs"
+                else:
+                    target_route = "/labs"
+                test_receipt = "tests/runtime/test_standalone_workbenches.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
             # 4. Chemistry Adapters C01-C14
             elif pop in ("CHEMISTRY_ADAPTER", "CHEMISTRY_SUBTOPIC", "CHEMISTRY_QRT_CANDIDATE"):
                 target_route = "/curriculum/chemistry"
@@ -263,6 +283,18 @@ class MigrationCrosswalkEngine:
                     disposition = "PARITY_VERIFIED"
                     target_route = f"/explorer/{Path(path).parent.name}"
                     test_receipt = "tests/runtime/test_standalone_workbenches.spec.ts"
+                    target_mounted = True
+                    dual_execution_passed = True
+                # Wave 16: NSEJS Curriculum Subtopics and Chapters
+                elif path.startswith("nsejs/"):
+                    disposition = "PARITY_VERIFIED"
+                    if "physics" in path:
+                        target_route = "/curriculum/nsejs-physics"
+                    elif "chemistry" in path:
+                        target_route = "/curriculum/chemistry"
+                    else:
+                        target_route = "/competitive/core2"
+                    test_receipt = "tests/runtime/test_curriculum_subtopics.spec.ts"
                     target_mounted = True
                     dual_execution_passed = True
                 else:

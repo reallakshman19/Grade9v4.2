@@ -242,6 +242,14 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     activeDisposer = () => m.dispose();
   } else if (clean.includes('curriculum/nsejs-physics') || clean.includes('nsejs-curriculum') || clean === 'nsejs-physics') {
     const controller = new NsejsCurriculumController();
+    const parts = clean.split('/');
+    if (parts.length >= 3) {
+      const chId = parts[2].toUpperCase();
+      controller.setSelectedChapter(chId);
+      if (parts.length >= 4) {
+        controller.setSelectedSubtopicId(parts[3]);
+      }
+    }
     const m = mountNsejsChapterExplorer(content, controller, (route: string) => {
       window.location.hash = '#' + route;
     });

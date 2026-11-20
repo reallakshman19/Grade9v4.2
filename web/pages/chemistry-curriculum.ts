@@ -359,6 +359,7 @@ export function mountChemistryCurriculum(
     const isBalanced = allElementKeys.every(el => (lhsElements[el] ?? 0) === (rhsElements[el] ?? 0));
 
     root.innerHTML = `
+      <div class="chemistry-curriculum-container" style="max-width:1400px;margin:0 auto;box-sizing:border-box;width:100%;">
       <!-- Header Banner -->
       <header style="background:linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);color:white;padding:24px 20px;border-radius:12px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;">
@@ -452,6 +453,7 @@ export function mountChemistryCurriculum(
       <main class="chem-tab-content">
         ${renderActiveTab()}
       </main>
+      </div>
     `;
 
     function renderActiveTab(): string {
