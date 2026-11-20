@@ -204,12 +204,17 @@ export function mountCompetitiveExam(
                 Covers 12 chapters (PH01 to PH12): Kinematics, Dynamics, Energy, Gravitation, Fluids, Heat, SHM, Circuits, and Ray Optics.
               </p>
             </div>
-            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;">
-              <strong style="color:#0284c7;display:block;margin-bottom:4px;">Section 2: Chemistry</strong>
-              <div style="font-size:0.9rem;color:#334155;">20 Questions · 60 Marks · Single Choice</div>
-              <p style="margin:6px 0 0;font-size:0.85rem;color:#64748b;">
-                Covers 14 topic adapters (C01 to C14): Chemical Bonding, Stoichiometry, Gas Laws, Redox Reactions, and Periodic Trends.
-              </p>
+            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <strong style="color:#047857;display:block;margin-bottom:4px;">Section 2: Chemistry</strong>
+                <div style="font-size:0.9rem;color:#334155;">20 Questions · 60 Marks · Single Choice</div>
+                <p style="margin:6px 0 0;font-size:0.85rem;color:#64748b;">
+                  Covers 14 topic adapters (C01 to C14): Chemical Bonding, Stoichiometry, Gas Laws, Redox Reactions, and Periodic Trends.
+                </p>
+              </div>
+              <button type="button" onclick="window.location.hash='#/curriculum/chemistry'" style="margin-top:10px;min-height:${HIT_TARGET_MIN_PX}px;width:100%;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;">
+                Launch Chemistry Curriculum (C01–C14) →
+              </button>
             </div>
             <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;">
               <strong style="color:#0284c7;display:block;margin-bottom:4px;">Section 3: Biology</strong>

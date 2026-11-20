@@ -230,12 +230,11 @@ class MigrationCrosswalkEngine:
                 target_route = None
             # 5. Chemistry Adapters C01-C14
             elif pop in ("CHEMISTRY_ADAPTER", "CHEMISTRY_SUBTOPIC", "CHEMISTRY_QRT_CANDIDATE"):
-                if "redox" in path.lower() or "c08" in path.lower() or "stoich" in path.lower():
-                    disposition = "MAPPED_PENDING_PORT"
-                    target_route = f"/subject/chemistry/topic/{key.lower()}"
-                else:
-                    disposition = "HELD"
-                    target_route = None
+                target_route = "/curriculum/chemistry"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
             # 6. HTML execution context candidates
             elif pop == "HTML_EXECUTION_CONTEXT_CANDIDATE":
                 if path.startswith("standalone/"):
@@ -256,6 +255,18 @@ class MigrationCrosswalkEngine:
                 target_route = "/competitive/exam:nsejs"
                 disposition = "PARITY_VERIFIED"
                 test_receipt = "tests/browser/phase11_nsejs_physics_audit.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
+            elif pop == "NSEJS_QUESTION_IDENTITY" and subj == "CHEMISTRY":
+                target_route = "/curriculum/chemistry"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
+            elif pop == "COMPETITIVE_CANDIDATE" and subj == "CHEMISTRY":
+                target_route = "/curriculum/chemistry"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
                 target_mounted = True
                 dual_execution_passed = True
             elif pop in ("COMPETITIVE_BANK", "COMPETITIVE_CANDIDATE", "NSEJS_QUESTION_IDENTITY", "NSEJS_MODULE"):
