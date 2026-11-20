@@ -4,9 +4,55 @@ import type {JsonObject,Response,WorkArtifact} from '../runtime/types.ts';
 export type DisplayOrientation='LANDSCAPE'|'PORTRAIT';
 export type TransferScreenState='loading'|'error'|'populated'|'pending review'|'stale origin'|'save blocked'|'stale event'|'assisted'|'boundary locked';
 export interface TransferPageConfig{readonly transferDefinition?:Core1BTransferDefinition;readonly binding?:TransferBinding;readonly orientation?:DisplayOrientation;readonly initialState?:TransferScreenState;readonly errorMessage?:string}
+const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: string): import('../runtime/types.ts').Ref<T> => ({type, id, revision: 1, sha256: 'a'.repeat(64)});
+
+export function createDefaultTransferDefinition(): Core1BTransferDefinition {
+  const origin = ref('LESSON', 'lesson:wpe-origin');
+  const taskA = ref('FRESH_TASK', 'fresh:wpe-task-a');
+  const taskB = ref('FRESH_TASK', 'fresh:wpe-task-b');
+  const solA = ref('SOLUTION', 'solution:wpe-a');
+  const solB = ref('SOLUTION', 'solution:wpe-b');
+  return {
+    journeyId: 'journey:wpe-transfer',
+    originRef: origin,
+    freshTaskA: {
+      taskRef: taskA,
+      title: 'Fresh Transfer Task A — Incline with Friction',
+      prompt: 'A 5 kg crate slides down a 30-degree incline of length 10 m with coefficient of kinetic friction μ = 0.2. Calculate the work done by friction and final kinetic energy.',
+      conditions: ['Incline angle θ = 30°', 'Distance d = 10 m', 'Friction coeff μ = 0.2'],
+      solutionRef: solA,
+      solutionSteps: ['Normal force N = mg cos(30°)', 'Frictional force f = μN', 'Work W = -f * d'],
+      targetNumeric: { value: 84.87, unit: 'J', tolerance: 0.5 },
+    },
+    boundaryTaskB: {
+      taskRef: taskB,
+      title: 'Boundary Transfer Task B — Variable Drag',
+      prompt: 'Verify energy conservation when quadratic aerodynamic drag is introduced along the incline.',
+      conditions: ['Quadratic drag F_d = -c * v^2'],
+      solutionRef: solB,
+      solutionSteps: ['Integrate net work along the velocity trajectory'],
+    },
+    hints: [
+      { level: 'H1', assetRef: ref('ASSET', 'asset:hint-1'), text: 'Consider normal force perpendicular to incline', guidance: 'Normal force is mg cos(θ), not mg' },
+      { level: 'H2', assetRef: ref('ASSET', 'asset:hint-2'), text: 'Work-energy theorem relates net work to change in kinetic energy', guidance: 'W_net = W_grav + W_fric = ΔK' },
+    ],
+    diagnosticRules: [
+      { code: 'move:normal-force', label: 'Normal Force Calculation', misconceptionDescription: 'Using mg instead of mg cos(θ)', correctiveGuidance: 'Project gravity perpendicular to the surface' },
+    ],
+    qualitativePredictionPrompt: 'Predict whether friction work increases or decreases as incline angle steepens',
+    predictionOptions: ['Friction work decreases', 'Friction work increases', 'Friction work stays constant'],
+    expectedPredictionIndex: 0,
+    status: 'SYNTHETIC',
+  };
+}
+
 export class Core1BTransferPageController{
  private journey:Core1BTransferJourney|null=null;private orientation:DisplayOrientation='LANDSCAPE';
- constructor(c:TransferPageConfig){this.setOrientation(c.orientation??'LANDSCAPE');if(c.transferDefinition)this.journey=new Core1BTransferJourney(c.transferDefinition,c.binding);}
+ constructor(c:TransferPageConfig = {}){
+  this.setOrientation(c.orientation??'LANDSCAPE');
+  const def = c.transferDefinition ?? createDefaultTransferDefinition();
+  this.journey = new Core1BTransferJourney(def, c.binding);
+ }
  getJourney(){if(!this.journey)throw Error('Transfer unavailable');return this.journey;}
  start(){return this.getJourney().start();}restore(){return this.getJourney().restore();}
  actionPredict(i:number){return this.getJourney().predict(i);}

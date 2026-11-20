@@ -4,9 +4,60 @@ import {Core1AUnitViewController,Core1AAnchorViewController,Core1AModelStageCont
 export type DisplayOrientation='LANDSCAPE'|'PORTRAIT';
 export type LessonScreenState='loading'|'error'|'populated'|'no fresh task'|'stale lesson'|'missing unit'|'invalid model domain'|'no eligible fresh task';
 export interface LessonPageConfig{readonly lessonDefinition?:Core1ALessonDefinition;readonly orientation?:DisplayOrientation;readonly initialState?:LessonScreenState;readonly errorMessage?:string}
+const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: string): import('../runtime/types.ts').Ref<T> => ({type, id, revision: 1, sha256: 'a'.repeat(64)});
+
+export function createDefaultLesson(): Core1ALessonDefinition {
+  return {
+    lessonRef: ref('LESSON', 'lesson:physics-wpe'),
+    constructionRef: ref('CONSTRUCTION', 'construction:physics-wpe'),
+    title: 'Work, Power and Potential Energy',
+    subject: 'PHYSICS',
+    topicId: 'topic:wpe',
+    depthBadge: 'MEDIUM',
+    status: 'SYNTHETIC',
+    units: CORE1A_ORDERED_ROLES.map(role => ({
+      role,
+      title: 'Unit ' + role,
+      summary: 'Core concept summary for ' + role,
+      bodyText: 'Structured conceptual exploration and invariant principles for ' + role,
+      blockRefs: [ref('SOURCE', 'source:' + role)],
+      evidenceRefs: [ref('WARRANT', 'warrant:' + role)],
+      ...(role === 'A6' ? {workedExample: {problemPrompt: 'Worked problem example', fullReasoningSteps: ['Step 1: Identify energy states', 'Step 2: Apply work-energy theorem'], solutionResult: 'Work done W = ΔK + ΔU'}} : {}),
+      ...(role === 'A7' ? {misconception: {wrongIdea: 'Work is always positive', diagnosticPrompt: 'What happens when friction opposes motion?', repair: 'Frictional work opposes velocity vector and is negative'}} : {})
+    })),
+    anchors: ANCHOR_LEVELS.map(level => ({
+      level,
+      taskRef: ref('QUESTION', 'question:' + level),
+      title: level + ' Anchor',
+      prompt: 'Evaluate the physical anchor scenario at ' + level + ' depth',
+      solutionRef: ref('SOLUTION', 'solution:' + level),
+      solutionSteps: ['Balance applied force against conservative field gradient'],
+      warrantRefs: [ref('WARRANT', 'warrant:' + level)]
+    })),
+    modelConfig: {
+      modelId: 'PHYS-MODEL-ENERGY-WELL',
+      modelName: 'Potential Well Dynamics',
+      defaultParameters: {x: 0},
+      parameterBounds: {x: {min: -0.5, max: 0.5}},
+      qualitativePredictionPrompt: 'Predict potential energy change as displacement x increases',
+      predictionOptions: ['Increases parabolically', 'Remains constant', 'Decreases linearly'],
+      expectedPredictionIndex: 0,
+      observationNote: 'U(x) = 0.5 * k * x^2'
+    },
+    synthesisTaskRef: ref('QUESTION', 'question:synthesis'),
+    synthesisTaskPrompt: 'Synthesize the conservation laws under non-conservative frictional dissipation',
+    freshTaskRef: ref('FRESH_TASK', 'fresh:wpe-01')
+  };
+}
+
 export class Core1ALessonPageController{
  private journey:Core1ATeachingJourney|null=null;private orientation:DisplayOrientation='LANDSCAPE';private state:LessonScreenState='loading';private error='';private anchor:AnchorLevel='FOUNDATION';
- constructor(config:LessonPageConfig){this.setOrientation(config.orientation??'LANDSCAPE');if(config.lessonDefinition){try{this.journey=new Core1ATeachingJourney(config.lessonDefinition);this.state='populated';}catch{this.state='error';this.error='Invalid lesson definition';}}else this.state=config.initialState??'loading';}
+ constructor(config:LessonPageConfig = {}){
+  this.setOrientation(config.orientation??'LANDSCAPE');
+  const def = config.lessonDefinition ?? createDefaultLesson();
+  if(def){try{this.journey=new Core1ATeachingJourney(def);this.state='populated';}catch{this.state='error';this.error='Invalid lesson definition';}}
+  else this.state=config.initialState??'loading';
+ }
  private j(){if(!this.journey)throw Error('Lesson unavailable');return this.journey;}
  actionSection(role:Core1ARole){this.j().selectSection(role);}
  actionExample(role?:Core1ARole){return this.j().toggleWorkedExample(role??this.j().getActiveRole());}

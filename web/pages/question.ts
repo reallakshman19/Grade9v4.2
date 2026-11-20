@@ -40,6 +40,26 @@ export interface QuestionPageViewState {
   readonly errorMessage?: string;
 }
 
+export function createDefaultQuestion(): WorkspaceQuestionDescriptor {
+  return {
+    id: 'q-wpe-01',
+    code: 'PHYS-WPE-01',
+    title: 'Work and Kinetic Energy Balance',
+    stemText: 'A constant horizontal force F = 20 N acts on a block of mass m = 4 kg over a displacement d = 5 m on a frictionless horizontal plane. What is the final velocity of the block starting from rest?',
+    kind: 'SINGLE_CHOICE',
+    options: [
+      { id: 'opt-a', text: 'Option A: 5.0 m/s' },
+      { id: 'opt-b', text: 'Option B: 7.07 m/s (sqrt(50))' },
+      { id: 'opt-c', text: 'Option C: 10.0 m/s' },
+      { id: 'opt-d', text: 'Option D: 25.0 m/s' }
+    ],
+    status: 'RELEASED',
+    keyStatus: 'VERIFIED',
+    maxPoints: 5,
+    figures: [{ id: 'fig-wpe-1', caption: 'Horizontal force acting on frictionless block', available: true }]
+  };
+}
+
 export class QuestionPageController {
   private workspace: QuestionWorkspaceController | null = null;
   private status: QuestionPageStatus = 'LOADING';
@@ -87,6 +107,9 @@ export class QuestionPageController {
   }
 
   render(): string {
+    if (!this.workspace) {
+      this.loadQuestion(createDefaultQuestion());
+    }
     const s = this.getViewState();
     const ws = s.workspaceState;
     if (!ws) {
