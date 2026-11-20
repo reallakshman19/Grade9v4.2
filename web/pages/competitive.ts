@@ -159,7 +159,8 @@ export function mountCompetitiveExam(
               </p>
             </div>
             
-            <div style="display:flex;gap:10px;align-items:center;">
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+              <button type="button" id="btn-goto-core2-bank" onclick="window.location.hash='#/competitive/core2'" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:160px;padding:10px 18px;background:#0f172a;color:#ffffff;border:1px solid #334155;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🧬 Core 2 Bank (302 Qs) →</button>
               <button type="button" id="btn-switch-ioqm" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:140px;padding:10px 18px;background:#f8fafc;color:#0284c7;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">📐 Switch to IOQM →</button>
               <button type="button" id="btn-back-home" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:120px;padding:10px 18px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">← Back to Home</button>
             </div>
@@ -216,12 +217,17 @@ export function mountCompetitiveExam(
                 Launch Chemistry Curriculum (C01–C14) →
               </button>
             </div>
-            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;">
-              <strong style="color:#0284c7;display:block;margin-bottom:4px;">Section 3: Biology</strong>
-              <div style="font-size:0.9rem;color:#334155;">20 Questions · 60 Marks · Single Choice</div>
-              <p style="margin:6px 0 0;font-size:0.85rem;color:#64748b;">
-                Covers Cytology, Physiology, Genetics, Ecology, and Evolution. (Scope pending governed owner admission).
-              </p>
+            <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;display:flex;flex-direction:column;justify-content:space-between;">
+              <div>
+                <strong style="color:#16a34a;display:block;margin-bottom:4px;">Section 3: Biology</strong>
+                <div style="font-size:0.9rem;color:#334155;">20 Questions · 60 Marks · Single Choice</div>
+                <p style="margin:6px 0 0;font-size:0.85rem;color:#64748b;">
+                  Covers 11 modules: Cytology, Physiology, Genetics, Immunology, Ecology, and Evolution. Reconciled Core 2 Question Bank mounted under diagnostic authorization.
+                </p>
+              </div>
+              <button type="button" id="btn-launch-biology-core2" onclick="window.location.hash='#/competitive/core2'" style="margin-top:10px;min-height:${HIT_TARGET_MIN_PX}px;width:100%;background:#16a34a;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;">
+                Launch Core 2 Bank (45 Modules, 302 Qs) →
+              </button>
             </div>
           </div>
         </div>

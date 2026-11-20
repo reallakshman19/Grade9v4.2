@@ -18,6 +18,7 @@ import { mountLabsHub } from '../pages/labs-hub.ts';
 import { mountChemistryCurriculum, ChemistryCurriculumController } from '../pages/chemistry-curriculum.ts';
 import { mountNsejsChapterExplorer, NsejsCurriculumController } from '../pages/nsejs-curriculum.ts';
 import { mountPhysicsLibrary, PhysicsLibraryController } from '../pages/physics-library.ts';
+import { mountNsejsCore2Hub } from '../pages/nsejs-core2-hub.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
 import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
 import { mountArchitectureHub } from '../pages/architecture.ts';
@@ -216,6 +217,11 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   } else if (clean.includes('core2b') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2B')) {
     const controller = new Core2BTransferPageController();
     const m = mountCore2BTransfer(content, controller);
+    activeDisposer = () => m.dispose();
+  } else if (clean.includes('competitive/core2') || clean.includes('nsejs-core2') || clean === 'core2' || clean.includes('core2-hub')) {
+    const m = mountNsejsCore2Hub(content, (route: string) => {
+      window.location.hash = '#' + route;
+    });
     activeDisposer = () => m.dispose();
   } else if (match.type === 'QUESTION' || clean.startsWith('question/') || clean === 'question' || (clean.includes('core2') && !clean.includes('core2a') && !clean.includes('core2b')) || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2')) {
     const controller = new QuestionPageController('phys', 'wpe');

@@ -220,22 +220,38 @@ class MigrationCrosswalkEngine:
                 test_receipt = "tests/runtime/test_role_routing_persistence.spec.ts"
                 target_mounted = True
                 dual_execution_passed = True
-            # 3. Biology candidate questions & modules (Governed hold)
-            elif subj == "BIOLOGY" or "bio" in path.lower() or "bio" in key.lower():
-                disposition = "HELD_PENDING_OWNER_SCOPE_DECISION"
-                target_route = None
-            # 4. Incomplete Physics authoring rows (62 missing pairs)
+            # 3. Incomplete Physics authoring rows (62 missing pairs)
             elif pop == "PHYSICS_AUTHOR_ROW" and c.get("source_metadata", {}).get("source_missing"):
                 disposition = "AUTHORING_GAP_SOURCE_INCOMPLETE"
                 target_route = None
-            # 5. Chemistry Adapters C01-C14
+            # 4. Chemistry Adapters C01-C14
             elif pop in ("CHEMISTRY_ADAPTER", "CHEMISTRY_SUBTOPIC", "CHEMISTRY_QRT_CANDIDATE"):
                 target_route = "/curriculum/chemistry"
                 disposition = "PARITY_VERIFIED"
                 test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
                 target_mounted = True
                 dual_execution_passed = True
-            # 6. HTML execution context candidates
+            # 5. Library Packages and Questions
+            elif pop in ("LIBRARY_PACKAGE", "LIBRARY_QUESTION"):
+                target_route = "/physics-library"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/runtime/test_physics_library.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
+            # 6. Wave 14: Core 2 Multi-Disciplinary Question Bank & Governed Scope
+            elif pop in ("NSEJS_MODULE", "NSEJS_QUESTION_IDENTITY", "COMPETITIVE_BANK", "COMPETITIVE_CANDIDATE"):
+                target_route = "/competitive/core2"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/runtime/test_nsejs_core2.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
+            elif pop == "HTML_EXECUTION_CONTEXT_CANDIDATE" and (subj == "BIOLOGY" or "nsejs/biology" in path.lower() or "bio" in path.lower()):
+                target_route = "/competitive/core2"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/runtime/test_nsejs_core2.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
+            # 7. Remaining HTML execution context candidates
             elif pop == "HTML_EXECUTION_CONTEXT_CANDIDATE":
                 if path.startswith("standalone/"):
                     disposition = "MAPPED_PENDING_PORT"
@@ -246,35 +262,9 @@ class MigrationCrosswalkEngine:
                 else:
                     disposition = "UNMAPPED"
                     target_route = None
-            # 7. Library Packages and Questions
-            elif pop in ("LIBRARY_PACKAGE", "LIBRARY_QUESTION"):
-                target_route = "/physics-library"
-                disposition = "PARITY_VERIFIED"
-                test_receipt = "tests/runtime/test_physics_library.spec.ts"
-                target_mounted = True
-                dual_execution_passed = True
-            # 8. Competitive Candidates
-            elif pop == "NSEJS_QUESTION_IDENTITY" and key in nsejs_physics_verified_keys:
-                target_route = "/competitive/exam:nsejs"
-                disposition = "PARITY_VERIFIED"
-                test_receipt = "tests/browser/phase11_nsejs_physics_audit.spec.ts"
-                target_mounted = True
-                dual_execution_passed = True
-            elif pop == "NSEJS_QUESTION_IDENTITY" and subj == "CHEMISTRY":
-                target_route = "/curriculum/chemistry"
-                disposition = "PARITY_VERIFIED"
-                test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
-                target_mounted = True
-                dual_execution_passed = True
-            elif pop == "COMPETITIVE_CANDIDATE" and subj == "CHEMISTRY":
-                target_route = "/curriculum/chemistry"
-                disposition = "PARITY_VERIFIED"
-                test_receipt = "tests/runtime/test_chemistry_curriculum.spec.ts"
-                target_mounted = True
-                dual_execution_passed = True
-            elif pop in ("COMPETITIVE_BANK", "COMPETITIVE_CANDIDATE", "NSEJS_QUESTION_IDENTITY", "NSEJS_MODULE"):
-                disposition = "MAPPED_PENDING_PORT"
-                target_route = f"/competitive/exam:nsejs"
+            elif subj == "BIOLOGY" or "bio" in path.lower() or "bio" in str(key).lower():
+                disposition = "HELD_PENDING_OWNER_SCOPE_DECISION"
+                target_route = None
             else:
                 disposition = "UNMAPPED"
                 target_route = None
