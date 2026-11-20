@@ -134,7 +134,7 @@ export class PortableWorkbenchController {
 
         return `
         <button
-          class="portable-rule-action-btn"
+          class="portable-rule-action-btn portable-rule-btn"
           data-rule-id="${escapeHtml(String(rule.id))}"
           
           style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 10px 16px; background: ${isApplied ? '#dcfce7' : isAccept ? '#2563eb' : '#fee2e2'}; color: ${isApplied ? '#166534' : isAccept ? '#ffffff' : '#991b1b'}; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; cursor: pointer;"
@@ -181,5 +181,34 @@ export class PortableWorkbenchController {
         </div>
       </section>
     `;
+  }
+
+  mount(root: HTMLElement): { dispose: () => void; refresh: () => void } {
+    let active = true;
+    const render = () => {
+      if (!active) return;
+      root.innerHTML = this.renderHtml();
+      root.querySelector('#portable-rotate-btn')?.addEventListener('click', () => {
+        this.rotate(90);
+        render();
+      });
+      root.querySelectorAll<HTMLButtonElement>('.portable-rule-action-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const ruleId = btn.dataset.ruleId;
+          if (ruleId) {
+            this.applyTransformation(ruleId);
+            render();
+          }
+        });
+      });
+    };
+    render();
+    return {
+      refresh: () => render(),
+      dispose: () => {
+        active = false;
+        root.replaceChildren();
+      },
+    };
   }
 }

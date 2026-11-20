@@ -7,7 +7,12 @@ import { Core2ASupportedPageController, mountCore2ASupported } from '../pages/su
 import { Core2BTransferPageController, mountCore2BTransfer } from '../pages/transfer-changed-demand.ts';
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
-import { createTopicScreen, mountTopicWorkspace } from '../pages/topic.ts';
+import { createTopicScreen, mountTopicWorkspace, WPE_PHYSICS_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC } from '../pages/topic.ts';
+import { createSubjectScreen, mountSubjectScreen, type SubjectDetail } from '../pages/subject.ts';
+import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/competitive.ts';
+import { PaperWorkspaceController, mountPaperWorkspace } from '../pages/paper.ts';
+import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
+import { mountStandaloneLab } from '../pages/resources.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
 import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
 import { Router } from './router.ts';
@@ -39,6 +44,74 @@ export function initializeBuildShell(): DiagnosticReport {
   }
   return report;
 }
+
+const MATHEMATICS_SUBJECT_DETAIL: SubjectDetail = {
+  id: 'mathematics',
+  code: 'MATHEMATICS',
+  name: 'Mathematics',
+  description: 'Foundations of Mathematics, Algebra, Euclidean Geometry, and Real Analysis',
+  status: 'HOLD',
+  academicAdmission: 'HOLD',
+  diagnosticAuthorized: true,
+  topics: [
+    {
+      id: 'polynomials',
+      code: 'POLYNOMIALS',
+      title: 'Polynomials & Real Numbers',
+      strand: 'Algebra',
+      itemCount: 4,
+      status: 'HOLD',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+    {
+      id: 'euclid-geometry',
+      code: 'EUCLID',
+      title: 'Euclidean Geometry & Proofs',
+      strand: 'Geometry',
+      itemCount: 4,
+      status: 'HOLD',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+    {
+      id: 'riemann',
+      code: 'RIEMANN',
+      title: 'Foundations of Real Analysis & Calculus',
+      strand: 'Analysis',
+      itemCount: 3,
+      status: 'HOLD',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+  ],
+};
+
+const PHYSICS_SUBJECT_DETAIL: SubjectDetail = {
+  id: 'physics',
+  code: 'PHYSICS',
+  name: 'Physics',
+  description: 'Classical Mechanics, Electromagnetism, Optics, and Modern Physics',
+  status: 'AVAILABLE',
+  academicAdmission: 'HOLD',
+  diagnosticAuthorized: true,
+  topics: [
+    {
+      id: 'wpe',
+      code: 'WPE',
+      title: 'Work, Power and Energy',
+      strand: 'Mechanics',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+  ],
+};
 
 let activeDisposer: (() => void) | null = null;
 const appRouter = new Router({ useHash: true });
@@ -98,9 +171,23 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
 
   // Dispatch route based on Router match
   if (match.type === 'TOPIC' || match.type === 'TOPIC_TAB') {
-    if (match.params.subjectId?.toLowerCase() === 'physics' && match.params.topicId?.toLowerCase() === 'wpe') {
-      const topicController = createTopicScreen();
-      const activeTab = match.params.tab || 'questions';
+    const subjId = match.params.subjectId?.toLowerCase() || '';
+    const topId = match.params.topicId?.toLowerCase() || '';
+    const activeTab = match.params.tab || 'questions';
+
+    if (subjId === 'physics' && (topId === 'wpe' || topId === 'work-power-energy')) {
+      const topicController = createTopicScreen(WPE_PHYSICS_TOPIC);
+      const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
+    } else if (subjId === 'mathematics' || subjId === 'math') {
+      let topicDetail = MATH_POLYNOMIALS_TOPIC;
+      if (topId.includes('euclid')) topicDetail = MATH_EUCLID_TOPIC;
+      else if (topId.includes('riemann')) topicDetail = MATH_RIEMANN_TOPIC;
+      else if (topId.includes('poly')) topicDetail = MATH_POLYNOMIALS_TOPIC;
+
+      const topicController = createTopicScreen(topicDetail);
       const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
         window.location.hash = '#' + route;
       });
@@ -150,13 +237,50 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     const m = mountGcdrExplorer(content, controller);
     activeDisposer = () => m.dispose();
   } else if (match.type === 'SUBJECT') {
-    renderSubjectPlaceholder(content, match.params.subjectId);
+    const sId = match.params.subjectId?.toLowerCase() || '';
+    if (sId === 'mathematics' || sId === 'math') {
+      const controller = createSubjectScreen(MATHEMATICS_SUBJECT_DETAIL);
+      const m = mountSubjectScreen(content, controller, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
+    } else if (sId === 'physics' || sId === 'phys') {
+      const controller = createSubjectScreen(PHYSICS_SUBJECT_DETAIL);
+      const m = mountSubjectScreen(content, controller, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
+    } else {
+      renderSubjectPlaceholder(content, match.params.subjectId);
+    }
   } else if (match.type === 'COMPETITIVE') {
-    renderCompetitiveExamPlaceholder(content, match.params.examId);
+    if (match.params.examId?.toLowerCase().includes('ioqm')) {
+      const controller = createCompetitiveExamScreen();
+      const m = mountCompetitiveExam(content, controller, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
+    } else {
+      renderCompetitiveExamPlaceholder(content, match.params.examId);
+    }
   } else if (match.type === 'PRACTICE') {
-    renderPracticePaperPlaceholder(content, match.params.paperId);
+    if (match.params.paperId?.toLowerCase().includes('ioqm')) {
+      void createAuthorizedIoqmPaperSession().then(async ({ config, binding }) => {
+        const controller = new PaperWorkspaceController(config, binding);
+        await controller.restore();
+        const m = mountPaperWorkspace(content, controller, (route) => {
+          window.location.hash = '#' + route;
+        });
+        activeDisposer = () => m.dispose();
+      });
+    } else {
+      renderPracticePaperPlaceholder(content, match.params.paperId);
+    }
   } else if (match.type === 'LAB') {
-    renderStandaloneLabPlaceholder(content, match.params.labId);
+    const m = mountStandaloneLab(content, match.params.labId, (route) => {
+      window.location.hash = '#' + route;
+    });
+    activeDisposer = () => m.dispose();
   } else if (match.type === 'PERSONAL') {
     renderPersonalStudyPlaceholder(content, match.params.tab);
   } else if (match.type === 'SEARCH') {

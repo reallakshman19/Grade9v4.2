@@ -232,3 +232,157 @@ export class ResourcesPageController {
 export function createResourcesPage(currentOrigin: string,authorize?:(resource:Readonly<Resource>)=>boolean): ResourcesPageController {
   return new ResourcesPageController(currentOrigin,authorize);
 }
+
+// ---------------------------------------------------------------------------
+// Standalone Lab Host Mounting Function
+// ---------------------------------------------------------------------------
+
+import { mountCirclesMaster, CirclesMasterController } from './circles-master.ts';
+import { PortableWorkbenchController } from '../applications/portable/component.ts';
+import { RIEMANN_SUMS_PACKAGE, LONG_DIVISION_PACKAGE } from '../runtime/math-packages.ts';
+import type { PortableWorkbenchPackage } from '../applications/portable/types.ts';
+import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
+import { escapeHtml } from '../runtime/rendering.ts';
+
+function mountPortableLab(
+  root: HTMLElement,
+  pkg: PortableWorkbenchPackage,
+  labTitle: string,
+  returnRoute: string,
+  onNavigate?: (route: string) => void
+): { dispose: () => void } {
+  let active = true;
+  const ctrl = new PortableWorkbenchController(pkg);
+
+  const render = () => {
+    if (!active) return;
+    const workbenchHtml = ctrl.renderHtml();
+
+    root.innerHTML = `
+      <div class="portable-lab-host" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;">
+        
+        <!-- Header -->
+        <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1rem;border-bottom:2px solid #e2e8f0;">
+          <div>
+            <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
+              <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;">Home</a> &gt; 
+              <span>Standalone Workbench</span>
+            </div>
+            <h1 style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">🔬 ${escapeHtml(labTitle)}</h1>
+            <p style="margin:0.25rem 0 0;color:#475569;font-size:1rem;">A64 / DEC-A59 Declarative Portable Workbench</p>
+          </div>
+          
+          <div style="display:flex;gap:10px;align-items:center;">
+            <button type="button" id="btn-rotate-pkg" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">🔄 Rotate 90°</button>
+            <button type="button" id="btn-return-topic" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">← Return</button>
+          </div>
+        </header>
+
+        <!-- Diagnostic Mode Banner -->
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:1.25rem;">ℹ️</span>
+          <div style="font-size:0.95rem;color:#1e40af;">
+            <strong>DEC-A59 Compatibility Decision · Academic Status: HOLD</strong> — Reuses exact verified declarative package schemas. State transitions are purely mathematical and declarative.
+          </div>
+        </div>
+
+        <!-- Rendered Workbench -->
+        <div id="workbench-container" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+          ${workbenchHtml}
+        </div>
+      </div>
+    `;
+
+    bindEvents();
+  };
+
+  const bindEvents = () => {
+    root.querySelector<HTMLButtonElement>('#btn-return-topic')?.addEventListener('click', () => {
+      if (onNavigate) onNavigate(returnRoute.replace(/^#/, ''));
+      else window.location.hash = returnRoute;
+    });
+
+    root.querySelector<HTMLButtonElement>('#btn-rotate-pkg')?.addEventListener('click', () => {
+      ctrl.rotate(90);
+      render();
+    });
+
+    // Rule Buttons in Workbench
+    root.querySelectorAll<HTMLButtonElement>('.portable-rule-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const ruleId = btn.dataset.ruleId;
+        if (ruleId) {
+          ctrl.applyTransformation(ruleId);
+          render();
+        }
+      });
+    });
+
+    // Projection Pills selection
+    root.querySelectorAll<HTMLElement>('.portable-projection-pill').forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const entRef = pill.dataset.entityRef;
+        if (entRef) {
+          ctrl.getAdapter().setActiveEntityId(entRef);
+          render();
+        }
+      });
+    });
+  };
+
+  render();
+
+  return {
+    dispose: () => {
+      active = false;
+      root.replaceChildren();
+    },
+  };
+}
+
+export function mountStandaloneLab(
+  root: HTMLElement,
+  rawLabId: string,
+  onNavigate?: (route: string) => void
+): { dispose: () => void } {
+  const labId = (rawLabId || '').toLowerCase();
+
+  if (labId.includes('circles')) {
+    const c = new CirclesMasterController();
+    return mountCirclesMaster(root, c, onNavigate);
+  }
+
+  if (labId.includes('riemann')) {
+    return mountPortableLab(
+      root,
+      RIEMANN_SUMS_PACKAGE,
+      'Riemann Sums — Partition Refinement Workbench',
+      '#/subject/mathematics/topic/riemann/labs',
+      onNavigate
+    );
+  }
+
+  if (labId.includes('division') || labId.includes('long-division')) {
+    return mountPortableLab(
+      root,
+      LONG_DIVISION_PACKAGE,
+      'Long Division — Multi-Step Arithmetic Scaffold',
+      '#/subject/mathematics/topic/polynomials/labs',
+      onNavigate
+    );
+  }
+
+  // Fallback for generic or unmapped labs
+  root.innerHTML = `
+    <div style="padding:2rem;text-align:center;color:#64748b;background:#ffffff;border-radius:12px;margin:2rem auto;max-width:800px;">
+      <h2>Standalone Lab: ${escapeHtml(rawLabId)}</h2>
+      <p>Lab descriptor is on HOLD pending technical package binding.</p>
+      <button type="button" onclick="window.location.hash='#/home'" style="min-height:${HIT_TARGET_PRIMARY_PX}px;padding:12px 24px;background:#0f172a;color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;">← Return to Curriculum Home</button>
+    </div>
+  `;
+  return {
+    dispose: () => {
+      root.replaceChildren();
+    },
+  };
+}

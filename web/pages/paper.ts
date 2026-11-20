@@ -1,6 +1,6 @@
 /** A30: synthetic paper controller. The authorized multipart task and A18
  * transaction are the only score/commit authority. Local snapshots are not receipts. */
-import { HIT_TARGET_MIN_PX } from '../styles/tokens.ts';
+import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import {PartNavigationController,type QuestionPartDescriptor,type PaperSectionDescriptor} from '../components/part-navigation.ts';
 import {escapeHtml,sanitizeMarkup} from '../runtime/rendering.ts';
 import {canonicalJson,computeSha256,sameRef} from '../runtime/loader.ts';
@@ -212,4 +212,294 @@ export class PaperWorkspaceController{
       </div>
     `;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Mount Function & Interactive Tablet Lifecycle
+// ---------------------------------------------------------------------------
+
+export function mountPaperWorkspace(
+  root: HTMLElement,
+  controller: PaperWorkspaceController,
+  onNavigate?: (route: string) => void
+): { dispose: () => void } {
+  let active = true;
+  let timerInterval: ReturnType<typeof setInterval> | null = null;
+  let scratchpadOpen = false;
+
+  const render = () => {
+    if (!active) return;
+    const state = controller.getViewState();
+    const parts = (controller as any).parts as PublicPart[];
+    const activePart = parts.find((p) => p.id === state.activePartId) || parts[0];
+    const nav = controller.getNavigation();
+    const navState = nav.exportState();
+
+    const mins = Math.floor(state.timer.remainingSeconds / 60);
+    const secs = state.timer.remainingSeconds % 60;
+    const timeDisplay = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+    // Get current part response
+    const currentResp = controller.getPartResponse(activePart?.id || '');
+    const currentVal = currentResp?.kind === 'INTEGER' ? String(currentResp.value) : '';
+
+    const aidsHtml = state.allowedAids
+      .map(
+        (aid) => `
+        <button type="button" class="aid-toggle-btn" data-aid="${aid}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: ${state.activeAid === aid ? '#dbeafe' : '#f1f5f9'}; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer;">
+          ${aid === 'SCRATCHPAD' ? '📝 Scratchpad' : aid.replace(/_/g, ' ')}
+        </button>`
+      )
+      .join('');
+
+    const stimulusHtml = state.activeStimulus
+      ? `<aside class="shared-stimulus-pane" aria-label="Shared Stimulus" style="padding: 16px; background: #fdfbf7; border: 1px solid #fef08a; border-radius: 8px; margin-bottom: 16px;">
+          <h3 style="margin-top: 0; font-size: 16px; color: #854d0e;">Stimulus: ${escapeHtml(String(state.activeStimulus.title))}</h3>
+          <div>${state.activeStimulus.contentHtml}</div>
+        </aside>`
+      : '';
+
+    root.innerHTML = `
+      <div class="paper-workspace paper-workspace-screen" style="display: flex; flex-direction: column; gap: 16px; max-width: 1400px; margin: 0 auto; padding: 1.5rem; box-sizing: border-box;">
+        
+        <!-- Header -->
+        <header class="paper-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0;">
+          <div>
+            <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
+              <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;">Home</a> &gt; 
+              <a href="#/competitive/ioqm" style="color:#0284c7;text-decoration:none;font-weight:600;">Competitive Hub</a> &gt; 
+              <span>${escapeHtml(controller.getPaperTitle())}</span>
+            </div>
+            <h1 style="margin: 0; font-size: 1.75rem; color: #0f172a; font-weight: 800;">${escapeHtml(controller.getPaperTitle())}</h1>
+            <span style="font-size: 0.9rem; color: #64748b;">30 Integer Parts · Max Score: 100 Marks · Mode: SIMULATED_EXAM</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="timer-badge" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: ${state.timer.isExpired ? '#fee2e2' : '#f8fafc'}; border: 1px solid ${state.timer.isExpired ? '#fca5a5' : '#cbd5e1'}; border-radius: 8px;">
+              <span id="timer-display" class="exam-timer-display" style="font-size: 1.15rem; font-weight: 800; color: ${state.timer.isExpired ? '#991b1b' : '#0284c7'};">⏱ ${timeDisplay}</span>
+            </div>
+            <button type="button" id="btn-back-hub" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #0f172a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">← Exit Exam</button>
+          </div>
+        </header>
+
+        <!-- Unreviewed Diagnostic Banner -->
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:1.25rem;">ℹ️</span>
+          <div style="font-size:0.95rem;color:#1e40af;">
+            <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed. Submission yields diagnostic sealed evaluation.
+          </div>
+        </div>
+
+        <!-- Aids Bar -->
+        <div class="aids-bar" style="display: flex; gap: 10px; align-items: center;">
+          <span style="font-size: 14px; font-weight: 700; color: #475569;">Configured Aids:</span>
+          ${aidsHtml || '<span style="font-size: 13px; color: #94a3b8;">None permitted</span>'}
+        </div>
+
+        <!-- Scratchpad Pane (Toggled) -->
+        ${scratchpadOpen ? `
+          <div id="scratchpad-drawer" style="background: #fffbeb; border: 2px dashed #f59e0b; border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #92400e;">Digital Scratchpad &amp; Mathematical Notes:</strong>
+              <button type="button" id="btn-close-scratchpad" style="background: none; border: none; font-weight: 700; cursor: pointer; color: #92400e;">✕ Close</button>
+            </div>
+            <textarea id="scratchpad-text" rows="4" placeholder="Write scratch work, factorisations, and intermediate equations here..." style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #fde68a; border-radius: 6px; font-family: monospace; font-size: 14px;"></textarea>
+          </div>
+        ` : ''}
+
+        <!-- Workspace Layout: Navigation Sidebar & Part Content -->
+        <div class="paper-layout" style="display: grid; grid-template-columns: minmax(280px, 320px) 1fr; gap: 20px; align-items: start;">
+          
+          <!-- Sidebar: Sections & Part Navigator -->
+          <aside class="paper-sidebar" style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1rem; max-height: 700px; overflow-y: auto;">
+            <h3 style="margin: 0 0 0.75rem; font-size: 1rem; color: #0f172a; text-transform: uppercase; font-weight: 700;">Question Parts (${parts.length})</h3>
+            
+            ${(controller as any).config.sections.map((sec: any) => `
+              <div style="margin-bottom: 1rem;">
+                <div style="font-size: 0.85rem; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 4px 8px; border-radius: 4px; margin-bottom: 6px;">
+                  ${escapeHtml(sec.title)}
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
+                  ${sec.partIds.map((pid: string) => {
+                    const p = parts.find(x => x.id === pid)!;
+                    const isAct = p.id === activePart.id;
+                    const st = navState.statuses[p.id] || 'UNVISITED';
+                    const hasAns = controller.getPartResponse(p.id) !== undefined;
+                    return `
+                      <button type="button" class="part-select-btn" data-part-id="${p.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px; background: ${isAct ? '#0284c7' : hasAns ? '#dcfce7' : '#f8fafc'}; color: ${isAct ? '#ffffff' : hasAns ? '#15803d' : '#0f172a'}; border: 2px solid ${isAct ? '#0369a1' : hasAns ? '#86efac' : '#cbd5e1'}; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
+                        ${p.partKey}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </aside>
+
+          <!-- Main Question Part Pane -->
+          <main class="paper-content" style="display: flex; flex-direction: column;">
+            ${stimulusHtml}
+
+            <!-- Part Card -->
+            <article class="question-part-pane" style="padding: 1.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem;">
+                <div>
+                  <span style="font-size: 0.8rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">Part ${escapeHtml(String(activePart?.partKey))}</span>
+                  <h2 style="margin: 0.5rem 0 0; font-size: 1.35rem; color: #0f172a; font-weight: 700;">${escapeHtml(String(activePart?.label || ''))}</h2>
+                </div>
+                <span style="font-size: 0.95rem; font-weight: 700; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; color: #334155;">
+                  [${escapeHtml(String(activePart?.archetypeId))}] ${escapeHtml(String(activePart?.maxPoints))} Points
+                </span>
+              </div>
+
+              <div class="part-prompt" style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; color: #1e293b;">
+                ${activePart?.promptHtml || '<p>No part selected.</p>'}
+              </div>
+
+              <!-- Answer Entry Area (IOQM Integer: [00..99]) -->
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                <label style="display: block; font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 6px;">
+                  Enter Integer Answer (00 to 99):
+                </label>
+                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                  <input type="text" id="integer-answer-input" class="part-integer-input" value="${escapeHtml(currentVal)}" maxlength="2" placeholder="e.g. 07 or 42" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; width: 140px; padding: 8px 12px; font-size: 1.25rem; font-weight: 700; text-align: center; border: 2px solid #cbd5e1; border-radius: 6px;" />
+                  <button type="button" id="save-integer-btn" class="btn-save-part" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 20px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem;">
+                    Save Part ${activePart?.partKey} Answer
+                  </button>
+                  <span id="integer-validation-msg" class="part-input-feedback" style="font-size: 0.9rem; font-weight: 600; color: #15803d;">${currentVal ? `Response saved: ${currentVal}` : ''}</span>
+                </div>
+              </div>
+
+              <!-- Post-Commit Evaluation Status -->
+              ${state.isCommitted && state.evaluation ? `
+                <div class="paper-evaluation-result" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;">
+                  <h3 style="margin: 0 0 0.5rem; color: #166534; font-size: 1.2rem;">✓ Paper Submitted Successfully</h3>
+                  <p style="margin: 0; color: #15803d; font-size: 0.95rem; line-height: 1.5;">
+                    ${state.evaluation.summaryFeedback}
+                  </p>
+                </div>
+              ` : ''}
+
+              <!-- Submission Bar -->
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+                <span style="font-size: 0.9rem; color: #64748b;">
+                  Parts Attempted: <strong>${Object.keys((controller as any).responses).length}</strong> of ${parts.length}
+                </span>
+
+                <button type="button" id="submit-paper-btn" ${!state.ready || state.busy || state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_PRIMARY_PX}px; padding: 12px 28px; background: ${state.isCommitted ? '#94a3b8' : '#16a34a'}; color: #ffffff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: ${state.isCommitted ? 'default' : 'pointer'};">
+                  ${state.isCommitted ? 'Paper Durably Committed (Sealed)' : 'Submit Complete Paper →'}
+                </button>
+              </div>
+            </article>
+          </main>
+        </div>
+      </div>
+    `;
+
+    bindEvents();
+  };
+
+  const bindEvents = () => {
+    // Exit Exam button
+    root.querySelector<HTMLButtonElement>('#btn-back-hub')?.addEventListener('click', () => {
+      if (onNavigate) onNavigate('/competitive/ioqm');
+      else window.location.hash = '#/competitive/ioqm';
+    });
+
+    // Part select buttons
+    root.querySelectorAll<HTMLButtonElement>('.part-select-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pid = btn.dataset.partId;
+        if (pid) {
+          controller.getNavigation().goToPart(pid);
+          render();
+        }
+      });
+    });
+
+    // Aids buttons
+    root.querySelectorAll<HTMLButtonElement>('.aid-toggle-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const aid = btn.dataset.aid as ExamAidKind;
+        if (aid === 'SCRATCHPAD') {
+          scratchpadOpen = !scratchpadOpen;
+          render();
+        } else {
+          controller.openAid(aid);
+          render();
+        }
+      });
+    });
+
+    root.querySelector<HTMLButtonElement>('#btn-close-scratchpad')?.addEventListener('click', () => {
+      scratchpadOpen = false;
+      render();
+    });
+
+    // Save Part Answer
+    const saveBtn = root.querySelector<HTMLButtonElement>('#save-integer-btn') || root.querySelector<HTMLButtonElement>('#btn-save-part');
+    const input = root.querySelector<HTMLInputElement>('#integer-answer-input') || root.querySelector<HTMLInputElement>('#part-integer-input');
+    const feedback = root.querySelector<HTMLElement>('#integer-validation-msg') || root.querySelector<HTMLElement>('#part-input-feedback');
+
+    const handleSave = () => {
+      if (!input || !feedback) return;
+      const raw = input.value.trim();
+      const val = parseInt(raw, 10);
+      if (!/^\d{1,2}$/.test(raw) || isNaN(val) || val < 0 || val > 99) {
+        feedback.style.color = '#dc2626';
+        feedback.textContent = '✗ Invalid answer. Enter an integer between 00 and 99.';
+        return;
+      }
+
+      const activePartId = controller.getViewState().activePartId;
+      const formatted = val.toString().padStart(2, '0');
+      const ok = controller.setPartResponse(activePartId, { kind: 'INTEGER', value: formatted });
+      if (ok) {
+        feedback.style.color = '#15803d';
+        feedback.textContent = `✓ Response saved: ${formatted}`;
+        render();
+      } else {
+        feedback.style.color = '#dc2626';
+        feedback.textContent = '✗ Unable to save. Paper may be locked or deadline passed.';
+      }
+    };
+
+    saveBtn?.addEventListener('click', handleSave);
+    input?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleSave();
+    });
+
+    // Submit Complete Paper
+    root.querySelector<HTMLButtonElement>('#submit-paper-btn')?.addEventListener('click', async () => {
+      try {
+        await controller.submitPaper();
+        render();
+      } catch (err: any) {
+        alert('Submission failed: ' + (err?.message || String(err)));
+      }
+    });
+  };
+
+  // Restore controller and start timer
+  void controller.restore().then(() => {
+    render();
+    timerInterval = setInterval(() => {
+      if (!active) return;
+      const timerDisplay = root.querySelector<HTMLElement>('#exam-timer-display');
+      if (timerDisplay) {
+        const rem = controller.getTimer().getRemainingSeconds();
+        const mins = Math.floor(rem / 60);
+        const secs = rem % 60;
+        timerDisplay.textContent = `⏱ ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      }
+    }, 1000);
+  });
+
+  return {
+    dispose: () => {
+      active = false;
+      if (timerInterval) clearInterval(timerInterval);
+      root.replaceChildren();
+    },
+  };
 }

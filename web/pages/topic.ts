@@ -27,6 +27,144 @@ import { WPE_DIAGNOSTIC_DECK, getAuthorizedWpeEntry, WPE_RELEASE_ID } from '../r
 import { createAuthorizedQuestionSession } from '../runtime/question-session.ts';
 import { createAuthorizedTransferSession } from '../runtime/wpe-transfer.ts';
 import { HarmonicEnergyWellAdapter } from '../adapters/physics/models/energy-well.ts';
+import { ProofWorkspaceController, mountProofWorkspace } from '../components/proof.ts';
+import { CirclesMasterController, mountCirclesMaster } from './circles-master.ts';
+import { PortableWorkbenchController } from '../applications/portable/component.ts';
+import { RIEMANN_SUMS_PACKAGE, LONG_DIVISION_PACKAGE } from '../runtime/math-packages.ts';
+
+// ---------------------------------------------------------------------------
+// Mathematics Topic Question Decks
+// ---------------------------------------------------------------------------
+
+export const MATH_POLYNOMIALS_DECK = [
+  {
+    id: 'poly-01',
+    code: 'POL-01',
+    title: "Vieta's Formulas for Cubic Roots",
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    stemText: 'Let P(x) = x³ - 6x² + 11x - 6 = 0 have roots α, β, γ. Evaluate the sum of pairwise products αβ + βγ + γα.',
+    explanationHtml: 'By Vieta\'s formulas for a cubic ax³ + bx² + cx + d = 0, the sum of pairwise products of roots is c/a = 11/1 = 11.',
+  },
+  {
+    id: 'poly-02',
+    code: 'POL-02',
+    title: 'Integer Root Theorem Application',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    stemText: 'Find the largest real integer root of the cubic polynomial P(x) = x³ - 3x² - 4x + 12 = 0.',
+    explanationHtml: 'Factoring by grouping: x²(x - 3) - 4(x - 3) = (x² - 4)(x - 3) = (x - 2)(x + 2)(x - 3) = 0. The integer roots are -2, 2, 3. The largest is 3.',
+  },
+  {
+    id: 'poly-03',
+    code: 'POL-03',
+    title: 'Polynomial Remainder Theorem',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    stemText: 'Evaluate the remainder when P(x) = x⁴ - 2x³ + 3x² - 4x + 5 is divided by (x - 2).',
+    explanationHtml: 'By the Remainder Theorem, R = P(2) = 2⁴ - 2(2³) + 3(2²) - 4(2) + 5 = 16 - 16 + 12 - 8 + 5 = 9.',
+  },
+  {
+    id: 'poly-04',
+    code: 'POL-04',
+    title: 'Symmetric Sum of Reciprocal Roots',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 5,
+    status: 'RELEASED' as const,
+    stemText: 'Let a, b, c be roots of x³ - 7x + 2 = 0. Evaluate the value of 10 * (1/a + 1/b + 1/c).',
+    explanationHtml: '1/a + 1/b + 1/c = (ab + bc + ca)/(abc). By Vieta: ab + bc + ca = -7, abc = -2. So 1/a + 1/b + 1/c = -7 / -2 = 3.5. Multiplying by 10 yields 35.',
+  },
+];
+
+export const MATH_EUCLID_DECK = [
+  {
+    id: 'geom-01',
+    code: 'GEO-01',
+    title: 'Inscribed Angle in Semicircle',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 2,
+    status: 'RELEASED' as const,
+    stemText: 'In a circle with diameter AB, point C lies on the circumference. If ∠CAB = 35°, evaluate the measure of ∠ABC in degrees.',
+    explanationHtml: 'By Thales’s Theorem, the angle in a semicircle ∠ACB = 90°. In triangle ABC, ∠ABC = 180° - 90° - 35° = 55°.',
+  },
+  {
+    id: 'geom-02',
+    code: 'GEO-02',
+    title: 'Power of a Point: Tangent-Secant',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    stemText: 'From an external point P, tangent segment PT and secant PAB are drawn. If PA = 4 and AB = 5, find the length of PT.',
+    explanationHtml: 'By the Power of a Point theorem: PT² = PA * PB = 4 * (4 + 5) = 4 * 9 = 36. Thus PT = 6.',
+  },
+  {
+    id: 'geom-03',
+    code: 'GEO-03',
+    title: 'Cyclic Quadrilateral Opposite Angles',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    stemText: 'In cyclic quadrilateral ABCD, ∠DAB = 74°. Find the measure of opposite angle ∠BCD in degrees.',
+    explanationHtml: 'Opposite angles of a cyclic quadrilateral sum to 180°. ∠BCD = 180° - 74° = 106°.',
+  },
+  {
+    id: 'geom-04',
+    code: 'GEO-04',
+    title: 'Chord Distance from Center',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    stemText: 'A chord of length 16 is drawn in a circle of radius 10. Find the perpendicular distance from the center to the chord.',
+    explanationHtml: 'Perpendicular from center bisects the chord into halves of length 8. By Pythagorean theorem: d² = r² - (chord/2)² = 10² - 8² = 100 - 64 = 36. Distance d = 6.',
+  },
+];
+
+export const MATH_RIEMANN_DECK = [
+  {
+    id: 'riem-01',
+    code: 'RIE-01',
+    title: 'Lower Darboux Sum for n=2',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    stemText: 'For f(x) = x² on [0, 1] with n = 2 equal intervals, evaluate 1000 * L(f, P_2).',
+    explanationHtml: 'Subintervals are [0, 0.5] and [0.5, 1], Δx = 0.5. L(f, P_2) = (0² * 0.5) + (0.5² * 0.5) = 0 + 0.125 = 0.125. 1000 * 0.125 = 125.',
+  },
+  {
+    id: 'riem-02',
+    code: 'RIE-02',
+    title: 'Upper Darboux Sum for n=2',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    stemText: 'For f(x) = x² on [0, 1] with n = 2 equal intervals, evaluate 1000 * U(f, P_2).',
+    explanationHtml: 'Subintervals [0, 0.5] and [0.5, 1], Δx = 0.5. U(f, P_2) = (0.5² * 0.5) + (1.0² * 0.5) = 0.125 + 0.5 = 0.625. 1000 * 0.625 = 625.',
+  },
+  {
+    id: 'riem-03',
+    code: 'RIE-03',
+    title: 'Monotonic Refinement Inequality',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    stemText: 'Evaluate the difference between U(f, P_2) and L(f, P_2) multiplied by 1000.',
+    explanationHtml: 'U(f, P_2) - L(f, P_2) = 0.625 - 0.125 = 0.500. Multiplied by 1000 gives 500.',
+  },
+];
 
 export interface TopicDetail {
   readonly id: string;
@@ -41,6 +179,62 @@ export interface TopicDetail {
   readonly resourceCount: number;
   readonly description?: string;
 }
+
+export const WPE_PHYSICS_TOPIC: TopicDetail = {
+  id: 'wpe',
+  code: 'WPE',
+  title: 'Work, Power and Energy',
+  subjectId: 'physics',
+  subjectCode: 'PHYSICS',
+  strand: 'Mechanics',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 3,
+  resourceCount: 8,
+  description: 'Work-energy theorem, conservative and non-conservative forces, potential energy functions, and power.',
+};
+
+export const MATH_POLYNOMIALS_TOPIC: TopicDetail = {
+  id: 'polynomials',
+  code: 'POLYNOMIALS',
+  title: 'Polynomials & Real Numbers',
+  subjectId: 'mathematics',
+  subjectCode: 'MATHEMATICS',
+  strand: 'Algebra',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 2,
+  resourceCount: 6,
+  description: 'Algebraic structures, polynomial division, factor theorem, and root isolation.',
+};
+
+export const MATH_EUCLID_TOPIC: TopicDetail = {
+  id: 'euclid-geometry',
+  code: 'EUCLID',
+  title: 'Euclidean Geometry & Proofs',
+  subjectId: 'mathematics',
+  subjectCode: 'MATHEMATICS',
+  strand: 'Geometry',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 3,
+  resourceCount: 8,
+  description: 'Axiomatic geometry, angle chasing, cyclic quadrilaterals, circle theorems, and deductive proofs.',
+};
+
+export const MATH_RIEMANN_TOPIC: TopicDetail = {
+  id: 'riemann',
+  code: 'RIEMANN',
+  title: 'Foundations of Real Analysis & Calculus',
+  subjectId: 'mathematics',
+  subjectCode: 'MATHEMATICS',
+  strand: 'Analysis',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 3,
+  interactiveModelCount: 2,
+  resourceCount: 5,
+  description: 'Partitions, step functions, Darboux sums, and Riemann integrability of monotonic functions.',
+};
 
 export interface TopicViewState {
   readonly status: 'LOADING' | 'POPULATED' | 'UNAVAILABLE';
@@ -178,24 +372,18 @@ export function mountTopicWorkspace(
     cleanupSub();
 
     const state = controller.getViewState();
-    const topic = state.topic || {
-      id: 'wpe',
-      code: 'WPE',
-      title: 'Work, Power and Energy',
-      subjectCode: 'PHYSICS',
-      subjectId: 'physics',
-      status: 'AVAILABLE' as const,
-      verifiedQuestionCount: 4,
-      interactiveModelCount: 3,
-      resourceCount: 8,
-    };
+    const topic = state.topic || WPE_PHYSICS_TOPIC;
+    const isMath = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
+    const subjName = isMath ? 'Mathematics' : 'Physics';
+    const subjRoute = isMath ? '#/subject/mathematics' : '#/subject/physics';
+    const subjEmoji = isMath ? '📐 ' : '⚛️ ';
 
     root.innerHTML = `
       <div class="g9-topic-workspace" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:1.5rem;max-width:100%;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;">
         <!-- Breadcrumb Navigation -->
         <nav aria-label="Breadcrumb" style="display:flex;gap:8px;font-size:0.95rem;color:#64748b;margin-bottom:1rem;flex-wrap:wrap;">
           <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;min-height:36px;display:inline-flex;align-items:center;">Home</a> &gt; 
-          <a href="#/subject/physics" style="color:#0284c7;text-decoration:none;font-weight:600;min-height:36px;display:inline-flex;align-items:center;">Physics</a> &gt; 
+          <a href="${subjRoute}" style="color:#0284c7;text-decoration:none;font-weight:600;min-height:36px;display:inline-flex;align-items:center;">${subjName}</a> &gt; 
           <span style="font-weight:600;color:#0f172a;min-height:36px;display:inline-flex;align-items:center;">Topic: ${escapeHtml(topic.title)}</span>
         </nav>
 
@@ -207,10 +395,10 @@ export function mountTopicWorkspace(
               <span style="font-size:0.8rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">${escapeHtml(topic.status)}</span>
               <span style="font-size:0.8rem;font-weight:600;color:#475569;">12.7" Tablet Workspace</span>
             </div>
-            <h1 class="topic-workspace-title" style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">⚛️ Physics: ${escapeHtml(topic.title)}</h1>
+            <h1 class="topic-workspace-title" style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">${subjEmoji}${subjName}: ${escapeHtml(topic.title)}</h1>
             <p style="margin:0.25rem 0 0;font-size:1rem;color:#64748b;">Unified workspace across all 7 native curriculum roles</p>
           </div>
-          <button type="button" id="g9-return-subject-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.95rem;">← Back to Physics</button>
+          <button type="button" id="g9-return-subject-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.95rem;">← Back to ${subjName}</button>
         </div>
 
         <!-- 4 Canonical Workspace Tabs -->
@@ -245,17 +433,23 @@ export function mountTopicWorkspace(
   // Tab 1: Question Bank (Core 2 / 2A / 2B)
   // -------------------------------------------------------------------------
   const mountQuestionBankTab = (container: HTMLElement) => {
+    const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+    let deck: readonly any[] = WPE_DIAGNOSTIC_DECK;
+    if (topic.code === 'POLYNOMIALS') deck = MATH_POLYNOMIALS_DECK;
+    else if (topic.code === 'EUCLID') deck = MATH_EUCLID_DECK;
+    else if (topic.code === 'RIEMANN') deck = MATH_RIEMANN_DECK;
+
     if (!selectedQuestionId) {
       // Render Question Deck Selection
       container.innerHTML = `
         <div class="g9-question-deck">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
-            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">Authentic Problem Deck (${WPE_DIAGNOSTIC_DECK.length} Items)</h2>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">${escapeHtml(topic.title)} Problem Deck (${deck.length} Items)</h2>
             <span style="font-size:0.85rem;color:#64748b;">Commitment required before evaluation · Zero pre-commit leakage</span>
           </div>
 
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:1rem;">
-            ${WPE_DIAGNOSTIC_DECK.map(q => `
+            ${deck.map(q => `
               <div style="border:1px solid #cbd5e1;border-radius:8px;padding:1.25rem;background:#ffffff;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
                 <div>
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -267,7 +461,7 @@ export function mountTopicWorkspace(
                   <div style="display:flex;gap:6px;font-size:0.8rem;color:#64748b;margin-bottom:1rem;flex-wrap:wrap;">
                     <span style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">Kind: ${escapeHtml(q.kind)}</span>
                     <span style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">Max: ${q.maxPoints ?? 5} pts</span>
-                    ${q.figures && q.figures.length ? `<span style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">🖼️ Figure</span>` : ''}
+                    ${(q as any).figures && (q as any).figures.length ? `<span style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">🖼️ Figure</span>` : ''}
                   </div>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:8px;">
@@ -287,7 +481,7 @@ export function mountTopicWorkspace(
       container.innerHTML = `
         <div style="margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-            <button type="button" id="g9-back-deck-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">← Back to WPE Question Deck</button>
+            <button type="button" id="g9-back-deck-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">← Back to ${escapeHtml(topic.title)} Question Deck</button>
             <div style="display:flex;gap:6px;background:#f1f5f9;padding:4px;border-radius:6px;" role="group" aria-label="Question Mode">
               <button type="button" data-switch-qmode="CORE2" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2: Question</button>
               <button type="button" data-switch-qmode="CORE2A" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2A' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2A' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2A: Supported</button>
@@ -300,33 +494,40 @@ export function mountTopicWorkspace(
       `;
 
       const qRoot = container.querySelector<HTMLElement>('#g9-question-mount-root')!;
+      const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
 
       if (activeQuestionMode === 'CORE2A') {
-        const c = new Core2ASupportedPageController({ returnRoute: '#/subject/physics/topic/wpe/questions' });
+        const c = new Core2ASupportedPageController({ returnRoute: `#/subject/${topic.subjectCode.toLowerCase()}/topic/${topic.code.toLowerCase()}/questions` });
         const m = mountCore2ASupported(qRoot, c);
         activeSubDisposer = () => m.dispose();
       } else if (activeQuestionMode === 'CORE2B') {
-        const c = new Core2BTransferPageController({ returnRoute: '#/subject/physics/topic/wpe/questions' });
+        const c = new Core2BTransferPageController({ returnRoute: `#/subject/${topic.subjectCode.toLowerCase()}/topic/${topic.code.toLowerCase()}/questions` });
         const m = mountCore2BTransfer(qRoot, c);
         activeSubDisposer = () => m.dispose();
       } else {
-        const qController = new QuestionPageController('phys', 'wpe');
-        const qDesc = WPE_DIAGNOSTIC_DECK.find(q => q.id === selectedQuestionId)!;
+        const qController = new QuestionPageController(topic.subjectCode.toLowerCase(), topic.code.toLowerCase());
+        const qDesc = deck.find(q => q.id === selectedQuestionId) || deck[0];
 
-        // Authorize question session asynchronously
-        void (async () => {
-          try {
-            const entry = await getAuthorizedWpeEntry(selectedQuestionId!);
-            const binding = await createAuthorizedQuestionSession(WPE_RELEASE_ID, entry);
-            qController.loadQuestion(qDesc, binding);
-            const m = mountQuestionPage(qRoot, qController);
-            activeSubDisposer = () => m.dispose();
-          } catch (e: any) {
-            qController.loadQuestion(qDesc);
-            const m = mountQuestionPage(qRoot, qController);
-            activeSubDisposer = () => m.dispose();
-          }
-        })();
+        if (isMathTopic) {
+          qController.loadQuestion(qDesc);
+          const m = mountQuestionPage(qRoot, qController);
+          activeSubDisposer = () => m.dispose();
+        } else {
+          // Authorize question session asynchronously for WPE
+          void (async () => {
+            try {
+              const entry = await getAuthorizedWpeEntry(selectedQuestionId!);
+              const binding = await createAuthorizedQuestionSession(WPE_RELEASE_ID, entry);
+              qController.loadQuestion(qDesc, binding);
+              const m = mountQuestionPage(qRoot, qController);
+              activeSubDisposer = () => m.dispose();
+            } catch (e: any) {
+              qController.loadQuestion(qDesc);
+              const m = mountQuestionPage(qRoot, qController);
+              activeSubDisposer = () => m.dispose();
+            }
+          })();
+        }
       }
     }
   };
@@ -335,13 +536,16 @@ export function mountTopicWorkspace(
   // Tab 2: Learn & Try (Core 1 / 1A / 1B)
   // -------------------------------------------------------------------------
   const mountLearnTryTab = (container: HTMLElement) => {
+    const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+    const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
+
     container.innerHTML = `
       <div class="g9-learn-try-hub">
         <!-- 3-Role Segmented Selector (Learn & Try Family) -->
         <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;" role="tablist" aria-label="Learn & Try Subroles">
           <button type="button" data-subrole="CORE1" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">1. Core 1: Reading Orientation</button>
           <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">2. Core 1A: Concept Construction (9 Units)</button>
-          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: Phenomenological Reconstruction (7 Stages)</button>
+          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: ${topic.code === 'EUCLID' ? 'Deductive Proof Workspace (A27)' : 'Phenomenological Reconstruction (7 Stages)'}</button>
         </div>
 
         <div id="g9-learn-try-mount-root"></div>
@@ -350,8 +554,59 @@ export function mountTopicWorkspace(
 
     const subRoot = container.querySelector<HTMLElement>('#g9-learn-try-mount-root')!;
 
-    if (learnTrySubRole === 'CORE1') {
-      const c = new Core1OrientationPageController({ returnRoute: '#/subject/physics/topic/wpe/learn-try' });
+    if (isMathTopic && topic.code === 'EUCLID' && learnTrySubRole === 'CORE1B') {
+      // Mount Euclidean Geometry Proof Workspace (A27)
+      const proofController = new ProofWorkspaceController({
+        archetype: 'MATH_E2',
+        givenStatements: [
+          'In circle O, AB is the diameter.',
+          'Point C lies on the circle distinct from A and B.',
+          'Point D lies on minor arc BC.',
+        ],
+        goalStatement: 'Prove that ∠ADC + ∠ABC = 180° (Opposite angles in cyclic quadrilateral ABCD sum to 180°).',
+        availableLemmas: [
+          {
+            id: 'LEMMA-THALES',
+            name: "Thales's Theorem",
+            statement: 'The angle subtended by a diameter at the circle circumference is a right angle (90°).',
+            isStandardAxiom: true,
+          },
+          {
+            id: 'LEMMA-INSCRIBED-ANGLE',
+            name: 'Inscribed Angle Theorem',
+            statement: 'An angle inscribed in a circle is half the central angle subtending the same arc.',
+            isStandardAxiom: true,
+          },
+          {
+            id: 'LEMMA-CYCLIC-SUM',
+            name: 'Cyclic Quadrilateral Theorem',
+            statement: 'Opposite angles of a cyclic quadrilateral inscribed in a circle sum to 180°.',
+            isStandardAxiom: true,
+          },
+        ],
+        approaches: [
+          {
+            id: 'app-direct-inscribed',
+            name: 'Direct Central Angle Inscribed Arc Method',
+            isGated: false,
+            isUnlocked: true,
+            hintsCount: 2,
+            strategySummary: 'Use central angle measure 2θ and arc subtension to prove supplementary angles.',
+          },
+          {
+            id: 'app-tangent-secant',
+            name: 'Auxiliary Tangent and Alternate Segment Method',
+            isGated: true,
+            isUnlocked: false,
+            hintsCount: 3,
+            strategySummary: '',
+          },
+        ],
+      });
+      const m = mountProofWorkspace(subRoot, proofController, onNavigate);
+      activeSubDisposer = () => m.dispose();
+    } else if (learnTrySubRole === 'CORE1') {
+      const c = new Core1OrientationPageController({ returnRoute: `#/subject/${topic.subjectCode.toLowerCase()}/topic/${topic.code.toLowerCase()}/learn-try` });
       const m = mountCore1Orientation(subRoot, c);
       activeSubDisposer = () => m.dispose();
     } else if (learnTrySubRole === 'CORE1B') {
@@ -371,9 +626,56 @@ export function mountTopicWorkspace(
   };
 
   // -------------------------------------------------------------------------
-  // Tab 3: Explorer Simulation (GCDR 10-Stage)
+  // Tab 3: Explorer Simulation
   // -------------------------------------------------------------------------
   const mountExplorerTab = (container: HTMLElement) => {
+    const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+
+    if (topic.code === 'RIEMANN') {
+      const pwc = new PortableWorkbenchController(RIEMANN_SUMS_PACKAGE);
+      const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'EUCLID') {
+      container.innerHTML = `
+        <div class="g9-explorer-hub" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+          <h2 style="margin:0 0 0.5rem;font-size:1.35rem;color:#0f172a;">Euclidean Circle Geometry &amp; Tangent Explorer</h2>
+          <p style="margin:0 0 1rem;font-size:0.95rem;color:#64748b;">Interactive coordinate plane visualizing circle tangents, secants, and power of a point.</p>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;text-align:center;">
+            <svg id="euclid-explorer-svg" viewBox="0 0 400 300" style="max-width:100%;height:auto;border:1px solid #e2e8f0;border-radius:6px;background:#f8fafc;" aria-label="Euclidean Circle Diagram">
+              <circle cx="200" cy="150" r="80" stroke="#0284c7" stroke-width="3" fill="#e0f2fe" fill-opacity="0.2"/>
+              <line x1="50" y1="150" x2="350" y2="150" stroke="#94a3b8" stroke-dasharray="4"/>
+              <line x1="200" y1="20" x2="200" y2="280" stroke="#94a3b8" stroke-dasharray="4"/>
+              <circle cx="200" cy="150" r="4" fill="#0f172a"/>
+              <text x="208" y="145" font-size="14" font-weight="700" fill="#0f172a">O (0,0)</text>
+              <line x1="120" y1="150" x2="280" y2="150" stroke="#0f172a" stroke-width="2"/>
+              <text x="110" y="170" font-size="14" font-weight="700" fill="#0f172a">A</text>
+              <text x="285" y="170" font-size="14" font-weight="700" fill="#0f172a">B</text>
+              <!-- Inscribed angle point C -->
+              <circle cx="240" cy="80.7" r="4" fill="#dc2626"/>
+              <text x="245" y="75" font-size="14" font-weight="700" fill="#dc2626">C</text>
+              <line x1="120" y1="150" x2="240" y2="80.7" stroke="#dc2626" stroke-width="1.5"/>
+              <line x1="280" y1="150" x2="240" y2="80.7" stroke="#dc2626" stroke-width="1.5"/>
+            </svg>
+            <div style="margin-top:1rem;color:#334155;font-size:0.95rem;">
+              Thales's Theorem Verification: ∠ACB is inscribed in semicircle AB, subtending 180° arc. Measure: <strong>∠ACB = 90.0°</strong>
+            </div>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    if (topic.code === 'POLYNOMIALS') {
+      const pwc = new PortableWorkbenchController(LONG_DIVISION_PACKAGE);
+      const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    // Default Physics Explorer (GCDR 10-Stage)
     container.innerHTML = `
       <div class="g9-explorer-hub">
         <div id="g9-explorer-mount-root"></div>
@@ -399,9 +701,33 @@ export function mountTopicWorkspace(
   };
 
   // -------------------------------------------------------------------------
-  // Tab 4: Standalone Labs (Energy Well & Analytical Oracles)
+  // Tab 4: Standalone Labs
   // -------------------------------------------------------------------------
   const mountLabsTab = (container: HTMLElement) => {
+    const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+
+    if (topic.code === 'EUCLID') {
+      const c = new CirclesMasterController();
+      const m = mountCirclesMaster(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'RIEMANN') {
+      const pwc = new PortableWorkbenchController(RIEMANN_SUMS_PACKAGE);
+      const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'POLYNOMIALS') {
+      const pwc = new PortableWorkbenchController(LONG_DIVISION_PACKAGE);
+      const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    // Physics Harmonic Potential Well
     const adapter = new HarmonicEnergyWellAdapter();
     const result = adapter.evaluate({ x: energyWellDisplacement });
 
@@ -491,15 +817,20 @@ export function mountTopicWorkspace(
     const target = e.target as HTMLElement | null;
     if (!target || !active) return;
 
+    const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+    const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
+    const subjRoute = isMathTopic ? '#/subject/mathematics' : '#/subject/physics';
+
     // Tab Bar click
     const tabBtn = target.closest<HTMLButtonElement>('[data-tab]');
     if (tabBtn && tabBtn.dataset.tab) {
       const tab = tabBtn.dataset.tab;
       selectedQuestionId = null; // Return to deck on tab change
+      const dest = `/subject/${topic.subjectCode.toLowerCase()}/topic/${topic.code.toLowerCase()}/${tab}`;
       if (onNavigate) {
-        onNavigate(`/subject/physics/topic/wpe/${tab}`);
+        onNavigate(dest);
       } else {
-        window.location.hash = `#/subject/physics/topic/wpe/${tab}`;
+        window.location.hash = '#' + dest;
       }
       return;
     }
@@ -530,7 +861,11 @@ export function mountTopicWorkspace(
 
     // Return to Subject
     if (target.id === 'g9-return-subject-btn') {
-      window.location.hash = '#/subject/physics';
+      if (onNavigate) {
+        onNavigate(subjRoute.slice(1));
+      } else {
+        window.location.hash = subjRoute;
+      }
       return;
     }
 
