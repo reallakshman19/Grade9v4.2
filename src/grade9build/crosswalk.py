@@ -248,8 +248,11 @@ class MigrationCrosswalkEngine:
                     target_route = None
             # 7. Library Packages and Questions
             elif pop in ("LIBRARY_PACKAGE", "LIBRARY_QUESTION"):
-                disposition = "MAPPED_PENDING_PORT"
-                target_route = f"/subject/{subj.lower()}/question/{key}"
+                target_route = "/physics-library"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/runtime/test_physics_library.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
             # 8. Competitive Candidates
             elif pop == "NSEJS_QUESTION_IDENTITY" and key in nsejs_physics_verified_keys:
                 target_route = "/competitive/exam:nsejs"

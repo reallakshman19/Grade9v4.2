@@ -376,15 +376,20 @@ export function mountSubjectScreen(
           <div style="background:linear-gradient(135deg, #0369a1 0%, #0284c7 100%);color:white;padding:18px 22px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
             <div>
               <div style="font-weight:800;font-size:1.2rem;display:flex;align-items:center;gap:8px;">
-                <span>⚛️</span> NSEJS 12-Chapter Physics Curriculum Navigator & Authentic Question Bank
+                <span>⚛️</span> 20 Physics Library Packages &amp; 208 Authentic Question Records
               </div>
               <div style="font-size:0.92rem;opacity:0.9;margin-top:4px;">
-                132 subtopics, 109 authentic Olympiad practice items, and 2-hour official mock paper simulation.
+                Comprehensive v3.5 STEM foundation across Mechanics, Fluids, Optics, Electricity, Waves, and Kinematics.
               </div>
             </div>
-            <button type="button" onclick="window.location.hash='#/curriculum/nsejs-physics'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 20px;background:#ffffff;color:#0369a1;border:none;border-radius:8px;font-weight:800;cursor:pointer;font-size:0.95rem;box-shadow:0 2px 4px rgba(0,0,0,0.15);">
-              Launch Physics Explorer →
-            </button>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" onclick="window.location.hash='#/physics-library'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#ffffff;color:#0369a1;border:none;border-radius:8px;font-weight:800;cursor:pointer;font-size:0.92rem;box-shadow:0 2px 4px rgba(0,0,0,0.15);">
+                Open Library Packages (20) →
+              </button>
+              <button type="button" onclick="window.location.hash='#/curriculum/nsejs-physics'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0f172a;color:#ffffff;border:1px solid #38bdf8;border-radius:8px;font-weight:800;cursor:pointer;font-size:0.92rem;">
+                NSEJS 12 Chapters →
+              </button>
+            </div>
           </div>
         ` : ''}
 

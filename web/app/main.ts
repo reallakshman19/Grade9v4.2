@@ -17,6 +17,7 @@ import { mountStandaloneLab } from '../pages/resources.ts';
 import { mountLabsHub } from '../pages/labs-hub.ts';
 import { mountChemistryCurriculum, ChemistryCurriculumController } from '../pages/chemistry-curriculum.ts';
 import { mountNsejsChapterExplorer, NsejsCurriculumController } from '../pages/nsejs-curriculum.ts';
+import { mountPhysicsLibrary, PhysicsLibraryController } from '../pages/physics-library.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
 import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
 import { mountArchitectureHub } from '../pages/architecture.ts';
@@ -246,6 +247,12 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   } else if (clean.includes('curriculum/nsejs-physics') || clean.includes('nsejs-curriculum') || clean === 'nsejs-physics') {
     const controller = new NsejsCurriculumController();
     const m = mountNsejsChapterExplorer(content, controller, (route: string) => {
+      window.location.hash = '#' + route;
+    });
+    activeDisposer = () => m.dispose();
+  } else if (clean.includes('physics-library') || clean.includes('library/physics') || clean === 'library') {
+    const controller = new PhysicsLibraryController();
+    const m = mountPhysicsLibrary(content, controller, (route: string) => {
       window.location.hash = '#' + route;
     });
     activeDisposer = () => m.dispose();
