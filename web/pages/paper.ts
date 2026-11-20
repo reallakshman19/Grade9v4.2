@@ -226,6 +226,7 @@ export function mountPaperWorkspace(
   let active = true;
   let timerInterval: ReturnType<typeof setInterval> | null = null;
   let scratchpadOpen = false;
+  let formulaSheetOpen = false;
 
   const render = () => {
     if (!active) return;
@@ -234,6 +235,7 @@ export function mountPaperWorkspace(
     const activePart = parts.find((p) => p.id === state.activePartId) || parts[0];
     const nav = controller.getNavigation();
     const navState = nav.exportState();
+    const isNsejs = controller.getPaperId().includes('nsejs');
 
     const mins = Math.floor(state.timer.remainingSeconds / 60);
     const secs = state.timer.remainingSeconds % 60;
@@ -241,14 +243,20 @@ export function mountPaperWorkspace(
 
     // Get current part response
     const currentResp = controller.getPartResponse(activePart?.id || '');
-    const currentVal = currentResp?.kind === 'INTEGER' ? String(currentResp.value) : '';
+    let currentVal = '';
+    if (currentResp && typeof currentResp === 'object' && 'value' in currentResp) {
+      currentVal = String(currentResp.value);
+    }
 
     const aidsHtml = state.allowedAids
       .map(
-        (aid) => `
-        <button type="button" class="aid-toggle-btn" data-aid="${aid}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: ${state.activeAid === aid ? '#dbeafe' : '#f1f5f9'}; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer;">
-          ${aid === 'SCRATCHPAD' ? '📝 Scratchpad' : aid.replace(/_/g, ' ')}
-        </button>`
+        (aid) => {
+          const isActive = (aid === 'SCRATCHPAD' && scratchpadOpen) || (aid === 'FORMULA_SHEET' && formulaSheetOpen);
+          return `
+          <button type="button" class="aid-toggle-btn" data-aid="${aid}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: ${isActive ? '#dbeafe' : '#f1f5f9'}; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer;">
+            ${aid === 'SCRATCHPAD' ? '📝 Scratchpad' : aid === 'FORMULA_SHEET' ? '📐 Formula Sheet' : aid.replace(/_/g, ' ')}
+          </button>`;
+        }
       )
       .join('');
 
@@ -259,19 +267,23 @@ export function mountPaperWorkspace(
         </aside>`
       : '';
 
+    const hubHash = isNsejs ? '#/competitive/exam:nsejs' : '#/competitive/exam:ioqm';
+
     root.innerHTML = `
-      <div class="paper-workspace paper-workspace-screen" style="display: flex; flex-direction: column; gap: 16px; max-width: 1400px; margin: 0 auto; padding: 1.5rem; box-sizing: border-box;">
+      <div class="paper-workspace paper-workspace-screen" style="display: flex; flex-direction: column; gap: 16px; max-width: 1400px; margin: 0 auto; padding: 1.5rem; box-sizing: border-box; width: 100%;">
         
         <!-- Header -->
         <header class="paper-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0;">
           <div>
             <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
               <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;">Home</a> &gt; 
-              <a href="#/competitive/ioqm" style="color:#0284c7;text-decoration:none;font-weight:600;">Competitive Hub</a> &gt; 
+              <a href="${hubHash}" style="color:#0284c7;text-decoration:none;font-weight:600;">Competitive Hub</a> &gt; 
               <span>${escapeHtml(controller.getPaperTitle())}</span>
             </div>
             <h1 style="margin: 0; font-size: 1.75rem; color: #0f172a; font-weight: 800;">${escapeHtml(controller.getPaperTitle())}</h1>
-            <span style="font-size: 0.9rem; color: #64748b;">30 Integer Parts · Max Score: 100 Marks · Mode: SIMULATED_EXAM</span>
+            <span style="font-size: 0.9rem; color: #64748b;">
+              ${isNsejs ? '60 Questions · Max Score: 180 Marks (+3 / -1) · Mode: SIMULATED_EXAM' : '30 Integer Parts · Max Score: 100 Marks · Mode: SIMULATED_EXAM'}
+            </span>
           </div>
 
           <div style="display: flex; align-items: center; gap: 12px;">
@@ -286,7 +298,7 @@ export function mountPaperWorkspace(
         <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
           <span style="font-size:1.25rem;">ℹ️</span>
           <div style="font-size:0.95rem;color:#1e40af;">
-            <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed. Submission yields diagnostic sealed evaluation.
+            <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — ${isNsejs ? 'Official NSEJS single-choice questions (+3 correct, -1 incorrect). Solutions sealed.' : 'Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed.'} Submission yields diagnostic sealed evaluation.
           </div>
         </div>
 
@@ -296,12 +308,39 @@ export function mountPaperWorkspace(
           ${aidsHtml || '<span style="font-size: 13px; color: #94a3b8;">None permitted</span>'}
         </div>
 
+        <!-- Formula Sheet Drawer (Toggled) -->
+        ${formulaSheetOpen ? `
+          <div id="formula-sheet-drawer" style="background: #f0fdf4; border: 2px dashed #22c55e; border-radius: 8px; padding: 1.25rem; margin-bottom: 0.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <strong style="color: #166534; font-size: 1.05rem;">📐 Official Examination Formula Reference Sheet:</strong>
+              <button type="button" id="btn-close-formula-sheet" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #86efac; border-radius: 6px; font-weight: 700; cursor: pointer; color: #166534; font-size: 0.95rem;">✕ Close</button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; font-size: 0.9rem; color: #14532d;">
+              <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
+                <strong>Mechanics &amp; Kinematics:</strong><br/>
+                $v = u + at$ · $s = ut + \\frac{1}{2}at^2$ · $v^2 = u^2 + 2as$<br/>
+                $F = ma$ · $W = \\vec{F}\\cdot\\vec{s}$ · $K = \\frac{1}{2}mv^2$ · $P = Fv$
+              </div>
+              <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
+                <strong>Electrostatics &amp; Circuits:</strong><br/>
+                $F = \\frac{kq_1 q_2}{r^2}$ · $V = IR$ · $P = VI = I^2 R$<br/>
+                $R_s = R_1 + R_2$ · $\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2}$
+              </div>
+              <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
+                <strong>Optics &amp; Waves:</strong><br/>
+                $\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u}$ (lens) · $\\frac{1}{f} = \\frac{1}{v} + \\frac{1}{u}$ (mirror)<br/>
+                $n_1 \\sin\\theta_1 = n_2 \\sin\\theta_2$ · $v = f\\lambda$
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
         <!-- Scratchpad Pane (Toggled) -->
         ${scratchpadOpen ? `
           <div id="scratchpad-drawer" style="background: #fffbeb; border: 2px dashed #f59e0b; border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
               <strong style="color: #92400e;">Digital Scratchpad &amp; Mathematical Notes:</strong>
-              <button type="button" id="btn-close-scratchpad" style="background: none; border: none; font-weight: 700; cursor: pointer; color: #92400e;">✕ Close</button>
+              <button type="button" id="btn-close-scratchpad" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #fde68a; border-radius: 6px; font-weight: 700; cursor: pointer; color: #92400e; font-size: 0.95rem;">✕ Close</button>
             </div>
             <textarea id="scratchpad-text" rows="4" placeholder="Write scratch work, factorisations, and intermediate equations here..." style="width: 100%; box-sizing: border-box; padding: 8px; border: 1px solid #fde68a; border-radius: 6px; font-family: monospace; font-size: 14px;"></textarea>
           </div>
@@ -321,7 +360,7 @@ export function mountPaperWorkspace(
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
                   ${sec.partIds.map((pid: string) => {
-                    const p = parts.find(x => x.id === pid)!;
+                    const p = parts.find((x: any) => x.id === pid)!;
                     const isAct = p.id === activePart.id;
                     const st = navState.statuses[p.id] || 'UNVISITED';
                     const hasAns = controller.getPartResponse(p.id) !== undefined;
@@ -356,19 +395,44 @@ export function mountPaperWorkspace(
                 ${activePart?.promptHtml || '<p>No part selected.</p>'}
               </div>
 
-              <!-- Answer Entry Area (IOQM Integer: [00..99]) -->
-              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
-                <label style="display: block; font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 6px;">
-                  Enter Integer Answer (00 to 99):
-                </label>
-                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                  <input type="text" id="integer-answer-input" class="part-integer-input" value="${escapeHtml(currentVal)}" maxlength="2" placeholder="e.g. 07 or 42" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; width: 140px; padding: 8px 12px; font-size: 1.25rem; font-weight: 700; text-align: center; border: 2px solid #cbd5e1; border-radius: 6px;" />
-                  <button type="button" id="save-integer-btn" class="btn-save-part" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 20px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem;">
-                    Save Part ${activePart?.partKey} Answer
-                  </button>
-                  <span id="integer-validation-msg" class="part-input-feedback" style="font-size: 0.9rem; font-weight: 600; color: #15803d;">${currentVal ? `Response saved: ${currentVal}` : ''}</span>
+              <!-- Answer Entry Area: SINGLE_CHOICE (MCQ) or INTEGER -->
+              ${activePart?.responseKind === 'SINGLE_CHOICE' ? `
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                  <label style="display: block; font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 10px;">
+                    Select Answer Option (A, B, C, or D):
+                  </label>
+                  <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                    ${['A', 'B', 'C', 'D'].map((opt) => {
+                      const isChosen = currentVal === opt;
+                      return `
+                        <button type="button" class="btn-mcq-choice" data-choice="${opt}" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 64px; padding: 10px 20px; font-size: 1.15rem; font-weight: 800; border-radius: 6px; cursor: pointer; border: 2px solid ${isChosen ? '#0284c7' : '#cbd5e1'}; background: ${isChosen ? '#0284c7' : '#ffffff'}; color: ${isChosen ? '#ffffff' : '#0f172a'}; transition: all 0.15s ease;">
+                          Option ${opt}
+                        </button>
+                      `;
+                    }).join('')}
+                    ${currentVal ? `
+                      <button type="button" id="btn-clear-choice" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Clear</button>
+                    ` : ''}
+                    <span id="choice-feedback-msg" style="font-size: 0.9rem; font-weight: 600; color: #15803d; margin-left: 8px;">
+                      ${currentVal ? `✓ Option ${currentVal} selected` : 'Unanswered'}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              ` : `
+                <!-- Answer Entry Area (IOQM Integer: [00..99]) -->
+                <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
+                  <label style="display: block; font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 6px;">
+                    Enter Integer Answer (00 to 99):
+                  </label>
+                  <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                    <input type="text" id="integer-answer-input" class="part-integer-input" value="${escapeHtml(currentVal)}" maxlength="2" placeholder="e.g. 07 or 42" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; width: 140px; padding: 8px 12px; font-size: 1.25rem; font-weight: 700; text-align: center; border: 2px solid #cbd5e1; border-radius: 6px;" />
+                    <button type="button" id="save-integer-btn" class="btn-save-part" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 140px; padding: 8px 20px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem;">
+                      Save Part ${activePart?.partKey} Answer
+                    </button>
+                    <span id="integer-validation-msg" class="part-input-feedback" style="font-size: 0.9rem; font-weight: 600; color: #15803d;">${currentVal ? `Response saved: ${currentVal}` : ''}</span>
+                  </div>
+                </div>
+              `}
 
               <!-- Post-Commit Evaluation Status -->
               ${state.isCommitted && state.evaluation ? `
@@ -381,7 +445,7 @@ export function mountPaperWorkspace(
               ` : ''}
 
               <!-- Submission Bar -->
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-wrap: wrap; gap: 10px;">
                 <span style="font-size: 0.9rem; color: #64748b;">
                   Parts Attempted: <strong>${Object.keys((controller as any).responses).length}</strong> of ${parts.length}
                 </span>
@@ -402,8 +466,10 @@ export function mountPaperWorkspace(
   const bindEvents = () => {
     // Exit Exam button
     root.querySelector<HTMLButtonElement>('#btn-back-hub')?.addEventListener('click', () => {
-      if (onNavigate) onNavigate('/competitive/ioqm');
-      else window.location.hash = '#/competitive/ioqm';
+      const isNsejs = controller.getPaperId().includes('nsejs');
+      const targetRoute = isNsejs ? '/competitive/exam:nsejs' : '/competitive/exam:ioqm';
+      if (onNavigate) onNavigate(targetRoute);
+      else window.location.hash = '#' + targetRoute;
     });
 
     // Part select buttons
@@ -424,6 +490,9 @@ export function mountPaperWorkspace(
         if (aid === 'SCRATCHPAD') {
           scratchpadOpen = !scratchpadOpen;
           render();
+        } else if (aid === 'FORMULA_SHEET') {
+          formulaSheetOpen = !formulaSheetOpen;
+          render();
         } else {
           controller.openAid(aid);
           render();
@@ -436,7 +505,33 @@ export function mountPaperWorkspace(
       render();
     });
 
-    // Save Part Answer
+    root.querySelector<HTMLButtonElement>('#btn-close-formula-sheet')?.addEventListener('click', () => {
+      formulaSheetOpen = false;
+      render();
+    });
+
+    // Single Choice (MCQ) buttons
+    root.querySelectorAll<HTMLButtonElement>('.btn-mcq-choice').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.choice;
+        if (!choice) return;
+        const activePartId = controller.getViewState().activePartId;
+        const ok = controller.setPartResponse(activePartId, { kind: 'SINGLE_CHOICE', value: choice });
+        if (ok) {
+          render();
+        }
+      });
+    });
+
+    // Clear choice button
+    root.querySelector<HTMLButtonElement>('#btn-clear-choice')?.addEventListener('click', () => {
+      const activePartId = controller.getViewState().activePartId;
+      (controller as any).responses.delete(activePartId);
+      (controller as any).navigation.setPartStatus(activePartId, 'VIEWED');
+      render();
+    });
+
+    // Save Part Answer for INTEGER
     const saveBtn = root.querySelector<HTMLButtonElement>('#save-integer-btn') || root.querySelector<HTMLButtonElement>('#btn-save-part');
     const input = root.querySelector<HTMLInputElement>('#integer-answer-input') || root.querySelector<HTMLInputElement>('#part-integer-input');
     const feedback = root.querySelector<HTMLElement>('#integer-validation-msg') || root.querySelector<HTMLElement>('#part-input-feedback');

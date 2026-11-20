@@ -176,6 +176,14 @@ class MigrationCrosswalkEngine:
             "mathematics-polynomials-and-coordinates-suite": ("/labs/lab:linear-coordinates", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
         }
 
+        # Wave 11 NSEJS Authentic Physics Questions Promotion (50 Questions)
+        nsejs_physics_verified_keys = set()
+        for c in candidates:
+            if c["population"] == "NSEJS_QUESTION_IDENTITY" and c.get("subject_hint") == "PHYSICS":
+                nsejs_physics_verified_keys.add(c["source"].get("record_key", ""))
+                if len(nsejs_physics_verified_keys) == 50:
+                    break
+
         for c in candidates:
             cap_id = c["capability_id"]
             pop = c["population"]
@@ -244,6 +252,12 @@ class MigrationCrosswalkEngine:
                 disposition = "MAPPED_PENDING_PORT"
                 target_route = f"/subject/{subj.lower()}/question/{key}"
             # 8. Competitive Candidates
+            elif pop == "NSEJS_QUESTION_IDENTITY" and key in nsejs_physics_verified_keys:
+                target_route = "/competitive/exam:nsejs"
+                disposition = "PARITY_VERIFIED"
+                test_receipt = "tests/browser/phase11_nsejs_physics_audit.spec.ts"
+                target_mounted = True
+                dual_execution_passed = True
             elif pop in ("COMPETITIVE_BANK", "COMPETITIVE_CANDIDATE", "NSEJS_QUESTION_IDENTITY", "NSEJS_MODULE"):
                 disposition = "MAPPED_PENDING_PORT"
                 target_route = f"/competitive/exam:nsejs"

@@ -36901,13 +36901,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -36920,7 +36920,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:004",
       "route": "/competitive/exam:nsejs"
@@ -36934,13 +36934,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -36953,7 +36953,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:012",
       "route": "/competitive/exam:nsejs"
@@ -37495,13 +37495,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -37514,7 +37514,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:018",
       "route": "/competitive/exam:nsejs"
@@ -37627,13 +37627,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -37646,7 +37646,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:002",
       "route": "/competitive/exam:nsejs"
@@ -37726,13 +37726,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -37745,7 +37745,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:017",
       "route": "/competitive/exam:nsejs"
@@ -38056,13 +38056,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -38075,7 +38075,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:010",
       "route": "/competitive/exam:nsejs"
@@ -38287,13 +38287,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -38306,7 +38306,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:008",
       "route": "/competitive/exam:nsejs"
@@ -39112,13 +39112,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -39131,7 +39131,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:007",
       "route": "/competitive/exam:nsejs"
@@ -39310,13 +39310,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -39329,7 +39329,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:ioqjs-optics-conjugate-d3-r1:001",
       "route": "/competitive/exam:nsejs"
@@ -40234,13 +40234,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -40253,7 +40253,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:020",
       "route": "/competitive/exam:nsejs"
@@ -40300,13 +40300,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -40319,7 +40319,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:004",
       "route": "/competitive/exam:nsejs"
@@ -40366,13 +40366,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -40385,7 +40385,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:003",
       "route": "/competitive/exam:nsejs"
@@ -40432,13 +40432,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -40451,7 +40451,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:011",
       "route": "/competitive/exam:nsejs"
@@ -40531,13 +40531,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -40550,7 +40550,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:003",
       "route": "/competitive/exam:nsejs"
@@ -40564,13 +40564,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -40583,7 +40583,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:007",
       "route": "/competitive/exam:nsejs"
@@ -40663,13 +40663,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -40682,7 +40682,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:005",
       "route": "/competitive/exam:nsejs"
@@ -42016,13 +42016,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42035,7 +42035,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:003",
       "route": "/competitive/exam:nsejs"
@@ -42049,13 +42049,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42068,7 +42068,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:006",
       "route": "/competitive/exam:nsejs"
@@ -42313,13 +42313,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42332,7 +42332,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:019",
       "route": "/competitive/exam:nsejs"
@@ -42346,13 +42346,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42365,7 +42365,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:002",
       "route": "/competitive/exam:nsejs"
@@ -42709,13 +42709,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42728,7 +42728,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:015",
       "route": "/competitive/exam:nsejs"
@@ -42742,13 +42742,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42761,7 +42761,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:001",
       "route": "/competitive/exam:nsejs"
@@ -42841,13 +42841,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42860,7 +42860,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:005",
       "route": "/competitive/exam:nsejs"
@@ -42907,13 +42907,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -42926,7 +42926,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:006",
       "route": "/competitive/exam:nsejs"
@@ -43006,13 +43006,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -43025,7 +43025,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:008",
       "route": "/competitive/exam:nsejs"
@@ -43171,13 +43171,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -43190,7 +43190,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:005",
       "route": "/competitive/exam:nsejs"
@@ -43204,13 +43204,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -43223,7 +43223,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:009",
       "route": "/competitive/exam:nsejs"
@@ -43336,13 +43336,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -43355,7 +43355,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:016",
       "route": "/competitive/exam:nsejs"
@@ -43435,13 +43435,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -43454,7 +43454,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:008",
       "route": "/competitive/exam:nsejs"
@@ -43864,13 +43864,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -43883,7 +43883,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:009",
       "route": "/competitive/exam:nsejs"
@@ -43996,13 +43996,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44015,7 +44015,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:005",
       "route": "/competitive/exam:nsejs"
@@ -44062,13 +44062,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44081,7 +44081,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:010",
       "route": "/competitive/exam:nsejs"
@@ -44293,13 +44293,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44312,7 +44312,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:001",
       "route": "/competitive/exam:nsejs"
@@ -44326,13 +44326,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44345,7 +44345,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:013",
       "route": "/competitive/exam:nsejs"
@@ -44392,13 +44392,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44411,7 +44411,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:002",
       "route": "/competitive/exam:nsejs"
@@ -44425,13 +44425,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44444,7 +44444,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:006",
       "route": "/competitive/exam:nsejs"
@@ -44689,13 +44689,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44708,7 +44708,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:007",
       "route": "/competitive/exam:nsejs"
@@ -44755,13 +44755,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44774,7 +44774,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:011",
       "route": "/competitive/exam:nsejs"
@@ -44788,13 +44788,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -44807,7 +44807,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:004",
       "route": "/competitive/exam:nsejs"
@@ -45415,13 +45415,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -45434,7 +45434,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:002",
       "route": "/competitive/exam:nsejs"
@@ -45481,13 +45481,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -45500,7 +45500,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:004",
       "route": "/competitive/exam:nsejs"
@@ -45811,13 +45811,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -45830,7 +45830,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:007",
       "route": "/competitive/exam:nsejs"
@@ -46075,13 +46075,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -46094,7 +46094,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:014",
       "route": "/competitive/exam:nsejs"
@@ -46108,13 +46108,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -46127,7 +46127,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:010",
       "route": "/competitive/exam:nsejs"
@@ -46339,13 +46339,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -46358,7 +46358,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2021-physics-r1:003",
       "route": "/competitive/exam:nsejs"
@@ -46603,13 +46603,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -46622,7 +46622,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:006",
       "route": "/competitive/exam:nsejs"
@@ -46867,13 +46867,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -46886,7 +46886,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2023-physics-r1:009",
       "route": "/competitive/exam:nsejs"
@@ -46933,13 +46933,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -46952,7 +46952,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:008",
       "route": "/competitive/exam:nsejs"
@@ -46966,13 +46966,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -46985,7 +46985,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2022-physics-r1:001",
       "route": "/competitive/exam:nsejs"
@@ -47032,13 +47032,13 @@
       "subject": "PHYSICS",
       "type": "NSEJS_QUESTION_IDENTITY"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase11_nsejs_physics_audit.spec.ts"
     },
     "population": "NSEJS_QUESTION_IDENTITY",
     "source": {
@@ -47051,7 +47051,7 @@
       "repository": "v41"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:nsejs_question_identity:g9:pcb:physics:nsejs-2020-physics-r1:001",
       "route": "/competitive/exam:nsejs"

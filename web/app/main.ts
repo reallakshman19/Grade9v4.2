@@ -12,6 +12,7 @@ import { createSubjectScreen, mountSubjectScreen, CHEMISTRY_SUBJECT_DETAIL, PHYS
 import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/competitive.ts';
 import { PaperWorkspaceController, mountPaperWorkspace } from '../pages/paper.ts';
 import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
+import { createAuthorizedNsejsPaperSession } from '../runtime/nsejs-session.ts';
 import { mountStandaloneLab } from '../pages/resources.ts';
 import { mountLabsHub } from '../pages/labs-hub.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
@@ -258,18 +259,24 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       renderSubjectPlaceholder(content, match.params.subjectId);
     }
   } else if (match.type === 'COMPETITIVE') {
-    if (match.params.examId?.toLowerCase().includes('ioqm')) {
-      const controller = createCompetitiveExamScreen();
-      const m = mountCompetitiveExam(content, controller, (route) => {
-        window.location.hash = '#' + route;
-      });
-      activeDisposer = () => m.dispose();
-    } else {
-      renderCompetitiveExamPlaceholder(content, match.params.examId);
-    }
+    const examId = match.params.examId || 'exam:nsejs';
+    const controller = createCompetitiveExamScreen(examId);
+    const m = mountCompetitiveExam(content, controller, (route) => {
+      window.location.hash = '#' + route;
+    });
+    activeDisposer = () => m.dispose();
   } else if (match.type === 'PRACTICE') {
     if (match.params.paperId?.toLowerCase().includes('ioqm')) {
       void createAuthorizedIoqmPaperSession().then(async ({ config, binding }) => {
+        const controller = new PaperWorkspaceController(config, binding);
+        await controller.restore();
+        const m = mountPaperWorkspace(content, controller, (route) => {
+          window.location.hash = '#' + route;
+        });
+        activeDisposer = () => m.dispose();
+      });
+    } else if (match.params.paperId?.toLowerCase().includes('nsejs')) {
+      void createAuthorizedNsejsPaperSession().then(async ({ config, binding }) => {
         const controller = new PaperWorkspaceController(config, binding);
         await controller.restore();
         const m = mountPaperWorkspace(content, controller, (route) => {

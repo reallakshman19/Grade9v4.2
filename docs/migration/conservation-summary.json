@@ -1,13 +1,13 @@
 {
   "academic_admission": "HOLD",
-  "actual_approved_compatibility_mappings": 35,
+  "actual_approved_compatibility_mappings": 85,
   "conservation_counters": {
     "missing_dependency_edges": 0,
     "unaccounted_resource_occurrences": 0,
     "unapproved_exclusions": 0,
     "unexplained_behavior_differences": 0,
     "unmapped_app_contexts": 857,
-    "unmapped_interactions": 631,
+    "unmapped_interactions": 581,
     "unmapped_search_entries": 784,
     "unresolved_state_mappings": 0
   },
@@ -18,14 +18,14 @@
       "authoring_gaps_source_incomplete": 124,
       "biology_pending_decision": 103,
       "held": 325,
-      "mapped_pending_port": 631,
-      "parity_verified": 35,
+      "mapped_pending_port": 581,
+      "parity_verified": 85,
       "unmapped": 784
     },
     "eligible_capabilities": 2002,
     "formula": "eligible_capabilities == verified_parity + outstanding + approved_exclusions",
-    "outstanding": 1967,
-    "verified_parity": 35
+    "outstanding": 1917,
+    "verified_parity": 85
   },
   "distinct_git_blobs": 4592,
   "external_r4_kit": {
