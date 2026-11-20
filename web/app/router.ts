@@ -269,8 +269,8 @@ export class Router {
       };
     }
 
-    // 11. Standalone Lab Route: "/labs/:labId"
-    const labMatch = pathPart.match(/^\/labs\/([^/]+)$/);
+    // 11. Standalone Lab Route: "/labs/:labId" or "/resources/:labId"
+    const labMatch = pathPart.match(/^\/(?:labs|resources)\/([^/]+)$/);
     if (labMatch) {
       return {
         type: 'LAB',

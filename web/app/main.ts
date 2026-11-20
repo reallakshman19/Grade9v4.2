@@ -7,8 +7,8 @@ import { Core2ASupportedPageController, mountCore2ASupported } from '../pages/su
 import { Core2BTransferPageController, mountCore2BTransfer } from '../pages/transfer-changed-demand.ts';
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
-import { createTopicScreen, mountTopicWorkspace, WPE_PHYSICS_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC } from '../pages/topic.ts';
-import { createSubjectScreen, mountSubjectScreen, type SubjectDetail } from '../pages/subject.ts';
+import { createTopicScreen, mountTopicWorkspace, WPE_PHYSICS_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC, CHEM_REDOX_TOPIC, CHEM_BONDING_TOPIC, CHEM_STOICHIOMETRY_TOPIC } from '../pages/topic.ts';
+import { createSubjectScreen, mountSubjectScreen, CHEMISTRY_SUBJECT_DETAIL, type SubjectDetail } from '../pages/subject.ts';
 import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/competitive.ts';
 import { PaperWorkspaceController, mountPaperWorkspace } from '../pages/paper.ts';
 import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
@@ -192,6 +192,17 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
         window.location.hash = '#' + route;
       });
       activeDisposer = () => m.dispose();
+    } else if (subjId === 'chemistry' || subjId === 'chem') {
+      let topicDetail = CHEM_REDOX_TOPIC;
+      if (topId.includes('redox')) topicDetail = CHEM_REDOX_TOPIC;
+      else if (topId.includes('bond')) topicDetail = CHEM_BONDING_TOPIC;
+      else if (topId.includes('stoich') || topId.includes('titrat')) topicDetail = CHEM_STOICHIOMETRY_TOPIC;
+
+      const topicController = createTopicScreen(topicDetail);
+      const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
     } else {
       renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
     }
@@ -246,6 +257,12 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       activeDisposer = () => m.dispose();
     } else if (sId === 'physics' || sId === 'phys') {
       const controller = createSubjectScreen(PHYSICS_SUBJECT_DETAIL);
+      const m = mountSubjectScreen(content, controller, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
+    } else if (sId === 'chemistry' || sId === 'chem') {
+      const controller = createSubjectScreen(CHEMISTRY_SUBJECT_DETAIL);
       const m = mountSubjectScreen(content, controller, (route) => {
         window.location.hash = '#' + route;
       });

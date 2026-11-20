@@ -240,6 +240,9 @@ export function createResourcesPage(currentOrigin: string,authorize?:(resource:R
 import { mountCirclesMaster, CirclesMasterController } from './circles-master.ts';
 import { PortableWorkbenchController } from '../applications/portable/component.ts';
 import { RIEMANN_SUMS_PACKAGE, LONG_DIVISION_PACKAGE } from '../runtime/math-packages.ts';
+import { REDOX_ELECTRON_EQUIVALENCE_PACKAGE } from '../runtime/chem-packages.ts';
+import { RedoxAdaptiveController, mountRedoxAdaptive } from './redox-adaptive.ts';
+import { TitrationSimulatorController, mountTitrationSimulator } from './titration.ts';
 import type { PortableWorkbenchPackage } from '../applications/portable/types.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import { escapeHtml } from '../runtime/rendering.ts';
@@ -370,6 +373,26 @@ export function mountStandaloneLab(
       '#/subject/mathematics/topic/polynomials/labs',
       onNavigate
     );
+  }
+
+  if (labId.includes('redox-adaptive') || labId === 'lab:redox-adaptive') {
+    const c = new RedoxAdaptiveController();
+    return mountRedoxAdaptive(root, c, onNavigate);
+  }
+
+  if (labId.includes('redox-equivalence') || labId === 'lab:redox-equivalence') {
+    return mountPortableLab(
+      root,
+      REDOX_ELECTRON_EQUIVALENCE_PACKAGE,
+      'Redox Electron Equivalence — Portable Proof Workbench',
+      '#/subject/chemistry/topic/chem-redox/labs',
+      onNavigate
+    );
+  }
+
+  if (labId.includes('titrat') || labId === 'lab:titration-simulator') {
+    const c = new TitrationSimulatorController();
+    return mountTitrationSimulator(root, c, onNavigate);
   }
 
   // Fallback for generic or unmapped labs

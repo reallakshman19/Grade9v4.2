@@ -159,7 +159,7 @@ export class PortableWorkbenchController {
         <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0;">
           <div>
             <h3 style="margin: 0; font-size: 18px; color: #0f172a;">${escapeHtml(String(pkg.title))}</h3>
-            <span style="font-size: 12px; color: #64748b;">Unverified diagnostic; declared provenance: <strong>${escapeHtml(String(pkg.provenance.authority))}</strong> | Rotation: ${rotation}°</span>
+            <span style="font-size: 12px; color: #64748b;">Unverified diagnostic; declared provenance: <strong class="portable-provenance-badge">${escapeHtml(String(pkg.provenance.authority))}</strong> | Rotation: ${rotation}°</span>
           </div>
           <button id="portable-rotate-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; cursor: pointer;">
             🔄 Rotate 90°

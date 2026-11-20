@@ -382,7 +382,7 @@ export class ChemicalWorkWorkspaceController {
           <div class="keyboard-structure-input" style="display: flex; flex-direction: column; gap: 12px;">
             <label for="chem-input-data" style="font-weight: 600;">Structure Data (Formula or SMILES):</label>
             <input id="chem-input-data" type="text" value="${escapeHtml(String(state.structure ? state.structure.data : ''))}" placeholder="e.g. C2H5OH or CCO" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 10px 14px; font-size: 16px; border: 1px solid #cbd5e1; border-radius: 6px;" />
-            <div style="font-size: 14px; color: #475569;">
+            <div class="chem-structure-meta" style="font-size: 14px; color: #475569;">
               ${state.structure?.molecularFormula ? `Hill Formula: <strong>${escapeHtml(String(state.structure.molecularFormula))}</strong>` : ''}
               ${state.structure?.molarMass ? ` | Molar Mass: <strong>${state.structure.molarMass} g/mol</strong>` : ''}
             </div>
@@ -414,22 +414,37 @@ export class ChemicalWorkWorkspaceController {
         </div>
       `;
     } else if (state.activeTab === 'EQUATION') {
+      const atomBadge = state.balanceResult.isAtomBalanced
+        ? `<span class="chem-atom-badge" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Atoms Balanced</span>`
+        : `<span class="chem-atom-badge" style="background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Atoms Imbalanced</span>`;
+
+      const chargeBadge = state.balanceResult.isChargeBalanced
+        ? `<span class="chem-charge-badge" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Net Charge Balanced (${state.balanceResult.reactantCharge ?? 0})</span>`
+        : `<span class="chem-charge-badge" style="background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Charge Imbalance (${state.balanceResult.reactantCharge ?? 0} vs ${state.balanceResult.productCharge ?? 0})</span>`;
+
       const balanceBadge = state.balanceResult.isBalanced
-        ? `<span style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Balanced</span>`
-        : `<span style="background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Unbalanced</span>`;
+        ? `<span class="chem-overall-badge" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Stoichiometrically & Charge Balanced</span>`
+        : `<span class="chem-overall-badge" style="background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">Equation Incomplete / Imbalanced</span>`;
 
       contentHtml = `
         <div class="chem-pane-equation" role="tabpanel">
           <div style="margin-bottom: 16px;">
-            <label for="chem-equation-input" style="font-weight: 600; display: block; margin-bottom: 8px;">Reaction Equation:</label>
-            <input id="chem-equation-input" type="text" value="${escapeHtml(String(state.equation))}" placeholder="e.g. 2 H2 + O2 -> 2 H2O" style="width: 100%; min-height: ${HIT_TARGET_MIN_PX}px; padding: 10px 14px; font-size: 16px; border: 1px solid #cbd5e1; border-radius: 6px;" />
+            <label for="chem-equation-input" style="font-weight: 600; display: block; margin-bottom: 8px;">Reaction Equation (Supports Neutral & Net Ionic Redox):</label>
+            <input id="chem-equation-input" type="text" value="${escapeHtml(String(state.equation))}" placeholder="e.g. Fe2+ + Ce4+ -> Fe3+ + Ce3+ or 2 H2 + O2 -> 2 H2O" style="width: 100%; min-height: ${HIT_TARGET_MIN_PX}px; padding: 10px 14px; font-size: 16px; border: 1px solid #cbd5e1; border-radius: 6px;" />
           </div>
-          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px;">
             <div>Status: ${balanceBadge}</div>
+            <div>${atomBadge}</div>
+            <div>${chargeBadge}</div>
           </div>
           ${
             state.balanceResult.imbalances.length > 0
-              ? `<ul style="color: #b91c1c; font-size: 14px;">${state.balanceResult.imbalances.map((i) => `<li>${escapeHtml(String(i.element))}: ${i.reactantCount} in reactants vs ${i.productCount} in products</li>`).join('')}</ul>`
+              ? `<ul style="color: #b91c1c; font-size: 14px; margin: 4px 0 8px 0;">${state.balanceResult.imbalances.map((i) => `<li>${escapeHtml(String(i.element))}: ${i.reactantCount} in reactants vs ${i.productCount} in products</li>`).join('')}</ul>`
+              : ''
+          }
+          ${
+            state.balanceResult.chargeImbalance
+              ? `<div style="color: #b91c1c; font-size: 14px; margin-bottom: 8px;">Net Charge Imbalance: Reactants total ${state.balanceResult.chargeImbalance.reactantCharge > 0 ? '+' : ''}${state.balanceResult.chargeImbalance.reactantCharge} vs Products total ${state.balanceResult.chargeImbalance.productCharge > 0 ? '+' : ''}${state.balanceResult.chargeImbalance.productCharge}</div>`
               : ''
           }
         </div>
@@ -477,11 +492,148 @@ export class ChemicalWorkWorkspaceController {
       `;
     }
 
+    const evalHtml = state.evaluation
+      ? `
+        <div class="chem-evaluation-panel" style="margin-top: 24px; padding: 16px; border-radius: 8px; background: #fefce8; border: 1px solid #fef08a;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-weight: 700; color: #854d0e;">Evaluation Status: ${escapeHtml(String(state.evaluation.status))}</span>
+            <span style="font-weight: 700; color: #854d0e;">Score: Withheld (Points: null)</span>
+          </div>
+          <p style="margin: 0 0 12px 0; color: #713f12; font-size: 14px;">${escapeHtml(String(state.evaluation.feedback))}</p>
+          ${
+            state.evaluation.rubricCriteria
+              ? `
+            <div style="font-size: 13px; color: #713f12;">
+              <strong>Rubric Assessment Bounds (Human Review Required):</strong>
+              <ul style="margin: 4px 0 0 0; padding-left: 20px;">
+                ${state.evaluation.rubricCriteria.map((c) => `<li>${escapeHtml(String(c.name))} (Max ${c.maxPoints} pts) &mdash; Awarded: ${c.awardedPoints ?? 'Pending'}</li>`).join('')}
+              </ul>
+            </div>
+          `
+              : ''
+          }
+        </div>
+      `
+      : `
+        <div style="margin-top: 24px; display: flex; justify-content: flex-end;">
+          <button id="btn-request-chem-eval" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 12px 20px; background: #0f172a; color: #ffffff; border-radius: 6px; font-weight: 600; cursor: pointer;">Request Expert Review (Rubric Evaluation)</button>
+        </div>
+      `;
+
     return `
       <section class="chemical-work-workspace" aria-label="Chemical Representation Workspace" data-archetype="${escapeHtml(String(state.archetype))}">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0;">
+          <h3 style="margin: 0; font-size: 1.25rem; color: #0f172a; font-weight: 700;">Chemical Representation Workspace (Workpack A28)</h3>
+          <span class="chem-archetype-badge" style="font-size: 0.85rem; font-weight: 800; color: #0284c7; background: #e0f2fe; padding: 4px 10px; border-radius: 6px; border: 1px solid #bae6fd;">Archetype: ${escapeHtml(String(state.archetype))}</span>
+        </div>
         ${tabsHtml}
         ${contentHtml}
+        ${evalHtml}
       </section>
     `;
   }
+}
+
+/**
+ * Interactive DOM mount function for Chemical Representation Workspace (A28).
+ */
+export function mountChemicalWorkspace(
+  root: HTMLElement,
+  controller: ChemicalWorkWorkspaceController,
+  onNavigate?: (route: string) => void
+): { dispose: () => void } {
+  let active = true;
+
+  const render = () => {
+    if (!active) return;
+    root.innerHTML = controller.render();
+
+    // Tab buttons
+    root.querySelectorAll<HTMLButtonElement>('.chem-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab as ChemicalWorkspaceTab;
+        if (tab) {
+          controller.setActiveTab(tab);
+          render();
+        }
+      });
+    });
+
+    // Structure input
+    const structureInput = root.querySelector<HTMLInputElement>('#chem-input-data');
+    if (structureInput) {
+      structureInput.addEventListener('change', () => {
+        const val = structureInput.value.trim();
+        const isSmiles = /[=#\(\)\[\]\/\\]/.test(val) && !/^[A-Z][a-z]?\d*$/.test(val);
+        controller.setStructureFromKeyboard(isSmiles ? 'SMILES' : 'FORMULA', val);
+        render();
+      });
+      structureInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          structureInput.dispatchEvent(new Event('change'));
+        }
+      });
+    }
+
+    // Mechanism step deletion
+    root.querySelectorAll<HTMLButtonElement>('.remove-step-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.id;
+        if (id) {
+          controller.removeMechanismStep(id);
+          render();
+        }
+      });
+    });
+
+    // Mechanism add step button
+    const addStepBtn = root.querySelector<HTMLButtonElement>('#add-mechanism-step-btn');
+    if (addStepBtn) {
+      addStepBtn.addEventListener('click', () => {
+        const eq = prompt('Enter step equation (e.g. A + B -> C):');
+        if (eq && eq.trim()) {
+          const reagents = prompt('Enter reagents (optional):') || '';
+          controller.addMechanismStepFromKeyboard(eq.trim(), reagents.trim());
+          render();
+        }
+      });
+    }
+
+    // Equation input
+    const eqInput = root.querySelector<HTMLInputElement>('#chem-equation-input');
+    if (eqInput) {
+      eqInput.addEventListener('input', () => {
+        controller.setEquation(eqInput.value);
+        const state = controller.getViewState();
+        const overallBadge = root.querySelector('.chem-overall-badge');
+        if (overallBadge) {
+          overallBadge.textContent = state.balanceResult.isBalanced
+            ? 'Stoichiometrically & Charge Balanced'
+            : 'Equation Incomplete / Imbalanced';
+        }
+      });
+      eqInput.addEventListener('change', () => {
+        controller.setEquation(eqInput.value);
+        render();
+      });
+    }
+
+    // Evaluation request button
+    const evalBtn = root.querySelector<HTMLButtonElement>('#btn-request-chem-eval');
+    if (evalBtn) {
+      evalBtn.addEventListener('click', () => {
+        controller.evaluate();
+        render();
+      });
+    }
+  };
+
+  render();
+
+  return {
+    dispose: () => {
+      active = false;
+      root.replaceChildren();
+    },
+  };
 }

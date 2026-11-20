@@ -31,6 +31,10 @@ import { ProofWorkspaceController, mountProofWorkspace } from '../components/pro
 import { CirclesMasterController, mountCirclesMaster } from './circles-master.ts';
 import { PortableWorkbenchController } from '../applications/portable/component.ts';
 import { RIEMANN_SUMS_PACKAGE, LONG_DIVISION_PACKAGE } from '../runtime/math-packages.ts';
+import { ChemicalWorkWorkspaceController, mountChemicalWorkspace } from '../components/chemical-work.ts';
+import { RedoxAdaptiveController, mountRedoxAdaptive } from './redox-adaptive.ts';
+import { TitrationSimulatorController, mountTitrationSimulator } from './titration.ts';
+import { REDOX_ELECTRON_EQUIVALENCE_PACKAGE } from '../runtime/chem-packages.ts';
 
 // ---------------------------------------------------------------------------
 // Mathematics Topic Question Decks
@@ -166,6 +170,175 @@ export const MATH_RIEMANN_DECK = [
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Chemistry Topic Question Decks
+// ---------------------------------------------------------------------------
+
+export const CHEM_REDOX_DECK = [
+  {
+    id: 'chem-redox-01',
+    code: 'RED-01',
+    title: 'CrO5 Butterfly Peroxide Oxidation State',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'AUTHENTIC_SOURCE_PINNED' as const,
+    sourceRef: 'Grade9v3.5:public/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html',
+    stemText: 'Chromium(VI) oxide peroxide (CrO5) adopts a butterfly structure with four peroxide oxygen atoms and one oxo oxygen atom. Determine the formal oxidation state of chromium.',
+    explanationHtml: 'Each peroxide oxygen has an oxidation state of -1 (4 x -1 = -4). The oxo oxygen has an oxidation state of -2. To balance the neutral CrO5 molecule: Oxidation State(Cr) + 4(-1) + (-2) = 0 => Oxidation State(Cr) = +6.',
+  },
+  {
+    id: 'chem-redox-02',
+    code: 'RED-02',
+    title: 'Reaction-Dependent n-Factor of KMnO4',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'AUTHENTIC_SOURCE_PINNED' as const,
+    sourceRef: 'Grade9v3.5:public/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html',
+    stemText: 'In acidic aqueous solution (dilute H2SO4), potassium permanganate (KMnO4) is reduced to manganese(II) ions (Mn2+). Determine the valence factor (n-factor) of KMnO4.',
+    explanationHtml: 'The reduction half-reaction is MnO4- + 8 H+ + 5 e- -> Mn2+ + 4 H2O. Manganese changes from +7 to +2, gaining 5 electrons per formula unit. Hence, the n-factor is 5.',
+  },
+  {
+    id: 'chem-redox-03',
+    code: 'RED-03',
+    title: 'FeC2O4 to Dichromate Mole Ratio',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'AUTHENTIC_SOURCE_PINNED' as const,
+    sourceRef: 'Grade9v3.5:public/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html',
+    stemText: 'Ferrous oxalate (FeC2O4) is titrated against potassium dichromate (K2Cr2O7) in acidic medium. How many moles of FeC2O4 are oxidized by 1 mole of Cr2O7^2-?',
+    explanationHtml: 'Each mole of FeC2O4 donates 3 electrons: Fe2+ -> Fe3+ + 1 e-, and C2O4^2- -> 2 CO2 + 2 e- (total 3 e-). Each mole of Cr2O7^2- accepts 6 electrons (2 Cr6+ -> 2 Cr3+). Therefore, 6 / 3 = 2 moles of FeC2O4 react per mole of Cr2O7^2-.',
+  },
+  {
+    id: 'chem-redox-04',
+    code: 'RED-04',
+    title: 'Disproportionation of Manganate(VI)',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 5,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-stoichiometry-fixtures',
+    stemText: 'In acidic solution, 3 moles of manganate(VI) disproportionate: 3 MnO4^2- + 4 H+ -> 2 MnO4- + MnO2 + 2 H2O. Calculate the net change in oxidation state of the oxidized manganese species.',
+    explanationHtml: 'Two moles of Mn(VI) are oxidized to Mn(VII), donating 1 electron each (net change = 1 per oxidized Mn atom). One mole of Mn(VI) is reduced to Mn(IV), accepting 2 electrons.',
+  },
+];
+
+export const CHEM_BONDING_DECK = [
+  {
+    id: 'chem-bond-01',
+    code: 'BND-01',
+    title: 'VSEPR Molecular Geometry of Sulfur Tetrafluoride',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-vsepr-fixtures',
+    stemText: 'Sulfur tetrafluoride (SF4) has 5 electron domains around sulfur (4 bonding pairs, 1 lone pair). How many non-bonding lone pairs reside in the equatorial plane of the seesaw geometry?',
+    explanationHtml: 'In trigonal bipyramidal electron geometry (sp3d), lone pairs occupy equatorial positions to minimize 90-degree lone pair-bonding pair repulsions. Thus, exactly 1 lone pair is in the equatorial plane.',
+  },
+  {
+    id: 'chem-bond-02',
+    code: 'BND-02',
+    title: 'Valence Octet Expansion in Phosphorus Pentachloride',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-vsepr-fixtures',
+    stemText: 'Determine the total number of shared valence electrons surrounding the central phosphorus atom in gaseous PCl5.',
+    explanationHtml: 'PCl5 forms 5 single P-Cl covalent bonds. With 2 shared electrons per single bond, phosphorus is surrounded by 5 x 2 = 10 valence electrons (an expanded octet utilizing 3d orbitals).',
+  },
+  {
+    id: 'chem-bond-03',
+    code: 'BND-03',
+    title: 'Hybridization of Iodine Pentafluoride',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-vsepr-fixtures',
+    stemText: 'Iodine pentafluoride (IF5) has 5 bonding pairs and 1 lone pair on iodine. What is the steric number (number of hybrid orbitals) of the central iodine atom?',
+    explanationHtml: 'Steric number = 5 bonding pairs + 1 lone pair = 6 electron domains, corresponding to octahedral electron geometry and sp3d2 hybridization. Steric number is 6.',
+  },
+  {
+    id: 'chem-bond-04',
+    code: 'BND-04',
+    title: 'Dipole Moment Symmetry in Boron Trifluoride',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-vsepr-fixtures',
+    stemText: 'In BF3, three polar B-F bonds are oriented at 120 degrees in a trigonal planar geometry. What is the net molecular dipole moment in Debye units?',
+    explanationHtml: 'By vector symmetry, the three bond dipole vectors cancel vectorially: sum(mu_i) = 0. Hence BF3 is completely nonpolar with net dipole moment 0 Debye.',
+  },
+];
+
+export const CHEM_STOICHIOMETRY_DECK = [
+  {
+    id: 'chem-stoich-01',
+    code: 'STC-01',
+    title: 'Limiting Reactant in Ammonia Synthesis',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 3,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-stoichiometry-fixtures',
+    stemText: 'Nitrogen and hydrogen react according to N2 + 3 H2 -> 2 NH3. If 2 moles of N2 and 3 moles of H2 are supplied, how many moles of NH3 are produced assuming 100% yield?',
+    explanationHtml: 'Stoichiometric ratio requires 3 moles of H2 per 1 mole of N2. For 2 moles of N2, 6 moles of H2 are needed. Since only 3 moles of H2 are available, H2 is the limiting reactant. 3 moles of H2 produce 2 moles of NH3.',
+  },
+  {
+    id: 'chem-stoich-02',
+    code: 'STC-02',
+    title: 'Combustion Analysis of Hydrocarbon',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-stoichiometry-fixtures',
+    stemText: 'Complete combustion of 1 mole of hydrocarbon CxHy requires 5 moles of O2 and produces 3 moles of CO2 and 4 moles of H2O. What is the molar mass of CxHy in g/mol?',
+    explanationHtml: 'From carbon balance: x = 3 (CO2). From hydrogen balance: y = 2 x 4 = 8 (H2O). The hydrocarbon is propane (C3H8). Molar mass = 3(12.011) + 8(1.008) = 36.033 + 8.064 = 44.097 ~= 44 g/mol.',
+  },
+  {
+    id: 'chem-stoich-03',
+    code: 'STC-03',
+    title: 'Equivalence Point Volume in Acetic Acid Titration',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 4,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-stoichiometry-fixtures',
+    stemText: 'A 25.0 mL aliquot of 0.100 M CH3COOH is titrated with 0.100 M NaOH. How many mL of NaOH titrant are required to reach the stoichiometric equivalence point?',
+    explanationHtml: 'At the equivalence point: C_a * V_a = C_b * V_b => 0.100 M * 25.0 mL = 0.100 M * V_b => V_b = 25.0 mL. Integer answer is 25.',
+  },
+  {
+    id: 'chem-stoich-04',
+    code: 'STC-04',
+    title: 'Precipitation Reaction Yield',
+    kind: 'INTEGER' as const,
+    keyStatus: 'VERIFIED' as const,
+    maxPoints: 5,
+    status: 'RELEASED' as const,
+    sourceProvenance: 'SYNTHETIC_DIAGNOSTIC_FIXTURE' as const,
+    sourceRef: 'synthetic:phase7-stoichiometry-fixtures',
+    stemText: 'Mixing aqueous solutions of 1 mole AgNO3 and 1 mole NaCl produces AgCl precipitate. If the experimental yield is 85%, how many percentage points below theoretical yield is this?',
+    explanationHtml: 'Theoretical yield is 100%. The difference is 100% - 85% = 15 percentage points.',
+  },
+];
+
 export interface TopicDetail {
   readonly id: string;
   readonly code: string;
@@ -234,6 +407,48 @@ export const MATH_RIEMANN_TOPIC: TopicDetail = {
   interactiveModelCount: 2,
   resourceCount: 5,
   description: 'Partitions, step functions, Darboux sums, and Riemann integrability of monotonic functions.',
+};
+
+export const CHEM_REDOX_TOPIC: TopicDetail = {
+  id: 'chem-redox',
+  code: 'CHEM_REDOX',
+  title: 'Redox Reactions & Electron Transfer',
+  subjectId: 'chemistry',
+  subjectCode: 'CHEMISTRY',
+  strand: 'Inorganic Chemistry',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 3,
+  resourceCount: 8,
+  description: 'Oxidation numbers, redox half-reactions, multi-centre electron transfer, and disproportionation equilibria.',
+};
+
+export const CHEM_BONDING_TOPIC: TopicDetail = {
+  id: 'chem-bonding',
+  code: 'CHEM_BONDING',
+  title: 'Chemical Bonding & Molecular Structure',
+  subjectId: 'chemistry',
+  subjectCode: 'CHEMISTRY',
+  strand: 'Inorganic Chemistry',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 2,
+  resourceCount: 6,
+  description: 'Lewis structures, VSEPR molecular geometry, octet expansion, hybridization, and electric dipole moments.',
+};
+
+export const CHEM_STOICHIOMETRY_TOPIC: TopicDetail = {
+  id: 'chem-stoichiometry',
+  code: 'CHEM_STOICHIOMETRY',
+  title: 'Stoichiometry & Volumetric Analysis',
+  subjectId: 'chemistry',
+  subjectCode: 'CHEMISTRY',
+  strand: 'Analytical Chemistry',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 2,
+  resourceCount: 7,
+  description: 'Stoichiometric proportions, limiting reagents, percent yields, and volumetric titration equilibria.',
 };
 
 export interface TopicViewState {
@@ -374,9 +589,10 @@ export function mountTopicWorkspace(
     const state = controller.getViewState();
     const topic = state.topic || WPE_PHYSICS_TOPIC;
     const isMath = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
-    const subjName = isMath ? 'Mathematics' : 'Physics';
-    const subjRoute = isMath ? '#/subject/mathematics' : '#/subject/physics';
-    const subjEmoji = isMath ? '📐 ' : '⚛️ ';
+    const isChem = topic.subjectCode.toUpperCase() === 'CHEMISTRY' || topic.subjectId.toLowerCase() === 'chemistry';
+    const subjName = isChem ? 'Chemistry' : isMath ? 'Mathematics' : 'Physics';
+    const subjRoute = isChem ? '#/subject/chemistry' : isMath ? '#/subject/mathematics' : '#/subject/physics';
+    const subjEmoji = isChem ? '🧪 ' : isMath ? '📐 ' : '⚛️ ';
 
     root.innerHTML = `
       <div class="g9-topic-workspace" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:1.5rem;max-width:100%;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;">
@@ -438,6 +654,9 @@ export function mountTopicWorkspace(
     if (topic.code === 'POLYNOMIALS') deck = MATH_POLYNOMIALS_DECK;
     else if (topic.code === 'EUCLID') deck = MATH_EUCLID_DECK;
     else if (topic.code === 'RIEMANN') deck = MATH_RIEMANN_DECK;
+    else if (topic.code === 'CHEM_REDOX') deck = CHEM_REDOX_DECK;
+    else if (topic.code === 'CHEM_BONDING') deck = CHEM_BONDING_DECK;
+    else if (topic.code === 'CHEM_STOICHIOMETRY') deck = CHEM_STOICHIOMETRY_DECK;
 
     if (!selectedQuestionId) {
       // Render Question Deck Selection
@@ -454,7 +673,11 @@ export function mountTopicWorkspace(
                 <div>
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                     <span style="font-size:0.8rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">${escapeHtml(q.code)}</span>
-                    <span style="font-size:0.75rem;font-weight:700;color:${q.status === 'RELEASED' ? '#047857' : '#b45309'};background:${q.status === 'RELEASED' ? '#d1fae5' : '#fef3c7'};padding:2px 8px;border-radius:4px;">${escapeHtml(q.status)}</span>
+                    <div style="display:flex;gap:4px;align-items:center;">
+                      ${(q as any).sourceProvenance === 'AUTHENTIC_SOURCE_PINNED' ? `<span style="font-size:0.75rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 6px;border-radius:4px;">Authentic (v3.5)</span>` : ''}
+                      ${(q as any).sourceProvenance === 'SYNTHETIC_DIAGNOSTIC_FIXTURE' ? `<span style="font-size:0.75rem;font-weight:700;color:#0369a1;background:#e0f2fe;padding:2px 6px;border-radius:4px;">SYNTHETIC_DIAGNOSTIC_FIXTURE</span>` : ''}
+                      <span style="font-size:0.75rem;font-weight:700;color:${q.status === 'RELEASED' ? '#047857' : '#b45309'};background:${q.status === 'RELEASED' ? '#d1fae5' : '#fef3c7'};padding:2px 8px;border-radius:4px;">${escapeHtml(q.status)}</span>
+                    </div>
                   </div>
                   <h3 style="margin:0 0 0.5rem;font-size:1.15rem;font-weight:700;color:#0f172a;">${escapeHtml(q.title)}</h3>
                   <p style="margin:0 0 1rem;font-size:0.95rem;color:#475569;line-height:1.4;">${escapeHtml(q.stemText.slice(0, 120))}...</p>
@@ -495,6 +718,7 @@ export function mountTopicWorkspace(
 
       const qRoot = container.querySelector<HTMLElement>('#g9-question-mount-root')!;
       const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
+      const isChemTopic = topic.subjectCode.toUpperCase() === 'CHEMISTRY' || topic.subjectId.toLowerCase() === 'chemistry';
 
       if (activeQuestionMode === 'CORE2A') {
         const c = new Core2ASupportedPageController({ returnRoute: `#/subject/${topic.subjectCode.toLowerCase()}/topic/${topic.code.toLowerCase()}/questions` });
@@ -508,7 +732,7 @@ export function mountTopicWorkspace(
         const qController = new QuestionPageController(topic.subjectCode.toLowerCase(), topic.code.toLowerCase());
         const qDesc = deck.find(q => q.id === selectedQuestionId) || deck[0];
 
-        if (isMathTopic) {
+        if (isMathTopic || isChemTopic) {
           qController.loadQuestion(qDesc);
           const m = mountQuestionPage(qRoot, qController);
           activeSubDisposer = () => m.dispose();
@@ -538,6 +762,7 @@ export function mountTopicWorkspace(
   const mountLearnTryTab = (container: HTMLElement) => {
     const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
     const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
+    const isChemTopic = topic.subjectCode.toUpperCase() === 'CHEMISTRY' || topic.subjectId.toLowerCase() === 'chemistry';
 
     container.innerHTML = `
       <div class="g9-learn-try-hub">
@@ -545,7 +770,7 @@ export function mountTopicWorkspace(
         <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;" role="tablist" aria-label="Learn & Try Subroles">
           <button type="button" data-subrole="CORE1" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">1. Core 1: Reading Orientation</button>
           <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">2. Core 1A: Concept Construction (9 Units)</button>
-          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: ${topic.code === 'EUCLID' ? 'Deductive Proof Workspace (A27)' : 'Phenomenological Reconstruction (7 Stages)'}</button>
+          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: ${topic.code === 'EUCLID' ? 'Deductive Proof Workspace (A27)' : isChemTopic ? 'Chemical Representation Workspace (A28)' : 'Phenomenological Reconstruction (7 Stages)'}</button>
         </div>
 
         <div id="g9-learn-try-mount-root"></div>
@@ -605,6 +830,23 @@ export function mountTopicWorkspace(
       });
       const m = mountProofWorkspace(subRoot, proofController, onNavigate);
       activeSubDisposer = () => m.dispose();
+    } else if (isChemTopic && learnTrySubRole === 'CORE1B') {
+      // Mount Chemical Representation Workspace (A28) inside Core 1B Journey
+      const chemController = new ChemicalWorkWorkspaceController({
+        archetype: 'CHEM_E2',
+        initialStructure: {
+          format: 'FORMULA',
+          data: topic.code === 'CHEM_REDOX' ? 'CrO5' : topic.code === 'CHEM_BONDING' ? 'SF4' : 'CH3COOH',
+          accessibleLabel: '',
+        },
+        initialEquation: topic.code === 'CHEM_REDOX'
+          ? 'Fe2+ + Ce4+ -> Fe3+ + Ce3+'
+          : topic.code === 'CHEM_STOICHIOMETRY'
+          ? 'CH3COOH + NaOH -> CH3COONa + H2O'
+          : 'PCl3 + Cl2 -> PCl5',
+      });
+      const m = mountChemicalWorkspace(subRoot, chemController, onNavigate);
+      activeSubDisposer = () => m.dispose();
     } else if (learnTrySubRole === 'CORE1') {
       const c = new Core1OrientationPageController({ returnRoute: `#/subject/${topic.subjectCode.toLowerCase()}/topic/${topic.code.toLowerCase()}/learn-try` });
       const m = mountCore1Orientation(subRoot, c);
@@ -630,6 +872,31 @@ export function mountTopicWorkspace(
   // -------------------------------------------------------------------------
   const mountExplorerTab = (container: HTMLElement) => {
     const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+
+    if (topic.code === 'CHEM_REDOX') {
+      const c = new RedoxAdaptiveController();
+      const m = mountRedoxAdaptive(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'CHEM_STOICHIOMETRY') {
+      const c = new TitrationSimulatorController();
+      const m = mountTitrationSimulator(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'CHEM_BONDING') {
+      const c = new ChemicalWorkWorkspaceController({
+        archetype: 'CHEM_E2',
+        initialStructure: { format: 'FORMULA', data: 'SF4', accessibleLabel: '' },
+        initialEquation: 'PCl3 + Cl2 -> PCl5',
+      });
+      const m = mountChemicalWorkspace(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
 
     if (topic.code === 'RIEMANN') {
       const pwc = new PortableWorkbenchController(RIEMANN_SUMS_PACKAGE);
@@ -705,6 +972,66 @@ export function mountTopicWorkspace(
   // -------------------------------------------------------------------------
   const mountLabsTab = (container: HTMLElement) => {
     const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+
+    if (topic.code === 'CHEM_REDOX') {
+      container.innerHTML = `
+        <div class="g9-chem-labs-hub" style="margin-bottom:1rem;">
+          <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;" role="tablist">
+            <button type="button" id="btn-lab-redox-adaptive" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">Redox Adaptive Hard-Concept (A69 Pilot 2)</button>
+            <button type="button" id="btn-lab-redox-portable" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;cursor:pointer;">Redox Electron Equivalence (Portable)</button>
+          </div>
+          <div id="g9-chem-lab-subslot"></div>
+        </div>
+      `;
+      const subSlot = container.querySelector<HTMLElement>('#g9-chem-lab-subslot')!;
+      let labDisposer: (() => void) | null = null;
+      const mountAdaptive = () => {
+        if (labDisposer) labDisposer();
+        const c = new RedoxAdaptiveController();
+        const m = mountRedoxAdaptive(subSlot, c, onNavigate);
+        labDisposer = () => m.dispose();
+      };
+      const mountPortable = () => {
+        if (labDisposer) labDisposer();
+        const pwc = new PortableWorkbenchController(REDOX_ELECTRON_EQUIVALENCE_PACKAGE);
+        const m = pwc.mount(subSlot);
+        labDisposer = () => m.dispose();
+      };
+      container.querySelector('#btn-lab-redox-adaptive')?.addEventListener('click', (e) => {
+        (e.target as HTMLElement).style.background = '#0284c7';
+        (e.target as HTMLElement).style.color = '#ffffff';
+        const pBtn = container.querySelector<HTMLButtonElement>('#btn-lab-redox-portable');
+        if (pBtn) { pBtn.style.background = '#f1f5f9'; pBtn.style.color = '#0f172a'; }
+        mountAdaptive();
+      });
+      container.querySelector('#btn-lab-redox-portable')?.addEventListener('click', (e) => {
+        (e.target as HTMLElement).style.background = '#0284c7';
+        (e.target as HTMLElement).style.color = '#ffffff';
+        const aBtn = container.querySelector<HTMLButtonElement>('#btn-lab-redox-adaptive');
+        if (aBtn) { aBtn.style.background = '#f1f5f9'; aBtn.style.color = '#0f172a'; }
+        mountPortable();
+      });
+      mountAdaptive();
+      activeSubDisposer = () => { if (labDisposer) labDisposer(); };
+      return;
+    }
+
+    if (topic.code === 'CHEM_STOICHIOMETRY') {
+      const c = new TitrationSimulatorController();
+      const m = mountTitrationSimulator(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'CHEM_BONDING') {
+      const c = new ChemicalWorkWorkspaceController({
+        archetype: 'CHEM_E2',
+        initialStructure: { format: 'FORMULA', data: 'SF4', accessibleLabel: '' },
+      });
+      const m = mountChemicalWorkspace(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
 
     if (topic.code === 'EUCLID') {
       const c = new CirclesMasterController();
@@ -819,10 +1146,11 @@ export function mountTopicWorkspace(
 
     const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
     const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
-    const subjRoute = isMathTopic ? '#/subject/mathematics' : '#/subject/physics';
+    const isChemTopic = topic.subjectCode.toUpperCase() === 'CHEMISTRY' || topic.subjectId.toLowerCase() === 'chemistry';
+    const subjRoute = isChemTopic ? '#/subject/chemistry' : isMathTopic ? '#/subject/mathematics' : '#/subject/physics';
 
-    // Tab Bar click
-    const tabBtn = target.closest<HTMLButtonElement>('[data-tab]');
+    // Tab Bar click (scoped to main topic tabs bar)
+    const tabBtn = target.closest<HTMLButtonElement>('.g9-topic-tabs-bar [data-tab]');
     if (tabBtn && tabBtn.dataset.tab) {
       const tab = tabBtn.dataset.tab;
       selectedQuestionId = null; // Return to deck on tab change

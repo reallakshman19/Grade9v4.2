@@ -40,6 +40,51 @@ export interface SubjectDetail {
   readonly topics: readonly SubjectTopicDescriptor[];
 }
 
+export const CHEMISTRY_SUBJECT_DETAIL: SubjectDetail = {
+  id: 'chemistry',
+  code: 'CHEMISTRY',
+  name: 'Chemistry',
+  description: 'Physical Chemistry, Inorganic Chemistry, Chemical Structure, and Analytical Stoichiometry',
+  status: 'AVAILABLE',
+  academicAdmission: 'HOLD',
+  diagnosticAuthorized: true,
+  topics: [
+    {
+      id: 'chem-redox',
+      code: 'CHEM_REDOX',
+      title: 'Redox Reactions & Electron Transfer',
+      strand: 'Inorganic Chemistry',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+    {
+      id: 'chem-bonding',
+      code: 'CHEM_BONDING',
+      title: 'Chemical Bonding & Molecular Structure',
+      strand: 'Inorganic Chemistry',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+    {
+      id: 'chem-stoichiometry',
+      code: 'CHEM_STOICHIOMETRY',
+      title: 'Stoichiometry & Volumetric Analysis',
+      strand: 'Analytical Chemistry',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+  ],
+};
+
 export interface SubjectViewState {
   readonly status: 'LOADING' | 'POPULATED' | 'UNAVAILABLE' | 'EMPTY';
   readonly subject: SubjectDetail | null;
