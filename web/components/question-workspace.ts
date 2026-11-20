@@ -57,6 +57,7 @@ export interface WorkspaceQuestionDescriptor {
   readonly keyStatus: KeyEvaluationStatus;
   readonly correctKey?: unknown;
   readonly maxPoints?: number;
+  readonly sourceProvenance?: 'AUTHENTIC_SOURCE_PINNED' | 'SYNTHETIC_DIAGNOSTIC_FIXTURE';
 }
 
 export interface WorkspaceLayoutState {

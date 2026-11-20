@@ -85,6 +85,62 @@ export const CHEMISTRY_SUBJECT_DETAIL: SubjectDetail = {
   ],
 };
 
+export const PHYSICS_SUBJECT_DETAIL: SubjectDetail = {
+  id: 'physics',
+  code: 'PHYSICS',
+  name: 'Physics',
+  description: 'Classical Mechanics, Kinematics, Circular Dynamics, Gravitation, and Wave Phenomena',
+  status: 'AVAILABLE',
+  academicAdmission: 'HOLD',
+  diagnosticAuthorized: true,
+  topics: [
+    {
+      id: 'wpe',
+      code: 'WPE',
+      title: 'Work, Power and Energy',
+      strand: 'Mechanics',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+    {
+      id: 'motion-plane',
+      code: 'MOTION_PLANE',
+      title: 'Motion in a Plane & Kinematics',
+      strand: 'Mechanics',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+    {
+      id: 'circular-banking',
+      code: 'CIRCULAR_BANKING',
+      title: 'Circular Motion & Road Banking',
+      strand: 'Mechanics',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+    {
+      id: 'gravitation',
+      code: 'GRAVITATION',
+      title: 'Gravitation & Orbital Mechanics',
+      strand: 'Mechanics',
+      itemCount: 4,
+      status: 'AVAILABLE',
+      academicAdmission: 'HOLD',
+      diagnosticAuthorized: true,
+      hasExplorer: true,
+    },
+  ],
+};
+
 export interface SubjectViewState {
   readonly status: 'LOADING' | 'POPULATED' | 'UNAVAILABLE' | 'EMPTY';
   readonly subject: SubjectDetail | null;

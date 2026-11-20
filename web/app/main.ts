@@ -7,8 +7,8 @@ import { Core2ASupportedPageController, mountCore2ASupported } from '../pages/su
 import { Core2BTransferPageController, mountCore2BTransfer } from '../pages/transfer-changed-demand.ts';
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
-import { createTopicScreen, mountTopicWorkspace, WPE_PHYSICS_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC, CHEM_REDOX_TOPIC, CHEM_BONDING_TOPIC, CHEM_STOICHIOMETRY_TOPIC } from '../pages/topic.ts';
-import { createSubjectScreen, mountSubjectScreen, CHEMISTRY_SUBJECT_DETAIL, type SubjectDetail } from '../pages/subject.ts';
+import { createTopicScreen, mountTopicWorkspace, WPE_PHYSICS_TOPIC, PHY_MOTION_PLANE_TOPIC, PHY_CIRCULAR_BANKING_TOPIC, PHY_GRAVITATION_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC, CHEM_REDOX_TOPIC, CHEM_BONDING_TOPIC, CHEM_STOICHIOMETRY_TOPIC } from '../pages/topic.ts';
+import { createSubjectScreen, mountSubjectScreen, CHEMISTRY_SUBJECT_DETAIL, PHYSICS_SUBJECT_DETAIL, type SubjectDetail } from '../pages/subject.ts';
 import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/competitive.ts';
 import { PaperWorkspaceController, mountPaperWorkspace } from '../pages/paper.ts';
 import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
@@ -90,29 +90,6 @@ const MATHEMATICS_SUBJECT_DETAIL: SubjectDetail = {
   ],
 };
 
-const PHYSICS_SUBJECT_DETAIL: SubjectDetail = {
-  id: 'physics',
-  code: 'PHYSICS',
-  name: 'Physics',
-  description: 'Classical Mechanics, Electromagnetism, Optics, and Modern Physics',
-  status: 'AVAILABLE',
-  academicAdmission: 'HOLD',
-  diagnosticAuthorized: true,
-  topics: [
-    {
-      id: 'wpe',
-      code: 'WPE',
-      title: 'Work, Power and Energy',
-      strand: 'Mechanics',
-      itemCount: 4,
-      status: 'AVAILABLE',
-      academicAdmission: 'HOLD',
-      diagnosticAuthorized: true,
-      hasExplorer: true,
-    },
-  ],
-};
-
 let activeDisposer: (() => void) | null = null;
 const appRouter = new Router({ useHash: true });
 
@@ -175,8 +152,14 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     const topId = match.params.topicId?.toLowerCase() || '';
     const activeTab = match.params.tab || 'questions';
 
-    if (subjId === 'physics' && (topId === 'wpe' || topId === 'work-power-energy')) {
-      const topicController = createTopicScreen(WPE_PHYSICS_TOPIC);
+    if (subjId === 'physics' || subjId === 'phys') {
+      let topicDetail = WPE_PHYSICS_TOPIC;
+      if (topId.includes('motion') || topId.includes('plane') || topId.includes('kin')) topicDetail = PHY_MOTION_PLANE_TOPIC;
+      else if (topId.includes('circular') || topId.includes('bank')) topicDetail = PHY_CIRCULAR_BANKING_TOPIC;
+      else if (topId.includes('grav')) topicDetail = PHY_GRAVITATION_TOPIC;
+      else if (topId.includes('wpe') || topId.includes('work')) topicDetail = WPE_PHYSICS_TOPIC;
+
+      const topicController = createTopicScreen(topicDetail);
       const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
         window.location.hash = '#' + route;
       });

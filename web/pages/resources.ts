@@ -243,6 +243,9 @@ import { RIEMANN_SUMS_PACKAGE, LONG_DIVISION_PACKAGE } from '../runtime/math-pac
 import { REDOX_ELECTRON_EQUIVALENCE_PACKAGE } from '../runtime/chem-packages.ts';
 import { RedoxAdaptiveController, mountRedoxAdaptive } from './redox-adaptive.ts';
 import { TitrationSimulatorController, mountTitrationSimulator } from './titration.ts';
+import { MotionPlaneController, mountMotionPlane } from './motion-plane.ts';
+import { MOTION_SHARED_CLOCK_PACKAGE } from '../runtime/physics-packages.ts';
+import { ExperimentWorkspaceController } from '../components/experiment.ts';
 import type { PortableWorkbenchPackage } from '../applications/portable/types.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import { escapeHtml } from '../runtime/rendering.ts';
@@ -343,6 +346,123 @@ function mountPortableLab(
   };
 }
 
+export function mountExperimentLab(
+  root: HTMLElement,
+  onNavigate?: (route: string) => void
+): { dispose: () => void } {
+  let active = true;
+  const ctrl = new ExperimentWorkspaceController({
+    archetype: 'PHY_E3',
+    title: 'Workpack A29: Simple Pendulum — Gravity Measurement & Least-Squares Regression',
+    apparatus: [
+      { id: 'app-bob', name: 'Spherical Pendulum Bob', type: 'PENDULUM_BOB', specifications: 'Brass bob mass m = 50 g', uncertaintyResolution: '±0.1 g', accessibleDescription: 'Solid brass spherical bob with attachment hook' },
+      { id: 'app-thread', name: 'Inextensible Fine Thread', type: 'THREAD', specifications: 'Braided nylon thread, negligible mass', uncertaintyResolution: 'negligible elongation', accessibleDescription: 'Inextensible suspension thread' },
+      { id: 'app-rule', name: 'Precision Meter Rule', type: 'METER_RULE', specifications: 'Length 1.0 m calibrated at 20°C', uncertaintyResolution: '±1 mm', accessibleDescription: 'Calibrated wooden metric scale' },
+      { id: 'app-timer', name: 'Digital Electronic Stopwatch', type: 'STOPWATCH', specifications: 'Quartz timer with lap memory', uncertaintyResolution: '±0.01 s', accessibleDescription: 'Digital electronic timer with high-contrast display' },
+    ],
+    table: {
+      columns: [
+        { id: 'col-l', name: 'Length (L)', symbol: 'L', unit: 'm', isIndependent: true, uncertainty: 0.001 },
+        { id: 'col-t', name: 'Periodic Time Squared (T²)', symbol: 'T²', unit: 's²', isIndependent: false, uncertainty: 0.02 },
+      ],
+      rows: [
+        { 'col-l': 0.2, 'col-t': 0.81 },
+        { 'col-l': 0.4, 'col-t': 1.62 },
+        { 'col-l': 0.6, 'col-t': 2.41 },
+        { 'col-l': 0.8, 'col-t': 3.23 },
+        { 'col-l': 1.0, 'col-t': 4.02 },
+      ],
+    },
+    graph: {
+      xAxis: { label: 'Length', symbol: 'L', unit: 'm', min: 0, max: 1.2 },
+      yAxis: { label: 'Periodic Time Squared', symbol: 'T²', unit: 's²', min: 0, max: 5.0 },
+    },
+  });
+
+  const render = () => {
+    if (!active) return;
+    root.innerHTML = `
+      <div class="standalone-lab-container g9-experiment-lab" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;">
+        <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0;">
+          <div>
+            <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
+              <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;">Home</a> &gt; 
+              <a href="#/subject/physics" style="color:#0284c7;text-decoration:none;font-weight:600;">Physics</a> &gt; 
+              <span>Experimental &amp; Graph Workspace</span>
+            </div>
+            <h1 style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">📊 Simple Pendulum Gravity Measurement</h1>
+            <p style="margin:0.25rem 0 0;color:#475569;font-size:1rem;">Workpack A29 Experimental Data Modeling &amp; Least-Squares Regression</p>
+          </div>
+          <button type="button" id="btn-return-topic" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">← Return to Physics</button>
+        </header>
+
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
+          <span style="font-size:1.25rem;">ℹ️</span>
+          <div style="font-size:0.95rem;color:#1e40af;">
+            <strong>Workpack A29 · Pedagogical Invariant</strong> — Experimental design and least-squares regression derivations require human domain evaluation. Score is withheld (points: null, REVIEW_PENDING).
+          </div>
+        </div>
+
+        <div id="experiment-content" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+          ${ctrl.render()}
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #e2e8f0;flex-wrap:wrap;gap:8px;">
+          <button type="button" id="btn-evaluate-experiment" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 20px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+            Submit for Domain Review
+          </button>
+          <span style="font-size:0.85rem;color:#64748b;">Human Domain Evaluation Required</span>
+        </div>
+        <div id="experiment-evaluation-slot"></div>
+      </div>
+    `;
+
+    bindEvents();
+  };
+
+  const bindEvents = () => {
+    root.querySelector<HTMLButtonElement>('#btn-return-topic')?.addEventListener('click', () => {
+      if (onNavigate) onNavigate('subject/physics');
+      else window.location.hash = '#/subject/physics';
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('.exp-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab as any;
+        if (tab) {
+          ctrl.setActiveTab(tab);
+          render();
+        }
+      });
+    });
+
+    root.querySelector<HTMLButtonElement>('#btn-evaluate-experiment')?.addEventListener('click', () => {
+      const evalResult = ctrl.evaluate();
+      const evalSlot = root.querySelector('#experiment-evaluation-slot');
+      if (evalSlot) {
+        evalSlot.innerHTML = `
+          <div class="experiment-evaluation-panel" style="margin-top:1rem;padding:1rem;background:#fef3c7;border:1px solid #fde68a;border-radius:8px;">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+              <span style="font-weight:800;color:#92400e;">Status: ${escapeHtml(evalResult.status)}</span>
+              <span style="font-size:0.85rem;color:#78350f;">(Score withheld, points: ${evalResult.points})</span>
+            </div>
+            <p style="margin:0;font-size:0.9rem;color:#78350f;">${escapeHtml(evalResult.feedback)}</p>
+          </div>
+        `;
+      }
+    });
+  };
+
+  render();
+
+  return {
+    dispose: () => {
+      active = false;
+      root.replaceChildren();
+    },
+  };
+}
+
 export function mountStandaloneLab(
   root: HTMLElement,
   rawLabId: string,
@@ -393,6 +513,25 @@ export function mountStandaloneLab(
   if (labId.includes('titrat') || labId === 'lab:titration-simulator') {
     const c = new TitrationSimulatorController();
     return mountTitrationSimulator(root, c, onNavigate);
+  }
+
+  if (labId.includes('motion-in-a-plane') || labId.includes('motion-suite') || labId === 'lab:motion-in-a-plane') {
+    const c = new MotionPlaneController();
+    return mountMotionPlane(root, c, onNavigate);
+  }
+
+  if (labId.includes('motion-shared-clock') || labId === 'lab:motion-shared-clock') {
+    return mountPortableLab(
+      root,
+      MOTION_SHARED_CLOCK_PACKAGE,
+      'Motion Shared Clock — Independent Components Workbench',
+      '#/subject/physics/topic/circular-banking/labs',
+      onNavigate
+    );
+  }
+
+  if (labId.includes('experiment-graph') || labId.includes('experimental-graph-workspace') || labId === 'lab:experiment-graph') {
+    return mountExperimentLab(root, onNavigate);
   }
 
   // Fallback for generic or unmapped labs

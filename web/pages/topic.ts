@@ -23,7 +23,7 @@ import { Core1OrientationPageController, mountCore1Orientation } from './orienta
 import { Core2ASupportedPageController, mountCore2ASupported } from './supported-practice.ts';
 import { Core2BTransferPageController, mountCore2BTransfer } from './transfer-changed-demand.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from './explorer.ts';
-import { WPE_DIAGNOSTIC_DECK, getAuthorizedWpeEntry, WPE_RELEASE_ID } from '../runtime/wpe-deck.ts';
+import { WPE_DIAGNOSTIC_DECK, PHYSICS_DIAGNOSTIC_DECK, getAuthorizedWpeEntry, getAuthorizedPhysicsEntry, WPE_RELEASE_ID } from '../runtime/wpe-deck.ts';
 import { createAuthorizedQuestionSession } from '../runtime/question-session.ts';
 import { createAuthorizedTransferSession } from '../runtime/wpe-transfer.ts';
 import { HarmonicEnergyWellAdapter } from '../adapters/physics/models/energy-well.ts';
@@ -35,6 +35,10 @@ import { ChemicalWorkWorkspaceController, mountChemicalWorkspace } from '../comp
 import { RedoxAdaptiveController, mountRedoxAdaptive } from './redox-adaptive.ts';
 import { TitrationSimulatorController, mountTitrationSimulator } from './titration.ts';
 import { REDOX_ELECTRON_EQUIVALENCE_PACKAGE } from '../runtime/chem-packages.ts';
+import { MotionPlaneController, mountMotionPlane } from './motion-plane.ts';
+import { MOTION_SHARED_CLOCK_PACKAGE } from '../runtime/physics-packages.ts';
+import { ScratchpadController, mountScratchpadWorkspace } from '../components/workspace/scratchpad.ts';
+import { mountExperimentLab } from './resources.ts';
 
 // ---------------------------------------------------------------------------
 // Mathematics Topic Question Decks
@@ -367,6 +371,48 @@ export const WPE_PHYSICS_TOPIC: TopicDetail = {
   description: 'Work-energy theorem, conservative and non-conservative forces, potential energy functions, and power.',
 };
 
+export const PHY_MOTION_PLANE_TOPIC: TopicDetail = {
+  id: 'motion-plane',
+  code: 'MOTION_PLANE',
+  title: 'Motion in a Plane & Kinematics',
+  subjectId: 'physics',
+  subjectCode: 'PHYSICS',
+  strand: 'Mechanics',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 3,
+  resourceCount: 8,
+  description: 'Two-dimensional kinematics, vector components, parabolic trajectory, range invariance, and curved banking.',
+};
+
+export const PHY_CIRCULAR_BANKING_TOPIC: TopicDetail = {
+  id: 'circular-banking',
+  code: 'CIRCULAR_BANKING',
+  title: 'Circular Motion & Road Banking',
+  subjectId: 'physics',
+  subjectCode: 'PHYSICS',
+  strand: 'Mechanics',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 2,
+  resourceCount: 6,
+  description: 'Centripetal acceleration, normal reaction and friction forces on banked curves, optimal and skidding speeds.',
+};
+
+export const PHY_GRAVITATION_TOPIC: TopicDetail = {
+  id: 'gravitation',
+  code: 'GRAVITATION',
+  title: 'Gravitation & Orbital Mechanics',
+  subjectId: 'physics',
+  subjectCode: 'PHYSICS',
+  strand: 'Mechanics',
+  status: 'AVAILABLE',
+  verifiedQuestionCount: 4,
+  interactiveModelCount: 2,
+  resourceCount: 6,
+  description: "Newton's law of universal gravitation, Kepler's laws, gravitational potential energy, and orbital velocity.",
+};
+
 export const MATH_POLYNOMIALS_TOPIC: TopicDetail = {
   id: 'polynomials',
   code: 'POLYNOMIALS',
@@ -651,7 +697,11 @@ export function mountTopicWorkspace(
   const mountQuestionBankTab = (container: HTMLElement) => {
     const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
     let deck: readonly any[] = WPE_DIAGNOSTIC_DECK;
-    if (topic.code === 'POLYNOMIALS') deck = MATH_POLYNOMIALS_DECK;
+    if (topic.code === 'MOTION_PLANE') deck = PHYSICS_DIAGNOSTIC_DECK.filter(q => q.id.startsWith('PHYS-KIN'));
+    else if (topic.code === 'CIRCULAR_BANKING') deck = PHYSICS_DIAGNOSTIC_DECK.filter(q => q.id.startsWith('PHYS-CIRC'));
+    else if (topic.code === 'GRAVITATION') deck = PHYSICS_DIAGNOSTIC_DECK.filter(q => q.id.startsWith('PHYS-GRAV'));
+    else if (topic.code === 'WPE') deck = PHYSICS_DIAGNOSTIC_DECK.filter(q => q.id.startsWith('PHYS-WPE'));
+    else if (topic.code === 'POLYNOMIALS') deck = MATH_POLYNOMIALS_DECK;
     else if (topic.code === 'EUCLID') deck = MATH_EUCLID_DECK;
     else if (topic.code === 'RIEMANN') deck = MATH_RIEMANN_DECK;
     else if (topic.code === 'CHEM_REDOX') deck = CHEM_REDOX_DECK;
@@ -706,9 +756,9 @@ export function mountTopicWorkspace(
           <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
             <button type="button" id="g9-back-deck-btn" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">← Back to ${escapeHtml(topic.title)} Question Deck</button>
             <div style="display:flex;gap:6px;background:#f1f5f9;padding:4px;border-radius:6px;" role="group" aria-label="Question Mode">
-              <button type="button" data-switch-qmode="CORE2" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2: Question</button>
-              <button type="button" data-switch-qmode="CORE2A" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2A' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2A' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2A: Supported</button>
-              <button type="button" data-switch-qmode="CORE2B" style="min-height:38px;padding:6px 12px;background:${activeQuestionMode === 'CORE2B' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2B' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2B: Transfer</button>
+              <button type="button" data-switch-qmode="CORE2" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:${activeQuestionMode === 'CORE2' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2: Question</button>
+              <button type="button" data-switch-qmode="CORE2A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:${activeQuestionMode === 'CORE2A' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2A' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2A: Supported</button>
+              <button type="button" data-switch-qmode="CORE2B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:${activeQuestionMode === 'CORE2B' ? '#0284c7' : 'transparent'};color:${activeQuestionMode === 'CORE2B' ? '#ffffff' : '#0f172a'};border:none;border-radius:4px;cursor:pointer;font-weight:700;font-size:0.85rem;">Core 2B: Transfer</button>
             </div>
           </div>
           <span style="font-size:0.85rem;color:#64748b;">Durable Session Bound (IndexedDB)</span>
@@ -737,10 +787,10 @@ export function mountTopicWorkspace(
           const m = mountQuestionPage(qRoot, qController);
           activeSubDisposer = () => m.dispose();
         } else {
-          // Authorize question session asynchronously for WPE
+          // Authorize question session asynchronously for Physics topics
           void (async () => {
             try {
-              const entry = await getAuthorizedWpeEntry(selectedQuestionId!);
+              const entry = await getAuthorizedPhysicsEntry(selectedQuestionId!);
               const binding = await createAuthorizedQuestionSession(WPE_RELEASE_ID, entry);
               qController.loadQuestion(qDesc, binding);
               const m = mountQuestionPage(qRoot, qController);
@@ -770,7 +820,7 @@ export function mountTopicWorkspace(
         <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;" role="tablist" aria-label="Learn & Try Subroles">
           <button type="button" data-subrole="CORE1" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">1. Core 1: Reading Orientation</button>
           <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">2. Core 1A: Concept Construction (9 Units)</button>
-          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: ${topic.code === 'EUCLID' ? 'Deductive Proof Workspace (A27)' : isChemTopic ? 'Chemical Representation Workspace (A28)' : 'Phenomenological Reconstruction (7 Stages)'}</button>
+          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: ${topic.code === 'EUCLID' ? 'Deductive Proof Workspace (A27)' : isChemTopic ? 'Chemical Representation Workspace (A28)' : 'Reconstruction & Stylus Ink Workspace (A26)'}</button>
         </div>
 
         <div id="g9-learn-try-mount-root"></div>
@@ -852,12 +902,32 @@ export function mountTopicWorkspace(
       const m = mountCore1Orientation(subRoot, c);
       activeSubDisposer = () => m.dispose();
     } else if (learnTrySubRole === 'CORE1B') {
+      subRoot.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:1.5rem;">
+          <div id="g9-core1b-transfer-slot"></div>
+          <div id="g9-core1b-ink-slot"></div>
+        </div>
+      `;
+      const transferSlot = subRoot.querySelector<HTMLElement>('#g9-core1b-transfer-slot')!;
+      const inkSlot = subRoot.querySelector<HTMLElement>('#g9-core1b-ink-slot')!;
+
+      // Mount A26 Stylus Digital Ink Workspace
+      const scratchpadCtrl = new ScratchpadController(800, 400);
+      const inkMount = mountScratchpadWorkspace(inkSlot, scratchpadCtrl, onNavigate);
+
+      // Mount Core 1B 7-Stage Transfer Journey
+      let transferDisposer: (() => void) | null = null;
       void createAuthorizedTransferSession().then(async ({ definition, binding }) => {
         const c = new Core1BTransferPageController({ transferDefinition: definition, binding });
         await c.start();
-        const m = mountCore1BTransfer(subRoot, c);
-        activeSubDisposer = () => m.dispose();
+        const m = mountCore1BTransfer(transferSlot, c);
+        transferDisposer = () => m.dispose();
       });
+
+      activeSubDisposer = () => {
+        inkMount.dispose();
+        if (transferDisposer) transferDisposer();
+      };
     } else {
       // Default: Core 1A
       const lessonDef = createDefaultLesson();
@@ -938,6 +1008,26 @@ export function mountTopicWorkspace(
     if (topic.code === 'POLYNOMIALS') {
       const pwc = new PortableWorkbenchController(LONG_DIVISION_PACKAGE);
       const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'MOTION_PLANE') {
+      const c = new MotionPlaneController();
+      const m = mountMotionPlane(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'CIRCULAR_BANKING') {
+      const pwc = new PortableWorkbenchController(MOTION_SHARED_CLOCK_PACKAGE);
+      const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'GRAVITATION') {
+      const m = mountExperimentLab(container, onNavigate);
       activeSubDisposer = () => m.dispose();
       return;
     }
@@ -1050,6 +1140,26 @@ export function mountTopicWorkspace(
     if (topic.code === 'POLYNOMIALS') {
       const pwc = new PortableWorkbenchController(LONG_DIVISION_PACKAGE);
       const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'MOTION_PLANE') {
+      const c = new MotionPlaneController();
+      const m = mountMotionPlane(container, c, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'CIRCULAR_BANKING') {
+      const pwc = new PortableWorkbenchController(MOTION_SHARED_CLOCK_PACKAGE);
+      const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+
+    if (topic.code === 'GRAVITATION') {
+      const m = mountExperimentLab(container, onNavigate);
       activeSubDisposer = () => m.dispose();
       return;
     }
