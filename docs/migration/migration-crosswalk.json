@@ -14329,13 +14329,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14348,10 +14348,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/mathematics-polynomials-and-coordinates-suite.html",
-      "route": null
+      "route": "/labs/lab:linear-coordinates"
     }
   },
   {
@@ -14362,13 +14362,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14381,10 +14381,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/practice/chemistry-behaviour-of-gases-master-suite.html",
-      "route": null
+      "route": "/labs/lab:gas-laws-suite"
     }
   },
   {
@@ -14395,13 +14395,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14414,10 +14414,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/practice/chemistry-chemical-bonding-master-suite.html",
-      "route": null
+      "route": "/labs/lab:chemical-bonding-atlas"
     }
   },
   {
@@ -14428,13 +14428,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14447,10 +14447,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/practice/chemistry-mole-concept-master-suite.html",
-      "route": null
+      "route": "/labs/lab:mole-concept-reactor"
     }
   },
   {
@@ -14824,13 +14824,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -14843,10 +14843,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/practice/core1a-physics-thrust-pressure-tablet.html",
-      "route": null
+      "route": "/labs/lab:fluid-pressure-thrust"
     }
   },
   {
@@ -15319,13 +15319,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -15338,10 +15338,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/practice/core2-physics-thrust-pressure-tablet.html",
-      "route": null
+      "route": "/labs/lab:fluid-pressure-thrust"
     }
   },
   {
@@ -15517,13 +15517,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -15536,10 +15536,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/practice/motion-in-1d-master-suite.html",
-      "route": null
+      "route": "/labs/lab:motion-1d-suite"
     }
   },
   {
@@ -15616,13 +15616,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -15635,10 +15635,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:docs/standalone/practice/vector-algebra-3d-master-suite.html",
-      "route": null
+      "route": "/labs/lab:vector-algebra-3d"
     }
   },
   {
@@ -20236,13 +20236,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -20255,10 +20255,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/mathematics-polynomials-and-coordinates-suite.html",
-      "route": null
+      "route": "/labs/lab:linear-coordinates"
     }
   },
   {
@@ -20269,13 +20269,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -20288,10 +20288,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/practice/chemistry-behaviour-of-gases-master-suite.html",
-      "route": null
+      "route": "/labs/lab:gas-laws-suite"
     }
   },
   {
@@ -20302,13 +20302,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -20321,10 +20321,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/practice/chemistry-chemical-bonding-master-suite.html",
-      "route": null
+      "route": "/labs/lab:chemical-bonding-atlas"
     }
   },
   {
@@ -20335,13 +20335,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -20354,10 +20354,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/practice/chemistry-mole-concept-master-suite.html",
-      "route": null
+      "route": "/labs/lab:mole-concept-reactor"
     }
   },
   {
@@ -20731,13 +20731,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -20750,10 +20750,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/practice/core1a-physics-thrust-pressure-tablet.html",
-      "route": null
+      "route": "/labs/lab:fluid-pressure-thrust"
     }
   },
   {
@@ -21226,13 +21226,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -21245,10 +21245,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/practice/core2-physics-thrust-pressure-tablet.html",
-      "route": null
+      "route": "/labs/lab:fluid-pressure-thrust"
     }
   },
   {
@@ -21424,13 +21424,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -21443,10 +21443,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/practice/motion-in-1d-master-suite.html",
-      "route": null
+      "route": "/labs/lab:motion-1d-suite"
     }
   },
   {
@@ -21523,13 +21523,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "UNMAPPED",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -21542,10 +21542,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
-      "module_path": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
+      "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:public/standalone/practice/vector-algebra-3d-master-suite.html",
-      "route": null
+      "route": "/labs/lab:vector-algebra-3d"
     }
   },
   {
@@ -22216,13 +22216,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22235,10 +22235,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/chemistry-behaviour-of-gases-master-suite.html",
-      "route": "/lab/chemistry-behaviour-of-gases-master-suite"
+      "route": "/labs/lab:gas-laws-suite"
     }
   },
   {
@@ -22249,13 +22249,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22268,10 +22268,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/chemistry-chemical-bonding-master-suite.html",
-      "route": "/lab/chemistry-chemical-bonding-master-suite"
+      "route": "/labs/lab:chemical-bonding-atlas"
     }
   },
   {
@@ -22282,13 +22282,13 @@
       "subject": "CHEMISTRY",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22301,10 +22301,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/chemistry-mole-concept-master-suite.html",
-      "route": "/lab/chemistry-mole-concept-master-suite"
+      "route": "/labs/lab:mole-concept-reactor"
     }
   },
   {
@@ -22612,13 +22612,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22631,10 +22631,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/core2-physics-thrust-pressure-tablet.html",
-      "route": "/lab/core2-physics-thrust-pressure-tablet"
+      "route": "/labs/lab:fluid-pressure-thrust"
     }
   },
   {
@@ -22711,13 +22711,13 @@
       "subject": "MATHEMATICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22730,10 +22730,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/mathematics-polynomials-and-coordinates-suite.html",
-      "route": "/lab/mathematics-polynomials-and-coordinates-suite"
+      "route": "/labs/lab:linear-coordinates"
     }
   },
   {
@@ -22744,13 +22744,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -22763,10 +22763,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/motion-in-1d-master-suite.html",
-      "route": "/lab/motion-in-1d-master-suite"
+      "route": "/labs/lab:motion-1d-suite"
     }
   },
   {
@@ -23173,13 +23173,13 @@
       "subject": "PHYSICS",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23192,10 +23192,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/core2-physics-thrust-pressure-tablet.html",
-      "route": "/lab/core2-physics-thrust-pressure-tablet"
+      "route": "/labs/lab:fluid-pressure-thrust"
     }
   },
   {
@@ -23272,13 +23272,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23291,10 +23291,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/practice/motion-in-1d-master-suite.html",
-      "route": "/lab/motion-in-1d-master-suite"
+      "route": "/labs/lab:motion-1d-suite"
     }
   },
   {
@@ -23437,13 +23437,13 @@
       "subject": "UNDETERMINED",
       "type": "HTML_EXECUTION_CONTEXT_CANDIDATE"
     },
-    "disposition": "MAPPED_PENDING_PORT",
+    "disposition": "PARITY_VERIFIED",
     "evidence": {
-      "dual_execution_passed": false,
+      "dual_execution_passed": true,
       "source_verified": true,
-      "state_recovery_passed": false,
-      "target_mounted": false,
-      "test_receipt": null
+      "state_recovery_passed": true,
+      "target_mounted": true,
+      "test_receipt": "tests/browser/phase10_standalone_labs_audit.spec.ts"
     },
     "population": "HTML_EXECUTION_CONTEXT_CANDIDATE",
     "source": {
@@ -23456,10 +23456,10 @@
       "repository": "v35"
     },
     "target": {
-      "implementation_commit": null,
+      "implementation_commit": "5afa66627ed7f71166eb70acf85195b8bb9009e0",
       "module_path": "web/ported/source-port.generated.ts",
       "resource_ref": "res:html_execution_context_candidate:standalone/vector-algebra-3d-master-suite.html",
-      "route": "/lab/vector-algebra-3d-master-suite"
+      "route": "/labs/lab:vector-algebra-3d"
     }
   },
   {

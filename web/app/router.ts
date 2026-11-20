@@ -14,6 +14,7 @@ export type RouteType =
   | 'COMPETITIVE'
   | 'PRACTICE'
   | 'LAB'
+  | 'LAB_HUB'
   | 'PERSONAL'
   | 'ARCHITECTURE'
   | 'NOT_FOUND';
@@ -270,7 +271,18 @@ export class Router {
       };
     }
 
-    // 11. Standalone Lab Route: "/labs/:labId" or "/resources/:labId"
+    // 11. Standalone Lab Route: "/labs" (Catalog Hub) or "/labs/:labId" (Workbench View)
+    const labHubMatch = pathPart.match(/^\/(?:labs|resources)\/?$/);
+    if (labHubMatch) {
+      return {
+        type: 'LAB_HUB',
+        path: pathPart,
+        params: {},
+        query,
+        hash: hashPart,
+      };
+    }
+
     const labMatch = pathPart.match(/^\/(?:labs|resources)\/([^/]+)$/);
     if (labMatch) {
       return {

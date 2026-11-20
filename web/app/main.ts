@@ -13,6 +13,7 @@ import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/comp
 import { PaperWorkspaceController, mountPaperWorkspace } from '../pages/paper.ts';
 import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
 import { mountStandaloneLab } from '../pages/resources.ts';
+import { mountLabsHub } from '../pages/labs-hub.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
 import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
 import { mountArchitectureHub } from '../pages/architecture.ts';
@@ -120,7 +121,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   const isHome = match.type === 'HOME' || !clean || clean === 'home';
   const isSubj = match.type === 'SUBJECT' || clean.includes('subject');
   const isExam = match.type === 'COMPETITIVE' || clean.includes('competitive');
-  const isLab = match.type === 'LAB' || clean.includes('labs');
+  const isLab = match.type === 'LAB' || match.type === 'LAB_HUB' || clean.includes('labs') || clean.includes('resources');
   const isPersonal = match.type === 'PERSONAL' || clean.includes('personal');
   const isArch = match.type === 'ARCHITECTURE' || clean.includes('architecture');
   const isSearch = match.type === 'SEARCH' || clean.includes('search');
@@ -130,7 +131,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     <button type="button" data-route="#/home" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isHome ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isHome ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🏠 Home</button>
     <button type="button" data-route="#/subject/physics" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isSubj ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isSubj ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">📚 Subjects</button>
     <button type="button" data-route="#/competitive/exam:nsejs" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isExam ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isExam ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🏆 Competitive Exams</button>
-    <button type="button" data-route="#/labs/lab:circles-master" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isLab ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isLab ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🔬 Standalone Labs</button>
+    <button type="button" data-route="#/labs" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isLab ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isLab ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🔬 Standalone Labs</button>
     <button type="button" data-route="#/personal" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isPersonal ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isPersonal ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">📈 Personal Study</button>
     <button type="button" data-route="#/architecture" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isArch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isArch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🧭 Architecture</button>
     <button type="button" data-route="#/search" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isSearch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isSearch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;margin-left:auto;">🔍 Search</button>
@@ -279,6 +280,11 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     } else {
       renderPracticePaperPlaceholder(content, match.params.paperId);
     }
+  } else if (match.type === 'LAB_HUB') {
+    const m = mountLabsHub(content, undefined, (route) => {
+      window.location.hash = '#' + route;
+    });
+    activeDisposer = () => m.dispose();
   } else if (match.type === 'LAB') {
     const m = mountStandaloneLab(content, match.params.labId, (route) => {
       window.location.hash = '#' + route;

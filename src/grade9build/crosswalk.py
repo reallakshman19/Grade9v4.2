@@ -165,6 +165,17 @@ class MigrationCrosswalkEngine:
             "public/chemistry/titration/index.html": ("/lab/titration-simulator", "PARITY_VERIFIED", "tests/runtime/test_titration_simulator.spec.ts"),
         }
 
+        # Wave 10 Standalone STEM Workbenches & Suites
+        verified_suite_patterns = {
+            "motion-in-1d-master-suite": ("/labs/lab:motion-1d-suite", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
+            "vector-algebra-3d-master-suite": ("/labs/lab:vector-algebra-3d", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
+            "thrust-pressure-tablet": ("/labs/lab:fluid-pressure-thrust", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
+            "chemistry-behaviour-of-gases-master-suite": ("/labs/lab:gas-laws-suite", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
+            "chemistry-chemical-bonding-master-suite": ("/labs/lab:chemical-bonding-atlas", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
+            "chemistry-mole-concept-master-suite": ("/labs/lab:mole-concept-reactor", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
+            "mathematics-polynomials-and-coordinates-suite": ("/labs/lab:linear-coordinates", "PARITY_VERIFIED", "tests/browser/phase10_standalone_labs_audit.spec.ts"),
+        }
+
         for c in candidates:
             cap_id = c["capability_id"]
             pop = c["population"]
@@ -179,8 +190,18 @@ class MigrationCrosswalkEngine:
             target_mounted = False
             dual_execution_passed = False
 
-            # 1. Match against known verified pilot implementations
-            if key in verified_items or path in verified_items:
+            # 1. Match against known verified pilot implementations or suite patterns
+            matched_suite = None
+            for suite_pat, (r_route, r_disp, r_rec) in verified_suite_patterns.items():
+                if suite_pat in path or suite_pat in str(key):
+                    matched_suite = (r_route, r_disp, r_rec)
+                    break
+
+            if matched_suite:
+                target_route, disposition, test_receipt = matched_suite
+                target_mounted = True
+                dual_execution_passed = True
+            elif key in verified_items or path in verified_items:
                 target_route, disposition, test_receipt = verified_items.get(key) or verified_items.get(path)
                 target_mounted = True
                 dual_execution_passed = True
