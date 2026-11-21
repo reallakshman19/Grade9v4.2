@@ -12305,7 +12305,102 @@ const RAW_UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze
  */
 export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze(
   RAW_UNIVERSAL_SEARCH_CORPUS.map((item):UniversalSearchDoc=>{
-    if(item.category!=='question'||/^#\\/question\\/[^/?#]+$/.test(item.route))return item;
+    if(item.category!=='question'||new RegExp('^#/question/[^/?#]+
+    return Object.freeze({
+      ...item,
+      category:'curriculum',
+      type:'QUESTION_COLLECTION',
+      badge:'COLLECTION',
+      subtitle:item.subtitle+' · Topic collection',
+      breadcrumb:item.breadcrumb+' · Opens collection, not individual question',
+    });
+  })
+);
+
+function scoreItem(item: UniversalSearchDoc, tokens: string[], term: string): number {
+  let score = 1000;
+  const titleNorm = normalizeSearchTerm(item.title);
+  const idNorm = normalizeSearchTerm(item.id);
+  const textNorm = normalizeSearchTerm(item.search_text);
+
+  if (idNorm === term || item.id === term || idNorm === 'q ' + term) score += 25000;
+  else if (idNorm.includes(term)) score += 5000;
+
+  if (titleNorm === term) score += 15000;
+  else if (titleNorm.startsWith(term)) score += 6000;
+  else if (tokens.length > 0 && tokens.every(tok => titleNorm.includes(tok))) score += 3000;
+  else if (tokens.some(tok => titleNorm.includes(tok))) score += 1000;
+
+  if (tokens.length > 0 && tokens.every(tok => textNorm.includes(tok))) score += 500;
+  if (textNorm.includes(term)) score += 300;
+
+  if (item.type === 'EXPLORER' || item.type === 'MASTER_SUITE') score += 800;
+  else if (item.type === 'CONCEPT' || item.type === 'TOPIC') score += 400;
+
+  return score;
+}
+
+/**
+ * Queries the universal index with optional category filtering and dynamic counts.
+ */
+export function queryUniversalSearch(query: string = '', category: string = 'all'): UniversalSearchResponse {
+  const start = typeof performance !== 'undefined' ? performance.now() : Date.now();
+  const term = normalizeSearchTerm(query);
+  const tokens = term.split(/\s+/).filter(Boolean);
+
+  let matched: UniversalSearchDoc[];
+  if (!term) {
+    matched = [...UNIVERSAL_SEARCH_CORPUS];
+  } else {
+    matched = UNIVERSAL_SEARCH_CORPUS.filter(item => {
+      const hay = normalizeSearchTerm([item.title, item.id, item.search_text, item.type].join(' '));
+      return tokens.every(t => {
+        if (hay.includes(t)) return true;
+        if (t.length >= 4) {
+          const stem = t.slice(0, 4);
+          if (hay.includes(stem)) return true;
+        }
+        return false;
+      });
+    });
+
+    matched.sort((a, b) => scoreItem(b, tokens, term) - scoreItem(a, tokens, term));
+  }
+
+  const countAll = matched.length;
+  const countQuestions = matched.filter(m => m.category === 'question').length;
+  const countTablets = matched.filter(m => m.category === 'tablet').length;
+  const countCurriculum = matched.filter(m => m.category === 'curriculum').length;
+
+  const counts: UniversalSearchCounts = {
+    all: countAll,
+    question: countQuestions,
+    tablet: countTablets,
+    curriculum: countCurriculum,
+  };
+
+  let results: UniversalSearchDoc[];
+  if (category === 'question') {
+    results = matched.filter(m => m.category === 'question');
+  } else if (category === 'tablet') {
+    results = matched.filter(m => m.category === 'tablet');
+  } else if (category === 'curriculum') {
+    results = matched.filter(m => m.category === 'curriculum');
+  } else {
+    results = matched;
+  }
+
+  const end = typeof performance !== 'undefined' ? performance.now() : Date.now();
+  return {
+    query,
+    category,
+    totalMatches: results.length,
+    executionTimeMs: Math.round((end - start) * 100) / 100,
+    counts,
+    results,
+  };
+}
+).test(item.route))return item;
     return Object.freeze({
       ...item,
       category:'curriculum',
