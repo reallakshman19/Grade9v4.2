@@ -16,12 +16,13 @@
  * No academic approval inferred from software validation.
  */
 
-import type { Ref, TaskRef, Kind, Session as SessionRecord } from './types.ts';
+import type { Ref, TaskRef, Kind } from './types.ts';
 import type { PaperWorkspaceConfig, PaperBinding, PaperQuestionPart, SharedStimulus } from '../pages/paper.ts';
 import { paperDefinitionDigest } from '../pages/paper.ts';
 import { StandardAssessmentEngine, type AssessmentContract } from './assessment.ts';
 import { DefaultProgressStore } from './progress.ts';
 import { Session as DurableSessionController } from './session.ts';
+import { acquireAuthorizedPaperRun } from './paper-run.ts';
 import { createStorageDriver, type StorageDriver } from './storage.ts';
 import { canonicalJson, computeSha256, sameRef } from './loader.ts';
 
@@ -213,7 +214,8 @@ export function createIoqmPaperWorkspaceConfig(): PaperWorkspaceConfig {
 
 export async function createAuthorizedIoqmPaperSession(
   learnerId: string = 'diagnostic_learner',
-  customDriver?: StorageDriver
+  customDriver?: StorageDriver,
+  forceNewAttempt: boolean = false
 ): Promise<{ config: PaperWorkspaceConfig; binding: PaperBinding }> {
   const config = createIoqmPaperWorkspaceConfig();
   const definitionSha256 = await paperDefinitionDigest(config);
@@ -277,53 +279,11 @@ export async function createAuthorizedIoqmPaperSession(
   const driver = customDriver || createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
 
   const releaseId = 'rel-ioqm-2024-v1';
-  const sessionId = `ses:${releaseId}:${config.paperId}:${learnerId}`;
-  const attemptId = `att:${sessionId}:1`;
-
-  // Establish persistent deadline
-  const now = Date.now();
-  const deadlineAt = new Date(now + config.durationSeconds * 1000).toISOString();
-
-  let ses = await driver.get<SessionRecord>('sessions', sessionId);
-  const isExpiredUncommitted = Boolean(ses && ses.deadlineAt && (!ses.attemptIds || ses.attemptIds.length === 0) && Date.now() >= Date.parse(ses.deadlineAt || ''));
-
-  if (!ses || ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted) {
-    if (ses && (ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted)) {
-      try {
-        await driver.delete('sessions', sessionId);
-        await driver.delete('drafts', sessionId);
-        for (const attId of ses.attemptIds || []) {
-          await driver.delete('attempts', attId);
-          await driver.delete('attempt_authority', attId);
-        }
-      } catch {
-        // ignore
-      }
-    }
-
-    try {
-      await driver.delete('drafts', sessionId);
-      await driver.delete('attempts', attemptId);
-      await driver.delete('attempt_authority', attemptId);
-    } catch {
-      // ignore
-    }
-
-    ses = {
-      id: sessionId,
-      releaseId,
-      item: task,
-      mode: 'SIMULATED_EXAM',
-      contentRevision: `rev:${task.revision}`,
-      origin: { type: 'PAPER', id: config.paperId, revision: 1, sha256: definitionSha256 },
-      returnRoute: '/competitive/ioqm',
-      cursor: 0,
-      attemptIds: [],
-      draftId: null,
-      deadlineAt,
-    };
-    await driver.put('sessions', sessionId, ses);
-  }
+  const {session:ses,attemptId} = await acquireAuthorizedPaperRun({
+    driver,legacySessionId:`ses:${releaseId}:${config.paperId}:${learnerId}`,
+    releaseId,paper,task,durationSeconds:config.durationSeconds,
+    returnRoute:'/competitive/exam:ioqm',forceNewAttempt,
+  });
 
   const progress = new DefaultProgressStore(
     driver,

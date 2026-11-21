@@ -468,100 +468,44 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     });
     activeDisposer = () => m.dispose();
   } else if (match.type === 'PRACTICE') {
-    if (match.params.paperId?.toLowerCase().includes('ioqm')) {
-      void (async () => {
-        const mountIoqm = async () => {
-          try {
-            const { config, binding } = await createAuthorizedIoqmPaperSession();
-            const controller = new PaperWorkspaceController(config, binding);
-            try {
-              await controller.restore();
-            } catch (restoreErr: any) {
-              console.warn('IOQM paper workspace state mismatch; reinitializing fresh session:', restoreErr);
-              const driver = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
-              const fresh = await createAuthorizedIoqmPaperSession();
-              const freshCtrl = new PaperWorkspaceController(fresh.config, fresh.binding);
-              await freshCtrl.restore();
-              if (activeDisposer) activeDisposer();
-              const m = mountPaperWorkspace(content, freshCtrl, (route) => {
-                window.location.hash = '#' + route;
-              }, async () => {
-                if (activeDisposer) activeDisposer();
-                const d = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
-                await d.clear().catch(() => {});
-                await d.close().catch(() => {});
-                await mountIoqm();
-              });
-              activeDisposer = () => m.dispose();
-              return;
-            }
-            if (activeDisposer) activeDisposer();
-            const m = mountPaperWorkspace(content, controller, (route) => {
-              window.location.hash = '#' + route;
-            }, async () => {
-              if (activeDisposer) activeDisposer();
-              const driver = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
-              await mountIoqm();
-            });
-            activeDisposer = () => m.dispose();
-          } catch (err) {
-            console.error('IOQM Paper Workspace Initialization Error:', err);
-          }
-        };
-        await mountIoqm();
-      })();
-    } else if (match.params.paperId?.toLowerCase().includes('nsejs')) {
-      void (async () => {
-        const mountNsejs = async () => {
-          try {
-            const { config, binding } = await createAuthorizedNsejsPaperSession();
-            const controller = new PaperWorkspaceController(config, binding);
-            try {
-              await controller.restore();
-            } catch (restoreErr: any) {
-              console.warn('NSEJS paper workspace state mismatch; reinitializing fresh session:', restoreErr);
-              const driver = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
-              const fresh = await createAuthorizedNsejsPaperSession();
-              const freshCtrl = new PaperWorkspaceController(fresh.config, fresh.binding);
-              await freshCtrl.restore();
-              if (activeDisposer) activeDisposer();
-              const m = mountPaperWorkspace(content, freshCtrl, (route) => {
-                window.location.hash = '#' + route;
-              }, async () => {
-                if (activeDisposer) activeDisposer();
-                const d = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
-                await d.clear().catch(() => {});
-                await d.close().catch(() => {});
-                await mountNsejs();
-              });
-              activeDisposer = () => m.dispose();
-              return;
-            }
-            if (activeDisposer) activeDisposer();
-            const m = mountPaperWorkspace(content, controller, (route) => {
-              window.location.hash = '#' + route;
-            }, async () => {
-              if (activeDisposer) activeDisposer();
-              const driver = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
-              await mountNsejs();
-            });
-            activeDisposer = () => m.dispose();
-          } catch (err) {
-            console.error('NSEJS Paper Workspace Initialization Error:', err);
-          }
-        };
-        await mountNsejs();
-      })();
+    const paperId = match.params.paperId?.toLowerCase() ?? '';
+    if (paperId.includes('ioqm') || paperId.includes('nsejs')) {
+      const isIoqm = paperId.includes('ioqm');
+      const mountExam = async (forceNewAttempt = false): Promise<void> => {
+        try {
+          // Retake allocates a durable run. Never clear the shared IndexedDB store.
+          const {config,binding} = isIoqm
+            ? await createAuthorizedIoqmPaperSession('diagnostic_learner', undefined, forceNewAttempt)
+            : await createAuthorizedNsejsPaperSession('diagnostic_learner', undefined, forceNewAttempt);
+          const controller = new PaperWorkspaceController(config,binding);
+          await controller.restore();
+          if (!content.isConnected) return;
+          if (activeDisposer) activeDisposer();
+          const mounted = mountPaperWorkspace(content,controller,route=>{
+            window.location.hash = '#' + route;
+          },async()=>{ await mountExam(true); });
+          activeDisposer = () => mounted.dispose();
+        } catch(err) {
+          console.error('Cannot restore paper; saved exam history remains intact:',err);
+          if (!content.isConnected) return;
+          content.replaceChildren();
+          const notice = document.createElement('p');
+          notice.setAttribute('role','alert');
+          notice.textContent = 'The saved exam could not be restored. Previous drafts and attempts have not been deleted.';
+          const retry = document.createElement('button');
+          retry.type = 'button';
+          retry.style.minHeight = '48px';
+          retry.textContent = 'Start a fresh timed attempt (preserve history)';
+          retry.addEventListener('click',()=>{
+            retry.disabled = true;
+            void mountExam(true);
+          });
+          content.append(notice,retry);
+        }
+      };
+      void mountExam();
     } else {
-      renderPracticePaperPlaceholder(content, match.params.paperId);
+      renderPracticePaperPlaceholder(content,match.params.paperId);
     }
   } else if (match.type === 'LAB_HUB') {
     const m = mountLabsHub(content, undefined, (route) => {
