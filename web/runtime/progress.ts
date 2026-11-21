@@ -267,7 +267,10 @@ export class DefaultProgressStore implements ProgressStore {
   // Shared restore transaction, used by A48. Imports are historical, never disclosure receipts.
   async restoreEmpty(tx:import('./storage.ts').TransactionContext,data:ExportDataPayload):Promise<void>{
     validateBundleData(data);
-    for(const store of DefaultProgressStore.attemptStores)check((await tx.getAll(store)).length===0,'Restore requires empty progress stores');
+    // Active exam-run pointers are not part of cognitive/archive restore scope.
+    // Keep all immutable progress stores empty, but do not read an out-of-scope
+    // paper_active_runs store in a cognitive import transaction.
+    for(const store of DefaultProgressStore.attemptStores.filter(name=>name!=='paper_active_runs'))check((await tx.getAll(store)).length===0,'Restore requires empty progress stores');
     for(const a of data.attempts)await this.qualify(a);
     for(const session of data.sessions)await tx.put('sessions',session.id,session);
     for(const artifact of data.artifacts)await tx.put('artifacts',artifact.id,artifact);
