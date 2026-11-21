@@ -22,7 +22,7 @@ export function paperBaseSessionId(releaseId: string, paperId: string, learnerId
 function validPointer(rootId: string, value: unknown): value is PaperPointer {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const p = value as Record<string, unknown>;
-  return Number.isSafeInteger(p.generation) && Number(p.generation) > 0 &&
+  return typeof p.generation === 'number' && Number.isSafeInteger(p.generation) && p.generation > 0 &&
     p.sessionId === `${rootId}:retake:${p.generation}`;
 }
 
