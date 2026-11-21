@@ -23,7 +23,174 @@ const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: s
   sha256: 'a'.repeat(64)
 });
 
+function createGravitationLesson(): Core1ALessonDefinition {
+  const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
+    A1: {
+      title: 'Phenomenon: Central Inverse-Square Force & Planetary Orbits',
+      summary: 'Why gravity acts along the line of centers with magnitude F = G M m / r².',
+      bodyText: 'Gravitation is a universal mutual attraction between any two masses. The force acts along the line joining their centers of mass and falls off inversely with the square of the distance. Because it is a central force, the torque about the center of attraction is zero, which guarantees that angular momentum is strictly conserved and orbital motion is planar.'
+    },
+    A2: {
+      title: 'Prerequisite Conventions: Spherical Coordinates & Infinity Reference',
+      summary: 'Sign conventions, radial unit vectors, and zero potential reference at infinity.',
+      bodyText: 'We use a radial coordinate r ≥ R measured from the center of the attracting body. The gravitational force vector is F = -G (M m / r²) r̂, where the negative sign denotes an attractive force pointing toward the origin. The standard reference state for gravitational potential energy is U(∞) = 0, which implies that potential energy is strictly negative for all finite separations: U(r) = -G M m / r.'
+    },
+    A3: {
+      title: 'Representation Bridge: Field Lines to Gravitational Potential Well',
+      summary: 'Connecting gravitational field intensity g(r) to potential gradient -dU/dr.',
+      bodyText: 'The gravitational field g(r) = F/m is the gravitational force per unit mass. Field lines converge radially inward toward the mass center. The field intensity is the negative radial gradient of potential: g = -dV/dr. In an energy diagram, the potential well forms an attractive 1/r hyperbolic bowl, where bound states are trapped at negative total energy E < 0.'
+    },
+    A4: {
+      title: 'Law & Conditions: Kepler\'s Three Laws & Centripetal Balance',
+      summary: 'Derivation of orbital velocity v_o = √(GM/r) and harmonic law T² ∝ r³.',
+      bodyText: 'For a circular orbit of radius r around mass M, gravity provides the necessary centripetal force: G M m / r² = m v² / r. Solving for orbital speed yields v_o = √(G M / r). The period of revolution is T = 2πr / v_o = 2π √(r³ / (G M)). Squaring both sides yields Kepler\'s Third Law: T² = (4π² / G M) r³, showing that period depends only on orbital semi-major axis and central mass.'
+    },
+    A5: {
+      title: 'Scientific Simulation: Two-Body Energy States & Escape Trajectories',
+      summary: 'Bound ellipses (E < 0), parabolic threshold (E = 0), and hyperbolic escape (E > 0).',
+      bodyText: 'Total orbital energy is E = K + U = 0.5 m v² - G M m / r. For circular orbits, the Virial Theorem requires 2K + U = 0, so K = -0.5 U and total energy E = -0.5 G M m / r < 0. To escape to infinity with zero residual speed, total energy must reach E = 0: 0.5 m v_esc² - G M m / R = 0 => v_esc = √(2 G M / R) = √2 v_orbit.'
+    },
+    A6: {
+      title: 'Reasoning Construction: Satellite Orbital Velocity & Period Worked Example',
+      summary: 'Step-by-step calculation for an Earth satellite at 600 km altitude.',
+      bodyText: 'Given Earth mass M = 5.972 × 10²⁴ kg and radius R = 6371 km. Orbital radius r = R + h = 6971 km. Orbital speed v_o = √(G M / r) = 7.56 km/s. Orbital period T = 2πr / v_o = 5790 s ≈ 96.5 minutes.'
+    },
+    A7: {
+      title: 'Misconception Alert: Weightlessness vs Lack of Gravity',
+      summary: 'Why astronauts float: free-fall in orbit, NOT absence of gravity.',
+      bodyText: 'A common misconception is that gravity is zero in orbit. In fact, at 400 km altitude (ISS), gravity is still ~89% of its surface value (g ≈ 8.7 m/s²)! Astronauts float because both the spacecraft and their bodies are in continuous simultaneous free fall toward Earth, so the floor exerts zero normal contact force (N = 0).'
+    },
+    A8: {
+      title: 'Boundary & Changed Demand: Escape Velocity vs Orbital Velocity',
+      summary: 'Determining the kinetic threshold required to break gravitational binding.',
+      bodyText: 'To leave Earth\'s gravitational well completely, kinetic energy must equal the depth of the potential well: 0.5 m v_e² = G M m / R => v_e = √(2 G M / R) = √2 v_orbit ≈ 11.2 km/s. If launch speed v < v_e, the trajectory remains a closed bound conic (ellipse); if v = v_e, it is a parabolic escape; if v > v_e, it is a hyperbolic trajectory with residual hyperbolic excess speed.'
+    },
+    A9: {
+      title: 'Synthesis: Two-Body Gravitational Problem & Barycenter Orbit',
+      summary: 'When both masses move around their common center of mass.',
+      bodyText: 'When two celestial bodies of masses m₁ and m₂ interact gravitationally, both orbit their common center of mass (barycenter) with identical orbital period T. The system is equivalent to a single reduced mass μ = (m₁ m₂) / (m₁ + m₂) orbiting at separation r in a central field of total mass M = m₁ + m₂.'
+    }
+  };
+
+  return {
+    lessonRef: ref('LESSON', 'lesson:physics-gravitation'),
+    constructionRef: ref('CONSTRUCTION', 'construction:physics-gravitation'),
+    title: 'Gravitation & Orbital Mechanics: 5 Thinking Skills & Concept Construction',
+    subject: 'PHYSICS',
+    topicId: 'topic:gravitation',
+    depthBadge: 'MEDIUM',
+    status: 'HOLD',
+    units: CORE1A_ORDERED_ROLES.map(role => ({
+      role,
+      title: roleTitles[role].title,
+      summary: roleTitles[role].summary,
+      bodyText: roleTitles[role].bodyText,
+      blockRefs: [ref('SOURCE', 'source:' + role)],
+      evidenceRefs: [ref('WARRANT', 'warrant:' + role)],
+      conventions: role === 'A2' ? ['Radial coordinate r measured from center of mass', 'U(∞) = 0 reference datum at infinite separation', 'Gravitational force points strictly inward (-r̂)'] : undefined,
+      representationBridge: role === 'A3' ? [
+        { pictureElement: 'Converging radial field vectors g(r)', symbol: 'g(r)', inWords: 'Gravitational field intensity pointing toward mass center' },
+        { pictureElement: 'Hyperbolic 1/r potential curve U(r)', symbol: 'U(r)', inWords: 'Negative gravitational potential well holding bound orbits' },
+        { pictureElement: 'Tangential velocity vector v_t', symbol: 'v_o', inWords: 'Orbital velocity perpendicular to radial gravity vector' },
+        { pictureElement: 'Inward centripetal acceleration vector', symbol: 'a_c', inWords: 'Produced purely by central gravitational attraction' }
+      ] : undefined,
+      derivationSteps: role === 'A4' ? [
+        { stepNumber: 1, expression: 'F_g = G M m / r² = m (v²/r)', whyValid: 'Newton universal gravitation provides exact centripetal force for circular orbit' },
+        { stepNumber: 2, expression: 'v_o = √(G M / r)', whyValid: 'Cancellation of satellite mass m and isolating tangential orbital speed' },
+        { stepNumber: 3, expression: 'T = 2πr / v_o = 2π √(r³ / (G M)) => T² = (4π² / G M) r³', whyValid: 'Harmonic orbital relation deriving Kepler Third Law' }
+      ] : undefined,
+      boundaryConditions: role === 'A8' ? ['Total mechanical energy E < 0 for bound closed orbits', 'Parabolic escape velocity threshold E = 0', 'v_escape = √2 · v_orbit'] : undefined,
+      selfCheckPrompt: role === 'A9' ? 'Self-Check: If Earth\'s mass were doubled while orbit radius remained fixed, by what factor would orbital speed change?' : undefined,
+      ...(role === 'A6' ? {
+        workedExample: {
+          problemPrompt: 'A 500 kg weather satellite orbits Earth at altitude h = 600 km (R_E = 6400 km, M_E = 6.0 × 10²⁴ kg, G = 6.67 × 10⁻¹¹ N m²/kg²). Calculate orbital speed, orbital period, and total mechanical energy.',
+          fullReasoningSteps: [
+            '1. Orbital radius: r = R_E + h = 6400 km + 600 km = 7000 km = 7.0 × 10⁶ m.',
+            '2. Orbital speed: v_o = √(G M / r) = √((6.67 × 10⁻¹¹ * 6.0 × 10²⁴) / (7.0 × 10⁶)) = √(5.717 × 10⁷) = 7561 m/s (7.56 km/s).',
+            '3. Orbital period: T = 2πr / v_o = (2 * 3.1416 * 7.0 × 10⁶) / 7561 = 5817 s ≈ 96.9 minutes.',
+            '4. Gravitational potential energy: U = -G M m / r = -(6.67 × 10⁻¹¹ * 6.0 × 10²⁴ * 500) / (7.0 × 10⁶) = -28.58 GJ.',
+            '5. Kinetic energy: K = 0.5 * 500 * (7561)² = +14.29 GJ.',
+            '6. Total mechanical energy: E = K + U = +14.29 GJ - 28.58 GJ = -14.29 GJ (Half of potential U, verifying Virial equilibrium).'
+          ],
+          solutionResult: 'v_o = 7.56 km/s, T = 96.9 min, E_total = -14.29 GJ (Bound circular orbit)'
+        }
+      } : {}),
+      ...(role === 'A7' ? {
+        misconception: {
+          wrongIdea: 'Astronauts in orbit float because gravity does not exist in space (zero gravity).',
+          diagnosticPrompt: 'The International Space Station orbits at 400 km altitude. Is Earth\'s gravity zero at this location?',
+          repair: 'At 400 km, g = g_surface · (R/(R+h))² = 9.8 · (6400/6800)² = 8.68 m/s² (89% of surface gravity!). Sensation of weightlessness occurs because both spacecraft and astronaut are falling freely together at the same acceleration, so the contact reaction N = 0.'
+        }
+      } : {})
+    })),
+    anchors: [
+      {
+        level: 'FOUNDATION',
+        taskRef: ref('QUESTION', 'question:anchor:grav-foundation'),
+        title: 'Foundation Anchor: Surface Gravity Calculation',
+        prompt: 'Calculate the acceleration due to gravity on the surface of a planet having twice the mass of Earth and twice Earth\'s radius (Earth g = 9.8 m/s²).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:grav-foundation'),
+        solutionSteps: [
+          '1. Formula for surface gravitational acceleration: g = G M / R².',
+          '2. Scaling relation: g_planet = G (2M) / (2R)² = (2/4) * (G M / R²) = 0.5 * g_Earth.',
+          '3. Evaluation: g_planet = 0.5 * 9.8 m/s² = 4.9 m/s².'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:foundation')]
+      },
+      {
+        level: 'CONNECTED',
+        taskRef: ref('QUESTION', 'question:anchor:grav-connected'),
+        title: 'Connected Anchor: Satellite Orbital Speed & Period',
+        prompt: 'A communications satellite moves in a circular orbit of radius r around Earth. By what factor must its orbital radius increase for its period to quadruple (T_new = 4 T_old)?',
+        solutionRef: ref('SOLUTION', 'solution:anchor:grav-connected'),
+        solutionSteps: [
+          '1. Apply Kepler\'s Third Law: T² ∝ r³ => (T₂/T₁)² = (r₂/r₁)³.',
+          '2. Substitute T₂/T₁ = 4: 4² = 16 = (r₂/r₁)³.',
+          '3. Solve for radius ratio: r₂/r₁ = 16^(1/3) = (2⁴)^(1/3) = 2^(4/3) ≈ 2.52.',
+          '4. The orbital radius must increase by a factor of 2^(4/3) ≈ 2.52.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:connected')]
+      },
+      {
+        level: 'ADVANCED',
+        taskRef: ref('QUESTION', 'question:anchor:grav-advanced'),
+        title: 'Advanced Anchor: Orbital Escape Energy Balance',
+        prompt: 'Determine the additional kinetic energy that must be imparted to a circular orbit satellite of mass m and speed v_o to allow it to completely escape Earth\'s gravitational field.',
+        solutionRef: ref('SOLUTION', 'solution:anchor:grav-advanced'),
+        solutionSteps: [
+          '1. In a circular orbit of radius r, kinetic energy is K_orbit = 0.5 m v_o² = 0.5 G M m / r, and potential energy is U = -G M m / r.',
+          '2. Total mechanical energy in orbit: E_orbit = K + U = -0.5 G M m / r = -K_orbit.',
+          '3. For complete escape to infinity, total energy must reach E_escape = 0 J.',
+          '4. Additional energy required: ΔE = E_escape - E_orbit = 0 - (-K_orbit) = +K_orbit = 0.5 m v_o².',
+          '5. This corresponds to boosting speed from v_o to v_esc = √2 v_o.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:advanced')]
+      }
+    ],
+    modelConfig: {
+      modelId: 'PHYS-MODEL-GRAVITATION-ORBIT',
+      modelName: 'Keplerian Orbit Dynamics & Gravitational Field',
+      defaultParameters: { altitude: 600 },
+      parameterBounds: { altitude: { min: 200, max: 36000 } },
+      qualitativePredictionPrompt: 'Predict whether satellite orbital speed v_o increases or decreases as orbital altitude increases.',
+      predictionOptions: [
+        'Orbital speed decreases because gravitational pull weakens inversely with distance (v_o = √(GM/r))',
+        'Orbital speed increases because higher orbits require more total energy',
+        'Orbital speed stays constant in vacuum'
+      ],
+      expectedPredictionIndex: 0,
+      observationNote: 'Centripetal balance G M m / r² = m v² / r => v_o = √(G M / r). Speed is strictly inversely proportional to √r.'
+    },
+    synthesisTaskRef: ref('QUESTION', 'question:synthesis:gravitation'),
+    synthesisTaskPrompt: 'Synthesize Newton\'s Universal Gravitation, Kepler\'s Laws, and energy conservation to deduce orbital transfer trajectories.',
+    freshTaskRef: ref('FRESH_TASK', 'fresh:gravitation-01')
+  };
+}
+
 export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition {
+  if (topicCode && topicCode.toLowerCase().includes('grav')) {
+    return createGravitationLesson();
+  }
   const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
     A1: {
       title: 'Phenomenon: Work, Direction & Energy Transfer',

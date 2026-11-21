@@ -1407,6 +1407,242 @@ function getVectorsStudyHtml(): string {
   `;
 }
 
+function getGravitationStudyHtml(): string {
+  return `
+    <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:1.25rem;border-bottom:1px solid #e2e8f0;padding-bottom:1rem;">
+        <div>
+          <div style="display:flex;gap:6px;margin-bottom:6px;">
+            <span style="font-size:0.8rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;">CORE 1A THEORY</span>
+            <span style="font-size:0.8rem;font-weight:800;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:4px;">6 CONCEPT UNITS</span>
+          </div>
+          <h2 style="margin:0 0 0.25rem;font-size:1.45rem;font-weight:800;color:#0f172a;">🪐 Gravitation &amp; Orbital Mechanics Study Guide</h2>
+          <p style="color:#64748b;margin:0;font-size:0.95rem;">Newton's universal gravitation, Kepler's orbital laws, gravitational field intensity, and escape velocity dynamics.</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" id="btn-grav-tab4-shortcut" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">⚡ Open Orbital Labs Workbench →</button>
+        </div>
+      </div>
+
+      <!-- Unit 1 & 2 -->
+      <div style="border:1px solid #e2e8f0;border-radius:8px;padding:1.2rem;margin-bottom:1rem;background:#f8fafc;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:0.8rem;font-weight:800;color:#0284c7;">UNIT 1 &amp; 2 · INVERSE-SQUARE LAW &amp; SHELL THEOREM</span>
+          <code style="font-size:0.9rem;background:#e0f2fe;color:#0369a1;padding:2px 6px;border-radius:4px;">F_g = G·M·m / r² &nbsp;|&nbsp; g(r) = -G·M / r² r̂</code>
+        </div>
+        <h3 style="margin:0 0 6px;font-size:1.15rem;font-weight:700;color:#0f172a;">Newton's Law of Universal Gravitation &amp; Spherical Symmetry</h3>
+        <p style="margin:0 0 8px;color:#475569;font-size:0.92rem;line-height:1.5;">
+          Gravitation acts along the line connecting centers of mass. By Gauss's Law / Newton's Shell Theorem, a spherically symmetric body attracts external bodies as if all mass were concentrated at its geometric center. Inside a uniform spherical shell, the net gravitational force is identically zero everywhere.
+        </p>
+        <div style="background:#eff6ff;border-left:3px solid #3b82f6;padding:8px 12px;border-radius:0 6px 6px 0;font-size:0.88rem;color:#1e3a8a;">
+          <strong>Surface Gravity Scaling:</strong> g = G M / R². For a planet with mass 2M and radius 2R, g_planet = G(2M)/(2R)² = 0.5 g_Earth.
+        </div>
+      </div>
+
+      <!-- Unit 3 & 4 -->
+      <div style="border:1px solid #e2e8f0;border-radius:8px;padding:1.2rem;margin-bottom:1rem;background:#f8fafc;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:0.8rem;font-weight:800;color:#0284c7;">UNIT 3 &amp; 4 · POTENTIAL WELL &amp; SATELLITE ORBITS</span>
+          <code style="font-size:0.9rem;background:#e0f2fe;color:#0369a1;padding:2px 6px;border-radius:4px;">U(r) = -G·M·m / r &nbsp;|&nbsp; v_o = √(G·M / r)</code>
+        </div>
+        <h3 style="margin:0 0 6px;font-size:1.15rem;font-weight:700;color:#0f172a;">Gravitational Potential Energy &amp; Centripetal Equilibrium</h3>
+        <p style="margin:0 0 8px;color:#475569;font-size:0.92rem;line-height:1.5;">
+          Because gravity is conservative and attractive, U(r) is negative everywhere relative to the datum U(∞) = 0. In a circular orbit of radius r, centripetal acceleration is supplied entirely by gravity: G M m / r² = m v² / r => v_o = √(G M / r). By the Virial Theorem: 2K + U = 0, so total mechanical energy is E = -K = 0.5 U = -G M m / (2r) &lt; 0.
+        </p>
+      </div>
+
+      <!-- Unit 5 & 6 -->
+      <div style="border:1px solid #e2e8f0;border-radius:8px;padding:1.2rem;margin-bottom:1rem;background:#f8fafc;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:0.8rem;font-weight:800;color:#0284c7;">UNIT 5 &amp; 6 · KEPLER'S LAWS &amp; ESCAPE VELOCITY</span>
+          <code style="font-size:0.9rem;background:#e0f2fe;color:#0369a1;padding:2px 6px;border-radius:4px;">T² = (4π² / G M) r³ &nbsp;|&nbsp; v_e = √(2G·M / R) = √2 v_o</code>
+        </div>
+        <h3 style="margin:0 0 6px;font-size:1.15rem;font-weight:700;color:#0f172a;">Orbital Harmonic Law &amp; Parabolic Escape Threshold</h3>
+        <p style="margin:0 0 8px;color:#475569;font-size:0.92rem;line-height:1.5;">
+          Kepler's Third Law states that the square of the orbital period T is directly proportional to the cube of the orbital radius: T² ∝ r³. To break gravitational binding completely and reach infinity with non-negative kinetic energy, total mechanical energy must satisfy E ≥ 0: 0.5 m v_e² - G M m / R = 0 => v_e = √(2 G M / R) ≈ 11.2 km/s for Earth.
+        </p>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem;">
+        <button type="button" onclick="window.location.hash='#/bank?subject=Physics&topic=gravitation'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+          🎯 Practice Gravitation in Question Bank →
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function mountGravitationLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  let altitudeKm = 600;
+  let satMassKg = 1000;
+  const R_E = 6371; // km
+  const M_E = 5.972e24; // kg
+  const G = 6.6743e-11; // N m^2 / kg^2
+  const GM = 3.986e14; // m^3 / s^2
+
+  const renderWorkbench = () => {
+    const rKm = R_E + altitudeKm;
+    const rM = rKm * 1000;
+    const vMps = Math.sqrt(GM / rM);
+    const vKmph = vMps / 1000;
+    const vEscKmph = Math.sqrt(2) * vKmph;
+    const periodSec = 2 * Math.PI * Math.sqrt(Math.pow(rM, 3) / GM);
+    const periodMin = periodSec / 60;
+    const gLocal = GM / Math.pow(rM, 2);
+    const Fg = satMassKg * gLocal;
+    const uGj = (-G * M_E * satMassKg / rM) / 1e9;
+    const kGj = (0.5 * satMassKg * Math.pow(vMps, 2)) / 1e9;
+    const eGj = kGj + uGj;
+
+    const orbitRadiusPx = 45 + (altitudeKm / 36000) * 110;
+    const satX = 220 + orbitRadiusPx;
+    const satY = 160;
+
+    container.innerHTML = `
+      <div class="g9-labs-workbench" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">Keplerian Orbital Mechanics &amp; Gravitational Field Workbench</h2>
+            <p style="margin:2px 0 0;font-size:0.95rem;color:#64748b;">Central Inverse-Square Potential: U(r) = -G·M·m/r | Orbital Speed: v_o = √(G·M/r)</p>
+          </div>
+          <span style="font-size:0.875rem;font-weight:700;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">A50 / A54 Model</span>
+        </div>
+
+        <!-- Interactive SVG Canvas: Orbital Geometry & Vector Field -->
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Orbital Trajectory &amp; Force Vector Balance</h3>
+            <div style="display:flex;gap:12px;font-size:0.875rem;font-weight:600;flex-wrap:wrap;">
+              <span style="color:#0284c7;">● Orbit Path r = ${rKm.toFixed(0)} km</span>
+              <span style="color:#10b981;">▲ Tangential Velocity v_o = ${vKmph.toFixed(2)} km/s</span>
+              <span style="color:#ef4444;">◀ Centripetal Gravity g = ${gLocal.toFixed(2)} m/s²</span>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 600 320" style="width:100%;height:auto;display:block;background:#090d16;border:1px solid #1e293b;border-radius:6px;" aria-label="Keplerian Orbit Trajectory and Field Balance">
+            <!-- Grid lines -->
+            <line x1="20" y1="160" x2="420" y2="160" stroke="#1e293b" stroke-dasharray="3,3" />
+            <line x1="220" y1="20" x2="220" y2="300" stroke="#1e293b" stroke-dasharray="3,3" />
+
+            <!-- Orbit circle -->
+            <circle cx="220" cy="160" r="${orbitRadiusPx.toFixed(1)}" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,4" />
+
+            <!-- Central Earth -->
+            <circle cx="220" cy="160" r="45" fill="url(#earthGradient)" stroke="#38bdf8" stroke-width="2" />
+            <text x="220" y="165" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="700">Earth</text>
+            <text x="220" y="180" text-anchor="middle" fill="#94a3b8" font-size="10">R = 6,371 km</text>
+
+            <!-- Satellite Point -->
+            <circle cx="${satX.toFixed(1)}" cy="${satY.toFixed(1)}" r="7" fill="#f59e0b" stroke="#ffffff" stroke-width="2" />
+            
+            <!-- Tangential Velocity Vector -->
+            <line x1="${satX.toFixed(1)}" y1="${satY.toFixed(1)}" x2="${satX.toFixed(1)}" y2="${(satY - 45).toFixed(1)}" stroke="#10b981" stroke-width="3" marker-end="url(#arrowGreen)" />
+            <text x="${(satX + 8).toFixed(1)}" y="${(satY - 25).toFixed(1)}" fill="#10b981" font-size="12" font-weight="700">v_o = ${vKmph.toFixed(2)} km/s</text>
+
+            <!-- Centripetal Gravitational Force Vector -->
+            <line x1="${satX.toFixed(1)}" y1="${satY.toFixed(1)}" x2="${(satX - 45).toFixed(1)}" y2="${satY.toFixed(1)}" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowRed)" />
+            <text x="${(satX - 50).toFixed(1)}" y="${(satY + 16).toFixed(1)}" fill="#ef4444" font-size="11" font-weight="700">F_g = ${Fg.toFixed(0)} N</text>
+
+            <!-- Energy Ledger on right side -->
+            <rect x="440" y="20" width="145" height="280" fill="#0f172a" rx="6" stroke="#334155" />
+            <text x="512" y="42" text-anchor="middle" fill="#cbd5e1" font-size="11" font-weight="700">Energy Ledger (GJ)</text>
+            <text x="450" y="70" fill="#38bdf8" font-size="11">Kinetic K: +${kGj.toFixed(2)}</text>
+            <text x="450" y="95" fill="#f87171" font-size="11">Potential U: ${uGj.toFixed(2)}</text>
+            <line x1="450" y1="108" x2="575" y2="108" stroke="#475569" />
+            <text x="450" y="125" fill="#facc15" font-size="11" font-weight="700">Total E: ${eGj.toFixed(2)}</text>
+            <text x="450" y="145" fill="#94a3b8" font-size="10">(E &lt; 0 Bound Orbit)</text>
+
+            <text x="450" y="180" fill="#a78bfa" font-size="11" font-weight="700">Escape Speed:</text>
+            <text x="450" y="198" fill="#e2e8f0" font-size="12">v_e = ${vEscKmph.toFixed(2)} km/s</text>
+
+            <text x="450" y="230" fill="#67e8f9" font-size="11" font-weight="700">Period T:</text>
+            <text x="450" y="248" fill="#e2e8f0" font-size="12">${periodMin < 120 ? periodMin.toFixed(1) + ' min' : (periodMin / 60).toFixed(1) + ' hrs'}</text>
+
+            <defs>
+              <radialGradient id="earthGradient" cx="40%" cy="40%" r="60%">
+                <stop offset="0%" stop-color="#38bdf8" />
+                <stop offset="50%" stop-color="#0284c7" />
+                <stop offset="100%" stop-color="#0f172a" />
+              </radialGradient>
+              <marker id="arrowGreen" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+              </marker>
+              <marker id="arrowRed" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Interactive Parameter Sliders & Analytical Controls -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="grav-alt-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Orbital Altitude (h):</label>
+              <span id="grav-alt-val" style="font-weight:800;color:#0284c7;font-size:1.05rem;">${altitudeKm.toLocaleString()} km</span>
+            </div>
+            <input type="range" id="grav-alt-slider" min="200" max="36000" step="100" value="${altitudeKm}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>200 km (LEO)</span>
+              <span>2,000 km (MEO)</span>
+              <span>35,786 km (GEO)</span>
+            </div>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="grav-mass-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Satellite Mass (m):</label>
+              <span id="grav-mass-val" style="font-weight:800;color:#0284c7;font-size:1.05rem;">${satMassKg.toLocaleString()} kg</span>
+            </div>
+            <input type="range" id="grav-mass-slider" min="100" max="5000" step="50" value="${satMassKg}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>100 kg (Cubesat)</span>
+              <span>1,000 kg (Observer)</span>
+              <span>5,000 kg (Comms)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytical Derivation Cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">ORBITAL VELOCITY</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${vKmph.toFixed(2)} km/s</div>
+            <span style="font-size:0.8rem;color:#0284c7;">v_o = √(G·M / r)</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">ORBITAL PERIOD</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${periodMin < 120 ? periodMin.toFixed(1) + ' min' : (periodMin / 60).toFixed(1) + ' hrs'}</div>
+            <span style="font-size:0.8rem;color:#0284c7;">T = 2π √(r³ / GM)</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">ESCAPE VELOCITY</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${vEscKmph.toFixed(2)} km/s</div>
+            <span style="font-size:0.8rem;color:#0284c7;">v_e = √2 · v_o</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">GRAVITY ACCELERATION</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${gLocal.toFixed(2)} m/s²</div>
+            <span style="font-size:0.8rem;color:#0284c7;">g(h) = g_0 (R/r)²</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#grav-alt-slider')?.addEventListener('input', (ev) => {
+      altitudeKm = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+    container.querySelector('#grav-mass-slider')?.addEventListener('input', (ev) => {
+      satMassKg = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+  };
+
+  renderWorkbench();
+  return { dispose: () => {} };
+}
+
 
 export function mountTopicWorkspace(
   root: HTMLElement,
@@ -2619,8 +2855,8 @@ export function mountTopicWorkspace(
       return;
     } else {
       // Default: Core 1A
-      const lessonDef = createDefaultLesson();
-      const c = new Core1ALessonPageController({ lessonDefinition: lessonDef });
+      const lessonDef = createDefaultLesson(topic.code);
+      const c = new Core1ALessonPageController({ lessonDefinition: lessonDef, topicCode: topic.code });
       const m = mountCore1ALesson(subRoot, c);
       activeSubDisposer = () => m.dispose();
     }
@@ -2774,9 +3010,13 @@ export function mountTopicWorkspace(
       return;
     }
 
-    if (topic.code === 'GRAVITATION') {
-      const m = mountExperimentLab(container, onNavigate);
-      activeSubDisposer = () => m.dispose();
+    if (topic.code === 'GRAVITATION' || topic.id === 'gravitation') {
+      container.innerHTML = getGravitationStudyHtml();
+      container.querySelector('#btn-grav-tab4-shortcut')?.addEventListener('click', () => {
+        const tabsBar = root.querySelector('.g9-topic-tabs-bar');
+        const labsBtn = tabsBar?.querySelector<HTMLButtonElement>('button[data-tab="labs"]');
+        if (labsBtn) labsBtn.click();
+      });
       return;
     }
 
@@ -2829,6 +3069,13 @@ export function mountTopicWorkspace(
   // Tab 4: Standalone Labs (Harmonic Potential Well Analytical Workbench)
   // -------------------------------------------------------------------------
   const mountLabsTab = (container: HTMLElement) => {
+    const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+    if (topic.code === 'GRAVITATION' || topic.id === 'gravitation') {
+      const w = mountGravitationLabsWorkbench(container);
+      activeSubDisposer = () => w.dispose();
+      return;
+    }
+
     // Physics Harmonic Potential Well
     const adapter = new HarmonicEnergyWellAdapter();
     const result = adapter.evaluate({ x: energyWellDisplacement });
