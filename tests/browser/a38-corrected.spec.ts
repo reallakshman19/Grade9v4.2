@@ -26,7 +26,7 @@ async function audit(page:Page,selector:string){
 }
 it('A38 real rendered QRT/search/transfer/personal controls at canonical viewports, contrast and keyboard',{timeout:60000},async()=>{
  const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');const browser=await chromium.launch({headless:true});
- try{const p=await browser.newPage();await p.goto('http://127.0.0.1:'+addr.port+'/');const path='/@fs/'+process.cwd()+'/tests/fixtures/',f=searchFixture().actual;
+ try{const p=await browser.newPage();await p.goto('http://127.0.0.1:'+addr.port+'/test-host.html');const path='/@fs/'+process.cwd()+'/tests/fixtures/',f=searchFixture().actual;
  await p.evaluate(async({path,f})=>{const {mountGolden}=await import(path+'a37-golden.ts');(window as any).g=await mountGolden(document.getElementById('app')!,f,'a38-golden-'+Date.now());},{path,f});
  const results=[await audit(p,'.g9-a53')];
  await p.locator('[data-coord="RETRIEVE:D1"]').focus();await p.keyboard.press('ArrowRight');assert.equal(await p.locator(':focus').getAttribute('data-coord'),'RETRIEVE:D2');
