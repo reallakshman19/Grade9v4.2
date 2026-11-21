@@ -248,7 +248,11 @@ export function wrapMathInAccessibleContainer(formula: MathFormulaDescriptor): s
   const ariaLabel = formula.label || (formula.isBlock ? 'Mathematical equation' : 'Inline formula');
   const scrollClass = formula.isBlock ? 'math-block-container scrollable-x' : 'math-inline-container';
 
-  const mathml = formatLatexMath(sanitized, formula.isBlock);
+  // Sanitation preserves a restricted subset of inert, attribute-free markup.
+  // Pass that markup through unchanged; parsing an existing <p> or <math> tag
+  // as LaTeX would destroy the semantic element and can hide safe content.
+  const hasSafeMarkup = /<\\/?(?:p|em|strong|b|i|sub|sup|br|ul|ol|li|span|div|pre|code|table|thead|tbody|tr|td|th|blockquote|h3|h4|math|mrow|mi|mn|mo|msup|msub|msubsup|mfrac|msqrt|mroot|mtext|mstyle|mspace)>/i.test(sanitized);
+  const mathml = hasSafeMarkup ? sanitized : formatLatexMath(sanitized, formula.isBlock);
 
   return (
     `<${tag} class="${scrollClass}" role="${role}" aria-label="${escapeHtml(ariaLabel)}" tabindex="0" ` +
