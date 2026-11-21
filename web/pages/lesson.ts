@@ -23,6 +23,259 @@ const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: s
   sha256: 'a'.repeat(64)
 });
 
+
+function createMotionPlaneLesson(): Core1ALessonDefinition {
+  const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
+    A1: {
+      title: 'Phenomenon: Independence of Perpendicular Motions in 2D',
+      summary: 'Why horizontal and vertical kinematics evolve independently under gravity.',
+      bodyText: 'When a projectile is launched into a gravitational field, its motion is two-dimensional. Galileo\'s principle of superposition establishes that motion in the horizontal direction (with zero acceleration, ax = 0) proceeds completely independently of motion in the vertical direction (with constant downward acceleration, ay = -g).'
+    },
+    A2: {
+      title: 'Prerequisite Conventions: Cartesian Plane & Launch Angle θ',
+      summary: 'Orthogonal coordinate frames and initial velocity decomposition.',
+      bodyText: 'We fix origin O at the launch point with +x horizontal in the launch direction and +y vertically upward. An initial launch velocity vector v₀ at elevation angle θ resolves into components: v0x = v₀ cos θ and v0y = v₀ sin θ.'
+    },
+    A3: {
+      title: 'Representation Bridge: Vector Parallelogram to Parabolic Trajectory',
+      summary: 'Connecting velocity vector tangents to the parametric position curve.',
+      bodyText: 'At any elapsed time t, position coordinates are x(t) = (v₀ cos θ) t and y(t) = (v₀ sin θ) t - ½ g t². Eliminating parameter t yields the Cartesian trajectory equation: y(x) = x tan θ - [g / (2 v₀² cos² θ)] x², which is a strictly concave-down parabola.'
+    },
+    A4: {
+      title: 'Law & Conditions: Three Projectile Metric Equations',
+      summary: 'Formal derivation of Time of Flight (T), Maximum Height (H), and Range (R).',
+      bodyText: '1. Time of Flight: Setting y = 0 gives T = (2 v₀ sin θ) / g. 2. Maximum Height: Setting vy = 0 gives H = (v₀² sin² θ) / (2g). 3. Horizontal Range: R = v0x · T = (v₀² sin 2θ) / g. Range reaches its global maximum at θ = 45° where sin 2θ = 1.'
+    },
+    A5: {
+      title: 'Scientific Simulation: Launch Angle Optimization & Complementary Angles',
+      summary: 'Why complementary angles θ and (90° - θ) produce identical range R.',
+      bodyText: 'Because sin(2(90° - θ)) = sin(180° - 2θ) = sin 2θ, two complementary launch angles achieve the exact same horizontal range R. However, the steeper angle achieves a greater maximum height H and a longer time of flight T.'
+    },
+    A6: {
+      title: 'Reasoning Construction: Projectile Launch Calculation Worked Example',
+      summary: 'Step-by-step evaluation for a ball launched at 20 m/s at 30° elevation.',
+      bodyText: 'Given v₀ = 20 m/s, θ = 30°, g = 9.8 m/s². Horizontal velocity v0x = 20 cos 30° = 17.32 m/s; vertical velocity v0y = 20 sin 30° = 10.0 m/s. Time of flight T = 2(10)/9.8 = 2.04 s. Maximum height H = 10² / (2 * 9.8) = 5.10 m. Range R = 17.32 * 2.04 = 35.35 m.'
+    },
+    A7: {
+      title: 'Misconception Alert: Velocity at Apex is NOT Zero',
+      summary: 'At the apex, only the vertical component vy = 0; horizontal velocity v0x persists.',
+      bodyText: 'A frequent student misconception is stating that total velocity v = 0 at the highest point of a trajectory. In reality, while the vertical velocity component vy momentarily vanishes, the horizontal component vx = v₀ cos θ is non-zero and unaltered (neglecting air drag).'
+    },
+    A8: {
+      title: 'Boundary & Changed Demand: Launch from Elevated Cliff',
+      summary: 'Modifying boundary conditions when landing elevation y_final ≠ 0.',
+      bodyText: 'When a projectile is launched from height h above the ground, the landing condition becomes y(t) = -h, requiring solution of the quadratic -h = (v₀ sin θ) t - ½ g t². The optimal launch angle for maximum range drops below 45°: θ_opt = arcsin(1 / √(2 + 2gh/v₀²)).'
+    },
+    A9: {
+      title: 'Synthesis: Vector Invariants & Energy Conservation in 2D Flight',
+      summary: 'Unifying kinetic energy variation with gravitational potential in 2D.',
+      bodyText: 'Mechanical energy E = ½ m (vx² + vy²) + mgy is conserved at every point on the path. Because vx is constant, kinetic energy never falls to zero; its minimum value occurs at the apex: K_min = ½ m (v₀ cos θ)².'
+    }
+  };
+
+  return {
+    lessonRef: ref('LESSON', 'lesson:physics-motion-plane'),
+    constructionRef: ref('CONSTRUCTION', 'construction:physics-motion-plane'),
+    title: 'Motion in a Plane & Projectiles: Concept Construction (9 Units)',
+    subject: 'PHYSICS',
+    topicId: 'topic:motion-in-a-plane',
+    depthBadge: 'MEDIUM',
+    status: 'HOLD',
+    units: CORE1A_ORDERED_ROLES.map(role => ({
+      role,
+      title: roleTitles[role].title,
+      summary: roleTitles[role].summary,
+      bodyText: roleTitles[role].bodyText,
+      blockRefs: [ref('SOURCE', 'source:' + role)],
+      evidenceRefs: [ref('WARRANT', 'warrant:' + role)]
+    })),
+    anchors: [
+      {
+        level: 'FOUNDATION',
+        taskRef: ref('QUESTION', 'question:anchor:plane-foundation'),
+        title: 'Foundation Anchor: Maximum Height and Flight Time',
+        prompt: 'A projectile is launched with speed v₀ = 30 m/s at angle θ = 30° above horizontal. Find the time taken to reach the highest point and maximum height (g = 9.8 m/s²).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:plane-foundation'),
+        solutionSteps: [
+          '1. Vertical component: v_0y = v₀ sin 30° = 30 * 0.5 = 15 m/s.',
+          '2. Time to apex: t_apex = v_0y / g = 15 / 9.8 ≈ 1.53 s.',
+          '3. Max height: H = v_0y² / (2g) = 15² / (2 * 9.8) = 225 / 19.6 ≈ 11.48 m.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:foundation')]
+      },
+      {
+        level: 'CONNECTED',
+        taskRef: ref('QUESTION', 'question:anchor:plane-connected'),
+        title: 'Connected Anchor: Horizontal Range and Optimal Angle',
+        prompt: 'Prove that horizontal range is identical for complementary launch angles θ and (90° - θ).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:plane-connected'),
+        solutionSteps: [
+          '1. Range formula: R(θ) = (v₀² sin 2θ) / g.',
+          '2. Evaluate for (90° - θ): R(90° - θ) = (v₀² sin(2(90° - θ))) / g = (v₀² sin(180° - 2θ)) / g.',
+          '3. Trigonometric identity: sin(180° - 2θ) = sin 2θ.',
+          '4. Therefore R(90° - θ) = R(θ), establishing identical range.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:connected')]
+      },
+      {
+        level: 'ADVANCED',
+        taskRef: ref('QUESTION', 'question:anchor:plane-advanced'),
+        title: 'Advanced Anchor: Speed at Arbitrary Elevation',
+        prompt: 'A projectile is fired at speed v₀ and angle θ. Show that speed v at height y above launch satisfies v = √(v₀² - 2gy).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:plane-advanced'),
+        solutionSteps: [
+          '1. Conservation of mechanical energy: ½ m v₀² = ½ m v² + mgy.',
+          '2. Divide by ½ m: v₀² = v² + 2gy.',
+          '3. Isolate v: v = √(v₀² - 2gy), independent of launch angle θ.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:advanced')]
+      }
+    ],
+    modelConfig: {
+      modelId: 'PHYS-MODEL-PROJECTILE',
+      modelName: '2D Projectile Trajectory Simulator',
+      defaultParameters: { v0: 25, theta: 45 },
+      parameterBounds: { v0: { min: 5, max: 50 }, theta: { min: 10, max: 80 } },
+      qualitativePredictionPrompt: 'Predict how the maximum height H changes if launch angle θ increases from 30° to 60° at constant initial speed.',
+      predictionOptions: [
+        'Maximum height increases because the vertical velocity component v₀ sin θ is larger',
+        'Maximum height decreases because less time is spent in the air',
+        'Maximum height remains unchanged because total initial kinetic energy is constant'
+      ],
+      expectedPredictionIndex: 0,
+      observationNote: 'H = (v₀² sin² θ) / (2g). Since sin 60° > sin 30°, maximum height increases.'
+    },
+    synthesisTaskRef: ref('QUESTION', 'question:synthesis:motion-plane'),
+    synthesisTaskPrompt: 'Synthesize 2D parametric kinematics and mechanical energy conservation to predict impact coordinates on an inclined slope.',
+    freshTaskRef: ref('FRESH_TASK', 'fresh:plane-01')
+  };
+}
+
+function createFluidsLesson(): Core1ALessonDefinition {
+  const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
+    A1: {
+      title: 'Phenomenon: Hydrostatic Pressure & Normal Surface Thrust',
+      summary: 'Why static fluids exert force strictly perpendicular to bounding surfaces.',
+      bodyText: 'A static fluid cannot sustain shear stress. Any shear force would cause continuous deformation (flow). Consequently, the contact force exerted by a static fluid against any surface is strictly normal (perpendicular) to that surface. The scalar intensity of this force per unit area is pressure P = dF_perp / dA.'
+    },
+    A2: {
+      title: 'Prerequisite Conventions: Fluid Density & Pressure Reference Datums',
+      summary: 'Gauge pressure vs absolute pressure (P_abs = P_atm + P_gauge).',
+      bodyText: 'We define the standard atmospheric datum P₀ = 101.325 kPa at sea level. Absolute pressure P is the true thermodynamic pressure measured relative to a perfect vacuum (P = 0). Gauge pressure P_gauge is measured relative to local atmospheric pressure: P_gauge = P - P₀.'
+    },
+    A3: {
+      title: 'Representation Bridge: Free-Body Equilibrium of a Fluid Column',
+      summary: 'Balancing vertical forces on an infinitesimal cylindrical fluid element.',
+      bodyText: 'Consider a vertical cylindrical fluid parcel of cross-section A and height dh. Upward force on bottom is (P + dP)A, downward force on top is PA, and weight of fluid is dm·g = (ρ A dh) g. Vertical equilibrium requires (P + dP)A - PA - ρ g A dh = 0 => dP/dh = ρ g.'
+    },
+    A4: {
+      title: 'Law & Conditions: Hydrostatic Equation & Pascal\'s Principle',
+      summary: 'P = P₀ + ρ·g·h and undiminished pressure transmission in closed fluids.',
+      bodyText: 'For an incompressible fluid of uniform density ρ, integrating dP = ρ g dh yields P(h) = P₀ + ρ g h. Pressure depends solely on vertical depth h and fluid density, completely independent of vessel shape or cross-section (Hydrostatic Paradox). Pascal\'s Principle states that pressure applied to an enclosed incompressible fluid is transmitted equally in all directions.'
+    },
+    A5: {
+      title: 'Scientific Simulation: Archimedes\' Principle & Buoyant Vector Origin',
+      summary: 'Buoyant force F_b = ρ_fluid · g · V_sub emerges from vertical pressure gradient.',
+      bodyText: 'Because hydrostatic pressure increases with depth, the upward pressure force on the bottom of a submerged body exceeds the downward pressure force on its top. The net vertical resultant is the buoyant force: F_b = ∮ P n̂ dA = ρ_fluid · g · V_submerged, equal to the weight of displaced fluid.'
+    },
+    A6: {
+      title: 'Reasoning Construction: Hydrostatic Pressure & Buoyancy Worked Example',
+      summary: 'Step-by-step evaluation of gauge pressure and buoyant force on a submerged cube.',
+      bodyText: 'A 0.1 m edge cube (volume V = 10⁻³ m³) of mass m = 2.7 kg is submerged in fresh water (ρ = 1000 kg/m³) at depth h = 4 m. Gauge pressure at top surface: P = 1000 * 9.8 * 4 = 39.2 kPa. Buoyant force F_b = 1000 * 9.8 * 10⁻³ = 9.8 N. Object weight W = 2.7 * 9.8 = 26.46 N. Apparent weight in water = 26.46 - 9.8 = 16.66 N.'
+    },
+    A7: {
+      title: 'Misconception Alert: Buoyancy Depends on Volume, NOT Object Mass',
+      summary: 'Buoyant force depends solely on displaced fluid volume, not the object\'s density.',
+      bodyText: 'Students often incorrectly assume a heavier object experiences a larger buoyant force. In fact, buoyant force depends strictly on the volume of displaced fluid (F_b = ρ_fluid · g · V_sub) and fluid density, completely independent of the internal composition, mass, or density of the submerged body.'
+    },
+    A8: {
+      title: 'Boundary & Changed Demand: Flotation Equilibrium & Neutral Buoyancy',
+      summary: 'Conditions for sinking, floating, and neutral equilibrium.',
+      bodyText: 'An object immersed in fluid experiences net vertical force F_net = (ρ_obj - ρ_fluid) g V. If ρ_obj > ρ_fluid, it sinks; if ρ_obj = ρ_fluid, it is in neutral equilibrium at any depth; if ρ_obj < ρ_fluid, it rises until floating in equilibrium with submerged fraction V_sub / V_total = ρ_obj / ρ_fluid.'
+    },
+    A9: {
+      title: 'Synthesis: Fluid Dynamics & Continuity / Bernoulli Conservation',
+      summary: 'Transitioning from hydrostatics to dynamic flow: A₁v₁ = A₂v₂ and P + ½ρv² + ρgh = const.',
+      bodyText: 'For steady, incompressible, non-viscous streamline flow, mass conservation yields the Continuity Equation: A₁v₁ = A₂v₂ = constant volume flow rate Q. Energy conservation along a streamline yields Bernoulli\'s Equation: P + ½ ρ v² + ρ g h = constant.'
+    }
+  };
+
+  return {
+    lessonRef: ref('LESSON', 'lesson:physics-fluids'),
+    constructionRef: ref('CONSTRUCTION', 'construction:physics-fluids'),
+    title: 'Fluids & Archimedes Principle: Concept Construction (9 Units)',
+    subject: 'PHYSICS',
+    topicId: 'topic:fluids',
+    depthBadge: 'MEDIUM',
+    status: 'HOLD',
+    units: CORE1A_ORDERED_ROLES.map(role => ({
+      role,
+      title: roleTitles[role].title,
+      summary: roleTitles[role].summary,
+      bodyText: roleTitles[role].bodyText,
+      blockRefs: [ref('SOURCE', 'source:' + role)],
+      evidenceRefs: [ref('WARRANT', 'warrant:' + role)]
+    })),
+    anchors: [
+      {
+        level: 'FOUNDATION',
+        taskRef: ref('QUESTION', 'question:anchor:fluids-foundation'),
+        title: 'Foundation Anchor: Hydrostatic Depth Pressure',
+        prompt: 'Calculate the gauge and absolute pressure at a depth of 10 m in water (ρ = 1000 kg/m³, g = 9.8 m/s², P₀ = 101.3 kPa).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:fluids-foundation'),
+        solutionSteps: [
+          '1. Gauge pressure: P_gauge = ρ g h = 1000 * 9.8 * 10 = 98,000 Pa = 98.0 kPa.',
+          '2. Absolute pressure: P_abs = P₀ + P_gauge = 101.3 kPa + 98.0 kPa = 199.3 kPa.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:foundation')]
+      },
+      {
+        level: 'CONNECTED',
+        taskRef: ref('QUESTION', 'question:anchor:fluids-connected'),
+        title: 'Connected Anchor: Archimedes Buoyancy Balance',
+        prompt: 'A piece of metal weighs 50 N in air and 32 N when fully immersed in water. Find the volume of the metal (g = 9.8 m/s²).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:fluids-connected'),
+        solutionSteps: [
+          '1. Buoyant force: F_b = W_air - W_water = 50 N - 32 N = 18 N.',
+          '2. By Archimedes principle: F_b = ρ_water * g * V_sub.',
+          '3. Solve for volume: V = F_b / (ρ_water * g) = 18 / (1000 * 9.8) ≈ 1.84 × 10⁻³ m³ (1.84 L).'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:connected')]
+      },
+      {
+        level: 'ADVANCED',
+        taskRef: ref('QUESTION', 'question:anchor:fluids-advanced'),
+        title: 'Advanced Anchor: Hydraulic Lift Mechanical Advantage',
+        prompt: 'In a hydraulic press, the small piston has radius r₁ = 2 cm and the large piston has radius r₂ = 20 cm. Find the force F₂ produced when F₁ = 150 N is applied.',
+        solutionRef: ref('SOLUTION', 'solution:anchor:fluids-advanced'),
+        solutionSteps: [
+          '1. Pascal\'s Principle: P₁ = P₂ => F₁ / A₁ = F₂ / A₂.',
+          '2. Area ratio: A₂ / A₁ = (r₂ / r₁)² = (20 / 2)² = 10² = 100.',
+          '3. Output force: F₂ = F₁ * (A₂ / A₁) = 150 N * 100 = 15,000 N (15 kN).'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:advanced')]
+      }
+    ],
+    modelConfig: {
+      modelId: 'PHYS-MODEL-FLUIDS',
+      modelName: 'Hydrostatic Pressure & Buoyancy Model',
+      defaultParameters: { depth: 5 },
+      parameterBounds: { depth: { min: 0, max: 25 } },
+      qualitativePredictionPrompt: 'Predict whether the buoyant force on a submerged solid increases, decreases, or stays constant as depth increases from 2 m to 10 m.',
+      predictionOptions: [
+        'Buoyant force stays constant because displaced fluid volume and fluid density do not change with depth in an incompressible liquid',
+        'Buoyant force increases because hydrostatic pressure increases with depth',
+        'Buoyant force decreases because gravity is weaker deeper down'
+      ],
+      expectedPredictionIndex: 0,
+      observationNote: 'F_b = ρ g V_sub is independent of depth h for an incompressible fluid.'
+    },
+    synthesisTaskRef: ref('QUESTION', 'question:synthesis:fluids'),
+    synthesisTaskPrompt: 'Synthesize Pascal\'s Principle and Bernoulli\'s flow law to deduce the pressure change in a converging constriction pipe.',
+    freshTaskRef: ref('FRESH_TASK', 'fresh:fluids-01')
+  };
+}
+
 function createGravitationLesson(): Core1ALessonDefinition {
   const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
     A1: {
@@ -188,9 +441,10 @@ function createGravitationLesson(): Core1ALessonDefinition {
 }
 
 export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition {
-  if (topicCode && topicCode.toLowerCase().includes('grav')) {
-    return createGravitationLesson();
-  }
+  const code = (topicCode || '').toLowerCase();
+  if (code.includes('grav')) return createGravitationLesson();
+  if (code.includes('plane') || code.includes('projectile')) return createMotionPlaneLesson();
+  if (code.includes('fluid') || code.includes('thrust') || code.includes('pressure')) return createFluidsLesson();
   const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
     A1: {
       title: 'Phenomenon: Work, Direction & Energy Transfer',

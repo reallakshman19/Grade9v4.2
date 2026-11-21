@@ -690,7 +690,7 @@ export function mountChemistryCurriculum(
                 <!-- Graphic Demonstration (if figure applies) -->
                 ${figName ? `
                   <div style="margin-bottom:14px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;padding:6px;text-align:center;">
-                    <img src="./figures/${figName}" alt="Scientific Demonstration: ${escapeHtml(figName)}" style="max-width:100%;max-height:160px;object-fit:contain;display:block;margin:0 auto;" loading="lazy"/>
+                    <img src="./figures/${figName}" alt="Scientific Demonstration: ${escapeHtml(figName)}" style="max-width:100%;max-height:160px;object-fit:contain;display:block;margin:0 auto;" onerror="this.parentElement.style.display='none';" loading="lazy"/>
                     <div style="font-size:0.78rem;color:#64748b;margin-top:4px;">Demonstration Figure · ${escapeHtml(figName)}</div>
                   </div>
                 ` : ''}

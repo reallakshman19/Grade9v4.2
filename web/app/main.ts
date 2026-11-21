@@ -156,7 +156,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   if (match.type === 'TOPIC' || match.type === 'TOPIC_TAB') {
     const subjId = match.params.subjectId?.toLowerCase() || '';
     const topId = match.params.topicId?.toLowerCase() || '';
-    const activeTab = match.params.tab || 'questions';
+    const activeTab = match.params.tab || match.query?.tab || 'questions';
 
     if (subjId === 'physics' || subjId === 'phys') {
       let topicDetail: TopicDetail | null = null;
@@ -164,8 +164,8 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       else if (topId.includes('fluid') || topId.includes('thrust') || topId.includes('pressure')) topicDetail = PHY_FLUIDS_TOPIC;
       else if (topId.includes('nlm') || topId.includes('newton') || topId.includes('force')) topicDetail = PHY_NLM_TOPIC;
       else if (topId.includes('vec')) topicDetail = PHY_VECTORS_TOPIC;
-      else if (topId.includes('motion') || topId.includes('plane') || topId.includes('kin')) topicDetail = PHY_MOTION_PLANE_TOPIC;
       else if (topId.includes('circular') || topId.includes('bank')) topicDetail = PHY_CIRCULAR_BANKING_TOPIC;
+      else if (topId.includes('motion') || topId.includes('plane') || topId.includes('kinematic')) topicDetail = PHY_MOTION_PLANE_TOPIC;
       else if (topId.includes('grav')) topicDetail = PHY_GRAVITATION_TOPIC;
       else if (topId.includes('wpe') || topId.includes('work') || topId.includes('energy')) topicDetail = WPE_PHYSICS_TOPIC;
 

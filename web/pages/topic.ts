@@ -1644,6 +1644,580 @@ function mountGravitationLabsWorkbench(container: HTMLElement): { dispose: () =>
 }
 
 
+
+export function mountFluidsLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  let depthM = 5.0;
+  let density = 1000; // kg/m3 (Fresh Water)
+  let subVolM3 = 0.05; // m3
+  const g = 9.8;
+  const P0 = 101.325; // kPa
+
+  const renderWorkbench = () => {
+    const pGauge = (density * g * depthM) / 1000; // kPa
+    const pAbs = P0 + pGauge; // kPa
+    const fbN = density * g * subVolM3; // N
+    const blockDensity = 2700; // kg/m3 (Aluminium)
+    const blockMass = blockDensity * subVolM3; // kg
+    const blockWeight = blockMass * g; // N
+    const fApparent = Math.max(0, blockWeight - fbN);
+
+    // SVG visual coordinates
+    const fluidH = 180;
+    const blockDepthY = 60 + Math.min(120, (depthM / 25) * 120);
+
+    container.innerHTML = `
+      <div class="g9-labs-workbench" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">Hydrostatic Pressure &amp; Archimedes Buoyancy Workbench</h2>
+            <p style="margin:2px 0 0;font-size:0.95rem;color:#64748b;">Fluid statics: P = P₀ + ρ·g·h | Buoyant Force F_b = ρ_fluid · g · V_sub</p>
+          </div>
+          <span style="font-size:0.875rem;font-weight:700;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">A50 / A54 Model</span>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Fluid Column &amp; Submerged Body Equilibrium</h3>
+            <div style="display:flex;gap:12px;font-size:0.875rem;font-weight:600;">
+              <span style="color:#0284c7;">● Depth h = ${depthM.toFixed(1)} m</span>
+              <span style="color:#10b981;">▲ Buoyancy F_b = ${fbN.toFixed(1)} N</span>
+              <span style="color:#ef4444;">▼ Weight W = ${blockWeight.toFixed(1)} N</span>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 600 240" style="width:100%;max-height:260px;background:#0f172a;border-radius:6px;display:block;">
+            <!-- Fluid Tank -->
+            <rect x="100" y="40" width="400" height="180" fill="#0369a1" fill-opacity="0.35" stroke="#38bdf8" stroke-width="2" rx="4"/>
+            <!-- Free Surface -->
+            <line x1="100" y1="40" x2="500" y2="40" stroke="#38bdf8" stroke-width="3" stroke-dasharray="4,2"/>
+            <text x="510" y="45" fill="#38bdf8" font-size="12" font-family="sans-serif">P₀ = 101.3 kPa</text>
+
+            <!-- Depth Ruler Line -->
+            <line x1="130" y1="40" x2="130" y2="${blockDepthY}" stroke="#facc15" stroke-width="2" stroke-dasharray="3,3"/>
+            <text x="140" y="${(40 + blockDepthY) / 2}" fill="#facc15" font-size="12" font-weight="700" font-family="sans-serif">h = ${depthM.toFixed(1)} m</text>
+
+            <!-- Submerged Block -->
+            <rect x="270" y="${blockDepthY - 20}" width="60" height="40" fill="#94a3b8" stroke="#f1f5f9" stroke-width="2" rx="4"/>
+            <text x="300" y="${blockDepthY + 4}" fill="#0f172a" font-size="11" font-weight="800" text-anchor="middle" font-family="sans-serif">V_sub</text>
+
+            <!-- Vectors -->
+            <line x1="300" y1="${blockDepthY - 20}" x2="300" y2="${blockDepthY - 20 - Math.min(50, fbN / 50)}" stroke="#10b981" stroke-width="3" marker-end="url(#arrowGreenF)"/>
+            <line x1="300" y1="${blockDepthY + 20}" x2="300" y2="${blockDepthY + 20 + Math.min(50, blockWeight / 50)}" stroke="#ef4444" stroke-width="3" marker-end="url(#arrowRedF)"/>
+
+            <defs>
+              <marker id="arrowGreenF" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+              </marker>
+              <marker id="arrowRedF" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="fluids-depth-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Submersion Depth (h):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${depthM.toFixed(1)} m</span>
+            </div>
+            <input type="range" id="fluids-depth-slider" min="0" max="25" step="0.5" value="${depthM}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>0 m (Surface)</span>
+              <span>12.5 m</span>
+              <span>25.0 m</span>
+            </div>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="fluids-density-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Fluid Density (ρ):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${density.toLocaleString()} kg/m³</span>
+            </div>
+            <input type="range" id="fluids-density-slider" min="800" max="13600" step="100" value="${density}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>800 (Oil)</span>
+              <span>1,000 (Water)</span>
+              <span>13,600 (Mercury)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">GAUGE PRESSURE</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${pGauge.toFixed(2)} kPa</div>
+            <span style="font-size:0.8rem;color:#0284c7;">P_gauge = ρ · g · h</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">ABSOLUTE PRESSURE</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${pAbs.toFixed(2)} kPa</div>
+            <span style="font-size:0.8rem;color:#0284c7;">P_abs = P₀ + ρ·g·h</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">BUOYANT FORCE</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${fbN.toFixed(1)} N</div>
+            <span style="font-size:0.8rem;color:#0284c7;">F_b = ρ · g · V_sub</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">APPARENT WEIGHT</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${fApparent.toFixed(1)} N</div>
+            <span style="font-size:0.8rem;color:#0284c7;">W_app = W - F_b</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#fluids-depth-slider')?.addEventListener('input', (ev) => {
+      depthM = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+    container.querySelector('#fluids-density-slider')?.addEventListener('input', (ev) => {
+      density = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+  };
+
+  renderWorkbench();
+  return { dispose: () => {} };
+}
+
+export function mountMotion1dLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  let u = 10.0; // m/s
+  let a = -2.5; // m/s2
+  let t = 4.0; // s
+
+  const renderWorkbench = () => {
+    const v = u + a * t;
+    const s = u * t + 0.5 * a * t * t;
+    const vSquared = Math.max(0, u * u + 2 * a * s);
+    const specWork = 0.5 * (v * v - u * u);
+
+    // SVG coordinates
+    const trackWidth = 500;
+    const cartX = 300 + Math.max(-250, Math.min(250, s * 4));
+
+    container.innerHTML = `
+      <div class="g9-labs-workbench" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">1D Constant Acceleration Kinematics Workbench</h2>
+            <p style="margin:2px 0 0;font-size:0.95rem;color:#64748b;">Rectilinear motion: v = u + a·t | s = u·t + ½·a·t² | v² = u² + 2·a·s</p>
+          </div>
+          <span style="font-size:0.875rem;font-weight:700;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">A50 / A54 Model</span>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Track Position &amp; Instantaneous Velocity Vector</h3>
+            <div style="display:flex;gap:12px;font-size:0.875rem;font-weight:600;">
+              <span style="color:#0284c7;">● Displacement s = ${s.toFixed(2)} m</span>
+              <span style="color:#10b981;">➔ Velocity v = ${v.toFixed(2)} m/s</span>
+              <span style="color:#ec4899;">➔ Acceleration a = ${a.toFixed(2)} m/s²</span>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 600 200" style="width:100%;max-height:220px;background:#0f172a;border-radius:6px;display:block;">
+            <!-- Ground Track -->
+            <line x1="50" y1="150" x2="550" y2="150" stroke="#475569" stroke-width="4"/>
+            <!-- Track Markings -->
+            <line x1="300" y1="140" x2="300" y2="160" stroke="#facc15" stroke-width="2"/>
+            <text x="300" y="175" fill="#facc15" font-size="11" font-weight="700" text-anchor="middle" font-family="sans-serif">x = 0</text>
+            <line x1="175" y1="145" x2="175" y2="155" stroke="#64748b" stroke-width="1"/>
+            <line x1="425" y1="145" x2="425" y2="155" stroke="#64748b" stroke-width="1"/>
+
+            <!-- Moving Cart -->
+            <rect x="${cartX - 30}" y="115" width="60" height="30" fill="#0284c7" stroke="#38bdf8" stroke-width="2" rx="4"/>
+            <circle cx="${cartX - 18}" cy="148" r="5" fill="#f1f5f9"/>
+            <circle cx="${cartX + 18}" cy="148" r="5" fill="#f1f5f9"/>
+            <text x="${cartX}" y="134" fill="#ffffff" font-size="11" font-weight="800" text-anchor="middle" font-family="sans-serif">m = 1 kg</text>
+
+            <!-- Velocity Vector -->
+            ${v !== 0 ? `
+              <line x1="${cartX}" y1="100" x2="${cartX + Math.max(-80, Math.min(80, v * 4))}" y2="100" stroke="#10b981" stroke-width="3" marker-end="url(#arrowGreenM)"/>
+              <text x="${cartX + (v > 0 ? 15 : -15)}" y="92" fill="#10b981" font-size="11" font-weight="700" text-anchor="middle" font-family="sans-serif">v = ${v.toFixed(1)} m/s</text>
+            ` : ''}
+
+            <defs>
+              <marker id="arrowGreenM" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="m1d-u-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Initial Velocity (u):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${u.toFixed(1)} m/s</span>
+            </div>
+            <input type="range" id="m1d-u-slider" min="-20" max="20" step="1" value="${u}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>-20 m/s</span>
+              <span>0 m/s</span>
+              <span>+20 m/s</span>
+            </div>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="m1d-a-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Acceleration (a):</label>
+              <span style="font-weight:800;color:#ec4899;font-size:1.05rem;">${a.toFixed(1)} m/s²</span>
+            </div>
+            <input type="range" id="m1d-a-slider" min="-10" max="10" step="0.5" value="${a}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>-10 m/s²</span>
+              <span>0 m/s²</span>
+              <span>+10 m/s²</span>
+            </div>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="m1d-t-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Time Elapsed (t):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${t.toFixed(1)} s</span>
+            </div>
+            <input type="range" id="m1d-t-slider" min="0" max="10" step="0.2" value="${t}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>0 s</span>
+              <span>5 s</span>
+              <span>10 s</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">FINAL VELOCITY</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${v.toFixed(2)} m/s</div>
+            <span style="font-size:0.8rem;color:#0284c7;">v = u + a · t</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">DISPLACEMENT</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${s.toFixed(2)} m</div>
+            <span style="font-size:0.8rem;color:#0284c7;">s = u·t + ½·a·t²</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">WORK PER UNIT MASS</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${specWork.toFixed(2)} J/kg</div>
+            <span style="font-size:0.8rem;color:#0284c7;">Δk = ½(v² - u²)</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">DIRECTION OF MOTION</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${v > 0 ? 'Forward (+x)' : v < 0 ? 'Backward (-x)' : 'Instantaneous Rest'}</div>
+            <span style="font-size:0.8rem;color:#0284c7;">Sign of v(t)</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#m1d-u-slider')?.addEventListener('input', (ev) => {
+      u = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+    container.querySelector('#m1d-a-slider')?.addEventListener('input', (ev) => {
+      a = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+    container.querySelector('#m1d-t-slider')?.addEventListener('input', (ev) => {
+      t = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+  };
+
+  renderWorkbench();
+  return { dispose: () => {} };
+}
+
+export function mountNlmLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  let m1 = 4.0; // kg
+  let m2 = 6.0; // kg
+  const g = 9.8;
+
+  const renderWorkbench = () => {
+    const totalMass = m1 + m2;
+    const netDrivingForce = Math.abs(m2 - m1) * g;
+    const accel = (Math.abs(m2 - m1) / totalMass) * g;
+    const tension = (2 * m1 * m2 * g) / totalMass;
+
+    // SVG coordinates
+    const leftY = 80 + (m1 > m2 ? 40 : -20);
+    const rightY = 80 + (m2 > m1 ? 40 : -20);
+
+    container.innerHTML = `
+      <div class="g9-labs-workbench" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">Newton's Second Law &amp; Atwood Machine Workbench</h2>
+            <p style="margin:2px 0 0;font-size:0.95rem;color:#64748b;">Pulley Dynamics: a = |m₂ - m₁|·g / (m₁ + m₂) | Tension T = 2·m₁·m₂·g / (m₁ + m₂)</p>
+          </div>
+          <span style="font-size:0.875rem;font-weight:700;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">A50 / A54 Model</span>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Pulley Force Balance &amp; Accelerating Inertia</h3>
+            <div style="display:flex;gap:12px;font-size:0.875rem;font-weight:600;">
+              <span style="color:#0284c7;">● String Tension T = ${tension.toFixed(2)} N</span>
+              <span style="color:#10b981;">➔ Accel a = ${accel.toFixed(2)} m/s²</span>
+              <span style="color:#ef4444;">▼ Net Driving Force = ${netDrivingForce.toFixed(2)} N</span>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 600 240" style="width:100%;max-height:260px;background:#0f172a;border-radius:6px;display:block;">
+            <!-- Ceiling Support -->
+            <rect x="250" y="10" width="100" height="8" fill="#475569"/>
+            <line x1="300" y1="18" x2="300" y2="40" stroke="#94a3b8" stroke-width="4"/>
+
+            <!-- Pulley Disc -->
+            <circle cx="300" cy="55" r="25" fill="#334155" stroke="#38bdf8" stroke-width="3"/>
+            <circle cx="300" cy="55" r="6" fill="#f1f5f9"/>
+
+            <!-- Suspended Strings -->
+            <line x1="275" y1="55" x2="275" y2="${leftY}" stroke="#e2e8f0" stroke-width="2"/>
+            <line x1="325" y1="55" x2="325" y2="${rightY}" stroke="#e2e8f0" stroke-width="2"/>
+
+            <!-- Left Mass (m1) -->
+            <rect x="255" y="${leftY}" width="40" height="35" fill="#0284c7" stroke="#38bdf8" stroke-width="2" rx="4"/>
+            <text x="275" y="${leftY + 22}" fill="#ffffff" font-size="11" font-weight="800" text-anchor="middle" font-family="sans-serif">m₁=${m1}k</text>
+            <!-- Tension & Gravity Vectors for m1 -->
+            <line x1="275" y1="${leftY}" x2="275" y2="${leftY - 25}" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowCyanNLM)"/>
+            <line x1="275" y1="${leftY + 35}" x2="275" y2="${leftY + 35 + Math.min(40, m1 * 4)}" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrowRedNLM)"/>
+
+            <!-- Right Mass (m2) -->
+            <rect x="305" y="${rightY}" width="40" height="35" fill="#0369a1" stroke="#38bdf8" stroke-width="2" rx="4"/>
+            <text x="325" y="${rightY + 22}" fill="#ffffff" font-size="11" font-weight="800" text-anchor="middle" font-family="sans-serif">m₂=${m2}k</text>
+            <!-- Tension & Gravity Vectors for m2 -->
+            <line x1="325" y1="${rightY}" x2="325" y2="${rightY - 25}" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowCyanNLM)"/>
+            <line x1="325" y1="${rightY + 35}" x2="325" y2="${rightY + 35 + Math.min(40, m2 * 4)}" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrowRedNLM)"/>
+
+            <defs>
+              <marker id="arrowCyanNLM" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+              </marker>
+              <marker id="arrowRedNLM" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="nlm-m1-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Mass 1 (m₁):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${m1.toFixed(1)} kg</span>
+            </div>
+            <input type="range" id="nlm-m1-slider" min="1" max="20" step="0.5" value="${m1}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>1 kg</span>
+              <span>10 kg</span>
+              <span>20 kg</span>
+            </div>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="nlm-m2-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Mass 2 (m₂):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${m2.toFixed(1)} kg</span>
+            </div>
+            <input type="range" id="nlm-m2-slider" min="1" max="20" step="0.5" value="${m2}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>1 kg</span>
+              <span>10 kg</span>
+              <span>20 kg</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">SYSTEM ACCELERATION</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${accel.toFixed(2)} m/s²</div>
+            <span style="font-size:0.8rem;color:#0284c7;">a = |m₂-m₁|·g / (m₁+m₂)</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">STRING TENSION</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${tension.toFixed(2)} N</div>
+            <span style="font-size:0.8rem;color:#0284c7;">T = 2·m₁·m₂·g / (m₁+m₂)</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">TOTAL INERTIA</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${totalMass.toFixed(1)} kg</div>
+            <span style="font-size:0.8rem;color:#0284c7;">M_tot = m₁ + m₂</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">MOTION REGIME</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${m1 === m2 ? 'Static Equilibrium (a=0)' : m2 > m1 ? 'm₂ Descends, m₁ Ascends' : 'm₁ Descends, m₂ Ascends'}</div>
+            <span style="font-size:0.8rem;color:#0284c7;">Unbalanced torque</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#nlm-m1-slider')?.addEventListener('input', (ev) => {
+      m1 = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+    container.querySelector('#nlm-m2-slider')?.addEventListener('input', (ev) => {
+      m2 = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+  };
+
+  renderWorkbench();
+  return { dispose: () => {} };
+}
+
+export function mountCircularBankingLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  let R = 80; // m
+  let thetaDeg = 20; // degrees
+  let mu = 0.20;
+  const g = 9.8;
+
+  const renderWorkbench = () => {
+    const thetaRad = (thetaDeg * Math.PI) / 180;
+    const tanTheta = Math.tan(thetaRad);
+    const vDesignMs = Math.sqrt(R * g * tanTheta);
+    const vDesignKmh = vDesignMs * 3.6;
+
+    const denomMax = 1 - mu * tanTheta;
+    const vMaxMs = denomMax > 0 ? Math.sqrt(R * g * ((tanTheta + mu) / denomMax)) : Infinity;
+    const vMaxKmh = Number.isFinite(vMaxMs) ? vMaxMs * 3.6 : 999;
+
+    const denomMin = 1 + mu * tanTheta;
+    const vMinMs = tanTheta > mu ? Math.sqrt(R * g * ((tanTheta - mu) / denomMin)) : 0;
+    const vMinKmh = vMinMs * 3.6;
+
+    container.innerHTML = `
+      <div class="g9-labs-workbench" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">Banked Roadway &amp; Centripetal Dynamics Workbench</h2>
+            <p style="margin:2px 0 0;font-size:0.95rem;color:#64748b;">Circular motion on banked curve: v_design = √(R·g·tanθ) | Friction threshold balance</p>
+          </div>
+          <span style="font-size:0.875rem;font-weight:700;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">A50 / A54 Model</span>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Incline Geometry &amp; Vector Equilibrium</h3>
+            <div style="display:flex;gap:12px;font-size:0.875rem;font-weight:600;">
+              <span style="color:#0284c7;">● Design Speed = ${vDesignKmh.toFixed(1)} km/h</span>
+              <span style="color:#10b981;">▲ Max Safe = ${vMaxKmh > 500 ? 'No Upper Limit' : vMaxKmh.toFixed(1) + ' km/h'}</span>
+              <span style="color:#f59e0b;">▼ Min Safe = ${vMinKmh.toFixed(1)} km/h</span>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 600 220" style="width:100%;max-height:240px;background:#0f172a;border-radius:6px;display:block;">
+            <!-- Banked Road Wedge -->
+            <polygon points="100,180 500,180 500,${180 - Math.min(100, Math.tan(thetaRad) * 400)}" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+            <!-- Angle Arc -->
+            <path d="M 160,180 A 60,60 0 0,0 ${100 + 60 * Math.cos(thetaRad)},${180 - 60 * Math.sin(thetaRad)}" fill="none" stroke="#facc15" stroke-width="2"/>
+            <text x="175" y="172" fill="#facc15" font-size="12" font-weight="700" font-family="sans-serif">θ = ${thetaDeg}°</text>
+
+            <!-- Vehicle on Incline -->
+            <g transform="translate(320, ${180 - Math.tan(thetaRad) * 220}) rotate(${-thetaDeg})">
+              <rect x="-25" y="-20" width="50" height="20" fill="#0284c7" stroke="#38bdf8" stroke-width="2" rx="3"/>
+              <!-- Normal Force Vector (perpendicular to road) -->
+              <line x1="0" y1="-20" x2="0" y2="-70" stroke="#10b981" stroke-width="3" marker-end="url(#arrowGreenCB)"/>
+              <text x="5" y="-55" fill="#10b981" font-size="11" font-weight="700" font-family="sans-serif">N</text>
+            </g>
+
+            <defs>
+              <marker id="arrowGreenCB" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="cb-r-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Curve Radius (R):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${R} m</span>
+            </div>
+            <input type="range" id="cb-r-slider" min="20" max="200" step="5" value="${R}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>20 m (Tight)</span>
+              <span>100 m</span>
+              <span>200 m (Highway)</span>
+            </div>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="cb-theta-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Banking Angle (θ):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${thetaDeg}°</span>
+            </div>
+            <input type="range" id="cb-theta-slider" min="5" max="45" step="1" value="${thetaDeg}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>5° (Gentle)</span>
+              <span>20°</span>
+              <span>45° (Steep)</span>
+            </div>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+              <label for="cb-mu-slider" style="font-weight:700;color:#0f172a;font-size:0.95rem;">Friction Coeff (μ):</label>
+              <span style="font-weight:800;color:#0284c7;font-size:1.05rem;">${mu.toFixed(2)}</span>
+            </div>
+            <input type="range" id="cb-mu-slider" min="0" max="0.8" step="0.05" value="${mu}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;cursor:pointer;">
+            <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#64748b;margin-top:4px;">
+              <span>0.00 (Ice)</span>
+              <span>0.20 (Wet)</span>
+              <span>0.80 (Dry)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">DESIGN SPEED (NO FRICTION)</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${vDesignKmh.toFixed(1)} km/h</div>
+            <span style="font-size:0.8rem;color:#0284c7;">v_opt = √(R·g·tanθ)</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">MAX SAFE SPEED</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${vMaxKmh > 500 ? 'Unlimited' : vMaxKmh.toFixed(1) + ' km/h'}</div>
+            <span style="font-size:0.8rem;color:#0284c7;">v_max with static friction</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">MINIMUM SAFE SPEED</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">${vMinKmh.toFixed(1)} km/h</div>
+            <span style="font-size:0.8rem;color:#0284c7;">Prevents inward sliding</span>
+          </div>
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:1rem;">
+            <span style="font-size:0.8rem;font-weight:700;color:#64748b;">CENTRIPETAL FORCE PROVIDER</span>
+            <div style="font-size:1.25rem;font-weight:800;color:#0f172a;margin:4px 0;">N · sin(θ)</div>
+            <span style="font-size:0.8rem;color:#0284c7;">Horizontal normal component</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#cb-r-slider')?.addEventListener('input', (ev) => {
+      R = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+    container.querySelector('#cb-theta-slider')?.addEventListener('input', (ev) => {
+      thetaDeg = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+    container.querySelector('#cb-mu-slider')?.addEventListener('input', (ev) => {
+      mu = Number((ev.target as HTMLInputElement).value);
+      renderWorkbench();
+    });
+  };
+
+  renderWorkbench();
+  return { dispose: () => {} };
+}
+
+
 export function mountTopicWorkspace(
   root: HTMLElement,
   controller: TopicScreenController,
@@ -3070,13 +3644,115 @@ export function mountTopicWorkspace(
   // -------------------------------------------------------------------------
   const mountLabsTab = (container: HTMLElement) => {
     const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
+    const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
+    const isChemTopic = topic.subjectCode.toUpperCase() === 'CHEMISTRY' || topic.subjectId.toLowerCase() === 'chemistry';
+
+    // 1. Chemistry Labs
+    if (isChemTopic) {
+      if (topic.code === 'CHEM_GASES') {
+        const w = mountGasLawsWorkbench(container);
+        activeSubDisposer = () => w.dispose();
+        return;
+      }
+      if (topic.code === 'CHEM_BONDING') {
+        const w = mountChemicalBondingWorkbench(container);
+        activeSubDisposer = () => w.dispose();
+        return;
+      }
+      if (topic.code === 'CHEM_REDOX') {
+        const pwc = new PortableWorkbenchController(REDOX_ELECTRON_EQUIVALENCE_PACKAGE);
+        const m = pwc.mount(container);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+      if (topic.code === 'CHEM_STOICHIOMETRY') {
+        const tc = new TitrationSimulatorController();
+        const m = mountTitrationSimulator(container, tc);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+    }
+
+    // 2. Mathematics Labs
+    if (isMathTopic) {
+      if (topic.code === 'RIEMANN') {
+        const pwc = new PortableWorkbenchController(RIEMANN_SUMS_PACKAGE);
+        const m = pwc.mount(container);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+      if (topic.code === 'POLYNOMIALS') {
+        const pwc = new PortableWorkbenchController(LONG_DIVISION_PACKAGE);
+        const m = pwc.mount(container);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+      if (topic.code === 'EUCLID') {
+        const cc = new CirclesMasterController();
+        const m = mountCirclesMaster(container, cc, onNavigate);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+      if (topic.code === 'VECTORS') {
+        const vc = new VectorAlgebraController();
+        const m = mountVectorAlgebraWorkbench(container, vc, onNavigate);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+      if (topic.code === 'IMO_GRADE9') {
+        const ic = new ImoMasterController();
+        const m = mountImoMaster(container, ic, onNavigate);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+      if (topic.code === 'COORD_GEOM' || topic.code === 'LINEAR_EQ' || topic.code === 'THEORY_EQUATIONS') {
+        const lc = new LinearCoordinatesController();
+        const m = mountLinearCoordinatesWorkbench(container, lc, onNavigate);
+        activeSubDisposer = () => m.dispose();
+        return;
+      }
+    }
+
+    // 3. Physics Labs
     if (topic.code === 'GRAVITATION' || topic.id === 'gravitation') {
       const w = mountGravitationLabsWorkbench(container);
       activeSubDisposer = () => w.dispose();
       return;
     }
+    if (topic.code === 'FLUIDS' || topic.id === 'fluids') {
+      const w = mountFluidsLabsWorkbench(container);
+      activeSubDisposer = () => w.dispose();
+      return;
+    }
+    if (topic.code === 'MOTION_1D' || topic.id === 'motion-1d') {
+      const w = mountMotion1dLabsWorkbench(container);
+      activeSubDisposer = () => w.dispose();
+      return;
+    }
+    if (topic.code === 'NLM' || topic.id === 'nlm') {
+      const w = mountNlmLabsWorkbench(container);
+      activeSubDisposer = () => w.dispose();
+      return;
+    }
+    if (topic.code === 'CIRCULAR_BANKING' || topic.id === 'circular-banking') {
+      const w = mountCircularBankingLabsWorkbench(container);
+      activeSubDisposer = () => w.dispose();
+      return;
+    }
+    if (topic.code === 'MOTION_PLANE' || topic.id === 'motion-plane') {
+      const pwc = new PortableWorkbenchController(MOTION_SHARED_CLOCK_PACKAGE);
+      const m = pwc.mount(container);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
+    if (topic.code === 'VECTORS') {
+      const vc = new VectorAlgebraController();
+      const m = mountVectorAlgebraWorkbench(container, vc, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
+    }
 
-    // Physics Harmonic Potential Well
+    // Default Physics Topic: WPE Harmonic Potential Well
     const adapter = new HarmonicEnergyWellAdapter();
     const result = adapter.evaluate({ x: energyWellDisplacement });
 
