@@ -8,7 +8,7 @@ it('A37 Golden actual shared-store QRT/search/source/transfer/return/reattempt/p
  const browser=await chromium.launch({headless:true});try{
   const page=await browser.newPage({viewport:{width:1600,height:1000}}),origin='http://127.0.0.1:'+addr.port,requests:string[]=[],responses:number[]=[];
   page.on('request',r=>{if(r.url().startsWith(origin+'/'))requests.push(r.url());});page.on('response',r=>{if(r.url().startsWith(origin+'/'))responses.push(r.status());});
-  await page.goto(origin+'/');
+  await page.goto(origin+'/test-host.html');
   await page.evaluate(async({wire,path})=>{const {mountGolden}=await import(path);(window as any).golden=await mountGolden(document.getElementById('app')!,wire,'golden-'+Date.now());},{wire,path:'/ @fs/'.replace(' ','')+process.cwd()+'/tests/fixtures/a37-golden.ts'});
   await page.locator('[data-coord="APPLY:D2"]').click();await page.getByRole('button',{name:'Open main question'}).click();await page.getByText('Source question',{exact:true}).waitFor();
   await page.evaluate(()=> (window as any).golden.openSearch());
