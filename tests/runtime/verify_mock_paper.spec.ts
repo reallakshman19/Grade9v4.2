@@ -138,6 +138,34 @@ test('NSEJS Mock Paper 1 Integration Verification', async (t) => {
 
       const postSubmit = await page.locator('.paper-workspace').textContent();
       assert.match(postSubmit || '', /Paper Submitted Successfully|Paper Durably Committed/);
+
+      // Verify Scorecard presence and metrics
+      const scorecard = page.locator('.paper-scorecard-section');
+      await scorecard.waitFor({ timeout: 5000 });
+      assert.equal(await scorecard.count(), 1, 'Scorecard section must render after submission');
+
+      const scorecardText = await scorecard.textContent();
+      assert.match(scorecardText || '', /Examination Result & Scorecard/);
+      assert.match(scorecardText || '', /Total Score/);
+      assert.match(scorecardText || '', /9 \/ 180/); // Q1 (+3), Q21 (+3), Q41 (+3) -> 9 marks
+      assert.match(scorecardText || '', /Correct/);
+      assert.match(scorecardText || '', /3 \/ 60/);
+      assert.match(scorecardText || '', /57/); // 57 unattempted
+      assert.match(scorecardText || '', /100\.0%/);
+      assert.match(scorecardText || '', /3 Attempted/);
+
+      // Verify step-by-step solution is disclosed after submission
+      const solutionDrawer = page.locator('.part-solution-drawer');
+      await solutionDrawer.waitFor({ timeout: 5000 });
+      assert.equal(await solutionDrawer.count(), 1, 'Solution drawer must be visible post-commit');
+      const solutionText = await solutionDrawer.textContent();
+      assert.match(solutionText || '', /Step-by-Step Pedagogical Solution & Scientific Derivation/);
+
+      // Save screenshot of the scorecard and solution view for user verification
+      await page.screenshot({
+        path: 'C:/Users/reall/.gemini/antigravity/brain/95e4fa99-ff46-4c91-9551-1d2731cf1176/post_submit_scorecard.png',
+        fullPage: true,
+      });
     } finally {
       await browser.close();
     }

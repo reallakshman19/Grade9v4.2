@@ -11,6 +11,7 @@ import {Session} from '../runtime/session.ts';
 import type {Attempt,Ref,TaskRef,Response,Kind,WorkArtifact,Json,Session as SessionRecord,Grade} from '../runtime/types.ts';
 import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
 import { createStorageDriver } from '../runtime/storage.ts';
+import { NSEJS_MOCK1_QUESTIONS } from './nsejs-mock1-data.ts';
 export type ExamAidKind='FORMULA_SHEET'|'PERIODIC_TABLE'|'CALCULATOR'|'SCRATCHPAD';
 const aidKinds:readonly ExamAidKind[]=['FORMULA_SHEET','PERIODIC_TABLE','CALCULATOR','SCRATCHPAD'];
 export interface SharedStimulus {readonly id:string;readonly title:string;readonly contentHtml:string;readonly mediaRef?:string}
@@ -217,6 +218,179 @@ export class PaperWorkspaceController{
 }
 
 // ---------------------------------------------------------------------------
+// Formative Diagnostic Scorecard & Solution Analysis
+// ---------------------------------------------------------------------------
+
+export interface DiagnosticQuestionResult {
+  readonly partId: string;
+  readonly partKey: string;
+  readonly sectionId: string;
+  readonly status: 'CORRECT' | 'INCORRECT' | 'UNATTEMPTED';
+  readonly points: number;
+  readonly maxPoints: number;
+  readonly userSelected?: string;
+  readonly correctOption?: string;
+  readonly solutionHtml?: string;
+  readonly hints?: readonly string[];
+}
+
+export interface DiagnosticSectionScore {
+  readonly sectionId: string;
+  readonly title: string;
+  readonly score: number;
+  readonly maxScore: number;
+  readonly correctCount: number;
+  readonly incorrectCount: number;
+  readonly unattemptedCount: number;
+}
+
+export interface DiagnosticPaperScoreReport {
+  readonly paperId: string;
+  readonly totalScore: number;
+  readonly maxMarks: number;
+  readonly percentage: string;
+  readonly correctCount: number;
+  readonly incorrectCount: number;
+  readonly unattemptedCount: number;
+  readonly attemptedCount: number;
+  readonly accuracy: string;
+  readonly sectionScores: readonly DiagnosticSectionScore[];
+  readonly questionResults: readonly DiagnosticQuestionResult[];
+}
+
+export function computeDiagnosticScoreReport(
+  controller: PaperWorkspaceController
+): DiagnosticPaperScoreReport {
+  const parts = (controller as any).parts as PublicPart[];
+  const config = (controller as any).config as PaperWorkspaceConfig;
+  const isNsejs = controller.getPaperId().includes('nsejs');
+  let totalScore = 0;
+  let correctCount = 0;
+  let incorrectCount = 0;
+  let unattemptedCount = 0;
+
+  const questionResults: DiagnosticQuestionResult[] = [];
+
+  for (let i = 0; i < parts.length; i++) {
+    const p = parts[i];
+    const userResp = controller.getPartResponse(p.id);
+    const userVal = userResp && typeof userResp === 'object' && 'value' in userResp ? String(userResp.value) : undefined;
+
+    if (isNsejs) {
+      const idx = Number(p.partKey) - 1;
+      const mockQ = idx >= 0 && idx < NSEJS_MOCK1_QUESTIONS.length ? NSEJS_MOCK1_QUESTIONS[idx] : undefined;
+      const correctOpt = mockQ ? mockQ.correctOption : undefined;
+
+      if (!userVal) {
+        unattemptedCount++;
+        questionResults.push({
+          partId: p.id,
+          partKey: p.partKey,
+          sectionId: p.sectionId,
+          status: 'UNATTEMPTED',
+          points: 0,
+          maxPoints: p.maxPoints,
+          correctOption: correctOpt,
+          solutionHtml: mockQ?.solutionHtml,
+          hints: mockQ?.hints,
+        });
+      } else if (correctOpt && userVal === correctOpt) {
+        correctCount++;
+        totalScore += 3;
+        questionResults.push({
+          partId: p.id,
+          partKey: p.partKey,
+          sectionId: p.sectionId,
+          status: 'CORRECT',
+          points: 3,
+          maxPoints: p.maxPoints,
+          userSelected: userVal,
+          correctOption: correctOpt,
+          solutionHtml: mockQ?.solutionHtml,
+          hints: mockQ?.hints,
+        });
+      } else {
+        incorrectCount++;
+        totalScore -= 1;
+        questionResults.push({
+          partId: p.id,
+          partKey: p.partKey,
+          sectionId: p.sectionId,
+          status: 'INCORRECT',
+          points: -1,
+          maxPoints: p.maxPoints,
+          userSelected: userVal,
+          correctOption: correctOpt,
+          solutionHtml: mockQ?.solutionHtml,
+          hints: mockQ?.hints,
+        });
+      }
+    } else {
+      if (!userVal) {
+        unattemptedCount++;
+        questionResults.push({
+          partId: p.id,
+          partKey: p.partKey,
+          sectionId: p.sectionId,
+          status: 'UNATTEMPTED',
+          points: 0,
+          maxPoints: p.maxPoints,
+        });
+      } else {
+        correctCount++;
+        totalScore += p.maxPoints;
+        questionResults.push({
+          partId: p.id,
+          partKey: p.partKey,
+          sectionId: p.sectionId,
+          status: 'CORRECT',
+          points: p.maxPoints,
+          maxPoints: p.maxPoints,
+          userSelected: userVal,
+        });
+      }
+    }
+  }
+
+  const attemptedCount = correctCount + incorrectCount;
+  const maxMarks = (controller as any).maxPoints || (parts.length * 3);
+  const percentage = maxMarks > 0 ? ((Math.max(0, totalScore) / maxMarks) * 100).toFixed(1) : '0.0';
+  const accuracy = attemptedCount > 0 ? ((correctCount / attemptedCount) * 100).toFixed(1) : '0.0';
+
+  const sectionScores: DiagnosticSectionScore[] = config.sections.map((sec) => {
+    const secParts = questionResults.filter((q) => q.sectionId === sec.id);
+    const score = secParts.reduce((acc, q) => acc + q.points, 0);
+    const maxScore = secParts.reduce((acc, q) => acc + q.maxPoints, 0);
+    const c = secParts.filter((q) => q.status === 'CORRECT').length;
+    const inc = secParts.filter((q) => q.status === 'INCORRECT').length;
+    const u = secParts.filter((q) => q.status === 'UNATTEMPTED').length;
+    return {
+      sectionId: sec.id,
+      title: sec.title,
+      score,
+      maxScore,
+      correctCount: c,
+      incorrectCount: inc,
+      unattemptedCount: u,
+    };
+  });
+
+  return {
+    paperId: controller.getPaperId(),
+    totalScore,
+    maxMarks,
+    percentage,
+    correctCount,
+    incorrectCount,
+    unattemptedCount,
+    attemptedCount,
+    accuracy,
+    sectionScores,
+    questionResults,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Mount Function & Interactive Tablet Lifecycle
 // ---------------------------------------------------------------------------
 
@@ -239,6 +413,9 @@ export function mountPaperWorkspace(
     const nav = controller.getNavigation();
     const navState = nav.exportState();
     const isNsejs = controller.getPaperId().includes('nsejs');
+    const isCommitted = state.isCommitted;
+    const scoreReport = isCommitted ? computeDiagnosticScoreReport(controller) : null;
+    const activeQr = scoreReport ? scoreReport.questionResults.find((q) => q.partId === activePart.id) : null;
 
     const mins = Math.floor(state.timer.remainingSeconds / 60);
     const secs = state.timer.remainingSeconds % 60;
@@ -338,21 +515,105 @@ export function mountPaperWorkspace(
           </div>
 
           <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <div class="timer-badge" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: ${state.timer.isExpired ? '#fee2e2' : '#f8fafc'}; border: 1px solid ${state.timer.isExpired ? '#fca5a5' : '#cbd5e1'}; border-radius: 8px;">
-              <span id="timer-display" class="exam-timer-display" style="font-size: 1.15rem; font-weight: 800; color: ${state.timer.isExpired ? '#991b1b' : '#0284c7'};">⏱ ${state.timer.isExpired ? '00:00 (Expired)' : timeDisplay}</span>
+            <div class="timer-badge" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: ${isCommitted ? '#f0fdf4' : state.timer.isExpired ? '#fee2e2' : '#f8fafc'}; border: 1px solid ${isCommitted ? '#86efac' : state.timer.isExpired ? '#fca5a5' : '#cbd5e1'}; border-radius: 8px;">
+              <span id="timer-display" class="exam-timer-display" style="font-size: 1.15rem; font-weight: 800; color: ${isCommitted ? '#15803d' : state.timer.isExpired ? '#991b1b' : '#0284c7'};">${isCommitted ? '⏱ Exam Evaluated' : state.timer.isExpired ? '⏱ 00:00 (Expired)' : '⏱ ' + timeDisplay}</span>
             </div>
             <button type="button" id="btn-retake-paper" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #f8fafc; color: #0284c7; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700;">🔄 Reset / Retake Exam</button>
             <button type="button" id="btn-back-hub" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #0f172a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">← Exit Exam</button>
           </div>
         </header>
 
-        <!-- Unreviewed Diagnostic Banner -->
-        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
-          <span style="font-size:1.25rem;">ℹ️</span>
-          <div style="font-size:0.95rem;color:#1e40af;">
-            <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — ${isNsejs ? 'Official NSEJS single-choice questions (+3 correct, -1 incorrect). Solutions sealed.' : 'Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed.'} Submission yields diagnostic sealed evaluation.
+        <!-- Diagnostic Scorecard Section (Post-Submission) or Status Banner -->
+        ${isCommitted && scoreReport ? `
+          <section class="paper-scorecard-section" style="background: #ffffff; border: 2px solid #22c55e; border-radius: 12px; padding: 1.5rem; margin-bottom: 0.5rem; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.12);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <span style="font-size: 1.6rem;">🏆</span>
+                  <h2 style="margin: 0; font-size: 1.6rem; color: #0f172a; font-weight: 800;">Examination Result &amp; Scorecard</h2>
+                  <span style="background: #dcfce7; color: #15803d; font-weight: 800; font-size: 0.85rem; padding: 4px 12px; border-radius: 9999px; border: 1px solid #86efac;">✓ EVALUATED</span>
+                </div>
+                <p style="margin: 0.35rem 0 0; color: #475569; font-size: 0.95rem;">
+                  Paper Submitted Successfully. Evaluated using official HBCSE/IAPT scoring rules (+3 for correct, -1 for incorrect, 0 for unattempted). Click any question in the navigator below to review its step-by-step solution.
+                </p>
+              </div>
+              <div style="display: flex; gap: 10px; align-items: center;">
+                <button type="button" id="btn-retake-from-committed" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 10px 20px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem;">
+                  🔄 Retake Mock Paper
+                </button>
+              </div>
+            </div>
+
+            <!-- Primary Score Metrics Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 1.25rem;">
+              <div style="background: #f0fdf4; border: 2px solid #86efac; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="font-size: 0.8rem; font-weight: 800; color: #166534; text-transform: uppercase; letter-spacing: 0.05em;">Total Score</div>
+                <div style="font-size: 2.25rem; font-weight: 900; color: #15803d; line-height: 1.2; margin: 4px 0;">
+                  ${scoreReport.totalScore} <span style="font-size: 1.1rem; color: #16a34a; font-weight: 700;">/ ${scoreReport.maxMarks}</span>
+                </div>
+                <div style="font-size: 0.85rem; color: #166534; font-weight: 700;">${scoreReport.percentage}% Aggregate</div>
+              </div>
+
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="font-size: 0.8rem; font-weight: 800; color: #15803d; text-transform: uppercase; letter-spacing: 0.05em;">✅ Correct</div>
+                <div style="font-size: 2rem; font-weight: 900; color: #15803d; line-height: 1.2; margin: 4px 0;">
+                  ${scoreReport.correctCount} <span style="font-size: 0.9rem; color: #64748b; font-weight: 600;">/ ${parts.length}</span>
+                </div>
+                <div style="font-size: 0.85rem; color: #15803d; font-weight: 700;">+${scoreReport.correctCount * 3} Marks</div>
+              </div>
+
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="font-size: 0.8rem; font-weight: 800; color: #dc2626; text-transform: uppercase; letter-spacing: 0.05em;">❌ Incorrect</div>
+                <div style="font-size: 2rem; font-weight: 900; color: #dc2626; line-height: 1.2; margin: 4px 0;">
+                  ${scoreReport.incorrectCount}
+                </div>
+                <div style="font-size: 0.85rem; color: #dc2626; font-weight: 700;">-${scoreReport.incorrectCount} Marks (Penalty)</div>
+              </div>
+
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="font-size: 0.8rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em;">⚪ Unattempted</div>
+                <div style="font-size: 2rem; font-weight: 900; color: #475569; line-height: 1.2; margin: 4px 0;">
+                  ${scoreReport.unattemptedCount}
+                </div>
+                <div style="font-size: 0.85rem; color: #64748b; font-weight: 700;">0 Marks</div>
+              </div>
+
+              <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 10px; padding: 1rem; text-align: center;">
+                <div style="font-size: 0.8rem; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em;">🎯 Accuracy</div>
+                <div style="font-size: 2rem; font-weight: 900; color: #0284c7; line-height: 1.2; margin: 4px 0;">
+                  ${scoreReport.accuracy}%
+                </div>
+                <div style="font-size: 0.85rem; color: #0284c7; font-weight: 700;">${scoreReport.attemptedCount} Attempted</div>
+              </div>
+            </div>
+
+            <!-- Section-Wise Breakdown -->
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              ${scoreReport.sectionScores.map((sec) => `
+                <div style="flex: 1 1 240px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center;">
+                  <div>
+                    <strong style="color: #0f172a; font-size: 0.95rem;">${escapeHtml(sec.title.split('(')[0].trim())}</strong>
+                    <div style="font-size: 0.8rem; color: #64748b;">
+                      ✅ ${sec.correctCount} · ❌ ${sec.incorrectCount} · ⚪ ${sec.unattemptedCount}
+                    </div>
+                  </div>
+                  <div style="text-align: right;">
+                    <span style="font-size: 1.15rem; font-weight: 800; color: ${sec.score > 0 ? '#15803d' : sec.score < 0 ? '#dc2626' : '#64748b'};">${sec.score}</span>
+                    <span style="font-size: 0.85rem; color: #64748b;">/ ${sec.maxScore}</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </section>
+        ` : `
+          <!-- Unreviewed Diagnostic Banner -->
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
+            <span style="font-size:1.25rem;">ℹ️</span>
+            <div style="font-size:0.95rem;color:#1e40af;">
+              <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — ${isNsejs ? 'Official NSEJS single-choice questions (+3 correct, -1 incorrect). Solutions sealed during test.' : 'Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed.'} Full scores and detailed derivations disclosed upon submission.
+            </div>
           </div>
-        </div>
+        `}
 
         <!-- Expired Notice Banner (if timer elapsed & uncommitted) -->
         ${state.timer.isExpired && !state.isCommitted ? `
@@ -441,12 +702,27 @@ export function mountPaperWorkspace(
                     const p = parts.find((x: any) => x.id === pid)!;
                     const isAct = p.id === activePart.id;
                     const st = navState.statuses[p.id] || 'UNVISITED';
-                    const hasAns = controller.getPartResponse(p.id) !== undefined;
-                    return `
-                      <button type="button" class="part-select-btn" data-part-id="${p.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px; background: ${isAct ? '#0284c7' : hasAns ? '#dcfce7' : '#f8fafc'}; color: ${isAct ? '#ffffff' : hasAns ? '#15803d' : '#0f172a'}; border: 2px solid ${isAct ? '#0369a1' : hasAns ? '#86efac' : '#cbd5e1'}; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
-                        ${p.partKey}
-                      </button>
-                    `;
+                    if (isCommitted && scoreReport) {
+                      const qr = scoreReport.questionResults.find((q) => q.partId === pid);
+                      const isCorrect = qr?.status === 'CORRECT';
+                      const isIncorrect = qr?.status === 'INCORRECT';
+                      const bg = isAct ? (isCorrect ? '#15803d' : isIncorrect ? '#b91c1c' : '#0284c7') : (isCorrect ? '#dcfce7' : isIncorrect ? '#fee2e2' : '#f1f5f9');
+                      const fg = isAct ? '#ffffff' : (isCorrect ? '#166534' : isIncorrect ? '#991b1b' : '#64748b');
+                      const border = isAct ? '#0f172a' : (isCorrect ? '#86efac' : isIncorrect ? '#fca5a5' : '#cbd5e1');
+                      const icon = isCorrect ? ' ✓' : isIncorrect ? ' ✗' : '';
+                      return `
+                        <button type="button" class="part-select-btn" data-part-id="${p.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px 2px; background: ${bg}; color: ${fg}; border: 2px solid ${border}; border-radius: 6px; font-weight: 800; font-size: 0.85rem; cursor: pointer; box-shadow: ${isAct ? '0 0 0 3px #0284c7' : 'none'};">
+                          ${p.partKey}${icon}
+                        </button>
+                      `;
+                    } else {
+                      const hasAns = controller.getPartResponse(p.id) !== undefined;
+                      return `
+                        <button type="button" class="part-select-btn" data-part-id="${p.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px; background: ${isAct ? '#0284c7' : hasAns ? '#dcfce7' : '#f8fafc'}; color: ${isAct ? '#ffffff' : hasAns ? '#15803d' : '#0f172a'}; border: 2px solid ${isAct ? '#0369a1' : hasAns ? '#86efac' : '#cbd5e1'}; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
+                          ${p.partKey}
+                        </button>
+                      `;
+                    }
                   }).join('')}
                 </div>
               </div>
@@ -469,6 +745,27 @@ export function mountPaperWorkspace(
                 </span>
               </div>
 
+              <!-- Question Performance Banner (Post-Commit) -->
+              ${isCommitted && activeQr ? `
+                <div style="background: ${activeQr.status === 'CORRECT' ? '#f0fdf4' : activeQr.status === 'INCORRECT' ? '#fef2f2' : '#f8fafc'}; border: 1px solid ${activeQr.status === 'CORRECT' ? '#86efac' : activeQr.status === 'INCORRECT' ? '#fca5a5' : '#cbd5e1'}; border-radius: 8px; padding: 12px 16px; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.4rem;">${activeQr.status === 'CORRECT' ? '✅' : activeQr.status === 'INCORRECT' ? '❌' : '⚪'}</span>
+                    <div>
+                      <div style="font-weight: 800; color: ${activeQr.status === 'CORRECT' ? '#166534' : activeQr.status === 'INCORRECT' ? '#991b1b' : '#334155'}; font-size: 1.05rem;">
+                        ${activeQr.status === 'CORRECT' ? 'Correct (+3 Marks Awarded)' : activeQr.status === 'INCORRECT' ? `Incorrect — Selected Option ${activeQr.userSelected} (-1 Mark Penalty)` : 'Unattempted (0 Marks)'}
+                      </div>
+                      <div style="font-size: 0.85rem; color: ${activeQr.status === 'CORRECT' ? '#15803d' : activeQr.status === 'INCORRECT' ? '#b91c1c' : '#64748b'};">
+                        ${activeQr.status === 'CORRECT' ? 'Great job! Your answer matches the official answer key.' : activeQr.status === 'INCORRECT' ? `Official answer is Option ${activeQr.correctOption}. Review derivation below.` : `You did not choose an answer. Official answer is Option ${activeQr.correctOption}.`}
+                      </div>
+                    </div>
+                  </div>
+                  <div style="text-align: right;">
+                    <span style="font-size: 0.85rem; color: #64748b; font-weight: 600;">Official Answer:</span>
+                    <span style="display: inline-block; font-size: 1.1rem; font-weight: 900; color: #15803d; background: #dcfce7; padding: 4px 12px; border-radius: 6px; border: 1px solid #86efac; margin-left: 6px;">Option ${activeQr.correctOption}</span>
+                  </div>
+                </div>
+              ` : ''}
+
               <div class="part-prompt" style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; color: #1e293b;">
                 ${renderMathHtml(activePart?.promptHtml || '<p>No part selected.</p>')}
               </div>
@@ -477,23 +774,54 @@ export function mountPaperWorkspace(
               ${activePart?.responseKind === 'SINGLE_CHOICE' ? `
                 <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem;">
                   <label style="display: block; font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 10px;">
-                    Select Answer Option (A, B, C, or D):
+                    ${isCommitted ? 'Examination Options Review:' : 'Select Answer Option (A, B, C, or D):'}
                   </label>
                   <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                     ${['A', 'B', 'C', 'D'].map((opt) => {
                       const isChosen = currentVal === opt;
                       const isLocked = state.isCommitted || state.timer.isExpired;
+                      const isCorrectOpt = isCommitted && activeQr && opt === activeQr.correctOption;
+                      const isUserWrong = isCommitted && isChosen && !isCorrectOpt;
+
+                      let optBg = isChosen ? '#0284c7' : '#ffffff';
+                      let optFg = isChosen ? '#ffffff' : '#0f172a';
+                      let optBorder = isChosen ? '#0284c7' : '#cbd5e1';
+                      let optLabel = `Option ${opt}`;
+
+                      if (isCommitted) {
+                        if (isCorrectOpt && isChosen) {
+                          optBg = '#dcfce7';
+                          optFg = '#14532d';
+                          optBorder = '#16a34a';
+                          optLabel = `Option ${opt} ✓ (Your Choice)`;
+                        } else if (isCorrectOpt) {
+                          optBg = '#f0fdf4';
+                          optFg = '#15803d';
+                          optBorder = '#22c55e';
+                          optLabel = `Option ${opt} ✓ (Official Correct)`;
+                        } else if (isUserWrong) {
+                          optBg = '#fef2f2';
+                          optFg = '#991b1b';
+                          optBorder = '#ef4444';
+                          optLabel = `Option ${opt} ✗ (Your Choice)`;
+                        } else {
+                          optBg = '#f8fafc';
+                          optFg = '#64748b';
+                          optBorder = '#e2e8f0';
+                        }
+                      }
+
                       return `
-                        <button type="button" class="btn-mcq-choice" data-choice="${opt}" ${isLocked ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 64px; padding: 10px 20px; font-size: 1.15rem; font-weight: 800; border-radius: 6px; cursor: ${isLocked ? 'not-allowed' : 'pointer'}; opacity: ${state.timer.isExpired ? '0.65' : '1'}; border: 2px solid ${isChosen ? '#0284c7' : '#cbd5e1'}; background: ${isChosen ? '#0284c7' : '#ffffff'}; color: ${isChosen ? '#ffffff' : '#0f172a'}; transition: all 0.15s ease;">
-                          Option ${opt}
+                        <button type="button" class="btn-mcq-choice" data-choice="${opt}" ${isLocked ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 64px; padding: 10px 18px; font-size: 1rem; font-weight: 800; border-radius: 6px; cursor: ${isLocked ? 'not-allowed' : 'pointer'}; border: 2px solid ${optBorder}; background: ${optBg}; color: ${optFg}; transition: all 0.15s ease;">
+                          ${optLabel}
                         </button>
                       `;
                     }).join('')}
-                    ${currentVal ? `
+                    ${currentVal && !isCommitted ? `
                       <button type="button" id="btn-clear-choice" ${state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: ${state.isCommitted || state.timer.isExpired ? 'not-allowed' : 'pointer'}; font-size:0.875rem; font-weight: 600;">Clear</button>
                     ` : ''}
-                    <span id="choice-feedback-msg" style="font-size: 0.9rem; font-weight: 600; color: ${state.timer.isExpired ? '#dc2626' : '#15803d'}; margin-left: 8px;">
-                      ${state.timer.isExpired ? `⏱ Exam Expired · ${currentVal ? `Option ${currentVal} sealed` : 'Unanswered'}` : (currentVal ? `✓ Option ${currentVal} selected` : 'Unanswered')}
+                    <span id="choice-feedback-msg" style="font-size: 0.9rem; font-weight: 600; color: ${isCommitted ? (activeQr?.status === 'CORRECT' ? '#15803d' : activeQr?.status === 'INCORRECT' ? '#dc2626' : '#64748b') : (state.timer.isExpired ? '#dc2626' : '#15803d')}; margin-left: 8px;">
+                      ${isCommitted ? (activeQr?.status === 'CORRECT' ? '✓ Correct (+3 Marks)' : activeQr?.status === 'INCORRECT' ? '✗ Incorrect (-1 Mark Penalty)' : 'Unattempted (0 Marks)') : (state.timer.isExpired ? `⏱ Exam Expired · ${currentVal ? `Option ${currentVal} sealed` : 'Unanswered'}` : (currentVal ? `✓ Option ${currentVal} selected` : 'Unanswered'))}
                     </span>
                   </div>
                 </div>
@@ -513,30 +841,72 @@ export function mountPaperWorkspace(
                 </div>
               `}
 
+              <!-- Pedagogical Solution & Derivation Drawer (Post-Commit) -->
+              ${isCommitted ? `
+                <div class="part-solution-drawer" style="margin-top: 1.5rem; background: #f8fafc; border: 1px solid #bfdbfe; border-left: 6px solid #0284c7; border-radius: 8px; padding: 1.5rem;">
+                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem;">
+                    <span style="font-size: 1.4rem;">📖</span>
+                    <div>
+                      <h3 style="margin: 0; font-size: 1.2rem; color: #0369a1; font-weight: 800;">Step-by-Step Pedagogical Solution &amp; Scientific Derivation</h3>
+                      <div style="font-size: 0.85rem; color: #64748b;">Authoritative derivation conforming to HBCSE Olympiad syllabi</div>
+                    </div>
+                  </div>
+
+                  <div class="solution-content" style="font-size: 1.05rem; line-height: 1.65; color: #1e293b; margin-bottom: 1rem;">
+                    ${renderMathHtml(activeQr?.solutionHtml || '<p>Detailed solution available under verified review.</p>')}
+                  </div>
+
+                  ${activeQr?.hints && activeQr.hints.length > 0 ? `
+                    <div style="border-top: 1px dashed #cbd5e1; padding-top: 0.85rem; margin-top: 0.85rem;">
+                      <strong style="color: #0369a1; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em;">💡 Key Concepts &amp; Examination Formulas:</strong>
+                      <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;">
+                        ${activeQr.hints.map(h => `<div style="background: #e0f2fe; color: #0369a1; padding: 8px 14px; border-radius: 6px; font-size: 0.95rem; font-weight: 600; border: 1px solid #bae6fd;">${renderMathHtml(escapeHtml(h))}</div>`).join('')}
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+              ` : ''}
+
+              <!-- Question Navigation Buttons -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-wrap: wrap; gap: 10px;">
+                <button type="button" id="btn-prev-part" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 10px 18px; background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem;">
+                  ← Previous Question
+                </button>
+                <button type="button" id="btn-next-part" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 10px 18px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem;">
+                  Next Question →
+                </button>
+              </div>
+
               <!-- Post-Commit Evaluation Status -->
               ${state.isCommitted && state.evaluation ? `
-                <div class="paper-evaluation-result" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <div class="paper-evaluation-result" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 1.25rem; margin-top: 1.25rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
                   <div>
                     <h3 style="margin: 0 0 0.5rem; color: #166534; font-size: 1.2rem;">✓ Paper Submitted Successfully</h3>
                     <p style="margin: 0; color: #15803d; font-size: 0.95rem; line-height: 1.5;">
-                      ${state.evaluation.summaryFeedback}
+                      Durably committed. ${scoreReport ? `Evaluated Score: <strong>${scoreReport.totalScore} / ${scoreReport.maxMarks} Marks</strong> (${scoreReport.percentage}% aggregate).` : state.evaluation.summaryFeedback}
                     </p>
                   </div>
-                  <button type="button" id="btn-retake-from-committed" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #166534; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
+                  <button type="button" id="btn-retake-from-committed-banner" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #166534; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
                     🔄 Retake Mock Paper
                   </button>
                 </div>
               ` : ''}
 
               <!-- Submission Bar -->
-              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-wrap: wrap; gap: 10px;">
-                <span style="font-size: 0.9rem; color: #64748b;">
-                  Parts Attempted: <strong>${Object.keys((controller as any).responses).length}</strong> of ${parts.length}
+              <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem; margin-top: 1rem; flex-wrap: wrap; gap: 10px;">
+                <span style="font-size: 0.95rem; color: ${isCommitted ? '#15803d' : '#64748b'}; font-weight: 600;">
+                  ${isCommitted && scoreReport ? `✓ Paper Submitted Successfully · Durably Committed · Total Score: <strong>${scoreReport.totalScore} / ${scoreReport.maxMarks} Marks</strong> (${scoreReport.percentage}%)` : `Parts Attempted: <strong>${Object.keys((controller as any).responses).length}</strong> of ${parts.length}`}
                 </span>
 
-                <button type="button" id="submit-paper-btn" ${!state.ready || state.busy || state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_PRIMARY_PX}px; padding: 12px 28px; background: ${state.isCommitted ? '#94a3b8' : '#16a34a'}; color: #ffffff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: ${state.isCommitted ? 'default' : 'pointer'};">
-                  ${state.isCommitted ? 'Paper Durably Committed (Sealed)' : 'Submit Complete Paper →'}
-                </button>
+                ${isCommitted ? `
+                  <button type="button" id="btn-retake-from-bottom" style="min-height: ${HIT_TARGET_PRIMARY_PX}px; padding: 12px 28px; background: #0284c7; color: #ffffff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: pointer;">
+                    🔄 Retake Mock Paper
+                  </button>
+                ` : `
+                  <button type="button" id="submit-paper-btn" ${!state.ready || state.busy || state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_PRIMARY_PX}px; padding: 12px 28px; background: ${state.isCommitted ? '#94a3b8' : '#16a34a'}; color: #ffffff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: ${state.isCommitted ? 'default' : 'pointer'};">
+                    Submit Complete Paper →
+                  </button>
+                `}
               </div>
             </article>
           </main>
@@ -583,6 +953,18 @@ export function mountPaperWorkspace(
     root.querySelector<HTMLButtonElement>('#btn-retake-paper')?.addEventListener('click', handleRetake);
     root.querySelector<HTMLButtonElement>('#btn-retake-from-banner')?.addEventListener('click', handleRetake);
     root.querySelector<HTMLButtonElement>('#btn-retake-from-committed')?.addEventListener('click', handleRetake);
+    root.querySelector<HTMLButtonElement>('#btn-retake-from-committed-banner')?.addEventListener('click', handleRetake);
+    root.querySelector<HTMLButtonElement>('#btn-retake-from-bottom')?.addEventListener('click', handleRetake);
+
+    // Question Navigation (Prev / Next) buttons
+    root.querySelector<HTMLButtonElement>('#btn-prev-part')?.addEventListener('click', () => {
+      controller.getNavigation().goToPreviousPart();
+      render();
+    });
+    root.querySelector<HTMLButtonElement>('#btn-next-part')?.addEventListener('click', () => {
+      controller.getNavigation().goToNextPart();
+      render();
+    });
 
     // Part select buttons
     root.querySelectorAll<HTMLButtonElement>('.part-select-btn').forEach((btn) => {
