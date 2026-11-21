@@ -27,6 +27,7 @@ export interface ExplorerCatalogEntry {
   readonly icon: string;
   readonly formulaBadge: string;
   readonly initialParameters?: Record<string, number>;
+  readonly standaloneUrl?: string;
 }
 
 export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
@@ -43,6 +44,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '📏',
     formulaBadge: 'v = u + at, s = ut + ½at²',
     initialParameters: { x: 0.0, v0: 10.0, a: -9.8 },
+    standaloneUrl: '/physics/motion-1d/explorers/motion_in_1d/index.html',
   },
   {
     id: 'motion-in-a-plane',
@@ -56,6 +58,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🎯',
     formulaBadge: 'r(t) = x(t)î + y(t)ĵ',
     initialParameters: { x: 0.0, theta: 45.0, v0: 20.0 },
+    standaloneUrl: '/physics/motion-2d/explorers/motion-in-a-plane/index.html',
   },
   {
     id: 'motions_in_2d',
@@ -69,6 +72,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '📈',
     formulaBadge: 'dy/dx = vy / vx',
     initialParameters: { x: 0.0, vx: 15.0, vy: 15.0 },
+    standaloneUrl: '/physics/motion-in-2d/explorers/motions_in_2d/index.html',
   },
   {
     id: 'projectile-model',
@@ -82,6 +86,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🚀',
     formulaBadge: 'R = u² sin(2θ) / g',
     initialParameters: { x: 0.0, angle: 45.0, speed: 25.0 },
+    standaloneUrl: '/physics/motion-2d/explorers/projectile-model/index.html',
   },
   {
     id: 'is_it_really_a_projectile',
@@ -95,6 +100,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '❓',
     formulaBadge: 'a_x = 0, a_y = -g',
     initialParameters: { x: 0.0, dragCoeff: 0.0 },
+    standaloneUrl: '/physics/motion-in-2d/explorers/is_it_really_a_projectile/index.html',
   },
   {
     id: 'apex-fallacy',
@@ -108,6 +114,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '⚠️',
     formulaBadge: 'v_y(t_apex) = 0, a_y = -g ≠ 0',
     initialParameters: { x: 0.0, yApex: 12.5 },
+    standaloneUrl: '/physics/motion-2d/explorers/apex-fallacy/index.html',
   },
   {
     id: 'the_apex_fallacy',
@@ -121,6 +128,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🔍',
     formulaBadge: 'F_net = mg (Downward)',
     initialParameters: { x: 0.0 },
+    standaloneUrl: '/physics/motion-in-2d/explorers/the_apex_fallacy/index.html',
   },
   {
     id: 'landing-geometry',
@@ -134,6 +142,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '📐',
     formulaBadge: 'tan(α) = vy / vx at impact',
     initialParameters: { x: 0.0, slopeAngle: 15.0 },
+    standaloneUrl: '/physics/motion-2d/explorers/landing-geometry/index.html',
   },
   {
     id: 'equal-height-state',
@@ -147,6 +156,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '⚖️',
     formulaBadge: 'v_up = v_down at y_1 = y_2',
     initialParameters: { x: 0.0, height: 10.0 },
+    standaloneUrl: '/physics/motion-2d/explorers/equal-height-state/index.html',
   },
   {
     id: 'same_height_same_speed',
@@ -160,6 +170,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '⚡',
     formulaBadge: '½mv² + mgy = E_total',
     initialParameters: { x: 0.0, energy: 100.0 },
+    standaloneUrl: '/physics/motion-in-2d/explorers/same_height_same_speed/index.html',
   },
   {
     id: 'event-clock',
@@ -173,6 +184,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '⏱️',
     formulaBadge: 't_event = Δx / v_rel',
     initialParameters: { x: 0.0, interval: 0.2 },
+    standaloneUrl: '/physics/motion-2d/explorers/event-clock/index.html',
   },
   {
     id: 'the_event_clock',
@@ -186,6 +198,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🕰️',
     formulaBadge: 'Δt = (2u sinθ) / g',
     initialParameters: { x: 0.0 },
+    standaloneUrl: '/physics/motion-in-2d/explorers/the_event_clock/index.html',
   },
   {
     id: 'shared-clock',
@@ -199,6 +212,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '⏰',
     formulaBadge: 't_master = τ₁ = τ₂',
     initialParameters: { x: 0.0, tMax: 10.0 },
+    standaloneUrl: '/physics/motion-2d/explorers/shared-clock/index.html',
   },
   {
     id: 'independent_components_shared_clock',
@@ -212,6 +226,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🔄',
     formulaBadge: 'x(t) ⫫ y(t) | t',
     initialParameters: { x: 0.0 },
+    standaloneUrl: '/physics/motion-in-2d/explorers/independent_components_shared_clock/index.html',
   },
 
   // --- Physics: Dynamics, Pulleys & Frames ---
@@ -227,6 +242,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '⛓️',
     formulaBadge: 'a = (m₂ - m₁)g / (m₁ + m₂)',
     initialParameters: { x: 0.0, m1: 2.0, m2: 3.0 },
+    standaloneUrl: '/physics/nlm/explorers/atwood-pulleys/index.html',
   },
   {
     id: 'connected-blocks',
@@ -240,6 +256,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '📦',
     formulaBadge: 'N_internal = m₁ / (m₁ + m₂) · F',
     initialParameters: { x: 0.0, m1: 4.0, m2: 6.0, force: 20.0 },
+    standaloneUrl: '/physics/nlm/explorers/connected-blocks/index.html',
   },
   {
     id: 'friction-threshold',
@@ -253,6 +270,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🛑',
     formulaBadge: 'f_s ≤ μ_s N, f_k = μ_k N',
     initialParameters: { x: 0.0, muS: 0.5, muK: 0.4, normal: 50.0 },
+    standaloneUrl: '/physics/nlm/explorers/friction-threshold/index.html',
   },
   {
     id: 'circular-dynamics',
@@ -266,6 +284,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🔄',
     formulaBadge: 'v_opt = √(R·g·tanθ)',
     initialParameters: { x: 0.0, radius: 25.0, bankingAngle: 20.0 },
+    standaloneUrl: '/physics/motion-1d/explorers/circular-dynamics/index.html',
   },
   {
     id: 'accelerated-frames',
@@ -279,6 +298,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🚡',
     formulaBadge: 'F_apparent = m(g - a_frame)',
     initialParameters: { x: 0.0, aFrame: 2.5 },
+    standaloneUrl: '/physics/nlm/explorers/accelerated-frames/index.html',
   },
 
   // --- Chemistry: Gases, Bonding, Moles & Redox ---
@@ -294,6 +314,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '💨',
     formulaBadge: 'PV = nRT',
     initialParameters: { x: 0.0, pressure: 1.0, volume: 22.4, temp: 273.15 },
+    standaloneUrl: '/chemistry/gases/explorers/behaviour_of_gases/index.html',
   },
   {
     id: 'chemical_bonding',
@@ -307,6 +328,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🔬',
     formulaBadge: 'Δχ = |χ_A - χ_B|',
     initialParameters: { x: 0.0 },
+    standaloneUrl: '/chemistry/bonding/explorers/chemical_bonding/index.html',
   },
   {
     id: 'mole_concept',
@@ -320,6 +342,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '⚖️',
     formulaBadge: 'n = m / M = N / N_A',
     initialParameters: { x: 0.0, moles: 1.0 },
+    standaloneUrl: '/chemistry/some-basic-concepts/explorers/mole_concept/index.html',
   },
   {
     id: 'redox_reactions',
@@ -333,6 +356,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '🔋',
     formulaBadge: 'Oxidation Number & Charge Balance',
     initialParameters: { x: 0.0 },
+    standaloneUrl: '/chemistry/redox/explorers/redox_reactions/index.html',
   },
 
   // --- Mathematics: Vector Algebra ---
@@ -348,6 +372,7 @@ export const EXPLORER_ENTRIES: readonly ExplorerCatalogEntry[] = [
     icon: '📐',
     formulaBadge: 'A · B = |A||B| cosθ',
     initialParameters: { x: 0.0, ax: 3.0, ay: 4.0, bx: 1.0, by: 2.0 },
+    standaloneUrl: '/mathematics/vectors/explorers/vector_algebra/index.html',
   },
 ];
 
@@ -373,6 +398,7 @@ export function getExplorerConfig(explorerId: string): ExplorerPageConfig {
       title: entry.title,
       subject: entry.subject,
       topic: entry.topic,
+      standaloneUrl: entry.standaloneUrl,
       initialParameters: { x: 0.0 },
       helpers: {
         exactnessBadge: {

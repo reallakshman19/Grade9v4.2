@@ -12,15 +12,15 @@ import {
 import { CANONICAL_UNIFIED_QUESTIONS } from '../../web/data/unified-questions.generated.ts';
 
 describe('Universal Search — Corpus & Relevance Engine Contract', () => {
-  it('indexes complete corpus count: 1082 total (976 questions, 61 tablets, 44 curriculum topics)', () => {
-    assert.equal(UNIVERSAL_SEARCH_CORPUS.length, 1082, 'Corpus must contain all 1082 verified STEM items');
+  it('indexes complete corpus count: 1114 total (976 questions, 93 tablets & explorers, 44 curriculum topics)', () => {
+    assert.equal(UNIVERSAL_SEARCH_CORPUS.length, 1114, 'Corpus must contain all 1114 verified STEM items');
 
     const questions = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'question');
     const tablets = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'tablet');
     const curriculum = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'curriculum');
 
     assert.equal(questions.length, 976, 'Must have exactly 976 questions (737 canonical + 239 specialized)');
-    assert.equal(tablets.length, 61, 'Must have exactly 61 interactive tablets/workbenches');
+    assert.equal(tablets.length, 93, 'Must have exactly 93 interactive tablets, workbenches & explorers');
     assert.equal(curriculum.length, 44, 'Must have exactly 44 curriculum topics and concepts');
   });
 
@@ -32,25 +32,35 @@ describe('Universal Search — Corpus & Relevance Engine Contract', () => {
 
   it('query with empty string returns full corpus and live counts matching tabs', () => {
     const res = queryUniversalSearch('');
-    assert.equal(res.totalMatches, 1082);
-    assert.equal(res.counts.all, 1082);
+    assert.equal(res.totalMatches, 1114);
+    assert.equal(res.counts.all, 1114);
     assert.equal(res.counts.question, 976);
-    assert.equal(res.counts.tablet, 61);
+    assert.equal(res.counts.tablet, 93);
     assert.equal(res.counts.curriculum, 44);
     assert.ok(res.executionTimeMs < 50, `Sub-50ms search requirement: took ${res.executionTimeMs}ms`);
   });
 
-  it('searching "Redox" places Redox concept & topic at the top of results', () => {
+  it('searching "Redox" places Redox concept, explorer & topic at the top of results', () => {
     const res = queryUniversalSearch('Redox');
     assert.ok(res.totalMatches > 0, 'Must find redox items');
     assert.ok(res.counts.curriculum >= 2, 'Must match Redox topic and concepts');
     assert.ok(res.counts.question >= 46, 'Must match 46 Redox questions');
+    assert.ok(res.counts.tablet >= 2, 'Must match Redox master suite and explorer');
 
-    // First results should be the main concept / topic
+    // First results should be the main concept / topic / explorer
     const topResult = res.results[0];
     assert.match(topResult.title, /Redox/i);
     assert.match(topResult.breadcrumb, /Chemistry/i);
-    assert.match(topResult.badge, /(CONCEPT|TOPIC)/i);
+    assert.match(topResult.badge, /(CONCEPT|TOPIC|EXPLORER|MASTER SUITE)/i);
+  });
+
+  it('searching "Atwood" locates Atwood Pulleys interactive explorer', () => {
+    const res = queryUniversalSearch('Atwood');
+    assert.ok(res.totalMatches >= 3, 'Must match Atwood explorer and practice tablets');
+    assert.ok(res.counts.tablet >= 3, 'Must match Atwood explorer in tablets tab');
+    const topResult = res.results[0];
+    assert.match(topResult.title, /Atwood/i);
+    assert.equal(topResult.route, '#/explorer/atwood-pulleys');
   });
 
   it('searching "Circles" locates Circles Master Lab and Circles question corpus', () => {
@@ -157,9 +167,9 @@ describe('Universal Search — Playwright Modal & Keyboard Shortcut Contract', (
       const tab3Text = await tabs.nth(2).textContent();
       const tab4Text = await tabs.nth(3).textContent();
 
-      assert.match(tab1Text ?? '', /All\s*1082/i);
+      assert.match(tab1Text ?? '', /All\s*1114/i);
       assert.match(tab2Text ?? '', /Questions\s*976/i);
-      assert.match(tab3Text ?? '', /Core 1A & 2 Tablets\s*61/i);
+      assert.match(tab3Text ?? '', /Core 1A & 2 Tablets\s*93/i);
       assert.match(tab4Text ?? '', /Topics & Concepts\s*44/i);
 
       // Verify initial cards rendered
@@ -167,7 +177,7 @@ describe('Universal Search — Playwright Modal & Keyboard Shortcut Contract', (
       assert.ok(await cards.count() > 0, 'Must show initial curated cards');
 
       // Save screenshot for verification
-      const artifactDir = 'C:/Users/reall/.gemini/antigravity/brain/078a6361-bee7-49fc-a21a-d88fc3bc034f';
+      const artifactDir = 'C:/Users/reall/.gemini/antigravity/brain/91e9ef40-66fc-41b2-a23d-5ed190193a98';
       await dialog.screenshot({ path: `${artifactDir}/evidence_search_modal_initial.png` });
 
       // Search "Redox"

@@ -251,11 +251,21 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
 
     void (async () => {
       try {
-        const { definition, binding } = await createAuthorizedTransferSession();
-        const controller = new Core1BTransferPageController({ transferDefinition: definition, binding, topicCode });
+        const { createStorageDriver } = await import('../runtime/storage.ts');
+        const driver = createStorageDriver({ dbName: 'grade9_wpe_transfer' });
+        const { definition, binding } = await createAuthorizedTransferSession(driver);
+        let controller = new Core1BTransferPageController({ transferDefinition: definition, binding, topicCode });
         try {
-          await controller.start();
-        } catch {}
+          await controller.initializeSession();
+        } catch {
+          await driver.clear('cognitive_journeys').catch(() => {});
+          await driver.clear('cognitive_instances').catch(() => {});
+          await driver.clear('sessions').catch(() => {});
+          await driver.clear('artifacts').catch(() => {});
+          const fresh = await createAuthorizedTransferSession(driver);
+          controller = new Core1BTransferPageController({ transferDefinition: fresh.definition, binding: fresh.binding, topicCode });
+          await controller.initializeSession();
+        }
         if (activeDisposer) {
           activeDisposer();
         }

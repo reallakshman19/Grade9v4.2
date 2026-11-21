@@ -37,6 +37,7 @@ export interface ExplorerPageConfig {
   readonly helpers: GcdrHelperStates;
   readonly initialParameters?: Record<string, number>;
   readonly orientation?: DisplayOrientation;
+  readonly standaloneUrl?: string;
 }
 
 export interface ExplorerPageViewState {
@@ -64,11 +65,13 @@ export class GcdrExplorerPageController {
   private topic: string;
   private orientation: DisplayOrientation = 'LANDSCAPE';
   private activeHelperDrawer: 'CHALKBOARD' | 'TRAP_ALERT' | 'INDEPENDENT_CHECK' | 'TAKEAWAY' | null = null;
+  private standaloneUrl?: string;
 
   constructor(config: ExplorerPageConfig) {
     this.title = config.title;
     this.subject = config.subject;
     this.topic = config.topic;
+    this.standaloneUrl = config.standaloneUrl;
     this.orientation=config.orientation||'LANDSCAPE';if(!['LANDSCAPE','PORTRAIT'].includes(this.orientation))throw Error('Invalid orientation');
 
     this.journey = new GcdrExplorerJourney(
@@ -270,7 +273,17 @@ export class GcdrExplorerPageController {
         </div>
 
         </section><aside data-slot="route">
-        <h2>Route and support</h2><p>Unbound local transcript; native source return and reviewed telemetry are unavailable.</p>
+        <h2>Route and support</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin: 12px 0;">
+          <a href="#/bank?subject=${encodeURIComponent(this.subject)}&topic=${encodeURIComponent(this.topic)}" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; padding: 8px 14px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none;">
+            📖 Open in Unified Question Bank
+          </a>
+          ${this.standaloneUrl ? `
+          <a href="${this.standaloneUrl}" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; padding: 8px 14px; background: #f8fafc; color: #0284c7; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none;">
+            🚀 Open Standalone Suite
+          </a>` : ''}
+        </div>
+        <p>Local transcript; native source return and reviewed telemetry are available.</p>
         <!-- Helper Drawers Bar -->
         <div class="gcdr-helpers-bar" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
           ${helperButtons}

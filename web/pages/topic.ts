@@ -1951,9 +1951,11 @@ export function mountTopicWorkspace(
         let transferDisposer: (() => void) | null = null;
         void createAuthorizedTransferSession().then(async ({ definition, binding }) => {
           const c = new Core1BTransferPageController({ transferDefinition: definition, binding });
-          await c.start();
+          await c.initializeSession();
           const m = mountCore1BTransfer(transferSlot, c);
           transferDisposer = () => m.dispose();
+        }).catch(err => {
+          console.warn('Topic Core 1B transfer session error:', err);
         });
 
         activeSubDisposer = () => {

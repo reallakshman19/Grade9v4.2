@@ -1,7 +1,7 @@
 /**
  * web/runtime/universal-search-index.ts
  * Grade9 STEM Universal Search Index & Engine
- * Full 1082-item offline indexed corpus: 976 Questions, 61 Tablets, 44 Topics & Concepts.
+ * Full 1114-item offline indexed corpus: 976 Questions, 93 Tablets & Explorers, 44 Topics & Concepts.
  * Sub-50ms instant fuzzy token search with multi-tier relevance scoring and Fault N09 answer isolation.
  */
 
@@ -38,7 +38,7 @@ export function normalizeSearchTerm(v: string): string {
 }
 
 /**
- * Full 1082-Item Unified STEM Corpus
+ * Full 1114-Item Unified STEM Corpus
  */
 export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze([
   {
@@ -1206,6 +1206,358 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "route": "#/subject/physics/topic/wpe",
     "breadcrumb": "Mathematics · Riemann · Core 2B Tablet",
     "search_text": "Riemann Trapezoidal Error Transfer Tablet Mathematics · Riemann · Core 2B Tablet trapezoid simpson rule bounding transfer takeaway core 2 practice transfer assessment tablet"
+  },
+  {
+    "id": "EXPLORER-MOTION_IN_1D",
+    "title": "Motion in 1D — Kinematic Position, Velocity & Acceleration",
+    "subtitle": "Physics · Motion in a Straight Line · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/motion_in_1d",
+    "breadcrumb": "Physics · Motion in a Straight Line · Interactive Explorer",
+    "search_text": "motion_in_1d motion in 1d Motion in 1D — Kinematic Position, Velocity & Acceleration Physics Motion in a Straight Line Kinematics Explore rectilinear particle motion under constant and piecewise acceleration with synchronized position-time and velocity-time telemetry. v = u + at, s = ut + ½at² /physics/motion-1d/explorers/motion_in_1d/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-MOTION_IN_A_PLANE",
+    "title": "Motion in a Plane — 2D Orthogonal Kinematics",
+    "subtitle": "Physics · Motion in a Plane · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/motion-in-a-plane",
+    "breadcrumb": "Physics · Motion in a Plane · Interactive Explorer",
+    "search_text": "motion-in-a-plane motion in a plane Motion in a Plane — 2D Orthogonal Kinematics Physics Motion in a Plane Kinematics Orthogonal decomposition of velocity and displacement along independent X and Y Cartesian axes with unified simulation time parameter. r(t) = x(t)î + y(t)ĵ /physics/motion-2d/explorers/motion-in-a-plane/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-MOTIONS_IN_2D",
+    "title": "Motions in 2D — Trajectory Synthesis & Phase Space",
+    "subtitle": "Physics · Motion in a Plane · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/motions_in_2d",
+    "breadcrumb": "Physics · Motion in a Plane · Interactive Explorer",
+    "search_text": "motions_in_2d motions in 2d Motions in 2D — Trajectory Synthesis & Phase Space Physics Motion in a Plane Kinematics Phase plane visualization of planar curves, parabolic trajectories, and relative velocity transformations. dy/dx = vy / vx /physics/motion-in-2d/explorers/motions_in_2d/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-PROJECTILE_MODEL",
+    "title": "Projectile Model — Parabolic Flight & Envelope Analysis",
+    "subtitle": "Physics · Projectile Motion · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/projectile-model",
+    "breadcrumb": "Physics · Projectile Motion · Interactive Explorer",
+    "search_text": "projectile-model projectile model Projectile Model — Parabolic Flight & Envelope Analysis Physics Projectile Motion Kinematics Parabolic trajectory modeling under uniform gravity: range calculation, maximum height, flight duration, and trajectory envelope. R = u² sin(2θ) / g /physics/motion-2d/explorers/projectile-model/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-IS_IT_REALLY_A_PROJECTILE",
+    "title": "Is It Really a Projectile? — Force & Acceleration Test",
+    "subtitle": "Physics · Projectile Motion · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/is_it_really_a_projectile",
+    "breadcrumb": "Physics · Projectile Motion · Interactive Explorer",
+    "search_text": "is_it_really_a_projectile is it really a projectile Is It Really a Projectile? — Force & Acceleration Test Physics Projectile Motion Kinematics Distinguish true gravitational projectile motion from self-propelled or aerodynamically lifted trajectories through acceleration invariant checks. a_x = 0, a_y = -g /physics/motion-in-2d/explorers/is_it_really_a_projectile/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-APEX_FALLACY",
+    "title": "The Apex Fallacy — Zero Velocity vs Nonzero Acceleration",
+    "subtitle": "Physics · Projectile Motion · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/apex-fallacy",
+    "breadcrumb": "Physics · Projectile Motion · Interactive Explorer",
+    "search_text": "apex-fallacy apex fallacy The Apex Fallacy — Zero Velocity vs Nonzero Acceleration Physics Projectile Motion Kinematics Deconstruct the pervasive misconception that acceleration vanishes at the projectile apex when vertical velocity momentarily crosses zero. v_y(t_apex) = 0, a_y = -g ≠ 0 /physics/motion-2d/explorers/apex-fallacy/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-THE_APEX_FALLACY",
+    "title": "The Apex Fallacy (Analytical Suite)",
+    "subtitle": "Physics · Projectile Motion · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/the_apex_fallacy",
+    "breadcrumb": "Physics · Projectile Motion · Interactive Explorer",
+    "search_text": "the_apex_fallacy the apex fallacy The Apex Fallacy (Analytical Suite) Physics Projectile Motion Kinematics Systematic contradiction and reconstruction of instantaneous velocity nullification versus persistent gravitational force. F_net = mg (Downward) /physics/motion-in-2d/explorers/the_apex_fallacy/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-LANDING_GEOMETRY",
+    "title": "Landing Geometry — Inclined Surface Impact Angles",
+    "subtitle": "Physics · Projectile Motion · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/landing-geometry",
+    "breadcrumb": "Physics · Projectile Motion · Interactive Explorer",
+    "search_text": "landing-geometry landing geometry Landing Geometry — Inclined Surface Impact Angles Physics Projectile Motion Kinematics Compute intersection coordinates, impact speed, and incidence angle for projectiles striking arbitrary inclined terrain slopes. tan(α) = vy / vx at impact /physics/motion-2d/explorers/landing-geometry/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-EQUAL_HEIGHT_STATE",
+    "title": "Equal-Height State — Symmetric Kinematic Properties",
+    "subtitle": "Physics · Projectile Motion · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/equal-height-state",
+    "breadcrumb": "Physics · Projectile Motion · Interactive Explorer",
+    "search_text": "equal-height-state equal height state Equal-Height State — Symmetric Kinematic Properties Physics Projectile Motion Kinematics Invariance of particle speed and equal magnitude vertical velocity components at equal elevations on ascent and descent limbs. v_up = v_down at y_1 = y_2 /physics/motion-2d/explorers/equal-height-state/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-SAME_HEIGHT_SAME_SPEED",
+    "title": "Same Height, Same Speed — Mechanical Energy Conservation",
+    "subtitle": "Physics · Work, Power & Energy · Energy & Dynamics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/same_height_same_speed",
+    "breadcrumb": "Physics · Work, Power & Energy · Interactive Explorer",
+    "search_text": "same_height_same_speed same height same speed Same Height, Same Speed — Mechanical Energy Conservation Physics Work, Power & Energy Energy & Dynamics Proof by conservation of mechanical energy that particle speed depends solely on altitude within a conservative gravitational field. ½mv² + mgy = E_total /physics/motion-in-2d/explorers/same_height_same_speed/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-EVENT_CLOCK",
+    "title": "The Event Clock — Discrete Temporal Markers in Kinematics",
+    "subtitle": "Physics · Kinematic Clocks · Measurement · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/event-clock",
+    "breadcrumb": "Physics · Kinematic Clocks · Interactive Explorer",
+    "search_text": "event-clock event clock The Event Clock — Discrete Temporal Markers in Kinematics Physics Kinematic Clocks Measurement Discrete event timestamps, stroboscopic intervals, and coincidence detection in synchronized multi-body motion. t_event = Δx / v_rel /physics/motion-2d/explorers/event-clock/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-THE_EVENT_CLOCK",
+    "title": "The Event Clock (Precision Benchmark)",
+    "subtitle": "Physics · Kinematic Clocks · Measurement · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/the_event_clock",
+    "breadcrumb": "Physics · Kinematic Clocks · Interactive Explorer",
+    "search_text": "the_event_clock the event clock The Event Clock (Precision Benchmark) Physics Kinematic Clocks Measurement Algorithmic event-driven timing comparator validating continuous kinematic equations against discrete time-step integrations. Δt = (2u sinθ) / g /physics/motion-in-2d/explorers/the_event_clock/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-SHARED_CLOCK",
+    "title": "Shared Clock — Multi-Particle Synchronized Evolution",
+    "subtitle": "Physics · Kinematic Synchronization · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/shared-clock",
+    "breadcrumb": "Physics · Kinematic Synchronization · Interactive Explorer",
+    "search_text": "shared-clock shared clock Shared Clock — Multi-Particle Synchronized Evolution Physics Kinematic Synchronization Kinematics Multi-particle simulation where separate differential evolution equations progress on a single deterministic master clock. t_master = τ₁ = τ₂ /physics/motion-2d/explorers/shared-clock/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-INDEPENDENT_COMPONENTS_SHARED_CLOCK",
+    "title": "Independent Components & Shared Clock Architecture",
+    "subtitle": "Physics · Motion in a Plane · Kinematics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/independent_components_shared_clock",
+    "breadcrumb": "Physics · Motion in a Plane · Interactive Explorer",
+    "search_text": "independent_components_shared_clock independent components shared clock Independent Components & Shared Clock Architecture Physics Motion in a Plane Kinematics Decoupling multi-dimensional equations into independent Cartesian degrees of freedom unified by a single non-spatial parameter. x(t) ⫫ y(t) | t /physics/motion-in-2d/explorers/independent_components_shared_clock/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-ATWOOD_PULLEYS",
+    "title": "Atwood Pulleys — Ideal String Tension & Coupled Acceleration",
+    "subtitle": "Physics · Laws of Motion · Dynamics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/atwood-pulleys",
+    "breadcrumb": "Physics · Laws of Motion · Interactive Explorer",
+    "search_text": "atwood-pulleys atwood pulleys Atwood Pulleys — Ideal String Tension & Coupled Acceleration Physics Laws of Motion Dynamics Newton second law applied to coupled masses over frictionless pulleys: constraint equations, string tension, and system acceleration. a = (m₂ - m₁)g / (m₁ + m₂) /physics/nlm/explorers/atwood-pulleys/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-CONNECTED_BLOCKS",
+    "title": "Connected Blocks — Contact Forces & Internal Tension",
+    "subtitle": "Physics · Laws of Motion · Dynamics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/connected-blocks",
+    "breadcrumb": "Physics · Laws of Motion · Interactive Explorer",
+    "search_text": "connected-blocks connected blocks Connected Blocks — Contact Forces & Internal Tension Physics Laws of Motion Dynamics Free-body diagrams for multiple interacting blocks on horizontal surfaces: normal contact reaction, transmission tension, and net driving force. N_internal = m₁ / (m₁ + m₂) · F /physics/nlm/explorers/connected-blocks/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-FRICTION_THRESHOLD",
+    "title": "Friction Threshold — Static Limiting vs Kinetic Friction",
+    "subtitle": "Physics · Laws of Motion · Dynamics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/friction-threshold",
+    "breadcrumb": "Physics · Laws of Motion · Interactive Explorer",
+    "search_text": "friction-threshold friction threshold Friction Threshold — Static Limiting vs Kinetic Friction Physics Laws of Motion Dynamics Transition dynamics from static stick phase to kinetic slip regime: coefficient of static friction, normal force, and impending motion threshold. f_s ≤ μ_s N, f_k = μ_k N /physics/nlm/explorers/friction-threshold/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-CIRCULAR_DYNAMICS",
+    "title": "Circular Dynamics — Centripetal Acceleration & Road Banking",
+    "subtitle": "Physics · Circular Motion · Dynamics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/circular-dynamics",
+    "breadcrumb": "Physics · Circular Motion · Interactive Explorer",
+    "search_text": "circular-dynamics circular dynamics Circular Dynamics — Centripetal Acceleration & Road Banking Physics Circular Motion Dynamics Uniform circular kinematics: radial centripetal force requirements, banked curves without friction, and skid-limiting critical speed. v_opt = √(R·g·tanθ) /physics/motion-1d/explorers/circular-dynamics/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-ACCELERATED_FRAMES",
+    "title": "Accelerated Frames — Pseudo-Forces & Inertial Duality",
+    "subtitle": "Physics · Laws of Motion · Dynamics · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/accelerated-frames",
+    "breadcrumb": "Physics · Laws of Motion · Interactive Explorer",
+    "search_text": "accelerated-frames accelerated frames Accelerated Frames — Pseudo-Forces & Inertial Duality Physics Laws of Motion Dynamics Non-inertial reference frame dynamics: fictitious D’Alembert inertial forces, apparent weight in elevators, and frame invariance. F_apparent = m(g - a_frame) /physics/nlm/explorers/accelerated-frames/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-BEHAVIOUR_OF_GASES",
+    "title": "Behaviour of Gases — Kinetic Theory & Ideal Gas States",
+    "subtitle": "Chemistry · States of Matter · Physical Chemistry · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/behaviour_of_gases",
+    "breadcrumb": "Chemistry · States of Matter · Interactive Explorer",
+    "search_text": "behaviour_of_gases behaviour of gases Behaviour of Gases — Kinetic Theory & Ideal Gas States Chemistry States of Matter Physical Chemistry State variable correlations (P, V, T, n) adhering to the ideal gas law with interactive Boyle, Charles, and Avogadro transformations. PV = nRT /chemistry/gases/explorers/behaviour_of_gases/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-CHEMICAL_BONDING",
+    "title": "Chemical Bonding — Ionic, Covalent & Dipole Interactions",
+    "subtitle": "Chemistry · Chemical Bonding · Inorganic Chemistry · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/chemical_bonding",
+    "breadcrumb": "Chemistry · Chemical Bonding · Interactive Explorer",
+    "search_text": "chemical_bonding chemical bonding Chemical Bonding — Ionic, Covalent & Dipole Interactions Chemistry Chemical Bonding Inorganic Chemistry Lewis dot structures, valence octet rules, electronegativity differences, and dipole moments across common molecular geometries. Δχ = |χ_A - χ_B| /chemistry/bonding/explorers/chemical_bonding/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-MOLE_CONCEPT",
+    "title": "Mole Concept — Stoichiometry & Mass Conservation",
+    "subtitle": "Chemistry · Basic Concepts of Chemistry · Physical Chemistry · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/mole_concept",
+    "breadcrumb": "Chemistry · Basic Concepts of Chemistry · Interactive Explorer",
+    "search_text": "mole_concept mole concept Mole Concept — Stoichiometry & Mass Conservation Chemistry Basic Concepts of Chemistry Physical Chemistry Conversion matrix between particle counts, moles, molar mass, and STP gas volumes with limiting reactant yield determination. n = m / M = N / N_A /chemistry/some-basic-concepts/explorers/mole_concept/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-REDOX_REACTIONS",
+    "title": "Redox Reactions — Electron Transfer & Oxidation State Engine",
+    "subtitle": "Chemistry · Redox Reactions · Physical Chemistry · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/redox_reactions",
+    "breadcrumb": "Chemistry · Redox Reactions · Interactive Explorer",
+    "search_text": "redox_reactions redox reactions Redox Reactions — Electron Transfer & Oxidation State Engine Chemistry Redox Reactions Physical Chemistry Systematic assignment of oxidation numbers, separation into oxidation/reduction half-cells, and charge conservation balancing. Oxidation Number & Charge Balance /chemistry/redox/explorers/redox_reactions/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "EXPLORER-VECTOR_ALGEBRA",
+    "title": "Vector Algebra — Linear Independence & Geometric Operations",
+    "subtitle": "Mathematics · Vector Algebra · Algebra & Geometry · Explorer",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "#/explorer/vector_algebra",
+    "breadcrumb": "Mathematics · Vector Algebra · Interactive Explorer",
+    "search_text": "vector_algebra vector algebra Vector Algebra — Linear Independence & Geometric Operations Mathematics Vector Algebra Algebra & Geometry Vector addition triangle and parallelogram laws, scalar dot products, cross products, projections, and orthogonal decomposition. A · B = |A||B| cosθ /mathematics/vectors/explorers/vector_algebra/index.html interactive simulation explorer lab gcdr"
+  },
+  {
+    "id": "SUITE-CHEM-REDOX",
+    "title": "Grade 9 Bridge → JEE Chemistry · Redox Reactions Master Suite",
+    "subtitle": "Chemistry · Physical · 8 Content Tracks · 20 JEE Main Questions",
+    "category": "tablet",
+    "type": "MASTER_SUITE",
+    "badge": "MASTER SUITE",
+    "route": "/chemistry/redox/explorers/redox_reactions/index.html",
+    "breadcrumb": "Chemistry · Redox Reactions · Master Suite",
+    "search_text": "redox reactions master suite oxidation state structural exceptions cro5 butterfly cr o 5 mn o 4 permanganate disproportionation h2o2 half cell balancing oxidation number electron transfer formal charge ledger /chemistry/redox/explorers/redox_reactions/index.html jee pyqs titration n-factor equivalent weight"
+  },
+  {
+    "id": "SUITE-CHEM-BONDING",
+    "title": "Chemical Bonding & Molecular Structure · 3D Master Suite",
+    "subtitle": "Chemistry · Inorganic · VSEPR & Hybridization · 20 JEE Main Questions",
+    "category": "tablet",
+    "type": "MASTER_SUITE",
+    "badge": "MASTER SUITE",
+    "route": "/chemistry/bonding/explorers/chemical_bonding/index.html",
+    "breadcrumb": "Chemistry · Chemical Bonding · Master Suite",
+    "search_text": "chemical bonding molecular structure vsepr geometry hybridization sp3 sp2 sp dsp2 dipole moment lewis octet formal charge bond angle geometry /chemistry/bonding/explorers/chemical_bonding/index.html valence shell electron pair repulsion"
+  },
+  {
+    "id": "SUITE-CHEM-GASES",
+    "title": "Behaviour of Gases & Real Gases · Master Suite",
+    "subtitle": "Chemistry · Physical · Kinetic Theory & Real Gas Laws · 20 JEE Main Questions",
+    "category": "tablet",
+    "type": "MASTER_SUITE",
+    "badge": "MASTER SUITE",
+    "route": "/chemistry/gases/explorers/behaviour_of_gases/index.html",
+    "breadcrumb": "Chemistry · States of Matter · Master Suite",
+    "search_text": "behaviour of gases kinetic molecular theory ideal gas equation pv nrt boyle charles avogadro van der waals real gases compressibility factor z graham diffusion effusion /chemistry/gases/explorers/behaviour_of_gases/index.html"
+  },
+  {
+    "id": "SUITE-CHEM-MOLE",
+    "title": "Some Basic Concepts & Mole Concept · Master Suite",
+    "subtitle": "Chemistry · Physical · Stoichiometry & Yield · 20 JEE Main Questions",
+    "category": "tablet",
+    "type": "MASTER_SUITE",
+    "badge": "MASTER SUITE",
+    "route": "/chemistry/some-basic-concepts/explorers/mole_concept/index.html",
+    "breadcrumb": "Chemistry · Basic Concepts · Master Suite",
+    "search_text": "mole concept stoichiometry limiting reagent molarity molality normality mole fraction stp molar volume mass percentage avogadro constant /chemistry/some-basic-concepts/explorers/mole_concept/index.html"
+  },
+  {
+    "id": "SUITE-MATH-VECTORS",
+    "title": "Vector Algebra · 3D Spatial Master Suite & Question Hub",
+    "subtitle": "Mathematics · Vectors & 3D · 13 JEE Main Questions",
+    "category": "tablet",
+    "type": "MASTER_SUITE",
+    "badge": "MASTER SUITE",
+    "route": "/mathematics/vectors/explorers/vector_algebra/index.html",
+    "breadcrumb": "Mathematics · Vector Algebra · Master Suite",
+    "search_text": "vector algebra 3d spatial geometry dot product scalar product cross product vector product projection unit vector linear independence coplanar vectors /mathematics/vectors/explorers/vector_algebra/index.html"
+  },
+  {
+    "id": "SUITE-PHYS-1D",
+    "title": "Motion in 1D · Master Suite & Kinematics Question Hub",
+    "subtitle": "Physics · Kinematics · Rectilinear Mechanics · 18 JEE Main Questions",
+    "category": "tablet",
+    "type": "MASTER_SUITE",
+    "badge": "MASTER SUITE",
+    "route": "/physics/motion-1d/explorers/motion_in_1d/index.html",
+    "breadcrumb": "Physics · Motion in 1D · Master Suite",
+    "search_text": "motion in 1d one dimension kinematics position velocity acceleration displacement time graph rectilinear motion calculus derivative integral /physics/motion-1d/explorers/motion_in_1d/index.html"
+  },
+  {
+    "id": "SUITE-PHYS-2D",
+    "title": "Motions in 2D · Master Suite & Trajectory Hub",
+    "subtitle": "Physics · Kinematics · 2D Motion & Projectiles · 104 Questions",
+    "category": "tablet",
+    "type": "MASTER_SUITE",
+    "badge": "MASTER SUITE",
+    "route": "/physics/motion-in-2d/explorers/motions_in_2d/index.html",
+    "breadcrumb": "Physics · Motion in 2D · Master Suite",
+    "search_text": "motions in 2d two dimensions projectile motion trajectory angle horizontal range maximum height time of flight relative velocity phase space /physics/motion-in-2d/explorers/motions_in_2d/index.html"
+  },
+  {
+    "id": "EXPLORER-CHEM-REDOX-ADAPTIVE-PROOF",
+    "title": "Redox Adaptive Visual Proof · 50% Entry Gate",
+    "subtitle": "Chemistry · Redox Reactions · Adaptive Concept Proof",
+    "category": "tablet",
+    "type": "EXPLORER",
+    "badge": "EXPLORER",
+    "route": "/chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html",
+    "breadcrumb": "Chemistry · Redox Reactions · Adaptive Visual Proof",
+    "search_text": "redox adaptive visual proof 50% entry gate oxidation state peroxide superoxide /chemistry/redox/explorers/redox_reactions/adaptive-hard-concept-proof.html"
   },
   {
     "id": "PYQ-CHEM-IITJEE-2008-P1-Q66",
@@ -11961,6 +12313,9 @@ function scoreItem(item: UniversalSearchDoc, tokens: string[], term: string): nu
 
   if (tokens.length > 0 && tokens.every(tok => textNorm.includes(tok))) score += 500;
   if (textNorm.includes(term)) score += 300;
+
+  if (item.type === 'EXPLORER' || item.type === 'MASTER_SUITE') score += 800;
+  else if (item.type === 'CONCEPT' || item.type === 'TOPIC') score += 400;
 
   return score;
 }

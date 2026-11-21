@@ -384,7 +384,11 @@ export class UniversalSearchModalController {
     card.addEventListener('click', (e) => {
       e.preventDefault();
       this.close();
-      window.location.hash = item.route;
+      if (item.route.startsWith('#')) {
+        window.location.hash = item.route;
+      } else {
+        window.location.href = item.route;
+      }
     });
 
     // Left info column
@@ -423,6 +427,9 @@ export class UniversalSearchModalController {
     } else if (b.includes('QUESTION')) {
       badge.style.background = '#ecfdf5';
       badge.style.color = '#047857';
+    } else if (b.includes('EXPLORER') || b.includes('SUITE')) {
+      badge.style.background = '#f5f3ff';
+      badge.style.color = '#7c3aed';
     } else if (b.includes('CORE') || b.includes('LAB')) {
       badge.style.background = '#e0f2fe';
       badge.style.color = '#0369a1';
