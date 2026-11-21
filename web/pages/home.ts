@@ -7,7 +7,7 @@
  * - 17px base typography conforming to native shell specifications
  * - Declarative extensible registry architecture (Subjects, Competitive Exams, Tests, Labs)
  * - Honest content accounting with zero unverified/fabricated counts
- * - Seven canonical native educational roles (CORE1, CORE1A, CORE1B, CORE2, CORE2A, CORE2B, EXPLORER)
+ * - Curated practice test suites, competitive exams, and interactive workbenches
  * - Top-right search integration and Personal Study Hub footer replacing legacy Diagnostic View
  *
  * Owner-authorized implementation; academic admission remains HOLD.
@@ -387,65 +387,6 @@ export class DashboardScreenController {
     </div>
   </section>
 
-  <!-- Canonical Seven Native Educational Roles -->
-  <section class="g9-section" aria-label="Seven native educational roles">
-    <div class="g9-section-header">
-      <div>
-        <h2>Seven Canonical Native Educational Roles</h2>
-        <p class="g9-section-sub">Pedagogical workspaces conforming to authoritative blueprint contracts</p>
-      </div>
-    </div>
-    <div class="g9-card-grid g9-roles-grid">
-      <article class="g9-card g9-role-card">
-        <span class="g9-code-pill">CORE1</span>
-        <h3>Orientation Workspace</h3>
-        <p>Intuitive concept entrypoints and visual anchors for foundational domain understanding.</p>
-        <button type="button" class="g9-btn g9-btn-secondary" data-nav="/learning/core1">Open Core 1 →</button>
-      </article>
-
-      <article class="g9-card g9-role-card">
-        <span class="g9-code-pill">CORE1A</span>
-        <h3>Teaching & Concept Anchor</h3>
-        <p>Ordered progressive teaching journey with interactive anchor projections and scientific model stages.</p>
-        <button type="button" class="g9-btn g9-btn-primary" data-nav="/learning/core1a">Open Core 1A →</button>
-      </article>
-
-      <article class="g9-card g9-role-card">
-        <span class="g9-code-pill">CORE1B</span>
-        <h3>Phenomenological Reconstruction</h3>
-        <p>Inquiry journey with pre-observation prediction commitment, qualitative CAS drafts, and divergence diagnosis.</p>
-        <button type="button" class="g9-btn g9-btn-primary" data-nav="/learning/core1b">Open Core 1B →</button>
-      </article>
-
-      <article class="g9-card g9-role-card">
-        <span class="g9-code-pill">CORE2</span>
-        <h3>Authentic Question Bank</h3>
-        <p>Real stimulus split-pane workspace with protected assessment-state scoring after verified commitment.</p>
-        <button type="button" class="g9-btn g9-btn-primary" data-nav="/learning/core2">Open Core 2 →</button>
-      </article>
-
-      <article class="g9-card g9-role-card">
-        <span class="g9-code-pill">CORE2A</span>
-        <h3>Supported Application</h3>
-        <p>Guided practice with bound reasoning crux disclosure, dual-locale presentations, and structured editors.</p>
-        <button type="button" class="g9-btn g9-btn-secondary" data-nav="/learning/core2a">Open Core 2A →</button>
-      </article>
-
-      <article class="g9-card g9-role-card">
-        <span class="g9-code-pill">CORE2B</span>
-        <h3>Changed-Demand Transfer</h3>
-        <p>Independent transfer under altered cognitive demand and constraints, with exact source-route return context.</p>
-        <button type="button" class="g9-btn g9-btn-secondary" data-nav="/learning/core2b">Open Core 2B →</button>
-      </article>
-
-      <article class="g9-card g9-role-card">
-        <span class="g9-code-pill">EXPLORER</span>
-        <h3>Scientific Simulation Runtime</h3>
-        <p>10-stage GCDR interactive simulation runtime with real-time parameter manipulation and phase space plots.</p>
-        <button type="button" class="g9-btn g9-btn-primary" data-nav="/explorer">Open Explorer →</button>
-      </article>
-    </div>
-  </section>
 
   <!-- My Personal Study Hub (Replacing Legacy Diagnostic View) -->
   <footer class="g9-personal-study-footer" aria-label="Personal study tools">

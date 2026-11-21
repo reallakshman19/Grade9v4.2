@@ -165,4 +165,38 @@ describe('Question Bank Screen Controller & Native DOM Mounting', () => {
       assert.equal(item.subjectCode, 'PHYS');
     }
   });
+
+  it('directly resolves all canonical topic slug navigation routes without zero results', () => {
+    const testCases: { query: string; minCount: number; expectedSubj?: string }[] = [
+      { query: 'subject=Physics&topic=motion-1d', minCount: 20, expectedSubj: 'PHYS' },
+      { query: 'subject=Physics&topic=motion-2d', minCount: 100, expectedSubj: 'PHYS' },
+      { query: 'subject=Physics&topic=nlm', minCount: 15, expectedSubj: 'PHYS' },
+      { query: 'subject=Physics&topic=vectors', minCount: 13 },
+      { query: 'subject=Chemistry&topic=bonding', minCount: 30, expectedSubj: 'CHEM' },
+      { query: 'subject=Chemistry&topic=gases', minCount: 20, expectedSubj: 'CHEM' },
+      { query: 'subject=Chemistry&topic=mole', minCount: 50, expectedSubj: 'CHEM' },
+      { query: 'subject=Chemistry&topic=redox', minCount: 40, expectedSubj: 'CHEM' },
+      { query: 'subject=Mathematics&topic=coordinate-geometry', minCount: 15, expectedSubj: 'MATH' },
+      { query: 'subject=Mathematics&topic=euclids-geometry', minCount: 40, expectedSubj: 'MATH' },
+      { query: 'subject=Mathematics&topic=theory-of-equations', minCount: 25, expectedSubj: 'MATH' },
+      { query: 'topic=genetics', minCount: 30, expectedSubj: 'BIO' },
+      { query: 'capability=MIC-PHY-GENERAL-PRACTICE', minCount: 10 },
+    ];
+
+    for (const tc of testCases) {
+      const controller = createQuestionBankScreen();
+      controller.loadFromUrlParams(new URLSearchParams(tc.query));
+      const state = controller.getViewState();
+      assert.equal(state.status, 'POPULATED', `Query "${tc.query}" should return POPULATED status`);
+      assert.ok(
+        state.totalMatchingCount >= tc.minCount,
+        `Query "${tc.query}" expected >= ${tc.minCount} matches, got ${state.totalMatchingCount}`
+      );
+      if (tc.expectedSubj) {
+        for (const item of state.pageItems) {
+          assert.equal(item.subjectCode, tc.expectedSubj, `Expected subject ${tc.expectedSubj} for item ${item.id}`);
+        }
+      }
+    }
+  });
 });

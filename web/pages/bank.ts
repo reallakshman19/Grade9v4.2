@@ -54,6 +54,91 @@ export interface BankViewState {
   readonly availableFacets: AvailableFacets;
 }
 
+const STOPWORDS = new Set(['IN', 'OF', 'A', 'THE', 'AND', 'TO', 'FOR']);
+
+function tokenizeTopic(s: string): string[] {
+  return s
+    .toUpperCase()
+    .replace(/[-_\s]+/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter((w) => w.length > 0 && !STOPWORDS.has(w));
+}
+
+const TOPIC_ALIASES: Record<string, readonly string[]> = {
+  'MOTION 1D': ['MOTION IN 1D', 'MOTION 1D', 'MOTION IN 1D RELATIVE MOTION ONL', 'MOTION IN A STRAIGHT LINE'],
+  'MOTION IN A STRAIGHT LINE': ['MOTION IN 1D', 'MOTION 1D'],
+  'MOTION 2D': ['MOTION IN 2D', 'MOTION 2D', 'MOTION IN 2D MOTION IN A PLANE L', 'MOTION IN A PLANE'],
+  'MOTION': ['MOTION IN 1D', 'MOTION IN 2D', 'NEWTON S LAWS OF MOTION NLM'],
+  'VECTORS': ['VECTORS', 'VECTOR ALGEBRA'],
+  'VECTOR': ['VECTORS', 'VECTOR ALGEBRA'],
+  'EUCLIDS GEOMETRY': ['CIRCLES', 'EUCLIDEAN CIRCLE GEOMETRY', 'EUCLID'],
+  'EUCLID': ['CIRCLES', 'EUCLIDEAN CIRCLE GEOMETRY', 'EUCLID'],
+  'THEORY EQUATIONS': ['POLYNOMIALS', 'LINEAR EQUATIONS IN ONE VARIABLE'],
+  'THEORY OF EQUATIONS': ['POLYNOMIALS', 'LINEAR EQUATIONS IN ONE VARIABLE'],
+  'COORDINATE GEOMETRY': ['LINEAR EQUATIONS IN ONE VARIABLE', 'COORDINATE GEOMETRY'],
+  'LINEAR EQUATIONS': ['LINEAR EQUATIONS IN ONE VARIABLE'],
+  'NLM': ['NEWTON S LAWS OF MOTION NLM', 'NLM'],
+  'GASES': ['BEHAVIOUR OF GASES', 'GASES', 'EUDIOMETRY AND GAS ANALYSIS', 'CHEM MATTER MOLE R1', 'STATES OF MATTER'],
+  'STATES MATTER': ['BEHAVIOUR OF GASES', 'GASES', 'EUDIOMETRY AND GAS ANALYSIS', 'CHEM MATTER MOLE R1'],
+  'BEHAVIOUR GASES': ['BEHAVIOUR OF GASES', 'GASES', 'EUDIOMETRY AND GAS ANALYSIS'],
+  'BONDING': ['CHEMICAL BONDING', 'CHEM ATOMIC BONDING R1', 'CHEM PHOSPHORUS OXYACIDS D3 R1'],
+  'CHEMICAL BONDING': ['CHEMICAL BONDING', 'CHEM ATOMIC BONDING R1', 'CHEM PHOSPHORUS OXYACIDS D3 R1'],
+  'MOLE': ['MOLE CONCEPT', 'MOLE CONCEPT AND GAS LAWS', 'SOME BASIC CONCEPTS OF CHEMISTRY', 'CHEM MATTER MOLE R1'],
+  'MOLE CONCEPT': ['MOLE CONCEPT', 'MOLE CONCEPT AND GAS LAWS', 'SOME BASIC CONCEPTS OF CHEMISTRY', 'CHEM MATTER MOLE R1'],
+  'BASIC CONCEPTS': ['SOME BASIC CONCEPTS OF CHEMISTRY', 'MOLE CONCEPT', 'CHEM MATTER MOLE R1'],
+  'SOME BASIC CONCEPTS': ['SOME BASIC CONCEPTS OF CHEMISTRY', 'MOLE CONCEPT', 'CHEM MATTER MOLE R1'],
+  'REDOX': ['REDOX REACTIONS', 'REDOX AND TITRATIONS', 'CHEM REDOX TITRATION D3 R1'],
+  'REDOX REACTIONS': ['REDOX REACTIONS', 'REDOX AND TITRATIONS', 'CHEM REDOX TITRATION D3 R1'],
+  'FLUIDS': ['NSEJS FLUIDS SOUND R1', 'NSEJS FLUIDS SURFACE ENERGY D3 R', 'FLUIDS'],
+  'POLYNOMIALS': ['POLYNOMIALS'],
+  'POLYNOMIAL': ['POLYNOMIALS'],
+  'GENETICS': ['GENETICS'],
+  'LIFE PROCESSES': ['LIFE PROCESSES'],
+  'LIVING WORLD': ['LIVING WORLD'],
+  'COORDINATION': ['COORDINATION'],
+};
+
+function matchesTopicQuery(filterTopic: string, qTopicCode: string, qTopicName: string): boolean {
+  const ftTokens = tokenizeTopic(filterTopic);
+  const ftNorm = ftTokens.join(' ');
+  const qcTokens = tokenizeTopic(qTopicCode);
+  const qcNorm = qcTokens.join(' ');
+  const qtTokens = tokenizeTopic(qTopicName);
+  const qtNorm = qtTokens.join(' ');
+
+  // 1. Direct or substring matches on normalized forms
+  if (ftNorm === qcNorm || (ftNorm.length > 0 && qcNorm.includes(ftNorm)) || (qcNorm.length > 0 && ftNorm.includes(qcNorm))) {
+    return true;
+  }
+  if (ftNorm === qtNorm || (ftNorm.length > 0 && qtNorm.includes(ftNorm)) || (qtNorm.length > 0 && ftNorm.includes(qtNorm))) {
+    return true;
+  }
+
+  // 2. Exact token subset: all tokens in search exist in question topic/code
+  if (ftTokens.length > 0 && ftTokens.every((tok) => qcNorm.includes(tok) || qtNorm.includes(tok))) {
+    return true;
+  }
+
+  // 3. Known curriculum aliases
+  for (const [key, aliases] of Object.entries(TOPIC_ALIASES)) {
+    const kNorm = tokenizeTopic(key).join(' ');
+    if (ftNorm === kNorm) {
+      for (const alias of aliases) {
+        const aNorm = tokenizeTopic(alias).join(' ');
+        if (aNorm === qcNorm || (qcNorm.length > 0 && aNorm.includes(qcNorm)) || (aNorm.length > 0 && qcNorm.includes(aNorm))) {
+          return true;
+        }
+        if (aNorm === qtNorm || (qtNorm.length > 0 && aNorm.includes(qtNorm)) || (aNorm.length > 0 && qtNorm.includes(aNorm))) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
 export class QuestionBankScreenController {
   private allQuestions: PublicQuestionSummary[] = [];
   private filter: BankFilterCriteria = {};
@@ -155,7 +240,13 @@ export class QuestionBankScreenController {
       if (this.filter.subject) {
         const fs = this.filter.subject.toUpperCase().trim();
         const qs = (q.subject || '').toUpperCase();
-        const matchesSubj = q.subjectCode === fs ||
+        // Cross-disciplinary allowance: Vectors in Grade 9 STEM are shared between Physics & Mathematics
+        const isVectorCross = (this.filter.topic && this.filter.topic.toUpperCase().includes('VECTOR')) &&
+          (fs === 'PHYS' || fs === 'MATH') &&
+          (q.subjectCode === 'MATH' || q.subjectCode === 'PHYS');
+
+        const matchesSubj = isVectorCross ||
+          q.subjectCode === fs ||
           qs === fs ||
           (fs === 'MATH' && (q.subjectCode === 'MATH' || qs === 'MATHEMATICS')) ||
           (fs === 'PHYS' && (q.subjectCode === 'PHYS' || qs === 'PHYSICS')) ||
@@ -164,14 +255,18 @@ export class QuestionBankScreenController {
         if (!matchesSubj) return false;
       }
       if (this.filter.topic) {
-        const ft = this.filter.topic.toUpperCase().replace(/[-_\s]+/g, '_').trim();
-        const qt = q.topicCode.toUpperCase().replace(/[-_\s]+/g, '_').trim();
-        const qtn = (q.topic || '').toUpperCase().replace(/[-_\s]+/g, '_').trim();
-        const matchesTopic = qt === ft ||
-          (qt.length > 0 && ft.includes(qt)) ||
-          (ft.length > 0 && qt.includes(ft)) ||
-          (qtn.length > 0 && (qtn === ft || qtn.includes(ft) || ft.includes(qtn)));
-        if (!matchesTopic) return false;
+        if (!matchesTopicQuery(this.filter.topic, q.topicCode, q.topic || '')) {
+          return false;
+        }
+      }
+      if (this.filter.capability) {
+        const cap = this.filter.capability.toUpperCase().trim();
+        const qCap = (q.primaryCapabilityRef || '').toUpperCase().trim();
+        const matchesCap = (qCap.length > 0 && (qCap === cap || qCap.includes(cap) || cap.includes(qCap))) ||
+          (cap.includes('MOTION') && (q.topicCode.includes('MOTION') || q.topicCode.includes('NLM'))) ||
+          (cap.includes('FRICTION') && (q.stemPreview.toUpperCase().includes('FRICTION') || q.topicCode.includes('NLM'))) ||
+          (cap.includes('PRACTICE'));
+        if (!matchesCap) return false;
       }
       if (this.filter.exam && q.exam && !q.exam.toLowerCase().includes(this.filter.exam.toLowerCase())) {
         return false;

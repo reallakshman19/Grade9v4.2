@@ -19,6 +19,7 @@ export type QuestionDifficulty = 'FOUNDATION' | 'INTERMEDIATE' | 'ADVANCED' | 'O
 export interface BankFilterCriteria {
   readonly subject?: string;
   readonly topic?: string;
+  readonly capability?: string;
   readonly difficulty?: QuestionDifficulty;
   readonly role?: string;
   readonly exam?: string;
@@ -49,6 +50,7 @@ export function serializeFilterToQueryParams(filter: BankFilterCriteria): URLSea
 
   if (filter.subject) params.set('subject', filter.subject);
   if (filter.topic) params.set('topic', filter.topic);
+  if (filter.capability) params.set('capability', filter.capability);
   if (filter.difficulty) params.set('difficulty', filter.difficulty);
   if (filter.role) params.set('role', filter.role);
   if (filter.exam) params.set('exam', filter.exam);
@@ -66,6 +68,7 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
   const filter: {
     subject?: string;
     topic?: string;
+    capability?: string;
     difficulty?: QuestionDifficulty;
     role?: string;
     exam?: string;
@@ -86,6 +89,9 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
 
   const topic = params.get('topic');
   if (topic) filter.topic = topic.toUpperCase().trim();
+
+  const capability = params.get('capability');
+  if (capability) filter.capability = capability.trim();
 
   const difficulty = params.get('difficulty');
   if (difficulty) {

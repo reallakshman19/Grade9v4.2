@@ -37,6 +37,7 @@ export interface PublicQuestionSummary {
   readonly steps?: readonly string[];
   readonly check?: string;
   readonly trapWarning?: string;
+  readonly primaryCapabilityRef?: string;
   readonly options?: readonly { readonly id: string; readonly text: string }[];
 }
 
@@ -74,6 +75,7 @@ export function sanitizePublicQuestionSummary(raw: any): PublicQuestionSummary {
     steps: Array.isArray(raw.steps) ? raw.steps.map(String) : undefined,
     check: raw.check ? String(raw.check) : undefined,
     trapWarning: raw.trapWarning ? String(raw.trapWarning) : undefined,
+    primaryCapabilityRef: raw.primaryCapabilityRef ? String(raw.primaryCapabilityRef) : undefined,
     options: Array.isArray(raw.options) ? raw.options.map((o: any) => ({ id: String(o.id || ''), text: String(o.text || '') })) : undefined,
   };
 }
