@@ -84,23 +84,23 @@ test('Gate W10-G7 — Standalone Labs Hub & STEM Workbenches Tablet Audit', { ti
       assert.match(hubText || '', /Academic Status: HOLD/);
       assert.match(hubText || '', /Standalone Labs & STEM Workbenches/);
 
-      // Verify 16 cards exist
+      // Verify 37 unified cards exist
       const labCards = await page.locator('.lab-card').count();
-      assert.equal(labCards, 16, 'Must render 16 standalone lab cards');
+      assert.equal(labCards, 37, 'Must render 37 standalone lab cards');
 
       // Filter by Chemistry
       const chemFilterBtn = page.locator('button[data-disc="CHEMISTRY"]');
       await chemFilterBtn.click();
-      assert.equal(await page.locator('.lab-card').count(), 6);
+      assert.equal(await page.locator('.lab-card').count(), 8);
 
       // Filter by Physics
       const physFilterBtn = page.locator('button[data-disc="PHYSICS"]');
       await physFilterBtn.click();
-      assert.equal(await page.locator('.lab-card').count(), 6);
+      assert.equal(await page.locator('.lab-card').count(), 23);
 
       // Reset to All
       await page.locator('button[data-disc="ALL"]').click();
-      assert.equal(await page.locator('.lab-card').count(), 16);
+      assert.equal(await page.locator('.lab-card').count(), 37);
 
       // Verify geometry on landscape
       await auditGeometry(page, 'Labs Hub (Landscape 1600x1000)');

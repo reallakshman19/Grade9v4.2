@@ -69,9 +69,9 @@ test('Gate P6-G8 — Phase 6 Mathematics Expansion Tablet Audit & E2E Journeys',
     assert.match(banner || '', /Academic Status: HOLD/);
     assert.match(banner || '', /Diagnostic Mode Authorized/);
 
-    // Verify 3 topics rendered
+    // Verify 7 topics rendered (Algebra, Analysis, Geometry)
     const topicCards = await page.locator('.g9-topic-card').count();
-    assert.equal(topicCards, 3);
+    assert.equal(topicCards, 7);
 
     await auditGeometry('Mathematics Subject Screen');
     await page.screenshot({ path: `${EVIDENCE_DIR}/phase6_math_subject_1600x1000.png` });

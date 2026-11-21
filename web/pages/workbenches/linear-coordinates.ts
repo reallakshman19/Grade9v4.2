@@ -378,15 +378,15 @@ export function mountLinearCoordinatesWorkbench(
                 <div style="display:flex;flex-direction:column;gap:0.75rem;">
                   <div style="display:flex;align-items:center;gap:8px;">
                     <span style="font-weight:700;width:30px;">L₁:</span>
-                    <input type="number" id="l1-a" value="${l1.a}" style="width:60px;min-height:44px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> x +
-                    <input type="number" id="l1-b" value="${l1.b}" style="width:60px;min-height:44px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> y =
-                    <input type="number" id="l1-c" value="${l1.c}" style="width:60px;min-height:44px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                    <input type="number" id="l1-a" value="${l1.a}" style="width:60px;min-height:${HIT_TARGET_MIN_PX}px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> x +
+                    <input type="number" id="l1-b" value="${l1.b}" style="width:60px;min-height:${HIT_TARGET_MIN_PX}px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> y =
+                    <input type="number" id="l1-c" value="${l1.c}" style="width:60px;min-height:${HIT_TARGET_MIN_PX}px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                   </div>
                   <div style="display:flex;align-items:center;gap:8px;">
                     <span style="font-weight:700;width:30px;">L₂:</span>
-                    <input type="number" id="l2-a" value="${l2.a}" style="width:60px;min-height:44px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> x +
-                    <input type="number" id="l2-b" value="${l2.b}" style="width:60px;min-height:44px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> y =
-                    <input type="number" id="l2-c" value="${l2.c}" style="width:60px;min-height:44px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                    <input type="number" id="l2-a" value="${l2.a}" style="width:60px;min-height:${HIT_TARGET_MIN_PX}px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> x +
+                    <input type="number" id="l2-b" value="${l2.b}" style="width:60px;min-height:${HIT_TARGET_MIN_PX}px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;"> y =
+                    <input type="number" id="l2-c" value="${l2.c}" style="width:60px;min-height:${HIT_TARGET_MIN_PX}px;padding:4px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                   </div>
 
                   <div style="margin-top:0.5rem;padding:0.75rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;">
@@ -419,15 +419,15 @@ export function mountLinearCoordinatesWorkbench(
 
               <div style="display:flex;flex-direction:column;gap:1rem;">
                 <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                  <input type="number" id="poly-a" value="${poly.a}" style="width:50px;min-height:44px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;"> x³ +
-                  <input type="number" id="poly-b" value="${poly.b}" style="width:50px;min-height:44px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;"> x² +
-                  <input type="number" id="poly-c" value="${poly.c}" style="width:50px;min-height:44px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;"> x +
-                  <input type="number" id="poly-d" value="${poly.d}" style="width:50px;min-height:44px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;">
+                  <input type="number" id="poly-a" value="${poly.a}" style="width:50px;min-height:${HIT_TARGET_MIN_PX}px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;"> x³ +
+                  <input type="number" id="poly-b" value="${poly.b}" style="width:50px;min-height:${HIT_TARGET_MIN_PX}px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;"> x² +
+                  <input type="number" id="poly-c" value="${poly.c}" style="width:50px;min-height:${HIT_TARGET_MIN_PX}px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;"> x +
+                  <input type="number" id="poly-d" value="${poly.d}" style="width:50px;min-height:${HIT_TARGET_MIN_PX}px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;">
                 </div>
 
                 <div style="display:flex;align-items:center;gap:8px;">
                   <span style="font-weight:700;">Divisor: (x − k) with k =</span>
-                  <input type="number" id="poly-k" value="${poly.k}" style="width:60px;min-height:44px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;">
+                  <input type="number" id="poly-k" value="${poly.k}" style="width:60px;min-height:${HIT_TARGET_MIN_PX}px;text-align:center;border:1px solid #cbd5e1;border-radius:4px;font-weight:700;">
                 </div>
 
                 <!-- Synthetic Division Step-by-Step HUD -->

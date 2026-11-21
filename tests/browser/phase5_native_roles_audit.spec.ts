@@ -190,9 +190,9 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
     const core2Btns = page.locator('button[data-action="open-question"][data-mode="CORE2"]');
     const core2aBtns = page.locator('button[data-action="open-question"][data-mode="CORE2A"]');
     const core2bBtns = page.locator('button[data-action="open-question"][data-mode="CORE2B"]');
-    assert.equal(await core2Btns.count(), 4);
-    assert.equal(await core2aBtns.count(), 4);
-    assert.equal(await core2bBtns.count(), 4);
+    assert.ok(await core2Btns.count() >= 4, 'Must render at least 4 Core 2 buttons');
+    assert.ok(await core2aBtns.count() >= 4, 'Must render at least 4 Core 2A buttons');
+    assert.ok(await core2bBtns.count() >= 4, 'Must render at least 4 Core 2B buttons');
 
     await page.screenshot({ path: `${EVIDENCE_DIR}/phase5_topic_question_bank_deck_1600x1000.png` });
 

@@ -1567,7 +1567,7 @@ export function mountTopicWorkspace(
       topic: topic.code,
       pageSize: 50,
     });
-    if (dbResults.items.length > 0) {
+    if (deck.length === 0 && dbResults.items.length > 0) {
       deck = dbResults.items.map(entry => ({
         id: entry.id,
         code: entry.code,
@@ -1773,37 +1773,18 @@ export function mountTopicWorkspace(
     const isChemTopic = topic.subjectCode.toUpperCase() === 'CHEMISTRY' || topic.subjectId.toLowerCase() === 'chemistry';
     const isWpeTopic = topic.code === 'WPE' || topic.id.toLowerCase().includes('wpe');
 
-    if (isWpeTopic) {
-      container.innerHTML = `
-        <div class="g9-learn-try-hub">
-          <!-- WPE 7-Subrole Segmented Selector -->
-          <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;" role="tablist" aria-label="WPE Learn & Try Modules">
-            <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">1. 📘 Core 1A: Concept Construction (9 Units)</button>
-            <button type="button" data-subrole="FOUNDATION" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'FOUNDATION' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'FOUNDATION' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">2. 🌟 Foundation Lesson</button>
-            <button type="button" data-subrole="THINKING_SKILLS" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'THINKING_SKILLS' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'THINKING_SKILLS' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. 🧠 5 Thinking Skills</button>
-            <button type="button" data-subrole="PRACTICE" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'PRACTICE' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'PRACTICE' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">4. ✏️ Attempt-First Practice</button>
-            <button type="button" data-subrole="PH04" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'PH04' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'PH04' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">5. 📐 PH04: 5 Curricular Units &amp; SVGs</button>
-            <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">6. 🔄 Core 1B: 21 Cognitive Journeys</button>
-            <button type="button" data-subrole="LEARNING_PACKS" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'LEARNING_PACKS' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'LEARNING_PACKS' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">7. 📚 13 Learning Pack Bridges</button>
-          </div>
-
-          <div id="g9-learn-try-mount-root"></div>
+    container.innerHTML = `
+      <div class="g9-learn-try-hub">
+        <!-- 3-Role Segmented Selector (Learn & Try Family) -->
+        <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;" role="tablist" aria-label="Learn & Try Subroles">
+          <button type="button" data-subrole="CORE1" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">1. Core 1: Reading Orientation</button>
+          <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">2. Core 1A: Concept Construction (${topic.code === 'WPE' ? '9 Units · 5 Skills' : '9 Units'})</button>
+          <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: ${topic.code === 'EUCLID' ? 'Deductive Proof Workspace (A27)' : isChemTopic ? 'Chemical Representation Workspace (A28)' : 'Phenomenological Reconstruction & Stylus Ink Workspace (A26)'}</button>
         </div>
-      `;
-    } else {
-      container.innerHTML = `
-        <div class="g9-learn-try-hub">
-          <!-- 3-Role Segmented Selector (Learn & Try Family) -->
-          <div style="display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap;" role="tablist" aria-label="Learn & Try Subroles">
-            <button type="button" data-subrole="CORE1" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">1. Core 1: Reading Orientation</button>
-            <button type="button" data-subrole="CORE1A" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1A' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1A' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">2. Core 1A: Concept Construction (${topic.code === 'WPE' ? '9 Units · 5 Skills' : '9 Units'})</button>
-            <button type="button" data-subrole="CORE1B" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${learnTrySubRole === 'CORE1B' ? '#0284c7' : '#f8fafc'};color:${learnTrySubRole === 'CORE1B' ? '#ffffff' : '#0f172a'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;">3. Core 1B: ${topic.code === 'EUCLID' ? 'Deductive Proof Workspace (A27)' : isChemTopic ? 'Chemical Representation Workspace (A28)' : 'Reconstruction & Stylus Ink Workspace (A26)'}</button>
-          </div>
 
-          <div id="g9-learn-try-mount-root"></div>
-        </div>
-      `;
-    }
+        <div id="g9-learn-try-mount-root"></div>
+      </div>
+    `;
 
     const subRoot = container.querySelector<HTMLElement>('#g9-learn-try-mount-root')!;
 
@@ -1909,7 +1890,7 @@ export function mountTopicWorkspace(
       if (topic.code === 'WPE') {
         subRoot.innerHTML = `
           <div style="display:flex;flex-direction:column;gap:1.5rem;">
-            <div id="g9-wpe-cognitive-journey-slot"></div>
+            <div id="g9-wpe-cognitive-journey-slot" class="g9-transfer-page"></div>
             <div style="border-top:1px solid #e2e8f0;padding-top:1.5rem;">
               <h3 style="margin:0 0 0.5rem;font-size:1.15rem;font-weight:700;color:#0f172a;">A26 Stylus Digital Ink &amp; Working Scratchpad</h3>
               <p style="margin:0 0 1rem;font-size:0.9rem;color:#64748b;">Use finger or stylus to sketch free-body diagrams, coordinate axes, and preliminary algebra during cognitive transfer.</p>

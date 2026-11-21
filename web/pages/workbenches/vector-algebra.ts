@@ -694,15 +694,15 @@ export function mountVectorAlgebraWorkbench(
                   <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;">
                     <div>
                       <label style="font-size:0.875rem;font-weight:600;color:#64748b;">Ax</label>
-                      <input type="number" id="va-x" value="${a.x}" style="width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                      <input type="number" id="va-x" value="${a.x}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                     </div>
                     <div>
                       <label style="font-size:0.875rem;font-weight:600;color:#64748b;">Ay</label>
-                      <input type="number" id="va-y" value="${a.y}" style="width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                      <input type="number" id="va-y" value="${a.y}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                     </div>
                     <div>
                       <label style="font-size:0.875rem;font-weight:600;color:#64748b;">Az</label>
-                      <input type="number" id="va-z" value="${a.z}" style="width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                      <input type="number" id="va-z" value="${a.z}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                     </div>
                   </div>
                 </div>
@@ -713,15 +713,15 @@ export function mountVectorAlgebraWorkbench(
                   <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;">
                     <div>
                       <label style="font-size:0.875rem;font-weight:600;color:#64748b;">Bx</label>
-                      <input type="number" id="vb-x" value="${b.x}" style="width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                      <input type="number" id="vb-x" value="${b.x}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                     </div>
                     <div>
                       <label style="font-size:0.875rem;font-weight:600;color:#64748b;">By</label>
-                      <input type="number" id="vb-y" value="${b.y}" style="width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                      <input type="number" id="vb-y" value="${b.y}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                     </div>
                     <div>
                       <label style="font-size:0.875rem;font-weight:600;color:#64748b;">Bz</label>
-                      <input type="number" id="vb-z" value="${b.z}" style="width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
+                      <input type="number" id="vb-z" value="${b.z}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;border:1px solid #cbd5e1;border-radius:4px;text-align:center;font-weight:700;">
                     </div>
                   </div>
                 </div>
