@@ -147,7 +147,7 @@ export async function renderSettings({ store, box, button, action }: PersonalCon
     const input = el('input');
     input.type = 'file';
     input.accept = 'application/json,.json';
-    input.style.cssText = 'margin-bottom:10px;font-size:0.9rem;';
+    input.style.cssText = 'display:block;width:100%;max-width:100%;min-width:48px;min-height:48px;box-sizing:border-box;padding:10px 8px;margin-bottom:10px;font-size:0.9rem;border:1px solid #94a3b8;border-radius:6px;background:#fff;color:#0f172a;';
     l.append(input);
     col.append(l);
 
