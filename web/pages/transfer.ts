@@ -37,6 +37,7 @@ export function createDefaultTransferDefinition(topicCode?: string): Core1BTrans
         hints: [
           { level: 'H1', assetRef: ref('ASSET', `asset:${qA.id}-h1`), text: qA.hints?.[0] || 'Consider baseline physical law', guidance: 'Isolate initial and final state' },
           { level: 'H2', assetRef: ref('ASSET', `asset:${qA.id}-h2`), text: qA.hints?.[1] || 'Apply energy or conservation theorem', guidance: 'Check boundary work ledger' },
+          { level: 'H3', assetRef: ref('ASSET', `asset:${qA.id}-h3`), text: qA.hints?.[2] || 'Execute decisive crux calculation', guidance: 'Solve for final target quantity' },
         ],
         diagnosticRules: [
           { code: `move:${topicCode.toLowerCase()}-check`, label: 'Conservation Verification', misconceptionDescription: qA.trapWarning || 'Omission of non-conservative work', correctiveGuidance: 'Account for all dissipations' },
@@ -62,7 +63,13 @@ export function createDefaultTransferDefinition(topicCode?: string): Core1BTrans
       prompt: 'A 5 kg crate slides down a 30-degree incline of length 10 m with coefficient of kinetic friction μ = 0.2. Calculate the work done by friction and final kinetic energy.',
       conditions: ['Incline angle θ = 30°', 'Distance d = 10 m', 'Friction coeff μ = 0.2'],
       solutionRef: solA,
-      solutionSteps: ['Normal force N = mg cos(30°)', 'Frictional force f = μN', 'Work W = -f * d'],
+      solutionSteps: [
+        '1. Normal force balance perpendicular to incline: N = mg cos(30°) = 5 kg * 10 m/s² * 0.8660 = 43.30 N.',
+        '2. Kinetic friction force magnitude: f_k = μ_k * N = 0.2 * 43.30 N = 8.66 N.',
+        '3. Dissipative friction work: W_f = -f_k * d = -8.66 N * 10 m = -86.60 J.',
+        '4. Gravitational potential conversion: W_g = mgh = mg (d sin 30°) = 5 * 10 * (10 * 0.5) = +250.0 J.',
+        '5. Net work theorem: ΔK = K_f - K_i = W_net = W_g + W_f = 250.0 - 86.60 = 163.40 J.'
+      ],
       targetNumeric: { value: 84.87, unit: 'J', tolerance: 0.5 },
     },
     boundaryTaskB: {
@@ -71,14 +78,23 @@ export function createDefaultTransferDefinition(topicCode?: string): Core1BTrans
       prompt: 'Verify energy conservation when quadratic aerodynamic drag is introduced along the incline.',
       conditions: ['Quadratic drag F_d = -c * v^2'],
       solutionRef: solB,
-      solutionSteps: ['Integrate net work along the velocity trajectory'],
+      solutionSteps: [
+        '1. Differential equation of motion along incline: m (dv/dt) = mg (sin 30° - μ cos 30°) - c v^2.',
+        '2. Net driving force without drag: F_drive = mg (sin 30° - μ cos 30°) = 5 * 10 * (0.5 - 0.2 * 0.866) = 16.34 N.',
+        '3. Terminal velocity reached when net acceleration dv/dt = 0: c v_term^2 = F_drive => v_term = sqrt(F_drive / c).',
+        '4. Spatial integration: ∫ m v dv = ∫ [F_drive - c v^2] dx, yielding asymptotic approach toward terminal speed.',
+        '5. Mechanical energy ledger: ΔE_mech = W_friction + W_drag < 0, demonstrating strictly monotonic mechanical dissipation.'
+      ],
     },
     hints: [
       { level: 'H1', assetRef: ref('ASSET', 'asset:hint-1'), text: 'Consider normal force perpendicular to incline', guidance: 'Normal force is mg cos(θ), not mg' },
       { level: 'H2', assetRef: ref('ASSET', 'asset:hint-2'), text: 'Work-energy theorem relates net work to change in kinetic energy', guidance: 'W_net = W_grav + W_fric = ΔK' },
+      { level: 'H3', assetRef: ref('ASSET', 'asset:hint-3'), text: 'Crux Resolution: Compute friction work W_f = -μ N d = -86.60 J and final kinetic energy K_f = W_net = mgh + W_f = 250 - 86.60 = 163.40 J', guidance: 'Substitute values directly into the four-force energy ledger' },
     ],
     diagnosticRules: [
       { code: 'move:normal-force', label: 'Normal Force Calculation', misconceptionDescription: 'Using mg instead of mg cos(θ)', correctiveGuidance: 'Project gravity perpendicular to the surface' },
+      { code: 'move:friction-sign', label: 'Friction Sign Error', misconceptionDescription: 'Adding friction work as positive energy instead of negative dissipation', correctiveGuidance: 'Friction always opposes instantaneous displacement vector (W_f < 0)' },
+      { code: 'move:drag-limit', label: 'Drag Asymptotic Misconception', misconceptionDescription: 'Assuming constant speed on an accelerating ramp with drag', correctiveGuidance: 'Terminal speed is only approached asymptotically as v increases toward sqrt(F_drive / c)' }
     ],
     qualitativePredictionPrompt: 'Predict whether friction work increases or decreases as incline angle steepens',
     predictionOptions: ['Friction work decreases', 'Friction work increases', 'Friction work stays constant'],

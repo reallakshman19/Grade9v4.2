@@ -131,8 +131,8 @@ export class UniversalSearchModalController {
       right: 6px;
       top: 50%;
       transform: translateY(-50%);
-      min-width: 44px;
-      min-height: 44px;
+      min-width: 48px;
+      min-height: 48px;
       background: transparent;
       border: none;
       color: #94a3b8;
@@ -297,7 +297,8 @@ export class UniversalSearchModalController {
       btn.setAttribute('role', 'tab');
       btn.setAttribute('aria-selected', String(isActive));
       btn.style.cssText = `
-        min-height: 44px;
+        min-height: 48px;
+        min-width: 48px;
         padding: 6px 14px;
         border-radius: 8px;
         font-size: 0.95rem;

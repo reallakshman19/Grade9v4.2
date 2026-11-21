@@ -25,12 +25,27 @@ import { test } from 'node:test';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { chromium } from 'playwright-core';
+import { createServer } from 'vite';
 
 const BASE_URL = 'http://127.0.0.1:3000';
 const EVIDENCE_DIR = resolve('C:/Users/reall/.gemini/antigravity/brain/c39fd02d-dabd-412d-b94d-9f2254fd4134/phase5_evidence');
 
 test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys', { timeout: 90000 }, async (t) => {
   await mkdir(EVIDENCE_DIR, { recursive: true });
+
+  let server: any = null;
+  let baseUrl = BASE_URL;
+  try {
+    const res = await fetch(BASE_URL, { signal: AbortSignal.timeout(1000) });
+    if (!res.ok && res.status !== 404 && res.status !== 304) throw new Error('Not ready');
+  } catch {
+    server = await createServer({
+      server: { host: '127.0.0.1', port: 3000, strictPort: false },
+    });
+    await server.listen();
+    const addr = server.httpServer!.address();
+    baseUrl = `http://127.0.0.1:${addr.port}`;
+  }
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
@@ -40,6 +55,8 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
   });
 
   const page = await context.newPage();
+
+  try {
 
   // Helper to audit hit targets and overflow
   const auditGeometry = async (label: string) => {
@@ -64,7 +81,7 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
   };
 
   await t.test('1. Core 1: Reading Orientation Workspace Mount & 7 Blocks Verification', async () => {
-    await page.goto(`${BASE_URL}/#/learning/core1`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseUrl}/#/learning/core1`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.g9-orientation-page', { timeout: 10000 });
 
     const role = await page.locator('.g9-orientation-page').getAttribute('data-role');
@@ -101,7 +118,7 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
   });
 
   await t.test('2. Core 2A: Supported Practice Workspace & Hint Exposure', async () => {
-    await page.goto(`${BASE_URL}/#/learning/core2a`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseUrl}/#/learning/core2a`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.g9-supported-practice-page', { timeout: 10000 });
 
     const role = await page.locator('.g9-supported-practice-page').getAttribute('data-role');
@@ -129,7 +146,7 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
   });
 
   await t.test('3. Core 2B: Changed-Demand Transfer & Precommit Secrecy Enforcement', async () => {
-    await page.goto(`${BASE_URL}/#/learning/core2b`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseUrl}/#/learning/core2b`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.g9-transfer-changed-demand-page', { timeout: 10000 });
 
     const role = await page.locator('.g9-transfer-changed-demand-page').getAttribute('data-role');
@@ -156,7 +173,7 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
   });
 
   await t.test('4. Topic Hub Tab 2: Learn & Try 3-Role Segmented Selector', async () => {
-    await page.goto(`${BASE_URL}/#/subject/physics/topic/wpe/learn-try`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseUrl}/#/subject/physics/topic/wpe/learn-try`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.g9-learn-try-hub', { timeout: 10000 });
 
     // Verify exactly 3 subroles in selector
@@ -183,7 +200,7 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
   });
 
   await t.test('5. Topic Hub Tab 1: Question Bank Contextual Actions & Return Trajectories', async () => {
-    await page.goto(`${BASE_URL}/#/subject/physics/topic/wpe/questions`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseUrl}/#/subject/physics/topic/wpe/questions`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.g9-question-deck', { timeout: 10000 });
 
     // Check action buttons on question deck items
@@ -212,6 +229,9 @@ test('Gates P5-G7 & P5-G8 — Phase 5 Native Roles Tablet Audit & E2E Journeys',
     await page.click('#g9-back-deck-btn');
     await page.waitForSelector('.g9-question-deck', { timeout: 5000 });
   });
-
-  await browser.close();
+  } finally {
+    await context.close();
+    await browser.close();
+    if (server) await server.close();
+  }
 });

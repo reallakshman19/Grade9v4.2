@@ -1,7 +1,7 @@
 /**
  * web/runtime/universal-search-index.ts
  * Grade9 STEM Universal Search Index & Engine
- * Full 1046-item offline indexed corpus: 940 Questions, 61 Tablets, 44 Topics & Concepts.
+ * Full 1082-item offline indexed corpus: 976 Questions, 61 Tablets, 44 Topics & Concepts.
  * Sub-50ms instant fuzzy token search with multi-tier relevance scoring and Fault N09 answer isolation.
  */
 
@@ -38,7 +38,7 @@ export function normalizeSearchTerm(v: string): string {
 }
 
 /**
- * Full 1046-Item Unified STEM Corpus
+ * Full 1082-Item Unified STEM Corpus
  */
 export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze([
   {
@@ -4937,72 +4937,6 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "search_text": "M2D-NC-09 M2D-NC-09 NCERT · NCERT Textbook · QM2D-NC-09 · Motion in 2D Physics Motion in 2D CAP-MOTION-2D NCERT [D2] A passenger tosses a coin vertically inside a moving train and the coin lands behind the passenger. What does that imply about the train's motion while the coin was airborne?"
   },
   {
-    "id": "BIO-NSEJS-ENV-01",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · BIO-NSEJS-ENV-01",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/BIO-NSEJS-ENV-01",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "BIO-NSEJS-ENV-01 BIO-NSEJS-ENV-01 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · BIO-NSEJS-ENV-01 Biology ENVIRONMENT_AND_NATURAL_RESOURCES BIO-NSEJS-ENV-01-M2 NSEJS [D2] In a temperate lake ecosystem, the total incident solar radiation entering the epilimnion is $1.0 \\times 10^7\\text{ kJ}/(\\text{m}^2\\cdot\\text{yr})$. Phytoplankton (primary producers, trophic level $T_1$) capture exactly $1.0\\%$ of this incident solar energy as Gross Primary Productivity ($\\text{GPP}"
-  },
-  {
-    "id": "BIO-NSEJS-GEN-01",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · BIO-NSEJS-GEN-01",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/BIO-NSEJS-GEN-01",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "BIO-NSEJS-GEN-01 BIO-NSEJS-GEN-01 NSEJS · GENETICS_AND_HEREDITY · BIO-NSEJS-GEN-01 Biology GENETICS_AND_HEREDITY BIO-NSEJS-GEN-01-M2 NSEJS [D2] In sweet pea (*Lathyrus odoratus*), purple flower coloration requires functional enzymes produced by two independently assorting dominant alleles, $C$ and $P$. Plants with genotypes $C\\_pp, ccP\\_,$ or $ccpp$ produce white flowers due to a biochemical pathway block. [FIG-stem-bio-complementary-genes-"
-  },
-  {
-    "id": "BIO-NSEJS-2024-B-Q52",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · BIO-NSEJS-2024-B-Q52",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D3]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D3",
-    "route": "#/question/BIO-NSEJS-2024-B-Q52",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "BIO-NSEJS-2024-B-Q52 BIO-NSEJS-2024-B-Q52 NSEJS · CONTROL_AND_COORDINATION · BIO-NSEJS-2024-B-Q52 Biology CONTROL_AND_COORDINATION M2 NSEJS [D3] [Multiple Correct] Which of the following statements regarding vertebrate immune responses and physiological defense mechanisms are correct? (A) All antibodies (immunoglobulins) are glycoproteins. (B) Eosinophils are non-phagocytic lymphocytes. (C) Ciliated pseudostratified epithelium of the respira"
-  },
-  {
-    "id": "BIO-NSEJS-PROC-01",
-    "title": "NSEJS · LIFE_PROCESSES · BIO-NSEJS-PROC-01",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/BIO-NSEJS-PROC-01",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "BIO-NSEJS-PROC-01 BIO-NSEJS-PROC-01 NSEJS · LIFE_PROCESSES · BIO-NSEJS-PROC-01 Biology LIFE_PROCESSES BIO-NSEJS-PROC-01-M2 NSEJS [D2] In a healthy human nephron, glomerular filtration is governed by Starling forces across the glomerular capillary endothelium and podocyte filtration slits. Physiological measurements indicate: - Glomerular capillary hydrostatic pressure: $P_{\\text{GC}} = 55.0\\text{ mmHg}$ - Bowman's capsule hydrosta"
-  },
-  {
-    "id": "BIO-NSEJS-CELL-01",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · BIO-NSEJS-CELL-01",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/BIO-NSEJS-CELL-01",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "BIO-NSEJS-CELL-01 BIO-NSEJS-CELL-01 NSEJS · ORGANISATION_IN_LIVING_WORLD · BIO-NSEJS-CELL-01 Biology ORGANISATION_IN_LIVING_WORLD BIO-NSEJS-CELL-01-M2 NSEJS [D2] In an investigation of plant cell water relations, cylindrical cores of uniform initial mass $m_0 = 5.00\\text{ g}$ from Solanum tuberosum tuber tissue are incubated for 2 hours in a graded series of sucrose solutions at $20^\\circ\\text{C}$ ($293\\text{ K}$). The percentage change in tissue mass $(\\Del"
-  },
-  {
-    "id": "NSEJS-2024-B-Q50",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q50",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D3]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D3",
-    "route": "#/question/NSEJS-2024-B-Q50",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2024-B-Q50 NSEJS-2024-B-Q50 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q50 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2024-B-Q50-M2 NSEJS [D3] [Multiple Correct] Which of the following statements concerning viral structure, molecular genetics, and replication are biologically incorrect? (A) Mature virions are obligate intracellular infectious particles. (B) Viral replication depends strictly on host ribosomes and translational machinery. ("
-  },
-  {
     "id": "CHEM-NSEJS-ATOM-01",
     "title": "NSEJS · STRUCTURE_OF_THE_ATOM · CHEM-NSEJS-ATOM-01",
     "subtitle": "Chemistry · STRUCTURE_OF_THE_ATOM · NSEJS · [D2]",
@@ -5089,94 +5023,6 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "route": "#/question/IOQJS-2021-P-Q01",
     "breadcrumb": "Physics · OPTICS · Question",
     "search_text": "IOQJS-2021-P-Q01 IOQJS-2021-P-Q01 NSEJS · OPTICS · IOQJS-2021-P-Q01 Physics OPTICS IOQJS-2021-P-Q01-M2 NSEJS [D3] Two illuminated point objects $O_1$ and $O_2$ are placed at a distance $24\\text{ cm}$ from each other along the principal axis of a thin convex lens of focal length $9\\text{ cm}$ such that images of both the objects are formed at the same position. The respective distances of the lens from $O_1$ and"
-  },
-  {
-    "id": "NSEJS-2020-B-Q13",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2020-B-Q13",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q13",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2020-B-Q13 NSEJS-2020-B-Q13 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2020-B-Q13 Biology GENETICS_AND_HEREDITY NSEJS-2020-B-Q13-M2 NSEJS [D2] If in a wheat mutant, the length of chromosome 1B was found to be 6.7 µm instead of 5.0 µm, approximately how many additional base pairs are incorporated in the mutant chromosome?"
-  },
-  {
-    "id": "NSEJS-2020-B-Q14",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2020-B-Q14",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q14",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2020-B-Q14 NSEJS-2020-B-Q14 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2020-B-Q14 Biology GENETICS_AND_HEREDITY NSEJS-2020-B-Q14-M2 NSEJS [D2] Considering the following characteristics, identify the correct inheritance pattern from the given options. • Most affected individuals are male. • Affected sons result from female parents who are either affected or who are known to be carriers because they have affected brothers, fathers, or matern"
-  },
-  {
-    "id": "NSEJS-2020-B-Q15",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2020-B-Q15",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q15",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2020-B-Q15 NSEJS-2020-B-Q15 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2020-B-Q15 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2020-B-Q15-M2 NSEJS [D2] In a marine ecosystem with rich diversity of fauna, which of the following images would be a correct representation of the pyramid of biomass?"
-  },
-  {
-    "id": "NSEJS-2020-B-Q16",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2020-B-Q16",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q16",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2020-B-Q16 NSEJS-2020-B-Q16 NSEJS · LIFE_PROCESSES · NSEJS-2020-B-Q16 Biology LIFE_PROCESSES NSEJS-2020-B-Q16-M2 NSEJS [D2] The transpiration pull is maximum under which of the following conditions?"
-  },
-  {
-    "id": "NSEJS-2020-B-Q17",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2020-B-Q17",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q17",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2020-B-Q17 NSEJS-2020-B-Q17 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2020-B-Q17 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2020-B-Q17-M2 NSEJS [D2] Curcuma longa, Azadirachta indica, Basmati Rice and Indian Ginseng are all related to which of the following concepts?"
-  },
-  {
-    "id": "NSEJS-2020-B-Q18",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2020-B-Q18",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q18",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2020-B-Q18 NSEJS-2020-B-Q18 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2020-B-Q18 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2020-B-Q18-M2 NSEJS [D2] Read the following criteria carefully. • Slow evolutionary change relative to similar entities. • Gross similarity to an ancestral fossil. • Very low taxonomic richness today compared to the past. • Phylogenetic inference of specific characters as plesiomorphic. • Phylogenetic inference of a genealo"
-  },
-  {
-    "id": "NSEJS-2020-B-Q29",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2020-B-Q29",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q29",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2020-B-Q29 NSEJS-2020-B-Q29 NSEJS · LIFE_PROCESSES · NSEJS-2020-B-Q29 Biology LIFE_PROCESSES NSEJS-2020-B-Q29-M3 NSEJS [D2] Choose the correct statements from the following options."
-  },
-  {
-    "id": "NSEJS-2020-B-Q30",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2020-B-Q30",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2020-B-Q30",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2020-B-Q30 NSEJS-2020-B-Q30 NSEJS · LIFE_PROCESSES · NSEJS-2020-B-Q30 Biology LIFE_PROCESSES NSEJS-2020-B-Q30-M3 NSEJS [D2] The minimum energy required to exist, that is, the energy required to perform chemical reactions even when a person is at rest, is called the basal metabolic rate (BMR), which accounts for about 50 to 70 per cent of the daily energy expenditure in most sedentary individuals. It is influenced by many"
   },
   {
     "id": "NSEJS-2020-C-Q07",
@@ -5353,127 +5199,6 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "route": "#/question/NSEJS-2020-P-Q26",
     "breadcrumb": "Physics · Nsejs 2020 Physics · Question",
     "search_text": "NSEJS-2020-P-Q26 NSEJS-2020-P-Q26 NSEJS · Nsejs 2020 Physics · NSEJS-2020-P-Q26 Physics Nsejs 2020 Physics NSEJS-2020-P-Q26-M3 NSEJS [D2] [NSEJS-2020-P-Q26] Authentic Junior Science Olympiad task (Nsejs 2020 Physics). Governed crux move requires rigorous physical/chemical derivation for crux reference NSEJS-2020-P-Q26-M3."
-  },
-  {
-    "id": "NSEJS-2021-B-Q01",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2021-B-Q01",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q01",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2021-B-Q01 NSEJS-2021-B-Q01 NSEJS · LIFE_PROCESSES · NSEJS-2021-B-Q01 Biology LIFE_PROCESSES NSEJS-2021-B-Q01-M2 NSEJS [D2] Which of the following is not a function of mature red blood cells (RBCs)?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q02",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q02",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q02",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2021-B-Q02 NSEJS-2021-B-Q02 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q02 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2021-B-Q02-M2 NSEJS [D2] In which of the following classes of vertebrates are there groups of animals without limbs?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q03",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q03",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q03",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2021-B-Q03 NSEJS-2021-B-Q03 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q03 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2021-B-Q03-M2 NSEJS [D2] Which of the following groups has only one pair of wings?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q04",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2021-B-Q04",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q04",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2021-B-Q04 NSEJS-2021-B-Q04 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2021-B-Q04 Biology GENETICS_AND_HEREDITY NSEJS-2021-B-Q04-M2 NSEJS [D2] During an expedition to planet 'Imagitica', scientists analysed the genetic material of its organisms and noted: i. Purines and pyrimidines are unequal in amount. ii. Thymine is absent. iii. The material is unstable and mutates frequently. iv. It is rapidly degraded at pH above 12. What genetic mate"
-  },
-  {
-    "id": "NSEJS-2021-B-Q05",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q05",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q05",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2021-B-Q05 NSEJS-2021-B-Q05 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q05 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2021-B-Q05-M2 NSEJS [D2] Which of the following is most likely to show aerenchyma?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q06",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q06",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q06",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2021-B-Q06 NSEJS-2021-B-Q06 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q06 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2021-B-Q06-M2 NSEJS [D2] Consider the following statements about bryophytes: i. Their plant body is differentiated into true root, stem and leaves. ii. They lack xylem and phloem. iii. They require water for completion of the life cycle. Which statement(s) is/are true?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q07",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2021-B-Q07",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q07",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2021-B-Q07 NSEJS-2021-B-Q07 NSEJS · LIFE_PROCESSES · NSEJS-2021-B-Q07 Biology LIFE_PROCESSES NSEJS-2021-B-Q07-M2 NSEJS [D2] Carbon fixation in most succulent plants takes place through which pathway?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q08",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2021-B-Q08",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q08",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2021-B-Q08 NSEJS-2021-B-Q08 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2021-B-Q08 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2021-B-Q08-M2 NSEJS [D2] A flower is large, wide-mouthed and white, opens after sunset, and gives out a fruity or musky fragrance. It is most likely pollinated by:"
-  },
-  {
-    "id": "NSEJS-2021-B-Q25",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q25",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q25",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2021-B-Q25 NSEJS-2021-B-Q25 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q25 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2021-B-Q25-M3 NSEJS [D2] Given below are four statements about viruses. Which statement(s) is/are incorrect?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q26",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2021-B-Q26",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q26",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2021-B-Q26 NSEJS-2021-B-Q26 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2021-B-Q26 Biology CONTROL_AND_COORDINATION NSEJS-2021-B-Q26-M3 NSEJS [D2] A person suffers an injury to the front part of the head. Which outcomes are possible?"
-  },
-  {
-    "id": "NSEJS-2021-B-Q27",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q27",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2021-B-Q27",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2021-B-Q27 NSEJS-2021-B-Q27 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2021-B-Q27 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2021-B-Q27-M3 NSEJS [D2] Which molecules are primarily responsible for structural support and motility?"
   },
   {
     "id": "NSEJS-2021-C-Q09",
@@ -5716,226 +5441,6 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "route": "#/question/NSEJS-2021-P-Q33",
     "breadcrumb": "Physics · Nsejs 2021 Physics · Question",
     "search_text": "NSEJS-2021-P-Q33 NSEJS-2021-P-Q33 NSEJS · Nsejs 2021 Physics · NSEJS-2021-P-Q33 Physics Nsejs 2021 Physics NSEJS-2021-P-Q33-M3 NSEJS [D2] [NSEJS-2021-P-Q33] Authentic Junior Science Olympiad task (Nsejs 2021 Physics). Governed crux move requires rigorous physical/chemical derivation for crux reference NSEJS-2021-P-Q33-M3."
-  },
-  {
-    "id": "NSEJS-2022-B-Q01",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q01",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q01",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2022-B-Q01 NSEJS-2022-B-Q01 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q01 Biology CONTROL_AND_COORDINATION NSEJS-2022-B-Q01-M2 NSEJS [D2] In the nineteenth century, farmers in Japan found that some rice seedlings became very tall. They called it Bakanae disease or mad-seedling disease. The affected plants were infected by the fungus Fusarium moniliforme. This led to the discovery of a phytohormone, later named:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q02",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q02",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q02",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2022-B-Q02 NSEJS-2022-B-Q02 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q02 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2022-B-Q02-M2 NSEJS [D2] In most angiosperms, pollen germinates on the stigma, travels through the style and ultimately enters the ovule. In the adjacent diagram, three possibilities of pollen-tube entry are marked A, B and C. What do A, B and C represent?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q03",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q03",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q03",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2022-B-Q03 NSEJS-2022-B-Q03 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q03 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2022-B-Q03-M2 NSEJS [D2] Members of Cucurbitaceae, such as bottle-gourd, pumpkin, watermelon and muskmelon, bear large fruits although their stems may be only finger-thick. What helps a large quantity of food to be translocated from leaves to fruits for storage?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q04",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2022-B-Q04",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q04",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2022-B-Q04 NSEJS-2022-B-Q04 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2022-B-Q04 Biology GENETICS_AND_HEREDITY NSEJS-2022-B-Q04-M2 NSEJS [D2] In some birds, a black bird crossed with a white-feathered bird produces all blue-plumaged chicks. If these blue birds are selfed, the offspring ratio will be:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q05",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q05",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q05",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2022-B-Q05 NSEJS-2022-B-Q05 NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q05 Biology LIFE_PROCESSES NSEJS-2022-B-Q05-M2 NSEJS [D2] The diagram shows chromatographic separation of pigments extracted from spinach leaves. The sequence of pigment bands from below upwards is:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q06",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q06",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q06",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2022-B-Q06 NSEJS-2022-B-Q06 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q06 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2022-B-Q06-M2 NSEJS [D2] In some plants and fungi, cell organelles convert lipids into sugars during the early stages of oil-seed germination. These organelles are:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q07",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2022-B-Q07",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q07",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2022-B-Q07 NSEJS-2022-B-Q07 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2022-B-Q07 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2022-B-Q07-M2 NSEJS [D2] In the analysis of wastewater, Escherichia coli is used as:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q08",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2022-B-Q08",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q08",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2022-B-Q08 NSEJS-2022-B-Q08 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2022-B-Q08 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2022-B-Q08-M2 NSEJS [D2] Acid rain damages soil and lakes and affects aquatic plants and animals. Which pH range is most suitable for the survival of most aquatic biota?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q09",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q09",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q09",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2022-B-Q09 NSEJS-2022-B-Q09 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q09 Biology CONTROL_AND_COORDINATION NSEJS-2022-B-Q09-M2 NSEJS [D2] Steroid hormones include sex hormones and hormones of the adrenal cortex. Based on intensity of action, which ovarian hormone is produced in large amount and is the principal active estrogen?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q10",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q10",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q10",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2022-B-Q10 NSEJS-2022-B-Q10 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q10 Biology CONTROL_AND_COORDINATION NSEJS-2022-B-Q10-M2 NSEJS [D2] In the human vertebral column there are about 26 bones in the adult. Which group of vertebrae is related to the pelvic region?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q11",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q11",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q11",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2022-B-Q11 NSEJS-2022-B-Q11 NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q11 Biology LIFE_PROCESSES NSEJS-2022-B-Q11-M2 NSEJS [D2] In the EMP (glycolytic) pathway shown, reactions are numbered E1 to E10. At which enzyme levels is ATP generated by substrate-level phosphorylation?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q12",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q12",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q12",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2022-B-Q12 NSEJS-2022-B-Q12 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q12 Biology CONTROL_AND_COORDINATION NSEJS-2022-B-Q12-M2 NSEJS [D2] A thick whitish band of nerve fibres bulges on the inner surface of the dorsal wall of each cerebral hemisphere in the mammalian brain. This structure is:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q13",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q13",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q13",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2022-B-Q13 NSEJS-2022-B-Q13 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q13 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2022-B-Q13-M2 NSEJS [D2] Body symmetry is a diagnostic feature in classification. Besides truly bilateral animals, some other organisms also show bilateral symmetry. Which of the following is such an example?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q14",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q14",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q14",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2022-B-Q14 NSEJS-2022-B-Q14 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2022-B-Q14 Biology CONTROL_AND_COORDINATION NSEJS-2022-B-Q14-M2 NSEJS [D2] Nissl granules are RNA-rich bodies. In which of the following do they occur?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q15",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q15",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q15",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2022-B-Q15 NSEJS-2022-B-Q15 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q15 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2022-B-Q15-M2 NSEJS [D2] Which statement is not applicable to viruses?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q16",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q16",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q16",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2022-B-Q16 NSEJS-2022-B-Q16 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2022-B-Q16 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2022-B-Q16-M2 NSEJS [D2] Carolus Linnaeus devised a system for classifying plants while using binomial nomenclature. His plant classification was:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q49",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2022-B-Q49",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q49",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2022-B-Q49 NSEJS-2022-B-Q49 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2022-B-Q49 Biology GENETICS_AND_HEREDITY NSEJS-2022-B-Q49-M3 NSEJS [D2] Which of the following evolutionary lineages of humans can be categorised as prehistoric man?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q50",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q50",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q50",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2022-B-Q50 NSEJS-2022-B-Q50 NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q50 Biology LIFE_PROCESSES NSEJS-2022-B-Q50-M3 NSEJS [D2] Select the sets of diseases caused by deficiency of B-complex vitamins:"
-  },
-  {
-    "id": "NSEJS-2022-B-Q51",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2022-B-Q51",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q51",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2022-B-Q51 NSEJS-2022-B-Q51 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2022-B-Q51 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2022-B-Q51-M3 NSEJS [D2] After the rainy season, students collect pond water containing aquatic plants. Which groups of organisms are they likely to find?"
-  },
-  {
-    "id": "NSEJS-2022-B-Q52",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q52",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2022-B-Q52",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2022-B-Q52 NSEJS-2022-B-Q52 NSEJS · LIFE_PROCESSES · NSEJS-2022-B-Q52 Biology LIFE_PROCESSES NSEJS-2022-B-Q52-M3 NSEJS [D2] Various parts of mammalian uriniferous tubules (nephrons) take part in ultrafiltration, selective reabsorption by active transport, passive osmosis and secretion. In the labelled nephron diagram, the options separately identify: (i) part(s) having columnar epithelial cells with a brush border suitab"
   },
   {
     "id": "NSEJS-2022-C-Q17",
@@ -6378,226 +5883,6 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "search_text": "NSEJS-2022-P-Q60 NSEJS-2022-P-Q60 NSEJS · Nsejs 2022 Physics · NSEJS-2022-P-Q60 Physics Nsejs 2022 Physics NSEJS-2022-P-Q60-M3 NSEJS [D2] [NSEJS-2022-P-Q60] Authentic Junior Science Olympiad task (Nsejs 2022 Physics). Governed crux move requires rigorous physical/chemical derivation for crux reference NSEJS-2022-P-Q60-M3."
   },
   {
-    "id": "NSEJS-2023-B-Q01",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2023-B-Q01",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q01",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2023-B-Q01 NSEJS-2023-B-Q01 NSEJS · LIFE_PROCESSES · NSEJS-2023-B-Q01 Biology LIFE_PROCESSES NSEJS-2023-B-Q01-M2 NSEJS [D2] In animals, the heart is the main pumping station, supplying and collecting blood from different parts of the body. In mammals, which structure is found between the left auricle and the left ventricle and ensures one-way flow of blood?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q02",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q02",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q02",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2023-B-Q02 NSEJS-2023-B-Q02 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q02 Biology CONTROL_AND_COORDINATION NSEJS-2023-B-Q02-M2 NSEJS [D2] Which of the following correctly lists the units involved in most reflex arcs?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q03",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q03",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q03",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2023-B-Q03 NSEJS-2023-B-Q03 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q03 Biology GENETICS_AND_HEREDITY NSEJS-2023-B-Q03-M2 NSEJS [D2] Cross-breeding, mutation breeding and cytoplasmic hybridisation can produce improved varieties or distinct hybrids. Which pair represents cytoplasmic hybrids (cybrids)?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q04",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q04",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q04",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2023-B-Q04 NSEJS-2023-B-Q04 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q04 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2023-B-Q04-M2 NSEJS [D2] In a certain animal epithelium, every cell rests on the basement membrane, but some basal cells do not reach the free surface. The nuclei therefore appear at different levels, making the tissue look multilayered although it is not truly stratified. It is often ciliated and may contain mucus-secretin"
-  },
-  {
-    "id": "NSEJS-2023-B-Q05",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q05",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q05",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2023-B-Q05 NSEJS-2023-B-Q05 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q05 Biology GENETICS_AND_HEREDITY NSEJS-2023-B-Q05-M2 NSEJS [D2] Phenylthiocarbamide (PTC) tastes bitter to tasters. The non-tasting condition is caused by a recessive allele. A non-taster woman marries a PTC-taster man. Their first two children are non- tasters. What is the probability that their third child will also be a non-taster?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q06",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q06",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q06",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2023-B-Q06 NSEJS-2023-B-Q06 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q06 Biology CONTROL_AND_COORDINATION NSEJS-2023-B-Q06-M2 NSEJS [D2] The diagram is a sectional view of an endocrine gland. Its characteristic layers are labelled 1, 2, 3 and 4. Which layers secrete the C21 hormones cortisol and corticosterone?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q07",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q07",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q07",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2023-B-Q07 NSEJS-2023-B-Q07 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q07 Biology CONTROL_AND_COORDINATION NSEJS-2023-B-Q07-M2 NSEJS [D2] Which eye defect develops because the ciliary muscles gradually weaken and the flexibility of the eye lens decreases?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q08",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2023-B-Q08",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q08",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2023-B-Q08 NSEJS-2023-B-Q08 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2023-B-Q08 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2023-B-Q08-M2 NSEJS [D2] Which genus is the Angoumois grain moth that causes serious damage to stored grains such as paddy and wheat?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q09",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q09",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q09",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2023-B-Q09 NSEJS-2023-B-Q09 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q09 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2023-B-Q09-M2 NSEJS [D2] For fertilisation in angiosperms, pollen grains germinate and pollen tubes carry male gametes to the ovules. Suppose a brinjal fruit is to contain 300 seeds. How many meiotic cell divisions are required to produce the necessary female and male gametophytes?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q10",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q10",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q10",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2023-B-Q10 NSEJS-2023-B-Q10 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q10 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2023-B-Q10-M2 NSEJS [D2] Which plant is well known for the anatomical features called carinal canals and vallecular canals?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q11",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q11",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q11",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2023-B-Q11 NSEJS-2023-B-Q11 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q11 Biology GENETICS_AND_HEREDITY NSEJS-2023-B-Q11-M2 NSEJS [D2] Satellite or SAT chromosomes have secondary constrictions at fixed positions. In humans, satellites are usually associated with the short arms of which acrocentric chromosomes?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q12",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q12",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q12",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2023-B-Q12 NSEJS-2023-B-Q12 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q12 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2023-B-Q12-M2 NSEJS [D2] In bordered pits of some plant cells, what is the central thickening formed on the pit membrane by circular deposition of microfibrils?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q13",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q13",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q13",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2023-B-Q13 NSEJS-2023-B-Q13 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q13 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2023-B-Q13-M2 NSEJS [D2] The diagrams show different types of inflorescences. Select the pair that represents cymose inflorescences."
-  },
-  {
-    "id": "NSEJS-2023-B-Q14",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q14",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q14",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2023-B-Q14 NSEJS-2023-B-Q14 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q14 Biology GENETICS_AND_HEREDITY NSEJS-2023-B-Q14-M2 NSEJS [D2] Genes normally important in mammalian embryogenesis include members of all the following classes, except:"
-  },
-  {
-    "id": "NSEJS-2023-B-Q15",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2023-B-Q15",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q15",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2023-B-Q15 NSEJS-2023-B-Q15 NSEJS · LIFE_PROCESSES · NSEJS-2023-B-Q15 Biology LIFE_PROCESSES NSEJS-2023-B-Q15-M2 NSEJS [D2] In a type of carbon dioxide fixation, stomata remain open at night and CO2 first combines with phosphoenolpyruvate (PEP) to form four-carbon oxaloacetate. Which plant shows this ecological adaptation?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q16",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2023-B-Q16",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q16",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2023-B-Q16 NSEJS-2023-B-Q16 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2023-B-Q16 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2023-B-Q16-M2 NSEJS [D2] Which is the most common hemiparasitic mistletoe found in India?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q49",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q49",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q49",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2023-B-Q49 NSEJS-2023-B-Q49 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2023-B-Q49 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2023-B-Q49-M3 NSEJS [D2] The table matches mammalian orders or examples with characteristics. Order / example Characteristic 1. Lagomorpha (i) First finger clawed; tail enclosed in an interfemoral membrane 2. Microchiroptera (ii) Toothless and polyembryony 3. Armadillo (iii) Baleen 4. Proboscidea (iv) Incisors open-rooted a"
-  },
-  {
-    "id": "NSEJS-2023-B-Q50",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q50",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q50",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2023-B-Q50 NSEJS-2023-B-Q50 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2023-B-Q50 Biology GENETICS_AND_HEREDITY NSEJS-2023-B-Q50-M3 NSEJS [D2] Which historical pedigrees were described as families of beggars and scoundrels?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q51",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q51",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q51",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2023-B-Q51 NSEJS-2023-B-Q51 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2023-B-Q51 Biology CONTROL_AND_COORDINATION NSEJS-2023-B-Q51-M3 NSEJS [D2] Which statements explain root gravitropism?"
-  },
-  {
-    "id": "NSEJS-2023-B-Q52",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2023-B-Q52",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2023-B-Q52",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2023-B-Q52 NSEJS-2023-B-Q52 NSEJS · LIFE_PROCESSES · NSEJS-2023-B-Q52 Biology LIFE_PROCESSES NSEJS-2023-B-Q52-M3 NSEJS [D2] Which statements describe cyclic photophosphorylation in green plants?"
-  },
-  {
     "id": "NSEJS-2023-C-Q17",
     "title": "NSEJS · STRUCTURE_OF_THE_ATOM · NSEJS-2023-C-Q17",
     "subtitle": "Chemistry · STRUCTURE_OF_THE_ATOM · NSEJS · [D2]",
@@ -7036,215 +6321,6 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "route": "#/question/NSEJS-2023-P-Q60",
     "breadcrumb": "Physics · Nsejs 2023 Physics · Question",
     "search_text": "NSEJS-2023-P-Q60 NSEJS-2023-P-Q60 NSEJS · Nsejs 2023 Physics · NSEJS-2023-P-Q60 Physics Nsejs 2023 Physics NSEJS-2023-P-Q60-M3 NSEJS [D2] [NSEJS-2023-P-Q60] Authentic Junior Science Olympiad task (Nsejs 2023 Physics). Governed crux move requires rigorous physical/chemical derivation for crux reference NSEJS-2023-P-Q60-M3."
-  },
-  {
-    "id": "NSEJS-2024-B-Q01",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q01",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q01",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2024-B-Q01 NSEJS-2024-B-Q01 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q01 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2024-B-Q01-M2 NSEJS [D2] In bilaterally symmetrical animals, true serial repetition of body parts into a linear succession of similar segments is called metamerism. In which of the following animal phyla did true metameric segmentation appear for the first time in evolutionary history?"
-  },
-  {
-    "id": "NSEJS-2024-B-Q02",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2024-B-Q02",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q02",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2024-B-Q02 NSEJS-2024-B-Q02 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2024-B-Q02 Biology GENETICS_AND_HEREDITY NSEJS-2024-B-Q02-M2 NSEJS [D2] In human palaeontology, hominid evolution is categorized into Hominid ancestral stocks, Prehistoric humans, and modern humans based on fossil and cranial records. Select the pair containing one member of an early Hominid stock and one member representing Prehistoric human:"
-  },
-  {
-    "id": "NSEJS-2024-B-Q03",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q03",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q03",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2024-B-Q03 NSEJS-2024-B-Q03 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q03 Biology CONTROL_AND_COORDINATION NSEJS-2024-B-Q03-M2 NSEJS [D2] The human brain has distinct functional anatomical centres: Part 1 (Hypothalamus) maintains autonomic homeostatic control, hunger, and thermoregulation. Part 2 (Cerebellum) coordinates fine voluntary muscular movements and balance. Part 3 (Cerebrum) governs sensory integration and cognition. Part 4"
-  },
-  {
-    "id": "NSEJS-2024-B-Q04",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2024-B-Q04",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q04",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2024-B-Q04 NSEJS-2024-B-Q04 NSEJS · LIFE_PROCESSES · NSEJS-2024-B-Q04 Biology LIFE_PROCESSES NSEJS-2024-B-Q04-M2 NSEJS [D2] Sap-sucking hemipteran insect pests (such as aphids and whiteflies) feed on internal vascular phloem sap of crop plants. These pests are most effectively controlled by applying which of the following systemic insecticides absorbed and translocated throughout plant vascular tissue?"
-  },
-  {
-    "id": "NSEJS-2024-B-Q05",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q05",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q05",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2024-B-Q05 NSEJS-2024-B-Q05 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q05 Biology CONTROL_AND_COORDINATION NSEJS-2024-B-Q05-M2 NSEJS [D2] What type of synovial joint is formed between the odontoid process (dens) of the second cervical vertebra (axis) and the anterior arch of the first cervical vertebra (atlas) in mammals?"
-  },
-  {
-    "id": "NSEJS-2024-B-Q06",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q06",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q06",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2024-B-Q06 NSEJS-2024-B-Q06 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q06 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2024-B-Q06-M2 NSEJS [D2] Match the diagnostic zoological structures in Column I with their corresponding organism/phenomenon in Column II: (1) Hexacanth larva: Taenia solium. (2) Renette excretory cell: Ascaris lumbricoides. (3) Respiratory tree: Sea cucumber (Holothuroidea). (4) Piloerectum (arrector pili contraction): Goo"
-  },
-  {
-    "id": "NSEJS-2024-B-Q07",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q07",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q07",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2024-B-Q07 NSEJS-2024-B-Q07 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q07 Biology CONTROL_AND_COORDINATION NSEJS-2024-B-Q07-M2 NSEJS [D2] The air-filled tympanic cavity of the middle ear communicates with the fluid-filled auditory capsule (internal ear cochlea and vestibule) through two fine membrane-covered apertures known as:"
-  },
-  {
-    "id": "NSEJS-2024-B-Q08",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2024-B-Q08",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q08",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2024-B-Q08 NSEJS-2024-B-Q08 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2024-B-Q08 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2024-B-Q08-M2 NSEJS [D2] To control vehicular exhaust emissions and combat urban air pollution, all newly manufactured and registered motor vehicles in India are mandated to comply with which Bharat Stage emission standard?"
-  },
-  {
-    "id": "NSEJS-2024-B-Q09",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2024-B-Q09",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q09",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2024-B-Q09 NSEJS-2024-B-Q09 NSEJS · LIFE_PROCESSES · NSEJS-2024-B-Q09 Biology LIFE_PROCESSES NSEJS-2024-B-Q09-M2 NSEJS [D2] In the human metabolic pathway of phenylalanine and tyrosine degradation: Defect 1 (Phenylalanine hydroxylase deficiency) causes accumulation of phenylpyruvate. Defect 2 (Tyrosine transaminase deficiency) causes elevated serum tyrosine. Defect 3 (Homogentisate 1,2-dioxygenase deficiency) causes accu"
-  },
-  {
-    "id": "NSEJS-2024-B-Q10",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q10",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q10",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2024-B-Q10 NSEJS-2024-B-Q10 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q10 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2024-B-Q10-M2 NSEJS [D2] Match the plant species in Column I with their unique diagnostic morphological and reproductive characteristics in Column II: (1) Wheat (Triticum aestivum): Glumes and lodicules in spikelet inflorescence. (2) Banyan tree (Ficus benghalensis): Prop roots for aerial support and hypanthodium infloresce"
-  },
-  {
-    "id": "NSEJS-2024-B-Q11",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2024-B-Q11",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q11",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2024-B-Q11 NSEJS-2024-B-Q11 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2024-B-Q11 Biology GENETICS_AND_HEREDITY NSEJS-2024-B-Q11-M2 NSEJS [D2] Under the transmission electron microscope, eukaryotic chromatin displays a repeating 'beads-on-a-string' structure composed of nucleosomes. A complete nucleosomal repeating unit contains a core particle and linker region. How many distinct histone protein types collectively constitute the core octa"
-  },
-  {
-    "id": "NSEJS-2024-B-Q12",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q12",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q12",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2024-B-Q12 NSEJS-2024-B-Q12 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q12 Biology CONTROL_AND_COORDINATION NSEJS-2024-B-Q12-M3 NSEJS [D2] Evaluate the following statements regarding vertebrate retinal photoreceptors: Assertion (A): The retinas of strictly nocturnal, cave-dwelling, and deep-sea animals are populated almost exclusively by rod photoreceptors with few or no cones. Reason (R): Rods contain rhodopsin with extremely high pho"
-  },
-  {
-    "id": "NSEJS-2024-B-Q13",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q13",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q13",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2024-B-Q13 NSEJS-2024-B-Q13 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q13 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2024-B-Q13-M2 NSEJS [D2] In a cross-section of a mature microsporangium (anther) of an angiosperm: the microspore tetrad/pollen grains are haploid (n); the outer wall layers (epidermis, endothecium, middle layers) are diploid (2n); and the nutritive tapetal layer cells undergo endomitosis/polyteny to become multinucleate or"
-  },
-  {
-    "id": "NSEJS-2024-B-Q14",
-    "title": "NSEJS · LIFE_PROCESSES · NSEJS-2024-B-Q14",
-    "subtitle": "Biology · LIFE_PROCESSES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q14",
-    "breadcrumb": "Biology · LIFE_PROCESSES · Question",
-    "search_text": "NSEJS-2024-B-Q14 NSEJS-2024-B-Q14 NSEJS · LIFE_PROCESSES · NSEJS-2024-B-Q14 Biology LIFE_PROCESSES NSEJS-2024-B-Q14-M2 NSEJS [D2] According to the Dixon and Joly Cohesion-Tension theory for the ascent of sap in tall trees, the frictional and gravitational forces opposing sap ascent in a 100-metre-tall tree require a pulling tension of about 20 to 50 atm. What is the intrinsic cohesive tensile strength of a continuous column of"
-  },
-  {
-    "id": "NSEJS-2024-B-Q15",
-    "title": "NSEJS · GENETICS_AND_HEREDITY · NSEJS-2024-B-Q15",
-    "subtitle": "Biology · GENETICS_AND_HEREDITY · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q15",
-    "breadcrumb": "Biology · GENETICS_AND_HEREDITY · Question",
-    "search_text": "NSEJS-2024-B-Q15 NSEJS-2024-B-Q15 NSEJS · GENETICS_AND_HEREDITY · NSEJS-2024-B-Q15 Biology GENETICS_AND_HEREDITY NSEJS-2024-B-Q15-M2 NSEJS [D2] Hypertrichosis pinnae auris (excessive hair growth on the external ear rim) is observed exclusively in human males and is transmitted directly from an affected father to all of his sons, while never appearing in daughters. Which genetic mode of inheritance accounts for this trait?"
-  },
-  {
-    "id": "NSEJS-2024-B-Q16",
-    "title": "NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2024-B-Q16",
-    "subtitle": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q16",
-    "breadcrumb": "Biology · ENVIRONMENT_AND_NATURAL_RESOURCES · Question",
-    "search_text": "NSEJS-2024-B-Q16 NSEJS-2024-B-Q16 NSEJS · ENVIRONMENT_AND_NATURAL_RESOURCES · NSEJS-2024-B-Q16 Biology ENVIRONMENT_AND_NATURAL_RESOURCES NSEJS-2024-B-Q16-M2 NSEJS [D2] Which international environmental treaty was adopted in 1987 to protect the Earth's stratospheric ozone layer by legally binding nations to phase out the production and consumption of ozone-depleting substances (such as chlorofluorocarbons, CFCs)?"
-  },
-  {
-    "id": "NSEJS-2024-B-Q49",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q49",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q49",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2024-B-Q49 NSEJS-2024-B-Q49 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q49 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2024-B-Q49-M2 NSEJS [D2] [Multiple Correct] In angiosperms, an aril is an accessory fleshy outgrowth developing from the funiculus or micropyle that partially or wholly encloses the mature seed. Which of the following plants possess an edible aril as their primary consumed portion? (A) Litchi (Litchi chinensis). (B) Rambuta"
-  },
-  {
-    "id": "NSEJS-2024-B-Q51",
-    "title": "NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q51",
-    "subtitle": "Biology · ORGANISATION_IN_LIVING_WORLD · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q51",
-    "breadcrumb": "Biology · ORGANISATION_IN_LIVING_WORLD · Question",
-    "search_text": "NSEJS-2024-B-Q51 NSEJS-2024-B-Q51 NSEJS · ORGANISATION_IN_LIVING_WORLD · NSEJS-2024-B-Q51 Biology ORGANISATION_IN_LIVING_WORLD NSEJS-2024-B-Q51-M2 NSEJS [D2] [Multiple Correct] Motile reproductive flagellated cells (zoospores and gametes) exhibit distinctive flagellar patterns across algal classes. Which of the following major divisions of algae possess biflagellate motile cells bearing two flagella? (A) Rhodophyta (red algae). (B) Phaeophyta (brown alga"
-  },
-  {
-    "id": "NSEJS-2024-B-Q52",
-    "title": "NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q52",
-    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D2]",
-    "category": "question",
-    "type": "QUESTION",
-    "badge": "D2",
-    "route": "#/question/NSEJS-2024-B-Q52",
-    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
-    "search_text": "NSEJS-2024-B-Q52 NSEJS-2024-B-Q52 NSEJS · CONTROL_AND_COORDINATION · NSEJS-2024-B-Q52 Biology CONTROL_AND_COORDINATION NSEJS-2024-B-Q52-M2 NSEJS [D2] [Multiple Correct] Which of the following statements regarding vertebrate immune responses and physiological defense mechanisms are correct? (A) All antibodies (immunoglobulins) are glycoproteins. (B) Eosinophils are non-phagocytic lymphocytes. (C) Ciliated pseudostratified epithelium of the respira"
   },
   {
     "id": "NSEJS-2024-C-Q17",
@@ -8245,7 +7321,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q001",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q001 SOF-IMO-G09-CIRCLES-Q001 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q001 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q001 SOF-IMO-G09-CIRCLES-Q001 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q001 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a circle of radius $13\\text{ cm}$, a chord $AB$ subtends an angle in a semicircle. Find the perpendicular distance."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q002",
@@ -8256,7 +7332,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q002",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q002 SOF-IMO-G09-CIRCLES-Q002 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q002 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q002 SOF-IMO-G09-CIRCLES-Q002 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q002 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] A chord of a circle is equal to the radius of the circle. Find the angle subtended by the chord at the centre of the circle, and the angle subtended by it at a point on the major arc."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q003",
@@ -8267,7 +7343,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q003",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q003 SOF-IMO-G09-CIRCLES-Q003 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q003 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q003 SOF-IMO-G09-CIRCLES-Q003 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q003 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In the given figure, points $A, B, C, D$ A , B , C , D lie on a circle. Chords $AC$ A C and $BD$ B D intersect at point $E$ E such that $\\angle BEC = 130^\\circ$ ∠ BEC = 13 0 ∘ and $\\angle ECD = 20^\\circ$ ∠ EC D = 2 0 ∘ . Find the measure of $\\angle BAC$ ∠ B A C ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q004",
@@ -8278,7 +7354,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q004",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q004 SOF-IMO-G09-CIRCLES-Q004 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q004 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q004 SOF-IMO-G09-CIRCLES-Q004 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q004 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Segment $AB$ A B is a diameter of a circle with centre $O$ O . Point $C$ C is any point on the circumference of the circle. If $\\angle CAB = 38^\\circ$ ∠ C A B = 3 8 ∘ , find the measure of $\\angle ABC$ ∠ A BC ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q005",
@@ -8289,7 +7365,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q005",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q005 SOF-IMO-G09-CIRCLES-Q005 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q005 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q005 SOF-IMO-G09-CIRCLES-Q005 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q005 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two concentric circles with common centre $O$ O have radii $17\\text{ cm}$ 17 cm and $10\\text{ cm}$ 10 cm . A straight line intersects the outer circle at $A$ A and $D$ D , and the inner circle at $B$ B and $C$ C . If the perpendicular distance from $O$ O to the line is $8\\text{ cm}$ 8 cm , find the"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q006",
@@ -8300,7 +7376,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q006",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q006 SOF-IMO-G09-CIRCLES-Q006 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q006 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q006 SOF-IMO-G09-CIRCLES-Q006 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q006 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a circle with centre $O$ O , points $A, B, C$ A , B , C lie on the circumference such that $\\angle AOB = 90^\\circ$ ∠ A OB = 9 0 ∘ and $\\angle BOC = 120^\\circ$ ∠ BOC = 12 0 ∘ . If point $D$ D lies on the circle on the major arc $AC$ A C (not containing $B$ B ), find the measure of $\\angle ADC$ ∠ A"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q007",
@@ -8311,7 +7387,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q007",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q007 SOF-IMO-G09-CIRCLES-Q007 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q007 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q007 SOF-IMO-G09-CIRCLES-Q007 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q007 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Let $ABCD$ A BC D be a cyclic quadrilateral. The internal angle bisectors of opposite angles $\\angle A$ ∠ A and $\\angle C$ ∠ C intersect the circumcircle at points $P$ P and $Q$ Q respectively. What can be concluded about the line segment $PQ$ PQ ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q008",
@@ -8322,7 +7398,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q008",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q008 SOF-IMO-G09-CIRCLES-Q008 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q008 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q008 SOF-IMO-G09-CIRCLES-Q008 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q008 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In the given figure, two chords $AB$ A B and $CD$ C D of a circle intersect at an interior point $P$ P . If $AP = 6\\text{ cm}$ A P = 6 cm , $PB = 8\\text{ cm}$ PB = 8 cm , and $CP = 4\\text{ cm}$ CP = 4 cm , find the total length of chord $CD$ C D ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q009",
@@ -8333,7 +7409,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q009",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q009 SOF-IMO-G09-CIRCLES-Q009 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q009 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q009 SOF-IMO-G09-CIRCLES-Q009 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q009 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a circle of radius $10\\text{ cm}$ 10 cm , two parallel chords $AB$ A B and $CD$ C D of lengths $16\\text{ cm}$ 16 cm and $12\\text{ cm}$ 12 cm respectively lie on opposite sides of the centre $O$ O . Find the perpendicular distance between the two chords."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q010",
@@ -8344,7 +7420,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q010",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q010 SOF-IMO-G09-CIRCLES-Q010 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q010 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q010 SOF-IMO-G09-CIRCLES-Q010 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q010 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two circles of equal radius $5\\text{ cm}$ 5 cm intersect each other such that each circle passes through the centre of the other. Find the exact length of their common chord."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q011",
@@ -8355,7 +7431,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q011",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q011 SOF-IMO-G09-CIRCLES-Q011 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q011 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q011 SOF-IMO-G09-CIRCLES-Q011 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q011 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Quadrilateral $ABCD$ A BC D is inscribed in a circle such that $AB \\parallel CD$ A B ∥ C D . If $\\angle A = 70^\\circ$ ∠ A = 7 0 ∘ , find the measures of $\\angle B, \\angle C$ ∠ B , ∠ C , and $\\angle D$ ∠ D ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q012",
@@ -8366,7 +7442,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q012",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q012 SOF-IMO-G09-CIRCLES-Q012 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q012 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q012 SOF-IMO-G09-CIRCLES-Q012 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q012 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a cyclic quadrilateral $ABCD$ A BC D , side $AB$ A B is produced to a point $E$ E . If $\\angle CBE = 82^\\circ$ ∠ CBE = 8 2 ∘ and $\\angle BAC = 42^\\circ$ ∠ B A C = 4 2 ∘ , find the measures of $\\angle BDC$ ∠ B D C and $\\angle ADC$ ∠ A D C ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q013",
@@ -8377,7 +7453,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q013",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q013 SOF-IMO-G09-CIRCLES-Q013 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q013 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q013 SOF-IMO-G09-CIRCLES-Q013 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q013 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In the given figure, a chord $AB$ A B of the outer circle of two concentric circles has length $20\\text{ cm}$ 20 cm and is tangent to the inner circle at point $T$ T . Find the exact area of the circular ring (annulus) bounded between the two circles."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q014",
@@ -8388,7 +7464,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q014",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q014 SOF-IMO-G09-CIRCLES-Q014 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q014 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q014 SOF-IMO-G09-CIRCLES-Q014 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q014 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In an acute triangle $ABC$ A BC , altitudes $AD$ A D and $BE$ BE intersect at the orthocentre $H$ H . Which of the following statements is mathematically true regarding the points $C, D, H, E$ C , D , H , E ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q015",
@@ -8399,7 +7475,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q015",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q015 SOF-IMO-G09-CIRCLES-Q015 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q015 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q015 SOF-IMO-G09-CIRCLES-Q015 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q015 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two secants $PAB$ P A B and $PCD$ PC D are drawn from an external point $P$ P to a circle, intersecting the circle at $A, B$ A , B and $C, D$ C , D respectively ($A$ A lies on segment $PB$ PB , $C$ C lies on segment $PD$ P D ). If the major intercepted arc $BD$ B D subtends a central angle of $110^\\"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q016",
@@ -8410,7 +7486,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q016",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q016 SOF-IMO-G09-CIRCLES-Q016 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q016 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q016 SOF-IMO-G09-CIRCLES-Q016 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q016 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] An equilateral triangle $ABC$ A BC is inscribed in a circle. A point $P$ P lies on the minor arc $BC$ BC . If $PB = 5\\text{ cm}$ PB = 5 cm and $PC = 7\\text{ cm}$ PC = 7 cm , find the exact length of the chord $PA$ P A ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q017",
@@ -8421,7 +7497,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q017",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q017 SOF-IMO-G09-CIRCLES-Q017 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q017 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q017 SOF-IMO-G09-CIRCLES-Q017 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q017 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two circles intersect at points $A$ A and $B$ B . Through the point of intersection $A$ A , two straight secants $CAD$ C A D and $EAF$ E A F are drawn intersecting the first circle at $C, E$ C , E and the second circle at $D, F$ D , F . What is the geometric relationship between $\\triangle CBE$ △ CB"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q018",
@@ -8432,7 +7508,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q018",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q018 SOF-IMO-G09-CIRCLES-Q018 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q018 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q018 SOF-IMO-G09-CIRCLES-Q018 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q018 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Three identical coins of radius $r = 6\\text{ cm}$ r = 6 cm lie flat on a table such that each coin touches the other two externally. A smaller coin of radius $r_0$ r 0 ​ is placed in the central void touching all three coins externally. Find the exact radius $r_0$ r 0 ​ of the smaller coin."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q019",
@@ -8443,7 +7519,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q019",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q019 SOF-IMO-G09-CIRCLES-Q019 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q019 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q019 SOF-IMO-G09-CIRCLES-Q019 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q019 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Through a fixed point $P$ P situated at a distance $d = 7\\text{ cm}$ d = 7 cm from the centre of a circle of radius $R = 9\\text{ cm}$ R = 9 cm , various chords are drawn. Find the exact numerical value of the product $PA \\cdot PB$ P A ⋅ PB for any chord $AB$ A B passing through $P$ P ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q020",
@@ -8454,7 +7530,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q020",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q020 SOF-IMO-G09-CIRCLES-Q020 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q020 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q020 SOF-IMO-G09-CIRCLES-Q020 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q020 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] A triangle is inscribed in a semicircle of radius $R = 8\\text{ cm}$ R = 8 cm such that one of its sides is the diameter of the semicircle. Find the maximum possible area of such an inscribed triangle."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q021",
@@ -8465,7 +7541,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q021",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q021 SOF-IMO-G09-CIRCLES-Q021 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q021 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q021 SOF-IMO-G09-CIRCLES-Q021 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q021 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two circles $C_1$ C 1 ​ and $C_2$ C 2 ​ intersect at two distinct points $A$ A and $B$ B . A line through $A$ A intersects $C_1$ C 1 ​ at $D$ D and $C_2$ C 2 ​ at $E$ E . A second line through $B$ B intersects $C_1$ C 1 ​ at $C$ C and $C_2$ C 2 ​ at $F$ F . Which of the following relationships betwe"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q022",
@@ -8476,7 +7552,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q022",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q022 SOF-IMO-G09-CIRCLES-Q022 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q022 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q022 SOF-IMO-G09-CIRCLES-Q022 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q022 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In the given figure, quadrilateral $ABCD$ A BC D is cyclic with consecutive side lengths $AB = 3$ A B = 3 , $BC = 4$ BC = 4 , $CD = 5$ C D = 5 , and $DA = 6$ D A = 6 . Diagonals $AC$ A C and $BD$ B D have lengths $d_1$ d 1 ​ and $d_2$ d 2 ​ respectively. Find the exact value of the product of the di"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q023",
@@ -8487,7 +7563,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q023",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q023 SOF-IMO-G09-CIRCLES-Q023 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q023 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q023 SOF-IMO-G09-CIRCLES-Q023 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q023 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In the given figure, from an external point $P$ P , a tangent $PT$ PT of length $12\\text{ cm}$ 12 cm is drawn to a circle. A secant line through $P$ P intersects the circle at points $A$ A and $B$ B (with $A$ A between $P$ P and $B$ B ) such that the internal chord length $AB$ A B is twice the exter"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q024",
@@ -8498,7 +7574,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q024",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q024 SOF-IMO-G09-CIRCLES-Q024 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q024 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q024 SOF-IMO-G09-CIRCLES-Q024 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q024 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] A right-angled triangle has perpendicular legs of lengths $a = 15\\text{ cm}$ a = 15 cm and $b = 20\\text{ cm}$ b = 20 cm . Let $R$ R denote the radius of its circumcircle and $r$ r denote the radius of its incircle. Find the exact numerical value of the sum $(R + r)$ ( R + r ) ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q025",
@@ -8509,7 +7585,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q025",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q025 SOF-IMO-G09-CIRCLES-Q025 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q025 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q025 SOF-IMO-G09-CIRCLES-Q025 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q025 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a triangle with circumradius $R = 10\\text{ cm}$ R = 10 cm and inradius $r = 4\\text{ cm}$ r = 4 cm , find the exact distance $d$ d between the circumcentre $O$ O and the incentre $I$ I ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q026",
@@ -8520,7 +7596,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q026",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q026 SOF-IMO-G09-CIRCLES-Q026 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q026 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q026 SOF-IMO-G09-CIRCLES-Q026 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q026 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] How many distinct circles can pass through three given non-collinear points in a plane?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q027",
@@ -8531,7 +7607,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q027",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q027 SOF-IMO-G09-CIRCLES-Q027 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q027 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q027 SOF-IMO-G09-CIRCLES-Q027 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q027 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Which of the following statements rigorously explains why no circle can pass through three distinct collinear points $P, Q,$ P , Q , and $R$ R ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q028",
@@ -8542,7 +7618,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q028",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q028 SOF-IMO-G09-CIRCLES-Q028 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q028 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q028 SOF-IMO-G09-CIRCLES-Q028 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q028 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a circle with centre $O$ O and radius $10\\text{ cm}$ 10 cm , two chords $AB$ A B and $CD$ C D are at the same perpendicular distance of $6\\text{ cm}$ 6 cm from $O$ O . If chord $AB$ A B has length $16\\text{ cm}$ 16 cm , what is the length of chord $CD$ C D ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q029",
@@ -8553,7 +7629,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q029",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q029 SOF-IMO-G09-CIRCLES-Q029 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q029 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q029 SOF-IMO-G09-CIRCLES-Q029 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q029 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a right-angled triangle with legs of length $a$ a and $b$ b and hypotenuse of length $c$ c , which algebraic formula correctly represents the inradius $r$ r of the incircle?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q030",
@@ -8564,7 +7640,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q030",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q030 SOF-IMO-G09-CIRCLES-Q030 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q030 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q030 SOF-IMO-G09-CIRCLES-Q030 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q030 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a circle with centre $O$ O , two chords $AB$ A B and $CD$ C D subtend equal angles at the centre, such that $\\angle AOB = \\angle COD = 70^\\circ$ ∠ A OB = ∠ CO D = 7 0 ∘ . If the length of chord $AB$ A B is $8\\text{ cm}$ 8 cm , what is the length of chord $CD$ C D ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q031",
@@ -8575,7 +7651,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q031",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q031 SOF-IMO-G09-CIRCLES-Q031 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q031 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q031 SOF-IMO-G09-CIRCLES-Q031 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q031 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Which of the following steps provides the foundational geometric explanation for why the opposite angles of a cyclic quadrilateral $ABCD$ A BC D sum to $180^\\circ$ 18 0 ∘ ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q032",
@@ -8586,7 +7662,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q032",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q032 SOF-IMO-G09-CIRCLES-Q032 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q032 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q032 SOF-IMO-G09-CIRCLES-Q032 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q032 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two parallel chords of lengths $10\\text{ cm}$ 10 cm and $24\\text{ cm}$ 24 cm are drawn on opposite sides of the centre of a circle. If the distance between the two chords is $17\\text{ cm}$ 17 cm , find the radius of the circle."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q033",
@@ -8597,7 +7673,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q033",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q033 SOF-IMO-G09-CIRCLES-Q033 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q033 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q033 SOF-IMO-G09-CIRCLES-Q033 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q033 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two equal chords $AB$ A B and $CD$ C D of a circle intersect at a point $X$ X inside the circle. If $AX = 9\\text{ cm}$ A X = 9 cm and $XB = 4\\text{ cm}$ XB = 4 cm , what are the lengths of the two segments $CX$ CX and $XD$ X D of chord $CD$ C D ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q034",
@@ -8608,7 +7684,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q034",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q034 SOF-IMO-G09-CIRCLES-Q034 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q034 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q034 SOF-IMO-G09-CIRCLES-Q034 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q034 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In a circle with centre $O$ O , diagonal $AC$ A C is a diameter. Points $B$ B and $D$ D lie on the circle on opposite sides of diameter $AC$ A C . If $\\angle BAC = 32^\\circ$ ∠ B A C = 3 2 ∘ and $\\angle CAD = 48^\\circ$ ∠ C A D = 4 8 ∘ , find the measure of $\\angle BCD$ ∠ BC D ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q035",
@@ -8619,7 +7695,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q035",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q035 SOF-IMO-G09-CIRCLES-Q035 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q035 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q035 SOF-IMO-G09-CIRCLES-Q035 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q035 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two intersecting circles of equal radius $5\\text{ cm}$ 5 cm have their centres at $O_1$ O 1 ​ and $O_2$ O 2 ​ , separated by a distance of $6\\text{ cm}$ 6 cm . What is the length of their common chord $AB$ A B ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q036",
@@ -8630,7 +7706,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q036",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q036 SOF-IMO-G09-CIRCLES-Q036 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q036 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q036 SOF-IMO-G09-CIRCLES-Q036 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q036 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Let $ABCD$ A BC D be a trapezium with $AB \\parallel CD$ A B ∥ C D . Which condition is both necessary and sufficient for $ABCD$ A BC D to be a cyclic quadrilateral?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q037",
@@ -8641,7 +7717,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q037",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q037 SOF-IMO-G09-CIRCLES-Q037 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q037 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q037 SOF-IMO-G09-CIRCLES-Q037 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q037 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] From an external point $P$ P , a tangent $PT$ PT is drawn to a circle with centre $O$ O and radius $5\\text{ cm}$ 5 cm . If the point $P$ P is at a distance of $13\\text{ cm}$ 13 cm from the centre $O$ O , what is the length of tangent segment $PT$ PT ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q038",
@@ -8652,7 +7728,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q038",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q038 SOF-IMO-G09-CIRCLES-Q038 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q038 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q038 SOF-IMO-G09-CIRCLES-Q038 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q038 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] A quadrilateral $ABCD$ A BC D is circumscribed about a circle, touching all four sides. If $AB = 6\\text{ cm}$ A B = 6 cm , $BC = 7\\text{ cm}$ BC = 7 cm , and $CD = 4\\text{ cm}$ C D = 4 cm , what is the length of side $DA$ D A ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q039",
@@ -8663,7 +7739,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q039",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q039 SOF-IMO-G09-CIRCLES-Q039 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q039 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q039 SOF-IMO-G09-CIRCLES-Q039 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q039 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Let $P$ P be a point in the plane of $\\triangle ABC$ △ A BC . Perpendiculars are dropped from $P$ P to the three lines containing the sides $BC, CA,$ BC , C A , and $AB$ A B , meeting them at $X, Y,$ X , Y , and $Z$ Z respectively. Under what exact geometric condition are the three feet $X, Y,$ X ,"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q040",
@@ -8674,7 +7750,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q040",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q040 SOF-IMO-G09-CIRCLES-Q040 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q040 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q040 SOF-IMO-G09-CIRCLES-Q040 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q040 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Let $ABCD$ A BC D be any convex quadrilateral. The internal bisectors of the four interior angles $\\angle A, \\angle B, \\angle C, \\angle D$ ∠ A , ∠ B , ∠ C , ∠ D intersect to form an interior quadrilateral $PQRS$ PQRS . Which deductive reasoning explains why $PQRS$ PQRS is always a cyclic quadrilater"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q041",
@@ -8685,7 +7761,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q041",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q041 SOF-IMO-G09-CIRCLES-Q041 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q041 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q041 SOF-IMO-G09-CIRCLES-Q041 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q041 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] A cyclic quadrilateral $ABCD$ A BC D has side lengths $a = 25$ a = 25 , $b = 39$ b = 39 , $c = 52$ c = 52 , and $d = 60$ d = 60 . Find the exact area of quadrilateral $ABCD$ A BC D ."
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q042",
@@ -8696,7 +7772,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q042",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q042 SOF-IMO-G09-CIRCLES-Q042 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q042 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q042 SOF-IMO-G09-CIRCLES-Q042 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q042 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Let $D, E, F$ D , E , F be points chosen on the sides $BC, CA, AB$ BC , C A , A B of $\\triangle ABC$ △ A BC respectively. The circumcircles of $\\triangle AFE$ △ A FE and $\\triangle BDF$ △ B D F intersect at a second point $M$ M distinct from $F$ F . Which fundamental cyclic invariant guarantees that"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q043",
@@ -8707,7 +7783,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q043",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q043 SOF-IMO-G09-CIRCLES-Q043 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q043 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q043 SOF-IMO-G09-CIRCLES-Q043 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q043 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] From an external point $P$ P , two secants $PAB$ P A B and $PCD$ PC D are drawn to a circle. Chord segment $AB = 5\\text{ cm}$ A B = 5 cm , external segment $PA = 4\\text{ cm}$ P A = 4 cm , and external segment $PC = 3\\text{ cm}$ PC = 3 cm . What is the length of chord segment $CD$ C D ?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q044",
@@ -8718,7 +7794,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q044",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q044 SOF-IMO-G09-CIRCLES-Q044 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q044 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q044 SOF-IMO-G09-CIRCLES-Q044 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q044 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] The incircle of a right-angled triangle touches the hypotenuse at point $T$ T , dividing it into two segments of lengths $6\\text{ cm}$ 6 cm and $10\\text{ cm}$ 10 cm . What is the exact area of the right-angled triangle?"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q045",
@@ -8729,7 +7805,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q045",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q045 SOF-IMO-G09-CIRCLES-Q045 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q045 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q045 SOF-IMO-G09-CIRCLES-Q045 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q045 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Let $M$ M be the midpoint of an arbitrary chord $PQ$ PQ of a circle. Two distinct chords $AB$ A B and $CD$ C D are drawn through $M$ M . Chords $AD$ A D and $BC$ BC intersect chord $PQ$ PQ at points $X$ X and $Y$ Y respectively. What is the fundamental relationship between segments $XM$ XM and $MY$"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q046",
@@ -8740,7 +7816,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q046",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q046 SOF-IMO-G09-CIRCLES-Q046 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q046 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q046 SOF-IMO-G09-CIRCLES-Q046 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q046 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Casey's Theorem states that for four circles $O_1, O_2, O_3, O_4$ O 1 ​ , O 2 ​ , O 3 ​ , O 4 ​ tangent internally to a common circle in cyclic order, the lengths $t_{ij}$ t ij ​ of their common external tangents satisfy $t_{12}t_{34} + t_{14}t_{23} = t_{13}t_{24}$ t 12 ​ t 34 ​ + t 14 ​ t 23 ​ = t"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q047",
@@ -8751,7 +7827,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q047",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q047 SOF-IMO-G09-CIRCLES-Q047 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q047 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q047 SOF-IMO-G09-CIRCLES-Q047 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q047 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] Two non-concentric circles $C_1$ C 1 ​ and $C_2$ C 2 ​ have radii $r_1 = 8\\text{ cm}$ r 1 ​ = 8 cm and $r_2 = 6\\text{ cm}$ r 2 ​ = 6 cm , and the distance between their centres $O_1$ O 1 ​ and $O_2$ O 2 ​ is $10\\text{ cm}$ 10 cm . At what distance from centre $O_1$ O 1 ​ does their radical axis inte"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q048",
@@ -8762,7 +7838,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q048",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q048 SOF-IMO-G09-CIRCLES-Q048 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q048 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q048 SOF-IMO-G09-CIRCLES-Q048 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q048 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In $\\triangle ABC$ △ A BC , the circumradius is $R = 14\\text{ cm}$ R = 14 cm , and the distance between the circumcentre $O$ O and the orthocentre $H$ H is $18\\text{ cm}$ 18 cm . Find the radius $R_9$ R 9 ​ of the Nine-Point Circle of $\\triangle ABC$ △ A BC and the distance from the Nine-Point Centr"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q049",
@@ -8773,7 +7849,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q049",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q049 SOF-IMO-G09-CIRCLES-Q049 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q049 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q049 SOF-IMO-G09-CIRCLES-Q049 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q049 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] In $\\triangle ABC$ △ A BC , the internal bisector of $\\angle A$ ∠ A meets the circumcircle at $M$ M . Let $I$ I be the incentre of $\\triangle ABC$ △ A BC . Which rigorous angle-chasing identity justifies that point $M$ M is the circumcentre of $\\triangle BIC$ △ B I C , proving that $MB = MC = MI$ MB"
   },
   {
     "id": "SOF-IMO-G09-CIRCLES-Q050",
@@ -8784,7 +7860,7 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "badge": "D2",
     "route": "#/question/SOF-IMO-G09-CIRCLES-Q050",
     "breadcrumb": "Mathematics · Euclidean Circle Geometry · Question",
-    "search_text": "SOF-IMO-G09-CIRCLES-Q050 SOF-IMO-G09-CIRCLES-Q050 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q050 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2]"
+    "search_text": "SOF-IMO-G09-CIRCLES-Q050 SOF-IMO-G09-CIRCLES-Q050 SOF IMO Circles · Circle Geometry · SOF-IMO-G09-CIRCLES-Q050 Mathematics Euclidean Circle Geometry Inscribed Angles & Tangents SOF IMO [D2] For any four distinct points $A, B, C, D$ A , B , C , D in a plane, Ptolemy's Inequality asserts that $AC \\cdot BD \\le AB \\cdot CD + BC \\cdot DA$ A C ⋅ B D ≤ A B ⋅ C D + BC ⋅ D A . If an inversion centered at $A$ A with radius $k$ k maps $B, C, D$ B , C , D to $B', C', D'$ B ′ , C ′ , D ′ , which ge"
   },
   {
     "id": "VEC-Q01",
@@ -8928,6 +8004,1326 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "route": "#/question/VEC-Q13",
     "breadcrumb": "Mathematics · Vector Algebra · Question",
     "search_text": "VEC-Q13 VEC-Q13 JEE Main Mathematics · Vector Algebra · VEC-Q13 Mathematics Vector Algebra 3D Spatial Geometry JEE Main [D3] The shortest distance between the two skew lines r₁ = (i + 2j + 3k) + λ (2i + 3j + 4k) and r₂ = (2i + 4j + 5k) + μ (3i + 4j + 5k) is:"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-01",
+    "title": "NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-01",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-01 BIO-NSEJS-GEN-01 NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4) Biology Reproduction & Mendelian Heredity BIO-GENETICS NSEJS [D2] In sweet pea (*Lathyrus odoratus*), purple flower coloration requires functional enzymes produced by two independently assorting dominant alleles, $C$ and $P$. Plants with genotypes $C\\_pp, ccP\\_,$ or $ccpp$ produce white flowers due to a biochemical pathway block. [FIG-stem-bio-complementary-genes-"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-02",
+    "title": "NSEJS / Junior Science Biology · Q02 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-02",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-02 BIO-NSEJS-GEN-02 NSEJS / Junior Science Biology · Q02 · MODEL · D2 (Score 4) Biology Reproduction & Mendelian Heredity BIO-PHYSIOLOGY NSEJS [D2] During the generation and propagation of a nerve impulse along an unmyelinated mammalian axon, which sequence of ionic events across the axonal membrane correctly describes the transition from resting potential ($-70\\text{ mV}$) through peak depolarization ($+30\\text{ mV}$) to repolarization and the"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-03",
+    "title": "NSEJS / Junior Science Biology · Q03 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-03",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-03 BIO-NSEJS-GEN-03 NSEJS / Junior Science Biology · Q03 · APPLY · D2 (Score 3) Biology Reproduction & Mendelian Heredity BIO-PHYSIOLOGY NSEJS [D2] A person accidentally touches a hot stove with their finger and immediately withdraws their hand before feeling conscious pain. Which sequence correctly represents the neural pathway and neurotransmitter action governing this monosynaptic/polysynaptic spinal reflex arc?"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-04",
+    "title": "NSEJS / Junior Science Biology · Q04 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-04",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-04 BIO-NSEJS-GEN-04 NSEJS / Junior Science Biology · Q04 · JUSTIFY · D2 (Score 4) Biology Reproduction & Mendelian Heredity BIO-PLANT-PHYSIOLOGY NSEJS [D2] When a potted seedling is placed horizontally in the dark, the shoot bends upwards (negative gravitropism) while the primary root bends downwards (positive gravitropism). According to the Cholodny-Went hypothesis and tissue-specific auxin dose-response kinetics, which physiological mechanism account"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-05",
+    "title": "NSEJS / Junior Science Biology · Q05 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-05",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-05 BIO-NSEJS-GEN-05 NSEJS / Junior Science Biology · Q05 · MODEL · D2 (Score 4) Biology Reproduction & Mendelian Heredity BIO-PLANT-PHYSIOLOGY NSEJS [D2] A short-day plant (SDP) with a critical dark period of $9.0\\text{ hours}$ is exposed to a light regimen of $14\\text{ hours light}$ and $10\\text{ hours darkness}$. In one experiment, the $10\\text{ hour}$ dark phase is interrupted in the middle by a $2\\text{ minute}$ flash of red light ($660\\text{ nm}"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-06",
+    "title": "NSEJS / Junior Science Biology · Q06 · SYNTHESIZE · D2 (Score 5)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-06",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-06 BIO-NSEJS-GEN-06 NSEJS / Junior Science Biology · Q06 · SYNTHESIZE · D2 (Score 5) Biology Reproduction & Mendelian Heredity BIO-PHYSIOLOGY NSEJS [D2] Following a carbohydrate-rich meal, human blood glucose rises from baseline ($90\\text{ mg/dL}$) to $150\\text{ mg/dL}$, triggering endocrine secretion. Later during fasting, glucose falls to $70\\text{ mg/dL}$. Which statement correctly identifies the pancreatic endocrine cell types, their secreted ho"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-07",
+    "title": "NSEJS / Junior Science Biology · Q07 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-07",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-07 BIO-NSEJS-GEN-07 NSEJS / Junior Science Biology · Q07 · APPLY · D2 (Score 3) Biology Reproduction & Mendelian Heredity BIO-GENETICS NSEJS [D2] Red-green color blindness is an X-linked recessive condition ($X^c$). A man with normal color vision ($X^C Y$) marries a woman with normal vision whose father was color-blind ($X^c Y$). If this couple has four children (two sons and two daughters), what is the probability that their first son will b"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-08",
+    "title": "NSEJS / Junior Science Biology · Q08 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-08",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-08 BIO-NSEJS-GEN-08 NSEJS / Junior Science Biology · Q08 · MODEL · D2 (Score 4) Biology Reproduction & Mendelian Heredity BIO-MOLECULAR-BIOLOGY NSEJS [D2] A double-stranded DNA duplex contains 2000 base pairs ($4000$ total nucleotides). Biochemical analysis reveals that Adenine accounts for $28.0\\%$ of the total nitrogenous bases in the molecule. Calculate the total number of Guanine nucleotides present in this DNA molecule and the total number of hyd"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-09",
+    "title": "NSEJS / Junior Science Biology · Q09 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-GEN-09",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-09 BIO-NSEJS-GEN-09 NSEJS / Junior Science Biology · Q09 · JUSTIFY · D2 (Score 4) Biology Reproduction & Mendelian Heredity BIO-MOLECULAR-BIOLOGY NSEJS [D2] Sickle-cell anemia is an autosomal recessive disorder caused by a single base-pair substitution (point mutation) in the gene encoding the $\\beta$-globin chain of hemoglobin. Which statement correctly identifies the nature of this mutation at the DNA, mRNA, and polypeptide levels, and explains why it"
+  },
+  {
+    "id": "BIO-NSEJS-GEN-10",
+    "title": "NSEJS / Junior Science Biology · Q10 · APPLY · D1 (Score 2)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/BIO-NSEJS-GEN-10",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "BIO-NSEJS-GEN-10 BIO-NSEJS-GEN-10 NSEJS / Junior Science Biology · Q10 · APPLY · D1 (Score 2) Biology Reproduction & Mendelian Heredity BIO-ENDOCRINOLOGY NSEJS [D1] Blood plasma calcium concentration is tightly maintained at approximately $9.0 - 11.0\\text{ mg/dL}$ by the antagonistic actions of two peptide hormones: Parathyroid Hormone (PTH) and Calcitonin. Which of the following correctly pairs each hormone with its gland of origin, physiological trigger, and"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-01",
+    "title": "NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-CELL-01",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-01 BIO-NSEJS-CELL-01 NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D2] In an investigation of plant cell water relations, cylindrical cores of uniform initial mass $m_0 = 5.00\\text{ g}$ from Solanum tuberosum tuber tissue are incubated for 2 hours in a graded series of sucrose solutions at $20^\\circ\\text{C}$ ($293\\text{ K}$). The percentage change in tissue mass $(\\Del"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-02",
+    "title": "NSEJS / Junior Science Biology · Q02 · REPRESENT · D1 (Score 2)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/BIO-NSEJS-CELL-02",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-02 BIO-NSEJS-CELL-02 NSEJS / Junior Science Biology · Q02 · REPRESENT · D1 (Score 2) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D1] In a pulse-chase autoradiography experiment on pancreatic acinar cells, cells are briefly exposed to radioactive $[^{35}\\text{S}]$-methionine ('pulse') and subsequently chased with non-radioactive amino acids. The intracellular location of radioactive digestive enzymes (such as zymogen precursors) i"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-03",
+    "title": "NSEJS / Junior Science Biology · Q03 · EXPLAIN · D1 (Score 2)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/BIO-NSEJS-CELL-03",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-03 BIO-NSEJS-CELL-03 NSEJS / Junior Science Biology · Q03 · EXPLAIN · D1 (Score 2) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D1] Mitochondria and chloroplasts are regarded as semiautonomous organelles that evolved through ancient endosymbiosis of ancestral prokaryotes with primitive eukaryotic host cells. Which of the following sets of biochemical characteristics correctly provides direct evidence in support of this endosymbi"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-04",
+    "title": "NSEJS / Junior Science Biology · Q04 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-CELL-04",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-04 BIO-NSEJS-CELL-04 NSEJS / Junior Science Biology · Q04 · JUSTIFY · D2 (Score 4) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D2] Xylem and phloem are complex permanent tissues that mediate long-distance vascular transport in angiosperms. A student analyzes cross-sections of stem vascular bundles under high magnification and observes distinct cytological and functional differences. Which of the following comparisons between xy"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-05",
+    "title": "NSEJS / Junior Science Biology · Q05 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-CELL-05",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-05 BIO-NSEJS-CELL-05 NSEJS / Junior Science Biology · Q05 · APPLY · D2 (Score 3) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D2] A histologist examines three unknown biopsy tissue samples ($T_1, T_2, T_3$) under a light microscope: - Sample $T_1$: Cells arranged in a single layer with apical hair-like projections that rhythmically beat to propel mucus across the luminal surface. - Sample $T_2$: Widely spaced cells (osteocytes"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-06",
+    "title": "NSEJS / Junior Science Biology · Q06 · APPLY · D1 (Score 2)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/BIO-NSEJS-CELL-06",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-06 BIO-NSEJS-CELL-06 NSEJS / Junior Science Biology · Q06 · APPLY · D1 (Score 2) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D1] A newly discovered unicellular microorganism $M_x$ isolated from an alkaline hot spring is analyzed in the laboratory. Biochemical and ultrastructural assays reveal the following properties: 1. Cell diameter: $1.2\\,\\mu\\text{m}$, bounded by a rigid cell wall containing peptidoglycan. 2. Ribosomes sed"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-07",
+    "title": "NSEJS / Junior Science Biology · Q07 · SYNTHESIZE · D2 (Score 4)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-CELL-07",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-07 BIO-NSEJS-CELL-07 NSEJS / Junior Science Biology · Q07 · SYNTHESIZE · D2 (Score 4) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D2] In animal taxonomy, fundamental body architecture is determined by three developmental milestones: embryonic germ layer organization (diploblastic vs triploblastic), body symmetry, and coelom cavity formation. Consider the following three invertebrate phyla: - Phylum $A$: Triploblastic, bilateral sy"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-08",
+    "title": "NSEJS / Junior Science Biology · Q08 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-CELL-08",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-08 BIO-NSEJS-CELL-08 NSEJS / Junior Science Biology · Q08 · JUSTIFY · D2 (Score 4) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D2] Both bryophytes (e.g. *Funaria*) and pteridophytes (e.g. *Dryopteris*) exhibit heteromorphic alternation of generations involving a haploid gametophyte ($n$) and a diploid sporophyte ($2n$). However, their evolutionary advancement differs fundamentally in terms of which generation is physiologically"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-09",
+    "title": "NSEJS / Junior Science Biology · Q09 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-CELL-09",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-09 BIO-NSEJS-CELL-09 NSEJS / Junior Science Biology · Q09 · APPLY · D2 (Score 3) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D2] A community health clinic records four patients exhibiting classic clinical symptoms of infectious diseases: - Patient 1: High cyclical intermittent fever with chills and shivering every 48 hours; blood smear reveals amoeboid trophozoites inside enlarged erythrocytes. - Patient 2: Severe persistent"
+  },
+  {
+    "id": "BIO-NSEJS-CELL-10",
+    "title": "NSEJS / Junior Science Biology · Q10 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-CELL-10",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "BIO-NSEJS-CELL-10 BIO-NSEJS-CELL-10 NSEJS / Junior Science Biology · Q10 · JUSTIFY · D2 (Score 4) Biology Cell Biology & Molecular Genetics BIO-ORGANISATION-LIVING-WORLD NSEJS [D2] A patient suffering from acute viral influenza is prescribed the antibiotic penicillin by an unqualified practitioner. After five days of therapy, the viral symptoms show zero clinical improvement. From a cell biological and pharmacological perspective, why is penicillin completely ineffective in tr"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-01",
+    "title": "NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-01",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-01 BIO-NSEJS-PROC-01 NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] In a healthy human nephron, glomerular filtration is governed by Starling forces across the glomerular capillary endothelium and podocyte filtration slits. Physiological measurements indicate: - Glomerular capillary hydrostatic pressure: $P_{\\text{GC}} = 55.0\\text{ mmHg}$ - Bowman's capsule hydrosta"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-02",
+    "title": "NSEJS / Junior Science Biology · Q02 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-02",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-02 BIO-NSEJS-PROC-02 NSEJS / Junior Science Biology · Q02 · MODEL · D2 (Score 4) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] In oxygenic photosynthesis, non-cyclic photophosphorylation (the Z-scheme) couples photosystems II and I to transfer electrons from water to $\\text{NADP}^+$. The overall stoichiometry per molecule of oxygen evolved is: $$2\\text{H}_2\\text{O} + 2\\text{NADP}^+ + 3\\text{ADP} + 3\\text{P}_i \\xrightarrow{8"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-03",
+    "title": "NSEJS / Junior Science Biology · Q03 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-03",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-03 BIO-NSEJS-PROC-03 NSEJS / Junior Science Biology · Q03 · APPLY · D2 (Score 3) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] The Respiratory Quotient ($\\text{RQ}$) of a respiring biological tissue is defined as the volumetric ratio of carbon dioxide evolved to oxygen consumed: $$\\text{RQ} = \\frac{\\text{Volume of } \\text{CO}_2 \\text{ evolved}}{\\text{Volume of } \\text{O}_2 \\text{ consumed}}$$ A student measures the $\\text{R"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-04",
+    "title": "NSEJS / Junior Science Biology · Q04 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-04",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-04 BIO-NSEJS-PROC-04 NSEJS / Junior Science Biology · Q04 · JUSTIFY · D2 (Score 4) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] An in vitro digestion experiment tests the enzymatic activity of human digestive juices under varying chemical microenvironments: - Test 1: Salivary amylase added to starch solution at $\\text{pH} = 6.8$ shows complete hydrolysis to maltose within 10 minutes. When hydrochloric acid is added lowering"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-05",
+    "title": "NSEJS / Junior Science Biology · Q05 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-05",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-05 BIO-NSEJS-PROC-05 NSEJS / Junior Science Biology · Q05 · APPLY · D2 (Score 3) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] An echocardiographic examination of a healthy adult at rest records the following ventricular volumetric and chronotropic parameters: - End-Diastolic Volume ($\\text{EDV}$): $120.0\\text{ mL}$ - End-Systolic Volume ($\\text{ESV}$): $50.0\\text{ mL}$ - Resting Heart Rate ($\\text{HR}$): $72.0\\text{ beats/"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-06",
+    "title": "NSEJS / Junior Science Biology · Q06 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-06",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-06 BIO-NSEJS-PROC-06 NSEJS / Junior Science Biology · Q06 · JUSTIFY · D2 (Score 4) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] The generation and propagation of a nerve impulse along an unmyelinated neuronal axon involves sequential changes in axonal membrane potential ($V_m$): - Stage 1: Resting potential stable at $-70.0\\text{ mV}$. - Stage 2: Threshold depolarization to $-55.0\\text{ mV}$ triggers rapid overshoot reaching"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-07",
+    "title": "NSEJS / Junior Science Biology · Q07 · EXPLAIN · D1 (Score 2)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/BIO-NSEJS-PROC-07",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-07 BIO-NSEJS-PROC-07 NSEJS / Junior Science Biology · Q07 · EXPLAIN · D1 (Score 2) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D1] Blood glucose concentration in healthy humans is tightly regulated within a narrow physiological range ($70.0\\text{ to } 100.0\\text{ mg/dL}$) by a negative feedback loop involving two antagonistic peptide hormones secreted by the endocrine pancreas. Which of the following correctly pairs the specifi"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-08",
+    "title": "NSEJS / Junior Science Biology · Q08 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-08",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-08 BIO-NSEJS-PROC-08 NSEJS / Junior Science Biology · Q08 · MODEL · D2 (Score 4) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] In a classical Mendelian dihybrid inheritance experiment in Pisum sativum, pure-breeding plants with round yellow seeds ($RRYY$) are crossed with pure-breeding plants with wrinkled green seeds ($rryy$). The resulting $F_1$ generation consists entirely of plants with round yellow seeds ($RrYy$). When"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-09",
+    "title": "NSEJS / Junior Science Biology · Q09 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-09",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-09 BIO-NSEJS-PROC-09 NSEJS / Junior Science Biology · Q09 · APPLY · D2 (Score 3) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] Red-green color blindness in humans is a well-characterized X-linked recessive genetic trait ($X^c$), while normal trichromatic vision is dominant ($X^C$). A man with normal vision marries a phenotypically normal woman whose father was red-green color-blind. 1. What is the probability that their fir"
+  },
+  {
+    "id": "BIO-NSEJS-PROC-10",
+    "title": "NSEJS / Junior Science Biology · Q10 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-PROC-10",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "BIO-NSEJS-PROC-10 BIO-NSEJS-PROC-10 NSEJS / Junior Science Biology · Q10 · JUSTIFY · D2 (Score 4) Biology Life Processes & Nephron Physiology BIO-LIFE-PROCESSES NSEJS [D2] Comparative anatomical studies of vertebrate and invertebrate structures provide powerful evidentiary support for evolutionary mechanisms: - Case 1: The forelimbs of a human (grasping), a cheetah (running), a whale (swimming), and a bat (flying) exhibit radically different functions and external mor"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-01",
+    "title": "NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-01",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-01 BIO-NSEJS-ENV-01 NSEJS / Junior Science Biology · Q01 · MODEL · D2 (Score 4) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] In a temperate lake ecosystem, the total incident solar radiation entering the epilimnion is $1.0 \\times 10^7\\text{ kJ}/(\\text{m}^2\\cdot\\text{yr})$. Phytoplankton (primary producers, trophic level $T_1$) capture exactly $1.0\\%$ of this incident solar energy as Gross Primary Productivity ($\\text{GPP}"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-02",
+    "title": "NSEJS / Junior Science Biology · Q02 · SYNTHESIZE · D2 (Score 4)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-02",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-02 BIO-NSEJS-ENV-02 NSEJS / Junior Science Biology · Q02 · SYNTHESIZE · D2 (Score 4) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] The global nitrogen cycle relies on specialized soil microorganisms mediating distinct chemical conversions. Three critical enzymatic steps in the nitrogen cycle are: - Step 1: Conversion of atmospheric dinitrogen ($\\text{N}_2$) into ammonia ($\\text{NH}_3$) - Step 2: Biological oxidation of nitrite"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-03",
+    "title": "NSEJS / Junior Science Biology · Q03 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-03",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-03 BIO-NSEJS-ENV-03 NSEJS / Junior Science Biology · Q03 · JUSTIFY · D2 (Score 4) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] The rapid post-industrial combustion of fossil fuels has driven atmospheric carbon dioxide levels from $280\\text{ ppm}$ to over $420\\text{ ppm}$. In addition to tropospheric greenhouse warming, atmospheric $\\text{CO}_2$ dissolution into ocean surface waters alters marine carbonate equilibrium: $$\\te"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-04",
+    "title": "NSEJS / Junior Science Biology · Q04 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-04",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-04 BIO-NSEJS-ENV-04 NSEJS / Junior Science Biology · Q04 · MODEL · D2 (Score 4) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] In the stratosphere, the steady-state concentration of ozone ($\\text{O}_3$) is maintained by Chapman photochemical reactions. However, anthropogenic chlorofluorocarbons (e.g. $\\text{CF}_2\\text{Cl}_2$) released into the troposphere migrate to the stratosphere and undergo photolytic cleavage by solar"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-05",
+    "title": "NSEJS / Junior Science Biology · Q05 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-05",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-05 BIO-NSEJS-ENV-05 NSEJS / Junior Science Biology · Q05 · APPLY · D2 (Score 3) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] An environmental monitoring station tracks the water quality of a clean river immediately upstream and downstream of a municipal sewage discharge pipe. Upstream water has a Dissolved Oxygen ($\\text{DO}$) of $8.5\\text{ mg/L}$ and a Biochemical Oxygen Demand ($\\text{BOD}$) of $1.5\\text{ mg/L}$. Immedi"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-06",
+    "title": "NSEJS / Junior Science Biology · Q06 · EXPLAIN · D1 (Score 2)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/BIO-NSEJS-ENV-06",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-06 BIO-NSEJS-ENV-06 NSEJS / Junior Science Biology · Q06 · EXPLAIN · D1 (Score 2) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D1] In rural decentralized energy production, agricultural cow dung (gobar) and crop residues are converted into clean fuel in anaerobic biogas digesters. The primary combustible component of biogas is methane ($\\text{CH}_4$, $55\\text{ to } 70\\%$ by volume). Which of the following biological processes a"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-07",
+    "title": "NSEJS / Junior Science Biology · Q07 · APPLY · D1 (Score 2)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/BIO-NSEJS-ENV-07",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-07 BIO-NSEJS-ENV-07 NSEJS / Junior Science Biology · Q07 · APPLY · D1 (Score 2) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D1] Traditional rainwater harvesting systems in semi-arid and arid regions of India (such as *Khadins* and *Johads* in Rajasthan) utilize earthen check dams built across sloping agricultural catchments. What is the primary ecological and hydrologic advantage of these structures over large surface-water"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-08",
+    "title": "NSEJS / Junior Science Biology · Q08 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-08",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-08 BIO-NSEJS-ENV-08 NSEJS / Junior Science Biology · Q08 · MODEL · D2 (Score 4) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] Commercial agricultural fertilizers are labeled with an N-P-K grade representing the mass percentages of elemental Nitrogen ($\\text{N}$), available phosphorus pentoxide ($\\text{P}_2\\text{O}_5$), and soluble potassium oxide ($\\text{K}_2\\text{O}$). A progressive farmer applies one $50.0\\text{ kg}$ bag"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-09",
+    "title": "NSEJS / Junior Science Biology · Q09 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-09",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-09 BIO-NSEJS-ENV-09 NSEJS / Junior Science Biology · Q09 · JUSTIFY · D2 (Score 4) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] In modern plant breeding for high-yield cereal crops (such as hybrid maize and pearl millet), agronomists develop pure inbred parental lines ($P_1$ and $P_2$) through repeated self-pollination over several generations, and then cross them to produce $F_1$ hybrid seeds exhibiting heterosis (hybrid vi"
+  },
+  {
+    "id": "BIO-NSEJS-ENV-10",
+    "title": "NSEJS / Junior Science Biology · Q10 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/BIO-NSEJS-ENV-10",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "BIO-NSEJS-ENV-10 BIO-NSEJS-ENV-10 NSEJS / Junior Science Biology · Q10 · APPLY · D2 (Score 3) Biology Ecology & Ecosystem Resources BIO-ENVIRONMENT-RESOURCES NSEJS [D2] In composite fish culture (polyculture), a fish farmer introduces five distinct freshwater fish species into a single perennial pond: - Species 1: Catla (*Catla catla*) - Species 2: Rohu (*Labeo rohita*) - Species 3: Mrigal (*Cirrhinus mrigala*) - Species 4: Silver Carp (*Hypophthalmichthys molitrix"
+  },
+  {
+    "id": "NSEJS-2024-B-Q01",
+    "title": "NSEJS 2024-25 · Q01 · RETRIEVE · D1 (Score 2)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2024-B-Q01",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2024-B-Q01 NSEJS-2024-B-Q01 NSEJS 2024-25 · Q01 · RETRIEVE · D1 (Score 2) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] In bilaterally symmetrical animals, true serial repetition of body parts into a linear succession of similar segments is called metamerism. In which of the following animal phyla did true metameric segmentation appear for the first time in evolutionary history?"
+  },
+  {
+    "id": "NSEJS-2024-B-Q02",
+    "title": "NSEJS 2024-25 · Q02 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q02",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2024-B-Q02 NSEJS-2024-B-Q02 NSEJS 2024-25 · Q02 · APPLY · D2 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] In human palaeontology, hominid evolution is categorized into Hominid ancestral stocks, Prehistoric humans, and modern humans based on fossil and cranial records. Select the pair containing one member of an early Hominid stock and one member representing Prehistoric human:"
+  },
+  {
+    "id": "NSEJS-2024-B-Q03",
+    "title": "NSEJS 2024-25 · Q03 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q03",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2024-B-Q03 NSEJS-2024-B-Q03 NSEJS 2024-25 · Q03 · MODEL · D2 (Score 4) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D2] The human brain has distinct functional anatomical centres: Part 1 (Hypothalamus) maintains autonomic homeostatic control, hunger, and thermoregulation. Part 2 (Cerebellum) coordinates fine voluntary muscular movements and balance. Part 3 (Cerebrum) governs sensory integration and cognition. Part 4"
+  },
+  {
+    "id": "NSEJS-2024-B-Q04",
+    "title": "NSEJS 2024-25 · Q04 · APPLY · D1 (Score 2)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2024-B-Q04",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2024-B-Q04 NSEJS-2024-B-Q04 NSEJS 2024-25 · Q04 · APPLY · D1 (Score 2) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D1] Sap-sucking hemipteran insect pests (such as aphids and whiteflies) feed on internal vascular phloem sap of crop plants. These pests are most effectively controlled by applying which of the following systemic insecticides absorbed and translocated throughout plant vascular tissue?"
+  },
+  {
+    "id": "NSEJS-2024-B-Q05",
+    "title": "NSEJS 2024-25 · Q05 · RETRIEVE · D1 (Score 2)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2024-B-Q05",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2024-B-Q05 NSEJS-2024-B-Q05 NSEJS 2024-25 · Q05 · RETRIEVE · D1 (Score 2) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] What type of synovial joint is formed between the odontoid process (dens) of the second cervical vertebra (axis) and the anterior arch of the first cervical vertebra (atlas) in mammals?"
+  },
+  {
+    "id": "NSEJS-2024-B-Q06",
+    "title": "NSEJS 2024-25 · Q06 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q06",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2024-B-Q06 NSEJS-2024-B-Q06 NSEJS 2024-25 · Q06 · APPLY · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Match the diagnostic zoological structures in Column I with their corresponding organism/phenomenon in Column II: (1) Hexacanth larva: Taenia solium. (2) Renette excretory cell: Ascaris lumbricoides. (3) Respiratory tree: Sea cucumber (Holothuroidea). (4) Piloerectum (arrector pili contraction): Goo"
+  },
+  {
+    "id": "NSEJS-2024-B-Q07",
+    "title": "NSEJS 2024-25 · Q07 · RETRIEVE · D1 (Score 2)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2024-B-Q07",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2024-B-Q07 NSEJS-2024-B-Q07 NSEJS 2024-25 · Q07 · RETRIEVE · D1 (Score 2) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] The air-filled tympanic cavity of the middle ear communicates with the fluid-filled auditory capsule (internal ear cochlea and vestibule) through two fine membrane-covered apertures known as:"
+  },
+  {
+    "id": "NSEJS-2024-B-Q08",
+    "title": "NSEJS 2024-25 · Q08 · RETRIEVE · D1 (Score 2)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2024-B-Q08",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2024-B-Q08 NSEJS-2024-B-Q08 NSEJS 2024-25 · Q08 · RETRIEVE · D1 (Score 2) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] To control vehicular exhaust emissions and combat urban air pollution, all newly manufactured and registered motor vehicles in India are mandated to comply with which Bharat Stage emission standard?"
+  },
+  {
+    "id": "NSEJS-2024-B-Q09",
+    "title": "NSEJS 2024-25 · Q09 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q09",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2024-B-Q09 NSEJS-2024-B-Q09 NSEJS 2024-25 · Q09 · MODEL · D2 (Score 4) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] In the human metabolic pathway of phenylalanine and tyrosine degradation: Defect 1 (Phenylalanine hydroxylase deficiency) causes accumulation of phenylpyruvate. Defect 2 (Tyrosine transaminase deficiency) causes elevated serum tyrosine. Defect 3 (Homogentisate 1,2-dioxygenase deficiency) causes accu"
+  },
+  {
+    "id": "NSEJS-2024-B-Q10",
+    "title": "NSEJS 2024-25 · Q10 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q10",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2024-B-Q10 NSEJS-2024-B-Q10 NSEJS 2024-25 · Q10 · APPLY · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Match the plant species in Column I with their unique diagnostic morphological and reproductive characteristics in Column II: (1) Wheat (Triticum aestivum): Glumes and lodicules in spikelet inflorescence. (2) Banyan tree (Ficus benghalensis): Prop roots for aerial support and hypanthodium infloresce"
+  },
+  {
+    "id": "NSEJS-2024-B-Q11",
+    "title": "NSEJS 2024-25 · Q11 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q11",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2024-B-Q11 NSEJS-2024-B-Q11 NSEJS 2024-25 · Q11 · MODEL · D2 (Score 4) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] Under the transmission electron microscope, eukaryotic chromatin displays a repeating 'beads-on-a-string' structure composed of nucleosomes. A complete nucleosomal repeating unit contains a core particle and linker region. How many distinct histone protein types collectively constitute the core octa"
+  },
+  {
+    "id": "NSEJS-2024-B-Q12",
+    "title": "NSEJS 2024-25 · Q12 · JUSTIFY · D2 (Score 4)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q12",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2024-B-Q12 NSEJS-2024-B-Q12 NSEJS 2024-25 · Q12 · JUSTIFY · D2 (Score 4) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D2] Evaluate the following statements regarding vertebrate retinal photoreceptors: Assertion (A): The retinas of strictly nocturnal, cave-dwelling, and deep-sea animals are populated almost exclusively by rod photoreceptors with few or no cones. Reason (R): Rods contain rhodopsin with extremely high pho"
+  },
+  {
+    "id": "NSEJS-2024-B-Q13",
+    "title": "NSEJS 2024-25 · Q13 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q13",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2024-B-Q13 NSEJS-2024-B-Q13 NSEJS 2024-25 · Q13 · MODEL · D2 (Score 4) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] In a cross-section of a mature microsporangium (anther) of an angiosperm: the microspore tetrad/pollen grains are haploid (n); the outer wall layers (epidermis, endothecium, middle layers) are diploid (2n); and the nutritive tapetal layer cells undergo endomitosis/polyteny to become multinucleate or"
+  },
+  {
+    "id": "NSEJS-2024-B-Q14",
+    "title": "NSEJS 2024-25 · Q14 · MODEL · D2 (Score 4)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2024-B-Q14",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2024-B-Q14 NSEJS-2024-B-Q14 NSEJS 2024-25 · Q14 · MODEL · D2 (Score 4) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] According to the Dixon and Joly Cohesion-Tension theory for the ascent of sap in tall trees, the frictional and gravitational forces opposing sap ascent in a 100-metre-tall tree require a pulling tension of about 20 to 50 atm. What is the intrinsic cohesive tensile strength of a continuous column of"
+  },
+  {
+    "id": "NSEJS-2024-B-Q15",
+    "title": "NSEJS 2024-25 · Q15 · APPLY · D1 (Score 2)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2024-B-Q15",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2024-B-Q15 NSEJS-2024-B-Q15 NSEJS 2024-25 · Q15 · APPLY · D1 (Score 2) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D1] Hypertrichosis pinnae auris (excessive hair growth on the external ear rim) is observed exclusively in human males and is transmitted directly from an affected father to all of his sons, while never appearing in daughters. Which genetic mode of inheritance accounts for this trait?"
+  },
+  {
+    "id": "NSEJS-2024-B-Q16",
+    "title": "NSEJS 2024-25 · Q16 · RETRIEVE · D1 (Score 2)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2024-B-Q16",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2024-B-Q16 NSEJS-2024-B-Q16 NSEJS 2024-25 · Q16 · RETRIEVE · D1 (Score 2) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] Which international environmental treaty was adopted in 1987 to protect the Earth's stratospheric ozone layer by legally binding nations to phase out the production and consumption of ozone-depleting substances (such as chlorofluorocarbons, CFCs)?"
+  },
+  {
+    "id": "NSEJS-2024-B-Q49",
+    "title": "NSEJS 2024-25 · Q49 · SYNTHESIZE · D3 (Score 6)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D3]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D3",
+    "route": "#/question/NSEJS-2024-B-Q49",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2024-B-Q49 NSEJS-2024-B-Q49 NSEJS 2024-25 · Q49 · SYNTHESIZE · D3 (Score 6) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D3] [Multiple Correct] In angiosperms, an aril is an accessory fleshy outgrowth developing from the funiculus or micropyle that partially or wholly encloses the mature seed. Which of the following plants possess an edible aril as their primary consumed portion? (A) Litchi (Litchi chinensis). (B) Rambuta"
+  },
+  {
+    "id": "NSEJS-2024-B-Q50",
+    "title": "NSEJS 2024-25 · Q50 · SYNTHESIZE · D3 (Score 6)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D3]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D3",
+    "route": "#/question/NSEJS-2024-B-Q50",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2024-B-Q50 NSEJS-2024-B-Q50 NSEJS 2024-25 · Q50 · SYNTHESIZE · D3 (Score 6) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D3] [Multiple Correct] Which of the following statements concerning viral structure, molecular genetics, and replication are biologically incorrect? (A) Mature virions are obligate intracellular infectious particles. (B) Viral replication depends strictly on host ribosomes and translational machinery. ("
+  },
+  {
+    "id": "NSEJS-2024-B-Q51",
+    "title": "NSEJS 2024-25 · Q51 · SYNTHESIZE · D3 (Score 6)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D3]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D3",
+    "route": "#/question/NSEJS-2024-B-Q51",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2024-B-Q51 NSEJS-2024-B-Q51 NSEJS 2024-25 · Q51 · SYNTHESIZE · D3 (Score 6) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D3] [Multiple Correct] Motile reproductive flagellated cells (zoospores and gametes) exhibit distinctive flagellar patterns across algal classes. Which of the following major divisions of algae possess biflagellate motile cells bearing two flagella? (A) Rhodophyta (red algae). (B) Phaeophyta (brown alga"
+  },
+  {
+    "id": "NSEJS-2024-B-Q52",
+    "title": "NSEJS 2024-25 · Q52 · SYNTHESIZE · D3 (Score 6)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D3]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D3",
+    "route": "#/question/NSEJS-2024-B-Q52",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2024-B-Q52 NSEJS-2024-B-Q52 NSEJS 2024-25 · Q52 · SYNTHESIZE · D3 (Score 6) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D3] [Multiple Correct] Which of the following statements regarding vertebrate immune responses and physiological defense mechanisms are correct? (A) All antibodies (immunoglobulins) are glycoproteins. (B) Eosinophils are non-phagocytic lymphocytes. (C) Ciliated pseudostratified epithelium of the respira"
+  },
+  {
+    "id": "NSEJS-2023-B-Q01",
+    "title": "NSEJS 2023-24 · Q01 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2023-B-Q01",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2023-B-Q01 NSEJS-2023-B-Q01 NSEJS 2023-24 · Q01 · RETRIEVE · D1 (Score 3) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D1] In animals, the heart is the main pumping station, supplying and collecting blood from different parts of the body. In mammals, which structure is found between the left auricle and the left ventricle and ensures one-way flow of blood?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q02",
+    "title": "NSEJS 2023-24 · Q02 · MODEL · D2 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q02",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2023-B-Q02 NSEJS-2023-B-Q02 NSEJS 2023-24 · Q02 · MODEL · D2 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D2] Which of the following correctly lists the units involved in most reflex arcs?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q03",
+    "title": "NSEJS 2023-24 · Q03 · EXPLAIN · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q03",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2023-B-Q03 NSEJS-2023-B-Q03 NSEJS 2023-24 · Q03 · EXPLAIN · D2 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] Cross-breeding, mutation breeding and cytoplasmic hybridisation can produce improved varieties or distinct hybrids. Which pair represents cytoplasmic hybrids (cybrids)?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q04",
+    "title": "NSEJS 2023-24 · Q04 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q04",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2023-B-Q04 NSEJS-2023-B-Q04 NSEJS 2023-24 · Q04 · APPLY · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] In a certain animal epithelium, every cell rests on the basement membrane, but some basal cells do not reach the free surface. The nuclei therefore appear at different levels, making the tissue look multilayered although it is not truly stratified. It is often ciliated and may contain mucus-secretin"
+  },
+  {
+    "id": "NSEJS-2023-B-Q05",
+    "title": "NSEJS 2023-24 · Q05 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q05",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2023-B-Q05 NSEJS-2023-B-Q05 NSEJS 2023-24 · Q05 · APPLY · D2 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] Phenylthiocarbamide (PTC) tastes bitter to tasters. The non-tasting condition is caused by a recessive allele. A non-taster woman marries a PTC-taster man. Their first two children are non- tasters. What is the probability that their third child will also be a non-taster?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q06",
+    "title": "NSEJS 2023-24 · Q06 · MODEL · D2 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q06",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2023-B-Q06 NSEJS-2023-B-Q06 NSEJS 2023-24 · Q06 · MODEL · D2 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D2] The diagram is a sectional view of an endocrine gland. Its characteristic layers are labelled 1, 2, 3 and 4. Which layers secrete the C21 hormones cortisol and corticosterone?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q07",
+    "title": "NSEJS 2023-24 · Q07 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2023-B-Q07",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2023-B-Q07 NSEJS-2023-B-Q07 NSEJS 2023-24 · Q07 · RETRIEVE · D1 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] Which eye defect develops because the ciliary muscles gradually weaken and the flexibility of the eye lens decreases?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q08",
+    "title": "NSEJS 2023-24 · Q08 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2023-B-Q08",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2023-B-Q08 NSEJS-2023-B-Q08 NSEJS 2023-24 · Q08 · RETRIEVE · D1 (Score 3) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] Which genus is the Angoumois grain moth that causes serious damage to stored grains such as paddy and wheat?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q09",
+    "title": "NSEJS 2023-24 · Q09 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q09",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2023-B-Q09 NSEJS-2023-B-Q09 NSEJS 2023-24 · Q09 · APPLY · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] For fertilisation in angiosperms, pollen grains germinate and pollen tubes carry male gametes to the ovules. Suppose a brinjal fruit is to contain 300 seeds. How many meiotic cell divisions are required to produce the necessary female and male gametophytes?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q10",
+    "title": "NSEJS 2023-24 · Q10 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2023-B-Q10",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2023-B-Q10 NSEJS-2023-B-Q10 NSEJS 2023-24 · Q10 · RETRIEVE · D1 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] Which plant is well known for the anatomical features called carinal canals and vallecular canals?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q11",
+    "title": "NSEJS 2023-24 · Q11 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2023-B-Q11",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2023-B-Q11 NSEJS-2023-B-Q11 NSEJS 2023-24 · Q11 · RETRIEVE · D1 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D1] Satellite or SAT chromosomes have secondary constrictions at fixed positions. In humans, satellites are usually associated with the short arms of which acrocentric chromosomes?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q12",
+    "title": "NSEJS 2023-24 · Q12 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2023-B-Q12",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2023-B-Q12 NSEJS-2023-B-Q12 NSEJS 2023-24 · Q12 · RETRIEVE · D1 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] In bordered pits of some plant cells, what is the central thickening formed on the pit membrane by circular deposition of microfibrils?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q13",
+    "title": "NSEJS 2023-24 · Q13 · REPRESENT · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q13",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2023-B-Q13 NSEJS-2023-B-Q13 NSEJS 2023-24 · Q13 · REPRESENT · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] The diagrams show different types of inflorescences. Select the pair that represents cymose inflorescences."
+  },
+  {
+    "id": "NSEJS-2023-B-Q14",
+    "title": "NSEJS 2023-24 · Q14 · EXPLAIN · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q14",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2023-B-Q14 NSEJS-2023-B-Q14 NSEJS 2023-24 · Q14 · EXPLAIN · D2 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] Genes normally important in mammalian embryogenesis include members of all the following classes, except:"
+  },
+  {
+    "id": "NSEJS-2023-B-Q15",
+    "title": "NSEJS 2023-24 · Q15 · EXPLAIN · D2 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q15",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2023-B-Q15 NSEJS-2023-B-Q15 NSEJS 2023-24 · Q15 · EXPLAIN · D2 (Score 3) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] In a type of carbon dioxide fixation, stomata remain open at night and CO2 first combines with phosphoenolpyruvate (PEP) to form four-carbon oxaloacetate. Which plant shows this ecological adaptation?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q16",
+    "title": "NSEJS 2023-24 · Q16 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2023-B-Q16",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2023-B-Q16 NSEJS-2023-B-Q16 NSEJS 2023-24 · Q16 · RETRIEVE · D1 (Score 3) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] Which is the most common hemiparasitic mistletoe found in India?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q49",
+    "title": "NSEJS 2023-24 · Q49 · MODEL · D2 (Score 6)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q49",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2023-B-Q49 NSEJS-2023-B-Q49 NSEJS 2023-24 · Q49 · MODEL · D2 (Score 6) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] The table matches mammalian orders or examples with characteristics. Order / example Characteristic 1. Lagomorpha (i) First finger clawed; tail enclosed in an interfemoral membrane 2. Microchiroptera (ii) Toothless and polyembryony 3. Armadillo (iii) Baleen 4. Proboscidea (iv) Incisors open-rooted a"
+  },
+  {
+    "id": "NSEJS-2023-B-Q50",
+    "title": "NSEJS 2023-24 · Q50 · RETRIEVE · D2 (Score 6)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q50",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2023-B-Q50 NSEJS-2023-B-Q50 NSEJS 2023-24 · Q50 · RETRIEVE · D2 (Score 6) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] Which historical pedigrees were described as families of beggars and scoundrels?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q51",
+    "title": "NSEJS 2023-24 · Q51 · SYNTHESIZE · D2 (Score 6)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q51",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2023-B-Q51 NSEJS-2023-B-Q51 NSEJS 2023-24 · Q51 · SYNTHESIZE · D2 (Score 6) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D2] Which statements explain root gravitropism?"
+  },
+  {
+    "id": "NSEJS-2023-B-Q52",
+    "title": "NSEJS 2023-24 · Q52 · EXPLAIN · D2 (Score 6)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2023-B-Q52",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2023-B-Q52 NSEJS-2023-B-Q52 NSEJS 2023-24 · Q52 · EXPLAIN · D2 (Score 6) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] Which statements describe cyclic photophosphorylation in green plants?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q01",
+    "title": "NSEJS 2022-23 · Q01 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q01",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2022-B-Q01 NSEJS-2022-B-Q01 NSEJS 2022-23 · Q01 · RETRIEVE · D1 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] In the nineteenth century, farmers in Japan found that some rice seedlings became very tall. They called it Bakanae disease or mad-seedling disease. The affected plants were infected by the fungus Fusarium moniliforme. This led to the discovery of a phytohormone, later named:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q02",
+    "title": "NSEJS 2022-23 · Q02 · MODEL · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q02",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2022-B-Q02 NSEJS-2022-B-Q02 NSEJS 2022-23 · Q02 · MODEL · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] In most angiosperms, pollen germinates on the stigma, travels through the style and ultimately enters the ovule. In the adjacent diagram, three possibilities of pollen-tube entry are marked A, B and C. What do A, B and C represent?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q03",
+    "title": "NSEJS 2022-23 · Q03 · EXPLAIN · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q03",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2022-B-Q03 NSEJS-2022-B-Q03 NSEJS 2022-23 · Q03 · EXPLAIN · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Members of Cucurbitaceae, such as bottle-gourd, pumpkin, watermelon and muskmelon, bear large fruits although their stems may be only finger-thick. What helps a large quantity of food to be translocated from leaves to fruits for storage?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q04",
+    "title": "NSEJS 2022-23 · Q04 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q04",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2022-B-Q04 NSEJS-2022-B-Q04 NSEJS 2022-23 · Q04 · APPLY · D2 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] In some birds, a black bird crossed with a white-feathered bird produces all blue-plumaged chicks. If these blue birds are selfed, the offspring ratio will be:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q05",
+    "title": "NSEJS 2022-23 · Q05 · REPRESENT · D2 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q05",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2022-B-Q05 NSEJS-2022-B-Q05 NSEJS 2022-23 · Q05 · REPRESENT · D2 (Score 3) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] The diagram shows chromatographic separation of pigments extracted from spinach leaves. The sequence of pigment bands from below upwards is:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q06",
+    "title": "NSEJS 2022-23 · Q06 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q06",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2022-B-Q06 NSEJS-2022-B-Q06 NSEJS 2022-23 · Q06 · RETRIEVE · D1 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] In some plants and fungi, cell organelles convert lipids into sugars during the early stages of oil-seed germination. These organelles are:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q07",
+    "title": "NSEJS 2022-23 · Q07 · JUSTIFY · D2 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q07",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2022-B-Q07 NSEJS-2022-B-Q07 NSEJS 2022-23 · Q07 · JUSTIFY · D2 (Score 3) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D2] In the analysis of wastewater, Escherichia coli is used as:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q08",
+    "title": "NSEJS 2022-23 · Q08 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q08",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2022-B-Q08 NSEJS-2022-B-Q08 NSEJS 2022-23 · Q08 · RETRIEVE · D1 (Score 3) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] Acid rain damages soil and lakes and affects aquatic plants and animals. Which pH range is most suitable for the survival of most aquatic biota?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q09",
+    "title": "NSEJS 2022-23 · Q09 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q09",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2022-B-Q09 NSEJS-2022-B-Q09 NSEJS 2022-23 · Q09 · RETRIEVE · D1 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] Steroid hormones include sex hormones and hormones of the adrenal cortex. Based on intensity of action, which ovarian hormone is produced in large amount and is the principal active estrogen?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q10",
+    "title": "NSEJS 2022-23 · Q10 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q10",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2022-B-Q10 NSEJS-2022-B-Q10 NSEJS 2022-23 · Q10 · RETRIEVE · D1 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] In the human vertebral column there are about 26 bones in the adult. Which group of vertebrae is related to the pelvic region?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q11",
+    "title": "NSEJS 2022-23 · Q11 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q11",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2022-B-Q11 NSEJS-2022-B-Q11 NSEJS 2022-23 · Q11 · APPLY · D2 (Score 3) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] In the EMP (glycolytic) pathway shown, reactions are numbered E1 to E10. At which enzyme levels is ATP generated by substrate-level phosphorylation?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q12",
+    "title": "NSEJS 2022-23 · Q12 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q12",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2022-B-Q12 NSEJS-2022-B-Q12 NSEJS 2022-23 · Q12 · RETRIEVE · D1 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] A thick whitish band of nerve fibres bulges on the inner surface of the dorsal wall of each cerebral hemisphere in the mammalian brain. This structure is:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q13",
+    "title": "NSEJS 2022-23 · Q13 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q13",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2022-B-Q13 NSEJS-2022-B-Q13 NSEJS 2022-23 · Q13 · APPLY · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Body symmetry is a diagnostic feature in classification. Besides truly bilateral animals, some other organisms also show bilateral symmetry. Which of the following is such an example?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q14",
+    "title": "NSEJS 2022-23 · Q14 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q14",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2022-B-Q14 NSEJS-2022-B-Q14 NSEJS 2022-23 · Q14 · RETRIEVE · D1 (Score 3) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D1] Nissl granules are RNA-rich bodies. In which of the following do they occur?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q15",
+    "title": "NSEJS 2022-23 · Q15 · EXPLAIN · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q15",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2022-B-Q15 NSEJS-2022-B-Q15 NSEJS 2022-23 · Q15 · EXPLAIN · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Which statement is not applicable to viruses?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q16",
+    "title": "NSEJS 2022-23 · Q16 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2022-B-Q16",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2022-B-Q16 NSEJS-2022-B-Q16 NSEJS 2022-23 · Q16 · RETRIEVE · D1 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] Carolus Linnaeus devised a system for classifying plants while using binomial nomenclature. His plant classification was:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q49",
+    "title": "NSEJS 2022-23 · Q49 · MODEL · D2 (Score 6)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q49",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2022-B-Q49 NSEJS-2022-B-Q49 NSEJS 2022-23 · Q49 · MODEL · D2 (Score 6) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] Which of the following evolutionary lineages of humans can be categorised as prehistoric man?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q50",
+    "title": "NSEJS 2022-23 · Q50 · MODEL · D2 (Score 6)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q50",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2022-B-Q50 NSEJS-2022-B-Q50 NSEJS 2022-23 · Q50 · MODEL · D2 (Score 6) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] Select the sets of diseases caused by deficiency of B-complex vitamins:"
+  },
+  {
+    "id": "NSEJS-2022-B-Q51",
+    "title": "NSEJS 2022-23 · Q51 · SYNTHESIZE · D2 (Score 6)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q51",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2022-B-Q51 NSEJS-2022-B-Q51 NSEJS 2022-23 · Q51 · SYNTHESIZE · D2 (Score 6) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D2] After the rainy season, students collect pond water containing aquatic plants. Which groups of organisms are they likely to find?"
+  },
+  {
+    "id": "NSEJS-2022-B-Q52",
+    "title": "NSEJS 2022-23 · Q52 · MODEL · D2 (Score 6)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2022-B-Q52",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2022-B-Q52 NSEJS-2022-B-Q52 NSEJS 2022-23 · Q52 · MODEL · D2 (Score 6) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] Various parts of mammalian uriniferous tubules (nephrons) take part in ultrafiltration, selective reabsorption by active transport, passive osmosis and secretion. In the labelled nephron diagram, the options separately identify: (i) part(s) having columnar epithelial cells with a brush border suitab"
+  },
+  {
+    "id": "NSEJS-2021-B-Q01",
+    "title": "NSEJS 2021-22 · Q01 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2021-B-Q01",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2021-B-Q01 NSEJS-2021-B-Q01 NSEJS 2021-22 · Q01 · RETRIEVE · D1 (Score 3) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D1] Which of the following is not a function of mature red blood cells (RBCs)?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q02",
+    "title": "NSEJS 2021-22 · Q02 · MODEL · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2021-B-Q02",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2021-B-Q02 NSEJS-2021-B-Q02 NSEJS 2021-22 · Q02 · MODEL · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] In which of the following classes of vertebrates are there groups of animals without limbs?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q03",
+    "title": "NSEJS 2021-22 · Q03 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2021-B-Q03",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2021-B-Q03 NSEJS-2021-B-Q03 NSEJS 2021-22 · Q03 · RETRIEVE · D1 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] Which of the following groups has only one pair of wings?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q04",
+    "title": "NSEJS 2021-22 · Q04 · APPLY · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2021-B-Q04",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2021-B-Q04 NSEJS-2021-B-Q04 NSEJS 2021-22 · Q04 · APPLY · D2 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] During an expedition to planet 'Imagitica', scientists analysed the genetic material of its organisms and noted: i. Purines and pyrimidines are unequal in amount. ii. Thymine is absent. iii. The material is unstable and mutates frequently. iv. It is rapidly degraded at pH above 12. What genetic mate"
+  },
+  {
+    "id": "NSEJS-2021-B-Q05",
+    "title": "NSEJS 2021-22 · Q05 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2021-B-Q05",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2021-B-Q05 NSEJS-2021-B-Q05 NSEJS 2021-22 · Q05 · RETRIEVE · D1 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] Which of the following is most likely to show aerenchyma?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q06",
+    "title": "NSEJS 2021-22 · Q06 · MODEL · D2 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2021-B-Q06",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2021-B-Q06 NSEJS-2021-B-Q06 NSEJS 2021-22 · Q06 · MODEL · D2 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Consider the following statements about bryophytes: i. Their plant body is differentiated into true root, stem and leaves. ii. They lack xylem and phloem. iii. They require water for completion of the life cycle. Which statement(s) is/are true?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q07",
+    "title": "NSEJS 2021-22 · Q07 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2021-B-Q07",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2021-B-Q07 NSEJS-2021-B-Q07 NSEJS 2021-22 · Q07 · RETRIEVE · D1 (Score 3) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D1] Carbon fixation in most succulent plants takes place through which pathway?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q08",
+    "title": "NSEJS 2021-22 · Q08 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2021-B-Q08",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2021-B-Q08 NSEJS-2021-B-Q08 NSEJS 2021-22 · Q08 · RETRIEVE · D1 (Score 3) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] A flower is large, wide-mouthed and white, opens after sunset, and gives out a fruity or musky fragrance. It is most likely pollinated by:"
+  },
+  {
+    "id": "NSEJS-2021-B-Q25",
+    "title": "NSEJS 2021-22 · Q25 · JUSTIFY · D2 (Score 6)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2021-B-Q25",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2021-B-Q25 NSEJS-2021-B-Q25 NSEJS 2021-22 · Q25 · JUSTIFY · D2 (Score 6) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Given below are four statements about viruses. Which statement(s) is/are incorrect?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q26",
+    "title": "NSEJS 2021-22 · Q26 · MODEL · D2 (Score 6)",
+    "subtitle": "Biology · Control & Endocrine Coordination / Immunology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2021-B-Q26",
+    "breadcrumb": "Biology · Control & Endocrine Coordination / Immunology · Question",
+    "search_text": "NSEJS-2021-B-Q26 NSEJS-2021-B-Q26 NSEJS 2021-22 · Q26 · MODEL · D2 (Score 6) Biology Control & Endocrine Coordination / Immunology Systems & Regulation NSEJS [D2] A person suffers an injury to the front part of the head. Which outcomes are possible?"
+  },
+  {
+    "id": "NSEJS-2021-B-Q27",
+    "title": "NSEJS 2021-22 · Q27 · EXPLAIN · D2 (Score 6)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2021-B-Q27",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2021-B-Q27 NSEJS-2021-B-Q27 NSEJS 2021-22 · Q27 · EXPLAIN · D2 (Score 6) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D2] Which molecules are primarily responsible for structural support and motility?"
+  },
+  {
+    "id": "NSEJS-2020-B-Q13",
+    "title": "NSEJS 2020-21 · Q13 · APPLY · D1 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2020-B-Q13",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2020-B-Q13 NSEJS-2020-B-Q13 NSEJS 2020-21 · Q13 · APPLY · D1 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D1] If in a wheat mutant, the length of chromosome 1B was found to be 6.7 µm instead of 5.0 µm, approximately how many additional base pairs are incorporated in the mutant chromosome?"
+  },
+  {
+    "id": "NSEJS-2020-B-Q14",
+    "title": "NSEJS 2020-21 · Q14 · MODEL · D2 (Score 3)",
+    "subtitle": "Biology · Reproduction & Mendelian Heredity · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2020-B-Q14",
+    "breadcrumb": "Biology · Reproduction & Mendelian Heredity · Question",
+    "search_text": "NSEJS-2020-B-Q14 NSEJS-2020-B-Q14 NSEJS 2020-21 · Q14 · MODEL · D2 (Score 3) Biology Reproduction & Mendelian Heredity Genetics & Evolution NSEJS [D2] Considering the following characteristics, identify the correct inheritance pattern from the given options. • Most affected individuals are male. • Affected sons result from female parents who are either affected or who are known to be carriers because they have affected brothers, fathers, or matern"
+  },
+  {
+    "id": "NSEJS-2020-B-Q15",
+    "title": "NSEJS 2020-21 · Q15 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2020-B-Q15",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2020-B-Q15 NSEJS-2020-B-Q15 NSEJS 2020-21 · Q15 · RETRIEVE · D1 (Score 3) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] In a marine ecosystem with rich diversity of fauna, which of the following images would be a correct representation of the pyramid of biomass?"
+  },
+  {
+    "id": "NSEJS-2020-B-Q16",
+    "title": "NSEJS 2020-21 · Q16 · APPLY · D1 (Score 3)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2020-B-Q16",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2020-B-Q16 NSEJS-2020-B-Q16 NSEJS 2020-21 · Q16 · APPLY · D1 (Score 3) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D1] The transpiration pull is maximum under which of the following conditions?"
+  },
+  {
+    "id": "NSEJS-2020-B-Q17",
+    "title": "NSEJS 2020-21 · Q17 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Ecology & Ecosystem Resources · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2020-B-Q17",
+    "breadcrumb": "Biology · Ecology & Ecosystem Resources · Question",
+    "search_text": "NSEJS-2020-B-Q17 NSEJS-2020-B-Q17 NSEJS 2020-21 · Q17 · RETRIEVE · D1 (Score 3) Biology Ecology & Ecosystem Resources Ecology & Environment NSEJS [D1] Curcuma longa, Azadirachta indica, Basmati Rice and Indian Ginseng are all related to which of the following concepts?"
+  },
+  {
+    "id": "NSEJS-2020-B-Q18",
+    "title": "NSEJS 2020-21 · Q18 · RETRIEVE · D1 (Score 3)",
+    "subtitle": "Biology · Cell Biology & Molecular Genetics · NSEJS · [D1]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D1",
+    "route": "#/question/NSEJS-2020-B-Q18",
+    "breadcrumb": "Biology · Cell Biology & Molecular Genetics · Question",
+    "search_text": "NSEJS-2020-B-Q18 NSEJS-2020-B-Q18 NSEJS 2020-21 · Q18 · RETRIEVE · D1 (Score 3) Biology Cell Biology & Molecular Genetics Cell & Molecular Biology NSEJS [D1] Read the following criteria carefully. • Slow evolutionary change relative to similar entities. • Gross similarity to an ancestral fossil. • Very low taxonomic richness today compared to the past. • Phylogenetic inference of specific characters as plesiomorphic. • Phylogenetic inference of a genealo"
+  },
+  {
+    "id": "NSEJS-2020-B-Q29",
+    "title": "NSEJS 2020-21 · Q29 · EXPLAIN · D2 (Score 6)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2020-B-Q29",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2020-B-Q29 NSEJS-2020-B-Q29 NSEJS 2020-21 · Q29 · EXPLAIN · D2 (Score 6) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] Choose the correct statements from the following options."
+  },
+  {
+    "id": "NSEJS-2020-B-Q30",
+    "title": "NSEJS 2020-21 · Q30 · MODEL · D2 (Score 6)",
+    "subtitle": "Biology · Life Processes & Nephron Physiology · NSEJS · [D2]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D2",
+    "route": "#/question/NSEJS-2020-B-Q30",
+    "breadcrumb": "Biology · Life Processes & Nephron Physiology · Question",
+    "search_text": "NSEJS-2020-B-Q30 NSEJS-2020-B-Q30 NSEJS 2020-21 · Q30 · MODEL · D2 (Score 6) Biology Life Processes & Nephron Physiology Human Physiology NSEJS [D2] The minimum energy required to exist, that is, the energy required to perform chemical reactions even when a person is at rest, is called the basal metabolic rate (BMR), which accounts for about 50 to 70 per cent of the daily energy expenditure in most sedentary individuals. It is influenced by many"
+  },
+  {
+    "id": "BIO-NSEJS-2024-B-Q52",
+    "title": "NSEJS · CONTROL_AND_COORDINATION · BIO-NSEJS-2024-B-Q52",
+    "subtitle": "Biology · CONTROL_AND_COORDINATION · NSEJS · [D3]",
+    "category": "question",
+    "type": "QUESTION",
+    "badge": "D3",
+    "route": "#/question/BIO-NSEJS-2024-B-Q52",
+    "breadcrumb": "Biology · CONTROL_AND_COORDINATION · Question",
+    "search_text": "BIO-NSEJS-2024-B-Q52 BIO-NSEJS-2024-B-Q52 NSEJS · CONTROL_AND_COORDINATION · BIO-NSEJS-2024-B-Q52 Biology CONTROL_AND_COORDINATION M2 NSEJS [D3] [Multiple Correct] Which of the following statements regarding vertebrate immune responses and physiological defense mechanisms are correct? (A) All antibodies (immunoglobulins) are glycoproteins. (B) Eosinophils are non-phagocytic lymphocytes. (C) Ciliated pseudostratified epithelium of the respira"
   },
   {
     "id": "Q-PHY-WPE-B1-01",

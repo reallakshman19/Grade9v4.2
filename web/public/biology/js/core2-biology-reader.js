@@ -802,5 +802,25 @@
     }
   }
 
+  // Intercept SPA hash routes on standalone biology pages to prevent dead buttons
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#/')) {
+      const pathname = window.location.pathname.replace(/\\/g, '/');
+      let up = '../';
+      if (pathname.includes('/core1/') && (pathname.includes('-r1') || pathname.includes('-d3'))) {
+        up = '../../../';
+      } else if (pathname.includes('/core1/')) {
+        up = '../../';
+      } else {
+        up = '../';
+      }
+      e.preventDefault();
+      window.location.href = up + 'index.html' + href;
+    }
+  });
+
   loadData();
 })();

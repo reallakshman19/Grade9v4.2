@@ -1,22 +1,73 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-g9-shell>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Question Bank · Grade9 STEM</title>
-<script>
-  (function() {
-    var search = window.location.search || '';
-    window.location.replace('../index.html#/bank' + search);
-  })();
-</script>
-<meta http-equiv="refresh" content="0; url=../index.html#/bank">
+  <!-- KaTeX Typography (Khan Academy Standard) -->
+  <link rel="stylesheet" href="../vendor/katex/0.16.8/katex.min.css">
+  <script src="../vendor/katex/0.16.8/katex.min.js"></script>
+  <script src="../vendor/katex/0.16.8/contrib/auto-render.min.js" onload="window.__katexLoaded=true; if(window.renderAllMath) window.renderAllMath();"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Question Bank · Grade9V3.5</title>
+<link rel="stylesheet" href="../css/modern-learner.css"><link rel="stylesheet" href="../css/site.css"><link rel="stylesheet" href="../css/question-bank.css?v=3.5.2">  <link rel="stylesheet" href="../css/tablet-12-7.css">
 </head>
-<body style="font-family:system-ui,-apple-system,sans-serif;background:#0f172a;color:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;">
-  <div style="text-align:center;padding:2rem;max-width:560px;">
-    <h1 style="color:#38bdf8;font-size:1.8rem;margin-bottom:1rem;">⚡ Loading Unified Question Bank...</h1>
-    <p style="color:#94a3b8;margin-bottom:1.5rem;line-height:1.6;">Redirecting directly to the centralized Grade9 STEM Single Page Application Question Bank.</p>
-    <a href="../index.html#/bank" style="display:inline-block;padding:12px 24px;background:#0284c7;color:#ffffff;text-decoration:none;border-radius:6px;font-weight:700;">Open Unified Question Bank →</a>
+<body>
+<header class="g9-shell-header">
+  <div class="g9-header-inner">
+    <a class="g9-brand" href="../index.html#/home">
+      <span class="logo-icon">⚡</span>
+      <span class="brand-title">Grade9V3.5</span>
+      <span class="g9-brand-badge">Learner Platform</span>
+    </a>
+    <nav class="g9-header-nav" aria-label="Portal Navigation">
+      <a href="../index.html#/home">Home</a>
+      <a href="../index.html#/subject/physics">Physics</a>
+      <a href="../chemistry/index.html">Chemistry Hub</a>
+      <a href="../index.html#/subject/mathematics">Mathematics</a>
+      <a href="index.html" class="active">Question Bank (v3.5)</a>
+      <a href="../index.html#/bank" style="font-weight:700;color:#0284c7;background:#e0f2fe;padding:4px 8px;border-radius:4px;">📋 Unified Bank (SPA)</a>
+    </nav>
+    <div class="g9-header-actions">
+      <button type="button" class="g9-header-btn g9-search-btn" data-g9-action="search" title="Search Grade9V3 (Ctrl/⌘ K)" aria-label="Search">
+        <span class="g9-btn-icon">🔍</span>
+        <span class="g9-btn-text">Search</span>
+      </button>
+      <button type="button" class="g9-header-btn g9-display-btn" data-g9-action="display" title="Display & Theme Settings" aria-label="Display & Theme">
+        <span class="g9-btn-icon">🌙 / ☀️</span>
+        <span class="g9-btn-text">Display</span>
+      </button>
+    </div>
   </div>
-</body>
-</html>
+</header>
+<div class="g9-container" style="max-width:1440px;margin:0 auto;padding:0.75rem 1rem 0;">
+  <div style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 16px;border-radius:8px;font-size:0.875rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span>⚠️</span>
+      <span><strong>Academic Status: HOLD · Formative Exploration Mode (Grade9 v3.5 Parity Candidate)</strong> · 339 published canonical questions from Grade9v3.5 repository.</span>
+    </div>
+    <a href="../index.html#/bank" style="display:inline-flex;align-items:center;gap:6px;background:#0284c7;color:#ffffff;text-decoration:none;padding:6px 12px;border-radius:6px;font-size:0.85rem;font-weight:700;">
+      🚀 Open in Unified Question Bank (#/bank) →
+    </a>
+  </div>
+</div>
+<main class="qb-shell">
+<div id="qbStatus" class="qb-status" role="status" aria-live="polite" hidden></div>
+<section class="qb-discover" aria-labelledby="discoverTitle" hidden><div class="qb-section-heading"><div><p class="qb-kicker">Reusable collections</p><h2 id="discoverTitle">Choose a study view</h2></div><button type="button" class="btn outline" id="qbBrowseAll">Browse all questions</button></div><div class="qb-collection-grid" id="qbCollections"></div><div class="qb-subject-grid" id="qbSubjects"></div></section>
+<section class="qb-browser" aria-labelledby="browseTitle"><div class="qb-section-heading"><div><p class="qb-kicker">Discover · Browse · Study</p><h2 id="browseTitle">Question browser</h2></div><div class="qb-result-count" id="qbResultCount" aria-live="polite"></div></div>
+<div class="qb-nav-workspace"><nav class="qb-subject-tabs" id="qbSubjectTabs" role="tablist" aria-label="Question Bank Subjects"></nav><div class="qb-topic-strip" id="qbTopicStrip" role="toolbar" aria-label="Subject Topics"></div><div class="qb-topic-strip qb-subtopic-strip" id="qbSubtopicStrip" role="toolbar" aria-label="Topic Subtopics" hidden></div></div>
+<div id="qbTopicBanner"></div>
+<form class="qb-filter-panel" id="qbFilters" role="search">
+<div class="qb-search-field"><input id="qbSearch" name="q" type="search" placeholder="Search questions, concepts, exams, crux, or keywords…" autocomplete="off" aria-label="Search questions"></div>
+<div class="qb-filter-controls">
+<select id="qbDifficulty" aria-label="Difficulty"><option value="">All difficulty</option></select>
+<select id="qbExam" aria-label="Exam"><option value="">All exams</option></select>
+<select id="qbSort" aria-label="Sort order"><option value="canonical">Canonical order</option><option value="difficulty">Difficulty</option><option value="year-desc">Newest first</option><option value="year-asc">Oldest first</option></select>
+<button type="button" class="btn outline qb-clear" id="qbClear" title="Clear search and filters">✕ Clear</button>
+</div>
+<select id="qbSubject" hidden aria-hidden="true"><option value="">All subjects</option></select>
+<select id="qbTopic" hidden aria-hidden="true"><option value="">All topics</option></select>
+<select id="qbType" hidden aria-hidden="true"><option value="">All types</option></select>
+<select id="qbMode" hidden aria-hidden="true"><option value="browse">Browse</option><option value="study">Study</option></select>
+</form><div class="qb-active-filters" id="qbActiveFilters" aria-label="Active filters"></div><div class="qb-study-toolbar" id="qbStudyToolbar"><button type="button" id="qbOpenSupport">Open support</button><button type="button" id="qbCloseSupport">Close support</button><button type="button" id="qbOpenSolutions">Open solutions</button><button type="button" id="qbCloseSolutions">Close solutions</button><button type="button" id="qbTop">↑ Top</button></div><div id="qbResults" class="qb-results"></div><button type="button" class="btn outline qb-load-more" id="qbLoadMore" hidden>Load more</button></section>
+</main>
+<dialog id="qbStudyDialog" class="qb-study-dialog" aria-modal="true" aria-labelledby="qbDialogTitle"><div class="qb-dialog-shell"><div class="qb-dialog-top"><div id="qbDialogTitle" class="qb-dialog-title">Study Workspace</div><button type="button" class="qb-dialog-close" id="qbDialogClose" aria-label="Close study popup">✕</button></div><div id="qbDialogBody" class="qb-dialog-body"></div></div></dialog>
+<footer>Grade9V3 Question Bank · generated from canonical repository records · static, offline-safe, GitHub Pages compatible</footer>
+<script src="../data/keyword-synonyms.js?v=3.5.2"></script><script src="../data/question-bank-manifest.js?v=3.5.2"></script><script src="../js/question-bank-data-service.js?v=3.5.2" data-site-root="../"></script><script src="../js/display-controls.js?v=3.5.2"></script><script src="../js/site-header.js?v=3.5.2" data-site-root="../" data-site-parent="../index.html"></script><script src="../js/question-bank.js?v=3.5.2"></script>
+</body></html>

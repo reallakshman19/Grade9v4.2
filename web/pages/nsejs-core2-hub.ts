@@ -13,7 +13,8 @@
  * No academic approval inferred from software validation.
  */
 
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
+import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import {
   NSEJS_CORE2_MODULES,
@@ -42,6 +43,7 @@ export interface NsejsCore2HubState {
   revealedHints: Set<string>;
   revealedSteps: Set<string>;
   selectedAnswers: Map<string, string>;
+  committedAnswers: Set<string>;
   // Sprint Simulator State
   sprintActive: boolean;
   sprintQuestions: NsejsCore2QuestionDescriptor[];
@@ -68,6 +70,7 @@ export class NsejsCore2HubController {
       revealedHints: new Set<string>(),
       revealedSteps: new Set<string>(),
       selectedAnswers: new Map<string, string>(),
+      committedAnswers: new Set<string>(),
       sprintActive: false,
       sprintQuestions: [],
       sprintIndex: 0,
@@ -142,7 +145,20 @@ export class NsejsCore2HubController {
   }
 
   public selectOption(questionId: string, optionKey: string): void {
-    this.state.selectedAnswers.set(questionId, optionKey);
+    if (!this.state.committedAnswers.has(questionId)) {
+      this.state.selectedAnswers.set(questionId, optionKey);
+      this.render();
+    }
+  }
+
+  public commitOption(questionId: string): void {
+    this.state.committedAnswers.add(questionId);
+    this.render();
+  }
+
+  public resetOption(questionId: string): void {
+    this.state.committedAnswers.delete(questionId);
+    this.state.selectedAnswers.delete(questionId);
     this.render();
   }
 
@@ -489,6 +505,12 @@ export class NsejsCore2HubController {
           const hintsOpen = this.state.revealedHints.has(q.id);
           const stepsOpen = this.state.revealedSteps.has(q.id);
           const selectedOption = this.state.selectedAnswers.get(q.id);
+          const isCommitted = this.state.committedAnswers.has(q.id);
+          const unifiedQ = UNIFIED_QUESTION_DATABASE.getById(q.id);
+          const correctKey = unifiedQ?.correctKey;
+          const userChoiceKey = selectedOption ? selectedOption.slice(0, 2).replace(/[\s\:\.\(\)]/g, '').toUpperCase() : null;
+          const isCorrect = Boolean(correctKey && userChoiceKey && correctKey === userChoiceKey);
+          const hasKey = Boolean(correctKey);
 
           return `
             <div class="core2-question-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:10px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
@@ -524,7 +546,7 @@ export class NsejsCore2HubController {
 
               <!-- Stem -->
               <div style="font-size:1.05rem;line-height:1.6;color:#1e293b;margin-bottom:1.25rem;white-space:pre-wrap;">
-                ${escapeHtml(q.stem)}
+                ${renderMathHtml(q.stem)}
               </div>
 
               <!-- Options Grid -->
@@ -533,12 +555,58 @@ export class NsejsCore2HubController {
                   ${q.options.map(opt => {
                     const optKey = opt.slice(0, 2).replace(/[\s\:\.\(\)]/g, '').toUpperCase();
                     const isSelected = selectedOption === opt;
+                    let btnBorder = isSelected ? '#0284c7' : '#cbd5e1';
+                    let btnBg = isSelected ? '#e0f2fe' : '#ffffff';
+                    let btnColor = isSelected ? '#0369a1' : '#1e293b';
+
+                    if (isCommitted) {
+                      if (hasKey && correctKey === optKey) {
+                        btnBorder = '#16a34a';
+                        btnBg = '#dcfce7';
+                        btnColor = '#15803d';
+                      } else if (isSelected && hasKey && !isCorrect) {
+                        btnBorder = '#dc2626';
+                        btnBg = '#fee2e2';
+                        btnColor = '#b91c1c';
+                      }
+                    }
+
                     return `
-                      <button type="button" class="btn-select-core2-opt" data-qid="${escapeHtml(q.id)}" data-opt="${escapeHtml(opt)}" style="min-height:${HIT_TARGET_MIN_PX}px;text-align:left;padding:10px 14px;border:1px solid ${isSelected ? '#0284c7' : '#cbd5e1'};border-radius:6px;background:${isSelected ? '#e0f2fe' : '#ffffff'};color:${isSelected ? '#0369a1' : '#1e293b'};font-size:0.95rem;cursor:pointer;font-weight:${isSelected ? '700' : '500'};line-height:1.4;">
-                        ${escapeHtml(opt)}
+                      <button type="button" class="btn-select-core2-opt" data-qid="${escapeHtml(q.id)}" data-opt="${escapeHtml(opt)}" ${isCommitted ? 'disabled' : ''} style="min-height:${HIT_TARGET_MIN_PX}px;text-align:left;padding:10px 14px;border:1px solid ${btnBorder};border-radius:6px;background:${btnBg};color:${btnColor};font-size:0.95rem;cursor:${isCommitted ? 'default' : 'pointer'};font-weight:${isSelected ? '700' : '500'};line-height:1.4;">
+                        ${renderMathHtml(opt)}
                       </button>
                     `;
                   }).join('')}
+                </div>
+              ` : ''}
+
+              <!-- Commitment / Feedback -->
+              ${selectedOption && !isCommitted ? `
+                <div style="margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#eff6ff;padding:10px 14px;border-radius:6px;border:1px solid #bfdbfe;">
+                  <button type="button" class="btn-commit-core2-opt" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;">
+                    🎯 Commit Solution (${userChoiceKey})
+                  </button>
+                  <span style="font-size:0.875rem;color:#1e40af;">Click to commit your choice, evaluate correctness, and trace decisive steps.</span>
+                </div>
+              ` : ''}
+
+              ${isCommitted ? `
+                <div style="margin-bottom:1.25rem;padding:12px 16px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;${
+                  hasKey
+                    ? (isCorrect ? 'background:#dcfce7;border:1px solid #86efac;color:#166534;' : 'background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;')
+                    : 'background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;'
+                }">
+                  <div style="font-weight:700;font-size:0.95rem;">
+                    ${hasKey
+                      ? (isCorrect
+                          ? `✅ Correct! Option (${escapeHtml(userChoiceKey ?? '')}) matches official solution.`
+                          : `❌ Incorrect. You chose (${escapeHtml(userChoiceKey ?? '')}), official answer is (${escapeHtml(correctKey ?? '')}).`)
+                      : `📝 Option (${escapeHtml(userChoiceKey ?? '')}) Committed (Formative Practice). Trace the decisive moves below.`
+                    }
+                  </div>
+                  <button type="button" class="btn-reset-core2-opt" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;color:#334155;">
+                    ↺ Try Again
+                  </button>
                 </div>
               ` : ''}
 
@@ -560,7 +628,7 @@ export class NsejsCore2HubController {
                 <div style="margin-top:1rem;background:#fefce8;border:1px solid #fef08a;border-radius:8px;padding:1rem;">
                   <h4 style="margin:0 0 0.5rem;font-size:0.95rem;color:#854d0e;font-weight:700;">Progressive Pedagogical Hints:</h4>
                   <ul style="margin:0;padding-left:1.25rem;color:#713f12;font-size:0.95rem;line-height:1.5;">
-                    ${q.hints.map(h => `<li style="margin-bottom:0.4rem;">${escapeHtml(h)}</li>`).join('')}
+                    ${q.hints.map(h => `<li style="margin-bottom:0.4rem;">${renderMathHtml(h)}</li>`).join('')}
                   </ul>
                 </div>
               ` : ''}
@@ -570,11 +638,11 @@ export class NsejsCore2HubController {
                 <div style="margin-top:1rem;background:#faf5ff;border:1px solid #e9d5ff;border-radius:8px;padding:1rem;">
                   <h4 style="margin:0 0 0.5rem;font-size:0.95rem;color:#6b21a8;font-weight:700;">Diagnostic Reasoning Steps &amp; Scaffolds:</h4>
                   <ol style="margin:0;padding-left:1.25rem;color:#581c87;font-size:0.95rem;line-height:1.5;">
-                    ${q.steps.map(s => `<li style="margin-bottom:0.4rem;">${escapeHtml(s)}</li>`).join('')}
+                    ${q.steps.map(s => `<li style="margin-bottom:0.4rem;">${renderMathHtml(s)}</li>`).join('')}
                   </ol>
                   ${q.check ? `
                     <div style="margin-top:0.75rem;padding-top:0.5rem;border-top:1px dashed #d8b4fe;font-size:0.875rem;color:#6b21a8;">
-                      <strong>Sanity Check:</strong> ${escapeHtml(q.check)}
+                      <strong>Sanity Check:</strong> ${renderMathHtml(q.check)}
                     </div>
                   ` : ''}
                 </div>
@@ -661,7 +729,7 @@ export class NsejsCore2HubController {
           </div>
 
           <div style="font-size:1.1rem;line-height:1.6;color:#0f172a;margin-bottom:1.5rem;white-space:pre-wrap;">
-            ${escapeHtml(currentQ.stem)}
+            ${renderMathHtml(currentQ.stem)}
           </div>
 
           <!-- Options -->
@@ -670,7 +738,7 @@ export class NsejsCore2HubController {
               const selected = this.state.sprintUserAnswers.get(currentQ.id) === opt;
               return `
                 <button type="button" class="btn-sprint-opt" data-qid="${escapeHtml(currentQ.id)}" data-opt="${escapeHtml(opt)}" style="min-height:${HIT_TARGET_MIN_PX}px;text-align:left;padding:12px 16px;border:1px solid ${selected ? '#0284c7' : '#cbd5e1'};border-radius:6px;background:${selected ? '#e0f2fe' : '#ffffff'};color:${selected ? '#0369a1' : '#1e293b'};font-size:0.95rem;cursor:pointer;font-weight:${selected ? '700' : '500'};line-height:1.4;">
-                  ${escapeHtml(opt)}
+                  ${renderMathHtml(opt)}
                 </button>
               `;
             }).join('')}
@@ -688,9 +756,32 @@ export class NsejsCore2HubController {
         </div>
 
         <!-- Sprint Submission Summary Modal -->
-        ${this.state.sprintSubmitted ? `
+        ${this.state.sprintSubmitted ? (() => {
+          let score = 0;
+          let correctCount = 0;
+          let wrongCount = 0;
+          for (const q of this.state.sprintQuestions) {
+            const userOpt = this.state.sprintUserAnswers.get(q.id);
+            if (userOpt) {
+              const uKey = userOpt.slice(0, 2).replace(/[\s\:\.\(\)]/g, '').toUpperCase();
+              const uq = UNIFIED_QUESTION_DATABASE.getById(q.id);
+              if (uq?.correctKey) {
+                if (uq.correctKey === uKey) {
+                  correctCount++;
+                  score += 3;
+                } else {
+                  wrongCount++;
+                  score -= 1;
+                }
+              }
+            }
+          }
+          return `
           <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:8px;padding:1.5rem;text-align:center;">
             <h3 style="font-size:1.4rem;font-weight:800;color:#166534;margin:0 0 0.5rem;">🎉 Sprint Assessment Submitted!</h3>
+            <p style="font-size:1.15rem;font-weight:700;color:#0f172a;margin:0 0 0.75rem;">
+              Score: <span style="color:#0284c7;">${score} pts</span> | Correct: <span style="color:#16a34a;">${correctCount} (+3)</span> | Incorrect: <span style="color:#dc2626;">${wrongCount} (-1)</span> | Unanswered: ${totalCount - answeredCount}
+            </p>
             <p style="font-size:1rem;color:#15803d;margin:0 0 1rem;">
               You attempted <strong>${answeredCount}</strong> out of <strong>${totalCount}</strong> questions.
               Fault N09 Answer Isolation active: Official answers are securely preserved and verified.
@@ -700,7 +791,8 @@ export class NsejsCore2HubController {
               Return to Module Explorer
             </button>
           </div>
-        ` : ''}
+        `;
+        })() : ''}
 
       </div>
     `;
@@ -785,6 +877,23 @@ export class NsejsCore2HubController {
         const qid = btn.dataset.qid;
         const opt = btn.dataset.opt;
         if (qid && opt) this.selectOption(qid, opt);
+      };
+    });
+
+    // Commit & Reset options
+    const commitBtns = this.root.querySelectorAll<HTMLButtonElement>('.btn-commit-core2-opt');
+    commitBtns.forEach(btn => {
+      btn.onclick = () => {
+        const qid = btn.dataset.qid;
+        if (qid) this.commitOption(qid);
+      };
+    });
+
+    const resetBtns = this.root.querySelectorAll<HTMLButtonElement>('.btn-reset-core2-opt');
+    resetBtns.forEach(btn => {
+      btn.onclick = () => {
+        const qid = btn.dataset.qid;
+        if (qid) this.resetOption(qid);
       };
     });
 

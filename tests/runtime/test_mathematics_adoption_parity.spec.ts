@@ -333,7 +333,7 @@ describe('Component 4: AppRegistry & Subject Screen Integration', () => {
     ];
     for (const tid of expectedTopicIds) {
       assert.ok(mathSubj.topicIds.includes(tid), `Topic ${tid} must be in subject:mathematics.topicIds`);
-      const topicDesc = DEFAULT_APP_REGISTRY.topics.find((t) => t.id === tid);
+      const topicDesc: any = DEFAULT_APP_REGISTRY.topics.find((t: any) => t.id === tid);
       assert.ok(topicDesc, `Topic descriptor ${tid} must exist in registry topics`);
       assert.equal(topicDesc.subjectId, 'subject:mathematics');
       assert.equal(topicDesc.disclosurePolicy.preCommitDisclosure, 'FORBIDDEN');

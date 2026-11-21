@@ -12,8 +12,9 @@
  * No academic approval inferred from software validation.
  */
 
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
+import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
 import {
   LIBRARY_PACKAGES,
   LIBRARY_QUESTIONS,
@@ -39,6 +40,7 @@ export interface PhysicsLibraryState {
   expandedPackages: Set<string>;
   revealedHints: Set<string>;
   selectedAnswers: Map<string, string>;
+  committedQuestions: Set<string>;
   // Kinematics Simulator state
   launchSpeed: number; // m/s
   launchAngle: number; // degrees
@@ -65,6 +67,7 @@ export class PhysicsLibraryController {
       expandedPackages: new Set<string>(),
       revealedHints: new Set<string>(),
       selectedAnswers: new Map<string, string>(),
+      committedQuestions: new Set<string>(),
       launchSpeed: 40,
       launchAngle: 45,
       gravity: 9.8,
@@ -128,6 +131,17 @@ export class PhysicsLibraryController {
 
   public selectOption(qid: string, optKey: string): void {
     this.state.selectedAnswers.set(qid, optKey);
+    this.notify();
+  }
+
+  public commitQuestion(qid: string): void {
+    this.state.committedQuestions.add(qid);
+    this.notify();
+  }
+
+  public resetQuestion(qid: string): void {
+    this.state.committedQuestions.delete(qid);
+    this.state.selectedAnswers.delete(qid);
     this.notify();
   }
 
@@ -424,6 +438,14 @@ export function mountPhysicsLibrary(
           ${visibleQuestions.slice(0, 35).map(q => {
             const isHintRevealed = state.revealedHints.has(q.id);
             const userChoice = state.selectedAnswers.get(q.id);
+            const isCommitted = state.committedQuestions.has(q.id);
+
+            const unifiedEntry = UNIFIED_QUESTION_DATABASE.getById(q.id);
+            const correctKey = unifiedEntry?.correctKey;
+            const hasKey = !!correctKey && correctKey !== 'WITHHELD_CLIENT_SIDE_FAULT_N09';
+            const cleanUserKey = userChoice ? userChoice.replace(/[()]/g, '').trim() : '';
+            const cleanCorrectKey = hasKey ? correctKey.replace(/[()]/g, '').trim() : '';
+            const isCorrect = hasKey && cleanUserKey.toUpperCase() === cleanCorrectKey.toUpperCase();
 
             return `
               <div class="library-question-card" style="border:1px solid #cbd5e1;border-radius:10px;padding:20px;background:#ffffff;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
@@ -437,27 +459,90 @@ export function mountPhysicsLibrary(
                 </div>
 
                 <div style="font-size:1.02rem;color:#0f172a;line-height:1.55;margin-bottom:16px;">
-                  ${escapeHtml(q.stem)}
+                  ${renderMathHtml(q.stem)}
                 </div>
 
                 <!-- Options -->
                 ${q.options.length > 0 ? `
                   <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:8px;margin-bottom:16px;">
                     ${q.options.map(opt => {
-                      const optKey = opt.slice(0, 3);
+                      const optKey = opt.slice(0, 3).trim();
                       const isSelected = userChoice === optKey;
+                      let btnBg = '#ffffff';
+                      let btnBorder = '#cbd5e1';
+                      let btnColor = '#1e293b';
+
+                      if (isSelected) {
+                        if (isCommitted) {
+                          if (hasKey) {
+                            btnBg = isCorrect ? '#dcfce7' : '#fee2e2';
+                            btnBorder = isCorrect ? '#16a34a' : '#dc2626';
+                            btnColor = isCorrect ? '#14532d' : '#991b1b';
+                          } else {
+                            btnBg = '#e0f2fe';
+                            btnBorder = '#0284c7';
+                            btnColor = '#075985';
+                          }
+                        } else {
+                          btnBg = '#e0f2fe';
+                          btnBorder = '#0284c7';
+                          btnColor = '#0369a1';
+                        }
+                      }
+
                       return `
                         <button
                           type="button"
                           data-action="select-option"
                           data-qid="${escapeHtml(q.id)}"
                           data-opt-key="${escapeHtml(optKey)}"
-                          style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:10px 14px;border-radius:6px;border:1px solid ${isSelected ? '#0284c7' : '#cbd5e1'};background:${isSelected ? '#e0f2fe' : '#ffffff'};color:${isSelected ? '#0369a1' : '#1e293b'};font-size:0.92rem;text-align:left;cursor:pointer;font-weight:${isSelected ? '700' : '400'};"
+                          ${isCommitted ? 'disabled' : ''}
+                          style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:10px 14px;border-radius:6px;border:1px solid ${btnBorder};background:${btnBg};color:${btnColor};font-size:0.92rem;text-align:left;cursor:${isCommitted ? 'default' : 'pointer'};font-weight:${isSelected ? '700' : '400'};"
                         >
-                          ${escapeHtml(opt)}
+                          ${renderMathHtml(opt)}
                         </button>
                       `;
                     }).join('')}
+                  </div>
+                ` : ''}
+
+                <!-- Active Commit / Feedback Section -->
+                ${userChoice && !isCommitted ? `
+                  <div style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #e2e8f0;">
+                    <button
+                      type="button"
+                      data-action="commit-answer"
+                      data-qid="${escapeHtml(q.id)}"
+                      style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:9px 20px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 1px 3px rgba(2,132,199,0.3);"
+                    >
+                      🎯 Commit Selected Option ${escapeHtml(userChoice)}
+                    </button>
+                    <span style="font-size:0.875rem;color:#475569;">Click to verify your selection and inspect physical principles.</span>
+                  </div>
+                ` : ''}
+
+                ${isCommitted ? `
+                  <div style="margin-bottom:16px;padding:12px 16px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;${
+                    hasKey
+                      ? (isCorrect ? 'background:#dcfce7;border:1px solid #86efac;color:#166534;' : 'background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;')
+                      : 'background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;'
+                  }">
+                    <div style="font-weight:700;font-size:0.95rem;">
+                      ${hasKey
+                        ? (isCorrect
+                            ? `✅ Correct! Option ${escapeHtml(userChoice ?? '')} matches the verified solution.`
+                            : `❌ Incorrect. You chose ${escapeHtml(userChoice ?? '')}, but verified answer is (${escapeHtml(correctKey ?? '')}).`)
+                        : `📝 Option ${escapeHtml(userChoice ?? '')} Committed (Formative Practice Mode). Trace the derivation below.`
+                      }
+                    </div>
+                    <button
+                      type="button"
+                      data-action="reset-answer"
+                      data-qid="${escapeHtml(q.id)}"
+                      style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.82rem;cursor:pointer;color:#334155;"
+                    >
+                      ↺ Try Again
+                    </button>
                   </div>
                 ` : ''}
 
@@ -467,21 +552,21 @@ export function mountPhysicsLibrary(
                     type="button"
                     data-action="toggle-hint"
                     data-qid="${escapeHtml(q.id)}"
-                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed ? '#e2e8f0' : '#0284c7'};color:${isHintRevealed ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
+                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed || isCommitted ? '#e2e8f0' : '#0284c7'};color:${isHintRevealed || isCommitted ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
                   >
-                    ${isHintRevealed ? 'Hide Hints & Steps' : '💡 Reveal Hints & Scaffold Ladder'}
+                    ${isHintRevealed || isCommitted ? 'Hide Hints & Steps' : '💡 Reveal Hints & Scaffold Ladder'}
                   </button>
 
                   <span style="font-size:0.875rem;color:#64748b;font-family:monospace;">Fault N09: Key Isolated</span>
                 </div>
 
-                ${isHintRevealed ? `
+                ${(isHintRevealed || isCommitted) ? `
                   <div style="margin-top:12px;padding:14px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;">
                     ${q.hints.length > 0 ? `
                       <div style="margin-bottom:10px;">
                         <strong style="color:#0284c7;font-size:0.875rem;text-transform:uppercase;">Conceptual Insights:</strong>
                         <ul style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
-                          ${q.hints.map(h => `<li>${escapeHtml(h)}</li>`).join('')}
+                          ${q.hints.map(h => `<li>${renderMathHtml(h)}</li>`).join('')}
                         </ul>
                       </div>
                     ` : ''}
@@ -490,7 +575,7 @@ export function mountPhysicsLibrary(
                       <div style="margin-bottom:10px;">
                         <strong style="color:#0369a1;font-size:0.875rem;text-transform:uppercase;">Progressive Hint Ladder:</strong>
                         <ol style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
-                          ${q.hintLadder.map(hl => `<li>${escapeHtml(hl)}</li>`).join('')}
+                          ${q.hintLadder.map(hl => `<li>${renderMathHtml(hl)}</li>`).join('')}
                         </ol>
                       </div>
                     ` : ''}
@@ -498,7 +583,7 @@ export function mountPhysicsLibrary(
                     <!-- Failure Signal Warning -->
                     <div style="background:#fef2f2;border-left:4px solid #ef4444;padding:8px 12px;border-radius:4px;margin-top:8px;">
                       <strong style="color:#b91c1c;font-size:0.875rem;text-transform:uppercase;">Diagnostic Failure Signal:</strong>
-                      <div style="font-size:0.88rem;color:#991b1b;margin-top:2px;">${escapeHtml(q.failureSignal)}</div>
+                      <div style="font-size:0.88rem;color:#991b1b;margin-top:2px;">${renderMathHtml(q.failureSignal)}</div>
                     </div>
                   </div>
                 ` : ''}
@@ -723,6 +808,20 @@ export function mountPhysicsLibrary(
     const optBtn = target.closest<HTMLButtonElement>('button[data-action="select-option"]');
     if (optBtn && optBtn.dataset.qid && optBtn.dataset.optKey) {
       controller.selectOption(optBtn.dataset.qid, optBtn.dataset.optKey);
+      return;
+    }
+
+    // Commit answer
+    const commitBtn = target.closest<HTMLButtonElement>('button[data-action="commit-answer"]');
+    if (commitBtn && commitBtn.dataset.qid) {
+      controller.commitQuestion(commitBtn.dataset.qid);
+      return;
+    }
+
+    // Reset answer
+    const resetBtn = target.closest<HTMLButtonElement>('button[data-action="reset-answer"]');
+    if (resetBtn && resetBtn.dataset.qid) {
+      controller.resetQuestion(resetBtn.dataset.qid);
       return;
     }
 

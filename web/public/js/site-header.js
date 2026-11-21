@@ -518,6 +518,29 @@
     if (!e.target.closest('.g9-header-dropdown')) {
       document.querySelectorAll('.g9-header-dropdown[open]').forEach(d => d.removeAttribute('open'));
     }
+
+    // Intercept SPA hash routes on standalone/subpages to prevent dead buttons
+    const link = e.target.closest('a');
+    if (link) {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#/')) {
+        const pathname = window.location.pathname.replace(/\\/g, '/');
+        const isRootSpa = (pathname.endsWith('/index.html') || pathname.endsWith('/grade9-project/') || pathname === '/') &&
+          !pathname.includes('/chemistry/') &&
+          !pathname.includes('/physics/') &&
+          !pathname.includes('/mathematics/') &&
+          !pathname.includes('/biology/') &&
+          !pathname.includes('/standalone/') &&
+          !pathname.includes('/topics/') &&
+          !pathname.includes('/question-bank/');
+
+        if (!isRootSpa) {
+          e.preventDefault();
+          const effectiveRoot = root || './';
+          window.location.href = effectiveRoot + 'index.html' + href;
+        }
+      }
+    }
   });
 
   if (document.readyState === 'loading') {

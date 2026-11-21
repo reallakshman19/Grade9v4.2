@@ -41,6 +41,7 @@ import { MOTION_SHARED_CLOCK_PACKAGE } from '../runtime/physics-packages.ts';
 import { ScratchpadController, mountScratchpadWorkspace } from '../components/workspace/scratchpad.ts';
 import { mountExperimentLab } from './resources.ts';
 import { mountGasLawsWorkbench } from './workbenches/gas-laws.ts';
+import { mountChemicalBondingWorkbench } from './workbenches/chemical-bonding.ts';
 import { LinearCoordinatesController, mountLinearCoordinatesWorkbench } from './workbenches/linear-coordinates.ts';
 import { VectorAlgebraController, mountVectorAlgebraWorkbench } from './workbenches/vector-algebra.ts';
 import { ImoMasterController, mountImoMaster } from './imo-master.ts';
@@ -1194,7 +1195,7 @@ function getFluidsStudyHtml(): string {
       </div>
 
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem;">
-        <button type="button" onclick="window.location.hash='#/bank'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+        <button type="button" onclick="window.location.hash='#/bank?subject=Physics&topic=fluids'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
           🎯 Practice Fluids Questions in Question Bank →
         </button>
       </div>
@@ -1270,7 +1271,7 @@ function getMotion1DStudyHtml(): string {
       </div>
 
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem;">
-        <button type="button" onclick="window.location.hash='#/bank'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+        <button type="button" onclick="window.location.hash='#/bank?subject=Physics&topic=motion-1d'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
           🎯 Practice Motion 1D in Question Bank →
         </button>
       </div>
@@ -1334,7 +1335,7 @@ function getNlmStudyHtml(): string {
       </div>
 
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem;">
-        <button type="button" onclick="window.location.hash='#/bank'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+        <button type="button" onclick="window.location.hash='#/bank?subject=Physics&topic=nlm'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
           🎯 Practice NLM in Question Bank →
         </button>
       </div>
@@ -1398,7 +1399,7 @@ function getVectorsStudyHtml(): string {
       </div>
 
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:1rem;">
-        <button type="button" onclick="window.location.hash='#/bank'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+        <button type="button" onclick="window.location.hash='#/bank?subject=Physics&topic=vectors'" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
           🎯 Practice Vectors in Question Bank →
         </button>
       </div>
@@ -1457,7 +1458,7 @@ export function mountTopicWorkspace(
           <div>
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
               <span style="font-size:0.875rem;font-weight:800;color:#0369a1;background:#e0f2fe;padding:2px 8px;border-radius:4px;">${escapeHtml(topic.code)}</span>
-              <span style="font-size:0.875rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">${escapeHtml(topic.status)}</span>
+              <span class="g9-status-badge" style="font-size:0.875rem;font-weight:700;color:#b45309;background:#fef3c7;padding:2px 8px;border-radius:4px;">Candidate Practice · Rule 13 HOLD</span>
               <span style="font-size:0.875rem;font-weight:600;color:#475569;">12.7" Tablet Workspace</span>
             </div>
             <h1 class="topic-workspace-title" style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">${subjEmoji}${subjName}: ${escapeHtml(topic.title)}</h1>
@@ -1593,7 +1594,7 @@ export function mountTopicWorkspace(
               ${q.batch ? `<span style="font-size:0.875rem;font-weight:700;color:#0369a1;background:#e0f2fe;padding:2px 6px;border-radius:4px;">${escapeHtml(q.batch)}</span>` : ''}
               ${q.sourceProvenance === 'AUTHENTIC_SOURCE_PINNED' ? `<span style="font-size:0.875rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 6px;border-radius:4px;">Authentic (v3.5)</span>` : ''}
               ${q.sourceProvenance === 'SYNTHETIC_DIAGNOSTIC_FIXTURE' ? `<span style="font-size:0.875rem;font-weight:700;color:#0369a1;background:#e0f2fe;padding:2px 6px;border-radius:4px;">SYNTHETIC_DIAGNOSTIC_FIXTURE</span>` : ''}
-              <span style="font-size:0.875rem;font-weight:700;color:${q.status === 'RELEASED' ? '#047857' : '#b45309'};background:${q.status === 'RELEASED' ? '#d1fae5' : '#fef3c7'};padding:2px 8px;border-radius:4px;">${escapeHtml(q.status)}</span>
+              <span class="g9-status-badge" style="font-size:0.875rem;font-weight:700;color:#b45309;background:#fef3c7;padding:2px 8px;border-radius:4px;">Candidate Practice · Rule 13 HOLD</span>
             </div>
           </div>
 
@@ -1814,70 +1815,91 @@ export function mountTopicWorkspace(
       return;
     }
 
-    if (isMathTopic && topic.code === 'EUCLID' && learnTrySubRole === 'CORE1B') {
-      // Mount Euclidean Geometry Proof Workspace (A27)
-      const proofController = new ProofWorkspaceController({
-        archetype: 'MATH_E2',
-        givenStatements: [
-          'In circle O, AB is the diameter.',
-          'Point C lies on the circle distinct from A and B.',
-          'Point D lies on minor arc BC.',
-        ],
-        goalStatement: 'Prove that ∠ADC + ∠ABC = 180° (Opposite angles in cyclic quadrilateral ABCD sum to 180°).',
-        availableLemmas: [
-          {
-            id: 'LEMMA-THALES',
-            name: "Thales's Theorem",
-            statement: 'The angle subtended by a diameter at the circle circumference is a right angle (90°).',
-            isStandardAxiom: true,
-          },
-          {
-            id: 'LEMMA-INSCRIBED-ANGLE',
-            name: 'Inscribed Angle Theorem',
-            statement: 'An angle inscribed in a circle is half the central angle subtending the same arc.',
-            isStandardAxiom: true,
-          },
-          {
-            id: 'LEMMA-CYCLIC-SUM',
-            name: 'Cyclic Quadrilateral Theorem',
-            statement: 'Opposite angles of a cyclic quadrilateral inscribed in a circle sum to 180°.',
-            isStandardAxiom: true,
-          },
-        ],
-        approaches: [
-          {
-            id: 'app-direct-inscribed',
-            name: 'Direct Central Angle Inscribed Arc Method',
-            isGated: false,
-            isUnlocked: true,
-            hintsCount: 2,
-            strategySummary: 'Use central angle measure 2θ and arc subtension to prove supplementary angles.',
-          },
-          {
-            id: 'app-tangent-secant',
-            name: 'Auxiliary Tangent and Alternate Segment Method',
-            isGated: true,
-            isUnlocked: false,
-            hintsCount: 3,
-            strategySummary: '',
-          },
-        ],
-      });
-      const m = mountProofWorkspace(subRoot, proofController, onNavigate);
-      activeSubDisposer = () => m.dispose();
+    if (isMathTopic && learnTrySubRole === 'CORE1B') {
+      if (topic.code === 'EUCLID') {
+        // Mount Euclidean Geometry Proof Workspace (A27)
+        const proofController = new ProofWorkspaceController({
+          archetype: 'MATH_E2',
+          givenStatements: [
+            'In circle O, AB is the diameter.',
+            'Point C lies on the circle distinct from A and B.',
+            'Point D lies on minor arc BC.',
+          ],
+          goalStatement: 'Prove that ∠ADC + ∠ABC = 180° (Opposite angles in cyclic quadrilateral ABCD sum to 180°).',
+          availableLemmas: [
+            {
+              id: 'LEMMA-THALES',
+              name: "Thales's Theorem",
+              statement: 'The angle subtended by a diameter at the circle circumference is a right angle (90°).',
+              isStandardAxiom: true,
+            },
+            {
+              id: 'LEMMA-INSCRIBED-ANGLE',
+              name: 'Inscribed Angle Theorem',
+              statement: 'An angle inscribed in a circle is half the central angle subtending the same arc.',
+              isStandardAxiom: true,
+            },
+            {
+              id: 'LEMMA-CYCLIC-SUM',
+              name: 'Cyclic Quadrilateral Theorem',
+              statement: 'Opposite angles of a cyclic quadrilateral inscribed in a circle sum to 180°.',
+              isStandardAxiom: true,
+            },
+          ],
+          approaches: [
+            {
+              id: 'app-direct-inscribed',
+              name: 'Direct Central Angle Inscribed Arc Method',
+              isGated: false,
+              isUnlocked: true,
+              hintsCount: 2,
+              strategySummary: 'Use central angle measure 2θ and arc subtension to prove supplementary angles.',
+            },
+            {
+              id: 'app-tangent-secant',
+              name: 'Auxiliary Tangent and Alternate Segment Method',
+              isGated: true,
+              isUnlocked: false,
+              hintsCount: 3,
+              strategySummary: '',
+            },
+          ],
+        });
+        const m = mountProofWorkspace(subRoot, proofController, onNavigate);
+        activeSubDisposer = () => m.dispose();
+      } else if (topic.code === 'VECTORS') {
+        const c = new VectorAlgebraController();
+        const m = mountVectorAlgebraWorkbench(subRoot, c, onNavigate);
+        activeSubDisposer = () => m.dispose();
+      } else if (topic.code === 'RIEMANN') {
+        const pwc = new PortableWorkbenchController(RIEMANN_SUMS_PACKAGE);
+        const m = pwc.mount(subRoot);
+        activeSubDisposer = () => m.dispose();
+      } else if (topic.code === 'IMO_GRADE9') {
+        const c = new ImoMasterController();
+        const m = mountImoMaster(subRoot, c, onNavigate);
+        activeSubDisposer = () => m.dispose();
+      } else {
+        // POLYNOMIALS, COORD_GEOM, LINEAR_EQ, THEORY_EQUATIONS
+        const c = new LinearCoordinatesController();
+        const m = mountLinearCoordinatesWorkbench(subRoot, c, onNavigate);
+        activeSubDisposer = () => m.dispose();
+      }
     } else if (isChemTopic && learnTrySubRole === 'CORE1B') {
       // Mount Chemical Representation Workspace (A28) inside Core 1B Journey
       const chemController = new ChemicalWorkWorkspaceController({
         archetype: 'CHEM_E2',
         initialStructure: {
           format: 'FORMULA',
-          data: topic.code === 'CHEM_REDOX' ? 'CrO5' : topic.code === 'CHEM_BONDING' ? 'SF4' : 'CH3COOH',
+          data: topic.code === 'CHEM_REDOX' ? 'CrO5' : topic.code === 'CHEM_BONDING' ? 'SF4' : topic.code === 'CHEM_GASES' ? 'CO2' : 'CH3COOH',
           accessibleLabel: '',
         },
         initialEquation: topic.code === 'CHEM_REDOX'
           ? 'Fe2+ + Ce4+ -> Fe3+ + Ce3+'
           : topic.code === 'CHEM_STOICHIOMETRY'
           ? 'CH3COOH + NaOH -> CH3COONa + H2O'
+          : topic.code === 'CHEM_GASES'
+          ? 'CH4 + 2O2 -> CO2 + 2H2O'
           : 'PCl3 + Cl2 -> PCl5',
       });
       const m = mountChemicalWorkspace(subRoot, chemController, onNavigate);
@@ -1953,6 +1975,189 @@ export function mountTopicWorkspace(
         derivationTitle = 'Mole Concept & Stoichiometry';
       }
 
+      const getChemCore1AContent = (code: string): string => {
+        if (code === 'CHEM_REDOX') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Fundamental Oxidation Number Priority Ladder</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  An oxidation state is the hypothetical charge an atom would possess if all bonds to different elements were 100% ionic. Hierarchy rules strictly dictate priority:
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Rule 1 (Elemental Invariant):</strong> Atoms in elementary form (P₄, S₈, O₂, Cl₂) have oxidation state <strong>0</strong>.</li>
+                  <li><strong>Rule 2 (Fluorine Absolute):</strong> Fluorine is always <strong>-1</strong> in all chemical compounds.</li>
+                  <li><strong>Rule 3 (Alkali & Alkaline Earth):</strong> Group 1 metals are always <strong>+1</strong>; Group 2 metals are always <strong>+2</strong>.</li>
+                  <li><strong>Rule 4 (Hydrogen):</strong> Hydrogen is <strong>+1</strong> with non-metals (HCl, H₂O) and <strong>-1</strong> with active metals (NaH, CaH₂).</li>
+                  <li><strong>Rule 5 (Oxygen Hierarchy):</strong> Oxygen is <strong>-2</strong> in oxides, <strong>-1</strong> in peroxides (H₂O₂, BaO₂), <strong>-½</strong> in superoxides (KO₂), and <strong>+2</strong> in OF₂.</li>
+                  <li><strong>Rule 6 (Sum Rule):</strong> Algebraic sum of oxidation numbers must equal net species charge: ∑ OS = q.</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Disproportionation & Comproportionation Mechanism</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  In <em>disproportionation</em>, an element in an intermediate oxidation state simultaneously undergoes self-oxidation and self-reduction into higher and lower states:
+                </p>
+                <div style="background:#ffffff;border:1px solid #e2e8f0;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.95rem;margin-bottom:0.5rem;">
+                  2 H₂O₂ (O at -1) ───► 2 H₂O (O at -2, reduction) + O₂ (O at 0, oxidation)
+                </div>
+                <p style="margin:0;font-size:0.9rem;color:#475569;">
+                  <em>Comproportionation</em> is the reverse process: two distinct species containing the same element in different oxidation states react to yield a single species with an intermediate state (e.g., IO₃⁻ (+5) + 5 I⁻ (-1) + 6 H⁺ ──► 3 I₂ (0) + 3 H₂O).
+                </p>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Diagnostic Misconceptions & IIT-JEE Traps</h3>
+                <table style="width:100%;border-collapse:collapse;font-size:0.9rem;text-align:left;">
+                  <thead>
+                    <tr style="border-bottom:2px solid #f87171;">
+                      <th style="padding:6px 8px;color:#991b1b;">Student Misconception</th>
+                      <th style="padding:6px 8px;color:#991b1b;">Scientific Reality & Decisive Principle</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #fecaca;">
+                      <td style="padding:6px 8px;font-weight:600;">Assuming uniform oxidation numbers for non-equivalent atoms</td>
+                      <td style="padding:6px 8px;">In polythionates like S₄O₆²⁻, the central S-S atoms have OS = 0, while terminal sulfonate atoms have OS = +5. The average is +2.5, but authentic individual atoms are 0 and +5.</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:6px 8px;font-weight:600;">Equating oxidation number with formal charge</td>
+                      <td style="padding:6px 8px;">Formal charge assumes equal sharing of bonding electrons; oxidation number assumes 100% transfer of bonding electrons to the more electronegative partner.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `;
+        } else if (code === 'CHEM_BONDING') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. 4-Step VSEPR Molecular Geometry Protocol</h3>
+                <ol style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Total Valence Pool:</strong> Calculate V_total = ∑ V_atoms - q_cation + q_anion.</li>
+                  <li><strong>Skeleton Construction:</strong> Place the least electronegative atom in the center and connect ligands via single σ-bonds.</li>
+                  <li><strong>Steric Number (SN):</strong> Count total electron domains: SN = (Number of bonded atoms) + (Lone pairs on central atom).</li>
+                  <li><strong>Domain Geometry vs Molecular Shape:</strong> Electron repulsion order: <strong>lp-lp &gt; lp-bp &gt; bp-bp</strong>. Lone pairs compress adjacent bond angles (e.g., CH₄: 109.5°, NH₃: 107.0°, H₂O: 104.5°).</li>
+                </ol>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Canonical Steric Geometry Mapping</h3>
+                <table style="width:100%;border-collapse:collapse;font-size:0.875rem;text-align:left;">
+                  <thead>
+                    <tr style="border-bottom:2px solid #94a3b8;background:#e2e8f0;">
+                      <th style="padding:6px 8px;">SN</th>
+                      <th style="padding:6px 8px;">Bond Pairs</th>
+                      <th style="padding:6px 8px;">Lone Pairs</th>
+                      <th style="padding:6px 8px;">Molecular Shape</th>
+                      <th style="padding:6px 8px;">Ideal Angle</th>
+                      <th style="padding:6px 8px;">Exemplar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>2</td><td>2</td><td>0</td><td>Linear</td><td>180°</td><td>BeCl₂, CO₂</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>3</td><td>3</td><td>0</td><td>Trigonal Planar</td><td>120°</td><td>BF₃, SO₃</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>3</td><td>2</td><td>1</td><td>Bent / Angular</td><td>&lt; 120° (119°)</td><td>SO₂, O₃</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>4</td><td>4</td><td>0</td><td>Tetrahedral</td><td>109.5°</td><td>CH₄, CCl₄</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>4</td><td>3</td><td>1</td><td>Trigonal Pyramidal</td><td>107.0°</td><td>NH₃, PCl₃</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>4</td><td>2</td><td>2</td><td>Bent / V-Shaped</td><td>104.5°</td><td>H₂O, H₂S</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>5</td><td>5</td><td>0</td><td>Trigonal Bipyramidal</td><td>120° (eq), 90° (ax)</td><td>PCl₅</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>5</td><td>4</td><td>1</td><td>See-Saw</td><td>&lt; 120°, &lt; 90°</td><td>SF₄</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>5</td><td>2</td><td>3</td><td>Linear</td><td>180°</td><td>XeF₂, I₃⁻</td></tr>
+                    <tr><td>6</td><td>6</td><td>0</td><td>Octahedral</td><td>90°</td><td>SF₆</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Dipole Moment Vector Algebra: NH₃ vs NF₃</h3>
+                <p style="margin:0;font-size:0.9rem;color:#334155;">
+                  In NH₃, nitrogen is more electronegative than hydrogen (3.0 vs 2.1), so N-H bond dipoles add constructively in the same direction as the lone pair dipole, resulting in a large net dipole (μ = 1.47 D). In NF₃, fluorine is more electronegative than nitrogen (4.0 vs 3.0), so N-F bond dipoles point downward away from the central atom, largely canceling the upward lone pair dipole and giving an exceptionally small net dipole (μ = 0.24 D).
+                </p>
+              </div>
+            </div>
+          `;
+        } else if (code === 'CHEM_STOICHIOMETRY') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. The Universal Mole Bridge Hub</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  A mole is defined as the amount of substance containing exactly 6.02214076 × 10²³ elementary entities (N_A). All quantitative stoichiometric calculations traverse this bridge:
+                </p>
+                <div style="background:#ffffff;border:1px solid #cbd5e1;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.95rem;">
+                  n = mass (g) / Molar mass (g/mol) = Number of entities (N) / N_A = Gas Volume at STP (L) / 22.4 L
+                </div>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Solution Concentration Metrics</h3>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Molarity (M):</strong> M = moles of solute / volume of solution in liters (mol/L). <em>Temperature dependent.</em></li>
+                  <li><strong>Molality (m):</strong> m = moles of solute / mass of solvent in kilograms (mol/kg). <em>Temperature independent.</em></li>
+                  <li><strong>Mole Fraction (X_A):</strong> X_A = n_A / (n_A + n_B), where ∑ X_i = 1.0.</li>
+                  <li><strong>Dilution Equation:</strong> M₁ V₁ = M₂ V₂ (conservation of total solute moles).</li>
+                </ul>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Limiting Reagent Determination Algorithm</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#334155;">
+                  Given reaction: a A + b B ──► c C + d D.
+                </p>
+                <ol style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li>Convert given quantities of all reactants into moles (n_A, n_B).</li>
+                  <li>Compute the stoichiometric capacity quotient: Q_A = n_A / a and Q_B = n_B / b.</li>
+                  <li>The reactant with the <strong>strictly smaller quotient</strong> is the Limiting Reagent (LR). All theoretical product yields and reactant consumptions must be calculated strictly from this limiting reactant.</li>
+                </ol>
+              </div>
+            </div>
+          `;
+        } else if (code === 'CHEM_GASES') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Kinetic Molecular Theory & Speed Distributions</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  The ideal gas equation PV = nRT derives from microscopic mechanical impacts of point particles. The Maxwell-Boltzmann distribution defines three fundamental characteristic speeds:
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Most Probable Speed (v_mp):</strong> v_mp = √(2RT / M) ≈ 1.414 √(RT/M)</li>
+                  <li><strong>Average Speed (v_avg):</strong> v_avg = √(8RT / πM) ≈ 1.596 √(RT/M)</li>
+                  <li><strong>Root Mean Square Speed (v_rms):</strong> v_rms = √(3RT / M) ≈ 1.732 √(RT/M)</li>
+                  <li><strong>Canonical Speed Hierarchy:</strong> v_mp &lt; v_avg &lt; v_rms (Ratio: 1 : 1.128 : 1.224).</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Real Gases: The van der Waals Equation</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  Real gases deviate from ideality due to molecular volume and intermolecular attractions:
+                </p>
+                <div style="background:#ffffff;border:1px solid #cbd5e1;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.95rem;margin-bottom:0.5rem;">
+                  (P + a n² / V²) (V - n b) = n R T
+                </div>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Parameter a (units: atm·L²·mol⁻²):</strong> Measures the magnitude of intermolecular attractive forces. Higher 'a' means greater liquefiability.</li>
+                  <li><strong>Parameter b (units: L·mol⁻¹):</strong> Excluded volume of finite molecular cores; b = 4 N_A v_molecule.</li>
+                  <li><strong>Compressibility Factor (Z):</strong> Z = PV / nRT. At low pressure, Z ≈ 1 - a/(RTV) &lt; 1 (attractive forces dominate). At high pressure, Z ≈ 1 + Pb/(RT) &gt; 1 (repulsive excluded volume dominates).</li>
+                </ul>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Critical State Constants & Liquefaction</h3>
+                <p style="margin:0;font-size:0.9rem;color:#334155;">
+                  According to Andrews isotherms, a gas cannot be liquefied at temperatures above its critical temperature T_c regardless of applied pressure: T_c = 8a / (27Rb), P_c = a / (27b²), V_c = 3b. At the critical point, Z_c = P_c V_c / (R T_c) = 3/8 = 0.375 for all van der Waals gases.
+                </p>
+              </div>
+            </div>
+          `;
+        }
+        return '';
+      };
+
       subRoot.innerHTML = `
         <div class="chem-core1a-panel" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:10px;">
@@ -1966,10 +2171,7 @@ export function mountTopicWorkspace(
           </div>
 
           <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;">
-            <div style="font-size:1.05rem;font-weight:700;color:#0f172a;margin-bottom:0.5rem;">Authentic v3.5 Curricular Derivation Invariants</div>
-            <p style="margin:0;color:#475569;line-height:1.6;font-size:0.95rem;">
-              Full mathematical derivation, chemical invariants, microscopic electron/particle mechanisms, and diagnostic misconceptions aligned with authentic Grade9 v3.5 Core 1A standards.
-            </p>
+            ${getChemCore1AContent(topic.code)}
           </div>
 
           <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -1992,6 +2194,422 @@ export function mountTopicWorkspace(
         if (expBtn) expBtn.click();
       });
       subRoot.querySelector('#btn-goto-core1b')?.addEventListener('click', () => {
+        const bBtn = container.querySelector<HTMLButtonElement>('button[data-subrole="CORE1B"]');
+        if (bBtn) bBtn.click();
+      });
+      activeSubDisposer = () => {};
+      return;
+    } else if (isMathTopic && learnTrySubRole === 'CORE1A') {
+      let derivationPath = './mathematics/polynomials/core1a.html';
+      let derivationTitle = 'Polynomials, Remainder & Factor Theorems';
+      if (topic.code === 'COORD_GEOM') {
+        derivationPath = './mathematics/coordinate-geometry/core1a.html';
+        derivationTitle = 'Cartesian Coordinates & Orthogonal Projections';
+      } else if (topic.code === 'EUCLID') {
+        derivationPath = './mathematics/euclids-geometry/core1a.html';
+        derivationTitle = "Euclid's Geometry, Circles & Cyclic Quadrilaterals";
+      } else if (topic.code === 'THEORY_EQUATIONS') {
+        derivationPath = './mathematics/theory-of-equations/core1a.html';
+        derivationTitle = 'Theory of Equations & Quadratic Roots';
+      } else if (topic.code === 'VECTORS') {
+        derivationPath = './mathematics/vectors/core1a.html';
+        derivationTitle = 'Vector Algebra & 3D Spatial Geometry';
+      } else if (topic.code === 'LINEAR_EQ') {
+        derivationPath = './mathematics/linear-equations/index.html';
+        derivationTitle = 'Linear Equations in Two Variables';
+      } else if (topic.code === 'RIEMANN') {
+        derivationPath = '#/labs/riemann-sums';
+        derivationTitle = 'Riemann Sums, Partition Refinement & Integration';
+      } else if (topic.code === 'IMO_GRADE9') {
+        derivationPath = './mathematics/imo-grade9/index.html';
+        derivationTitle = 'Olympiad Inequalities & Competitive Mathematics';
+      }
+
+      const getMathCore1AContent = (code: string): string => {
+        if (code === 'POLYNOMIALS') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Degree Classification & Monic Polynomials</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  A polynomial in one variable x is an expression of the form P(x) = a_n x^n + a_{n-1} x^{n-1} + ... + a_1 x + a_0, where non-zero a_n is the leading coefficient.
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Degree invariant:</strong> deg(P) = n if a_n ≠ 0. The degree of any non-zero constant polynomial is 0. The zero polynomial 0 has an undefined degree.</li>
+                  <li><strong>Standard classification:</strong> Linear (deg 1), Quadratic (deg 2), Cubic (deg 3), Quartic (deg 4).</li>
+                  <li><strong>Fundamental Theorem of Algebra:</strong> Every non-zero polynomial of degree n has exactly n complex roots (counted with multiplicity).</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Remainder Theorem & Factor Theorem</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  If a polynomial P(x) is divided by a monic linear divisor (x - a), the remainder is the scalar value P(a):
+                </p>
+                <div style="background:#ffffff;border:1px solid #cbd5e1;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.95rem;margin-bottom:0.5rem;">
+                  P(x) = (x - a) Q(x) + R &nbsp;⟹&nbsp; P(a) = (a - a) Q(a) + R = R
+                </div>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Factor Theorem:</strong> (x - a) is a factor of P(x) if and only if P(a) = 0.</li>
+                  <li><strong>Rational Root Theorem:</strong> For integer polynomial P(x), any rational root p/q in lowest terms satisfies p | a_0 and q | a_n.</li>
+                </ul>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Cyclic Symmetric Algebraic Identities</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#334155;">
+                  The central identity of Olympiad & Grade 9 Algebra:
+                </p>
+                <div style="background:#ffffff;border:1px solid #fecaca;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.9rem;margin-bottom:0.5rem;">
+                  x³ + y³ + z³ - 3xyz = (x + y + z)(x² + y² + z² - xy - yz - zx) = ½(x + y + z)[(x - y)² + (y - z)² + (z - x)²]
+                </div>
+                <p style="margin:0;font-size:0.9rem;color:#334155;">
+                  <strong>Vanishing Invariant:</strong> If x + y + z = 0, then x³ + y³ + z³ = 3xyz identically.
+                </p>
+              </div>
+            </div>
+          `;
+        } else if (code === 'COORD_GEOM') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Cartesian Coordinate Reference Frame</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  A Cartesian plane is constructed by two perpendicular real lines intersecting at the Origin O(0,0).
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Abscissa (x):</strong> Directed distance of point P from the vertical y-axis. Positive to the right, negative to the left.</li>
+                  <li><strong>Ordinate (y):</strong> Directed distance of point P from the horizontal x-axis. Positive upward, negative downward.</li>
+                  <li><strong>Axis Invariants:</strong> Every point on the x-axis has ordinate y = 0. Every point on the y-axis has abscissa x = 0.</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Four Quadrants Sign Invariants</h3>
+                <table style="width:100%;border-collapse:collapse;font-size:0.875rem;text-align:left;">
+                  <thead>
+                    <tr style="border-bottom:2px solid #94a3b8;background:#e2e8f0;">
+                      <th style="padding:6px 8px;">Quadrant</th>
+                      <th style="padding:6px 8px;">Abscissa (x)</th>
+                      <th style="padding:6px 8px;">Ordinate (y)</th>
+                      <th style="padding:6px 8px;">Coordinate Form</th>
+                      <th style="padding:6px 8px;">Exemplar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>Quadrant I</td><td>x > 0 (+)</td><td>y > 0 (+)</td><td>(+, +)</td><td>(3, 5)</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>Quadrant II</td><td>x < 0 (-)</td><td>y > 0 (+)</td><td>(-, +)</td><td>(-4, 2)</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>Quadrant III</td><td>x < 0 (-)</td><td>y < 0 (-)</td><td>(-, -)</td><td>(-2, -7)</td></tr>
+                    <tr><td>Quadrant IV</td><td>x > 0 (+)</td><td>y < 0 (-)</td><td>(+, -)</td><td>(6, -3)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Metric Distance & Section Theorem</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#334155;">
+                  Pythagorean Euclidean distance between P(x₁, y₁) and Q(x₂, y₂):
+                </p>
+                <div style="background:#ffffff;border:1px solid #fecaca;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.9rem;margin-bottom:0.5rem;">
+                  d(P, Q) = √[(x₂ - x₁)² + (y₂ - y₁)²]
+                </div>
+                <p style="margin:0;font-size:0.9rem;color:#334155;">
+                  Internal division section formula for ratio m:n: R = ((m x₂ + n x₁)/(m + n), (m y₂ + n y₁)/(m + n)). Midpoint formula occurs when m:n = 1:1.
+                </p>
+              </div>
+            </div>
+          `;
+        } else if (code === 'EUCLID') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Euclid's Axiomatic Foundations & Postulates</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  Euclidean deductive geometry rests on undefined primitives (point, line, plane) and unproven intuitive truths:
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Axiom 1:</strong> Things which are equal to the same thing are equal to one another (Transitivity).</li>
+                  <li><strong>Axiom 2 & 3:</strong> If equals are added to/subtracted from equals, the wholes/remainders are equal.</li>
+                  <li><strong>Axiom 4:</strong> Things which coincide with one another are equal to one another.</li>
+                  <li><strong>Postulate 5 (Parallel Postulate):</strong> If a straight line falling on two straight lines makes interior angles on the same side less than two right angles, the two lines intersect on that side. Playfair's equivalent: Given line L and external point P, exactly one parallel to L passes through P.</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Inscribed Angle Theorem & Thales's Theorem</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  The angle subtended by an arc at the center of a circle is twice the angle subtended by it at any point on the remaining part of the circle:
+                </p>
+                <div style="background:#ffffff;border:1px solid #cbd5e1;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.95rem;margin-bottom:0.5rem;">
+                  ∠AOB = 2 × ∠APB &nbsp;⟹&nbsp; ∠APB = ½ ∠AOB
+                </div>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Angles in the same segment:</strong> All angles subtended by the same arc in the same segment are equal.</li>
+                  <li><strong>Thales's Theorem:</strong> An angle inscribed in a semicircle is a right angle (90°), since the central straight angle is 180°.</li>
+                </ul>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Cyclic Quadrilaterals & Tangent Orthogonality</h3>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#334155;">
+                  <li><strong>Cyclic Quadrilateral Theorem:</strong> The opposite angles of a cyclic quadrilateral inscribed in a circle sum to 180°: ∠A + ∠C = 180° and ∠B + ∠D = 180°.</li>
+                  <li><strong>Tangent Orthogonality:</strong> The tangent at any point P of a circle is perpendicular to the radius OP through the point of contact: OP ⊥ PT.</li>
+                  <li><strong>Equilateral Tangent Lengths:</strong> The lengths of tangents drawn from an external point P to a circle are equal: PA = PB.</li>
+                </ul>
+              </div>
+            </div>
+          `;
+        } else if (code === 'THEORY_EQUATIONS') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Canonical Quadratic Form & The Discriminant</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  For a real quadratic equation ax² + bx + c = 0 with a ≠ 0, completing the square gives the quadratic formula x = (-b ± √Δ) / (2a), where the discriminant Δ = b² - 4ac governs the nature of roots:
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Δ > 0:</strong> Two distinct real roots. If a,b,c ∈ ℚ and Δ is a perfect square, roots are rational; otherwise conjugate irrationals.</li>
+                  <li><strong>Δ = 0:</strong> Two real and coincident roots: α = β = -b / (2a). The parabola touches the x-axis.</li>
+                  <li><strong>Δ < 0:</strong> No real roots; two strictly complex conjugate roots α, β = u ± iv (v ≠ 0).</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Vieta's Symmetric Root Relations</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  If α and β are the roots of ax² + bx + c = 0:
+                </p>
+                <div style="background:#ffffff;border:1px solid #cbd5e1;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.95rem;margin-bottom:0.5rem;">
+                  Sum of roots: α + β = -b / a &nbsp;|&nbsp; Product of roots: α · β = c / a
+                </div>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Difference of roots:</strong> |α - β| = √[(α + β)² - 4αβ] = √Δ / |a|.</li>
+                  <li><strong>Reconstruction of equation:</strong> x² - (α + β) x + αβ = 0.</li>
+                  <li><strong>Sum of squares:</strong> α² + β² = (α + β)² - 2αβ = (b² - 2ac) / a².</li>
+                </ul>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Common Root Condition (Bézout Resultant)</h3>
+                <p style="margin:0;font-size:0.9rem;color:#334155;">
+                  Two quadratic equations a₁ x² + b₁ x + c₁ = 0 and a₂ x² + b₂ x + c₂ = 0 possess a common root if and only if:
+                  <br><strong>(c₁ a₂ - c₂ a₁)² = (a₁ b₂ - a₂ b₁)(b₁ c₂ - b₂ c₁)</strong>.
+                  <br>If both roots are common, coefficients are strictly proportional: a₁/a₂ = b₁/b₂ = c₁/c₂.
+                </p>
+              </div>
+            </div>
+          `;
+        } else if (code === 'VECTORS') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Vector Representation & 3D Spatial Geometry</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  A vector v in ℝ³ is an ordered triplet (v_x, v_y, v_z) represented in the orthonormal basis {î, ĵ, k̂} as v = v_x î + v_y ĵ + v_z k̂.
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Magnitude (Norm):</strong> ||v|| = √(v_x² + v_y² + v_z²). A unit vector is v̂ = v / ||v||.</li>
+                  <li><strong>Direction Cosines:</strong> l = cos α, m = cos β, n = cos γ, satisfying the fundamental identity l² + m² + n² = 1.</li>
+                  <li><strong>Linear Combination:</strong> Collinearity of vectors a and b ⟺ a = λ b for scalar λ ≠ 0.</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Scalar (Dot) Product & Projections</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  The dot product maps two vectors to a scalar: a · b = ||a|| ||b|| cos θ = a_x b_x + a_y b_y + a_z b_z.
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Orthogonality Criterion:</strong> Two non-zero vectors a and b are perpendicular ⟺ a · b = 0.</li>
+                  <li><strong>Scalar Projection:</strong> The orthogonal projection of a onto b is proj_b(a) = (a · b) / ||b||.</li>
+                  <li><strong>Vector Projection:</strong> proj_vec_b(a) = ((a · b) / ||b||²) b.</li>
+                </ul>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Vector (Cross) Product & Area Invariant</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.9rem;color:#334155;">
+                  The cross product produces a vector orthogonal to both operands: a × b = ||a|| ||b|| sin θ n̂.
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#334155;">
+                  <li><strong>Anticommutativity:</strong> a × b = -(b × a). Non-associative: a × (b × c) ≠ (a × b) × c.</li>
+                  <li><strong>Geometric Area:</strong> The area of the parallelogram formed by a and b is ||a × b||. Triangle area = ½ ||a × b||.</li>
+                  <li><strong>Scalar Triple Product:</strong> [a b c] = a · (b × c) gives the signed volume of the parallelepiped. Vectors are coplanar ⟺ [a b c] = 0.</li>
+                </ul>
+              </div>
+            </div>
+          `;
+        } else if (code === 'LINEAR_EQ') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. General Linear Equation in Two Variables</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  An equation of the form ax + by + c = 0, where a, b, c ∈ ℝ and a² + b² ≠ 0, defines a unique straight line in the Cartesian plane.
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Solution Set:</strong> Any ordered pair (x₀, y₀) satisfying a x₀ + b y₀ + c = 0 is a point on the line. A single linear equation has infinitely many solutions.</li>
+                  <li><strong>Slope-Intercept Form:</strong> y = mx + c', where m = -a/b is the slope and c' = -c/b is the y-intercept.</li>
+                  <li><strong>Intercept Form:</strong> x/p + y/q = 1, where p = -c/a is the x-intercept and q = -c/b is the y-intercept. Area of triangle with axes = ½ |p q|.</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Consistency & Solvability of Linear Systems</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  For a system of two lines a₁ x + b₁ y + c₁ = 0 and a₂ x + b₂ y + c₂ = 0:
+                </p>
+                <table style="width:100%;border-collapse:collapse;font-size:0.875rem;text-align:left;">
+                  <thead>
+                    <tr style="border-bottom:2px solid #94a3b8;background:#e2e8f0;">
+                      <th style="padding:6px 8px;">Ratio Test</th>
+                      <th style="padding:6px 8px;">Geometric Configuration</th>
+                      <th style="padding:6px 8px;">Number of Solutions</th>
+                      <th style="padding:6px 8px;">System Consistency</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>a₁/a₂ ≠ b₁/b₂</td><td>Intersecting Lines</td><td>Unique Solution</td><td>Consistent & Independent</td></tr>
+                    <tr style="border-bottom:1px solid #e2e8f0;"><td>a₁/a₂ = b₁/b₂ = c₁/c₂</td><td>Coincident (Identical) Lines</td><td>Infinitely Many</td><td>Consistent & Dependent</td></tr>
+                    <tr><td>a₁/a₂ = b₁/b₂ ≠ c₁/c₂</td><td>Strictly Parallel Lines</td><td>No Solution (Zero)</td><td>Inconsistent</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Algebraic Resolution Protocols</h3>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#334155;">
+                  <li><strong>Substitution Method:</strong> Express one variable in terms of the other from equation 1 and substitute into equation 2.</li>
+                  <li><strong>Elimination Method:</strong> Multiply by scaling constants so the coefficients of one variable become additive inverses.</li>
+                  <li><strong>Cramer's Determinant Rule:</strong> x = D_x / D, y = D_y / D, where D = a₁ b₂ - a₂ b₂ ≠ 0.</li>
+                </ul>
+              </div>
+            </div>
+          `;
+        } else if (code === 'RIEMANN') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Partition of Interval & Darboux Bounds</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  Let f: [a, b] → ℝ be a bounded function. A partition P is a finite ordered set {a = x₀ < x₁ < ... < x_n = b} with subintervals I_k = [x_{k-1}, x_k] of width Δx_k = x_k - x_{k-1}.
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Lower Darboux Sum:</strong> L(f, P) = ∑_{k=1}^n m_k Δx_k, where m_k = inf_{x ∈ I_k} f(x).</li>
+                  <li><strong>Upper Darboux Sum:</strong> U(f, P) = ∑_{k=1}^n M_k Δx_k, where M_k = sup_{x ∈ I_k} f(x).</li>
+                  <li><strong>Fundamental Invariant:</strong> For any partition P, L(f, P) ≤ U(f, P).</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Partition Refinement & Convergence</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  If P' is a refinement of P (i.e., P ⊆ P'):
+                </p>
+                <div style="background:#ffffff;border:1px solid #cbd5e1;padding:0.75rem 1rem;border-radius:6px;font-family:var(--g9-font-mono, monospace);font-size:0.95rem;margin-bottom:0.5rem;">
+                  L(f, P) ≤ L(f, P') ≤ U(f, P') ≤ U(f, P)
+                </div>
+                <p style="margin:0;font-size:0.9rem;color:#334155;">
+                  <strong>Riemann Integrability Criterion:</strong> f is Riemann integrable on [a, b] ⟺ for every ε > 0, there exists a partition P such that U(f, P) - L(f, P) < ε.
+                </p>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Classical Numerical Quadrature Schemes</h3>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#334155;">
+                  <li><strong>Left & Right Riemann Sums:</strong> Evaluated at left endpoint (x_{k-1}) or right endpoint (x_k) of each subinterval. Error O(1/n).</li>
+                  <li><strong>Midpoint Rule:</strong> Evaluated at center point c_k = (x_{k-1} + x_k)/2. Error O(1/n²).</li>
+                  <li><strong>Trapezoidal Rule:</strong> Approximates area as trapezoids: T_n = (Δx / 2) [f(x₀) + 2 f(x₁) + ... + 2 f(x_{n-1}) + f(x_n)]. Error O(1/n²).</li>
+                </ul>
+              </div>
+            </div>
+          `;
+        } else if (code === 'IMO_GRADE9') {
+          return `
+            <div class="core1a-derivation-body" style="display:flex;flex-direction:column;gap:1.25rem;line-height:1.6;color:#1e293b;">
+              <div style="background:#f1f5f9;border-left:4px solid #0284c7;padding:1rem;border-radius:0 8px 8px 0;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">1. Classical Olympiad Inequalities</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  Pivotal inequalities underpinning international and national olympiad competitions:
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>AM-GM Inequality:</strong> For any non-negative real numbers x₁, x₂, ..., x_n: (x₁ + x₂ + ... + x_n) / n ≥ (x₁ x₂ ... x_n)^{1/n}, with equality if and only if x₁ = x₂ = ... = x_n.</li>
+                  <li><strong>Cauchy-Schwarz Inequality:</strong> (∑ a_i²) (∑ b_i²) ≥ (∑ a_i b_i)², with equality ⟺ a_i / b_i = constant for all i.</li>
+                  <li><strong>Nesbitt's Inequality:</strong> For positive a, b, c: a/(b+c) + b/(c+a) + c/(a+b) ≥ 3/2.</li>
+                </ul>
+              </div>
+
+              <div style="background:#f8fafc;border:1px solid #cbd5e1;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#0f172a;font-weight:700;">2. Number Theory & Modular Arithmetic</h3>
+                <p style="margin:0 0 0.5rem;font-size:0.95rem;">
+                  Divisibility invariants and modular congruence principles:
+                </p>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;">
+                  <li><strong>Euclidean Algorithm & Bézout's Identity:</strong> gcd(a, b) = gcd(b, a mod b). There exist integers x, y such that a x + b y = gcd(a, b).</li>
+                  <li><strong>Fermat's Little Theorem:</strong> If p is a prime and gcd(a, p) = 1, then a^{p-1} ≡ 1 (mod p).</li>
+                  <li><strong>Chinese Remainder Theorem:</strong> If m₁, m₂, ..., m_k are pairwise coprime, the system x ≡ a_i (mod m_i) has a unique solution modulo M = ∏ m_i.</li>
+                </ul>
+              </div>
+
+              <div style="background:#fef2f2;border:1px solid #fecaca;padding:1rem;border-radius:8px;">
+                <h3 style="margin:0 0 0.5rem;font-size:1.15rem;color:#991b1b;font-weight:700;">3. Combinatorial Reasoning & Invariants</h3>
+                <ul style="margin:0;padding-left:1.25rem;font-size:0.9rem;color:#334155;">
+                  <li><strong>Pigeonhole Principle (Dirichlet):</strong> If n items are put into m containers with n > m, at least one container must contain at least ⌈n/m⌉ items.</li>
+                  <li><strong>Monovariant & Invariant Principle:</strong> In discrete processes, track quantities that remain strictly invariant (parity, modulo) or strictly monotone.</li>
+                  <li><strong>Double Counting:</strong> Counting a set of elements or edges in two different ways establishes unexpected identities or inequalities.</li>
+                </ul>
+              </div>
+            </div>
+          `;
+        }
+        return `
+          <div class="core1a-derivation-body" style="padding:1rem;background:#f8fafc;border-radius:8px;">
+            <p style="margin:0;color:#334155;">Curricular concept construction invariants and formal derivations for Grade 9 Mathematics.</p>
+          </div>
+        `;
+      };
+
+      subRoot.innerHTML = `
+        <div class="math-core1a-panel" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:10px;">
+            <div>
+              <span style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">CORE 1A CONCEPT CONSTRUCTION</span>
+              <h2 style="margin:0.5rem 0 0;font-size:1.5rem;font-weight:800;color:#0f172a;">${escapeHtml(derivationTitle)}: Core 1A Derivation</h2>
+            </div>
+            <button type="button" id="btn-open-math-core1a-doc" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+              📖 Open Standalone Core 1A Document (v3.5) →
+            </button>
+          </div>
+
+          <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;">
+            ${getMathCore1AContent(topic.code)}
+          </div>
+
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button type="button" id="btn-try-math-simulation" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 20px;background:#0f172a;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
+              ⚡ Launch Interactive Simulation Suite →
+            </button>
+            <button type="button" id="btn-goto-math-core1b" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 20px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;cursor:pointer;">
+              Proceed to Core 1B (Deductive Transfer &amp; Proof) →
+            </button>
+          </div>
+        </div>
+      `;
+
+      subRoot.querySelector('#btn-open-math-core1a-doc')?.addEventListener('click', () => {
+        if (derivationPath.startsWith('#')) {
+          if (onNavigate) onNavigate(derivationPath.slice(1));
+          else window.location.hash = derivationPath;
+        } else {
+          window.location.href = derivationPath;
+        }
+      });
+      subRoot.querySelector('#btn-try-math-simulation')?.addEventListener('click', () => {
+        const tabsBar = root.querySelector('.g9-topic-tabs-bar');
+        const expBtn = tabsBar?.querySelector<HTMLButtonElement>('button[data-tab="explorer"]');
+        if (expBtn) expBtn.click();
+      });
+      subRoot.querySelector('#btn-goto-math-core1b')?.addEventListener('click', () => {
         const bBtn = container.querySelector<HTMLButtonElement>('button[data-subrole="CORE1B"]');
         if (bBtn) bBtn.click();
       });
@@ -2072,12 +2690,7 @@ export function mountTopicWorkspace(
         window.location.href = './chemistry/bonding/explorers/chemical_bonding/index.html';
       });
       const subSlot = container.querySelector<HTMLElement>('#g9-chem-submount')!;
-      const c = new ChemicalWorkWorkspaceController({
-        archetype: 'CHEM_E2',
-        initialStructure: { format: 'FORMULA', data: 'SF4', accessibleLabel: '' },
-        initialEquation: 'PCl3 + Cl2 -> PCl5',
-      });
-      const m = mountChemicalWorkspace(subSlot, c, onNavigate);
+      const m = mountChemicalBondingWorkbench(subSlot, undefined, onNavigate);
       activeSubDisposer = () => m.dispose();
       return;
     }

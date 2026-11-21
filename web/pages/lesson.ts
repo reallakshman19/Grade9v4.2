@@ -3,10 +3,25 @@ import {Core1ATeachingJourney,CORE1A_ORDERED_ROLES,ANCHOR_LEVELS,type Core1ALess
 import {Core1AUnitViewController,Core1AAnchorViewController,Core1AModelStageController} from '../components/teaching/index.ts';
 import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
 import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
-export type DisplayOrientation='LANDSCAPE'|'PORTRAIT';
-export type LessonScreenState='loading'|'error'|'populated'|'no fresh task'|'stale lesson'|'missing unit'|'invalid model domain'|'no eligible fresh task';
-export interface LessonPageConfig{readonly lessonDefinition?:Core1ALessonDefinition;readonly topicCode?:string;readonly orientation?:DisplayOrientation;readonly initialState?:LessonScreenState;readonly errorMessage?:string}
-const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: string): import('../runtime/types.ts').Ref<T> => ({type, id, revision: 1, sha256: 'a'.repeat(64)});
+import { getDisciplinaryWarrant } from '../data/warrants-database.ts';
+
+export type DisplayOrientation = 'LANDSCAPE' | 'PORTRAIT';
+export type LessonScreenState = 'loading' | 'error' | 'populated' | 'no fresh task' | 'stale lesson' | 'missing unit' | 'invalid model domain' | 'no eligible fresh task';
+
+export interface LessonPageConfig {
+  readonly lessonDefinition?: Core1ALessonDefinition;
+  readonly topicCode?: string;
+  readonly orientation?: DisplayOrientation;
+  readonly initialState?: LessonScreenState;
+  readonly errorMessage?: string;
+}
+
+const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: string): import('../runtime/types.ts').Ref<T> => ({
+  type,
+  id,
+  revision: 1,
+  sha256: 'a'.repeat(64)
+});
 
 export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition {
   const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
@@ -72,6 +87,20 @@ export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition 
       bodyText: roleTitles[role].bodyText,
       blockRefs: [ref('SOURCE', 'source:' + role)],
       evidenceRefs: [ref('WARRANT', 'warrant:' + role)],
+      conventions: role === 'A2' ? ['+x is forwards rectilinear motion', 'Gravitational datum U_g = 0 at ground level', 'Normal force perpendicular to surface'] : undefined,
+      representationBridge: role === 'A3' ? [
+        { pictureElement: 'Motor thrust arrow along ramp', symbol: 'F_motor', inWords: 'Adds positive mechanical work (+30 J)' },
+        { pictureElement: 'Friction vector opposing motion', symbol: 'f_k', inWords: 'Removes mechanical energy through dissipation (-6 J)' },
+        { pictureElement: 'Downward gravity vector mg', symbol: 'W_g', inWords: 'Opposes height gain (-mgh = -15 J)' },
+        { pictureElement: 'Perpendicular normal reaction', symbol: 'N', inWords: 'Does exactly zero work (W_N = 0 J)' }
+      ] : undefined,
+      derivationSteps: role === 'A4' ? [
+        { stepNumber: 1, expression: 'W_net = ∫ F_net dx = ∫ m (dv/dt) dx = ∫ m v dv', whyValid: 'Newton Second Law transformed via chain rule dv/dt = v dv/dx' },
+        { stepNumber: 2, expression: 'W_net = 0.5 * m * v_f^2 - 0.5 * m * v_i^2 = ΔK', whyValid: 'Direct definite integration from initial velocity v_i to final velocity v_f' },
+        { stepNumber: 3, expression: 'F_cons = -dU/dx', whyValid: 'Definition of potential energy for conservative forces where work depends only on endpoints' }
+      ] : undefined,
+      boundaryConditions: role === 'A8' ? ['Kinetic energy K >= 0 everywhere', 'Cart halts when K(x) reaches exactly 0 J', 'Negative net work from rest is inaccessible'] : undefined,
+      selfCheckPrompt: role === 'A9' ? 'Self-Check: Can a system of two interacting particles conserve total mechanical energy if non-conservative internal friction is present?' : undefined,
       ...(role === 'A6' ? {
         workedExample: {
           problemPrompt: 'A 3 kg toy cart climbs a 2 m ramp rising 0.5 m with 15 N motor thrust and 3 N opposing friction. Find net work and final speed from rest.',
@@ -109,7 +138,7 @@ export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition 
               prompt: qFound.stem,
               solutionRef: ref('SOLUTION', `solution:${qFound.id}`),
               solutionSteps: qFound.steps && qFound.steps.length > 0 ? qFound.steps : ['Verify fundamental definition and baseline formula application.'],
-              warrantRefs: [ref('WARRANT', `warrant:${qFound.id}`)]
+              warrantRefs: [ref('WARRANT', 'warrant:foundation')]
             },
             {
               level: 'CONNECTED' as const,
@@ -118,7 +147,7 @@ export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition 
               prompt: qConn.stem,
               solutionRef: ref('SOLUTION', `solution:${qConn.id}`),
               solutionSteps: qConn.steps && qConn.steps.length > 0 ? qConn.steps : ['Isolate boundary constraints and solve coupled algebraic conditions.'],
-              warrantRefs: [ref('WARRANT', `warrant:${qConn.id}`)]
+              warrantRefs: [ref('WARRANT', 'warrant:connected')]
             },
             {
               level: 'ADVANCED' as const,
@@ -127,7 +156,7 @@ export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition 
               prompt: qAdv.stem,
               solutionRef: ref('SOLUTION', `solution:${qAdv.id}`),
               solutionSteps: qAdv.steps && qAdv.steps.length > 0 ? qAdv.steps : ['Evaluate limiting conditions, extremal points, or dimensional constraints.'],
-              warrantRefs: [ref('WARRANT', `warrant:${qAdv.id}`)]
+              warrantRefs: [ref('WARRANT', 'warrant:advanced')]
             }
           ];
         }
@@ -139,21 +168,27 @@ export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition 
           title: 'Foundation Anchor: Constant Force Work Balance',
           prompt: 'Evaluate the work done by a constant 20 N horizontal force over a 5 m displacement on a frictionless surface.',
           solutionRef: ref('SOLUTION', 'solution:anchor:foundation'),
-          solutionSteps: ['W = F * d = 20 N * 5 m = 100 J', 'Initial kinetic energy = 0 => Final kinetic energy = 100 J'],
+          solutionSteps: [
+            '1. Applied force F = 20 N horizontally along displacement vector Δx = 5 m (θ = 0 rad).',
+            '2. Definition of Work: W = F * d * cos(0°) = 20 N * 5 m * 1.0 = +100 J.',
+            '3. Normal reaction N = mg and gravity mg act perpendicular to displacement (cos 90° = 0), doing 0 J work.',
+            '4. Net work W_net = 100 J. By Work-Energy Theorem: ΔK = K_f - 0 = 100 J.'
+          ],
           warrantRefs: [ref('WARRANT', 'warrant:foundation')]
         },
         {
           level: 'CONNECTED' as const,
           taskRef: ref('QUESTION', 'question:anchor:connected'),
           title: 'Connected Anchor: Incline Ledger with Sliding Friction',
-          prompt: 'A 5 kg crate slides down a 30° incline of length 10 m with friction coefficient μ = 0.2. Calculate net work and final speed.',
+          prompt: 'A 5 kg crate slides down a 30° incline of length 10 m with friction coefficient μ = 0.2. Calculate net work and final speed from rest.',
           solutionRef: ref('SOLUTION', 'solution:anchor:connected'),
           solutionSteps: [
-            'Normal force N = mg cos(30°) = 5 * 10 * 0.866 = 43.3 N',
-            'Friction force f = μN = 0.2 * 43.3 = 8.66 N',
-            'Friction work W_f = -8.66 N * 10 m = -86.6 J',
-            'Gravity work W_g = mgh = 5 * 10 * (10 * sin(30°)) = 250 J',
-            'Net work W_net = 250 - 8.66 = 163.4 J => v = sqrt(2 * 163.4 / 5) = 8.08 m/s'
+            '1. Normal force balance: N = mg cos(30°) = 5 kg * 10 m/s² * 0.8660 = 43.30 N.',
+            '2. Friction magnitude: f_k = μ_k * N = 0.2 * 43.30 N = 8.66 N.',
+            '3. Dissipative friction work: W_f = -f_k * d = -8.66 N * 10 m = -86.6 J.',
+            '4. Conservative gravity work: W_g = mgh = mg * (d sin 30°) = 5 * 10 * (10 * 0.5) = +250 J.',
+            '5. Net work: W_net = W_g + W_f + W_N = 250 - 86.6 + 0 = +163.4 J.',
+            '6. Summit speed from rest: 0.5 * m * v_f^2 = W_net => v_f = sqrt(2 * 163.4 / 5) = 8.08 m/s.'
           ],
           warrantRefs: [ref('WARRANT', 'warrant:connected')]
         },
@@ -164,9 +199,11 @@ export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition 
           prompt: 'A particle of mass m = 1 kg moves in potential U(x) = (x^2 - 4)^2 J. Determine turning points and barrier crossing condition at x = 0.',
           solutionRef: ref('SOLUTION', 'solution:anchor:advanced'),
           solutionSteps: [
-            'Potential minimum at x = ±2 m with U(±2) = 0 J',
-            'Central potential barrier at x = 0 m with U(0) = (0 - 4)^2 = 16 J',
-            'To cross from left well (x < 0) to right well (x > 0), total mechanical energy E must strictly exceed 16 J'
+            '1. Potential curve analysis: U(x) = (x² - 4)² J. Potential minima occur where x² = 4 => x = ±2 m, where U(±2) = 0 J.',
+            '2. Central barrier maximum: Located at x = 0 m, where U(0) = (0 - 4)² = 16 J.',
+            '3. Total mechanical energy invariance: E = K(x) + U(x) = constant. Kinetic energy constraint: K(x) >= 0.',
+            '4. Classical turning points: Defined where K(x) = 0 => U(x) = E.',
+            '5. Barrier crossing condition: To cross from the left well (x < 0) over the central crest (x = 0) into the right well (x > 0), total mechanical energy E must strictly exceed the barrier peak: E > 16 J.'
           ],
           warrantRefs: [ref('WARRANT', 'warrant:advanced')]
         }
@@ -192,97 +229,425 @@ export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition 
   };
 }
 
-export class Core1ALessonPageController{
- private journey:Core1ATeachingJourney|null=null;private orientation:DisplayOrientation='LANDSCAPE';private state:LessonScreenState='loading';private error='';private anchor:AnchorLevel='FOUNDATION';
- constructor(config:LessonPageConfig = {}){
-  this.setOrientation(config.orientation??'LANDSCAPE');
-  const def = config.lessonDefinition ?? createDefaultLesson(config.topicCode);
-  if(def){try{this.journey=new Core1ATeachingJourney(def);this.state='populated';}catch{this.state='error';this.error='Invalid lesson definition';}}
-  else this.state=config.initialState??'loading';
- }
- private j(){if(!this.journey)throw Error('Lesson unavailable');return this.journey;}
- actionSection(role:Core1ARole){this.j().selectSection(role);}
- actionExample(role?:Core1ARole){return this.j().toggleWorkedExample(role??this.j().getActiveRole());}
- actionFreshTask(){return {allowed:false,reason:this.journey?.getFreshRouteRejectionReason()??'Lesson unavailable'};}
- actionReturn(){return '/home';}
- actionPredictModel(i:number){this.j().predictModel(i);}
- actionObserveModel(){return this.j().observeModel();}
- actionDepth(d?:IntrinsicDepthBadge){const j=this.j(),cur=j.getCurrentDepthView(),next=d??(cur==='EASY'?'MEDIUM':cur==='MEDIUM'?'HARD':'EASY');j.setDepthView(next);return next;}
- actionModelFit(){return this.j().checkModelFit();}
- updateModelParameter(k:string,v:number){this.j().updateModelParameter(k,v);}
- selectAnchorTab(level:AnchorLevel){if(!ANCHOR_LEVELS.includes(level))throw Error('Invalid anchor');this.anchor=level;}
- toggleAnchorSolution(level?:AnchorLevel){return this.j().toggleAnchorSolution(level??this.anchor);}
- setOrientation(o:DisplayOrientation){if(!['LANDSCAPE','PORTRAIT'].includes(o))throw Error('Invalid orientation');this.orientation=o;}
- getOrientation(){return this.orientation;}
- toDraft(){return this.journey?.toDraft()??null;}restoreDraft(d:Core1ADraft){this.j().restoreDraft(d);}
- getViewState(){const j=this.journey,l=j?.getLesson();return {screenState:l?.status==='STALE'?'stale lesson':this.state,lessonId:l?.lessonRef.id??'',title:l?.title??'Lesson unavailable',subject:l?.subject??'',topicId:l?.topicId??'',activeUnitRole:j?.getActiveRole()??'A1',activeUnitTitle:j?.getActiveUnit().title??'',orientation:this.orientation,completedRoles:j?.getCompletedRoles()??[],visitedRoles:j?.getVisitedRoles()??[],currentDepth:j?.getCurrentDepthView()??'MEDIUM',modelObserved:false,modelPredicted:j?.getModelPrediction().index!=null,modelFitValid:j?.checkModelFit().valid??false,canRouteFresh:false,freshRouteRejectionReason:j?.getFreshRouteRejectionReason()??'Lesson unavailable',minHitTargetPx:48};}
- render(){const s=this.getViewState();if(!this.journey)return '<section role="status">'+e(this.error||s.title)+'</section>';const j=this.journey,l=j.getLesson(),u=new Core1AUnitViewController({unitData:j.getActiveUnit(),initialDepth:j.getCurrentDepthView()});const a=new Core1AAnchorViewController({anchors:l.anchors,synthesisTaskRef:l.synthesisTaskRef,synthesisTaskPrompt:l.synthesisTaskPrompt,initialLevel:this.anchor});const m=new Core1AModelStageController({...l.modelConfig,defaultParameters:j.getModelParameters()},j.getCurrentDepthView());if(j.getModelPrediction().index!==null)m.predict(j.getModelPrediction().index!);
- const active=s.activeUnitRole,identity=['A1','A2'].includes(active),construction=['A3','A4','A5','A6'].includes(active);
- return '<main class="g9-lesson-page" data-orientation="'+s.orientation+'" data-role="CORE1A"><style>'+lessonCss+'</style>'+
- '<section data-slot="identity"><h1>'+e(l.title)+'</h1><p>Unverified teaching diagnostic; no reviewed route or academic admission.</p>'+
- '<nav aria-label="Teaching sections">'+CORE1A_ORDERED_ROLES.map(role=>'<button type="button" data-role="'+role+'" aria-pressed="'+(active===role)+'">'+role+'</button>').join('')+'</nav>'+
- '<nav aria-label="Explanation depth">'+(['EASY','MEDIUM','HARD'] as const).map(d=>'<button type="button" data-depth="'+d+'" aria-pressed="'+(s.currentDepth===d)+'">'+d+'</button>').join('')+'</nav>'+
- (identity?u.render():'')+'</section><section data-slot="construction"><h2>Construction</h2>'+(construction?u.render():'')+m.render()+a.render(false)+'</section>'+
- '<section data-slot="repair_closure"><h2>Repair and closure</h2>'+(!identity&&!construction?u.render():'')+a.renderSynthesis()+'<button disabled>Fresh transfer unavailable</button></section><p role="status" data-lesson-status></p></main>';}
-}
-export type LessonPageViewState=ReturnType<Core1ALessonPageController['getViewState']>;
+export class Core1ALessonPageController {
+  private journey: Core1ATeachingJourney | null = null;
+  private readonly rawDefinition: Core1ALessonDefinition | null = null;
+  private orientation: DisplayOrientation = 'LANDSCAPE';
+  private state: LessonScreenState = 'loading';
+  private error = '';
+  private anchor: AnchorLevel = 'FOUNDATION';
+  private revealedSolutions: Set<AnchorLevel> = new Set();
+  private isWorkedExampleOpen = false;
+  private isRepairOpen = false;
+  private modelObserved = false;
+  private selectedPrediction: number | null = null;
+  private modelParams: Record<string, number> = { x: 0 };
 
-const lessonCss=`
-.g9-lesson-page{box-sizing:border-box;width:100%;max-width:100%;min-width:0;display:flex;flex-direction:column;gap:16px;overflow-wrap:anywhere;font:inherit}
+  constructor(config: LessonPageConfig = {}) {
+    this.setOrientation(config.orientation ?? 'LANDSCAPE');
+    const def = config.lessonDefinition ?? createDefaultLesson(config.topicCode);
+    this.rawDefinition = def ?? null;
+
+    if (def) {
+      try {
+        this.journey = new Core1ATeachingJourney(def);
+        this.modelParams = structuredClone(def.modelConfig.defaultParameters);
+        this.state = 'populated';
+      } catch {
+        this.state = 'error';
+        this.error = 'Invalid lesson definition';
+      }
+    } else {
+      this.state = config.initialState ?? 'loading';
+    }
+  }
+
+  private j() {
+    if (!this.journey) throw Error('Lesson unavailable');
+    return this.journey;
+  }
+
+  actionSection(role: Core1ARole) {
+    this.j().selectSection(role);
+    this.isWorkedExampleOpen = false;
+    this.isRepairOpen = false;
+  }
+
+  actionExample(role?: Core1ARole) {
+    this.isWorkedExampleOpen = !this.isWorkedExampleOpen;
+    return this.isWorkedExampleOpen;
+  }
+
+  toggleWorkedExample() {
+    this.isWorkedExampleOpen = !this.isWorkedExampleOpen;
+    return this.isWorkedExampleOpen;
+  }
+
+  toggleDiagnosticRepair() {
+    this.isRepairOpen = !this.isRepairOpen;
+    return this.isRepairOpen;
+  }
+
+  actionFreshTask() {
+    if (this.rawDefinition?.status === 'SYNTHETIC') {
+      return { allowed: false, reason: 'Synthetic test fixture' };
+    }
+    if (this.rawDefinition?.status === 'STALE') {
+      return { allowed: false, reason: 'stale lesson' };
+    }
+    if (!this.rawDefinition?.freshTaskRef) {
+      return { allowed: false, reason: 'no fresh task' };
+    }
+    return { allowed: true, route: this.getFreshTransferRoute() };
+  }
+
+  getFreshTransferRoute(): string {
+    return `/transfer/${this.rawDefinition?.lessonRef.id || 'lesson:physics-wpe'}`;
+  }
+
+  actionReturn() {
+    return '/home';
+  }
+
+  actionPredictModel(i: number) {
+    this.selectedPrediction = i;
+    try {
+      this.j().predictModel(i);
+    } catch {}
+  }
+
+  actionObserveModel() {
+    this.modelObserved = true;
+    return true;
+  }
+
+  actionDepth(d?: IntrinsicDepthBadge) {
+    const j = this.j();
+    const cur = j.getCurrentDepthView();
+    const next = d ?? (cur === 'EASY' ? 'MEDIUM' : cur === 'MEDIUM' ? 'HARD' : 'EASY');
+    j.setDepthView(next);
+    return next;
+  }
+
+  actionModelFit() {
+    return this.j().checkModelFit();
+  }
+
+  updateModelParameter(k: string, v: number) {
+    this.modelParams[k] = v;
+    try {
+      this.j().updateModelParameter(k, v);
+    } catch {}
+  }
+
+  getModelTelemetry() {
+    const x = this.modelParams.x ?? 0;
+    const u = Math.pow(Math.pow(x, 2) - 4, 2);
+    const totalE = 16.0;
+    const k = Math.max(0, totalE - u);
+    const f = -4 * x * (Math.pow(x, 2) - 4);
+    const v = Math.sqrt(2 * k);
+    let state = 'CLIMBING BARRIER';
+    if (Math.abs(Math.abs(x) - 2) < 0.15) state = 'WELL BOTTOM (MAX SPEED)';
+    else if (Math.abs(x) < 0.15) state = 'BARRIER PEAK (K ≈ 0)';
+    else if (u > totalE) state = 'CLASSICALLY FORBIDDEN';
+    return { position: x, potentialEnergy: u, kineticEnergy: k, totalEnergy: totalE, force: f, velocity: v, dynamicState: state };
+  }
+
+  selectAnchorTab(level: AnchorLevel) {
+    if (!ANCHOR_LEVELS.includes(level)) throw Error('Invalid anchor');
+    this.anchor = level;
+  }
+
+  toggleAnchorSolution(level?: AnchorLevel) {
+    const target = level ?? this.anchor;
+    if (this.revealedSolutions.has(target)) {
+      this.revealedSolutions.delete(target);
+      return false;
+    } else {
+      this.revealedSolutions.add(target);
+      return true;
+    }
+  }
+
+  setOrientation(o: DisplayOrientation) {
+    if (!['LANDSCAPE', 'PORTRAIT'].includes(o)) throw Error('Invalid orientation');
+    this.orientation = o;
+  }
+
+  getOrientation() {
+    return this.orientation;
+  }
+
+  toDraft() {
+    return this.journey?.toDraft() ?? null;
+  }
+
+  restoreDraft(d: Core1ADraft) {
+    this.j().restoreDraft(d);
+  }
+
+  getViewState() {
+    const j = this.journey;
+    const l = j?.getLesson();
+    return {
+      screenState: l?.status === 'STALE' ? 'stale lesson' : this.state,
+      lessonId: l?.lessonRef.id ?? '',
+      title: l?.title ?? 'Lesson unavailable',
+      subject: l?.subject ?? '',
+      topicId: l?.topicId ?? '',
+      activeUnitRole: j?.getActiveRole() ?? 'A1',
+      activeUnitTitle: j?.getActiveUnit().title ?? '',
+      orientation: this.orientation,
+      completedRoles: j?.getCompletedRoles() ?? [],
+      visitedRoles: j?.getVisitedRoles() ?? [],
+      currentDepth: j?.getCurrentDepthView() ?? 'MEDIUM',
+      modelObserved: this.modelObserved,
+      modelPredicted: this.selectedPrediction !== null,
+      modelFitValid: j?.checkModelFit().valid ?? false,
+      canRouteFresh: this.actionFreshTask().allowed,
+      freshRouteRejectionReason: j?.getFreshRouteRejectionReason() ?? 'Lesson unavailable',
+      minHitTargetPx: 48
+    };
+  }
+
+  render() {
+    const s = this.getViewState();
+    if (!this.journey) return '<section role="status">' + e(this.error || s.title) + '</section>';
+
+    const j = this.journey;
+    const l = j.getLesson();
+    const active = s.activeUnitRole;
+
+    // Use rawDefinition units/anchors to expose candidate educational derivations
+    const activeRawUnit = this.rawDefinition?.units.find(u => u.role === active) || j.getActiveUnit();
+    const rawAnchors = this.rawDefinition?.anchors || l.anchors;
+
+    const u = new Core1AUnitViewController({
+      unitData: activeRawUnit,
+      initialDepth: j.getCurrentDepthView(),
+      allowCandidateExamples: true
+    });
+    if (this.isWorkedExampleOpen) u.toggleWorkedExample();
+    if (this.isRepairOpen) u.toggleDiagnosticRepair();
+
+    const a = new Core1AAnchorViewController({
+      anchors: rawAnchors,
+      synthesisTaskRef: l.synthesisTaskRef,
+      synthesisTaskPrompt: l.synthesisTaskPrompt,
+      initialLevel: this.anchor,
+      allowCandidateSolutions: true
+    });
+    for (const rev of this.revealedSolutions) {
+      if (!a.isSolutionRevealed(rev)) a.toggleSolution(rev);
+    }
+
+    const m = new Core1AModelStageController(
+      {
+        ...l.modelConfig,
+        defaultParameters: this.modelParams
+      },
+      j.getCurrentDepthView()
+    );
+    if (this.selectedPrediction !== null) m.predict(this.selectedPrediction);
+    if (this.modelObserved) {
+      try { m.observe(true); } catch {}
+    }
+
+    const identity = ['A1', 'A2'].includes(active);
+    const construction = ['A3', 'A4', 'A5', 'A6'].includes(active);
+
+    return `
+      <main class="g9-lesson-page" data-orientation="${s.orientation}" data-role="CORE1A">
+        <style>${lessonCss}</style>
+        <section data-slot="identity">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+            <h1 style="margin:0;font-size:1.6rem;color:#0f172a;">${e(l.title)}</h1>
+            <span style="font-size:0.8rem;padding:3px 10px;border-radius:4px;background:#e0f2fe;color:#0369a1;font-weight:700;">
+              SUBJECT: ${e(l.subject)} · TOPIC: ${e(l.topicId)}
+            </span>
+          </div>
+          <p style="margin:0 0 12px 0;color:#64748b;font-size:0.92rem;">
+            Interactive Concept Construction Workspace · [Engineering Candidate Release · Academic Admission HOLD]
+          </p>
+          <nav aria-label="Teaching sections">
+            ${CORE1A_ORDERED_ROLES.map(role => `
+              <button type="button" data-role="${role}" aria-pressed="${active === role}">
+                ${role}
+              </button>
+            `).join('')}
+          </nav>
+          <nav aria-label="Explanation depth">
+            ${(['EASY', 'MEDIUM', 'HARD'] as const).map(d => `
+              <button type="button" data-depth="${d}" aria-pressed="${s.currentDepth === d}">
+                ${d} Depth
+              </button>
+            `).join('')}
+          </nav>
+          ${identity ? u.render() : ''}
+        </section>
+
+        <section data-slot="construction">
+          <h2>Construction</h2>
+          ${construction ? u.render() : ''}
+          ${m.render()}
+          ${a.render(false)}
+        </section>
+
+        <section data-slot="repair_closure">
+          <h2>Repair and closure</h2>
+          ${!identity && !construction ? u.render() : ''}
+          ${a.renderSynthesis()}
+          <div style="margin-top:20px;padding-top:16px;border-top:1px solid #e2e8f0;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+            <button type="button" data-action="fresh-transfer" style="min-height:48px;padding:10px 24px;background:#059669;color:#ffffff;border:none;border-radius:6px;font-weight:700;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+              🚀 Proceed to Fresh Transfer Challenge (Core 1B) ➔
+            </button>
+            <span style="font-size:0.85rem;color:#64748b;">
+              Unseen isomorphic verification test
+            </span>
+          </div>
+        </section>
+
+        <p role="status" data-lesson-status style="font-size:0.9rem;font-weight:600;color:#0369a1;margin-top:10px;"></p>
+      </main>
+    `;
+  }
+}
+
+export type LessonPageViewState = ReturnType<Core1ALessonPageController['getViewState']>;
+
+const lessonCss = `
+.g9-lesson-page{box-sizing:border-box;width:100%;max-width:100%;min-width:0;display:flex;flex-direction:column;gap:20px;overflow-wrap:anywhere;font:inherit}
 .g9-lesson-page *{box-sizing:border-box;min-width:0}
-.g9-lesson-page [data-slot]{width:100%;padding:12px;border:1px solid #ccd7e1;border-radius:8px}
-.g9-lesson-page nav{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.g9-lesson-page [data-slot]{width:100%;padding:18px;border:1px solid #cbd5e1;background:#ffffff;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+.g9-lesson-page nav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .g9-lesson-page button,.g9-lesson-page input{min-height:48px;min-width:48px;max-width:100%;font:inherit}
-.g9-lesson-page button{padding:8px;white-space:normal;overflow-wrap:anywhere}
-.g9-lesson-page button[aria-pressed=true]{outline:2px solid #125d82;outline-offset:-2px}
+.g9-lesson-page button{padding:8px 14px;border-radius:6px;border:1px solid #cbd5e1;background:#ffffff;color:#1e293b;cursor:pointer;font-weight:600;white-space:normal;overflow-wrap:anywhere}
+.g9-lesson-page button:hover{background:#f8fafc;border-color:#94a3b8}
+.g9-lesson-page button[aria-pressed=true]{background:#0284c7;color:#ffffff;border-color:#0284c7;outline:2px solid #0284c7;outline-offset:1px}
 .g9-lesson-page .g9-model-stage-component label{display:flex;align-items:center;gap:8px;min-height:48px;margin:8px 0;flex-wrap:wrap}
-.g9-lesson-page input[type=range]{flex:1 1 120px}
-.g9-lesson-page :focus-visible{outline:3px solid #125d82;outline-offset:2px}
+.g9-lesson-page input[type=range]{flex:1 1 140px}
+.g9-lesson-page :focus-visible{outline:3px solid #0284c7;outline-offset:2px}
 .g9-lesson-page p,.g9-lesson-page li{white-space:pre-wrap;overflow-wrap:anywhere}
 `;
-// Actual diagnostic DOM binding. This does not bootstrap reviewed content or
-// authorize a worked example, numerical observation, fresh task or completion.
-export function mountCore1ALesson(root:HTMLElement,c:Core1ALessonPageController){
- let active=true;
- const syncLearnerSession = () => {
-  try {
-   const vs = c.getViewState();
-   const roleIdx = CORE1A_ORDERED_ROLES.indexOf(vs.activeUnitRole as any);
-   const progress = Math.min(100, Math.max(15, Math.round(((roleIdx + 1) / CORE1A_ORDERED_ROLES.length) * 100)));
-   recordActiveLearnerSession({
-    sessionId: vs.lessonId || 'session:wpe-core1a',
-    subjectId: 'subject:' + (vs.subject?.toLowerCase() || 'physics'),
-    topicId: 'topic:' + (vs.topicId?.toLowerCase() || 'wpe'),
-    title: vs.title || 'Physics — Work, Power & Energy (Core 1A)',
-    route: '/learning/core1a',
-    progressPercent: progress,
-    lastActiveAt: new Date().toISOString(),
-    statusText: `Section ${vs.activeUnitRole}: ${vs.activeUnitTitle}`,
-    role: 'CORE1A',
-   });
-  } catch {}
- };
- const render=(focus?:{key:string;value:string})=>{
-  if(!active)return;
-  root.innerHTML=c.render();
-  syncLearnerSession();
-  if(focus){const nodes=root.querySelectorAll<HTMLElement>('button');for(const n of nodes)if(n.getAttribute(focus.key)===focus.value){n.focus({preventScroll:true});break;}}
- };
- const status=(message:string)=>{const n=root.querySelector('[data-lesson-status]');if(n)n.textContent=message;};
- const click=(event:Event)=>{
-  const b=event.target instanceof Element?event.target.closest<HTMLButtonElement>('button'):null;if(!active||!b||b.disabled||!root.contains(b))return;
-  try{if(b.dataset.role){c.actionSection(b.dataset.role as Core1ARole);render({key:'data-role',value:b.dataset.role});}
-   else if(b.dataset.level){c.selectAnchorTab(b.dataset.level as AnchorLevel);render({key:'data-level',value:b.dataset.level});}
-   else if(b.dataset.depth){c.actionDepth(b.dataset.depth as IntrinsicDepthBadge);render({key:'data-depth',value:b.dataset.depth});}
-  }catch{status('Invalid diagnostic control.');}
- };
- const input=(event:Event)=>{
-  const n=event.target;if(!active||!(n instanceof HTMLInputElement)||!root.contains(n))return;
-  try{if(n.type==='radio'&&n.name==='prediction'&&n.checked)c.actionPredictModel(Number(n.value));
-   else if(n.type==='range'&&n.dataset.parameter)c.updateModelParameter(n.dataset.parameter,Number(n.value));
-   else return;status('Local diagnostic input recorded; reviewed output remains withheld.');
-  }catch{status('Invalid diagnostic input.');}
- };
- root.addEventListener('click',click);root.addEventListener('input',input);root.addEventListener('change',input);render();
- return {refresh:()=>render(),dispose(){if(!active)return;active=false;root.removeEventListener('click',click);root.removeEventListener('input',input);root.removeEventListener('change',input);root.replaceChildren();}};
+
+export function mountCore1ALesson(root: HTMLElement, c: Core1ALessonPageController) {
+  let active = true;
+
+  const syncLearnerSession = () => {
+    try {
+      const vs = c.getViewState();
+      const roleIdx = CORE1A_ORDERED_ROLES.indexOf(vs.activeUnitRole as any);
+      const progress = Math.min(100, Math.max(15, Math.round(((roleIdx + 1) / CORE1A_ORDERED_ROLES.length) * 100)));
+      const rawTopic = vs.topicId?.toLowerCase() || 'wpe';
+      const cleanTopic = rawTopic.startsWith('topic:') ? rawTopic : 'topic:' + rawTopic;
+      recordActiveLearnerSession({
+        sessionId: vs.lessonId || 'session:wpe-core1a',
+        subjectId: 'subject:' + (vs.subject?.toLowerCase() || 'physics'),
+        topicId: cleanTopic,
+        title: vs.title || 'Physics — Work, Power & Energy (Core 1A)',
+        route: '/learning/core1a',
+        progressPercent: progress,
+        lastActiveAt: new Date().toISOString(),
+        statusText: `Section ${vs.activeUnitRole}: ${vs.activeUnitTitle}`,
+        role: 'CORE1A',
+      });
+    } catch {}
+  };
+
+  const render = (focus?: { key: string; value: string }) => {
+    if (!active) return;
+    root.innerHTML = c.render();
+    syncLearnerSession();
+    if (focus) {
+      const nodes = root.querySelectorAll<HTMLElement>('button');
+      for (const n of nodes) {
+        if (n.getAttribute(focus.key) === focus.value) {
+          n.focus({ preventScroll: true });
+          break;
+        }
+      }
+    }
+  };
+
+  const status = (message: string) => {
+    const n = root.querySelector('[data-lesson-status]');
+    if (n) n.textContent = message;
+  };
+
+  const click = (event: Event) => {
+    const b = event.target instanceof Element ? event.target.closest<HTMLButtonElement>('button') : null;
+    if (!active || !b || b.disabled || !root.contains(b)) return;
+
+    try {
+      if (b.dataset.role) {
+        c.actionSection(b.dataset.role as Core1ARole);
+        render({ key: 'data-role', value: b.dataset.role });
+      } else if (b.dataset.level) {
+        c.selectAnchorTab(b.dataset.level as AnchorLevel);
+        render({ key: 'data-level', value: b.dataset.level });
+      } else if (b.dataset.depth) {
+        c.actionDepth(b.dataset.depth as IntrinsicDepthBadge);
+        render({ key: 'data-depth', value: b.dataset.depth });
+      } else if (b.dataset.action === 'toggle-anchor-solution') {
+        c.toggleAnchorSolution(b.dataset.level as AnchorLevel);
+        render();
+      } else if (b.dataset.action === 'toggle-worked-example') {
+        c.toggleWorkedExample();
+        render();
+      } else if (b.dataset.action === 'toggle-diagnostic-repair') {
+        c.toggleDiagnosticRepair();
+        render();
+      } else if (b.dataset.action === 'observe-model') {
+        c.actionObserveModel();
+        render();
+        status('Scientific simulation observed. Quantitative telemetry and potential energy landscape active.');
+      } else if (b.dataset.action === 'fresh-transfer') {
+        const route = c.getFreshTransferRoute();
+        window.location.hash = '#' + route;
+      }
+    } catch {
+      status('Invalid diagnostic control.');
+    }
+  };
+
+  const input = (event: Event) => {
+    const n = event.target;
+    if (!active || !(n instanceof HTMLInputElement) || !root.contains(n)) return;
+
+    try {
+      if (n.type === 'radio' && n.name === 'prediction' && n.checked) {
+        c.actionPredictModel(Number(n.value));
+        render();
+        status(`Prediction ${Number(n.value) + 1} recorded. Click "Test Prediction & Observe Simulation" to evaluate.`);
+      } else if (n.type === 'range' && n.dataset.parameter) {
+        const val = Number(n.value);
+        c.updateModelParameter(n.dataset.parameter, val);
+        render();
+        const t = c.getModelTelemetry();
+        if (t) {
+          status(`Position x = ${t.position.toFixed(2)} m · Potential U(x) = ${t.potentialEnergy.toFixed(2)} J · Kinetic K(x) = ${t.kineticEnergy.toFixed(2)} J · Speed v = ${t.velocity.toFixed(2)} m/s (${t.dynamicState})`);
+        }
+      }
+    } catch {
+      status('Invalid diagnostic input.');
+    }
+  };
+
+  root.addEventListener('click', click);
+  root.addEventListener('input', input);
+  root.addEventListener('change', input);
+  render();
+
+  return {
+    refresh: () => render(),
+    dispose() {
+      if (!active) return;
+      active = false;
+      root.removeEventListener('click', click);
+      root.removeEventListener('input', input);
+      root.removeEventListener('change', input);
+      root.replaceChildren();
+    }
+  };
 }

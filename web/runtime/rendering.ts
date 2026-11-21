@@ -51,6 +51,26 @@ export function formatLatexMath(latex: string, isBlock: boolean = false): string
   let s = latex.trim();
   if (!s) return '';
 
+  // 1. If KaTeX is available in the global browser environment, use it for production typography
+  if (typeof window !== 'undefined' && (window as any).katex?.renderToString) {
+    try {
+      return (window as any).katex.renderToString(s, {
+        throwOnError: false,
+        displayMode: isBlock,
+        strict: false
+      });
+    } catch {
+      // Fall through to native MathML fallback
+    }
+  }
+
+  // 2. Vector notation handling for MathML fallback: \vec{x} -> <mover><mi>x</mi><mo>→</mo></mover>
+  while (/\\vec\{([^{}]+)\}/.test(s)) {
+    s = s.replace(/\\vec\{([^{}]+)\}/g, (_m, arg) => {
+      return `<mover><mrow>${arg.trim()}</mrow><mo>→</mo></mover>`;
+    });
+  }
+
   // Greek replacements
   const greekMap: Record<string, string> = {
     '\\alpha': 'α', '\\beta': 'β', '\\gamma': 'γ', '\\delta': 'δ', '\\epsilon': 'ε',
@@ -78,6 +98,8 @@ export function formatLatexMath(latex: string, isBlock: boolean = false): string
     '\\sum': '∑', '\\prod': '∏',
     '\\circ': '°', '\\angle': '∠', '\\triangle': '△',
     '\\perp': '⊥', '\\parallel': '∥',
+    '\\cos': 'cos', '\\sin': 'sin', '\\tan': 'tan', '\\sec': 'sec', '\\csc': 'csc', '\\cot': 'cot',
+    '\\ln': 'ln', '\\log': 'log', '\\exp': 'exp',
     '\\rightarrow': '→', '\\to': '→', '\\leftarrow': '←', '\\leftrightarrow': '↔',
     '\\Rightarrow': '⇒', '\\implies': '⇒', '\\Leftarrow': '⇐', '\\Leftrightarrow': '⇔', '\\iff': '⇔',
     '\\quad': '  ', '\\qquad': '    ', '\\,': ' ', '\\;': ' ', '\\ ': ' '

@@ -284,4 +284,42 @@ export class PartNavigationController {
       </nav>
     `;
   }
+
+  bindEvents(container: HTMLElement, onUpdate?: () => void): void {
+    container.querySelector('#part-nav-prev-btn')?.addEventListener('click', () => {
+      if (this.goToPreviousPart() && onUpdate) onUpdate();
+    });
+    container.querySelector('#part-nav-flag-btn')?.addEventListener('click', () => {
+      if (this.activePartId) {
+        this.toggleFlag(this.activePartId);
+        if (onUpdate) onUpdate();
+      }
+    });
+    container.querySelector('#part-nav-next-btn')?.addEventListener('click', () => {
+      if (this.goToNextPart() && onUpdate) onUpdate();
+    });
+    container.querySelectorAll<HTMLButtonElement>('.part-nav-item').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pid = btn.dataset.partId;
+        if (pid && this.goToPart(pid) && onUpdate) onUpdate();
+      });
+    });
+  }
+
+  mount(container: HTMLElement): { dispose: () => void; refresh: () => void } {
+    let active = true;
+    const render = () => {
+      if (!active) return;
+      container.innerHTML = this.renderHtml();
+      this.bindEvents(container, render);
+    };
+    render();
+    return {
+      dispose: () => {
+        active = false;
+        container.replaceChildren();
+      },
+      refresh: () => render(),
+    };
+  }
 }

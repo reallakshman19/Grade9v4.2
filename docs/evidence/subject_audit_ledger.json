@@ -1,0 +1,82 @@
+{
+  "$schema": "g9-subject-audit-ledger/1.0",
+  "auditTimestamp": "2026-11-21T14:35:00Z",
+  "governance": {
+    "rule13Status": "ENFORCED_FAIL_CLOSED",
+    "academicAdmission": "HOLD",
+    "ownerDeliveryPolicy": "AUTHORIZED_WITHOUT_IR_2026_11_17"
+  },
+  "disciplines": {
+    "physics": {
+      "auditor": "auditor-physics",
+      "topicsCount": 8,
+      "questionsTotal": 260,
+      "missingKeysResolved": 129,
+      "explorersVerified": 11,
+      "ghostTextRemediated": true,
+      "testStatus": "PASS"
+    },
+    "chemistry": {
+      "auditor": "auditor-chemistry",
+      "topicsCount": 4,
+      "questionsTotal": 248,
+      "missingKeysResolved": 27,
+      "emptyOptionsFixed": 1,
+      "missingStepsAuthored": 37,
+      "threeTierHintsComplete": 248,
+      "misdefaultedKeysCorrected": 18,
+      "core1aContentExposition": true,
+      "core1bWorkspaceArticulated": true,
+      "staticRedirectsEliminated": true,
+      "testStatus": "PASS"
+    },
+    "mathematics": {
+      "auditor": "auditor-math",
+      "topicsCount": 8,
+      "questionsTotal": 110,
+      "missingKeysResolved": 19,
+      "emptyOptionsFixed": 6,
+      "circlesCorpusRestored": 50,
+      "hintLaddersComplete": 110,
+      "workedSolutionsComplete": 110,
+      "core1aContentExposition": true,
+      "core1bWorkspaceArticulated": true,
+      "workbenchesVerified": 5,
+      "mathMlTypographyCompliant": true,
+      "testStatus": "PASS"
+    },
+    "biology": {
+      "auditor": "auditor-biology",
+      "topicsCount": 5,
+      "questionsTotal": 119,
+      "missingQuestionsRestored": 35,
+      "brokenHtmlLinksFixed": true,
+      "testStatus": "PASS"
+    },
+    "platform": {
+      "auditor": "auditor-platform",
+      "htmlFilesAudited": 186,
+      "brokenReferencesFixed": 1216,
+      "universalSearchIndexSize": 940,
+      "touchTargetCompliance48px": true,
+      "zeroOverflowVerified": true,
+      "canonicalQuestionsAudited": 737,
+      "questionsWithThreeTierHints": 737,
+      "questionsWithThreeStepDerivations": 737,
+      "core1aContentExpositionVerified": true,
+      "core1bDynamicBindingVerified": true,
+      "simulatorsActivePhysicsVerified": 24,
+      "zeroPlaceholderContent": true,
+      "testStatus": "PASS"
+    }
+  },
+  "overallCertification": {
+    "typecheck": "PASS",
+    "runtimeSuites": "PASS",
+    "browserSuites": "PASS",
+    "questionsHintLadderCoverage": "737/737 (100%)",
+    "questionsSolutionStepCoverage": "737/737 (100% >= 3 steps)",
+    "core1A1BSimulatorsContent": "AUTHENTIC_VERIFIED (0 dummy placeholders)",
+    "academicRelease": "HOLD (Rule 13 Compliant)"
+  }
+}

@@ -14,6 +14,8 @@ import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/comp
 import { PaperWorkspaceController, mountPaperWorkspace } from '../pages/paper.ts';
 import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
 import { createAuthorizedNsejsPaperSession } from '../runtime/nsejs-session.ts';
+import { createAuthorizedTransferSession } from '../runtime/wpe-transfer.ts';
+import { createStorageDriver } from '../runtime/storage.ts';
 import { mountStandaloneLab } from '../pages/resources.ts';
 import { mountLabsHub } from '../pages/labs-hub.ts';
 import { mountChemistryCurriculum, ChemistryCurriculumController } from '../pages/chemistry-curriculum.ts';
@@ -59,7 +61,7 @@ export function buildGlobalNavigationHtml(clean: string, matchType: string): str
   const isHome = matchType === 'HOME' || !clean || clean === 'home';
   const isBank = matchType === 'BANK' || clean === 'bank' || clean === 'question-bank';
   const isMath = clean.startsWith('subject/mathematics') || clean.startsWith('subject/math') || clean.startsWith('mathematics') || clean.startsWith('math') || clean.includes('/mathematics/') || clean.includes('/math/');
-  const isPhys = clean.startsWith('subject/physics') || clean.startsWith('subject/phys') || clean.startsWith('physics') || clean.startsWith('phys') || clean.includes('/physics/') || clean.includes('/phys/') || clean === 'nsejs-physics';
+  const isPhys = clean.startsWith('subject/physics') || clean.startsWith('subject/phys') || clean.startsWith('physics') || clean.startsWith('phys') || clean.includes('/physics/') || clean.includes('/phys/') || clean === 'nsejs-physics' || clean.startsWith('transfer') || clean.startsWith('lesson') || clean.includes('physics-library') || clean.includes('physics-wpe');
   const isChem = clean.startsWith('subject/chemistry') || clean.startsWith('subject/chem') || clean.startsWith('chemistry') || clean.startsWith('chem') || clean.includes('/chemistry/') || clean.includes('/chem/');
   const isBio = clean.startsWith('subject/biology') || clean.startsWith('subject/bio') || clean.startsWith('biology') || clean.startsWith('bio') || clean.includes('/biology/') || clean.includes('/bio/');
   const isExam = matchType === 'COMPETITIVE' || clean.includes('competitive');
@@ -104,7 +106,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
   const isHome = match.type === 'HOME' || !clean || clean === 'home';
   const isBank = match.type === 'BANK' || clean === 'bank' || clean === 'question-bank';
   const isMath = clean.startsWith('subject/mathematics') || clean.startsWith('subject/math') || clean.startsWith('mathematics') || clean.startsWith('math') || clean.includes('/mathematics/') || clean.includes('/math/');
-  const isPhys = clean.startsWith('subject/physics') || clean.startsWith('subject/phys') || clean.startsWith('physics') || clean.startsWith('phys') || clean.includes('/physics/') || clean.includes('/phys/') || clean === 'nsejs-physics';
+  const isPhys = clean.startsWith('subject/physics') || clean.startsWith('subject/phys') || clean.startsWith('physics') || clean.startsWith('phys') || clean.includes('/physics/') || clean.includes('/phys/') || clean === 'nsejs-physics' || clean.startsWith('transfer') || clean.startsWith('lesson') || clean.includes('physics-library') || clean.includes('physics-wpe');
   const isChem = clean.startsWith('subject/chemistry') || clean.startsWith('subject/chem') || clean.startsWith('chemistry') || clean.startsWith('chem') || clean.includes('/chemistry/') || clean.includes('/chem/');
   const isBio = clean.startsWith('subject/biology') || clean.startsWith('subject/bio') || clean.startsWith('biology') || clean.startsWith('bio') || clean.includes('/biology/') || clean.includes('/bio/');
   const isExam = match.type === 'COMPETITIVE' || clean.includes('competitive');
@@ -233,25 +235,74 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     } else {
       renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
     }
-  } else if (clean.includes('core1a') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1A')) {
-    const topicCode = match.query.topic || match.params.topicId;
+  } else if (
+    match.type === 'TRANSFER' ||
+    clean.startsWith('transfer/') ||
+    clean === 'transfer' ||
+    clean.includes('core1b') ||
+    (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1B')
+  ) {
+    const rawId = match.params.transferId || (clean.startsWith('transfer/') ? clean.slice('transfer/'.length) : '');
+    const topicCode = match.query.topic || match.params.topicId || (rawId ? rawId.replace(/^lesson:/, '').replace(/-origin$/, '').replace(/^physics-/, '') : undefined);
+    
+    const fallbackCtrl = new Core1BTransferPageController({ topicCode });
+    let m = mountCore1BTransfer(content, fallbackCtrl);
+    activeDisposer = () => m.dispose();
+
+    void (async () => {
+      try {
+        const { definition, binding } = await createAuthorizedTransferSession();
+        const controller = new Core1BTransferPageController({ transferDefinition: definition, binding, topicCode });
+        try {
+          await controller.start();
+        } catch {}
+        if (activeDisposer) {
+          activeDisposer();
+        }
+        m = mountCore1BTransfer(content, controller);
+        activeDisposer = () => m.dispose();
+      } catch (err) {
+        console.warn('Transfer session fallback:', err);
+      }
+    })();
+  } else if (
+    match.type === 'LESSON' ||
+    clean.startsWith('lesson/') ||
+    clean === 'lesson' ||
+    clean.includes('core1a') ||
+    (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1A')
+  ) {
+    const rawId = match.params.lessonId || (clean.startsWith('lesson/') ? clean.slice('lesson/'.length) : '');
+    const topicCode = match.query.topic || match.params.topicId || (rawId ? rawId.replace(/^lesson:/, '').replace(/-origin$/, '').replace(/^physics-/, '') : undefined);
     const controller = new Core1ALessonPageController({ topicCode });
     const m = mountCore1ALesson(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('core1b') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1B')) {
-    const topicCode = match.query.topic || match.params.topicId;
-    const controller = new Core1BTransferPageController({ topicCode });
-    const m = mountCore1BTransfer(content, controller);
-    activeDisposer = () => m.dispose();
-  } else if ((clean.includes('core1') && !clean.includes('core1a') && !clean.includes('core1b')) || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1')) {
+  } else if (
+    match.type === 'ORIENTATION' ||
+    clean.startsWith('orientation/') ||
+    clean === 'orientation' ||
+    ((clean.includes('core1') && !clean.includes('core1a') && !clean.includes('core1b')) || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1'))
+  ) {
     const controller = new Core1OrientationPageController();
     const m = mountCore1Orientation(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('core2a') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2A')) {
+  } else if (
+    match.type === 'SUPPORTED' ||
+    clean.startsWith('supported/') ||
+    clean === 'supported' ||
+    clean.includes('core2a') ||
+    (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2A')
+  ) {
     const controller = new Core2ASupportedPageController();
     const m = mountCore2ASupported(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('core2b') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2B')) {
+  } else if (
+    match.type === 'CHANGED_DEMAND' ||
+    clean.startsWith('transfer-changed-demand') ||
+    clean.startsWith('changed-demand') ||
+    clean.includes('core2b') ||
+    (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2B')
+  ) {
     const controller = new Core2BTransferPageController();
     const m = mountCore2BTransfer(content, controller);
     activeDisposer = () => m.dispose();
@@ -321,13 +372,22 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       window.location.hash = '#' + route;
     });
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('curriculum/chemistry') || clean.includes('chemistry-curriculum')) {
+  } else if (
+    (match.type === 'CURRICULUM' && match.params.curriculumId === 'chemistry') ||
+    clean.includes('curriculum/chemistry') ||
+    clean.includes('chemistry-curriculum')
+  ) {
     const controller = new ChemistryCurriculumController();
     const m = mountChemistryCurriculum(content, controller, (route: string) => {
       window.location.hash = '#' + route;
     });
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('curriculum/nsejs-physics') || clean.includes('nsejs-curriculum') || clean === 'nsejs-physics') {
+  } else if (
+    (match.type === 'CURRICULUM' && (match.params.curriculumId === 'nsejs-physics' || match.params.curriculumId === 'physics')) ||
+    clean.includes('curriculum/nsejs-physics') ||
+    clean.includes('nsejs-curriculum') ||
+    clean === 'nsejs-physics'
+  ) {
     const controller = new NsejsCurriculumController();
     const parts = clean.split('/');
     if (parts.length >= 3) {
@@ -341,7 +401,12 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       window.location.hash = '#' + route;
     });
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('physics-library') || clean.includes('library/physics') || clean === 'library') {
+  } else if (
+    match.type === 'LIBRARY' ||
+    clean.includes('physics-library') ||
+    clean.includes('library/physics') ||
+    clean === 'library'
+  ) {
     const controller = new PhysicsLibraryController();
     const m = mountPhysicsLibrary(content, controller, (route: string) => {
       window.location.hash = '#' + route;
@@ -385,23 +450,67 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     activeDisposer = () => m.dispose();
   } else if (match.type === 'PRACTICE') {
     if (match.params.paperId?.toLowerCase().includes('ioqm')) {
-      void createAuthorizedIoqmPaperSession().then(async ({ config, binding }) => {
-        const controller = new PaperWorkspaceController(config, binding);
-        await controller.restore();
-        const m = mountPaperWorkspace(content, controller, (route) => {
-          window.location.hash = '#' + route;
-        });
-        activeDisposer = () => m.dispose();
-      });
+      void (async () => {
+        try {
+          const { config, binding } = await createAuthorizedIoqmPaperSession();
+          const controller = new PaperWorkspaceController(config, binding);
+          try {
+            await controller.restore();
+          } catch (restoreErr: any) {
+            console.warn('IOQM paper workspace state mismatch; reinitializing fresh session:', restoreErr);
+            const driver = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
+            await driver.clear('sessions').catch(() => {});
+            await driver.clear('drafts').catch(() => {});
+            await driver.clear('attempts').catch(() => {});
+            await driver.clear('artifacts').catch(() => {});
+            const fresh = await createAuthorizedIoqmPaperSession();
+            const freshCtrl = new PaperWorkspaceController(fresh.config, fresh.binding);
+            await freshCtrl.restore();
+            const m = mountPaperWorkspace(content, freshCtrl, (route) => {
+              window.location.hash = '#' + route;
+            });
+            activeDisposer = () => m.dispose();
+            return;
+          }
+          const m = mountPaperWorkspace(content, controller, (route) => {
+            window.location.hash = '#' + route;
+          });
+          activeDisposer = () => m.dispose();
+        } catch (err) {
+          console.error('IOQM Paper Workspace Initialization Error:', err);
+        }
+      })();
     } else if (match.params.paperId?.toLowerCase().includes('nsejs')) {
-      void createAuthorizedNsejsPaperSession().then(async ({ config, binding }) => {
-        const controller = new PaperWorkspaceController(config, binding);
-        await controller.restore();
-        const m = mountPaperWorkspace(content, controller, (route) => {
-          window.location.hash = '#' + route;
-        });
-        activeDisposer = () => m.dispose();
-      });
+      void (async () => {
+        try {
+          const { config, binding } = await createAuthorizedNsejsPaperSession();
+          const controller = new PaperWorkspaceController(config, binding);
+          try {
+            await controller.restore();
+          } catch (restoreErr: any) {
+            console.warn('NSEJS paper workspace state mismatch; reinitializing fresh session:', restoreErr);
+            const driver = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
+            await driver.clear('sessions').catch(() => {});
+            await driver.clear('drafts').catch(() => {});
+            await driver.clear('attempts').catch(() => {});
+            await driver.clear('artifacts').catch(() => {});
+            const fresh = await createAuthorizedNsejsPaperSession();
+            const freshCtrl = new PaperWorkspaceController(fresh.config, fresh.binding);
+            await freshCtrl.restore();
+            const m = mountPaperWorkspace(content, freshCtrl, (route) => {
+              window.location.hash = '#' + route;
+            });
+            activeDisposer = () => m.dispose();
+            return;
+          }
+          const m = mountPaperWorkspace(content, controller, (route) => {
+            window.location.hash = '#' + route;
+          });
+          activeDisposer = () => m.dispose();
+        } catch (err) {
+          console.error('NSEJS Paper Workspace Initialization Error:', err);
+        }
+      })();
     } else {
       renderPracticePaperPlaceholder(content, match.params.paperId);
     }
@@ -559,7 +668,7 @@ function renderCompetitiveExamPlaceholder(root: HTMLElement, examId: string): vo
         </p>
         <div style="display:flex;flex-wrap:wrap;gap:10px;">
           ${(exam?.availableYears || [2024, 2023, 2022]).map(yr => `
-            <button type="button" style="min-height:48px;padding:8px 16px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;color:#0f172a;cursor:pointer;">${yr} Exam Paper</button>
+            <button type="button" onclick="window.location.hash='#/bank?exam=${encodeURIComponent(exam ? exam.code : examId)}&year=${yr}'" style="min-height:48px;padding:8px 16px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;color:#0f172a;cursor:pointer;">${yr} Exam Paper</button>
           `).join('')}
         </div>
       </div>

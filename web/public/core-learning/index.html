@@ -49,13 +49,13 @@
 </head>
 <body>
   <header class="site-nav">
-    <a href="../index.html" class="brand-link">
+    <a href="../index.html#/home" class="brand-link">
       <span class="logo-icon" aria-hidden="true">⚡</span>
       <span>Grade9V3 Knowledge Portal</span>
       <span class="brand-badge">Core</span>
     </a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="../index.html">Home</a>
+      <a href="../index.html#/home">Home</a>
       <a href="../index.html#/bank" data-site-question-bank>Question Bank</a>
       <button type="button" class="g9-display-trigger-btn" onclick="window.Grade9Display.togglePopover()" title="Adjust Font Size and UI Zoom Scale"><span>🔤 / 🔍 Display</span></button>
     </nav>
@@ -98,7 +98,7 @@
           <span class="migration-badge">Legacy iframe · migration only</span>
           <h2 id="explorer-title">Interactive scientific representation</h2>
         </div>
-        <a class="core-action-link" id="explorer-open" href="#" target="_blank" rel="noopener">Open full page</a>
+        <a class="core-action-link" id="explorer-open" style="display:none;" target="_blank" rel="noopener">Open full page</a>
       </div>
       <p class="host-note">New builder work should prefer a portable scene or component mount. This iframe preserves an existing explorer while it is migrated.</p>
       <iframe id="explorer-frame" class="explorer-frame" title="Interactive scientific representation" loading="lazy"></iframe>

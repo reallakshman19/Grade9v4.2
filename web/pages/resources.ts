@@ -528,20 +528,17 @@ export function mountStandaloneLab(
   }
 
   if (labId.includes('redox-reactions-master-suite') || labId.includes('redox-master-suite')) {
-    window.location.href = './chemistry/redox/explorers/redox_reactions/index.html';
-    return { dispose: () => {} };
+    const c = new RedoxAdaptiveController();
+    return mountRedoxAdaptive(root, c, onNavigate);
   }
   if (labId.includes('chemical-bonding-master-suite') || labId.includes('bonding-master-suite')) {
-    window.location.href = './chemistry/bonding/explorers/chemical_bonding/index.html';
-    return { dispose: () => {} };
+    return mountChemicalBondingWorkbench(root, undefined, onNavigate);
   }
   if (labId.includes('behaviour-of-gases-master-suite') || labId.includes('gases-master-suite')) {
-    window.location.href = './chemistry/gases/explorers/behaviour_of_gases/index.html';
-    return { dispose: () => {} };
+    return mountGasLawsWorkbench(root, undefined, onNavigate);
   }
   if (labId.includes('mole-concept-master-suite') || labId.includes('mole-master-suite')) {
-    window.location.href = './chemistry/some-basic-concepts/explorers/mole_concept/index.html';
-    return { dispose: () => {} };
+    return mountMoleConceptWorkbench(root, undefined, onNavigate);
   }
 
   if (

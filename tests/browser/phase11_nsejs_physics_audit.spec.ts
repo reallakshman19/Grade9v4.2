@@ -304,7 +304,7 @@ test('Gate W11-G7 — NSEJS Physics & Timed Paper Simulation Tablet Audit', { ti
       // Submit Complete Paper
       const submitBtn = page.locator('#submit-paper-btn');
       await submitBtn.click();
-      await page.waitForTimeout(400);
+      await page.waitForSelector('#submit-paper-btn:disabled', { timeout: 10000 });
 
       const postSubmitText = await page.locator('.paper-workspace').textContent();
       assert.match(postSubmitText || '', /Paper Submitted Successfully|Paper Durably Committed/);

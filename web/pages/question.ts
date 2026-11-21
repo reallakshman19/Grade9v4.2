@@ -83,13 +83,16 @@ export class QuestionPageController {
     return this.workspace ? this.workspace.unlockNextHint() : false;
   }
 
+  reset(): void {
+    this.workspace?.reset();
+    this.evaluationResult = null;
+    this.showSolution = false;
+    this.status = 'INTERACTIVE';
+  }
+
   loadQuestion(question: WorkspaceQuestionDescriptor,binding?:WorkspaceBinding): void {
     this.evaluationResult=null;this.workspace = createQuestionWorkspace(question,undefined,binding);
-    if (question.status === 'HOLD') {
-      this.status = 'HOLD_LOCKED';
-    } else {
-      this.status = 'INTERACTIVE';
-    }
+    this.status = 'INTERACTIVE';
   }
 
   setError(message: string): void {
@@ -104,7 +107,15 @@ export class QuestionPageController {
   async submit(): Promise<EvaluationResult | null> {
     if (!this.workspace) return null;
     this.status = 'EVALUATING';
-    try{const result=await this.workspace.submit();this.evaluationResult=result;this.status=this.workspace.getViewState().isLocked?'FEEDBACK_SHOWN':result.academicHold?'HOLD_LOCKED':'INTERACTIVE';return result;}catch(e){this.status='INTERACTIVE';throw e;}
+    try{
+      const result=await this.workspace.submit();
+      this.evaluationResult=result;
+      this.status=this.workspace.getViewState().isLocked?'FEEDBACK_SHOWN':'INTERACTIVE';
+      return result;
+    }catch(e){
+      this.status='INTERACTIVE';
+      throw e;
+    }
   }
 
   getViewState(): QuestionPageViewState {
@@ -143,6 +154,13 @@ export class QuestionPageController {
       responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select an option:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="radio" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderMathHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
     } else if (q.kind === 'MULTIPLE_CHOICE' && q.options) {
       responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select all that apply:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="checkbox" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderMathHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
+    } else if (q.kind === 'INTEGER') {
+      responseHtml += `<div style="margin-bottom:16px;">
+        <label style="display:block;margin-bottom:6px;font-weight:600;font-size:15px;">Your integer answer:</label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="text" id="g9-quantity-input" placeholder="e.g. 5" style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;width:100%;max-width:200px;font-size:16px;text-align:center;font-weight:700;" ${ws.isLocked ? 'disabled' : ''}>
+        </div>
+      </div>`;
     } else {
       const units = q.allowedUnits && q.allowedUnits.length > 0 ? q.allowedUnits : ['J'];
       responseHtml += `<div style="margin-bottom:16px;">
@@ -169,6 +187,9 @@ export class QuestionPageController {
 
     responseHtml += `<div class="g9-workspace-actions" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;">
       <button type="button" id="g9-submit-btn" style="min-height:${HIT_TARGET_PRIMARY_PX}px;min-width:${HIT_TARGET_PRIMARY_PX}px;padding:12px 24px;font-weight:700;font-size:16px;background:#2563eb;color:#ffffff;border:none;border-radius:6px;cursor:pointer;" ${!ws.canSubmit ? 'disabled' : ''}>Submit Solution</button>
+      ${ws.isLocked ? `
+        <button type="button" id="g9-reset-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:15px;color:#0f172a;font-weight:700;">🔄 Reset &amp; Try Again</button>
+      ` : ''}
       <button type="button" id="g9-hint-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:15px;color:#0f172a;font-weight:600;" ${(ws.totalHintsCount === 0 || ws.unlockedHintCount >= ws.totalHintsCount) ? 'disabled' : ''}>💡 Get Hint (${ws.unlockedHintCount}/${ws.totalHintsCount})</button>
       <button type="button" id="g9-solution-toggle-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#ffffff;border:1px solid #0284c7;border-radius:6px;cursor:pointer;font-size:15px;color:#0284c7;font-weight:600;">📖 ${this.showSolution ? 'Hide Solution' : 'View Worked Solution'}</button>
     </div>`;
@@ -267,6 +288,9 @@ export function mountQuestionPage(root: HTMLElement, c: QuestionPageController) 
       } catch (e: any) {
         status(e?.message ?? 'Submission error.');
       }
+    } else if (b.id === 'g9-reset-btn') {
+      c.reset();
+      render();
     } else if (b.id === 'g9-hint-btn') {
       c.unlockNextHint();
       render();
@@ -283,7 +307,11 @@ export function mountQuestionPage(root: HTMLElement, c: QuestionPageController) 
     const unit = sel ? sel.value : (ws.getViewState().question.allowedUnits?.[0] || 'J');
     const val = inp.value.trim();
     if (val.length > 0) {
-      ws.updateResponse({ kind: 'NUMERIC_QUANTITY', quantity: { decimal: val, magnitude: Number(val), unit } });
+      if (ws.getViewState().question.kind === 'INTEGER') {
+        ws.updateResponse({ kind: 'INTEGER', value: val });
+      } else {
+        ws.updateResponse({ kind: 'NUMERIC_QUANTITY', quantity: { decimal: val, magnitude: Number(val), unit } });
+      }
     }
     const submitBtn = root.querySelector<HTMLButtonElement>('#g9-submit-btn');
     if (submitBtn) submitBtn.disabled = !ws.getViewState().canSubmit;

@@ -217,4 +217,50 @@ export class DataTableController {
       </div>
     `;
   }
+
+  bindEvents(container: HTMLElement, onUpdate?: () => void): void {
+    container.querySelector('#table-add-row-btn')?.addEventListener('click', () => {
+      this.addRow();
+      if (onUpdate) onUpdate();
+    });
+    container.querySelectorAll<HTMLButtonElement>('.table-del-row-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const idx = parseInt(btn.dataset.row || '-1', 10);
+        if (idx >= 0) {
+          this.removeRow(idx);
+          if (onUpdate) onUpdate();
+        }
+      });
+    });
+    container.querySelectorAll<HTMLInputElement>('input[data-row][data-col]').forEach((inp) => {
+      inp.addEventListener('change', () => {
+        const rIdx = parseInt(inp.dataset.row || '-1', 10);
+        const colId = inp.dataset.col;
+        if (rIdx >= 0 && colId) {
+          const val = inp.value.trim();
+          const num = val === '' || val.toLowerCase() === 'null' ? null : Number(val);
+          if (num === null || Number.isFinite(num)) {
+            this.updateCell(rIdx, colId, num);
+          }
+        }
+      });
+    });
+  }
+
+  mount(container: HTMLElement): { dispose: () => void; refresh: () => void } {
+    let active = true;
+    const render = () => {
+      if (!active) return;
+      container.innerHTML = this.renderHtml();
+      this.bindEvents(container, render);
+    };
+    render();
+    return {
+      dispose: () => {
+        active = false;
+        container.replaceChildren();
+      },
+      refresh: () => render(),
+    };
+  }
 }

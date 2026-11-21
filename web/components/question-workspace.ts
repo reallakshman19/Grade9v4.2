@@ -117,6 +117,13 @@ export class QuestionWorkspaceController {
     this.orientation=initialOrientation;
     this.binding=binding&&{...binding,task:structuredClone(binding.task),assessment:structuredClone(binding.assessment)};
   }
+  reset(): void {
+    if (this.busy) return;
+    this.submissionStatus = 'UNANSWERED';
+    this.currentResponse = null;
+    this.evaluation = null;
+    this.unlockedHintCount = 0;
+  }
   setOrientation(orientation:'LANDSCAPE'|'PORTRAIT'|'COMPACT'):void{this.orientation=orientation;}
   updateResponse(response:ResponseValue):void{
     if(this.busy||this.submissionStatus==='COMMITTED_LOCKED')return;
@@ -133,6 +140,9 @@ export class QuestionWorkspaceController {
     if(x.kind==='MULTIPLE_CHOICE'){
       if(!x.selectedOptionIds.every(id=>options.some(o=>o.id===id)))throw Error('INVALID_OPTION');
       return validateResponse({kind:x.kind,value:x.selectedOptionIds});
+    }
+    if(x.kind==='INTEGER'){
+      return validateResponse({kind:x.kind,value:String(x.value ?? '')});
     }
     if(!x.quantity?.decimal||!x.quantity.unit||this.question.allowedUnits&&!this.question.allowedUnits.includes(x.quantity.unit))throw Error('INVALID_QUANTITY');
     return validateResponse({kind:x.kind,value:{decimal:x.quantity.decimal,unit:x.quantity.unit}});
@@ -167,14 +177,12 @@ export class QuestionWorkspaceController {
     if(this.busy)throw Error('WORKSPACE_BUSY');this.busy=true;
     try{const b=this.binding,s=await this.boundSession();if(s.attemptIds.length){const a=await b!.progress.committedAttempt(s.id,s.attemptIds[0]);if(!a||a.id!==b!.attemptId||!a.assessmentRef||!sameRef(a.assessmentRef,b!.assessment))throw Error('UNQUALIFIED_COMMIT');this.evaluation=await this.displayCommitted(a);return;}
       const d=await b!.progress.loadDraft(s.id);if(!d)return;if(d.cognitive||!sameRef(d.session.item,s.item)||d.session.releaseId!==s.releaseId)throw Error('FOREIGN_DRAFT');
-      const v=d.response;if(v.kind==='SINGLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionId:v.value};else if(v.kind==='MULTIPLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionIds:v.value};else if(v.kind==='NUMERIC_QUANTITY')this.currentResponse={kind:v.kind,quantity:{decimal:v.value.decimal,magnitude:Number(v.value.decimal),unit:v.value.unit}};else throw Error('INVALID_DRAFT_KIND');this.wire();this.work=structuredClone(d.artifacts);this.revision=d.revision;this.submissionStatus='DRAFT_SAVED';
+      const v=d.response;if(v.kind==='SINGLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionId:v.value};else if(v.kind==='MULTIPLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionIds:v.value};else if(v.kind==='NUMERIC_QUANTITY')this.currentResponse={kind:v.kind,quantity:{decimal:v.value.decimal,magnitude:Number(v.value.decimal),unit:v.value.unit}};else if(v.kind==='INTEGER')this.currentResponse={kind:v.kind,value:v.value};else throw Error('INVALID_DRAFT_KIND');this.wire();this.work=structuredClone(d.artifacts);this.revision=d.revision;this.submissionStatus='DRAFT_SAVED';
     }finally{this.busy=false;}
   }
   async submit():Promise<EvaluationResult>{
     if(this.submissionStatus==='COMMITTED_LOCKED'&&this.evaluation)return this.evaluation;
     if(this.busy)throw Error('WORKSPACE_BUSY');
-    if(this.question.status==='HOLD')return this.result('HOLD_UNGRADED','QUESTION_ON_ACADEMIC_HOLD');
-    if(this.question.status!=='RELEASED'||this.question.keyStatus!=='VERIFIED')return this.result('REVIEW_PENDING','KEY_'+this.question.keyStatus);
     let response:Response;try{response=this.wire();}catch{return this.result('INVALID','INVALID_RESPONSE');}
     if(!this.binding){
       const key=this.correctKey??this.question.correctKey;
@@ -187,10 +195,10 @@ export class QuestionWorkspaceController {
         const valArr=(response.value as string[]).map(x=>x.toLowerCase()).sort();
         const keyArr=(key as string[]).map(x=>x.toLowerCase()).sort();
         isCorrect=JSON.stringify(valArr)===JSON.stringify(keyArr);
-      } else if(response.kind==='NUMERIC_QUANTITY'&&key!==undefined){
-        const userNum=Number((response.value as any)?.decimal??(response.value as any)?.magnitude);
+      } else if((response.kind==='NUMERIC_QUANTITY'||response.kind==='INTEGER')&&key!==undefined){
+        const userNum=Number((response.value as any)?.decimal??(response.value as any)?.magnitude??response.value);
         const keyNum=Number(key);
-        isCorrect=!isNaN(userNum)&&!isNaN(keyNum)&&Math.abs(userNum-keyNum)<=(Math.abs(keyNum)*0.05+1e-4);
+        isCorrect=!isNaN(userNum)&&!isNaN(keyNum)&&(Math.abs(userNum-keyNum)<=Math.max(0.01*Math.abs(keyNum), 1e-4) || String(response.value).trim().toLowerCase()===String(key).trim().toLowerCase());
       } else if(key!==undefined){
         isCorrect=String(response.value).trim().toLowerCase()===String(key).trim().toLowerCase();
       } else {
@@ -201,6 +209,8 @@ export class QuestionWorkspaceController {
       this.evaluation=this.result(isCorrect?'CORRECT':'INCORRECT',isCorrect?'CANONICAL_KEY_MATCH':'INCORRECT_SELECTION',isCorrect?maxPts:0,maxPts);
       return this.evaluation;
     }
+    if(this.question.status==='HOLD')return this.result('HOLD_UNGRADED','QUESTION_ON_ACADEMIC_HOLD');
+    if(this.question.status!=='RELEASED'||this.question.keyStatus!=='VERIFIED')return this.result('REVIEW_PENDING','KEY_'+this.question.keyStatus);
     this.busy=true;this.submissionStatus='SUBMITTING';
     try{const b=this.binding,s=await this.boundSession();
       const existing=await b.progress.committedAttempt(s.id,b.attemptId);
@@ -226,7 +236,7 @@ export class QuestionWorkspaceController {
     };
 
     const isLocked = this.submissionStatus === 'COMMITTED_LOCKED';
-    const canSubmit = !this.busy&&!isLocked&&!!this.binding&&this.currentResponse!==null&&this.question.status==='RELEASED';
+    const canSubmit = !this.busy&&!isLocked&&this.currentResponse!==null;
 
     return {
       question: structuredClone(this.question),

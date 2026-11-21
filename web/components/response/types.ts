@@ -11,7 +11,7 @@
  * No academic approval inferred from software validation.
  */
 
-export type ResponseKind = 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE' | 'NUMERIC_QUANTITY';
+export type ResponseKind = 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE' | 'NUMERIC_QUANTITY' | 'INTEGER';
 
 export interface ChoiceOption {
   readonly id: string;
@@ -30,7 +30,8 @@ export interface NumericQuantityValue {
 export type ResponseValue =
   | { readonly kind: 'SINGLE_CHOICE'; readonly selectedOptionId: string | null }
   | { readonly kind: 'MULTIPLE_CHOICE'; readonly selectedOptionIds: readonly string[] }
-  | { readonly kind: 'NUMERIC_QUANTITY'; readonly quantity: NumericQuantityValue | null };
+  | { readonly kind: 'NUMERIC_QUANTITY'; readonly quantity: NumericQuantityValue | null }
+  | { readonly kind: 'INTEGER'; readonly value: string };
 
 export type SubmissionStatus =
   | 'UNANSWERED'

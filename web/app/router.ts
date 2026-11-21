@@ -19,6 +19,13 @@ export type RouteType =
   | 'EXPLORER'
   | 'PERSONAL'
   | 'ARCHITECTURE'
+  | 'TRANSFER'
+  | 'LESSON'
+  | 'ORIENTATION'
+  | 'SUPPORTED'
+  | 'CHANGED_DEMAND'
+  | 'CURRICULUM'
+  | 'LIBRARY'
   | 'NOT_FOUND';
 
 export interface RouteMatch {
@@ -351,6 +358,106 @@ export class Router {
         type: 'ARCHITECTURE',
         path: pathPart,
         params: { docId: archMatch[1] ? decodeURIComponent(archMatch[1]) : '' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 14. Transfer Route: "/transfer" or "/transfer/:transferId"
+    const transferMatch = pathPart.match(/^\/transfer(?:\/([^/]+))?$/);
+    if (transferMatch) {
+      return {
+        type: 'TRANSFER',
+        path: pathPart,
+        params: { transferId: transferMatch[1] ? decodeURIComponent(transferMatch[1]) : '' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 15. Lesson Route: "/lesson" or "/lesson/:lessonId"
+    const lessonMatch = pathPart.match(/^\/lesson(?:\/([^/]+))?$/);
+    if (lessonMatch) {
+      return {
+        type: 'LESSON',
+        path: pathPart,
+        params: { lessonId: lessonMatch[1] ? decodeURIComponent(lessonMatch[1]) : '' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 16. Orientation Route: "/orientation" or "/orientation/:orientationId"
+    const orientationMatch = pathPart.match(/^\/orientation(?:\/([^/]+))?$/);
+    if (orientationMatch) {
+      return {
+        type: 'ORIENTATION',
+        path: pathPart,
+        params: { orientationId: orientationMatch[1] ? decodeURIComponent(orientationMatch[1]) : '' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 17. Supported Practice Route: "/supported" or "/supported/:supportedId"
+    const supportedMatch = pathPart.match(/^\/(?:supported|supported-practice)(?:\/([^/]+))?$/);
+    if (supportedMatch) {
+      return {
+        type: 'SUPPORTED',
+        path: pathPart,
+        params: { supportedId: supportedMatch[1] ? decodeURIComponent(supportedMatch[1]) : '' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 18. Changed Demand Route: "/transfer-changed-demand" or "/changed-demand"
+    const changedDemandMatch = pathPart.match(/^\/(?:transfer-changed-demand|changed-demand)(?:\/([^/]+))?$/);
+    if (changedDemandMatch) {
+      return {
+        type: 'CHANGED_DEMAND',
+        path: pathPart,
+        params: { demandId: changedDemandMatch[1] ? decodeURIComponent(changedDemandMatch[1]) : '' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 19. Learning Stage Route: "/learning/:role"
+    const learningMatch = pathPart.match(/^\/learning\/([^/]+)$/);
+    if (learningMatch) {
+      const r = decodeURIComponent(learningMatch[1]).toUpperCase();
+      return {
+        type: 'ROLE',
+        path: pathPart,
+        params: { coreRole: r, resourceId: '' },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 20. Curriculum Route: "/curriculum/:curriculumId" or "/curriculum/:curriculumId/:subtopicId"
+    const curriculumMatch = pathPart.match(/^\/curriculum\/([^/]+)(?:\/([^/]+))?$/);
+    if (curriculumMatch) {
+      return {
+        type: 'CURRICULUM',
+        path: pathPart,
+        params: {
+          curriculumId: decodeURIComponent(curriculumMatch[1]),
+          subtopicId: curriculumMatch[2] ? decodeURIComponent(curriculumMatch[2]) : '',
+        },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    // 21. Library Route: "/physics-library" or "/library/:libraryId"
+    const libraryMatch = pathPart.match(/^\/(?:physics-library|stem-library|library)(?:\/([^/]+))?$/);
+    if (libraryMatch) {
+      return {
+        type: 'LIBRARY',
+        path: pathPart,
+        params: { libraryId: libraryMatch[1] ? decodeURIComponent(libraryMatch[1]) : 'physics' },
         query,
         hash: hashPart,
       };

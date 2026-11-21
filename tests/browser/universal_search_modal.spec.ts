@@ -12,14 +12,14 @@ import {
 import { CANONICAL_UNIFIED_QUESTIONS } from '../../web/data/unified-questions.generated.ts';
 
 describe('Universal Search — Corpus & Relevance Engine Contract', () => {
-  it('indexes complete corpus count: 1046 total (940 questions, 61 tablets, 44 curriculum topics)', () => {
-    assert.equal(UNIVERSAL_SEARCH_CORPUS.length, 1046, 'Corpus must contain all 1046 verified STEM items');
+  it('indexes complete corpus count: 1082 total (976 questions, 61 tablets, 44 curriculum topics)', () => {
+    assert.equal(UNIVERSAL_SEARCH_CORPUS.length, 1082, 'Corpus must contain all 1082 verified STEM items');
 
     const questions = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'question');
     const tablets = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'tablet');
     const curriculum = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'curriculum');
 
-    assert.equal(questions.length, 940, 'Must have exactly 940 questions (702 canonical + 238 specialized)');
+    assert.equal(questions.length, 976, 'Must have exactly 976 questions (737 canonical + 239 specialized)');
     assert.equal(tablets.length, 61, 'Must have exactly 61 interactive tablets/workbenches');
     assert.equal(curriculum.length, 44, 'Must have exactly 44 curriculum topics and concepts');
   });
@@ -32,9 +32,9 @@ describe('Universal Search — Corpus & Relevance Engine Contract', () => {
 
   it('query with empty string returns full corpus and live counts matching tabs', () => {
     const res = queryUniversalSearch('');
-    assert.equal(res.totalMatches, 1046);
-    assert.equal(res.counts.all, 1046);
-    assert.equal(res.counts.question, 940);
+    assert.equal(res.totalMatches, 1082);
+    assert.equal(res.counts.all, 1082);
+    assert.equal(res.counts.question, 976);
     assert.equal(res.counts.tablet, 61);
     assert.equal(res.counts.curriculum, 44);
     assert.ok(res.executionTimeMs < 50, `Sub-50ms search requirement: took ${res.executionTimeMs}ms`);
@@ -157,8 +157,8 @@ describe('Universal Search — Playwright Modal & Keyboard Shortcut Contract', (
       const tab3Text = await tabs.nth(2).textContent();
       const tab4Text = await tabs.nth(3).textContent();
 
-      assert.match(tab1Text ?? '', /All\s*1046/i);
-      assert.match(tab2Text ?? '', /Questions\s*940/i);
+      assert.match(tab1Text ?? '', /All\s*1082/i);
+      assert.match(tab2Text ?? '', /Questions\s*976/i);
       assert.match(tab3Text ?? '', /Core 1A & 2 Tablets\s*61/i);
       assert.match(tab4Text ?? '', /Topics & Concepts\s*44/i);
 

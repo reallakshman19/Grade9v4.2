@@ -115,11 +115,11 @@ export class PaperWorkspaceController{
  private async recover(s:SessionRecord):Promise<boolean>{
   if(!s.attemptIds.length)return false;const b=this.binding!,a=await b.progress.committedAttempt(s.id,b.attemptId);
   if(!a||a.id!==b.attemptId||!a.assessmentRef||!sameRef(a.assessmentRef,b.assessment)||a.scoringVersion!==SCORING_VERSION||a.cognitive!==null||a.hintIds.length)throw Error('UNQUALIFIED_PAPER_COMMIT');
-  await this.hydrate(s,a.response,a.work);this.committed=true;this.activeAid=null;this.evaluationResult=this.sealed();this.dirty=false;return true;
+  try{await this.hydrate(s,a.response,a.work);this.committed=true;this.activeAid=null;this.evaluationResult=this.sealed();this.dirty=false;return true;}catch(err:any){if(err?.message==='PAPER_STATE_MISMATCH')return false;throw err;}
  }
  async restore():Promise<void>{
   if(this.busy)throw Error('PAPER_BUSY');this.busy=true;this.ready=false;
-  try{const s=await this.bound();if(!await this.recover(s)){const d=await this.binding!.progress.loadDraft(s.id);if(d){if(d.cognitive||d.session.id!==s.id||d.session.releaseId!==s.releaseId||!sameRef(d.session.item,s.item)||d.session.deadlineAt!==s.deadlineAt)throw Error('FOREIGN_PAPER_DRAFT');await this.hydrate(s,d.response,d.artifacts);this.revision=d.revision;}else{this.responses.clear();this.work=[];this.revision=0;}this.committed=false;this.evaluationResult=null;this.dirty=false;}this.ready=true;}finally{this.busy=false;}
+  try{const s=await this.bound();if(!await this.recover(s)){const d=await this.binding!.progress.loadDraft(s.id);if(d){if(d.cognitive||d.session.id!==s.id||d.session.releaseId!==s.releaseId||!sameRef(d.session.item,s.item)||d.session.deadlineAt!==s.deadlineAt)throw Error('FOREIGN_PAPER_DRAFT');try{await this.hydrate(s,d.response,d.artifacts);this.revision=d.revision;}catch(err:any){if(err?.message==='PAPER_STATE_MISMATCH'){this.responses.clear();this.work=[];this.revision=0;}else{throw err;}}}else{this.responses.clear();this.work=[];this.revision=0;}this.committed=false;this.evaluationResult=null;this.dirty=false;}this.ready=true;}finally{this.busy=false;}
  }
  async saveDraft():Promise<void>{
   if(!this.editable())throw Error('PAPER_LOCKED');this.busy=true;
@@ -290,6 +290,36 @@ export function mountPaperWorkspace(
 
     root.innerHTML = `
       <div class="paper-workspace paper-workspace-screen" style="display: flex; flex-direction: column; gap: 16px; max-width: 1400px; margin: 0 auto; padding: 1.5rem; box-sizing: border-box; width: 100%;">
+        <style>
+          .part-prompt ul {
+            list-style: none;
+            padding: 0;
+            margin: 1.25rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+          }
+          .part-prompt li {
+            padding: 12px 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            color: #1e293b;
+            line-height: 1.5;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+          }
+          .part-prompt li strong {
+            color: #0284c7;
+            background: #e0f2fe;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+          }
+        </style>
         
         <!-- Header -->
         <header class="paper-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0;">
@@ -349,6 +379,16 @@ export function mountPaperWorkspace(
                 <strong>Optics &amp; Waves:</strong><br/>
                 $\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u}$ (lens) · $\\frac{1}{f} = \\frac{1}{v} + \\frac{1}{u}$ (mirror)<br/>
                 $n_1 \\sin\\theta_1 = n_2 \\sin\\theta_2$ · $v = f\\lambda$
+              </div>
+              <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
+                <strong>Chemistry Constants &amp; Gas Laws:</strong><br/>
+                $PV = nRT$ · $R = 8.314\\text{ J/(mol}\\cdot\\text{K)}$ · $F = 96,500\\text{ C/mol}$<br/>
+                $\\Delta H = \\Delta U + \\Delta n_g RT$ · $\\Delta G^\\circ = -nFE^\\circ_{\\text{cell}}$ · $\\text{pH} = -\\log[\\text{H}^+]$
+              </div>
+              <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
+                <strong>Genetics &amp; Cellular Bio:</strong><br/>
+                Hardy-Weinberg: $p + q = 1$ · $p^2 + 2pq + q^2 = 1$<br/>
+                Lindeman 10% Trophic Transfer: $E_{n+1} = 0.10 \\times E_n$
               </div>
             </div>
           </div>

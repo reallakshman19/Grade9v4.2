@@ -309,4 +309,46 @@ export class GraphController {
       </div>
     `;
   }
+
+  bindEvents(container: HTMLElement, onUpdate?: () => void): void {
+    container.querySelector('#graph-zoom-in-btn')?.addEventListener('click', () => {
+      this.zoom(1.25);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-zoom-out-btn')?.addEventListener('click', () => {
+      this.zoom(0.8);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-pan-left-btn')?.addEventListener('click', () => {
+      const dx = (this.viewState.xMax - this.viewState.xMin) * 0.1;
+      this.pan(-dx, 0);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-pan-right-btn')?.addEventListener('click', () => {
+      const dx = (this.viewState.xMax - this.viewState.xMin) * 0.1;
+      this.pan(dx, 0);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-reset-view-btn')?.addEventListener('click', () => {
+      this.resetView();
+      if (onUpdate) onUpdate();
+    });
+  }
+
+  mount(container: HTMLElement): { dispose: () => void; refresh: () => void } {
+    let active = true;
+    const render = () => {
+      if (!active) return;
+      container.innerHTML = this.renderHtml();
+      this.bindEvents(container, render);
+    };
+    render();
+    return {
+      dispose: () => {
+        active = false;
+        container.replaceChildren();
+      },
+      refresh: () => render(),
+    };
+  }
 }

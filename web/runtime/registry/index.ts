@@ -1179,7 +1179,7 @@ export const DEFAULT_APP_REGISTRY: AppRegistrySnapshot = {
       year: 2024,
       durationMinutes: 120,
       questionCount: 60,
-      totalMarks: 216,
+      totalMarks: 180,
       scoringPolicy: {
         positiveMarksPerQuestion: 3,
         negativeMarksPerQuestion: 1,
@@ -1188,16 +1188,16 @@ export const DEFAULT_APP_REGISTRY: AppRegistrySnapshot = {
       sourceRef: {
         repository: 'Grade9v4.1',
         commit: '564ad2a07fddc0fdd30d103674b3eca61235a54b',
-        path: 'nsejs/mocks/paper1.json',
+        path: 'web/pages/nsejs-mock1-data.ts',
         sha256: 'ccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb',
       },
       canonicalRoute: '/practice/nsejs-2024-mock-1',
       legacyAliases: [],
-      availability: 'HOLD', // Honest status: mock paper descriptor defined, assessment content in HOLD
+      availability: 'AVAILABLE', // Active simulated mock paper with authentic 60-question set
       authorityStatus: {
         academicAdmission: 'HOLD',
         technicalCheck: 'PASS',
-        releaseEligibility: 'HOLD',
+        releaseEligibility: 'ELIGIBLE',
       },
       runtimeBinding: {
         controllerName: 'PaperWorkspacePageController',

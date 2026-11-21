@@ -31,10 +31,10 @@ import { DefaultProgressStore } from './progress.ts';
 import { Session as DurableSessionController } from './session.ts';
 import { createStorageDriver, type StorageDriver } from './storage.ts';
 import { canonicalJson, computeSha256, sameRef } from './loader.ts';
-import { NSEJS_AUTHENTIC_QUESTIONS } from '../pages/nsejs-data.generated.ts';
+import { NSEJS_MOCK1_QUESTIONS } from '../pages/nsejs-mock1-data.ts';
 
 // ---------------------------------------------------------------------------
-// 1. Shared Stimuli & Formula Sheet
+// 1. Shared Stimuli & Reference Constants
 // ---------------------------------------------------------------------------
 
 const SHARED_PHYSICS_STIMULUS: SharedStimulus = {
@@ -46,6 +46,23 @@ const SHARED_PHYSICS_STIMULUS: SharedStimulus = {
   `,
 };
 
+const SHARED_CHEMISTRY_STIMULUS: SharedStimulus = {
+  id: 'stim-nsejs-chemistry',
+  title: 'Thermodynamics & Solution Equilibria Reference',
+  contentHtml: `
+    <p>All standard thermodynamic quantities ($\Delta H^\circ, S^\circ, \Delta G^\circ$) are evaluated at $T = 298.15\text{ K}$ and $P = 1.0\text{ bar}$.
+    Faraday constant $F = 96,500\text{ C/mol}$. Universal gas constant $R = 8.314\text{ J/(mol}\cdot\text{K)} = 0.0821\text{ L}\cdot\text{atm/(mol}\cdot\text{K)}$.</p>
+  `,
+};
+
+const SHARED_BIOLOGY_STIMULUS: SharedStimulus = {
+  id: 'stim-nsejs-biology',
+  title: 'Cellular Energetics & Metabolic Assay Controls',
+  contentHtml: `
+    <p>In mitochondrial respiration assays, uncouplers (e.g., DNP) dissipate the transmembrane electrochemical proton gradient ($\Delta\mu_{\text{H}^+}$) without directly inhibiting electron transport complexes I–IV, whereas oligomycin directly blocks the $F_0$ proton channel of ATP synthase.</p>
+  `,
+};
+
 // ---------------------------------------------------------------------------
 // 2. Question Parts Factory (60 Questions: 20 Physics, 20 Chemistry, 20 Biology)
 // ---------------------------------------------------------------------------
@@ -53,78 +70,50 @@ const SHARED_PHYSICS_STIMULUS: SharedStimulus = {
 function createNsejsQuestionParts(): PaperQuestionPart[] {
   const parts: PaperQuestionPart[] = [];
 
-  // Section 1: Physics (Questions 1 to 20, 3 Marks each)
-  for (let i = 1; i <= 20; i++) {
-    const qid = `nsejs-p-${String(i).padStart(2, '0')}`;
-    const authQ = NSEJS_AUTHENTIC_QUESTIONS[i - 1];
-    const prompt = authQ
-      ? `<p><strong>${authQ.id} [${authQ.topic}]:</strong></p><p>${authQ.stem}</p>`
-      : `<p>A uniform body accelerates from rest under constant net force. Calculate the physical displacement during the $n$-th second.</p>`;
+  for (let i = 1; i <= 60; i++) {
+    const q = NSEJS_MOCK1_QUESTIONS[i - 1];
+    if (!q) {
+      throw new Error(`Missing mock question item at index ${i - 1}`);
+    }
+
+    let qid: string;
+    let secId: string;
+    let labelPrefix: string;
+    let archetypeId: string;
+    let stimulusId: string | undefined;
+
+    if (i <= 20) {
+      qid = `nsejs-p-${String(i).padStart(2, '0')}`;
+      secId = 'sec-nsejs-physics';
+      labelPrefix = `Physics Q${i}: ${q.topic}`;
+      archetypeId = 'NSEJS-PHYSICS-MCQ';
+      if (i <= 5) stimulusId = 'stim-nsejs-mechanics';
+    } else if (i <= 40) {
+      qid = `nsejs-c-${String(i).padStart(2, '0')}`;
+      secId = 'sec-nsejs-chemistry';
+      labelPrefix = `Chemistry Q${i}: ${q.topic}`;
+      archetypeId = 'NSEJS-CHEMISTRY-MCQ';
+      if (i >= 21 && i <= 25) stimulusId = 'stim-nsejs-chemistry';
+    } else {
+      qid = `nsejs-b-${String(i).padStart(2, '0')}`;
+      secId = 'sec-nsejs-biology';
+      labelPrefix = `Biology Q${i}: ${q.topic}`;
+      archetypeId = 'NSEJS-BIOLOGY-MCQ';
+      if (i >= 41 && i <= 45) stimulusId = 'stim-nsejs-biology';
+    }
+
+    const promptHtml = `<p><strong>Question ${i} [${q.topic}]:</strong></p><p>${q.stem}</p><ul><li><strong>(A)</strong> ${q.options[0]}</li><li><strong>(B)</strong> ${q.options[1]}</li><li><strong>(C)</strong> ${q.options[2]}</li><li><strong>(D)</strong> ${q.options[3]}</li></ul>`;
 
     parts.push({
       id: qid,
       partKey: String(i),
-      sectionId: 'sec-nsejs-physics',
-      label: `Physics Q${i}: ${authQ ? authQ.topic : 'Mechanics & Dynamics'}`,
+      sectionId: secId,
+      label: labelPrefix,
       maxPoints: 3,
-      archetypeId: 'NSEJS-PHYSICS-MCQ',
-      promptHtml: prompt,
+      archetypeId,
+      promptHtml,
       responseKind: 'SINGLE_CHOICE',
-      ...(i <= 5 ? { sharedStimulusId: 'stim-nsejs-mechanics' } : {}),
-    });
-  }
-
-  // Section 2: Chemistry (Questions 21 to 40, 3 Marks each)
-  const chemTopics = [
-    'Chemical Bonding & Molecular Shapes',
-    'Mole Concept & Stoichiometric Ratios',
-    'Gas Laws & Kinetic Theory',
-    'Acids, Bases and Salts',
-    'Periodic Classification & Trends',
-    'Redox Reactions & Oxidation Numbers',
-    'Thermodynamics & Enthalpy Changes',
-    'Electrochemistry & Galvanic Cells',
-  ];
-
-  for (let i = 21; i <= 40; i++) {
-    const qid = `nsejs-c-${String(i).padStart(2, '0')}`;
-    const topic = chemTopics[(i - 21) % chemTopics.length]!;
-    parts.push({
-      id: qid,
-      partKey: String(i),
-      sectionId: 'sec-nsejs-chemistry',
-      label: `Chemistry Q${i}: ${topic}`,
-      maxPoints: 3,
-      archetypeId: 'NSEJS-CHEMISTRY-MCQ',
-      promptHtml: `<p><strong>[${topic}]:</strong> An unknown substance $X$ reacts according to standard stoichiometric stoichiometry. Determine the correct empirical relation or reaction product under standard conditions.</p>`,
-      responseKind: 'SINGLE_CHOICE',
-    });
-  }
-
-  // Section 3: Biology (Questions 41 to 60, 3 Marks each)
-  const bioTopics = [
-    'Cell Structure & Organelles',
-    'Photosynthesis & Light Reactions',
-    'Cellular Respiration & ATP Yield',
-    'Genetics & Mendelian Inheritance',
-    'Human Physiology & Circulation',
-    'Excretory Systems & Nephron Osmoregulation',
-    'Plant Transport & Transpiration',
-    'Ecology & Energy Flow in Trophic Levels',
-  ];
-
-  for (let i = 41; i <= 60; i++) {
-    const qid = `nsejs-b-${String(i).padStart(2, '0')}`;
-    const topic = bioTopics[(i - 41) % bioTopics.length]!;
-    parts.push({
-      id: qid,
-      partKey: String(i),
-      sectionId: 'sec-nsejs-biology',
-      label: `Biology Q${i}: ${topic}`,
-      maxPoints: 3,
-      archetypeId: 'NSEJS-BIOLOGY-MCQ',
-      promptHtml: `<p><strong>[${topic}]:</strong> In a physiological assay of cellular organelle activity, selective inhibitors are introduced. Deduce the observed metabolic consequence on biochemical homeostasis.</p>`,
-      responseKind: 'SINGLE_CHOICE',
+      ...(stimulusId ? { sharedStimulusId: stimulusId } : {}),
     });
   }
 
@@ -163,7 +152,7 @@ export function createNsejsPaperWorkspaceConfig(): PaperWorkspaceConfig {
       },
     ],
     parts,
-    stimuli: [SHARED_PHYSICS_STIMULUS],
+    stimuli: [SHARED_PHYSICS_STIMULUS, SHARED_CHEMISTRY_STIMULUS, SHARED_BIOLOGY_STIMULUS],
     allowedAids: ['FORMULA_SHEET', 'SCRATCHPAD'],
   };
 }
@@ -245,7 +234,28 @@ export async function createAuthorizedNsejsPaperSession(
   const deadlineAt = new Date(now + config.durationSeconds * 1000).toISOString();
 
   let ses = await driver.get<SessionRecord>('sessions', sessionId);
-  if (!ses) {
+  if (!ses || ses.origin?.sha256 !== definitionSha256) {
+    if (ses && ses.origin?.sha256 !== definitionSha256) {
+      try {
+        await driver.delete('sessions', sessionId);
+        await driver.delete('drafts', sessionId);
+        for (const attId of ses.attemptIds || []) {
+          await driver.delete('attempts', attId);
+          await driver.delete('attempt_authority', attId);
+        }
+      } catch {
+        // ignore storage cleanup errors
+      }
+    }
+
+    try {
+      await driver.delete('drafts', sessionId);
+      await driver.delete('attempts', attemptId);
+      await driver.delete('attempt_authority', attemptId);
+    } catch {
+      // ignore
+    }
+
     ses = {
       id: sessionId,
       releaseId,

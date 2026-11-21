@@ -13,8 +13,9 @@
  * No academic approval inferred from software validation.
  */
 
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
+import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
 import {
   NSEJS_CHAPTERS,
   NSEJS_SUBTOPICS,
@@ -58,6 +59,8 @@ export class NsejsCurriculumController {
   private selectedSubtopicId: string | null = null;
   private expandedHints = new Set<string>();
   private expandedSteps = new Set<string>();
+  private selectedOptions = new Map<string, string>();
+  private committedQuestions = new Set<string>();
 
   getChapters(): readonly NsejsChapterDescriptor[] {
     return NSEJS_CHAPTERS;
@@ -138,6 +141,27 @@ export class NsejsCurriculumController {
 
   isStepExpanded(id: string): boolean {
     return this.expandedSteps.has(id);
+  }
+
+  selectOption(qid: string, opt: string): void {
+    this.selectedOptions.set(qid, opt);
+  }
+
+  getSelectedOption(qid: string): string | undefined {
+    return this.selectedOptions.get(qid);
+  }
+
+  commitQuestion(qid: string): void {
+    this.committedQuestions.add(qid);
+  }
+
+  isQuestionCommitted(qid: string): boolean {
+    return this.committedQuestions.has(qid);
+  }
+
+  resetQuestion(qid: string): void {
+    this.committedQuestions.delete(qid);
+    this.selectedOptions.delete(qid);
   }
 
   getSubtopics(chapterId?: string): readonly NsejsSubtopicDescriptor[] {
@@ -429,10 +453,20 @@ export function mountNsejsChapterExplorer(
                     No authentic questions match the current filter.
                   </div>
                 ` : questions.map((q) => {
-                  const hintsOpen = controller.isHintExpanded(q.id);
-                  const stepsOpen = controller.isStepExpanded(q.id);
+                  const userChoice = controller.getSelectedOption(q.id);
+                  const isCommitted = controller.isQuestionCommitted(q.id);
+                  const hintsOpen = controller.isHintExpanded(q.id) || isCommitted;
+                  const stepsOpen = controller.isStepExpanded(q.id) || isCommitted;
+
+                  const unifiedEntry = UNIFIED_QUESTION_DATABASE.getById(q.id);
+                  const correctKey = unifiedEntry?.correctKey;
+                  const hasKey = !!correctKey && correctKey !== 'WITHHELD_CLIENT_SIDE_FAULT_N09';
+                  const cleanUserKey = userChoice ? userChoice.replace(/[()]/g, '').trim() : '';
+                  const cleanCorrectKey = hasKey ? correctKey.replace(/[()]/g, '').trim() : '';
+                  const isCorrect = hasKey && cleanUserKey.toUpperCase() === cleanCorrectKey.toUpperCase();
+
                   return `
-                    <article style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem;">
+                    <article style="background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
                         <div style="display: flex; gap: 8px; align-items: center;">
                           <strong style="color: #0284c7; font-size: 1.05rem;">${escapeHtml(q.id)}</strong>
@@ -445,16 +479,90 @@ export function mountNsejsChapterExplorer(
                       </div>
 
                       <div style="font-size: 1rem; line-height: 1.6; color: #1e293b; margin-bottom: 1rem;">
-                        ${escapeHtml(q.stem)}
+                        ${renderMathHtml(q.stem)}
                       </div>
 
+                      <!-- Interactive Options -->
                       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 8px; margin-bottom: 1rem;">
-                        ${q.options.map((opt) => `
-                          <div style="padding: 8px 12px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.95rem; color: #334155;">
-                            ${escapeHtml(opt)}
-                          </div>
-                        `).join('')}
+                        ${q.options.map((opt) => {
+                          const optKey = opt.slice(0, 3).trim();
+                          const isSelected = userChoice === optKey;
+                          let btnBg = '#ffffff';
+                          let btnBorder = '#cbd5e1';
+                          let btnColor = '#1e293b';
+
+                          if (isSelected) {
+                            if (isCommitted) {
+                              if (hasKey) {
+                                btnBg = isCorrect ? '#dcfce7' : '#fee2e2';
+                                btnBorder = isCorrect ? '#16a34a' : '#dc2626';
+                                btnColor = isCorrect ? '#14532d' : '#991b1b';
+                              } else {
+                                btnBg = '#e0f2fe';
+                                btnBorder = '#0284c7';
+                                btnColor = '#075985';
+                              }
+                            } else {
+                              btnBg = '#e0f2fe';
+                              btnBorder = '#0284c7';
+                              btnColor = '#0369a1';
+                            }
+                          }
+
+                          return `
+                            <button
+                              type="button"
+                              class="btn-select-nsejs-opt"
+                              data-qid="${escapeHtml(q.id)}"
+                              data-opt="${escapeHtml(optKey)}"
+                              ${isCommitted ? 'disabled' : ''}
+                              style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;border:1px solid ${btnBorder};border-radius:6px;background:${btnBg};color:${btnColor};font-size:0.92rem;text-align:left;cursor:${isCommitted ? 'default' : 'pointer'};font-weight:${isSelected ? '700' : '500'};line-height:1.4;"
+                            >
+                              ${renderMathHtml(opt)}
+                            </button>
+                          `;
+                        }).join('')}
                       </div>
+
+                      <!-- Commitment / Feedback -->
+                      ${userChoice && !isCommitted ? `
+                        <div style="margin-bottom:1rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#eff6ff;padding:10px 14px;border-radius:6px;border:1px solid #bfdbfe;">
+                          <button
+                            type="button"
+                            class="btn-commit-nsejs-opt"
+                            data-qid="${escapeHtml(q.id)}"
+                            style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
+                          >
+                            🎯 Commit Solution (${userChoice})
+                          </button>
+                          <span style="font-size:0.875rem;color:#1e40af;">Click to verify selection and inspect decisive moves.</span>
+                        </div>
+                      ` : ''}
+
+                      ${isCommitted ? `
+                        <div style="margin-bottom:1rem;padding:10px 14px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;${
+                          hasKey
+                            ? (isCorrect ? 'background:#dcfce7;border:1px solid #86efac;color:#166534;' : 'background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;')
+                            : 'background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;'
+                        }">
+                          <div style="font-weight:700;font-size:0.92rem;">
+                            ${hasKey
+                              ? (isCorrect
+                                  ? `✅ Correct! Option ${escapeHtml(userChoice ?? '')} matches official solution.`
+                                  : `❌ Incorrect. You chose ${escapeHtml(userChoice ?? '')}, but official answer is (${escapeHtml(correctKey ?? '')}).`)
+                              : `📝 Option ${escapeHtml(userChoice ?? '')} Committed (Formative Practice). Trace the decisive moves below.`
+                            }
+                          </div>
+                          <button
+                            type="button"
+                            class="btn-reset-nsejs-opt"
+                            data-qid="${escapeHtml(q.id)}"
+                            style="min-height:${HIT_TARGET_MIN_PX}px;padding:4px 12px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.8rem;cursor:pointer;color:#334155;"
+                          >
+                            ↺ Try Again
+                          </button>
+                        </div>
+                      ` : ''}
 
                       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button type="button" class="btn-toggle-hint" data-qid="${q.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem; color: #0284c7;">
@@ -469,7 +577,7 @@ export function mountNsejsChapterExplorer(
                         <div style="margin-top: 10px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 14px;">
                           <strong style="color: #1e40af; font-size:0.875rem; display: block; margin-bottom: 6px;">Pedagogical Guidance &amp; Crux Hints:</strong>
                           <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #1e3a8a;">
-                            ${q.hints.map((h) => `<li style="margin-bottom: 4px;">${escapeHtml(h)}</li>`).join('')}
+                            ${q.hints.map((h) => `<li style="margin-bottom: 4px;">${renderMathHtml(h)}</li>`).join('')}
                           </ul>
                         </div>
                       ` : ''}
@@ -478,7 +586,7 @@ export function mountNsejsChapterExplorer(
                         <div style="margin-top: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 14px;">
                           <strong style="color: #166534; font-size:0.875rem; display: block; margin-bottom: 6px;">Decisive Reasoning Moves (No Direct Key):</strong>
                           <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #14532d;">
-                            ${q.steps.map((st) => `<li style="margin-bottom: 4px;">${escapeHtml(st)}</li>`).join('')}
+                            ${q.steps.map((st) => `<li style="margin-bottom: 4px;">${renderMathHtml(st)}</li>`).join('')}
                           </ol>
                         </div>
                       ` : ''}
@@ -502,8 +610,18 @@ export function mountNsejsChapterExplorer(
                     No circuit modules match the current filter.
                   </div>
                 ` : circuits.map((c) => {
-                  const hintsOpen = controller.isHintExpanded(c.id);
-                  const stepsOpen = controller.isStepExpanded(c.id);
+                  const userChoice = controller.getSelectedOption(c.id);
+                  const isCommitted = controller.isQuestionCommitted(c.id);
+                  const hintsOpen = controller.isHintExpanded(c.id) || isCommitted;
+                  const stepsOpen = controller.isStepExpanded(c.id) || isCommitted;
+
+                  const unifiedEntry = UNIFIED_QUESTION_DATABASE.getById(c.id);
+                  const correctKey = unifiedEntry?.correctKey;
+                  const hasKey = !!correctKey && correctKey !== 'WITHHELD_CLIENT_SIDE_FAULT_N09';
+                  const cleanUserKey = userChoice ? userChoice.replace(/[()]/g, '').trim() : '';
+                  const cleanCorrectKey = hasKey ? correctKey.replace(/[()]/g, '').trim() : '';
+                  const isCorrect = hasKey && cleanUserKey.toUpperCase() === cleanCorrectKey.toUpperCase();
+
                   return `
                     <article style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.25rem;">
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
@@ -517,16 +635,90 @@ export function mountNsejsChapterExplorer(
                       </div>
 
                       <div style="font-size: 1rem; line-height: 1.6; color: #1e293b; margin-bottom: 1rem;">
-                        ${escapeHtml(c.stem)}
+                        ${renderMathHtml(c.stem)}
                       </div>
 
+                      <!-- Options Grid -->
                       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 8px; margin-bottom: 1rem;">
-                        ${c.options.map((opt) => `
-                          <div style="padding: 8px 12px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 0.95rem; color: #334155;">
-                            ${escapeHtml(opt)}
-                          </div>
-                        `).join('')}
+                        ${c.options.map((opt) => {
+                          const optKey = opt.slice(0, 3).trim();
+                          const isSelected = userChoice === optKey;
+                          let btnBg = '#ffffff';
+                          let btnBorder = '#cbd5e1';
+                          let btnColor = '#1e293b';
+
+                          if (isSelected) {
+                            if (isCommitted) {
+                              if (hasKey) {
+                                btnBg = isCorrect ? '#dcfce7' : '#fee2e2';
+                                btnBorder = isCorrect ? '#16a34a' : '#dc2626';
+                                btnColor = isCorrect ? '#14532d' : '#991b1b';
+                              } else {
+                                btnBg = '#ede9fe';
+                                btnBorder = '#7c3aed';
+                                btnColor = '#5b21b6';
+                              }
+                            } else {
+                              btnBg = '#ede9fe';
+                              btnBorder = '#7c3aed';
+                              btnColor = '#5b21b6';
+                            }
+                          }
+
+                          return `
+                            <button
+                              type="button"
+                              class="btn-select-nsejs-opt"
+                              data-qid="${escapeHtml(c.id)}"
+                              data-opt="${escapeHtml(optKey)}"
+                              ${isCommitted ? 'disabled' : ''}
+                              style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;border:1px solid ${btnBorder};border-radius:6px;background:${btnBg};color:${btnColor};font-size:0.92rem;text-align:left;cursor:${isCommitted ? 'default' : 'pointer'};font-weight:${isSelected ? '700' : '500'};line-height:1.4;"
+                            >
+                              ${renderMathHtml(opt)}
+                            </button>
+                          `;
+                        }).join('')}
                       </div>
+
+                      <!-- Commitment / Feedback -->
+                      ${userChoice && !isCommitted ? `
+                        <div style="margin-bottom:1rem;display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#faf5ff;padding:10px 14px;border-radius:6px;border:1px solid #e9d5ff;">
+                          <button
+                            type="button"
+                            class="btn-commit-nsejs-opt"
+                            data-qid="${escapeHtml(c.id)}"
+                            style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#7c3aed;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
+                          >
+                            🎯 Commit Solution (${userChoice})
+                          </button>
+                          <span style="font-size:0.875rem;color:#6b21a8;">Click to verify selection and inspect circuit analysis.</span>
+                        </div>
+                      ` : ''}
+
+                      ${isCommitted ? `
+                        <div style="margin-bottom:1rem;padding:10px 14px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;${
+                          hasKey
+                            ? (isCorrect ? 'background:#dcfce7;border:1px solid #86efac;color:#166534;' : 'background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;')
+                            : 'background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;'
+                        }">
+                          <div style="font-weight:700;font-size:0.92rem;">
+                            ${hasKey
+                              ? (isCorrect
+                                  ? `✅ Correct! Option ${escapeHtml(userChoice ?? '')} matches circuit solution.`
+                                  : `❌ Incorrect. You chose ${escapeHtml(userChoice ?? '')}, but official answer is (${escapeHtml(correctKey ?? '')}).`)
+                              : `📝 Option ${escapeHtml(userChoice ?? '')} Committed (Circuit Practice). Trace the analysis below.`
+                            }
+                          </div>
+                          <button
+                            type="button"
+                            class="btn-reset-nsejs-opt"
+                            data-qid="${escapeHtml(c.id)}"
+                            style="min-height:${HIT_TARGET_MIN_PX}px;padding:4px 12px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.8rem;cursor:pointer;color:#334155;"
+                          >
+                            ↺ Try Again
+                          </button>
+                        </div>
+                      ` : ''}
 
                       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button type="button" class="btn-toggle-hint" data-qid="${c.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem; color: #7c3aed;">
@@ -541,7 +733,7 @@ export function mountNsejsChapterExplorer(
                         <div style="margin-top: 10px; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 6px; padding: 10px 14px;">
                           <strong style="color: #6b21a8; font-size:0.875rem; display: block; margin-bottom: 6px;">Circuit Hints &amp; Crux Invariants:</strong>
                           <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #581c87;">
-                            ${c.hints.map((h) => `<li style="margin-bottom: 4px;">${escapeHtml(h)}</li>`).join('')}
+                            ${c.hints.map((h) => `<li style="margin-bottom: 4px;">${renderMathHtml(h)}</li>`).join('')}
                           </ul>
                         </div>
                       ` : ''}
@@ -550,7 +742,7 @@ export function mountNsejsChapterExplorer(
                         <div style="margin-top: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 14px;">
                           <strong style="color: #166534; font-size:0.875rem; display: block; margin-bottom: 6px;">Circuit Analysis Steps:</strong>
                           <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #14532d;">
-                            ${c.steps.map((st) => `<li style="margin-bottom: 4px;">${escapeHtml(st)}</li>`).join('')}
+                            ${c.steps.map((st) => `<li style="margin-bottom: 4px;">${renderMathHtml(st)}</li>`).join('')}
                           </ol>
                         </div>
                       ` : ''}
@@ -659,6 +851,38 @@ export function mountNsejsChapterExplorer(
         const qid = btn.dataset.qid;
         if (qid) {
           controller.toggleStep(qid);
+          render();
+        }
+      });
+    });
+
+    // Option selection & commitment
+    root.querySelectorAll<HTMLButtonElement>('.btn-select-nsejs-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const qid = btn.dataset.qid;
+        const opt = btn.dataset.opt;
+        if (qid && opt) {
+          controller.selectOption(qid, opt);
+          render();
+        }
+      });
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('.btn-commit-nsejs-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const qid = btn.dataset.qid;
+        if (qid) {
+          controller.commitQuestion(qid);
+          render();
+        }
+      });
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('.btn-reset-nsejs-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const qid = btn.dataset.qid;
+        if (qid) {
+          controller.resetQuestion(qid);
           render();
         }
       });

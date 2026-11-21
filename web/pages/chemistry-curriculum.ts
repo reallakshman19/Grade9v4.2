@@ -13,8 +13,9 @@
  * No academic approval inferred from software validation.
  */
 
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
+import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
 import {
   CHEMISTRY_ADAPTERS,
   CHEMISTRY_SUBTOPICS,
@@ -51,6 +52,8 @@ export interface ChemistryCurriculumState {
   expandedSubtopics: Set<string>;
   revealedHints: Set<string>;
   selectedAnswers: Map<string, string>;
+  committedQrts: Set<string>;
+  committedAnswers: Set<string>;
   // Stoichiometry workbench state
   activeReactionIndex: number;
   stoichCoefficients: number[];
@@ -154,6 +157,8 @@ export class ChemistryCurriculumController {
       expandedSubtopics: new Set<string>(),
       revealedHints: new Set<string>(),
       selectedAnswers: new Map<string, string>(),
+      committedQrts: new Set<string>(),
+      committedAnswers: new Set<string>(),
       activeReactionIndex: 0,
       stoichCoefficients: initialCoeffs,
     };
@@ -231,6 +236,27 @@ export class ChemistryCurriculumController {
 
   public selectOption(qid: string, optKey: string): void {
     this.state.selectedAnswers.set(qid, optKey);
+    this.notify();
+  }
+
+  public commitQrt(instanceId: string): void {
+    this.state.committedQrts.add(instanceId);
+    this.notify();
+  }
+
+  public resetQrt(instanceId: string): void {
+    this.state.committedQrts.delete(instanceId);
+    this.notify();
+  }
+
+  public commitAnswer(qid: string): void {
+    this.state.committedAnswers.add(qid);
+    this.notify();
+  }
+
+  public resetAnswer(qid: string): void {
+    this.state.committedAnswers.delete(qid);
+    this.state.selectedAnswers.delete(qid);
     this.notify();
   }
 
@@ -614,7 +640,7 @@ export function mountChemistryCurriculum(
         <div style="margin-bottom:16px;">
           <h2 style="margin:0 0 6px 0;font-size:1.25rem;font-weight:700;">252 QRT Cognitive Demand Tasks</h2>
           <p style="margin:0 0 14px 0;font-size:0.9rem;color:#64748b;">
-            Structured cognitive operations spanning D3 (Application & Analysis) and D4 (Olympiad-Grade Synthesis).
+            Structured cognitive operations spanning D3 (Application & Analysis) and D4 (Olympiad-Grade Synthesis). Practice scientific modeling and verify your hypotheses.
           </p>
 
           <!-- Operation and Band Filters -->
@@ -640,36 +666,91 @@ export function mountChemistryCurriculum(
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(420px, 1fr));gap:16px;">
-          ${visibleQrts.slice(0, 50).map(qrt => `
-            <div class="qrt-card" style="border:1px solid #cbd5e1;border-radius:8px;padding:16px;background:#ffffff;box-shadow:0 1px 4px rgba(0,0,0,0.06);display:flex;flex-direction:column;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <span style="font-family:monospace;font-weight:800;font-size:0.9rem;color:#047857;">${escapeHtml(qrt.instanceId)}</span>
-                <div style="display:flex;gap:6px;">
-                  <span style="font-size:0.875rem;padding:2px 6px;border-radius:4px;background:#dbeafe;color:#1e40af;font-weight:700;">${escapeHtml(qrt.primaryOperation)}</span>
-                  <span style="font-size:0.875rem;padding:2px 6px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">${escapeHtml(qrt.band)}</span>
+          ${visibleQrts.slice(0, 50).map(qrt => {
+            const isCommitted = state.committedQrts.has(qrt.instanceId);
+            const figMatch = qrt.visualJob.match(/figures\/([a-zA-Z0-9_-]+\.svg)/);
+            const figName = figMatch ? figMatch[1] : null;
+            const cleanCheck = qrt.independentCheck.replace(/^Check:\s*/i, '');
+
+            return `
+              <div class="qrt-card" style="border:1px solid #cbd5e1;border-radius:10px;padding:18px;background:#ffffff;box-shadow:0 1px 4px rgba(0,0,0,0.06);display:flex;flex-direction:column;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                  <span style="font-family:monospace;font-weight:800;font-size:0.9rem;color:#047857;">${escapeHtml(qrt.instanceId)}</span>
+                  <div style="display:flex;gap:6px;">
+                    <span style="font-size:0.85rem;padding:2px 8px;border-radius:4px;background:#dbeafe;color:#1e40af;font-weight:700;">${escapeHtml(qrt.primaryOperation)}</span>
+                    <span style="font-size:0.85rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">${escapeHtml(qrt.band)}</span>
+                  </div>
+                </div>
+
+                <!-- Student Task Prompt -->
+                <div style="margin-bottom:14px;font-size:0.98rem;color:#0f172a;line-height:1.5;font-weight:600;">
+                  ${renderMathHtml(qrt.studentTask)}
+                </div>
+
+                <!-- Graphic Demonstration (if figure applies) -->
+                ${figName ? `
+                  <div style="margin-bottom:14px;border:1px solid #e2e8f0;border-radius:8px;background:#f8fafc;padding:6px;text-align:center;">
+                    <img src="./figures/${figName}" alt="Scientific Demonstration: ${escapeHtml(figName)}" style="max-width:100%;max-height:160px;object-fit:contain;display:block;margin:0 auto;" loading="lazy"/>
+                    <div style="font-size:0.78rem;color:#64748b;margin-top:4px;">Demonstration Figure · ${escapeHtml(figName)}</div>
+                  </div>
+                ` : ''}
+
+                <!-- Pedagogical Trapped Idea & Decisive Rule -->
+                <div style="margin-bottom:8px;background:#fef2f2;padding:8px 10px;border-radius:6px;font-size:0.88rem;color:#991b1b;line-height:1.45;">
+                  <strong>⚠️ Trapped Idea:</strong> ${renderMathHtml(qrt.wrongIdea)}
+                </div>
+                <div style="margin-bottom:8px;background:#f0fdf4;padding:8px 10px;border-radius:6px;font-size:0.88rem;color:#166534;line-height:1.45;">
+                  <strong>💡 Decisive Rule:</strong> ${renderMathHtml(qrt.replacementRule)}
+                </div>
+
+                <!-- Active Student Engagement / Hypothesis Commitment -->
+                ${!isCommitted ? `
+                  <div style="margin-top:auto;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:8px;">
+                    <div style="font-size:0.875rem;font-weight:700;color:#334155;margin-bottom:4px;">
+                      🤔 Active Model Practice:
+                    </div>
+                    <p style="margin:0 0 10px 0;font-size:0.85rem;color:#64748b;line-height:1.4;">
+                      Formulate your reasoning using the decisive rule above. Commit to check self-verification criteria.
+                    </p>
+                    <button
+                      type="button"
+                      data-action="commit-qrt"
+                      data-qrt-id="${escapeHtml(qrt.instanceId)}"
+                      style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.88rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;box-shadow:0 1px 3px rgba(4,120,87,0.25);"
+                    >
+                      🎯 Commit Model &amp; Verify Criteria
+                    </button>
+                  </div>
+                ` : `
+                  <div style="margin-top:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:8px;">
+                    <div style="background:#f0f9ff;border-left:4px solid #0284c7;padding:10px 12px;border-radius:6px;font-size:0.88rem;color:#075985;line-height:1.4;">
+                      <div style="font-weight:800;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;color:#0284c7;">🔍 Self-Verification Criterion:</div>
+                      ${renderMathHtml(cleanCheck)}
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;">
+                      <button
+                        type="button"
+                        data-action="reset-qrt"
+                        data-qrt-id="${escapeHtml(qrt.instanceId)}"
+                        style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;border-radius:6px;font-weight:600;font-size:0.82rem;cursor:pointer;"
+                      >
+                        ↺ Rethink / Reset
+                      </button>
+                    </div>
+                  </div>
+                `}
+
+                <!-- Curriculum Target & Verification Specs -->
+                <div style="margin-top:auto;border-top:1px solid #f1f5f9;padding-top:8px;">
+                  <details style="font-size:0.8rem;color:#64748b;cursor:pointer;">
+                    <summary style="font-weight:600;color:#64748b;">Curriculum Criteria &amp; Target</summary>
+                    <div style="margin-top:4px;"><strong>Visual Target:</strong> ${escapeHtml(qrt.visualJob)}</div>
+                    <div style="margin-top:2px;"><strong>Check:</strong> ${escapeHtml(qrt.independentCheck)}</div>
+                  </details>
                 </div>
               </div>
-
-              <!-- Student Task -->
-              <div style="margin-bottom:12px;font-size:0.95rem;color:#0f172a;line-height:1.45;font-weight:600;">
-                ${escapeHtml(qrt.studentTask)}
-              </div>
-
-              <!-- Wrong Idea & Replacement Rule -->
-              <div style="margin-bottom:8px;background:#fef2f2;padding:8px 10px;border-radius:4px;font-size:0.875rem;color:#991b1b;">
-                <strong>⚠️ Trapped Idea:</strong> ${escapeHtml(qrt.wrongIdea)}
-              </div>
-              <div style="margin-bottom:8px;background:#f0fdf4;padding:8px 10px;border-radius:4px;font-size:0.875rem;color:#166534;">
-                <strong>💡 Decisive Rule:</strong> ${escapeHtml(qrt.replacementRule)}
-              </div>
-
-              <!-- Visual Job & Independent Check -->
-              <div style="margin-top:auto;border-top:1px solid #f1f5f9;padding-top:8px;font-size:0.875rem;color:#64748b;line-height:1.4;">
-                <div><strong>Visual Target:</strong> ${escapeHtml(qrt.visualJob)}</div>
-                <div style="margin-top:2px;"><strong>Check:</strong> ${escapeHtml(qrt.independentCheck)}</div>
-              </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
         ${visibleQrts.length > 50 ? `
           <div style="text-align:center;padding:16px;color:#64748b;font-size:0.9rem;">
@@ -686,7 +767,7 @@ export function mountChemistryCurriculum(
           <div>
             <h2 style="margin:0;font-size:1.25rem;font-weight:700;">Authentic Chemistry Question Bank</h2>
             <p style="margin:4px 0 0 0;font-size:0.9rem;color:#64748b;">
-              165 Official Questions (119 NSEJS Core 2 + 46 v3.5 Competitive Bank) with Fault N09 Key Isolation.
+              165 Official Questions (119 NSEJS Core 2 + 46 v3.5 Competitive Bank) with Formative Self-Assessment.
             </p>
           </div>
         </div>
@@ -695,72 +776,143 @@ export function mountChemistryCurriculum(
           ${visibleQuestions.slice(0, 30).map(q => {
             const isHintRevealed = state.revealedHints.has(q.id);
             const userChoice = state.selectedAnswers.get(q.id);
+            const isCommitted = state.committedAnswers.has(q.id);
+
+            const unifiedEntry = UNIFIED_QUESTION_DATABASE.getById(q.id);
+            const correctKey = unifiedEntry?.correctKey;
+            const hasKey = !!correctKey && correctKey !== 'WITHHELD_CLIENT_SIDE_FAULT_N09';
+            const cleanUserKey = userChoice ? userChoice.replace(/[()]/g, '').trim() : '';
+            const cleanCorrectKey = hasKey ? correctKey.replace(/[()]/g, '').trim() : '';
+            const isCorrect = hasKey && cleanUserKey.toUpperCase() === cleanCorrectKey.toUpperCase();
 
             return `
               <div class="chem-question-card" style="border:1px solid #cbd5e1;border-radius:10px;padding:20px;background:#ffffff;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-                  <div style="display:flex;align-items:center;gap:8px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                     <span style="font-family:monospace;font-weight:800;font-size:0.95rem;color:#047857;">${escapeHtml(q.id)}</span>
-                    <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;font-weight:600;">${escapeHtml(q.sourceName)}</span>
-                    <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#e0f2fe;color:#0369a1;font-weight:600;">${escapeHtml(q.topic)}</span>
+                    <span style="font-size:0.85rem;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;font-weight:600;">${escapeHtml(q.sourceName)}</span>
+                    <span style="font-size:0.85rem;padding:2px 8px;border-radius:4px;background:#e0f2fe;color:#0369a1;font-weight:600;">${escapeHtml(q.topic)}</span>
                   </div>
-                  <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">Band ${escapeHtml(q.band)}</span>
+                  <span style="font-size:0.85rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">Band ${escapeHtml(q.band)}</span>
                 </div>
 
                 <div style="font-size:1.02rem;color:#0f172a;line-height:1.55;margin-bottom:16px;">
-                  ${escapeHtml(q.stem)}
+                  ${renderMathHtml(q.stem)}
                 </div>
 
                 <!-- Options -->
                 ${q.options.length > 0 ? `
                   <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:8px;margin-bottom:16px;">
                     ${q.options.map(opt => {
-                      const optKey = opt.slice(0, 3);
+                      const optKey = opt.slice(0, 3).trim();
                       const isSelected = userChoice === optKey;
+                      let btnBg = '#ffffff';
+                      let btnBorder = '#cbd5e1';
+                      let btnColor = '#1e293b';
+
+                      if (isSelected) {
+                        if (isCommitted) {
+                          if (hasKey) {
+                            btnBg = isCorrect ? '#dcfce7' : '#fee2e2';
+                            btnBorder = isCorrect ? '#16a34a' : '#dc2626';
+                            btnColor = isCorrect ? '#14532d' : '#991b1b';
+                          } else {
+                            btnBg = '#e0f2fe';
+                            btnBorder = '#0284c7';
+                            btnColor = '#075985';
+                          }
+                        } else {
+                          btnBg = '#d1fae5';
+                          btnBorder = '#047857';
+                          btnColor = '#065f46';
+                        }
+                      }
+
                       return `
                         <button
                           type="button"
                           data-action="select-option"
                           data-qid="${escapeHtml(q.id)}"
                           data-opt-key="${escapeHtml(optKey)}"
-                          style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:10px 14px;border-radius:6px;border:1px solid ${isSelected ? '#047857' : '#cbd5e1'};background:${isSelected ? '#d1fae5' : '#ffffff'};color:${isSelected ? '#065f46' : '#1e293b'};font-size:0.92rem;text-align:left;cursor:pointer;font-weight:${isSelected ? '700' : '400'};box-shadow:${isSelected ? '0 1px 3px rgba(4,120,87,0.2)' : 'none'};"
+                          ${isCommitted ? 'disabled' : ''}
+                          style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:10px 14px;border-radius:6px;border:1px solid ${btnBorder};background:${btnBg};color:${btnColor};font-size:0.92rem;text-align:left;cursor:${isCommitted ? 'default' : 'pointer'};font-weight:${isSelected ? '700' : '400'};box-shadow:${isSelected ? '0 1px 3px rgba(4,120,87,0.2)' : 'none'};"
                         >
-                          ${escapeHtml(opt)}
+                          ${renderMathHtml(opt)}
                         </button>
                       `;
                     }).join('')}
                   </div>
                 ` : ''}
 
-                <!-- Scaffolding and Hints (Fault N09 Compliant) -->
+                <!-- Commit / Feedback Section -->
+                ${userChoice && !isCommitted ? `
+                  <div style="margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #e2e8f0;">
+                    <button
+                      type="button"
+                      data-action="commit-answer"
+                      data-qid="${escapeHtml(q.id)}"
+                      style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:9px 20px;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 1px 3px rgba(4,120,87,0.3);"
+                    >
+                      🎯 Commit Selected Option ${escapeHtml(userChoice)}
+                    </button>
+                    <span style="font-size:0.875rem;color:#475569;">Click to verify your selection and inspect the scientific derivation.</span>
+                  </div>
+                ` : ''}
+
+                ${isCommitted ? `
+                  <div style="margin-bottom:16px;padding:12px 16px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;${
+                    hasKey
+                      ? (isCorrect ? 'background:#dcfce7;border:1px solid #86efac;color:#166534;' : 'background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;')
+                      : 'background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;'
+                  }">
+                    <div style="font-weight:700;font-size:0.95rem;">
+                      ${hasKey
+                        ? (isCorrect
+                            ? `✅ Correct! Option ${escapeHtml(userChoice ?? '')} matches the official answer.`
+                            : `❌ Incorrect. You selected ${escapeHtml(userChoice ?? '')}, but the verified answer is (${escapeHtml(correctKey ?? '')}).`)
+                        : `📝 Option ${escapeHtml(userChoice ?? '')} Committed (Formative Practice Mode). Trace the derivation below.`
+                      }
+                    </div>
+                    <button
+                      type="button"
+                      data-action="reset-answer"
+                      data-qid="${escapeHtml(q.id)}"
+                      style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.82rem;cursor:pointer;color:#334155;"
+                    >
+                      ↺ Try Again
+                    </button>
+                  </div>
+                ` : ''}
+
+                <!-- Scaffolding and Hints -->
                 <div style="border-top:1px solid #f1f5f9;padding-top:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
                   <button
                     type="button"
                     data-action="toggle-hint"
                     data-qid="${escapeHtml(q.id)}"
-                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed ? '#e2e8f0' : '#047857'};color:${isHintRevealed ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
+                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed || isCommitted ? '#e2e8f0' : '#047857'};color:${isHintRevealed || isCommitted ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
                   >
-                    ${isHintRevealed ? 'Hide Hints & Steps' : '💡 Reveal Hints & Decisive Moves'}
+                    ${isHintRevealed || isCommitted ? 'Hide Hints & Steps' : '💡 Reveal Hints & Decisive Moves'}
                   </button>
 
-                  <span style="font-size:0.875rem;color:#64748b;font-family:monospace;">Fault N09: Key Isolated</span>
+                  <span style="font-size:0.85rem;background:#f1f5f9;color:#475569;padding:3px 8px;border-radius:4px;font-weight:600;">Practice Mode · Fault N09: Key Isolated</span>
                 </div>
 
-                ${isHintRevealed ? `
+                ${(isHintRevealed || isCommitted) ? `
                   <div style="margin-top:12px;padding:14px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;">
                     ${q.hints.length > 0 ? `
-                      <div style="margin-bottom:8px;">
-                        <strong style="color:#047857;font-size:0.875rem;text-transform:uppercase;">Conceptual Scaffolding:</strong>
-                        <ul style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
-                          ${q.hints.map(h => `<li>${escapeHtml(h)}</li>`).join('')}
+                      <div style="margin-bottom:12px;">
+                        <strong style="color:#047857;font-size:0.875rem;text-transform:uppercase;letter-spacing:0.04em;">Conceptual Scaffolding:</strong>
+                        <ul style="margin:6px 0 0 0;padding-left:20px;font-size:0.92rem;color:#334155;line-height:1.5;">
+                          ${q.hints.map(h => `<li>${renderMathHtml(h)}</li>`).join('')}
                         </ul>
                       </div>
                     ` : ''}
                     ${q.steps.length > 0 ? `
                       <div>
-                        <strong style="color:#0284c7;font-size:0.875rem;text-transform:uppercase;">Decisive Solution Steps:</strong>
-                        <ol style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
-                          ${q.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
+                        <strong style="color:#0284c7;font-size:0.875rem;text-transform:uppercase;letter-spacing:0.04em;">Decisive Solution Steps:</strong>
+                        <ol style="margin:6px 0 0 0;padding-left:20px;font-size:0.92rem;color:#334155;line-height:1.5;">
+                          ${q.steps.map(s => `<li>${renderMathHtml(s)}</li>`).join('')}
                         </ol>
                       </div>
                     ` : ''}
@@ -981,6 +1133,34 @@ export function mountChemistryCurriculum(
     const optBtn = target.closest<HTMLButtonElement>('button[data-action="select-option"]');
     if (optBtn && optBtn.dataset.qid && optBtn.dataset.optKey) {
       controller.selectOption(optBtn.dataset.qid, optBtn.dataset.optKey);
+      return;
+    }
+
+    // Action: commit-qrt
+    const commitQrtBtn = target.closest<HTMLButtonElement>('button[data-action="commit-qrt"]');
+    if (commitQrtBtn && commitQrtBtn.dataset.qrtId) {
+      controller.commitQrt(commitQrtBtn.dataset.qrtId);
+      return;
+    }
+
+    // Action: reset-qrt
+    const resetQrtBtn = target.closest<HTMLButtonElement>('button[data-action="reset-qrt"]');
+    if (resetQrtBtn && resetQrtBtn.dataset.qrtId) {
+      controller.resetQrt(resetQrtBtn.dataset.qrtId);
+      return;
+    }
+
+    // Action: commit-answer
+    const commitAnsBtn = target.closest<HTMLButtonElement>('button[data-action="commit-answer"]');
+    if (commitAnsBtn && commitAnsBtn.dataset.qid) {
+      controller.commitAnswer(commitAnsBtn.dataset.qid);
+      return;
+    }
+
+    // Action: reset-answer
+    const resetAnsBtn = target.closest<HTMLButtonElement>('button[data-action="reset-answer"]');
+    if (resetAnsBtn && resetAnsBtn.dataset.qid) {
+      controller.resetAnswer(resetAnsBtn.dataset.qid);
       return;
     }
 

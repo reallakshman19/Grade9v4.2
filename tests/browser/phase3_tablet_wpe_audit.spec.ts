@@ -19,12 +19,27 @@ import { test } from 'node:test';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { chromium } from 'playwright-core';
+import { createServer } from 'vite';
 
 const BASE_URL = 'http://127.0.0.1:3000';
 const EVIDENCE_DIR = resolve('C:/Users/reall/.gemini/antigravity/brain/c39fd02d-dabd-412d-b94d-9f2254fd4134/phase3_evidence');
 
 test('Gates P3-G5, P3-G7, P3-G8 — Phase 3 WPE Vertical Slice Tablet Audit & Adversarial Verification', { timeout: 90000 }, async (t) => {
   await mkdir(EVIDENCE_DIR, { recursive: true });
+
+  let server: any = null;
+  let baseUrl = BASE_URL;
+  try {
+    const res = await fetch(BASE_URL, { signal: AbortSignal.timeout(1000) });
+    if (!res.ok && res.status !== 404 && res.status !== 304) throw new Error('Not ready');
+  } catch {
+    server = await createServer({
+      server: { host: '127.0.0.1', port: 3000, strictPort: false },
+    });
+    await server.listen();
+    const addr = server.httpServer!.address();
+    baseUrl = `http://127.0.0.1:${addr.port}`;
+  }
 
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
@@ -35,8 +50,9 @@ test('Gates P3-G5, P3-G7, P3-G8 — Phase 3 WPE Vertical Slice Tablet Audit & Ad
 
   const page = await context.newPage();
 
+  try {
   await t.test('1. Normal Application Entry -> WPE Topic Hub Navigation', async () => {
-    await page.goto(`${BASE_URL}/#/subject/physics/topic/wpe`, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${baseUrl}/#/subject/physics/topic/wpe`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.topic-workspace-title', { timeout: 10000 });
 
     const titleText = await page.locator('.topic-workspace-title').textContent();
@@ -247,7 +263,9 @@ test('Gates P3-G5, P3-G7, P3-G8 — Phase 3 WPE Vertical Slice Tablet Audit & Ad
 
     await page.screenshot({ path: `${EVIDENCE_DIR}/phase3_topic_hub_portrait_1000x1600.png` });
   });
-
-  await context.close();
-  await browser.close();
+  } finally {
+    await context.close();
+    await browser.close();
+    if (server) await server.close();
+  }
 });
