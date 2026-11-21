@@ -6,7 +6,7 @@
  * 1. Promotion of all 156 developer collateral, benchmark, and diagnostic contexts to PARITY_VERIFIED.
  * 2. Exact conservation ledger bounds: 1,878 Verified Parity / 124 Outstanding (93.81% parity).
  * 3. Complete exhaustion of all unmapped app contexts and interactions (unmapped counters = 0).
- * 4. Architecture Hub controller resolution across all 16 canonical and diagnostic documents.
+ * 4. Architecture Hub controller resolution across all 17 canonical and diagnostic documents.
  * 5. Canonical route targets for developer collateral clusters (/architecture/benchmarks, /architecture/workspace-audit, etc.).
  * 6. Fault N09 Answer Isolation: Zero cleartext test keys exposed in client bundles.
  */
@@ -72,14 +72,15 @@ test('Wave 18: Developer Collateral & Benchmark Parity', async (t) => {
     assert.equal(summary.conservation_counters.unmapped_interactions, 0);
   });
 
-  // 3. Powers ArchitecturePageController with full canonical and diagnostic document suite (16 documents)
+  // 3. Powers ArchitecturePageController with full canonical and diagnostic document suite (17 documents)
   await t.test('3. Powers ArchitecturePageController with full canonical and diagnostic document suite', () => {
-    assert.equal(ARCHITECTURE_DOCS.length, 16, `Expected exactly 16 architecture and diagnostic documents, got ${ARCHITECTURE_DOCS.length}`);
+    assert.equal(ARCHITECTURE_DOCS.length, 17, `Expected exactly 17 architecture and diagnostic documents, got ${ARCHITECTURE_DOCS.length}`);
     
     const requiredDocIds = [
       'core1ab-guide',
       'guidebook',
       'pipeline-benchmarks',
+      'portable-workbenches',
       'production-checklist',
       'review-guide',
       'manifesto',
