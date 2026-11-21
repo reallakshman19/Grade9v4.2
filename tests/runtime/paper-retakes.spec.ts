@@ -56,6 +56,28 @@ for(const [name,factory] of [
     assert.deepEqual(await driver.get('sessions',old.id),old);
   });
 }
+for(const [name,factory] of [
+  ['NSEJS',createAuthorizedNsejsPaperSession],
+  ['IOQM',createAuthorizedIoqmPaperSession],
+] as const){
+  test(`${name}: archived run cannot accept stale-tab drafts after retake`,async()=>{
+    const driver=createStorageDriver({preferMemory:true});
+    const oldBinding=await factory('two-tab-learner',driver),old=await oldBinding.binding.session.snapshot();
+    const response=name==='NSEJS'
+      ? {kind:'SINGLE_CHOICE' as const,value:'A'}
+      : {kind:'INTEGER' as const,value:'07'};
+    await oldBinding.binding.progress.saveDraft(old,response,[],0);
+    const current=await factory('two-tab-learner',driver,true),fresh=await current.binding.session.snapshot();
+    await assert.rejects(
+      oldBinding.binding.progress.saveDraft(old,response,[],1),
+      /Exam session superseded/
+    );
+    assert(await oldBinding.binding.progress.loadDraft(old.id),'Old draft must remain readable');
+    await current.binding.progress.saveDraft(fresh,response,[],0);
+    assert(await current.binding.progress.loadDraft(fresh.id),'New run must accept its own draft');
+    assert.notEqual(old.id,fresh.id);
+  });
+}
 test('clearing a selected answer changes dirty status without private state access',async()=>{
   const driver=createStorageDriver({preferMemory:true});
   const {config,binding}=await createAuthorizedNsejsPaperSession('learner',driver);
