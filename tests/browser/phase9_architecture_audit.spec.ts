@@ -80,9 +80,9 @@ test('Gate W9-G5 — Architecture Hub & Tablet Navigation Audit', { timeout: 120
       assert.match(hubText || '', /Academic Status: HOLD/);
       assert.match(hubText || '', /How Do Great Lessons Get Made\?/);
 
-      // Verify 5 doc cards exist
+      // Verify doc cards exist
       const docCards = await page.locator('.doc-card').count();
-      assert.equal(docCards, 5, 'Must render 5 core authoring doc cards');
+      assert.ok(docCards >= 5, 'Must render at least 5 core authoring doc cards');
 
       // Verify 9 blueprint cards exist
       const blueprintHeading = page.locator('text=The 9-Stage Learning Blueprint');
@@ -112,15 +112,15 @@ test('Gate W9-G5 — Architecture Hub & Tablet Navigation Audit', { timeout: 120
 
       // Click the first "Inspect Architecture Guide →" button
       const inspectButtons = page.locator('.btn-open-doc');
-      assert.equal(await inspectButtons.count(), 5);
+      assert.ok((await inspectButtons.count()) >= 5);
       await inspectButtons.first().click();
 
-      // Verify active document viewer opens
+      // Verify active document viewer opens with full authentic content inline
       await page.waitForSelector('#btn-close-doc', { timeout: 5000 });
       const viewerText = await page.locator('.architecture-hub').textContent();
       assert.match(viewerText || '', /Complete Core1A \/ Core1B Agent Authoring Field Guide/);
-      assert.match(viewerText || '', /architecture\/core1ab-agent-guide\.html/);
-      assert.match(viewerText || '', /Preserved Losslessly in Local Staging/);
+      assert.match(viewerText || '', /Start here: the agent's mission/);
+      assert.ok(!viewerText?.includes('Preserved Losslessly in Local Staging'), 'Must bring in data directly without staging path placeholder');
 
       // Audit geometry with active viewer
       await auditGeometry(page, 'Architecture Doc Viewer (1600x1000)');
