@@ -32,7 +32,9 @@ export async function acquireAuthorizedPaperRun(o:Request):Promise<{session:Sess
       ses.id!==sessionId||ses.releaseId!==o.releaseId||ses.mode!=='SIMULATED_EXAM'||
       !sameRef(ses.item,o.task)||!ses.origin||!sameRef(ses.origin,o.paper)||
       ses.contentRevision!==`rev:${o.task.revision}`||!Array.isArray(ses.attemptIds)||
-      !Number.isFinite(expiry)||(ses.attemptIds.length===0&&Date.now()>=expiry)
+      !Number.isFinite(expiry)
+      // Expiration alone must not auto-advance the active run: the learner
+      // can inspect a read-only expired draft and explicitly choose Retake.
     );
     if(o.forceNewAttempt||incompatible||(!!ptr&&!ses)){
       let next=ptr?.sequence??0;
