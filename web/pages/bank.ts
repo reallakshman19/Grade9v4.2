@@ -39,7 +39,7 @@ import {
   CANONICAL_UNIFIED_QUESTIONS,
 } from '../data/unified-questions.generated.ts';
 
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 
 export interface BankViewState {
@@ -578,12 +578,12 @@ export function mountQuestionBankScreen(
 
           <!-- Question ID / Title -->
           <h3 style="margin:0 0 0.5rem;font-size:1.1rem;font-weight:800;color:#0f172a;line-height:1.4;">
-            ${escapeHtml(q.title || q.code)}
+            ${renderMathHtml(escapeHtml(q.title || q.code))}
           </h3>
 
           <!-- Stem Preview -->
           <p style="margin:0 0 1rem;font-size:0.95rem;color:#334155;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;">
-            ${escapeHtml(q.stemPreview)}
+            ${renderMathHtml(escapeHtml(q.stemPreview))}
           </p>
 
           <!-- Multiple Choice Options Preview -->
@@ -591,7 +591,7 @@ export function mountQuestionBankScreen(
             <div style="margin-bottom:1rem;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px 12px;font-size:0.9rem;">
               <div style="font-weight:700;color:#64748b;margin-bottom:4px;font-size:0.8rem;text-transform:uppercase;">Options (${q.options.length})</div>
               ${q.options.slice(0, 4).map(opt => `
-                <div style="padding:2px 0;color:#334155;overflow-wrap:anywhere;">• ${escapeHtml(opt.text)}</div>
+                <div style="padding:2px 0;color:#334155;overflow-wrap:anywhere;">• ${renderMathHtml(escapeHtml(opt.text))}</div>
               `).join('')}
             </div>
           ` : ''}
@@ -603,7 +603,7 @@ export function mountQuestionBankScreen(
               <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;">
                 ${q.hints.map((hint, hIdx) => `
                   <div style="padding:4px 8px;background:#ffffff;border-left:3px solid #eab308;border-radius:2px;font-size:0.85rem;color:#713f12;">
-                    <strong>Tier ${hIdx + 1}:</strong> ${escapeHtml(hint)}
+                    <strong>Tier ${hIdx + 1}:</strong> ${renderMathHtml(escapeHtml(hint))}
                   </div>
                 `).join('')}
               </div>
@@ -617,10 +617,10 @@ export function mountQuestionBankScreen(
               <div style="margin-top:8px;display:flex;flex-direction:column;gap:6px;">
                 ${q.steps.map((st, sIdx) => `
                   <div style="padding:4px 8px;background:#ffffff;border-left:3px solid #22c55e;border-radius:2px;font-size:0.85rem;color:#14532d;">
-                    ${escapeHtml(st)}
+                    ${renderMathHtml(escapeHtml(st))}
                   </div>
                 `).join('')}
-                ${q.check ? `<div style="font-size:0.8rem;font-weight:700;color:#15803d;margin-top:4px;">✓ Independent Check: ${escapeHtml(q.check)}</div>` : ''}
+                ${q.check ? `<div style="font-size:0.8rem;font-weight:700;color:#15803d;margin-top:4px;">✓ Independent Check: ${renderMathHtml(escapeHtml(q.check))}</div>` : ''}
               </div>
             </details>
           ` : ''}
@@ -628,7 +628,7 @@ export function mountQuestionBankScreen(
           <!-- Tempting Trap Alert -->
           ${q.trapWarning ? `
             <div style="background:#fff1f2;border:1px solid #fecdd3;border-radius:6px;padding:6px 10px;margin-bottom:0.75rem;font-size:0.82rem;color:#9f1239;">
-              ⚠️ <strong>Trap Alert:</strong> ${escapeHtml(q.trapWarning)}
+              ⚠️ <strong>Trap Alert:</strong> ${renderMathHtml(escapeHtml(q.trapWarning))}
             </div>
           ` : ''}
         </div>

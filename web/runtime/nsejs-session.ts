@@ -234,8 +234,10 @@ export async function createAuthorizedNsejsPaperSession(
   const deadlineAt = new Date(now + config.durationSeconds * 1000).toISOString();
 
   let ses = await driver.get<SessionRecord>('sessions', sessionId);
-  if (!ses || ses.origin?.sha256 !== definitionSha256) {
-    if (ses && ses.origin?.sha256 !== definitionSha256) {
+  const isExpiredUncommitted = Boolean(ses && ses.deadlineAt && (!ses.attemptIds || ses.attemptIds.length === 0) && Date.now() >= Date.parse(ses.deadlineAt || ''));
+
+  if (!ses || ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted) {
+    if (ses && (ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted)) {
       try {
         await driver.delete('sessions', sessionId);
         await driver.delete('drafts', sessionId);

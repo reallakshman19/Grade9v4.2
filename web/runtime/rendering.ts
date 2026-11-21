@@ -64,12 +64,22 @@ export function formatLatexMath(latex: string, isBlock: boolean = false): string
     }
   }
 
-  // 2. Vector notation handling for MathML fallback: \vec{x} -> <mover><mi>x</mi><mo>→</mo></mover>
-  while (/\\vec\{([^{}]+)\}/.test(s)) {
-    s = s.replace(/\\vec\{([^{}]+)\}/g, (_m, arg) => {
-      return `<mover><mrow>${arg.trim()}</mrow><mo>→</mo></mover>`;
-    });
+  const nodes: string[] = [];
+  function saveNode(html: string): string {
+    const idx = nodes.length;
+    nodes.push(html);
+    return `§N${idx}§`;
   }
+
+  // Handle \text{...} and \mathrm{...}
+  s = s.replace(/\\(?:text|mathrm)\{([^{}]+)\}/g, (_m, t) => {
+    return saveNode(`<mtext>${t}</mtext>`);
+  });
+
+  // Math functions (upright operators)
+  s = s.replace(/\\(cos|sin|tan|sec|csc|cot|ln|log|exp|det|lim|max|min)\b/g, (_m, fn) => {
+    return saveNode(`<mo>${fn}</mo>`);
+  });
 
   // Greek replacements
   const greekMap: Record<string, string> = {
@@ -98,8 +108,6 @@ export function formatLatexMath(latex: string, isBlock: boolean = false): string
     '\\sum': '∑', '\\prod': '∏',
     '\\circ': '°', '\\angle': '∠', '\\triangle': '△',
     '\\perp': '⊥', '\\parallel': '∥',
-    '\\cos': 'cos', '\\sin': 'sin', '\\tan': 'tan', '\\sec': 'sec', '\\csc': 'csc', '\\cot': 'cot',
-    '\\ln': 'ln', '\\log': 'log', '\\exp': 'exp',
     '\\rightarrow': '→', '\\to': '→', '\\leftarrow': '←', '\\leftrightarrow': '↔',
     '\\Rightarrow': '⇒', '\\implies': '⇒', '\\Leftarrow': '⇐', '\\Leftrightarrow': '⇔', '\\iff': '⇔',
     '\\quad': '  ', '\\qquad': '    ', '\\,': ' ', '\\;': ' ', '\\ ': ' '
@@ -108,18 +116,12 @@ export function formatLatexMath(latex: string, isBlock: boolean = false): string
     s = s.replaceAll(k, v);
   }
 
-  // Handle \text{...} and \mathrm{...} with protected placeholders to prevent tag nesting
-  const textBlocks: string[] = [];
-  s = s.replace(/\\text\{([^{}]+)\}/g, (_m, t) => {
-    const idx = textBlocks.length;
-    textBlocks.push(`<mtext>${t}</mtext>`);
-    return `___MTEXT_${idx}___`;
-  });
-  s = s.replace(/\\mathrm\{([^{}]+)\}/g, (_m, t) => {
-    const idx = textBlocks.length;
-    textBlocks.push(`<mtext>${t}</mtext>`);
-    return `___MTEXT_${idx}___`;
-  });
+  // Vector notation: \vec{x}
+  while (/\\vec\{([^{}]+)\}/.test(s)) {
+    s = s.replace(/\\vec\{([^{}]+)\}/g, (_m, arg) => {
+      return saveNode(`<mover><mrow>${parseExpr(arg)}</mrow><mo>→</mo></mover>`);
+    });
+  }
 
   // Recursive parsing for expressions
   function parseExpr(expr: string): string {
@@ -129,77 +131,80 @@ export function formatLatexMath(latex: string, isBlock: boolean = false): string
     // Handle fractions
     while (/\\frac\{([^{}]+)\}\{([^{}]+)\}/.test(str)) {
       str = str.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, (_m, n, d) => {
-        return `<mfrac><mrow>${parseExpr(n)}</mrow><mrow>${parseExpr(d)}</mrow></mfrac>`;
+        return saveNode(`<mfrac><mrow>${parseExpr(n)}</mrow><mrow>${parseExpr(d)}</mrow></mfrac>`);
       });
     }
 
     // Handle roots
     while (/\\sqrt\{([^{}]+)\}/.test(str)) {
       str = str.replace(/\\sqrt\{([^{}]+)\}/g, (_m, arg) => {
-        return `<msqrt><mrow>${parseExpr(arg)}</mrow></msqrt>`;
+        return saveNode(`<msqrt><mrow>${parseExpr(arg)}</mrow></msqrt>`);
       });
     }
 
     // Handle sub and sup combinations: x_{a}^{b} or x^{b}_{a}
-    str = str.replace(/([0-9a-zA-Z\u0370-\u03ff]+|\)|>)\^\{([^{}]+)\}_\{([^{}]+)\}/g, (_m, base, sup, sub) => {
-      return `<msubsup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow><mrow>${parseExpr(sup)}</mrow></msubsup>`;
+    const tokenRegexStr = '§N[0-9]+§|[0-9a-zA-Z\\u0370-\\u03ff°]+|\\)';
+    const subSupCombined = new RegExp(`(${tokenRegexStr})\\^\\{([^{}]+)\\}_\\{([^{}]+)\\}`, 'g');
+    str = str.replace(subSupCombined, (_m, base, sup, sub) => {
+      return saveNode(`<msubsup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow><mrow>${parseExpr(sup)}</mrow></msubsup>`);
     });
-    str = str.replace(/([0-9a-zA-Z\u0370-\u03ff]+|\)|>)_\{([^{}]+)\}\^\{([^{}]+)\}/g, (_m, base, sub, sup) => {
-      return `<msubsup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow><mrow>${parseExpr(sup)}</mrow></msubsup>`;
+    const supSubCombined = new RegExp(`(${tokenRegexStr})_\\{([^{}]+)\\}\\^\\{([^{}]+)\\}`, 'g');
+    str = str.replace(supSubCombined, (_m, base, sub, sup) => {
+      return saveNode(`<msubsup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow><mrow>${parseExpr(sup)}</mrow></msubsup>`);
     });
 
     // Handle superscripts: base^{exp} or base^exp
-    str = str.replace(/([0-9a-zA-Z\u0370-\u03ff°]+|\)|>)\^\{([^{}]+)\}/g, (_m, base, exp) => {
-      return `<msup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(exp)}</mrow></msup>`;
+    const supBraced = new RegExp(`(${tokenRegexStr})\\^\\{([^{}]+)\\}`, 'g');
+    str = str.replace(supBraced, (_m, base, exp) => {
+      return saveNode(`<msup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(exp)}</mrow></msup>`);
     });
-    str = str.replace(/([0-9a-zA-Z\u0370-\u03ff°]+|\)|>)\^([0-9a-zA-Z\u0370-\u03ff°])/g, (_m, base, exp) => {
-      return `<msup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(exp)}</mrow></msup>`;
+    const supBare = new RegExp(`(${tokenRegexStr})\\^([0-9a-zA-Z\\u0370-\\u03ff°])`, 'g');
+    str = str.replace(supBare, (_m, base, exp) => {
+      return saveNode(`<msup><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(exp)}</mrow></msup>`);
     });
 
     // Handle subscripts: base_{sub} or base_sub
-    str = str.replace(/([0-9a-zA-Z\u0370-\u03ff]+|\)|>)_\{([^{}]+)\}/g, (_m, base, sub) => {
-      return `<msub><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow></msub>`;
+    const subBraced = new RegExp(`(${tokenRegexStr})_\\{([^{}]+)\\}`, 'g');
+    str = str.replace(subBraced, (_m, base, sub) => {
+      return saveNode(`<msub><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow></msub>`);
     });
-    str = str.replace(/([0-9a-zA-Z\u0370-\u03ff]+|\)|>)_([0-9a-zA-Z\u0370-\u03ff])/g, (_m, base, sub) => {
-      return `<msub><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow></msub>`;
+    const subBare = new RegExp(`(${tokenRegexStr})_([0-9a-zA-Z\\u0370-\\u03ff])`, 'g');
+    str = str.replace(subBare, (_m, base, sub) => {
+      return saveNode(`<msub><mrow>${parseExpr(base)}</mrow><mrow>${parseExpr(sub)}</mrow></msub>`);
     });
 
     // Remove any remaining backslashes
     str = str.replace(/\\/g, '');
 
     // Tokenize non-tag parts into proper MathML tokens
-    const segments = str.split(/(<[^>]+>)/g);
+    const tokens = str.match(/§N[0-9]+§|[0-9]+(?:\.[0-9]+)?|[a-zA-Z]+|[=+\-×÷±∓·≤≥≠≈≡∼≅∝∞°∠△⊥∥→←↔⇒⇐⇔∂∇∫∮∑∏()\[\],;:|]|[\u0370-\u03ff]|\s+/g) || [str];
     let out = '';
-    for (const seg of segments) {
-      if (!seg) continue;
-      if (seg.startsWith('<') && seg.endsWith('>')) {
-        out += seg;
-      } else {
-        const tokens = seg.match(/[0-9]+(?:\.[0-9]+)?|___MTEXT_[0-9]+___|[a-zA-Z]+|[=+\-×÷±∓·≤≥≠≈≡∼≅∝∞°∠△⊥∥→←↔⇒⇐⇔∂∇∫∮∑∏()\[\],;:|]|[\u0370-\u03ff]|\s+/g) || [seg];
-        for (const tok of tokens) {
-          if (/^___MTEXT_[0-9]+___$/.test(tok)) {
-            out += tok;
-          } else if (/^\s+$/.test(tok)) {
-            out += '<mspace width="0.22em"></mspace>';
-          } else if (/^[0-9]+(?:\.[0-9]+)?$/.test(tok)) {
-            out += `<mn>${tok}</mn>`;
-          } else if (/^[a-zA-Z\u0370-\u03ff]+$/.test(tok)) {
-            out += `<mi>${tok}</mi>`;
-          } else if (/^[=+\-×÷±∓·≤≥≠≈≡∼≅∝∞°∠△⊥∥→←↔⇒⇐⇔∂∇∫∮∑∏()\[\],;:|]$/.test(tok)) {
-            out += `<mo>${tok}</mo>`;
-          } else {
-            out += `<mtext>${tok}</mtext>`;
-          }
+    for (const tok of tokens) {
+      if (/^§N[0-9]+§$/.test(tok)) {
+        out += tok;
+      } else if (/^\s+$/.test(tok)) {
+        out += '<mspace width="0.22em"></mspace>';
+      } else if (/^[0-9]+(?:\.[0-9]+)?$/.test(tok)) {
+        out += `<mn>${tok}</mn>`;
+      } else if (/^[a-zA-Z\u0370-\u03ff]+$/.test(tok)) {
+        for (const char of tok) {
+          out += `<mi>${char}</mi>`;
         }
+      } else if (/^[=+\-×÷±∓·≤≥≠≈≡∼≅∝∞°∠△⊥∥→←↔⇒⇐⇔∂∇∫∮∑∏()\[\],;:|]$/.test(tok)) {
+        out += `<mo>${tok}</mo>`;
+      } else {
+        out += `<mtext>${tok}</mtext>`;
       }
     }
     return out;
   }
 
   let finalBody = parseExpr(s);
-  for (let i = 0; i < textBlocks.length; i++) {
-    finalBody = finalBody.replaceAll(`___MTEXT_${i}___`, textBlocks[i]);
+  let guard = 0;
+  while (/§N[0-9]+§/.test(finalBody) && guard++ < 50) {
+    finalBody = finalBody.replace(/§N([0-9]+)§/g, (_m, id) => nodes[Number(id)] ?? '');
   }
+
   const display = isBlock ? 'block' : 'inline';
   return `<math xmlns="http://www.w3.org/1998/Math/MathML" display="${display}" class="g9-math">${finalBody}</math>`;
 }
@@ -274,13 +279,13 @@ export class SharedStimulusRenderer {
   renderSafeHtml(): string {
     const sanitized = sanitizeMarkup(this.stimulus.contentHtml);
     const titleHtml = this.stimulus.title
-      ? `<h3 class="stimulus-title">${sanitizeMarkup(this.stimulus.title).html}</h3>`
+      ? `<h3 class="stimulus-title">${renderMathHtml(sanitizeMarkup(this.stimulus.title).html)}</h3>`
       : '';
 
     return (
       `<section class="shared-stimulus-card" role="region" aria-label="Shared stimulus context">` +
       titleHtml +
-      `<div class="stimulus-body">${sanitized.html}</div>` +
+      `<div class="stimulus-body">${renderMathHtml(sanitized.html)}</div>` +
       `</section>`
     );
   }

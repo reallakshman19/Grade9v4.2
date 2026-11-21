@@ -10,6 +10,7 @@ import {DefaultProgressStore,refOk,timestamp} from '../runtime/progress.ts';
 import {Session} from '../runtime/session.ts';
 import type {Attempt,Ref,TaskRef,Response,Kind,WorkArtifact,Json,Session as SessionRecord,Grade} from '../runtime/types.ts';
 import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
+import { createStorageDriver } from '../runtime/storage.ts';
 export type ExamAidKind='FORMULA_SHEET'|'PERIODIC_TABLE'|'CALCULATOR'|'SCRATCHPAD';
 const aidKinds:readonly ExamAidKind[]=['FORMULA_SHEET','PERIODIC_TABLE','CALCULATOR','SCRATCHPAD'];
 export interface SharedStimulus {readonly id:string;readonly title:string;readonly contentHtml:string;readonly mediaRef?:string}
@@ -164,8 +165,8 @@ export class PaperWorkspaceController{
 
     const stimulusHtml = state.activeStimulus
       ? `<aside class="shared-stimulus-pane" aria-label="Shared Stimulus" style="flex: 1; padding: 16px; background: #fdfbf7; border: 1px solid #fef08a; border-radius: 8px; margin-bottom: 16px;">
-          <h3 style="margin-top: 0; font-size: 16px; color: #854d0e;">Stimulus: ${escapeHtml(String(state.activeStimulus.title))}</h3>
-          <div>${state.activeStimulus.contentHtml}</div>
+          <h3 style="margin-top: 0; font-size: 16px; color: #854d0e;">Stimulus: ${renderMathHtml(escapeHtml(String(state.activeStimulus.title)))}</h3>
+          <div>${renderMathHtml(state.activeStimulus.contentHtml)}</div>
         </aside>`
       : '';
 
@@ -195,7 +196,7 @@ export class PaperWorkspaceController{
             ${stimulusHtml}
             <article class="question-part-pane" style="padding: 16px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h2 style="margin: 0; font-size: 18px;">Part ${escapeHtml(String(activePart?.partKey))}: ${escapeHtml(String(activePart?.label || ''))}</h2>
+                <h2 style="margin: 0; font-size: 18px;">Part ${escapeHtml(String(activePart?.partKey))}: ${renderMathHtml(escapeHtml(String(activePart?.label || '')))}</h2>
                 <span style="font-size:14px; background: #f1f5f9; padding: 4px 8px; border-radius: 4px;">[${escapeHtml(String(activePart?.archetypeId))}] ${escapeHtml(String(activePart?.maxPoints))} pts</span>
               </div>
               <div class="part-prompt" style="font-size: 15px; margin-bottom: 16px;">
@@ -222,7 +223,8 @@ export class PaperWorkspaceController{
 export function mountPaperWorkspace(
   root: HTMLElement,
   controller: PaperWorkspaceController,
-  onNavigate?: (route: string) => void
+  onNavigate?: (route: string) => void,
+  onRetake?: () => void | Promise<void>
 ): { dispose: () => void } {
   let active = true;
   let timerInterval: ReturnType<typeof setInterval> | null = null;
@@ -281,8 +283,8 @@ export function mountPaperWorkspace(
 
     const stimulusHtml = state.activeStimulus
       ? `<aside class="shared-stimulus-pane" aria-label="Shared Stimulus" style="padding: 16px; background: #fdfbf7; border: 1px solid #fef08a; border-radius: 8px; margin-bottom: 16px;">
-          <h3 style="margin-top: 0; font-size: 16px; color: #854d0e;">Stimulus: ${escapeHtml(String(state.activeStimulus.title))}</h3>
-          <div>${state.activeStimulus.contentHtml}</div>
+          <h3 style="margin-top: 0; font-size: 16px; color: #854d0e;">Stimulus: ${renderMathHtml(escapeHtml(String(state.activeStimulus.title)))}</h3>
+          <div>${renderMathHtml(state.activeStimulus.contentHtml)}</div>
         </aside>`
       : '';
 
@@ -335,10 +337,11 @@ export function mountPaperWorkspace(
             </span>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
             <div class="timer-badge" style="display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: ${state.timer.isExpired ? '#fee2e2' : '#f8fafc'}; border: 1px solid ${state.timer.isExpired ? '#fca5a5' : '#cbd5e1'}; border-radius: 8px;">
-              <span id="timer-display" class="exam-timer-display" style="font-size: 1.15rem; font-weight: 800; color: ${state.timer.isExpired ? '#991b1b' : '#0284c7'};">⏱ ${timeDisplay}</span>
+              <span id="timer-display" class="exam-timer-display" style="font-size: 1.15rem; font-weight: 800; color: ${state.timer.isExpired ? '#991b1b' : '#0284c7'};">⏱ ${state.timer.isExpired ? '00:00 (Expired)' : timeDisplay}</span>
             </div>
+            <button type="button" id="btn-retake-paper" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #f8fafc; color: #0284c7; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700;">🔄 Reset / Retake Exam</button>
             <button type="button" id="btn-back-hub" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #0f172a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">← Exit Exam</button>
           </div>
         </header>
@@ -350,6 +353,22 @@ export function mountPaperWorkspace(
             <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — ${isNsejs ? 'Official NSEJS single-choice questions (+3 correct, -1 incorrect). Solutions sealed.' : 'Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed.'} Submission yields diagnostic sealed evaluation.
           </div>
         </div>
+
+        <!-- Expired Notice Banner (if timer elapsed & uncommitted) -->
+        ${state.timer.isExpired && !state.isCommitted ? `
+          <div class="exam-expired-banner" style="background: #fef2f2; border: 1px solid #f87171; border-radius: 8px; padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 12px; color: #991b1b;">
+              <span style="font-size: 1.4rem;">⏱️</span>
+              <div>
+                <strong style="font-size: 0.95rem;">Exam Duration Elapsed (120-Minute Countdown Expired)</strong>
+                <div style="font-size: 0.85rem; color: #b91c1c;">Editing answers is locked. You can review your questions or start a new timed attempt with a fresh 2-hour timer.</div>
+              </div>
+            </div>
+            <button type="button" id="btn-retake-from-banner" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
+              🔄 Retake Mock Paper (Fresh 2h Timer)
+            </button>
+          </div>
+        ` : ''}
 
         <!-- Aids Bar -->
         <div class="aids-bar" style="display: flex; gap: 10px; align-items: center;">
@@ -367,28 +386,28 @@ export function mountPaperWorkspace(
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; font-size: 0.9rem; color: #14532d;">
               <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
                 <strong>Mechanics &amp; Kinematics:</strong><br/>
-                $v = u + at$ · $s = ut + \\frac{1}{2}at^2$ · $v^2 = u^2 + 2as$<br/>
-                $F = ma$ · $W = \\vec{F}\\cdot\\vec{s}$ · $K = \\frac{1}{2}mv^2$ · $P = Fv$
+                ${renderMathHtml('$v = u + at$ · $s = ut + \\frac{1}{2}at^2$ · $v^2 = u^2 + 2as$')}<br/>
+                ${renderMathHtml('$F = ma$ · $W = \\vec{F}\\cdot\\vec{s}$ · $K = \\frac{1}{2}mv^2$ · $P = Fv$')}
               </div>
               <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
                 <strong>Electrostatics &amp; Circuits:</strong><br/>
-                $F = \\frac{kq_1 q_2}{r^2}$ · $V = IR$ · $P = VI = I^2 R$<br/>
-                $R_s = R_1 + R_2$ · $\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2}$
+                ${renderMathHtml('$F = \\frac{kq_1 q_2}{r^2}$ · $V = IR$ · $P = VI = I^2 R$')}<br/>
+                ${renderMathHtml('$R_s = R_1 + R_2$ · $\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2}$')}
               </div>
               <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
                 <strong>Optics &amp; Waves:</strong><br/>
-                $\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u}$ (lens) · $\\frac{1}{f} = \\frac{1}{v} + \\frac{1}{u}$ (mirror)<br/>
-                $n_1 \\sin\\theta_1 = n_2 \\sin\\theta_2$ · $v = f\\lambda$
+                ${renderMathHtml('$\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u}$ (lens) · $\\frac{1}{f} = \\frac{1}{v} + \\frac{1}{u}$ (mirror)')}<br/>
+                ${renderMathHtml('$n_1 \\sin\\theta_1 = n_2 \\sin\\theta_2$ · $v = f\\lambda$')}
               </div>
               <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
                 <strong>Chemistry Constants &amp; Gas Laws:</strong><br/>
-                $PV = nRT$ · $R = 8.314\\text{ J/(mol}\\cdot\\text{K)}$ · $F = 96,500\\text{ C/mol}$<br/>
-                $\\Delta H = \\Delta U + \\Delta n_g RT$ · $\\Delta G^\\circ = -nFE^\\circ_{\\text{cell}}$ · $\\text{pH} = -\\log[\\text{H}^+]$
+                ${renderMathHtml('$PV = nRT$ · $R = 8.314\\text{ J/(mol}\\cdot\\text{K)}$ · $F = 96,500\\text{ C/mol}$')}<br/>
+                ${renderMathHtml('$\\Delta H = \\Delta U + \\Delta n_g RT$ · $\\Delta G^\\circ = -nFE^\\circ_{\\text{cell}}$ · $\\text{pH} = -\\log[\\text{H}^+]$')}
               </div>
               <div style="background: #ffffff; padding: 10px; border-radius: 6px; border: 1px solid #bbf7d0;">
                 <strong>Genetics &amp; Cellular Bio:</strong><br/>
-                Hardy-Weinberg: $p + q = 1$ · $p^2 + 2pq + q^2 = 1$<br/>
-                Lindeman 10% Trophic Transfer: $E_{n+1} = 0.10 \\times E_n$
+                ${renderMathHtml('Hardy-Weinberg: $p + q = 1$ · $p^2 + 2pq + q^2 = 1$')}<br/>
+                ${renderMathHtml('Lindeman 10% Trophic Transfer: $E_{n+1} = 0.10 \\times E_n$')}
               </div>
             </div>
           </div>
@@ -443,7 +462,7 @@ export function mountPaperWorkspace(
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem;">
                 <div>
                   <span style="font-size:0.875rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">Part ${escapeHtml(String(activePart?.partKey))}</span>
-                  <h2 style="margin: 0.5rem 0 0; font-size: 1.35rem; color: #0f172a; font-weight: 700;">${escapeHtml(String(activePart?.label || ''))}</h2>
+                  <h2 style="margin: 0.5rem 0 0; font-size: 1.35rem; color: #0f172a; font-weight: 700;">${renderMathHtml(escapeHtml(String(activePart?.label || '')))}</h2>
                 </div>
                 <span style="font-size: 0.95rem; font-weight: 700; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; color: #334155;">
                   [${escapeHtml(String(activePart?.archetypeId))}] ${escapeHtml(String(activePart?.maxPoints))} Points
@@ -463,17 +482,18 @@ export function mountPaperWorkspace(
                   <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
                     ${['A', 'B', 'C', 'D'].map((opt) => {
                       const isChosen = currentVal === opt;
+                      const isLocked = state.isCommitted || state.timer.isExpired;
                       return `
-                        <button type="button" class="btn-mcq-choice" data-choice="${opt}" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 64px; padding: 10px 20px; font-size: 1.15rem; font-weight: 800; border-radius: 6px; cursor: pointer; border: 2px solid ${isChosen ? '#0284c7' : '#cbd5e1'}; background: ${isChosen ? '#0284c7' : '#ffffff'}; color: ${isChosen ? '#ffffff' : '#0f172a'}; transition: all 0.15s ease;">
+                        <button type="button" class="btn-mcq-choice" data-choice="${opt}" ${isLocked ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 64px; padding: 10px 20px; font-size: 1.15rem; font-weight: 800; border-radius: 6px; cursor: ${isLocked ? 'not-allowed' : 'pointer'}; opacity: ${state.timer.isExpired ? '0.65' : '1'}; border: 2px solid ${isChosen ? '#0284c7' : '#cbd5e1'}; background: ${isChosen ? '#0284c7' : '#ffffff'}; color: ${isChosen ? '#ffffff' : '#0f172a'}; transition: all 0.15s ease;">
                           Option ${opt}
                         </button>
                       `;
                     }).join('')}
                     ${currentVal ? `
-                      <button type="button" id="btn-clear-choice" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-size:0.875rem; font-weight: 600;">Clear</button>
+                      <button type="button" id="btn-clear-choice" ${state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: ${state.isCommitted || state.timer.isExpired ? 'not-allowed' : 'pointer'}; font-size:0.875rem; font-weight: 600;">Clear</button>
                     ` : ''}
-                    <span id="choice-feedback-msg" style="font-size: 0.9rem; font-weight: 600; color: #15803d; margin-left: 8px;">
-                      ${currentVal ? `✓ Option ${currentVal} selected` : 'Unanswered'}
+                    <span id="choice-feedback-msg" style="font-size: 0.9rem; font-weight: 600; color: ${state.timer.isExpired ? '#dc2626' : '#15803d'}; margin-left: 8px;">
+                      ${state.timer.isExpired ? `⏱ Exam Expired · ${currentVal ? `Option ${currentVal} sealed` : 'Unanswered'}` : (currentVal ? `✓ Option ${currentVal} selected` : 'Unanswered')}
                     </span>
                   </div>
                 </div>
@@ -484,22 +504,27 @@ export function mountPaperWorkspace(
                     Enter Integer Answer (00 to 99):
                   </label>
                   <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                    <input type="text" id="integer-answer-input" class="part-integer-input" value="${escapeHtml(currentVal)}" maxlength="2" placeholder="e.g. 07 or 42" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; width: 140px; padding: 8px 12px; font-size: 1.25rem; font-weight: 700; text-align: center; border: 2px solid #cbd5e1; border-radius: 6px;" />
-                    <button type="button" id="save-integer-btn" class="btn-save-part" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 140px; padding: 8px 20px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.95rem;">
+                    <input type="text" id="integer-answer-input" class="part-integer-input" value="${escapeHtml(currentVal)}" maxlength="2" placeholder="e.g. 07 or 42" ${state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; width: 140px; padding: 8px 12px; font-size: 1.25rem; font-weight: 700; text-align: center; border: 2px solid #cbd5e1; border-radius: 6px;" />
+                    <button type="button" id="save-integer-btn" class="btn-save-part" ${state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: 140px; padding: 8px 20px; background: ${state.isCommitted || state.timer.isExpired ? '#94a3b8' : '#0284c7'}; color: white; border: none; border-radius: 6px; cursor: ${state.isCommitted || state.timer.isExpired ? 'not-allowed' : 'pointer'}; font-weight: 700; font-size: 0.95rem;">
                       Save Part ${activePart?.partKey} Answer
                     </button>
-                    <span id="integer-validation-msg" class="part-input-feedback" style="font-size: 0.9rem; font-weight: 600; color: #15803d;">${currentVal ? `Response saved: ${currentVal}` : ''}</span>
+                    <span id="integer-validation-msg" class="part-input-feedback" style="font-size: 0.9rem; font-weight: 600; color: ${state.timer.isExpired ? '#dc2626' : '#15803d'};">${state.timer.isExpired ? `⏱ Exam Expired · ${currentVal ? `Response ${currentVal} sealed` : 'Locked'}` : (currentVal ? `Response saved: ${currentVal}` : '')}</span>
                   </div>
                 </div>
               `}
 
               <!-- Post-Commit Evaluation Status -->
               ${state.isCommitted && state.evaluation ? `
-                <div class="paper-evaluation-result" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;">
-                  <h3 style="margin: 0 0 0.5rem; color: #166534; font-size: 1.2rem;">✓ Paper Submitted Successfully</h3>
-                  <p style="margin: 0; color: #15803d; font-size: 0.95rem; line-height: 1.5;">
-                    ${state.evaluation.summaryFeedback}
-                  </p>
+                <div class="paper-evaluation-result" style="background: #f0fdf4; border: 1px solid #86efac; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                  <div>
+                    <h3 style="margin: 0 0 0.5rem; color: #166534; font-size: 1.2rem;">✓ Paper Submitted Successfully</h3>
+                    <p style="margin: 0; color: #15803d; font-size: 0.95rem; line-height: 1.5;">
+                      ${state.evaluation.summaryFeedback}
+                    </p>
+                  </div>
+                  <button type="button" id="btn-retake-from-committed" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #166534; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
+                    🔄 Retake Mock Paper
+                  </button>
                 </div>
               ` : ''}
 
@@ -530,6 +555,34 @@ export function mountPaperWorkspace(
       if (onNavigate) onNavigate(targetRoute);
       else window.location.hash = '#' + targetRoute;
     });
+
+    // Retake Exam handlers
+    const handleRetake = async () => {
+      const confirmed = window.confirm(
+        'Reset Mock Exam?\n\nThis will clear current draft answers and start a fresh 120-minute timed attempt.'
+      );
+      if (!confirmed) return;
+      if (onRetake) {
+        await onRetake();
+        return;
+      }
+      try {
+        const isNsejsPaper = controller.getPaperId().includes('nsejs');
+        const dbName = isNsejsPaper ? 'grade9_nsejs_runtime' : 'grade9_ioqm_runtime';
+        const driver = createStorageDriver({ dbName });
+        await driver.clear('sessions').catch(() => {});
+        await driver.clear('drafts').catch(() => {});
+        await driver.clear('attempts').catch(() => {});
+        await driver.clear('artifacts').catch(() => {});
+      } catch (err) {
+        console.error('Storage clear error on retake:', err);
+      }
+      window.location.reload();
+    };
+
+    root.querySelector<HTMLButtonElement>('#btn-retake-paper')?.addEventListener('click', handleRetake);
+    root.querySelector<HTMLButtonElement>('#btn-retake-from-banner')?.addEventListener('click', handleRetake);
+    root.querySelector<HTMLButtonElement>('#btn-retake-from-committed')?.addEventListener('click', handleRetake);
 
     // Part select buttons
     root.querySelectorAll<HTMLButtonElement>('.part-select-btn').forEach((btn) => {
@@ -577,7 +630,15 @@ export function mountPaperWorkspace(
         const activePartId = controller.getViewState().activePartId;
         const ok = controller.setPartResponse(activePartId, { kind: 'SINGLE_CHOICE', value: choice });
         if (ok) {
+          void controller.saveDraft().catch(() => {});
           render();
+        } else {
+          const vs = controller.getViewState();
+          if (vs.timer.isExpired) {
+            alert('Exam timer has expired. Answers are sealed.\n\nClick "🔄 Reset / Retake Exam" to start a fresh attempt.');
+          } else if (vs.isCommitted) {
+            alert('Paper has already been submitted and sealed.\n\nClick "🔄 Reset / Retake Exam" to start a new attempt.');
+          }
         }
       });
     });
@@ -585,8 +646,10 @@ export function mountPaperWorkspace(
     // Clear choice button
     root.querySelector<HTMLButtonElement>('#btn-clear-choice')?.addEventListener('click', () => {
       const activePartId = controller.getViewState().activePartId;
+      if (controller.getViewState().timer.isExpired || controller.getViewState().isCommitted) return;
       (controller as any).responses.delete(activePartId);
       (controller as any).navigation.setPartStatus(activePartId, 'VIEWED');
+      void controller.saveDraft().catch(() => {});
       render();
     });
 
@@ -609,6 +672,7 @@ export function mountPaperWorkspace(
       const formatted = val.toString().padStart(2, '0');
       const ok = controller.setPartResponse(activePartId, { kind: 'INTEGER', value: formatted });
       if (ok) {
+        void controller.saveDraft().catch(() => {});
         feedback.style.color = '#15803d';
         feedback.textContent = `✓ Response saved: ${formatted}`;
         render();
@@ -635,19 +699,37 @@ export function mountPaperWorkspace(
   };
 
   // Restore controller and start timer
-  void controller.restore().then(() => {
+  const init = async () => {
+    try {
+      if (!controller.getViewState().ready) {
+        await controller.restore();
+      }
+    } catch (err) {
+      console.warn('Paper workspace restore warning:', err);
+    }
     render();
+
+    let wasExpired = controller.getTimer().isExpired();
     timerInterval = setInterval(() => {
       if (!active) return;
-      const timerDisplay = root.querySelector<HTMLElement>('#exam-timer-display');
+      const timerDisplay = root.querySelector<HTMLElement>('#timer-display') || root.querySelector<HTMLElement>('.exam-timer-display');
       if (timerDisplay) {
         const rem = controller.getTimer().getRemainingSeconds();
         const mins = Math.floor(rem / 60);
         const secs = rem % 60;
-        timerDisplay.textContent = `⏱ ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        const isExp = controller.getTimer().isExpired();
+        timerDisplay.textContent = isExp
+          ? '⏱ 00:00 (Expired)'
+          : `⏱ ${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+        if (isExp && !wasExpired) {
+          wasExpired = true;
+          render();
+        }
       }
     }, 1000);
-  });
+  };
+  void init();
 
   return {
     dispose: () => {

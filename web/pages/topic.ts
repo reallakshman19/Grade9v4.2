@@ -2634,7 +2634,7 @@ export function mountTopicWorkspace(
             </div>
           ` : ''}
 
-          <h3 style="margin:0 0 0.5rem;font-size:1.15rem;font-weight:700;color:#0f172a;">${escapeHtml(q.title)}</h3>
+          <h3 style="margin:0 0 0.5rem;font-size:1.15rem;font-weight:700;color:#0f172a;">${renderMathHtml(escapeHtml(q.title))}</h3>
           <div style="margin:0 0 1rem;font-size:0.95rem;color:#475569;line-height:1.5;">${renderMathHtml(escapeHtml(q.stemText.slice(0, 120)))}...</div>
           <div style="display:flex;gap:6px;font-size:0.875rem;color:#64748b;margin-bottom:1rem;flex-wrap:wrap;">
             <span style="background:#f1f5f9;padding:2px 6px;border-radius:4px;">Kind: ${escapeHtml(q.kind)}</span>

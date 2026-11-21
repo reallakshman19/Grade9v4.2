@@ -285,7 +285,30 @@ export async function createAuthorizedIoqmPaperSession(
   const deadlineAt = new Date(now + config.durationSeconds * 1000).toISOString();
 
   let ses = await driver.get<SessionRecord>('sessions', sessionId);
-  if (!ses) {
+  const isExpiredUncommitted = Boolean(ses && ses.deadlineAt && (!ses.attemptIds || ses.attemptIds.length === 0) && Date.now() >= Date.parse(ses.deadlineAt || ''));
+
+  if (!ses || ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted) {
+    if (ses && (ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted)) {
+      try {
+        await driver.delete('sessions', sessionId);
+        await driver.delete('drafts', sessionId);
+        for (const attId of ses.attemptIds || []) {
+          await driver.delete('attempts', attId);
+          await driver.delete('attempt_authority', attId);
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    try {
+      await driver.delete('drafts', sessionId);
+      await driver.delete('attempts', attemptId);
+      await driver.delete('attempt_authority', attemptId);
+    } catch {
+      // ignore
+    }
+
     ses = {
       id: sessionId,
       releaseId,
