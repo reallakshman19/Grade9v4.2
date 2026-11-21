@@ -9,25 +9,32 @@ import {
   UNIVERSAL_SEARCH_CORPUS,
   queryUniversalSearch,
 } from '../../web/runtime/universal-search-index.ts';
+import { CANONICAL_UNIFIED_QUESTIONS } from '../../web/data/unified-questions.generated.ts';
 
 describe('Universal Search — Corpus & Relevance Engine Contract', () => {
-  it('indexes exact corpus count matching snapshot: 416 total (310 questions, 61 tablets, 44 curriculum topics)', () => {
-    assert.equal(UNIVERSAL_SEARCH_CORPUS.length, 416, 'Corpus must contain exactly 416 verified STEM items');
+  it('indexes complete corpus count: 1046 total (940 questions, 61 tablets, 44 curriculum topics)', () => {
+    assert.equal(UNIVERSAL_SEARCH_CORPUS.length, 1046, 'Corpus must contain all 1046 verified STEM items');
 
     const questions = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'question');
     const tablets = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'tablet');
     const curriculum = UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'curriculum');
 
-    assert.equal(questions.length, 310, 'Must have exactly 310 authentic questions');
+    assert.equal(questions.length, 940, 'Must have exactly 940 questions (702 canonical + 238 specialized)');
     assert.equal(tablets.length, 61, 'Must have exactly 61 interactive tablets/workbenches');
     assert.equal(curriculum.length, 44, 'Must have exactly 44 curriculum topics and concepts');
   });
 
-  it('query with empty string returns full corpus and live counts matching snapshot tabs', () => {
+  it('indexes all canonical questions from CANONICAL_UNIFIED_QUESTIONS with zero omissions', () => {
+    const searchQuestionIds = new Set(UNIVERSAL_SEARCH_CORPUS.filter(i => i.category === 'question').map(i => i.id));
+    const missing = CANONICAL_UNIFIED_QUESTIONS.filter(q => !searchQuestionIds.has(q.id));
+    assert.equal(missing.length, 0, 'Every canonical question must be indexed in universal search');
+  });
+
+  it('query with empty string returns full corpus and live counts matching tabs', () => {
     const res = queryUniversalSearch('');
-    assert.equal(res.totalMatches, 416);
-    assert.equal(res.counts.all, 416);
-    assert.equal(res.counts.question, 310);
+    assert.equal(res.totalMatches, 1046);
+    assert.equal(res.counts.all, 1046);
+    assert.equal(res.counts.question, 940);
     assert.equal(res.counts.tablet, 61);
     assert.equal(res.counts.curriculum, 44);
     assert.ok(res.executionTimeMs < 50, `Sub-50ms search requirement: took ${res.executionTimeMs}ms`);
@@ -150,8 +157,8 @@ describe('Universal Search — Playwright Modal & Keyboard Shortcut Contract', (
       const tab3Text = await tabs.nth(2).textContent();
       const tab4Text = await tabs.nth(3).textContent();
 
-      assert.match(tab1Text ?? '', /All\s*416/i);
-      assert.match(tab2Text ?? '', /Questions\s*310/i);
+      assert.match(tab1Text ?? '', /All\s*1046/i);
+      assert.match(tab2Text ?? '', /Questions\s*940/i);
       assert.match(tab3Text ?? '', /Core 1A & 2 Tablets\s*61/i);
       assert.match(tab4Text ?? '', /Topics & Concepts\s*44/i);
 
