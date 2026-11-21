@@ -528,6 +528,7 @@ export function mountPaperWorkspace(
               ` : ''}
 
               <!-- Submission Bar -->
+              <p id="paper-draft-status" role="status" aria-live="polite" style="margin: 0; font-size: 0.9rem; color: #475569;"></p>
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-wrap: wrap; gap: 10px;">
                 <span style="font-size: 0.9rem; color: #64748b;">
                   Parts Attempted: <strong>${parts.filter(p => controller.getPartResponse(p.id) !== undefined).length}</strong> of ${parts.length}
@@ -544,6 +545,20 @@ export function mountPaperWorkspace(
     `;
 
     bindEvents();
+  };
+
+  const persistDraft = () => {
+    void controller.saveDraft().then(() => {
+      const status = root.querySelector<HTMLElement>('#paper-draft-status');
+      if (status) { status.textContent = 'Latest answer saved locally.'; status.style.color = '#166534'; }
+    }).catch(err => {
+      console.error('Exam draft persistence failed:', err);
+      const status = root.querySelector<HTMLElement>('#paper-draft-status');
+      if (status) {
+        status.textContent = 'Warning: latest answer was NOT saved locally. Do not exit; retry the answer after checking available storage.';
+        status.style.color = '#b91c1c';
+      }
+    });
   };
 
   const bindEvents = () => {
@@ -623,7 +638,7 @@ export function mountPaperWorkspace(
         const activePartId = controller.getViewState().activePartId;
         const ok = controller.setPartResponse(activePartId, { kind: 'SINGLE_CHOICE', value: choice });
         if (ok) {
-          void controller.saveDraft().catch(() => {});
+          persistDraft();
           render();
         } else {
           const vs = controller.getViewState();
@@ -642,7 +657,7 @@ export function mountPaperWorkspace(
       if (controller.getViewState().timer.isExpired || controller.getViewState().isCommitted) return;
       (controller as any).responses.delete(activePartId);
       (controller as any).navigation.setPartStatus(activePartId, 'VIEWED');
-      void controller.saveDraft().catch(() => {});
+      persistDraft();
       render();
     });
 
@@ -665,7 +680,7 @@ export function mountPaperWorkspace(
       const formatted = val.toString().padStart(2, '0');
       const ok = controller.setPartResponse(activePartId, { kind: 'INTEGER', value: formatted });
       if (ok) {
-        void controller.saveDraft().catch(() => {});
+        persistDraft();
         feedback.style.color = '#15803d';
         feedback.textContent = `✓ Response saved: ${formatted}`;
         render();
