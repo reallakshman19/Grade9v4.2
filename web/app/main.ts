@@ -494,7 +494,6 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
               const m = mountPaperWorkspace(content, freshCtrl, (route) => {
                 window.location.hash = '#' + route;
               }, async () => {
-                if (activeDisposer) activeDisposer();
                 const d = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
                 try {
                   await beginFreshPaperAttempt(d, paperBaseSessionId('rel-ioqm-2024-v1', fresh.config.paperId, 'diagnostic_learner'));
@@ -510,7 +509,6 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
             const m = mountPaperWorkspace(content, controller, (route) => {
               window.location.hash = '#' + route;
             }, async () => {
-              if (activeDisposer) activeDisposer();
               const driver = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
               try {
                 await beginFreshPaperAttempt(driver, paperBaseSessionId('rel-ioqm-2024-v1', config.paperId, 'diagnostic_learner'));
@@ -551,7 +549,6 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
               const m = mountPaperWorkspace(content, freshCtrl, (route) => {
                 window.location.hash = '#' + route;
               }, async () => {
-                if (activeDisposer) activeDisposer();
                 const d = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
                 try {
                   await beginFreshPaperAttempt(d, paperBaseSessionId('rel-nsejs-2024-v1', fresh.config.paperId, 'diagnostic_learner'));
@@ -567,7 +564,6 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
             const m = mountPaperWorkspace(content, controller, (route) => {
               window.location.hash = '#' + route;
             }, async () => {
-              if (activeDisposer) activeDisposer();
               const driver = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
               try {
                 await beginFreshPaperAttempt(driver, paperBaseSessionId('rel-nsejs-2024-v1', config.paperId, 'diagnostic_learner'));
