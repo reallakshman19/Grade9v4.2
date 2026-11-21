@@ -12305,7 +12305,7 @@ const RAW_UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze
  */
 export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze(
   RAW_UNIVERSAL_SEARCH_CORPUS.map((item):UniversalSearchDoc=>{
-    if(item.category!=='question'||new RegExp('^#/question/[^/?#]+
+    if(item.category!=='question'||new RegExp('^#/question/[^/?#]+$').test(item.route))return item;
     return Object.freeze({
       ...item,
       category:'curriculum',
