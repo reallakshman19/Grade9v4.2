@@ -81,6 +81,23 @@ export function timestamp(x:unknown):x is string {
 const uniqueStrings=(x:unknown)=>Array.isArray(x)&&x.every(nonblank)&&new Set(x).size===x.length;
 function sessionOk(s:any){return s&&nonblank(s.id)&&refOk(s.item)&&['QUESTION','FRESH_TASK'].includes(s.item.type)&&nonblank(s.releaseId)&&['LEARN','PRACTICE','SIMULATED_EXAM'].includes(s.mode)&&uniqueStrings(s.attemptIds)&&s.attemptIds.length<=1&&Number.isSafeInteger(s.cursor)&&s.cursor>=0&&(s.mode!=='SIMULATED_EXAM'||timestamp(s.deadlineAt))&&(s.contentRevision===undefined||nonblank(s.contentRevision))&&(s.draftId===null||s.draftId===s.id)&&(s.origin===null||refOk(s.origin))&&(s.returnRoute===undefined||s.returnRoute===null||typeof s.returnRoute==='string');}
 function sameSession(a:Session,b:Session){return sameRef(a.item,b.item)&&a.releaseId===b.releaseId&&a.mode===b.mode&&eq(a.origin,b.origin)&&(a.returnRoute??null)===(b.returnRoute??null)&&(a.deadlineAt??null)===(b.deadlineAt??null)&&(a.contentRevision??null)===(b.contentRevision??null);}
+
+/** Exam writes are admissible only for the currently selected run.
+ * The pointer check is performed inside the same storage transaction as the
+ * draft/attempt mutation, so a retake in another tab cannot race the write.
+ * Historical sessions remain readable without mutating their records.
+ */
+async function assertCurrentExamRun(tx:import('./storage.ts').TransactionContext,session:Session):Promise<void>{
+  if(session.mode!=='SIMULATED_EXAM')return;
+  const match=/^(.*):run:([1-9][0-9]*)$/.exec(session.id);
+  const legacyId=match?match[1]:session.id;
+  const ptr=await tx.get<{schema?:string;sequence?:number;sessionId?:string}>('paper_active_runs',legacyId);
+  if(ptr===undefined){check(!match,'Archived exam session lacks its active-run pointer');return;}
+  check(ptr.schema==='g9-paper-active-run/1'&&Number.isSafeInteger(ptr.sequence)&&
+    (ptr.sequence as number)>0&&ptr.sessionId===legacyId+':run:'+ptr.sequence&&
+    ptr.sessionId===session.id,'Exam session superseded or active-run pointer invalid');
+}
+
 function artifactOk(x:any){if(!x||Object.keys(x).sort().join(',')!=='id,kind,value,version'||!nonblank(x.id)||x.version!==1||!['NOTE','EQUATION','INK','TABLE','GRAPH','STRUCTURE','ATTACHMENT'].includes(x.kind))return false;try{canonicalJson(x.value);return x.value!==undefined;}catch{return false;}}
 function validateAttempt(a:any){check(a&&nonblank(a.id)&&nonblank(a.sessionId)&&nonblank(a.releaseId)&&refOk(a.item)&&Array.isArray(a.work)&&a.work.every(artifactOk)&&new Set(a.work.map((w:WorkArtifact)=>w.id)).size===a.work.length&&uniqueStrings(a.hintIds)&&timestamp(a.submittedAt)&&a.cognitive!==undefined&&a.grade&&Number.isFinite(a.grade.maxPoints)&&a.grade.maxPoints>=0&&((a.grade.status==='SCORED'&&Number.isFinite(a.grade.points)&&a.grade.points>=0&&a.grade.points<=a.grade.maxPoints)||(['REVIEW_PENDING','INVALID','UNSUPPORTED'].includes(a.grade.status)&&a.grade.points===null)),'Invalid attempt');validateResponse(a.response);if(a.assessmentRef!==undefined)check(refOk(a.assessmentRef)&&a.assessmentRef.type==='ASSESSMENT'&&nonblank(a.scoringVersion),'Invalid assessment binding');if(a.cognitive!==null){const c=a.cognitive;check(c&&c.journey&&nonblank(c.journey.journeyId)&&nonblank(c.journey.taskInstanceId)&&c.journey.releaseId===a.releaseId&&refOk(c.journey.task)&&nonblank(c.originSessionId)&&refOk(c.originRef)&&Number.isSafeInteger(c.originCursor)&&c.originCursor>=0,'Invalid cognitive lineage');}}
 // A36 archive closure: A49 allows a lesson origin session without an attempt.
@@ -145,13 +162,14 @@ export class DefaultProgressStore implements ProgressStore {
     validateResponse(response);check(sessionOk(session)&&artifacts.every(artifactOk)&&new Set(artifacts.map(a=>a.id)).size===artifacts.length,'Invalid draft');
 
     await this.driver.transaction(
-      ['drafts', 'sessions', 'artifacts','artifact_owners',...(cognitive?['cognitive_journeys','cognitive_event_attempt','cog_snap:'+cognitive.journey.journeyId]:[])],
+      ['drafts', 'sessions', 'artifacts','artifact_owners','paper_active_runs',...(cognitive?['cognitive_journeys','cognitive_event_attempt','cog_snap:'+cognitive.journey.journeyId]:[])],
       'readwrite',
       async (tx) => {
         const existing = await tx.get<DraftRecord>('drafts', session.id);
         const priorSession=await tx.get<Session>('sessions',session.id);
         if(priorSession&&!sameSession(priorSession,session))throw new StorageError('RECORD_CONFLICT','Session identity mismatch');
         check((existing?.revision??0)===expectedRevision,'Stale draft revision');
+        await assertCurrentExamRun(tx,session);
         if(session.mode==='SIMULATED_EXAM'){check(!!priorSession&&priorSession.attemptIds.length===0&&timestamp(priorSession.deadlineAt)&&Date.now()<=Date.parse(priorSession.deadlineAt!),'Exam draft locked or deadline passed');}
         check(!!priorSession||session.attemptIds.length===0,'New session cannot claim previous attempts');
         if(cognitive){check(!!priorSession&&(!['ATTEMPT','BOUNDARY_TEST'].includes(cognitive.stage)||priorSession.attemptIds.length===0),'Cognitive attempt draft session is committed or missing');await verifyDraftLineage(tx,session,cognitive);}
@@ -202,7 +220,7 @@ export class DefaultProgressStore implements ProgressStore {
    * Appends an attempt, updating session attemptIds and persisting work artifacts.
    * Idempotent on identical attempt, rejects conflicting attempt with RECORD_CONFLICT.
    */
-  static readonly attemptStores=['attempts','sessions','artifacts','drafts','artifact_owners','attempt_authority'] as const;
+  static readonly attemptStores=['attempts','sessions','artifacts','drafts','artifact_owners','attempt_authority','paper_active_runs'] as const;
   async appendAttempt(attempt:Attempt):Promise<void>{
     attempt=structuredClone(attempt);check(attempt.cognitive===null,'Cognitive attempts must commit with their event in one transaction');
     await this.driver.transaction(DefaultProgressStore.attemptStores,'readwrite',tx=>this.commitAttempt(tx,attempt));
@@ -218,6 +236,7 @@ export class DefaultProgressStore implements ProgressStore {
     if(!session||!sessionOk(session)||!sameRef(session.item,attempt.item)||session.releaseId!==attempt.releaseId)throw new StorageError('RECORD_CONFLICT','Attempt missing matching session');
     const old=await tx.get<Attempt>('attempts',attempt.id);
     if(old){if(!eq(old,attempt)||!session.attemptIds.includes(attempt.id))throw new StorageError('RECORD_CONFLICT','Conflicting attempt identity');const qualified=await this.qualify(attempt);check(!requireQualified||qualified&&await tx.get('attempt_authority',attempt.id)==='LOCAL_VERIFIED_SCORE','Existing attempt not qualified');return;}
+    await assertCurrentExamRun(tx,session);
     if(expectedDraftRevision!==undefined){const draft=await tx.get<DraftRecord>('drafts',session.id);check(Number.isSafeInteger(expectedDraftRevision)&&expectedDraftRevision>=0&&(draft?.revision??0)===expectedDraftRevision,'Stale draft revision at commitment');}
     const qualified=await this.qualify(attempt);check(!requireQualified||qualified,'Unqualified commitment');
     if(session.mode==='SIMULATED_EXAM')check(timestamp(session.deadlineAt)&&Date.now()<=Date.parse(session.deadlineAt!)&&Date.parse(attempt.submittedAt)<=Date.parse(session.deadlineAt!),'Exam submission deadline passed or unavailable');
