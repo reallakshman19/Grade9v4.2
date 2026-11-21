@@ -16,6 +16,7 @@ test('retake is generation-scoped and leaves prior NSEJS answers, draft and comm
   assert.equal(controller.setPartResponse(original.config.parts[0].id,{kind:'SINGLE_CHOICE',value:'A'}),true);
   await controller.saveDraft();
   const oldDraft = await driver.get('drafts',first.id);
+  const preservedSession = await driver.get('sessions',first.id);
   assert.ok(oldDraft,'draft must exist before retake');
 
   const base = paperBaseSessionId('rel-nsejs-2024-v1',original.config.paperId,learner);
@@ -30,7 +31,7 @@ test('retake is generation-scoped and leaves prior NSEJS answers, draft and comm
   await secondController.restore();
   assert.equal(secondController.getPartResponse(original.config.parts[0].id),undefined);
   assert.deepEqual(await driver.get('drafts',first.id),oldDraft,'retake must not destroy prior draft');
-  assert.deepEqual(await driver.get('sessions',first.id),first,'original session retained');
+  assert.deepEqual(await driver.get('sessions',first.id),preservedSession,'original session retained');
 
   for(const part of second.config.parts) {
     assert.equal(secondController.setPartResponse(part.id,{kind:'SINGLE_CHOICE',value:'A'}),true);
