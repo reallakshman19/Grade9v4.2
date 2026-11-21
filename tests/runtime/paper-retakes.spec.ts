@@ -29,16 +29,18 @@ for(const [name,factory] of [
     assert.equal((await (await factory('learner1',driver)).binding.session.snapshot()).id,fresh.id);
     assert.notEqual((await (await factory('learner2',driver)).binding.session.snapshot()).id,fresh.id);
   });
-  test(`${name}: expired and definition-mismatched history is archived`,async()=>{
+  test(`${name}: expiry is read-only until explicit retake; mismatched history is archived`,async()=>{
     const driver=createStorageDriver({preferMemory:true});
     const first=await factory('learner',driver);
     const old=await first.binding.session.snapshot();
     await driver.put('sessions',old.id,{...old,deadlineAt:new Date(Date.now()-5000).toISOString()});
     await driver.put('drafts',old.id,{marker:'expired draft'});
-    const renewed=await factory('learner',driver);
+    const reopened=await factory('learner',driver);
+    assert.equal((await reopened.binding.session.snapshot()).id,old.id,'Expired session must remain active for read-only viewing');
+    assert.equal((await driver.get<{marker:string}>('drafts',old.id))?.marker,'expired draft');
+    const renewed=await factory('learner',driver,true); // only explicit retake rotates the active run
     const second=await renewed.binding.session.snapshot();
     assert.notEqual(second.id,old.id);
-    assert.equal((await driver.get<{marker:string}>('drafts',old.id))?.marker,'expired draft');
     const tampered={...second,origin:{...second.origin!,sha256:'0'.repeat(64)}};
     await driver.put('sessions',second.id,tampered);
     const fresh=await factory('learner',driver);
