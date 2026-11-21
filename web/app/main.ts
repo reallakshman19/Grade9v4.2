@@ -16,6 +16,7 @@ import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
 import { createAuthorizedNsejsPaperSession } from '../runtime/nsejs-session.ts';
 import { createAuthorizedTransferSession } from '../runtime/wpe-transfer.ts';
 import { createStorageDriver } from '../runtime/storage.ts';
+import {beginFreshPaperAttempt, paperBaseSessionId} from '../runtime/paper-attempts.ts';
 import { mountStandaloneLab } from '../pages/resources.ts';
 import { mountLabsHub } from '../pages/labs-hub.ts';
 import { mountChemistryCurriculum, ChemistryCurriculumController } from '../pages/chemistry-curriculum.ts';
@@ -478,9 +479,14 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
               await controller.restore();
             } catch (restoreErr: any) {
               console.warn('IOQM paper workspace state mismatch; reinitializing fresh session:', restoreErr);
+              // Keep the failed-to-restore bytes for export/investigation. Only
+              // move the active pointer to a new attempt generation.
               const driver = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
+              try {
+                await beginFreshPaperAttempt(driver, paperBaseSessionId('rel-ioqm-2024-v1', config.paperId, 'diagnostic_learner'));
+              } finally {
+                await driver.close();
+              }
               const fresh = await createAuthorizedIoqmPaperSession();
               const freshCtrl = new PaperWorkspaceController(fresh.config, fresh.binding);
               await freshCtrl.restore();
@@ -490,8 +496,11 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
               }, async () => {
                 if (activeDisposer) activeDisposer();
                 const d = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
-                await d.clear().catch(() => {});
-                await d.close().catch(() => {});
+                try {
+                  await beginFreshPaperAttempt(d, paperBaseSessionId('rel-ioqm-2024-v1', fresh.config.paperId, 'diagnostic_learner'));
+                } finally {
+                  await d.close();
+                }
                 await mountIoqm();
               });
               activeDisposer = () => m.dispose();
@@ -503,8 +512,11 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
             }, async () => {
               if (activeDisposer) activeDisposer();
               const driver = createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
+              try {
+                await beginFreshPaperAttempt(driver, paperBaseSessionId('rel-ioqm-2024-v1', config.paperId, 'diagnostic_learner'));
+              } finally {
+                await driver.close();
+              }
               await mountIoqm();
             });
             activeDisposer = () => m.dispose();
@@ -524,9 +536,14 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
               await controller.restore();
             } catch (restoreErr: any) {
               console.warn('NSEJS paper workspace state mismatch; reinitializing fresh session:', restoreErr);
+              // Keep the failed-to-restore bytes for export/investigation. Only
+              // move the active pointer to a new attempt generation.
               const driver = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
+              try {
+                await beginFreshPaperAttempt(driver, paperBaseSessionId('rel-nsejs-2024-v1', config.paperId, 'diagnostic_learner'));
+              } finally {
+                await driver.close();
+              }
               const fresh = await createAuthorizedNsejsPaperSession();
               const freshCtrl = new PaperWorkspaceController(fresh.config, fresh.binding);
               await freshCtrl.restore();
@@ -536,8 +553,11 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
               }, async () => {
                 if (activeDisposer) activeDisposer();
                 const d = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
-                await d.clear().catch(() => {});
-                await d.close().catch(() => {});
+                try {
+                  await beginFreshPaperAttempt(d, paperBaseSessionId('rel-nsejs-2024-v1', fresh.config.paperId, 'diagnostic_learner'));
+                } finally {
+                  await d.close();
+                }
                 await mountNsejs();
               });
               activeDisposer = () => m.dispose();
@@ -549,8 +569,11 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
             }, async () => {
               if (activeDisposer) activeDisposer();
               const driver = createStorageDriver({ dbName: 'grade9_nsejs_runtime' });
-              await driver.clear().catch(() => {});
-              await driver.close().catch(() => {});
+              try {
+                await beginFreshPaperAttempt(driver, paperBaseSessionId('rel-nsejs-2024-v1', config.paperId, 'diagnostic_learner'));
+              } finally {
+                await driver.close();
+              }
               await mountNsejs();
             });
             activeDisposer = () => m.dispose();
