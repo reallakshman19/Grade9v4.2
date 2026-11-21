@@ -312,7 +312,7 @@ describe('Question Page Screen Controller — Lifecycle & Feedback', () => {
 
     page.loadQuestion(STANDARD_QUESTION);
     assert.equal(page.getViewState().pageStatus, 'INTERACTIVE');
-    assert.equal(page.getViewState().returnRoute, '/topic/phys/wpe');
+    assert.equal(page.getViewState().returnRoute, '/subject/phys/topic/wpe/questions');
   });
 
   it('transitions to FEEDBACK_SHOWN on submission', async () => {

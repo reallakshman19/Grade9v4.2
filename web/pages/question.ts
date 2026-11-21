@@ -87,12 +87,12 @@ export class QuestionPageController {
     this.workspace?.reset();
     this.evaluationResult = null;
     this.showSolution = false;
-    this.status = 'INTERACTIVE';
+    this.status = this.workspace?.getViewState().question.status === 'HOLD' ? 'HOLD_LOCKED' : 'INTERACTIVE';
   }
 
   loadQuestion(question: WorkspaceQuestionDescriptor,binding?:WorkspaceBinding): void {
     this.evaluationResult=null;this.workspace = createQuestionWorkspace(question,undefined,binding);
-    this.status = 'INTERACTIVE';
+    this.status = question.status === 'HOLD' ? 'HOLD_LOCKED' : 'INTERACTIVE';
   }
 
   setError(message: string): void {
@@ -195,10 +195,15 @@ export class QuestionPageController {
     </div>`;
 
     if (s.evaluation) {
-      const isCorrect = s.evaluation.status === 'CORRECT';
-      responseHtml += `<div class="g9-evaluation-feedback" style="margin-top:16px;padding:14px;border-radius:6px;background:${isCorrect ? '#f0fdf4' : '#fef2f2'};border:1px solid ${isCorrect ? '#86efac' : '#fca5a5'};">
-        <strong style="color:${isCorrect ? '#166534' : '#991b1b'};font-size:16px;">${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong> (${s.evaluation.rawPoints ?? 0}/${s.evaluation.maxPoints} pts)
-        <p style="margin:6px 0 0 0;font-size:14px;color:${isCorrect ? '#15803d' : '#b91c1c'};">${isCorrect ? 'Outstanding work! Your answer matches the canonical key.' : 'The selected option does not match the canonical result. Review the step-by-step model derivation below:'}</p>
+      const status = s.evaluation.status;
+      const isCorrect = status === 'CORRECT';
+      const isGraded = status === 'CORRECT' || status === 'INCORRECT' || status === 'PARTIAL';
+      const label = isCorrect ? '✅ Correct' : isGraded ? (status === 'PARTIAL' ? 'Partially correct' : 'Incorrect') : 'Review pending';
+      const details = isGraded
+        ? ` (${s.evaluation.rawPoints}/${s.evaluation.maxPoints} pts)`
+        : ' — no verified marks have been awarded';
+      responseHtml += `<div class="g9-evaluation-feedback" role="status" style="margin-top:16px;padding:14px;border-radius:6px;background:${isCorrect?'#f0fdf4':'#f8fafc'};border:1px solid ${isCorrect?'#86efac':'#cbd5e1'};">
+        <strong style="color:${isCorrect?'#166534':'#334155'};font-size:16px;">${label}</strong>${details}
       </div>`;
     }
 

@@ -109,11 +109,12 @@ export class QuestionWorkspaceController {
   private work:readonly WorkArtifact[]=[];
   private readonly binding?:WorkspaceBinding;
   private hints:readonly QuestionHint[]=[];
-  private correctKey?:unknown;
   constructor(question:WorkspaceQuestionDescriptor,initialOrientation:'LANDSCAPE'|'PORTRAIT'|'COMPACT'='LANDSCAPE',binding?:WorkspaceBinding){
     this.hints=question.hints?structuredClone(question.hints):[];
-    this.correctKey=question.correctKey;
-    this.question=structuredClone(question);
+    // A client-supplied answer key is not an assessment authority and must never
+    // escape into public view-state snapshots.
+    const {correctKey: _untrustedKey, ...publicQuestion}=question;
+    this.question=structuredClone(publicQuestion);
     this.orientation=initialOrientation;
     this.binding=binding&&{...binding,task:structuredClone(binding.task),assessment:structuredClone(binding.assessment)};
   }
@@ -184,33 +185,11 @@ export class QuestionWorkspaceController {
     if(this.submissionStatus==='COMMITTED_LOCKED'&&this.evaluation)return this.evaluation;
     if(this.busy)throw Error('WORKSPACE_BUSY');
     let response:Response;try{response=this.wire();}catch{return this.result('INVALID','INVALID_RESPONSE');}
-    if(!this.binding){
-      const key=this.correctKey??this.question.correctKey;
-      let isCorrect=false;
-      if(response.kind==='SINGLE_CHOICE'&&key!==undefined){
-        const valStr=String(response.value).toLowerCase();
-        const keyStr=String(key).toLowerCase();
-        isCorrect=valStr===keyStr||(keyStr.startsWith('opt-')&&valStr===keyStr.slice(4))||(valStr.startsWith('opt-')&&valStr.slice(4)===keyStr);
-      } else if(response.kind==='MULTIPLE_CHOICE'&&Array.isArray(key)){
-        const valArr=(response.value as string[]).map(x=>x.toLowerCase()).sort();
-        const keyArr=(key as string[]).map(x=>x.toLowerCase()).sort();
-        isCorrect=JSON.stringify(valArr)===JSON.stringify(keyArr);
-      } else if((response.kind==='NUMERIC_QUANTITY'||response.kind==='INTEGER')&&key!==undefined){
-        const userNum=Number((response.value as any)?.decimal??(response.value as any)?.magnitude??response.value);
-        const keyNum=Number(key);
-        isCorrect=!isNaN(userNum)&&!isNaN(keyNum)&&(Math.abs(userNum-keyNum)<=Math.max(0.01*Math.abs(keyNum), 1e-4) || String(response.value).trim().toLowerCase()===String(key).trim().toLowerCase());
-      } else if(key!==undefined){
-        isCorrect=String(response.value).trim().toLowerCase()===String(key).trim().toLowerCase();
-      } else {
-        isCorrect=true;
-      }
-      this.submissionStatus='COMMITTED_LOCKED';
-      const maxPts=this.question.maxPoints??4;
-      this.evaluation=this.result(isCorrect?'CORRECT':'INCORRECT',isCorrect?'CANONICAL_KEY_MATCH':'INCORRECT_SELECTION',isCorrect?maxPts:0,maxPts);
-      return this.evaluation;
-    }
     if(this.question.status==='HOLD')return this.result('HOLD_UNGRADED','QUESTION_ON_ACADEMIC_HOLD');
     if(this.question.status!=='RELEASED'||this.question.keyStatus!=='VERIFIED')return this.result('REVIEW_PENDING','KEY_'+this.question.keyStatus);
+    // Only a server/release-bound assessment may grant points or finality.
+    // Never score with caller-provided keys or invent correctness when a key is missing.
+    if(!this.binding)return this.result('REVIEW_PENDING','UNBOUND_ASSESSMENT');
     this.busy=true;this.submissionStatus='SUBMITTING';
     try{const b=this.binding,s=await this.boundSession();
       const existing=await b.progress.committedAttempt(s.id,b.attemptId);
