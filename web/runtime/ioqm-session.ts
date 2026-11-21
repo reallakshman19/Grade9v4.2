@@ -23,6 +23,7 @@ import { StandardAssessmentEngine, type AssessmentContract } from './assessment.
 import { DefaultProgressStore } from './progress.ts';
 import { Session as DurableSessionController } from './session.ts';
 import { createStorageDriver, type StorageDriver } from './storage.ts';
+import {paperBaseSessionId, activePaperSessionId, beginFreshPaperAttempt} from './paper-attempts.ts';
 import { canonicalJson, computeSha256, sameRef } from './loader.ts';
 
 // ---------------------------------------------------------------------------
@@ -277,38 +278,25 @@ export async function createAuthorizedIoqmPaperSession(
   const driver = customDriver || createStorageDriver({ dbName: 'grade9_ioqm_runtime' });
 
   const releaseId = 'rel-ioqm-2024-v1';
-  const sessionId = `ses:${releaseId}:${config.paperId}:${learnerId}`;
-  const attemptId = `att:${sessionId}:1`;
+  const rootSessionId = paperBaseSessionId(releaseId, config.paperId, learnerId);
+  let sessionId = await activePaperSessionId(driver, rootSessionId);
+  let attemptId = `att:${sessionId}:1`;
 
-  // Establish persistent deadline
   const now = Date.now();
   const deadlineAt = new Date(now + config.durationSeconds * 1000).toISOString();
 
   let ses = await driver.get<SessionRecord>('sessions', sessionId);
-  const isExpiredUncommitted = Boolean(ses && ses.deadlineAt && (!ses.attemptIds || ses.attemptIds.length === 0) && Date.now() >= Date.parse(ses.deadlineAt || ''));
+  // A content revision cannot bind to a past attempt. Rotate the active
+  // pointer while retaining historical sessions, draft bytes and receipts.
+  if (ses && ses.origin?.sha256 !== definitionSha256) {
+    sessionId = await beginFreshPaperAttempt(driver, rootSessionId);
+    attemptId = `att:${sessionId}:1`;
+    ses = await driver.get<SessionRecord>('sessions', sessionId);
+  }
 
-  if (!ses || ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted) {
-    if (ses && (ses.origin?.sha256 !== definitionSha256 || isExpiredUncommitted)) {
-      try {
-        await driver.delete('sessions', sessionId);
-        await driver.delete('drafts', sessionId);
-        for (const attId of ses.attemptIds || []) {
-          await driver.delete('attempts', attId);
-          await driver.delete('attempt_authority', attId);
-        }
-      } catch {
-        // ignore
-      }
-    }
-
-    try {
-      await driver.delete('drafts', sessionId);
-      await driver.delete('attempts', attemptId);
-      await driver.delete('attempt_authority', attemptId);
-    } catch {
-      // ignore
-    }
-
+  // An expired uncommitted session must remain recoverable/read-only. Never
+  // silently erase it on page reload; the learner explicitly starts a retake.
+  if (!ses) {
     ses = {
       id: sessionId,
       releaseId,
