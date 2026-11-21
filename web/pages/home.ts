@@ -15,6 +15,11 @@
 
 import { escapeHtml } from '../runtime/rendering.ts';
 import {
+  getActiveLearnerSession,
+  formatSessionTime,
+  type ActiveLearnerSession,
+} from '../runtime/learner-activity.ts';
+import {
   DEFAULT_APP_REGISTRY,
   type AppRegistrySnapshot,
   type CurriculumSubjectDescriptor,
@@ -46,6 +51,10 @@ export interface ResumeSessionAnchor {
   readonly itemId?: string;
   readonly lastActiveAt: string;
   readonly title: string;
+  readonly route?: string;
+  readonly progressPercent?: number;
+  readonly statusText?: string;
+  readonly role?: string;
 }
 
 export type NativeCoreCode =
@@ -115,6 +124,14 @@ export class DashboardScreenController {
 
   loadRegistry(snapshot: RegistrySnapshot): void {
     this.registry = snapshot;
+    this.state = this.computeViewState();
+  }
+
+  setResumeAnchor(anchor: ResumeSessionAnchor | null): void {
+    this.registry = {
+      ...this.registry,
+      lastSession: anchor || undefined,
+    };
     this.state = this.computeViewState();
   }
 
@@ -216,15 +233,19 @@ export class DashboardScreenController {
   <section class="g9-section g9-resume-section" aria-label="Resume learning session">
     <div class="g9-resume-card">
       <div class="g9-resume-meta">
-        <span class="g9-tag g9-tag-active">Last Active Session</span>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+          <span class="g9-tag g9-tag-active">Last Active Session</span>
+          ${s.resumeAnchor.role ? `<span class="g9-tag" style="background:#e0f2fe;color:#0369a1;font-weight:700;">${escapeHtml(s.resumeAnchor.role)}</span>` : ''}
+          <span style="font-size:0.875rem;color:#0369a1;font-weight:700;margin-left:auto;">${typeof s.resumeAnchor.progressPercent === 'number' ? s.resumeAnchor.progressPercent : 42}% Progress</span>
+        </div>
         <h2>${escapeHtml(s.resumeAnchor.title)}</h2>
-        <p class="g9-meta-desc">Topic: <strong>${escapeHtml(s.resumeAnchor.topicId)}</strong> · Active at ${new Date(s.resumeAnchor.lastActiveAt).toLocaleTimeString()}</p>
-        <div class="g9-progress-bar-wrap" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
-          <div class="g9-progress-bar-fill" style="width: 42%;"></div>
+        <p class="g9-meta-desc">Topic: <strong>${escapeHtml(s.resumeAnchor.topicId)}</strong> · ${formatSessionTime(s.resumeAnchor.lastActiveAt)}${s.resumeAnchor.statusText ? ` · <span style="color:#0284c7;font-weight:600;">${escapeHtml(s.resumeAnchor.statusText)}</span>` : ''}</p>
+        <div class="g9-progress-bar-wrap" role="progressbar" aria-valuenow="${typeof s.resumeAnchor.progressPercent === 'number' ? s.resumeAnchor.progressPercent : 42}" aria-valuemin="0" aria-valuemax="100">
+          <div class="g9-progress-bar-fill" style="width: ${typeof s.resumeAnchor.progressPercent === 'number' ? s.resumeAnchor.progressPercent : 42}%;"></div>
         </div>
       </div>
       <div class="g9-resume-action">
-        <button type="button" class="g9-btn g9-btn-cta" data-nav="/learning/core1a">
+        <button type="button" class="g9-btn g9-btn-cta" data-nav="${escapeHtml(s.resumeAnchor.route || '/learning/core1a')}">
           ▶ Resume Session →
         </button>
       </div>
@@ -486,7 +507,7 @@ export const homeCss = `
   display: inline-block;
   background: #0284c7;
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size:0.875rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -583,7 +604,7 @@ export const homeCss = `
   margin-bottom: 0.75rem;
 }
 .g9-code-pill {
-  font-size: 0.8rem;
+  font-size:0.875rem;
   font-weight: 800;
   color: #0284c7;
   background: #e0f2fe;
@@ -592,7 +613,7 @@ export const homeCss = `
   letter-spacing: 0.04em;
 }
 .g9-badge {
-  font-size: 0.75rem;
+  font-size:0.875rem;
   font-weight: 700;
   padding: 0.25rem 0.55rem;
   border-radius: 4px;
@@ -642,7 +663,7 @@ export const homeCss = `
 .g9-tag-active {
   background: #0284c7;
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size:0.875rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -785,8 +806,17 @@ export const DEFAULT_CURRICULUM_REGISTRY: RegistrySnapshot = {
       code: 'MATHEMATICS',
       name: 'Mathematics',
       status: 'AVAILABLE',
-      topicIds: ['topic:polynomials', 'topic:riemann', 'topic:euclid-geometry'],
-      totalItemCount: 30,
+      topicIds: [
+        'topic:coordinate-geometry',
+        'topic:euclid-geometry',
+        'topic:polynomials',
+        'topic:theory-of-equations',
+        'topic:vectors',
+        'topic:linear-equations',
+        'topic:imo-grade9',
+        'topic:riemann',
+      ],
+      totalItemCount: 193,
     },
   ],
   programmes: [
@@ -810,6 +840,10 @@ export const DEFAULT_CURRICULUM_REGISTRY: RegistrySnapshot = {
     itemId: 'item:wpe-core1a-anchor-01',
     lastActiveAt: '2026-11-20T08:00:00Z',
     title: 'Physics — Work, Power & Energy (Core 1A)',
+    route: '/learning/core1a',
+    progressPercent: 42,
+    statusText: 'Core 1A Concept Anchors',
+    role: 'CORE1A',
   },
 };
 
@@ -819,10 +853,54 @@ export function mountDashboard(
   onNavigate?: (route: string) => void
 ): { refresh: () => void; dispose: () => void } {
   let active = true;
+
+  // Initialize with real persisted session if available in browser
+  const persisted = getActiveLearnerSession();
+  if (persisted) {
+    c.setResumeAnchor({
+      sessionId: persisted.sessionId,
+      subjectId: persisted.subjectId,
+      topicId: persisted.topicId,
+      itemId: persisted.itemId,
+      lastActiveAt: persisted.lastActiveAt,
+      title: persisted.title,
+      route: persisted.route,
+      progressPercent: persisted.progressPercent,
+      statusText: persisted.statusText,
+      role: persisted.role,
+    });
+  }
+
   const render = () => {
     if (!active) return;
     root.innerHTML = c.renderHtml();
   };
+
+  const onSessionUpdated = (e: Event) => {
+    const customEvt = e as CustomEvent<ActiveLearnerSession | null>;
+    if (customEvt.detail) {
+      const s = customEvt.detail;
+      c.setResumeAnchor({
+        sessionId: s.sessionId,
+        subjectId: s.subjectId,
+        topicId: s.topicId,
+        itemId: s.itemId,
+        lastActiveAt: s.lastActiveAt,
+        title: s.title,
+        route: s.route,
+        progressPercent: s.progressPercent,
+        statusText: s.statusText,
+        role: s.role,
+      });
+    } else {
+      c.setResumeAnchor(null);
+    }
+    render();
+  };
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('g9-active-session-changed', onSessionUpdated);
+  }
 
   const click = (e: MouseEvent) => {
     const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>('button');
@@ -862,6 +940,9 @@ export function mountDashboard(
     dispose: () => {
       if (!active) return;
       active = false;
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('g9-active-session-changed', onSessionUpdated);
+      }
       root.removeEventListener('click', click);
       root.removeEventListener('keydown', keydown);
       root.replaceChildren();

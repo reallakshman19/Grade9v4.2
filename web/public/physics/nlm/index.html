@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en" data-g9-shell>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Newton's Laws of Motion Workspace · Grade9V3.5</title>
+  <link rel="stylesheet" href="../../css/modern-learner.css">
+  <style>
+    .study-unit-card {
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: var(--radius-md, 14px);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .study-unit-header {
+      border-bottom: 2px solid var(--bg-soft, #f1f5f9);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .unit-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-learn-bg, #eef2ff);
+      color: var(--accent-learn, #4f46e5);
+    }
+    .unit-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main, #0f172a);
+      margin: 0.35rem 0 0;
+    }
+    .key-step-box {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 10px 10px 0;
+      padding: 12px 16px;
+      margin: 1rem 0;
+      color: #1e3a8a;
+    }
+    [data-theme="dark"] .key-step-box {
+      background: #172554;
+      border-left-color: #60a5fa;
+      color: #dbeafe;
+    }
+    .key-step-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: #2563eb;
+    }
+    [data-theme="dark"] .key-step-title {
+      color: #93c5fd;
+    }
+    .derivation-steps {
+      display: grid;
+      gap: 10px;
+      margin: 1.25rem 0;
+    }
+    .step-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 12px;
+      background: var(--bg-soft, #f8fafc);
+      border-radius: 8px;
+      border: 1px solid var(--border, #e2e8f0);
+    }
+    .step-badge {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-learn, #4f46e5);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .step-content strong {
+      color: var(--text-main, #0f172a);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .step-content em {
+      font-style: normal;
+      color: var(--text-muted, #64748b);
+      font-size: 0.9rem;
+      display: block;
+    }
+    .worked-box {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 1.25rem;
+      background: var(--bg-soft, #f8fafc);
+      margin: 1.25rem 0;
+    }
+    .worked-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .trap-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #9a3412;
+      margin: 1rem 0;
+    }
+    [data-theme="dark"] .trap-box {
+      background: #2a1b0e;
+      border-color: #7c2d12;
+      color: #fdba74;
+    }
+    .trap-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .check-card {
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 8px;
+      padding: 10px 14px;
+      background: var(--bg-card, #ffffff);
+    }
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 1.25rem 0 2rem;
+      position: sticky;
+      top: 60px;
+      z-index: 20;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border, #e2e8f0);
+    }
+    [data-theme="dark"] .jump-nav {
+      background: rgba(13, 17, 23, 0.95);
+    }
+    .jump-chip {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border, #e2e8f0);
+      background: var(--bg-card, #ffffff);
+      color: var(--text-main, #0f172a);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .jump-chip:hover {
+      border-color: #38bdf8;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .formula-tag {
+      font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: var(--bg-soft, #f1f5f9);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #0284c7;
+      display: inline-block;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="g9-shell-header">
+    <div class="g9-header-inner">
+      <a class="g9-brand" href="../../index.html">
+        <span class="logo-icon">⚡</span>
+        <span class="brand-title">Grade9V3.5</span>
+        <span class="g9-brand-badge">Learner Platform</span>
+      </a>
+      <nav class="g9-header-nav" aria-label="Portal Navigation">
+        <a href="../../index.html">Home</a>
+        <a href="../../physics/index.html">Physics</a>
+        <a href="../../chemistry/index.html">Chemistry</a>
+        <a href="../../mathematics/index.html">Mathematics</a>
+        <a href="../../question-bank/index.html">Question Bank</a>
+      </nav>
+      <div class="g9-header-actions">
+        <button type="button" class="g9-header-btn g9-search-btn" data-g9-action="search" title="Search Grade9V3 (Ctrl/⌘ K)" aria-label="Search">
+          <span class="g9-btn-icon">🔍</span>
+          <span class="g9-btn-text">Search</span>
+        </button>
+        <button type="button" class="g9-header-btn g9-display-btn" data-g9-action="display" title="Display & Theme Settings" aria-label="Display & Theme">
+          <span class="g9-btn-icon">🌙 / ☀️</span>
+          <span class="g9-btn-text">Display</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <nav class="g9-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="g9-breadcrumbs">
+      <a href="../../index.html">Home</a> <span>/</span> <a href="../../physics/index.html">Physics</a> <span>/</span> <span>Newton's Laws of Motion</span>
+    </div>
+  </nav>
+
+  <main class="g9-container">
+    <!-- Hero Workspace Header -->
+    <div class="g9-hero" style="margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+            <span class="unit-tag" style="background:#e0f2fe;color:#0284c7;">Physics · Classical Dynamics</span>
+            <span class="unit-tag" style="background:#dcfce7;color:#166534;">Core 1A Structured Theory</span>
+            <span class="unit-tag" style="background:#fef3c7;color:#b45309;">6 Complete Learning Units</span>
+          </div>
+          <h1 class="g9-hero-title" style="margin:0 0 6px;">Newton's Laws of Motion Workspace</h1>
+          <p class="g9-hero-subtitle" style="margin:0;">Complete structured study curriculum: first law & inertial frames, free-body diagram isolation rules, second law & Atwood pulley string constraints, momentum & impulse, third law interaction pairs, and static-to-kinetic friction thresholds.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Launch Bar -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;padding:12px 16px;background:var(--bg-soft, #f8fafc);border:1px solid var(--border, #e2e8f0);border-radius:12px;">
+      <a class="g9-btn-action g9-btn-explore" href="../../physics/nlm/explorers/atwood-pulleys/index.html" style="font-weight:700;">
+        ⚡ Atwood Machine &amp; Pulley Suite &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-explore" href="../../physics/nlm/explorers/friction-threshold/index.html" style="font-weight:700;">
+        🛑 Friction Threshold Explorer &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-explore" href="../../physics/nlm/explorers/connected-blocks/index.html" style="font-weight:700;">
+        📦 Connected Blocks Suite &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-qb" href="../../question-bank/index.html?subject=Physics&topic=nlm&mode=study" style="font-weight:700;">
+        🎯 Practice in Question Bank (Core 2) &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-learn" href="../../standalone/practice/core1a-physics-nlm-tablet.html" style="font-weight:700;">
+        📱 Dedicated Fullscreen Tablet App &rarr;
+      </a>
+    </div>
+
+    <!-- Sticky Concept Jump Navigation -->
+    <div class="jump-nav" aria-label="Quick Jump to Study Units">
+      <span style="font-size:0.85rem;font-weight:800;color:var(--text-muted);align-self:center;margin-right:4px;">Jump to Unit:</span>
+      <a href="#unit-1" class="jump-chip">1. First Law &amp; Inertia</a>
+      <a href="#unit-2" class="jump-chip">2. FBD Isolation Rules</a>
+      <a href="#unit-3" class="jump-chip">3. Newton II &amp; Atwood</a>
+      <a href="#unit-4" class="jump-chip">4. Momentum &amp; Impulse</a>
+      <a href="#unit-5" class="jump-chip">5. Third Law Pairs</a>
+      <a href="#unit-6" class="jump-chip">6. Friction Threshold</a>
+    </div>
+
+    <!-- STUDY UNIT 1 -->
+    <article class="study-unit-card" id="unit-1">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 1 of 6 · Inertial Foundations</span>
+          <h2 class="unit-title">The First Law, Inertia &amp; Reference Frames</h2>
+        </div>
+        <div class="formula-tag">Σ F_ext = 0 ⇔ v = constant</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;"><strong>Motion does NOT require force.</strong> An object at rest remains at rest, and an object in motion continues at constant velocity in a straight line, unless acted upon by a non-zero net external force. Force is the agent of <em>change in velocity (acceleration)</em>, never the maintainer of motion.</p>
+      </div>
+
+      <!-- SVG Illustration -->
+      <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;margin:1rem 0;text-align:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 180" style="max-width:100%;height:auto;max-height:180px;">
+          <defs>
+            <marker id="arr-green2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#16a34a"/></marker>
+            <marker id="arr-red2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#dc2626"/></marker>
+            <marker id="arr-blue2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0284c7"/></marker>
+          </defs>
+          <!-- Surface -->
+          <line x1="30" y1="140" x2="430" y2="140" stroke="#475569" stroke-width="3" />
+          <text x="50" y="165" font-size="14" fill="#64748b" font-family="system-ui">Frictionless Inertial Track (Ice Surface)</text>
+          <!-- Glider -->
+          <rect x="180" y="80" width="100" height="60" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5" />
+          <text x="230" y="115" font-size="16" font-weight="800" fill="#0369a1" text-anchor="middle" font-family="system-ui">Mass m</text>
+          <!-- Normal Force N -->
+          <line x1="230" y1="80" x2="230" y2="25" stroke="#16a34a" stroke-width="3" marker-end="url(#arr-green2)"/>
+          <text x="240" y="45" font-size="14" font-weight="700" fill="#16a34a" font-family="system-ui">N (Normal)</text>
+          <!-- Gravity mg -->
+          <line x1="230" y1="140" x2="230" y2="175" stroke="#dc2626" stroke-width="3" marker-end="url(#arr-red2)"/>
+          <text x="240" y="172" font-size="14" font-weight="700" fill="#dc2626" font-family="system-ui">mg</text>
+          <!-- Velocity Vector -->
+          <line x1="280" y1="110" x2="360" y2="110" stroke="#0284c7" stroke-width="3" marker-end="url(#arr-blue2)"/>
+          <text x="320" y="95" font-size="14" font-weight="800" fill="#0284c7" font-family="system-ui">v = const (a = 0)</text>
+        </svg>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Galileo's Incline Thought Experiment</strong>
+            <em>A ball rolling down an incline and up another incline rises to the same height. If the second incline is horizontal, the ball must travel forever to reach that height.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Definition of Inertial Reference Frame</strong>
+            <em>A frame of reference in which Newton's First Law holds true without invoking pseudo-forces. Any frame moving at constant velocity relative to an inertial frame is also inertial.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Equilibrium Criterion</strong>
+            <em>Equilibrium means zero acceleration (a = 0). It does NOT mean velocity is zero! Static equilibrium (v = 0) and dynamic equilibrium (v = const) both require Σ F = 0.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 The Constant-Speed Elevator Problem</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A person of mass m = 70 kg stands on a weighing scale inside an elevator moving upward at a constant speed of 8 m/s. What does the scale read? What if the elevator moves downward at 8 m/s?</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. In both cases, velocity is constant ⇒ acceleration a = 0.<br>
+          2. Vertical FBD: N - mg = m(a) = 0 ⇒ <strong>N = mg = 70 × 9.8 = 686 N</strong>.<br>
+          3. The scale reads exactly 70 kg (686 N) whether stationary, moving up at 8 m/s, or moving down at 8 m/s. Scale reading changes ONLY when the elevator accelerates!
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Thinking that because the elevator is moving upward, the scale must push up harder (N > mg).<br>
+        <strong>Repair:</strong> If N were greater than mg, the net force would be upward, causing the elevator to accelerate upward! Constant velocity demands N = mg.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 2 -->
+    <article class="study-unit-card" id="unit-2">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 2 of 6 · Modeling Discipline</span>
+          <h2 class="unit-title">Free Body Diagrams (FBD) &amp; System Isolation Rules</h2>
+        </div>
+        <div class="formula-tag">Choose Body Boundary → Draw ONLY External Forces Acting ON the Body</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">A Free Body Diagram (FBD) must isolate a single chosen body and include <strong>ONLY external forces exerted BY other bodies ON that chosen body</strong>. Never include forces exerted by the chosen body on its surroundings. Normal force N is strictly perpendicular to the contact interface; friction f is strictly parallel.</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Step 1: Declare the System Boundary</strong>
+            <em>Isolate Body A from all tables, ropes, and adjacent bodies. Represent it as a point mass or bounded silhouette.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Step 2: Non-Contact Field Forces</strong>
+            <em>Draw gravity W = mg acting vertically downward from the center of mass.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Step 3: Contact Forces at Boundaries</strong>
+            <em>Every physical contact point creates a force: strings pull inward along length (Tension T); solid surfaces push perpendicularly inward (Normal N) and resist tangential slip (Friction f).</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">4</span>
+          <div class="step-content">
+            <strong>Step 4: Coordinate Resolution</strong>
+            <em>Align coordinate axes with acceleration (e.g. parallel and perpendicular to an inclined plane). Resolve all off-axis vectors.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Block on Inclined Plane</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A block of mass m = 10 kg sits at rest on a rough plane inclined at θ = 30° to the horizontal. Evaluate the normal reaction N and static friction force f_s.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Resolve weight mg into components: perpendicular = mg cosθ; parallel down slope = mg sinθ.<br>
+          2. Perpendicular equilibrium: Σ F_perp = N - mg cos 30° = 0 ⇒ N = 10 × 9.8 × (√3/2) = <strong>84.87 N</strong>.<br>
+          3. Parallel equilibrium: Σ F_parallel = mg sin 30° - f_s = 0 ⇒ f_s = 10 × 9.8 × 0.5 = <strong>49.00 N (up the incline)</strong>.<br>
+          Notice: Normal reaction N is NOT mg! N = mg cosθ.</p>
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Drawing "ma" as a force on an FBD, or writing N = mg automatically.<br>
+        <strong>Repair:</strong> "ma" is the RESULTANT acceleration product (Σ F = ma), NOT a physical force! Only draw real physical interactions (gravity, normal, tension, friction).</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 3 -->
+    <article class="study-unit-card" id="unit-3">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 3 of 6 · Dynamics &amp; Constraints</span>
+          <h2 class="unit-title">Newton's Second Law &amp; Atwood Pulley Constraints</h2>
+        </div>
+        <div class="formula-tag">Σ F = m a &nbsp;|&nbsp; a = (m₂ - m₁)g / (m₁ + m₂) &nbsp;|&nbsp; T = 2m₁m₂ g / (m₁ + m₂)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">For connected bodies linked by inextensible taut strings, the geometric string constraint <strong>L = x₁ + x₂ = constant</strong> requires acceleration magnitudes to be identical: <strong>a₁ = a₂ = a</strong>. Write the Second Law equation for each body separately, then sum or substitute to eliminate the internal constraint force (Tension T).</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Equation for Ascending Mass m₁</strong>
+            <em>Tension pulls up, gravity pulls down: T - m₁ g = m₁ a.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Equation for Descending Mass m₂ (m₂ > m₁)</strong>
+            <em>Gravity pulls down, tension pulls up: m₂ g - T = m₂ a.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Sum to Eliminate Tension T</strong>
+            <em>(T - m₁ g) + (m₂ g - T) = (m₁ + m₂) a ⇒ (m₂ - m₁) g = (m₁ + m₂) a ⇒ <strong>a = (m₂ - m₁)g / (m₁ + m₂)</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">4</span>
+          <div class="step-content">
+            <strong>Substitute to Solve String Tension T</strong>
+            <em>T = m₁ (g + a) = m₁ [g + (m₂ - m₁)g / (m₁ + m₂)] = <strong>2 m₁ m₂ g / (m₁ + m₂)</strong>.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Standard Atwood Machine</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> Two masses m₁ = 3 kg and m₂ = 5 kg are suspended over a light frictionless pulley. Take g = 10 m/s². Determine the system acceleration and the tension in the string.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. System acceleration: a = (5 - 3) × 10 / (5 + 3) = 2 × 10 / 8 = 20 / 8 = <strong>2.50 m/s²</strong>.<br>
+          2. String tension: T = 2 × 3 × 5 × 10 / (3 + 5) = 300 / 8 = <strong>37.50 N</strong>.<br>
+          3. Notice: For m₂ = 5 kg, gravity is 50 N, but tension is only 37.5 N (net downward force = 12.5 N = 5 × 2.5 N). Tension is NOT 50 N!</p>
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Assuming tension equals the weight of the heavier block (T = m₂ g).<br>
+        <strong>Repair:</strong> If T were equal to m₂ g, block 2 would not accelerate downward! T is strictly less than m₂ g during downward acceleration.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 4 -->
+    <article class="study-unit-card" id="unit-4">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 4 of 6 · Momentum &amp; Impacts</span>
+          <h2 class="unit-title">Momentum, Impulse &amp; Average Impact Forces</h2>
+        </div>
+        <div class="formula-tag">p = m v &nbsp;|&nbsp; J = Δp = ∫ F dt = F_avg · Δt</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Momentum is a <strong>signed vector quantity p = m v</strong>. Rebounding from a wall produces double the momentum change of stopping: <strong>Δp = m(v - (-u)) = 2mu</strong>. Impulse J equals this change in momentum. To minimize destructive impact force F_avg, the collision duration <strong>Δt must be prolonged</strong> (the fundamental engineering principle of airbags, crumple zones, and catching cricket balls with soft hands).</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Impulse-Momentum Theorem</strong>
+            <em>From Newton II: F = dp/dt ⇒ F dt = dp ⇒ <strong>J = ∫ F dt = Δp = m v_final - m v_initial</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Average Impact Force</strong>
+            <em>F_avg = Δp / Δt. For a fixed momentum change, peak force is inversely proportional to collision contact time Δt.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Rebounding Cricket Ball Force</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A cricket ball of mass m = 0.15 kg strikes a batsman's bat horizontally at u = 25 m/s and rebounds in the opposite direction at v = 25 m/s. The contact duration is Δt = 0.002 s. Find the impulse delivered and the average force exerted on the bat.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Choose incoming direction as negative (-25 m/s) and rebound direction as positive (+25 m/s).<br>
+          2. Δp = m(v_f - v_i) = 0.15 × (25 - (-25)) = 0.15 × 50 = <strong>+7.50 N·s</strong>.<br>
+          3. Impulse J = <strong>7.50 N·s</strong>.<br>
+          4. Average force: F_avg = J / Δt = 7.50 / 0.002 = <strong>3,750 N</strong> (Over 380 kg of force!).
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Subtracting speeds as scalars: Δp = m(25 - 25) = 0.<br>
+        <strong>Repair:</strong> Velocity is a vector! Direction reversal turns the minus sign into an addition: 25 - (-25) = 50 m/s.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 5 -->
+    <article class="study-unit-card" id="unit-5">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 5 of 6 · Relational Dynamics</span>
+          <h2 class="unit-title">Newton's Third Law Action-Reaction Pairs</h2>
+        </div>
+        <div class="formula-tag">F_{A→B} = -F_{B→A} &nbsp;(Equal, Opposite, on DIFFERENT Bodies)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Every single force is a mutual interaction between TWO bodies. If Body A exerts force F on Body B, Body B simultaneously exerts an equal and opposite force -F on Body A. Action and reaction <strong>CANNOT cancel each other out because they act on TWO DIFFERENT bodies</strong>!</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>The 4 Invariant Criteria of Newton III Pairs</strong>
+            <em>1. Equal in magnitude.<br>2. Opposite in direction.<br>3. Act simultaneously.<br>4. <strong>Act on two completely different bodies of the exact same physical origin</strong> (e.g. both gravitational, or both electromagnetic).</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Internal vs. External Cancellation</strong>
+            <em>When both bodies are grouped into a single combined system (A + B), internal action-reaction pairs sum vectorially to zero, leaving system acceleration determined strictly by external forces.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Classic Concept Check: The Book on the Table</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Question:</strong> A book rests on a table. The normal reaction N pushes upward on the book, and gravity mg pulls downward on the book. Are N and mg a Newton's Third Law action-reaction pair?</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Answer: NO! Absolutely not!</strong><br>
+          1. Both N and mg act on the SAME body (the book). Action-reaction pairs must act on DIFFERENT bodies.<br>
+          2. They have completely different physical origins (N is contact electromagnetic repulsion between atomic electron clouds; mg is long-range gravitational pull of Earth).<br>
+          • The true partner of upward normal N on the book is: <strong>Downward contact normal push on the TABLE</strong>.<br>
+          • The true partner of downward gravity mg on the book is: <strong>Upward gravitational pull of the book on PLANET EARTH</strong>!
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Confusing balanced forces on one body (Σ F = 0) with a Third Law interaction pair.<br>
+        <strong>Repair:</strong> If two forces act on the same object, they are NEVER an action-reaction pair.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 6 -->
+    <article class="study-unit-card" id="unit-6">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 6 of 6 · Interfacial Thresholds</span>
+          <h2 class="unit-title">Static vs. Kinetic Friction &amp; The Stick-Slip Threshold</h2>
+        </div>
+        <div class="formula-tag">f_s ≤ μ_s N &nbsp;|&nbsp; f_lim = μ_s N &nbsp;|&nbsp; f_k = μ_k N &nbsp;(μ_k &lt; μ_s)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Static friction is an <strong>adaptive, self-adjusting reaction force</strong>. It is NOT automatically equal to μ_s N! It matches the applied tangential force exactly (f_s = F_applied) up to the limiting threshold <strong>f_lim = μ_s N</strong>. The instant applied force exceeds f_lim, atomic cold welds shear, relative slip begins, and friction drops to the constant kinetic value <strong>f_k = μ_k N</strong>.</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Static Regime (f_s ≤ μ_s N)</strong>
+            <em>System is at relative rest (a_rel = 0). Static friction adjusts to whatever value is required to maintain equilibrium: f_s = F_parallel.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Impending Motion Threshold</strong>
+            <em>f_max = μ_s N. On an inclined plane, impending slip occurs at the angle of repose: tan θ_repose = μ_s.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Kinetic Sliding Regime (F_applied > μ_s N)</strong>
+            <em>Surfaces slide relative to each other. Friction magnitude is constant: f_k = μ_k N, directed strictly opposite the relative velocity vector.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: The 3-Stage Friction Test</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A block of mass m = 10 kg sits on a horizontal floor with μ_s = 0.50 and μ_k = 0.40 (take g = 10 m/s²). Normal N = 100 N. Find the friction force and acceleration when pulled horizontally with: (a) F = 30 N, (b) F = 50 N, and (c) F = 70 N.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          • Threshold check: Limiting static friction f_lim = μ_s N = 0.50 × 100 = <strong>50 N</strong>. Kinetic friction f_k = μ_k N = 0.40 × 100 = <strong>40 N</strong>.<br>
+          1. <strong>F = 30 N:</strong> Since 30 N &lt; 50 N, block does NOT slip! Friction adjusts to match applied force: <strong>f_s = 30 N</strong> (NOT 50 N!), acceleration a = <strong>0 m/s²</strong>.<br>
+          2. <strong>F = 50 N:</strong> Impending slip threshold. Friction reaches maximum: <strong>f_s = 50 N</strong>, acceleration a = <strong>0 m/s²</strong>.<br>
+          3. <strong>F = 70 N:</strong> Since 70 N > 50 N, block SLIPS! Friction instantly drops to kinetic: <strong>f_k = 40 N</strong>. Net force = 70 - 40 = 30 N. Acceleration a = 30 / 10 = <strong>3.00 m/s²</strong>.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Setting f = μ_s N = 50 N when pulled with 30 N, concluding that the block accelerates backwards at 2 m/s²!<br>
+        <strong>Repair:</strong> Friction is a passive reaction. It can never cause an object to move by itself; it only resists external applied forces up to its maximum threshold.</p>
+      </div>
+    </article>
+
+    <!-- Bottom Return & Practice Navigation -->
+    <div style="text-align:center;margin:3rem 0 1rem;padding:2rem;background:var(--bg-soft, #f8fafc);border-radius:14px;border:1px solid var(--border, #e2e8f0);">
+      <h3 style="margin:0 0 0.5rem;font-size:1.3rem;font-weight:800;color:var(--text-main);">Ready to Test Your Mastery?</h3>
+      <p style="color:var(--text-muted);margin:0 0 1.25rem;">Apply these 6 foundational concepts to authentic Olympiad &amp; JEE past-paper questions in the Question Bank.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="g9-btn-action g9-btn-qb" href="../../question-bank/index.html?subject=Physics&topic=nlm&mode=study" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          🎯 Practice NLM in Question Bank &rarr;
+        </a>
+        <a class="g9-btn-action g9-btn-learn" href="../../physics/index.html" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          ← Return to Physics Hub
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="g9-footer">
+    <p>Grade9V3.5 Concept-Centred Learner Platform · Authentic Question Bank &amp; Complete Core Study Modules</p>
+  </footer>
+<script src="../../js/display-controls.js"></script>
+<script src="../../js/site-header.js" data-site-root="../../"></script>
+</body>
+</html>

@@ -238,6 +238,7 @@ export function createResourcesPage(currentOrigin: string,authorize?:(resource:R
 // ---------------------------------------------------------------------------
 
 import { mountCirclesMaster, CirclesMasterController } from './circles-master.ts';
+import { mountImoMaster, ImoMasterController } from './imo-master.ts';
 import { PortableWorkbenchController } from '../applications/portable/component.ts';
 import { RIEMANN_SUMS_PACKAGE, LONG_DIVISION_PACKAGE } from '../runtime/math-packages.ts';
 import { REDOX_ELECTRON_EQUIVALENCE_PACKAGE } from '../runtime/chem-packages.ts';
@@ -281,7 +282,7 @@ function mountPortableLab(
               <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;">Home</a> &gt; 
               <span>Standalone Workbench</span>
             </div>
-            <h1 style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">🔬 ${escapeHtml(labTitle)}</h1>
+            <h1 class="placeholder-title" style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">🔬 ${escapeHtml(labTitle)}</h1>
             <p style="margin:0.25rem 0 0;color:#475569;font-size:1rem;">A64 / DEC-A59 Declarative Portable Workbench</p>
           </div>
           
@@ -418,7 +419,7 @@ export function mountExperimentLab(
           <button type="button" id="btn-evaluate-experiment" style="min-height:${HIT_TARGET_MIN_PX}px;padding:10px 20px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;cursor:pointer;">
             Submit for Domain Review
           </button>
-          <span style="font-size:0.85rem;color:#64748b;">Human Domain Evaluation Required</span>
+          <span style="font-size:0.875rem;color:#64748b;">Human Domain Evaluation Required</span>
         </div>
         <div id="experiment-evaluation-slot"></div>
       </div>
@@ -451,7 +452,7 @@ export function mountExperimentLab(
           <div class="experiment-evaluation-panel" style="margin-top:1rem;padding:1rem;background:#fef3c7;border:1px solid #fde68a;border-radius:8px;">
             <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
               <span style="font-weight:800;color:#92400e;">Status: ${escapeHtml(evalResult.status)}</span>
-              <span style="font-size:0.85rem;color:#78350f;">(Score withheld, points: ${evalResult.points})</span>
+              <span style="font-size:0.875rem;color:#78350f;">(Score withheld, points: ${evalResult.points})</span>
             </div>
             <p style="margin:0;font-size:0.9rem;color:#78350f;">${escapeHtml(evalResult.feedback)}</p>
           </div>
@@ -477,12 +478,22 @@ export function mountStandaloneLab(
 ): { dispose: () => void } {
   const labId = (rawLabId || '').toLowerCase();
 
-  if (labId.includes('circles') || labId.includes('imo')) {
+  if (labId.includes('imo')) {
+    const c = new ImoMasterController();
+    return mountImoMaster(root, c, onNavigate);
+  }
+
+  if (labId.includes('circles')) {
     const c = new CirclesMasterController();
     return mountCirclesMaster(root, c, onNavigate);
   }
 
-  if (labId.includes('linear-coordinates') || labId === 'lab:linear-coordinates') {
+  if (
+    labId.includes('linear-coordinates') ||
+    labId.includes('polynomials-and-coordinates') ||
+    labId.includes('polynomials-coordinates') ||
+    labId === 'lab:linear-coordinates'
+  ) {
     return mountLinearCoordinatesWorkbench(root, undefined, onNavigate);
   }
 
@@ -514,6 +525,23 @@ export function mountStandaloneLab(
       '#/subject/chemistry/topic/chem-redox/labs',
       onNavigate
     );
+  }
+
+  if (labId.includes('redox-reactions-master-suite') || labId.includes('redox-master-suite')) {
+    window.location.href = './chemistry/redox/explorers/redox_reactions/index.html';
+    return { dispose: () => {} };
+  }
+  if (labId.includes('chemical-bonding-master-suite') || labId.includes('bonding-master-suite')) {
+    window.location.href = './chemistry/bonding/explorers/chemical_bonding/index.html';
+    return { dispose: () => {} };
+  }
+  if (labId.includes('behaviour-of-gases-master-suite') || labId.includes('gases-master-suite')) {
+    window.location.href = './chemistry/gases/explorers/behaviour_of_gases/index.html';
+    return { dispose: () => {} };
+  }
+  if (labId.includes('mole-concept-master-suite') || labId.includes('mole-master-suite')) {
+    window.location.href = './chemistry/some-basic-concepts/explorers/mole_concept/index.html';
+    return { dispose: () => {} };
   }
 
   if (

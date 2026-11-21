@@ -16,12 +16,13 @@ import {
   createQuestionWorkspace,
   QuestionWorkspaceController,
 } from '../components/question-workspace.ts';
+import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
 import type {
   WorkspaceQuestionDescriptor,
   QuestionWorkspaceViewState,WorkspaceBinding,
 } from '../components/question-workspace.ts';
 import type { EvaluationResult } from '../components/response/types.ts';
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 
 export type QuestionPageStatus =
@@ -66,10 +67,20 @@ export class QuestionPageController {
   private evaluationResult: EvaluationResult | null = null;
   private subjectCode: string;
   private topicCode: string;
+  private showSolution: boolean = false;
 
   constructor(subjectCode: string = 'phys', topicCode: string = 'wpe') {
     this.subjectCode = subjectCode;
     this.topicCode = topicCode;
+  }
+
+  toggleSolution(): boolean {
+    this.showSolution = !this.showSolution;
+    return this.showSolution;
+  }
+
+  unlockNextHint(): boolean {
+    return this.workspace ? this.workspace.unlockNextHint() : false;
   }
 
   loadQuestion(question: WorkspaceQuestionDescriptor,binding?:WorkspaceBinding): void {
@@ -118,21 +129,24 @@ export class QuestionPageController {
     const q = ws.question;
     const isLandscape = ws.layout.orientation === 'LANDSCAPE';
 
-    let stimulusHtml = `<div class="g9-stimulus-content"><h2 style="margin:0 0 8px 0;font-size:18px;">${escapeHtml(q.title)}</h2><p style="white-space:pre-wrap;overflow-wrap:anywhere;">${escapeHtml(q.stemText)}</p>`;
+    let stimulusHtml = `<div class="g9-stimulus-content"><h2 style="margin:0 0 8px 0;font-size:18px;">${escapeHtml(q.title)}</h2><div style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;font-size:16px;">${renderMathHtml(q.stemText)}</div>`;
     if (q.figures && q.figures.length > 0) {
-      stimulusHtml += `<div class="g9-stimulus-figures" style="margin-top:12px;">` + q.figures.map(f => `<figure style="margin:0 0 8px 0;"><figcaption>${escapeHtml(f.caption)}</figcaption><div style="padding:16px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:6px;min-height:64px;display:flex;align-items:center;justify-content:center;">${f.available ? '<span>Figure: ' + escapeHtml(f.id) + '</span>' : '<span style="color:#ef4444;">[Figure unavailable / withheld]</span>'}</div></figure>`).join('') + `</div>`;
+      stimulusHtml += `<div class="g9-stimulus-figures" style="margin-top:12px;">` + q.figures.map(f => {
+        const imgHtml = f.available && f.sourceUrl ? `<img src="${f.sourceUrl}" alt="${escapeHtml(f.caption)}" style="max-width:100%;max-height:360px;object-fit:contain;display:block;margin:auto;background:#ffffff;border-radius:4px;padding:8px;" />` : (f.available ? `<span>Figure: ${escapeHtml(f.id)}</span>` : `<span style="color:#ef4444;">[Figure unavailable / withheld]</span>`);
+        return `<figure style="margin:0 0 8px 0;"><figcaption style="font-size:14px;margin-bottom:4px;color:#475569;">${escapeHtml(f.caption)}</figcaption><div style="padding:12px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:6px;min-height:64px;display:flex;align-items:center;justify-content:center;">${imgHtml}</div></figure>`;
+      }).join('') + `</div>`;
     }
     stimulusHtml += `</div>`;
 
     let responseHtml = `<div class="g9-response-content">`;
     if (q.kind === 'SINGLE_CHOICE' && q.options) {
-      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;">Select an option:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="radio" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span>${escapeHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
+      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select an option:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="radio" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderMathHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
     } else if (q.kind === 'MULTIPLE_CHOICE' && q.options) {
-      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;">Select all that apply:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="checkbox" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span>${escapeHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
+      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select all that apply:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="checkbox" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderMathHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
     } else {
       const units = q.allowedUnits && q.allowedUnits.length > 0 ? q.allowedUnits : ['J'];
       responseHtml += `<div style="margin-bottom:16px;">
-        <label style="display:block;margin-bottom:6px;font-weight:600;">Your answer:</label>
+        <label style="display:block;margin-bottom:6px;font-weight:600;font-size:15px;">Your answer:</label>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
           <input type="text" id="g9-quantity-input" placeholder="Value..." style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;width:100%;max-width:240px;font-size:16px;" ${ws.isLocked ? 'disabled' : ''}>
           <select id="g9-unit-select" style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-size:16px;background:#f8fafc;" ${ws.isLocked ? 'disabled' : ''}>
@@ -142,20 +156,47 @@ export class QuestionPageController {
       </div>`;
     }
 
+    if (ws.currentHints && ws.currentHints.length > 0) {
+      responseHtml += `<div class="g9-unlocked-hints" style="margin:16px 0;display:flex;flex-direction:column;gap:8px;">
+        <h4 style="margin:0 0 4px 0;font-size:15px;color:#0369a1;font-weight:700;">💡 Progressive Hint Ladder (${ws.unlockedHintCount}/${ws.totalHintsCount}):</h4>
+        ${ws.currentHints.map((h: any, i: number) => `
+          <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:10px 14px;color:#0369a1;font-size:15px;line-height:1.5;">
+            <strong>Hint ${i + 1}:</strong> ${renderMathHtml(escapeHtml(h.text || h.id || ''))}
+          </div>
+        `).join('')}
+      </div>`;
+    }
+
     responseHtml += `<div class="g9-workspace-actions" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:16px;">
       <button type="button" id="g9-submit-btn" style="min-height:${HIT_TARGET_PRIMARY_PX}px;min-width:${HIT_TARGET_PRIMARY_PX}px;padding:12px 24px;font-weight:700;font-size:16px;background:#2563eb;color:#ffffff;border:none;border-radius:6px;cursor:pointer;" ${!ws.canSubmit ? 'disabled' : ''}>Submit Solution</button>
-      <button type="button" id="g9-hint-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;" ${ws.unlockedHintCount >= ws.totalHintsCount ? 'disabled' : ''}>Get Hint (${ws.unlockedHintCount}/${ws.totalHintsCount})</button>
+      <button type="button" id="g9-hint-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:15px;color:#0f172a;font-weight:600;" ${(ws.totalHintsCount === 0 || ws.unlockedHintCount >= ws.totalHintsCount) ? 'disabled' : ''}>💡 Get Hint (${ws.unlockedHintCount}/${ws.totalHintsCount})</button>
+      <button type="button" id="g9-solution-toggle-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#ffffff;border:1px solid #0284c7;border-radius:6px;cursor:pointer;font-size:15px;color:#0284c7;font-weight:600;">📖 ${this.showSolution ? 'Hide Solution' : 'View Worked Solution'}</button>
     </div>`;
 
     if (s.evaluation) {
-      responseHtml += `<div class="g9-evaluation-feedback" style="margin-top:16px;padding:12px;border-radius:6px;background:#f0fdf4;border:1px solid #86efac;"><strong>Status: ${escapeHtml(s.evaluation.status)}</strong> (${s.evaluation.rawPoints ?? 0}/${s.evaluation.maxPoints} pts)<p style="margin:4px 0 0 0;font-size:13px;color:#475569;">Reason: ${escapeHtml(s.evaluation.reasonCode)}</p></div>`;
+      const isCorrect = s.evaluation.status === 'CORRECT';
+      responseHtml += `<div class="g9-evaluation-feedback" style="margin-top:16px;padding:14px;border-radius:6px;background:${isCorrect ? '#f0fdf4' : '#fef2f2'};border:1px solid ${isCorrect ? '#86efac' : '#fca5a5'};">
+        <strong style="color:${isCorrect ? '#166534' : '#991b1b'};font-size:16px;">${isCorrect ? '✅ Correct!' : '❌ Incorrect'}</strong> (${s.evaluation.rawPoints ?? 0}/${s.evaluation.maxPoints} pts)
+        <p style="margin:6px 0 0 0;font-size:14px;color:${isCorrect ? '#15803d' : '#b91c1c'};">${isCorrect ? 'Outstanding work! Your answer matches the canonical key.' : 'The selected option does not match the canonical result. Review the step-by-step model derivation below:'}</p>
+      </div>`;
+    }
+
+    if (this.showSolution || s.evaluation) {
+      if (q.explanationHtml || (q.solutionSteps && q.solutionSteps.length > 0)) {
+        responseHtml += `<div class="g9-worked-solution" style="margin-top:16px;padding:16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;">
+          <h4 style="margin:0 0 10px 0;font-size:16px;color:#1e293b;display:flex;align-items:center;gap:6px;"><span>📝</span> Worked Solution &amp; Model Derivation</h4>
+          ${q.solutionSteps && q.solutionSteps.length > 0 ? `<ol style="margin:0;padding-left:20px;font-size:15px;line-height:1.6;color:#334155;">${q.solutionSteps.map((st: string) => `<li style="margin-bottom:6px;">${renderMathHtml(st)}</li>`).join('')}</ol>` : ''}
+          ${q.explanationHtml && (!q.solutionSteps || q.solutionSteps.length === 0) ? `<div style="font-size:15px;line-height:1.6;margin-bottom:8px;color:#334155;">${renderMathHtml(q.explanationHtml)}</div>` : ''}
+          ${q.limitingCheck ? `<div style="margin-top:12px;padding:10px 12px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:6px;font-size:14px;color:#0369a1;"><strong>🔍 Limiting Case &amp; Invariant Check:</strong> ${renderMathHtml(escapeHtml(q.limitingCheck))}</div>` : ''}
+        </div>`;
+      }
     }
     responseHtml += `<p role="status" data-question-status></p></div>`;
 
     return `<main class="g9-question-page" data-role="CORE2" data-orientation="${ws.layout.orientation}"><style>${questionCss}</style>
       <section data-slot="identity">
         <h1 style="margin:0 0 4px 0;font-size:20px;">${escapeHtml(q.title)}</h1>
-        <div style="font-size:13px;color:#64748b;">Code: ${escapeHtml(q.code)} | Status: ${escapeHtml(q.status)} | Key: ${escapeHtml(q.keyStatus)}</div>
+        <div style="font-size:14px;color:#64748b;">Code: ${escapeHtml(q.code)} | Status: ${escapeHtml(q.status)} | Key: ${escapeHtml(q.keyStatus)}</div>
       </section>
       <div class="g9-workspace-split">
         <section data-slot="stimulus">
@@ -170,7 +211,7 @@ export class QuestionPageController {
 }
 
 const questionCss = `
-.g9-question-page{box-sizing:border-box;width:100%;max-width:100%;min-width:0;display:flex;flex-direction:column;gap:16px;padding:12px;overflow-wrap:anywhere;font-family:system-ui,sans-serif}
+.g9-question-page{box-sizing:border-box;width:100%;max-width:100%;min-width:0;display:flex;flex-direction:column;gap:16px;padding:12px;overflow-wrap:anywhere;font-family:var(--g9-font-family,system-ui,sans-serif);font-size:16px;}
 .g9-question-page *{box-sizing:border-box;min-width:0}
 .g9-question-page [data-slot]{width:100%;padding:12px;border:1px solid #ccd7e1;border-radius:8px}
 .g9-question-page .g9-workspace-split{display:flex;gap:16px;width:100%}
@@ -184,9 +225,33 @@ const questionCss = `
 
 export function mountQuestionPage(root: HTMLElement, c: QuestionPageController) {
   let active = true;
+  const syncLearnerSession = () => {
+    try {
+      const s = c.getViewState();
+      const ws = s.workspaceState;
+      if (!ws) return;
+      const q = ws.question;
+      const isScored = !!s.evaluation;
+      const points = s.evaluation?.rawPoints ?? 0;
+      const progress = isScored ? 100 : (ws.unlockedHintCount > 0 ? 60 : 30);
+      recordActiveLearnerSession({
+        sessionId: `session:question:${q.id}`,
+        subjectId: 'subject:physics',
+        topicId: 'topic:wpe',
+        itemId: q.id,
+        title: `${q.code}: ${q.title}`,
+        route: `/question/${q.id}`,
+        progressPercent: progress,
+        lastActiveAt: new Date().toISOString(),
+        statusText: isScored ? `Scored: ${points}/${s.evaluation?.maxPoints ?? 1} pts` : 'Solving Problem',
+        role: 'QUESTION',
+      });
+    } catch {}
+  };
   const render = () => {
     if (!active) return;
     root.innerHTML = c.render();
+    syncLearnerSession();
   };
   const status = (message: string) => {
     const n = root.querySelector('[data-question-status]');
@@ -203,11 +268,11 @@ export function mountQuestionPage(root: HTMLElement, c: QuestionPageController) 
         status(e?.message ?? 'Submission error.');
       }
     } else if (b.id === 'g9-hint-btn') {
-      const ws = c.getWorkspace();
-      if (ws) {
-        ws.unlockNextHint();
-        render();
-      }
+      c.unlockNextHint();
+      render();
+    } else if (b.id === 'g9-solution-toggle-btn') {
+      c.toggleSolution();
+      render();
     }
   };
   const updateQuantity = () => {

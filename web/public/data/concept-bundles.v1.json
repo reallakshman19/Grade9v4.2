@@ -1,0 +1,591 @@
+[
+  {
+    "concept_ref": "MIC-CHEM-BONDING",
+    "interactive": [
+      {
+        "entrypoint": "chemistry/bonding/explorers/chemical_bonding/index.html",
+        "resource_ref": "chem.bonding.chemical-bonding.explorer",
+        "title": "Chemical Bonding & Molecular Structure Explorer"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "chemistry/bonding/core1a.html",
+        "resource_ref": "chem.bonding.core1a",
+        "title": "Chemical Bonding \u00b7 VSEPR & Geometry \u2014 Learn"
+      },
+      {
+        "entrypoint": "standalone/practice/core1a-chemistry-chemical-bonding-tablet.html",
+        "resource_ref": "product.core1a-chemistry-chemical-bonding-tablet",
+        "title": "Chemical Bonding & Molecular Structure | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/chemistry-chemical-bonding-master-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.chemistry-chemical-bonding-master-suite",
+        "title": "IIT-JEE Chemistry"
+      },
+      {
+        "entrypoint": "standalone/practice/core2-chemistry-chemical-bonding-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-chemistry-chemical-bonding-tablet",
+        "title": "Chemical Bonding Core (2) NCERT Question Helper | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-CHEM-BONDING"
+      },
+      "url": "question-bank/index.html?capability=MIC-CHEM-BONDING"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Chemistry",
+    "title": "Chemical Bonding & Molecular Structure",
+    "topic_ref": "chem.bonding"
+  },
+  {
+    "concept_ref": "MIC-CHEM-GAS-LAWS",
+    "interactive": [
+      {
+        "entrypoint": "chemistry/gases/explorers/behaviour_of_gases/index.html",
+        "resource_ref": "chem.gases.behaviour-of-gases.explorer",
+        "title": "Behaviour of Gases Explorer"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "chemistry/gases/core1a.html",
+        "resource_ref": "chem.gases.core1a",
+        "title": "Behaviour of Gases & Molecular Speeds \u00b7 Core 1A Learn"
+      },
+      {
+        "entrypoint": "standalone/practice/core1a-chemistry-behaviour-of-gases-tablet.html",
+        "resource_ref": "product.core1a-chemistry-behaviour-of-gases-tablet",
+        "title": "Behaviour of Gases Master Suite | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/chemistry-behaviour-of-gases-master-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.chemistry-behaviour-of-gases-master-suite",
+        "title": "IIT-JEE Chemistry"
+      },
+      {
+        "entrypoint": "standalone/practice/core2-chemistry-behaviour-of-gases-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-chemistry-behaviour-of-gases-tablet",
+        "title": "Behaviour of Gases Core (2) NCERT Question Helper | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-CHEM-GAS-LAWS"
+      },
+      "url": "question-bank/index.html?capability=MIC-CHEM-GAS-LAWS"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Chemistry",
+    "title": "Behaviour of Gases & Molecular Speeds",
+    "topic_ref": "chem.gases"
+  },
+  {
+    "concept_ref": "MIC-CHEM-MOLE-CONCEPT",
+    "interactive": [
+      {
+        "entrypoint": "chemistry/some-basic-concepts/explorers/mole_concept/index.html",
+        "resource_ref": "chem.mole.mole-concept.explorer",
+        "title": "Mole Concept & Stoichiometry Explorer"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "chemistry/some-basic-concepts/core1a.html",
+        "resource_ref": "chem.mole.core1a",
+        "title": "Mole Concept & Stoichiometry \u00b7 Core 1A Learn"
+      },
+      {
+        "entrypoint": "standalone/practice/core1a-chemistry-some-basic-concepts-tablet.html",
+        "resource_ref": "product.core1a-chemistry-some-basic-concepts-tablet",
+        "title": "Some Basic Concepts & Mole Concept | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/chemistry-mole-concept-master-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.chemistry-mole-concept-master-suite",
+        "title": "IIT-JEE Chemistry"
+      },
+      {
+        "entrypoint": "standalone/practice/core2-chemistry-some-basic-concepts-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-chemistry-some-basic-concepts-tablet",
+        "title": "Some Basic Concepts & Mole Concept Core (2) NCERT Helper | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-CHEM-MOLE-CONCEPT"
+      },
+      "url": "question-bank/index.html?capability=MIC-CHEM-MOLE-CONCEPT"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Chemistry",
+    "title": "Mole Concept & Stoichiometry",
+    "topic_ref": "chem.mole"
+  },
+  {
+    "concept_ref": "MIC-CHEM-REDOX",
+    "interactive": [
+      {
+        "entrypoint": "chemistry/redox/explorers/redox_reactions/index.html",
+        "resource_ref": "chem.redox.redox-reactions.explorer",
+        "title": "Redox Reactions Explorer"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "chemistry/redox/core1a.html",
+        "resource_ref": "chem.redox.core1a",
+        "title": "Redox Reactions & Oxidation Numbers \u00b7 Core 1A Learn"
+      },
+      {
+        "entrypoint": "standalone/practice/core1a-chemistry-redox-reactions-tablet.html",
+        "resource_ref": "product.core1a-chemistry-redox-reactions-tablet",
+        "title": "Redox Reactions Master Suite | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/chemistry-redox-reactions-master-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.chemistry-redox-reactions-master-suite",
+        "title": "Redox Reactions Master Suite \u00b7 Standalone"
+      },
+      {
+        "entrypoint": "standalone/practice/core2-chemistry-redox-reactions-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-chemistry-redox-reactions-tablet",
+        "title": "Redox Reactions Core (2) NCERT Question Helper | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-CHEM-REDOX"
+      },
+      "url": "question-bank/index.html?capability=MIC-CHEM-REDOX"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Chemistry",
+    "title": "Redox Reactions & Oxidation States",
+    "topic_ref": "chem.redox"
+  },
+  {
+    "concept_ref": "MIC-MATH-COORDINATE-GEOMETRY",
+    "interactive": [],
+    "learn": [
+      {
+        "entrypoint": "mathematics/coordinate-geometry/core1a.html",
+        "resource_ref": "math.coordinate-geometry.core1a",
+        "title": "Coordinate Geometry: Cartesian Plane & Coordinates \u2014 Learn"
+      }
+    ],
+    "practice": [],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-MATH-COORDINATE-GEOMETRY"
+      },
+      "url": "question-bank/index.html?capability=MIC-MATH-COORDINATE-GEOMETRY"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Mathematics",
+    "title": "Math Coordinate Geometry",
+    "topic_ref": "math.coordinate-geometry"
+  },
+  {
+    "concept_ref": "MIC-MATH-EUCLID-GEOMETRY",
+    "interactive": [],
+    "learn": [
+      {
+        "entrypoint": "mathematics/euclids-geometry/core1a.html",
+        "resource_ref": "math.euclids-geometry.core1a",
+        "title": "Euclid's Geometry: Axioms, Postulates & Proofs \u2014 Learn"
+      },
+      {
+        "entrypoint": "standalone/practice/core1a-mathematics-euclids-geometry-tablet.html",
+        "resource_ref": "product.core1a-mathematics-euclids-geometry-tablet",
+        "title": "Euclid's Geometry Master Suite | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/core2-mathematics-euclids-geometry-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-mathematics-euclids-geometry-tablet",
+        "title": "Euclid's Geometry Core (2) NCERT Question Helper & Transfer | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-MATH-EUCLID-GEOMETRY"
+      },
+      "url": "question-bank/index.html?capability=MIC-MATH-EUCLID-GEOMETRY"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Mathematics",
+    "title": "Math Euclid Geometry",
+    "topic_ref": "math.euclids-geometry"
+  },
+  {
+    "concept_ref": "MIC-MATH-POLYNOMIALS",
+    "interactive": [],
+    "learn": [
+      {
+        "entrypoint": "mathematics/polynomials/core1a.html",
+        "resource_ref": "math.polynomials.core1a",
+        "title": "Polynomials: Degree, Remainder & Factor Theorems \u2014 Learn"
+      }
+    ],
+    "practice": [],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-MATH-POLYNOMIALS"
+      },
+      "url": "question-bank/index.html?capability=MIC-MATH-POLYNOMIALS"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Mathematics",
+    "title": "Math Polynomials",
+    "topic_ref": "math.polynomials"
+  },
+  {
+    "concept_ref": "MIC-MATH-THEORY-OF-EQUATIONS",
+    "interactive": [],
+    "learn": [
+      {
+        "entrypoint": "mathematics/theory-of-equations/core1a.html",
+        "resource_ref": "math.theory-of-equations.core1a",
+        "title": "Math Theory Of Equations \u00b7 Core 1A Learn"
+      },
+      {
+        "entrypoint": "standalone/practice/core1a-mathematics-theory-of-equations-tablet.html",
+        "resource_ref": "product.core1a-mathematics-theory-of-equations-tablet",
+        "title": "Theory of Equations Master Suite | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/core2-mathematics-theory-of-equations-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-mathematics-theory-of-equations-tablet",
+        "title": "Theory of Equations Core (2) Challenge Practice | 12.7\" Tablet Standalone Edition"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-MATH-THEORY-OF-EQUATIONS"
+      },
+      "url": "question-bank/index.html?capability=MIC-MATH-THEORY-OF-EQUATIONS"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Mathematics",
+    "title": "Math Theory Of Equations",
+    "topic_ref": "math.theory-of-equations"
+  },
+  {
+    "concept_ref": "MIC-MATH-VECTOR-ALGEBRA",
+    "interactive": [
+      {
+        "entrypoint": "mathematics/vectors/explorers/vector_algebra/index.html",
+        "resource_ref": "math.vectors.vector-algebra.explorer",
+        "title": "Vector Algebra \u00b7 3D Master Suite"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "mathematics/vectors/core1a.html",
+        "resource_ref": "math.vectors.core1a",
+        "title": "Vector Algebra 3D \u00b7 Core 1A Learn"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/vector-algebra-3d-master-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.vector-algebra-3d-master-suite",
+        "title": "IIT-JEE Vector Algebra"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-MATH-VECTOR-ALGEBRA"
+      },
+      "url": "question-bank/index.html?capability=MIC-MATH-VECTOR-ALGEBRA"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Mathematics",
+    "title": "Vector Algebra \u00b7 3D Engine",
+    "topic_ref": "math.vectors"
+  },
+  {
+    "concept_ref": "MIC-PHY-FLUIDS-THRUST-PRESSURE",
+    "interactive": [],
+    "learn": [
+      {
+        "entrypoint": "standalone/practice/core1a-physics-thrust-pressure-tablet.html",
+        "resource_ref": "product.core1a-physics-thrust-pressure-tablet",
+        "title": "Construction \u00b7 Thrust and Pressure"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/core2-physics-thrust-pressure-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-physics-thrust-pressure-tablet",
+        "title": "Construction \u00b7 Thrust and Pressure"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-PHY-FLUIDS-THRUST-PRESSURE"
+      },
+      "url": "question-bank/index.html?capability=MIC-PHY-FLUIDS-THRUST-PRESSURE"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Physics",
+    "title": "Thrust & Hydrostatic Pressure",
+    "topic_ref": "phy.fluids"
+  },
+  {
+    "concept_ref": "MIC-PHY-KIN-1D-MOTION",
+    "interactive": [
+      {
+        "entrypoint": "physics/motion-1d/explorers/motion_in_1d/index.html",
+        "resource_ref": "phy.motion-1d.motion-in-1d.explorer",
+        "title": "Motion in 1D Interactive Suite"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "physics/motion-1d/core1a.html",
+        "resource_ref": "phy.motion-1d.core1a",
+        "title": "Core Study (All 11 Units)"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/core2-motion-1d-straight-line-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-motion-1d-straight-line-tablet",
+        "title": "Motion in 1D Core (2) Challenge Suite | 12.7\" Tablet Standalone Edition"
+      },
+      {
+        "entrypoint": "standalone/practice/motion-in-1d-master-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.motion-in-1d-master-suite",
+        "title": "IIT-JEE Motion in One Dimension"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-PHY-KIN-1D-MOTION"
+      },
+      "url": "question-bank/index.html?capability=MIC-PHY-KIN-1D-MOTION"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Physics",
+    "title": "Motion in a Straight Line",
+    "topic_ref": "phy.motion-1d"
+  },
+  {
+    "concept_ref": "MIC-PHY-KIN-2D-INDEPENDENT-COMPONENTS",
+    "interactive": [
+      {
+        "entrypoint": "physics/motion-2d/explorers/motion-in-a-plane/index.html",
+        "resource_ref": "phy.motion-2d.motion-in-a-plane.explorer",
+        "title": "Motion in a Plane Research Suite"
+      },
+      {
+        "entrypoint": "physics/motion-in-2d/explorers/motions_in_2d/index.html",
+        "resource_ref": "phy.motion-in-2d.motions-in-2d.explorer",
+        "title": "2D Motion Master Suite"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "physics/motion-2d/core1a.html",
+        "resource_ref": "product.core1a-physics-motion-2d",
+        "title": "Motion in a Plane · Core 1A Learn"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/core2-motion-consolidated-practice-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-motion-consolidated-practice-tablet",
+        "title": "Motion Consolidated Student Practice Edition | 12.7\" Tablet Standalone Edition"
+      },
+      {
+        "entrypoint": "standalone/practice/core2-motion-in-a-plane-tablet.html",
+        "question_count": 10,
+        "resource_ref": "product.core2-motion-in-a-plane-tablet",
+        "title": "CORE (2) v2"
+      },
+      {
+        "entrypoint": "standalone/practice/core2a-projectile-study.html",
+        "question_count": 10,
+        "resource_ref": "product.core2a-projectile-study",
+        "title": "Projectile Motion"
+      },
+      {
+        "entrypoint": "standalone/practice/motion-in-2d-master-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.motion-in-2d-master-suite",
+        "title": "Motions in 2D"
+      },
+      {
+        "entrypoint": "standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+        "question_count": 5,
+        "resource_ref": "product.physics-motion-in-a-plane-interactive-suite",
+        "title": "Motion in a Plane"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-PHY-KIN-2D-INDEPENDENT-COMPONENTS"
+      },
+      "url": "question-bank/index.html?capability=MIC-PHY-KIN-2D-INDEPENDENT-COMPONENTS"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Physics",
+    "title": "Motion in a Plane & Projectiles",
+    "topic_ref": "phy.motion-2d"
+  },
+  {
+    "concept_ref": "MIC-PHY-NLM-FIRST-LAW",
+    "interactive": [
+      {
+        "entrypoint": "physics/nlm/explorers/atwood-pulleys/index.html",
+        "resource_ref": "phy.nlm.atwood-pulleys.explorer",
+        "title": "Atwood Machines & Pulley Constraints"
+      },
+      {
+        "entrypoint": "physics/nlm/explorers/connected-blocks/index.html",
+        "resource_ref": "phy.nlm.connected-blocks.explorer",
+        "title": "Connected Blocks Dynamics"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "standalone/practice/core1a-physics-nlm-tablet.html",
+        "resource_ref": "product.core1a-physics-nlm-tablet",
+        "title": "Newton's Laws of Motion Master Suite"
+      }
+    ],
+    "practice": [],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-PHY-NLM-FIRST-LAW"
+      },
+      "url": "question-bank/index.html?capability=MIC-PHY-NLM-FIRST-LAW"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Physics",
+    "title": "First Law & Inertia",
+    "topic_ref": "phy.nlm"
+  },
+  {
+    "concept_ref": "MIC-PHY-NLM-FRICTION",
+    "interactive": [
+      {
+        "entrypoint": "physics/nlm/explorers/friction-threshold/index.html",
+        "resource_ref": "phy.nlm.friction.threshold-explorer",
+        "title": "Static-to-Kinetic Friction Threshold Explorer"
+      }
+    ],
+    "learn": [
+      {
+        "entrypoint": "standalone/practice/friction/core1a.html",
+        "resource_ref": "phy.nlm.friction.core1a",
+        "title": "Friction \u2014 Learn"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/friction/core2.html",
+        "question_count": 10,
+        "resource_ref": "phy.nlm.friction.core2",
+        "title": "Friction \u2014 Practice"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-PHY-NLM-FRICTION"
+      },
+      "url": "question-bank/index.html?capability=MIC-PHY-NLM-FRICTION"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Physics",
+    "title": "Limiting & Kinetic Friction",
+    "topic_ref": "phy.nlm"
+  },
+  {
+    "concept_ref": "MIC-PHY-NLM-FRICTION-QUANT",
+    "interactive": [],
+    "learn": [
+      {
+        "entrypoint": "standalone/practice/friction/core1a.html",
+        "resource_ref": "phy.nlm.friction.core1a",
+        "title": "Friction \u2014 Learn"
+      }
+    ],
+    "practice": [
+      {
+        "entrypoint": "standalone/practice/friction/core2.html",
+        "question_count": 10,
+        "resource_ref": "phy.nlm.friction.core2",
+        "title": "Friction \u2014 Practice"
+      }
+    ],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-PHY-NLM-FRICTION-QUANT"
+      },
+      "url": "question-bank/index.html?capability=MIC-PHY-NLM-FRICTION-QUANT"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Physics",
+    "title": "Quantitative Friction & Connected Bodies",
+    "topic_ref": "phy.nlm"
+  },
+  {
+    "concept_ref": "MIC-PHY-VEC-ADDITION",
+    "interactive": [],
+    "learn": [
+      {
+        "entrypoint": "standalone/practice/core1a-physics-vectors-tablet.html",
+        "resource_ref": "product.core1a-physics-vectors-tablet",
+        "title": "Vector Algebra & Resolution Master Suite"
+      },
+      {
+        "entrypoint": "standalone/practice/core1a-vector-add-sub-tablet.html",
+        "resource_ref": "product.core1a-vector-add-sub-tablet",
+        "title": "Construction"
+      }
+    ],
+    "practice": [],
+    "question_bank": {
+      "filter": {
+        "capability_ref": "MIC-PHY-VEC-ADDITION"
+      },
+      "url": "question-bank/index.html?capability=MIC-PHY-VEC-ADDITION"
+    },
+    "schema": "concept-bundle/v1",
+    "subject_ref": "Physics",
+    "title": "Vector Addition & Resolution",
+    "topic_ref": "phy.vectors"
+  }
+]

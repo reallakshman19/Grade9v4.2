@@ -1,0 +1,274 @@
+{
+  "schema_version": "grade9v3-core1a-construction/v1",
+  "package_id": "CORE1A-MATH-CIRCLES-GRADE9",
+  "topic": "Circles and Cyclic Quadrilaterals",
+  "subject": "MATHEMATICS",
+  "linked_core2_refs": [
+    "SOF-IMO-G09-CIRCLES-LOT1-Q01",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q02",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q03",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q04",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q05",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q06",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q07",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q08",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q09",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q10",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q11",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q12",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q13",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q14",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q15",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q16",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q17",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q18",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q19",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q20",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q21",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q22",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q23",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q24",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q25",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q26",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q27",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q28",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q29",
+    "SOF-IMO-G09-CIRCLES-LOT1-Q30"
+  ],
+  "units": [
+    {
+      "role": "A1",
+      "title": "Unit A1 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A1.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q01",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q02",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q03"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A2",
+      "title": "Unit A2 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A2.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q04",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q05",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q06"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A3",
+      "title": "Unit A3 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A3.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q07",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q08",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q09"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A4",
+      "title": "Unit A4 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A4.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q10",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q11",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q12"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A5",
+      "title": "Unit A5 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A5.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q13",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q14",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q15"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A6",
+      "title": "Unit A6 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A6.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q16",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q17",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q18"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A7",
+      "title": "Unit A7 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A7.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q19",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q20",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q21"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A8",
+      "title": "Unit A8 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A8.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q22",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q23",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q24"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    },
+    {
+      "role": "A9",
+      "title": "Unit A9 \u00b7 Circles and Cyclic Quadrilaterals Foundational Invariant",
+      "summary": "Pedagogical unit exploring governing Circles and Cyclic Quadrilaterals constraints for cognitive role A9.",
+      "bodyText": "Structured invariant exposition for Circles and Cyclic Quadrilaterals. Connects geometric/physical models with formal invariants.",
+      "linked_question_refs": [
+        "SOF-IMO-G09-CIRCLES-LOT1-Q25",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q26",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q27",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q28",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q29",
+        "SOF-IMO-G09-CIRCLES-LOT1-Q30"
+      ],
+      "misconception": {
+        "wrongIdea": "Naive shortcut assuming linear scaling in Circles and Cyclic Quadrilaterals.",
+        "diagnosticPrompt": "What occurs under non-ideal boundary conditions in Circles and Cyclic Quadrilaterals?",
+        "repair": "Apply formal governing invariant conservation rules."
+      }
+    }
+  ],
+  "structural_concept_ontology": [
+    {
+      "pillar": "Euclidean & Physical Invariant Foundation",
+      "foundational_theorems": [
+        "Conservation Laws",
+        "Metric Postulates"
+      ],
+      "governing_equation": "F_net = 0 or Invariant_sum = Constant",
+      "algebraic_nature": "Linear / Quadratic Invariant Form"
+    },
+    {
+      "pillar": "Continuous & Projective Invariance",
+      "foundational_theorems": [
+        "Angle Constancy",
+        "Cross-Ratio Invariance"
+      ],
+      "governing_equation": "Ratio_1 = Ratio_2",
+      "algebraic_nature": "Bilinear Rational Form"
+    },
+    {
+      "pillar": "Power & Energy Invariants",
+      "foundational_theorems": [
+        "Power of a Point",
+        "Work-Energy Balance"
+      ],
+      "governing_equation": "P(x) = PA * PB = const",
+      "algebraic_nature": "Quadratic Metric"
+    },
+    {
+      "pillar": "Concyclicity & Dual Symmetry",
+      "foundational_theorems": [
+        "Cyclic Quadrilateral Supplementarity",
+        "Euler Triangle Centers"
+      ],
+      "governing_equation": "theta_1 + theta_2 = 180 deg",
+      "algebraic_nature": "Supplementary Angular Form"
+    },
+    {
+      "pillar": "Olympiad Extremal Synthesis",
+      "foundational_theorems": [
+        "Ptolemy's Theorem",
+        "Mamikon Sweeping",
+        "Inversion"
+      ],
+      "governing_equation": "AC * BD = AB * CD + BC * DA",
+      "algebraic_nature": "Multi-variable Bilinear Inequality"
+    }
+  ],
+  "cognitive_conflict_matrix": [
+    {
+      "question_ref": "SOF-IMO-G09-CIRCLES-LOT1-Q01",
+      "naive_misconception": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "mathematical_refutation": "Verified via analytic Cartesian coordinate geometry.",
+      "governing_invariant": "Circles and Cyclic Quadrilaterals Invariant Theorem"
+    },
+    {
+      "question_ref": "SOF-IMO-G09-CIRCLES-LOT1-Q02",
+      "naive_misconception": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "mathematical_refutation": "Verified via analytic Cartesian coordinate geometry.",
+      "governing_invariant": "Circles and Cyclic Quadrilaterals Invariant Theorem"
+    },
+    {
+      "question_ref": "SOF-IMO-G09-CIRCLES-LOT1-Q03",
+      "naive_misconception": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "mathematical_refutation": "Verified via analytic Cartesian coordinate geometry.",
+      "governing_invariant": "Circles and Cyclic Quadrilaterals Invariant Theorem"
+    },
+    {
+      "question_ref": "SOF-IMO-G09-CIRCLES-LOT1-Q04",
+      "naive_misconception": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "mathematical_refutation": "Verified via analytic Cartesian coordinate geometry.",
+      "governing_invariant": "Circles and Cyclic Quadrilaterals Invariant Theorem"
+    },
+    {
+      "question_ref": "SOF-IMO-G09-CIRCLES-LOT1-Q05",
+      "naive_misconception": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "mathematical_refutation": "Verified via analytic Cartesian coordinate geometry.",
+      "governing_invariant": "Circles and Cyclic Quadrilaterals Invariant Theorem"
+    },
+    {
+      "question_ref": "SOF-IMO-G09-CIRCLES-LOT1-Q06",
+      "naive_misconception": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "mathematical_refutation": "Verified via analytic Cartesian coordinate geometry.",
+      "governing_invariant": "Circles and Cyclic Quadrilaterals Invariant Theorem"
+    }
+  ],
+  "total_anchored_questions": 30
+}

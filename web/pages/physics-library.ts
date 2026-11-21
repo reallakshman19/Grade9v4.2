@@ -212,7 +212,7 @@ export function mountPhysicsLibrary(
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;">
           <span style="font-size:2rem;line-height:1;">⚛️</span>
           <h1 style="margin:0;font-size:1.75rem;font-weight:800;letter-spacing:-0.02em;">STEM Curriculum Library Packages & 208 Authentic Questions</h1>
-          <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:6px;font-size:0.85rem;font-weight:700;margin-left:auto;">Wave 13 Parity</span>
+          <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:6px;font-size:0.875rem;font-weight:700;margin-left:auto;">Wave 13 Parity</span>
         </div>
         <p style="margin:0 0 16px 0;opacity:0.95;max-width:920px;font-size:1.05rem;">
           Official Grade9v3.5 core foundation: 20 Physics library packages spanning Mechanics, Fluids, Optics, Electricity, Waves, plus 2 Mathematics packages and 208 authentic questions.
@@ -221,19 +221,19 @@ export function mountPhysicsLibrary(
         <!-- KPI Metrics Ribbon -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:12px;background:rgba(0,0,0,0.2);padding:14px;border-radius:8px;">
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Library Packages</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Library Packages</div>
             <div style="font-size:1.4rem;font-weight:800;">22 Packages (20 Phy + 2 Math)</div>
           </div>
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Authentic Questions</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Authentic Questions</div>
             <div style="font-size:1.4rem;font-weight:800;">208 Questions (137 Phy + 71 Math)</div>
           </div>
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">STEM Domains</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">STEM Domains</div>
             <div style="font-size:1.4rem;font-weight:800;">6 Domains Covered</div>
           </div>
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Answer Isolation</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Answer Isolation</div>
             <div style="font-size:1.1rem;font-weight:700;color:#bae6fd;">🛡️ Fault N09 Active</div>
           </div>
         </div>
@@ -266,7 +266,7 @@ export function mountPhysicsLibrary(
 
         ${state.selectedPackageId ? `
           <div style="display:flex;align-items:center;gap:6px;background:#e0f2fe;border:1px solid #7dd3fc;padding:4px 10px;border-radius:6px;">
-            <span style="font-size:0.85rem;font-weight:700;color:#0369a1;">Package: ${escapeHtml(state.selectedPackageId)}</span>
+            <span style="font-size:0.875rem;font-weight:700;color:#0369a1;">Package: ${escapeHtml(state.selectedPackageId)}</span>
             <button type="button" id="btn-clear-package" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;background:none;border:none;cursor:pointer;color:#0284c7;font-weight:800;font-size:1.2rem;line-height:1;display:flex;align-items:center;justify-content:center;" aria-label="Clear package filter">×</button>
           </div>
         ` : ''}
@@ -295,7 +295,7 @@ export function mountPhysicsLibrary(
         <button
           type="button"
           data-domain="${domain}"
-          style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.85rem;font-weight:700;cursor:pointer;border:1px solid ${isSelected ? '#0284c7' : '#cbd5e1'};background:${isSelected ? '#e0f2fe' : '#ffffff'};color:${isSelected ? '#0369a1' : '#334155'};"
+          style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;border:1px solid ${isSelected ? '#0284c7' : '#cbd5e1'};background:${isSelected ? '#e0f2fe' : '#ffffff'};color:${isSelected ? '#0369a1' : '#334155'};"
         >
           ${escapeHtml(label)}
         </button>
@@ -332,21 +332,21 @@ export function mountPhysicsLibrary(
               <div class="library-package-card" style="border:1px solid ${isSelected ? '#0284c7' : '#e2e8f0'};border-left:5px solid ${isMath ? '#9333ea' : '#0284c7'};border-radius:10px;padding:18px;background:${isSelected ? '#f0f9ff' : '#ffffff'};box-shadow:0 1px 4px rgba(0,0,0,0.06);display:flex;flex-direction:column;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
                   <div>
-                    <span style="font-weight:800;font-size:0.85rem;color:${isMath ? '#7e22ce' : '#0369a1'};padding:2px 8px;border-radius:4px;background:${isMath ? '#f3e8ff' : '#e0f2fe'};margin-right:6px;">
+                    <span style="font-weight:800;font-size:0.875rem;color:${isMath ? '#7e22ce' : '#0369a1'};padding:2px 8px;border-radius:4px;background:${isMath ? '#f3e8ff' : '#e0f2fe'};margin-right:6px;">
                       ${escapeHtml(pkg.subject)}
                     </span>
-                    <span style="font-size:0.75rem;font-weight:700;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;">
+                    <span style="font-size:0.875rem;font-weight:700;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;">
                       ${escapeHtml(pkg.domain)}
                     </span>
                   </div>
-                  <span style="font-size:0.8rem;color:#64748b;font-weight:700;">${pkg.questionCount} Qs</span>
+                  <span style="font-size:0.875rem;color:#64748b;font-weight:700;">${pkg.questionCount} Qs</span>
                 </div>
 
                 <h3 style="margin:0 0 6px 0;font-size:1.15rem;font-weight:700;color:#0f172a;line-height:1.3;">
                   ${escapeHtml(pkg.title)}
                 </h3>
 
-                <div style="font-family:monospace;font-size:0.75rem;color:#64748b;margin-bottom:10px;">
+                <div style="font-family:monospace;font-size:0.875rem;color:#64748b;margin-bottom:10px;">
                   ${escapeHtml(pkg.id)}
                 </div>
 
@@ -358,12 +358,12 @@ export function mountPhysicsLibrary(
                 ${pkg.microtopics.length > 0 ? `
                   <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;">
                     ${pkg.microtopics.slice(0, 4).map(m => `
-                      <span style="font-size:0.72rem;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;padding:2px 6px;border-radius:4px;">
+                      <span style="font-size:0.875rem;background:#f8fafc;border:1px solid #e2e8f0;color:#334155;padding:2px 6px;border-radius:4px;">
                         ${escapeHtml(m)}
                       </span>
                     `).join('')}
                     ${pkg.microtopics.length > 4 ? `
-                      <span style="font-size:0.72rem;color:#64748b;padding:2px;">+${pkg.microtopics.length - 4} more</span>
+                      <span style="font-size:0.875rem;color:#64748b;padding:2px;">+${pkg.microtopics.length - 4} more</span>
                     ` : ''}
                   </div>
                 ` : ''}
@@ -374,7 +374,7 @@ export function mountPhysicsLibrary(
                     type="button"
                     data-action="toggle-pkg-detail"
                     data-pkg-id="${escapeHtml(pkg.id)}"
-                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;"
+                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;color:#334155;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
                   >
                     ${isExpanded ? 'Hide Details' : 'Inspect Microtopics'}
                   </button>
@@ -383,14 +383,14 @@ export function mountPhysicsLibrary(
                     type="button"
                     data-action="view-pkg-questions"
                     data-pkg-id="${escapeHtml(pkg.id)}"
-                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;"
+                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#0284c7;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
                   >
                     Questions (${pkg.questionCount}) →
                   </button>
                 </div>
 
                 ${isExpanded ? `
-                  <div style="margin-top:12px;padding:12px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;font-size:0.85rem;">
+                  <div style="margin-top:12px;padding:12px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;font-size:0.875rem;">
                     <strong>All Microtopics (${pkg.microtopics.length}):</strong>
                     <ul style="margin:4px 0 8px 0;padding-left:18px;color:#334155;">
                       ${pkg.microtopics.map(m => `<li>${escapeHtml(m)}</li>`).join('')}
@@ -430,10 +430,10 @@ export function mountPhysicsLibrary(
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
                   <div style="display:flex;align-items:center;gap:8px;">
                     <span style="font-family:monospace;font-weight:800;font-size:0.95rem;color:#0284c7;">${escapeHtml(q.id)}</span>
-                    <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#e0f2fe;color:#0369a1;font-weight:600;">${escapeHtml(q.domain)}</span>
-                    <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;font-weight:600;">${escapeHtml(q.packageId)}</span>
+                    <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#e0f2fe;color:#0369a1;font-weight:600;">${escapeHtml(q.domain)}</span>
+                    <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;font-weight:600;">${escapeHtml(q.packageId)}</span>
                   </div>
-                  <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">${escapeHtml(q.difficulty)}</span>
+                  <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">${escapeHtml(q.difficulty)}</span>
                 </div>
 
                 <div style="font-size:1.02rem;color:#0f172a;line-height:1.55;margin-bottom:16px;">
@@ -467,19 +467,19 @@ export function mountPhysicsLibrary(
                     type="button"
                     data-action="toggle-hint"
                     data-qid="${escapeHtml(q.id)}"
-                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed ? '#e2e8f0' : '#0284c7'};color:${isHintRevealed ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;"
+                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed ? '#e2e8f0' : '#0284c7'};color:${isHintRevealed ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
                   >
                     ${isHintRevealed ? 'Hide Hints & Steps' : '💡 Reveal Hints & Scaffold Ladder'}
                   </button>
 
-                  <span style="font-size:0.8rem;color:#64748b;font-family:monospace;">Fault N09: Key Isolated</span>
+                  <span style="font-size:0.875rem;color:#64748b;font-family:monospace;">Fault N09: Key Isolated</span>
                 </div>
 
                 ${isHintRevealed ? `
                   <div style="margin-top:12px;padding:14px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;">
                     ${q.hints.length > 0 ? `
                       <div style="margin-bottom:10px;">
-                        <strong style="color:#0284c7;font-size:0.85rem;text-transform:uppercase;">Conceptual Insights:</strong>
+                        <strong style="color:#0284c7;font-size:0.875rem;text-transform:uppercase;">Conceptual Insights:</strong>
                         <ul style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
                           ${q.hints.map(h => `<li>${escapeHtml(h)}</li>`).join('')}
                         </ul>
@@ -488,7 +488,7 @@ export function mountPhysicsLibrary(
 
                     ${q.hintLadder.length > 0 ? `
                       <div style="margin-bottom:10px;">
-                        <strong style="color:#0369a1;font-size:0.85rem;text-transform:uppercase;">Progressive Hint Ladder:</strong>
+                        <strong style="color:#0369a1;font-size:0.875rem;text-transform:uppercase;">Progressive Hint Ladder:</strong>
                         <ol style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
                           ${q.hintLadder.map(hl => `<li>${escapeHtml(hl)}</li>`).join('')}
                         </ol>
@@ -497,7 +497,7 @@ export function mountPhysicsLibrary(
 
                     <!-- Failure Signal Warning -->
                     <div style="background:#fef2f2;border-left:4px solid #ef4444;padding:8px 12px;border-radius:4px;margin-top:8px;">
-                      <strong style="color:#b91c1c;font-size:0.8rem;text-transform:uppercase;">Diagnostic Failure Signal:</strong>
+                      <strong style="color:#b91c1c;font-size:0.875rem;text-transform:uppercase;">Diagnostic Failure Signal:</strong>
                       <div style="font-size:0.88rem;color:#991b1b;margin-top:2px;">${escapeHtml(q.failureSignal)}</div>
                     </div>
                   </div>
@@ -592,13 +592,13 @@ export function mountPhysicsLibrary(
 
               <!-- Quick Angle Presets -->
               <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                <button type="button" data-action="set-angle" data-angle="45" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;">
+                <button type="button" data-action="set-angle" data-angle="45" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;">
                   Max Range (45°)
                 </button>
-                <button type="button" data-action="set-angle" data-angle="75" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;">
+                <button type="button" data-action="set-angle" data-angle="75" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;">
                   High Lob (75°)
                 </button>
-                <button type="button" data-action="set-angle" data-angle="20" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;font-size:0.8rem;font-weight:700;cursor:pointer;">
+                <button type="button" data-action="set-angle" data-angle="20" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;">
                   Flat Shot (20°)
                 </button>
               </div>
@@ -623,15 +623,15 @@ export function mountPhysicsLibrary(
               <!-- Metrics Grid -->
               <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:8px;background:#f8fafc;padding:12px;border-radius:8px;margin-bottom:16px;">
                 <div>
-                  <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;font-weight:700;">Flight Time (T)</div>
+                  <div style="font-size:0.875rem;color:#64748b;text-transform:uppercase;font-weight:700;">Flight Time (T)</div>
                   <div style="font-size:1.25rem;font-weight:800;color:#0284c7;">${timeOfFlight.toFixed(2)} s</div>
                 </div>
                 <div>
-                  <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;font-weight:700;">Max Height (H)</div>
+                  <div style="font-size:0.875rem;color:#64748b;text-transform:uppercase;font-weight:700;">Max Height (H)</div>
                   <div style="font-size:1.25rem;font-weight:800;color:#047857;">${maxHeight.toFixed(1)} m</div>
                 </div>
                 <div>
-                  <div style="font-size:0.75rem;color:#64748b;text-transform:uppercase;font-weight:700;">Range (R)</div>
+                  <div style="font-size:0.875rem;color:#64748b;text-transform:uppercase;font-weight:700;">Range (R)</div>
                   <div style="font-size:1.25rem;font-weight:800;color:#b45309;">${range.toFixed(1)} m</div>
                 </div>
               </div>
@@ -650,19 +650,19 @@ export function mountPhysicsLibrary(
                   
                   <!-- Apex point marker -->
                   <circle cx="${apexX}" cy="${apexY}" r="5" fill="#34d399" />
-                  <text x="${apexX}" y="${apexY - 10}" fill="#34d399" font-size="12" text-anchor="middle" font-weight="bold">
+                  <text x="${apexX}" y="${apexY - 10}" fill="#34d399" font-size="14" font-family="var(--g9-font-family,system-ui,sans-serif)" text-anchor="middle" font-weight="bold">
                     H = ${maxHeight.toFixed(1)}m
                   </text>
 
                   <!-- Range end marker -->
                   <circle cx="${padding + range * scaleX}" cy="${canvasHeight - padding}" r="5" fill="#fbbf24" />
-                  <text x="${padding + range * scaleX}" y="${canvasHeight - padding + 18}" fill="#fbbf24" font-size="12" text-anchor="middle" font-weight="bold">
+                  <text x="${padding + range * scaleX}" y="${canvasHeight - padding + 18}" fill="#fbbf24" font-size="14" font-family="var(--g9-font-family,system-ui,sans-serif)" text-anchor="middle" font-weight="bold">
                     R = ${range.toFixed(1)}m
                   </text>
 
                   <!-- Origin label -->
                   <circle cx="${padding}" cy="${canvasHeight - padding}" r="4" fill="#ffffff" />
-                  <text x="${padding}" y="${canvasHeight - padding + 18}" fill="#94a3b8" font-size="11" text-anchor="middle">(0,0)</text>
+                  <text x="${padding}" y="${canvasHeight - padding + 18}" fill="#94a3b8" font-size="14" font-family="var(--g9-font-family,system-ui,sans-serif)" text-anchor="middle">(0,0)</text>
                 </svg>
               </div>
             </div>

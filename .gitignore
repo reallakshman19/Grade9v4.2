@@ -67,6 +67,7 @@ playwright-report/
 .playwright/
 
 # OS and Editor Files
+scratch/
 .DS_Store
 Thumbs.db
 desktop.ini

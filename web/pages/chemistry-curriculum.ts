@@ -365,7 +365,7 @@ export function mountChemistryCurriculum(
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap;">
           <span style="font-size:2rem;line-height:1;">🧪</span>
           <h1 style="margin:0;font-size:1.75rem;font-weight:800;letter-spacing:-0.02em;">Chemistry Curriculum & 14 Topic Adapters (C01–C14)</h1>
-          <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:6px;font-size:0.85rem;font-weight:700;margin-left:auto;">Wave 12 Full Parity</span>
+          <span style="background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:6px;font-size:0.875rem;font-weight:700;margin-left:auto;">Wave 12 Full Parity</span>
         </div>
         <p style="margin:0 0 16px 0;opacity:0.95;max-width:900px;font-size:1.05rem;">
           Complete 14-topic junior syllabus from foundations (Matter, Solutions, Atoms, Mole Concept, Bonding) to Olympiad core (Redox, Kinetics, Thermodynamics, Organics).
@@ -374,23 +374,23 @@ export function mountChemistryCurriculum(
         <!-- KPI Metrics Ribbon -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:12px;background:rgba(0,0,0,0.18);padding:14px;border-radius:8px;">
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Topic Adapters</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Topic Adapters</div>
             <div style="font-size:1.4rem;font-weight:800;">14 Adapters (C01–C14)</div>
           </div>
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Subtopics Register</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Subtopics Register</div>
             <div style="font-size:1.4rem;font-weight:800;">84 Subtopics</div>
           </div>
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Cognitive Demand Tasks</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Cognitive Demand Tasks</div>
             <div style="font-size:1.4rem;font-weight:800;">252 QRT Tasks</div>
           </div>
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Authentic Questions</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Authentic Questions</div>
             <div style="font-size:1.4rem;font-weight:800;">165 Questions</div>
           </div>
           <div>
-            <div style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Answer Isolation</div>
+            <div style="font-size:0.875rem;text-transform:uppercase;letter-spacing:0.05em;opacity:0.85;">Answer Isolation</div>
             <div style="font-size:1.1rem;font-weight:700;color:#a7f3d0;">🛡️ Fault N09 Active</div>
           </div>
         </div>
@@ -419,20 +419,20 @@ export function mountChemistryCurriculum(
       <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:12px 16px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-weight:700;font-size:0.9rem;color:#475569;">Scope:</span>
-          <button type="button" data-tier="ALL" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.85rem;font-weight:700;cursor:pointer;border:1px solid ${state.tierFilter === 'ALL' ? '#047857' : '#cbd5e1'};background:${state.tierFilter === 'ALL' ? '#d1fae5' : '#ffffff'};color:${state.tierFilter === 'ALL' ? '#065f46' : '#334155'};">
+          <button type="button" data-tier="ALL" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;border:1px solid ${state.tierFilter === 'ALL' ? '#047857' : '#cbd5e1'};background:${state.tierFilter === 'ALL' ? '#d1fae5' : '#ffffff'};color:${state.tierFilter === 'ALL' ? '#065f46' : '#334155'};">
             All (14)
           </button>
-          <button type="button" data-tier="FOUNDATION" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.85rem;font-weight:700;cursor:pointer;border:1px solid ${state.tierFilter === 'FOUNDATION' ? '#047857' : '#cbd5e1'};background:${state.tierFilter === 'FOUNDATION' ? '#d1fae5' : '#ffffff'};color:${state.tierFilter === 'FOUNDATION' ? '#065f46' : '#334155'};">
+          <button type="button" data-tier="FOUNDATION" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;border:1px solid ${state.tierFilter === 'FOUNDATION' ? '#047857' : '#cbd5e1'};background:${state.tierFilter === 'FOUNDATION' ? '#d1fae5' : '#ffffff'};color:${state.tierFilter === 'FOUNDATION' ? '#065f46' : '#334155'};">
             Junior Foundation (C01–C07)
           </button>
-          <button type="button" data-tier="OLYMPIAD" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.85rem;font-weight:700;cursor:pointer;border:1px solid ${state.tierFilter === 'OLYMPIAD' ? '#047857' : '#cbd5e1'};background:${state.tierFilter === 'OLYMPIAD' ? '#d1fae5' : '#ffffff'};color:${state.tierFilter === 'OLYMPIAD' ? '#065f46' : '#334155'};">
+          <button type="button" data-tier="OLYMPIAD" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;border:1px solid ${state.tierFilter === 'OLYMPIAD' ? '#047857' : '#cbd5e1'};background:${state.tierFilter === 'OLYMPIAD' ? '#d1fae5' : '#ffffff'};color:${state.tierFilter === 'OLYMPIAD' ? '#065f46' : '#334155'};">
             Olympiad Core (C08–C14)
           </button>
         </div>
 
         ${state.selectedAdapterId ? `
           <div style="display:flex;align-items:center;gap:6px;background:#e0f2fe;border:1px solid #7dd3fc;padding:4px 10px;border-radius:6px;">
-            <span style="font-size:0.85rem;font-weight:700;color:#0369a1;">Filtered: ${escapeHtml(state.selectedAdapterId)}</span>
+            <span style="font-size:0.875rem;font-weight:700;color:#0369a1;">Filtered: ${escapeHtml(state.selectedAdapterId)}</span>
             <button type="button" id="btn-clear-adapter" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;background:none;border:none;cursor:pointer;color:#0284c7;font-weight:800;font-size:1.2rem;line-height:1;display:flex;align-items:center;justify-content:center;" aria-label="Clear adapter filter">×</button>
           </div>
         ` : ''}
@@ -488,11 +488,11 @@ export function mountChemistryCurriculum(
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
                   <div>
                     <span style="font-weight:800;font-size:1.15rem;color:#065f46;margin-right:8px;">${escapeHtml(adapter.id)}</span>
-                    <span style="font-size:0.75rem;font-weight:700;padding:2px 8px;border-radius:4px;background:${adapter.tier === 'FOUNDATION' ? '#e0f2fe' : '#d1fae5'};color:${adapter.tier === 'FOUNDATION' ? '#0369a1' : '#065f46'};">
+                    <span style="font-size:0.875rem;font-weight:700;padding:2px 8px;border-radius:4px;background:${adapter.tier === 'FOUNDATION' ? '#e0f2fe' : '#d1fae5'};color:${adapter.tier === 'FOUNDATION' ? '#0369a1' : '#065f46'};">
                       ${escapeHtml(adapter.tier)}
                     </span>
                   </div>
-                  <span style="font-size:0.8rem;color:#64748b;font-weight:600;">Unit: ${escapeHtml(adapter.unitId)}</span>
+                  <span style="font-size:0.875rem;color:#64748b;font-weight:600;">Unit: ${escapeHtml(adapter.unitId)}</span>
                 </div>
 
                 <h3 style="margin:0 0 8px 0;font-size:1.15rem;font-weight:700;color:#0f172a;line-height:1.3;">
@@ -506,7 +506,7 @@ export function mountChemistryCurriculum(
                 <!-- Concepts cloud -->
                 <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:14px;">
                   ${adapter.coreConcepts.slice(0, 5).map(concept => `
-                    <span style="font-size:0.72rem;background:#f1f5f9;color:#334155;padding:2px 6px;border-radius:4px;font-family:monospace;">
+                    <span style="font-size:0.875rem;background:#f1f5f9;color:#334155;padding:2px 6px;border-radius:4px;font-family:monospace;">
                       ${escapeHtml(concept)}
                     </span>
                   `).join('')}
@@ -514,14 +514,14 @@ export function mountChemistryCurriculum(
 
                 <!-- Footer with stats & actions -->
                 <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:12px;gap:8px;flex-wrap:wrap;">
-                  <div style="font-size:0.82rem;color:#64748b;">
+                  <div style="font-size:0.875rem;color:#64748b;">
                     <strong>${adapter.subtopicCount}</strong> subtopics • <strong>${adapter.qrtCount}</strong> QRTs
                   </div>
                   <div style="display:flex;gap:6px;">
-                    <button type="button" data-action="explore-subtopics" data-adapter-id="${escapeHtml(adapter.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;">
+                    <button type="button" data-action="explore-subtopics" data-adapter-id="${escapeHtml(adapter.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;">
                       Subtopics →
                     </button>
-                    <button type="button" data-action="explore-qrts" data-adapter-id="${escapeHtml(adapter.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;">
+                    <button type="button" data-action="explore-qrts" data-adapter-id="${escapeHtml(adapter.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;">
                       QRTs
                     </button>
                   </div>
@@ -556,10 +556,10 @@ export function mountChemistryCurriculum(
                   <span style="font-size:1rem;color:#047857;font-weight:800;">${isExpanded ? '▼' : '►'}</span>
                   <span style="font-family:monospace;font-weight:700;font-size:0.9rem;color:#047857;">${escapeHtml(st.subtopicId)}</span>
                   <h3 style="margin:0;font-size:1.05rem;font-weight:700;color:#0f172a;flex-grow:1;">${escapeHtml(st.title)}</h3>
-                  <span style="font-size:0.8rem;background:#e2e8f0;padding:2px 8px;border-radius:4px;font-weight:600;color:#334155;">
+                  <span style="font-size:0.875rem;background:#e2e8f0;padding:2px 8px;border-radius:4px;font-weight:600;color:#334155;">
                     ${escapeHtml(st.adapterId)}
                   </span>
-                  <span style="font-size:0.8rem;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:4px;font-weight:700;">
+                  <span style="font-size:0.875rem;background:#dcfce7;color:#166534;padding:2px 8px;border-radius:4px;font-weight:700;">
                     ${st.qrtCount} QRTs
                   </span>
                 </div>
@@ -568,7 +568,7 @@ export function mountChemistryCurriculum(
                   <div style="padding:16px 20px;border-top:1px solid #e2e8f0;background:#ffffff;">
                     <!-- Hook / Entry question -->
                     <div style="margin-bottom:12px;background:#f0fdf4;border-left:4px solid #10b981;padding:10px 14px;border-radius:4px;">
-                      <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;color:#047857;letter-spacing:0.05em;margin-bottom:2px;">Inquiry Hook</div>
+                      <div style="font-size:0.875rem;font-weight:700;text-transform:uppercase;color:#047857;letter-spacing:0.05em;margin-bottom:2px;">Inquiry Hook</div>
                       <div style="font-size:0.95rem;color:#065f46;font-style:italic;">"${escapeHtml(st.entryQuestion)}"</div>
                     </div>
 
@@ -580,19 +580,19 @@ export function mountChemistryCurriculum(
 
                     <!-- Misconception Alert -->
                     <div style="margin-bottom:14px;background:#fef2f2;border-left:4px solid #ef4444;padding:10px 14px;border-radius:4px;">
-                      <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;color:#b91c1c;letter-spacing:0.05em;margin-bottom:2px;">Diagnostic Trap / Misconception</div>
+                      <div style="font-size:0.875rem;font-weight:700;text-transform:uppercase;color:#b91c1c;letter-spacing:0.05em;margin-bottom:2px;">Diagnostic Trap / Misconception</div>
                       <div style="font-size:0.92rem;color:#991b1b;line-height:1.45;">${escapeHtml(st.misconception)}</div>
                     </div>
 
                     <!-- Deep dive / boundary -->
                     <div style="margin-bottom:14px;background:#f0f9ff;border-left:4px solid #0284c7;padding:10px 14px;border-radius:4px;">
-                      <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;color:#0369a1;letter-spacing:0.05em;margin-bottom:2px;">Olympiad Scope Boundary & Extension</div>
+                      <div style="font-size:0.875rem;font-weight:700;text-transform:uppercase;color:#0369a1;letter-spacing:0.05em;margin-bottom:2px;">Olympiad Scope Boundary & Extension</div>
                       <div style="font-size:0.92rem;color:#075985;line-height:1.45;">${escapeHtml(st.deepDive)}</div>
                     </div>
 
                     <!-- Actions -->
                     <div style="display:flex;gap:8px;margin-top:14px;">
-                      <button type="button" data-action="explore-qrts" data-adapter-id="${escapeHtml(st.adapterId)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 14px;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;">
+                      <button type="button" data-action="explore-qrts" data-adapter-id="${escapeHtml(st.adapterId)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 14px;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;">
                         Inspect Associated QRT Tasks →
                       </button>
                     </div>
@@ -620,18 +620,18 @@ export function mountChemistryCurriculum(
           <!-- Operation and Band Filters -->
           <div style="display:flex;flex-wrap:wrap;gap:12px;background:#f8fafc;padding:12px;border-radius:8px;border:1px solid #e2e8f0;">
             <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-              <span style="font-size:0.85rem;font-weight:700;color:#475569;">Operation:</span>
+              <span style="font-size:0.875rem;font-weight:700;color:#475569;">Operation:</span>
               ${ops.map(op => `
-                <button type="button" data-qrt-op="${escapeHtml(op)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.82rem;font-weight:700;cursor:pointer;border:1px solid ${state.selectedQrtOperation === op ? '#047857' : '#cbd5e1'};background:${state.selectedQrtOperation === op ? '#d1fae5' : '#ffffff'};color:${state.selectedQrtOperation === op ? '#065f46' : '#334155'};">
+                <button type="button" data-qrt-op="${escapeHtml(op)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;border:1px solid ${state.selectedQrtOperation === op ? '#047857' : '#cbd5e1'};background:${state.selectedQrtOperation === op ? '#d1fae5' : '#ffffff'};color:${state.selectedQrtOperation === op ? '#065f46' : '#334155'};">
                   ${escapeHtml(op)}
                 </button>
               `).join('')}
             </div>
 
             <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
-              <span style="font-size:0.85rem;font-weight:700;color:#475569;">Band:</span>
+              <span style="font-size:0.875rem;font-weight:700;color:#475569;">Band:</span>
               ${bands.map(b => `
-                <button type="button" data-qrt-band="${escapeHtml(b)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.82rem;font-weight:700;cursor:pointer;border:1px solid ${state.selectedQrtBand === b ? '#047857' : '#cbd5e1'};background:${state.selectedQrtBand === b ? '#d1fae5' : '#ffffff'};color:${state.selectedQrtBand === b ? '#065f46' : '#334155'};">
+                <button type="button" data-qrt-band="${escapeHtml(b)}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.875rem;font-weight:700;cursor:pointer;border:1px solid ${state.selectedQrtBand === b ? '#047857' : '#cbd5e1'};background:${state.selectedQrtBand === b ? '#d1fae5' : '#ffffff'};color:${state.selectedQrtBand === b ? '#065f46' : '#334155'};">
                   ${escapeHtml(b)}
                 </button>
               `).join('')}
@@ -645,8 +645,8 @@ export function mountChemistryCurriculum(
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
                 <span style="font-family:monospace;font-weight:800;font-size:0.9rem;color:#047857;">${escapeHtml(qrt.instanceId)}</span>
                 <div style="display:flex;gap:6px;">
-                  <span style="font-size:0.75rem;padding:2px 6px;border-radius:4px;background:#dbeafe;color:#1e40af;font-weight:700;">${escapeHtml(qrt.primaryOperation)}</span>
-                  <span style="font-size:0.75rem;padding:2px 6px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">${escapeHtml(qrt.band)}</span>
+                  <span style="font-size:0.875rem;padding:2px 6px;border-radius:4px;background:#dbeafe;color:#1e40af;font-weight:700;">${escapeHtml(qrt.primaryOperation)}</span>
+                  <span style="font-size:0.875rem;padding:2px 6px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">${escapeHtml(qrt.band)}</span>
                 </div>
               </div>
 
@@ -656,15 +656,15 @@ export function mountChemistryCurriculum(
               </div>
 
               <!-- Wrong Idea & Replacement Rule -->
-              <div style="margin-bottom:8px;background:#fef2f2;padding:8px 10px;border-radius:4px;font-size:0.85rem;color:#991b1b;">
+              <div style="margin-bottom:8px;background:#fef2f2;padding:8px 10px;border-radius:4px;font-size:0.875rem;color:#991b1b;">
                 <strong>⚠️ Trapped Idea:</strong> ${escapeHtml(qrt.wrongIdea)}
               </div>
-              <div style="margin-bottom:8px;background:#f0fdf4;padding:8px 10px;border-radius:4px;font-size:0.85rem;color:#166534;">
+              <div style="margin-bottom:8px;background:#f0fdf4;padding:8px 10px;border-radius:4px;font-size:0.875rem;color:#166534;">
                 <strong>💡 Decisive Rule:</strong> ${escapeHtml(qrt.replacementRule)}
               </div>
 
               <!-- Visual Job & Independent Check -->
-              <div style="margin-top:auto;border-top:1px solid #f1f5f9;padding-top:8px;font-size:0.8rem;color:#64748b;line-height:1.4;">
+              <div style="margin-top:auto;border-top:1px solid #f1f5f9;padding-top:8px;font-size:0.875rem;color:#64748b;line-height:1.4;">
                 <div><strong>Visual Target:</strong> ${escapeHtml(qrt.visualJob)}</div>
                 <div style="margin-top:2px;"><strong>Check:</strong> ${escapeHtml(qrt.independentCheck)}</div>
               </div>
@@ -701,10 +701,10 @@ export function mountChemistryCurriculum(
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
                   <div style="display:flex;align-items:center;gap:8px;">
                     <span style="font-family:monospace;font-weight:800;font-size:0.95rem;color:#047857;">${escapeHtml(q.id)}</span>
-                    <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;font-weight:600;">${escapeHtml(q.sourceName)}</span>
-                    <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#e0f2fe;color:#0369a1;font-weight:600;">${escapeHtml(q.topic)}</span>
+                    <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#475569;font-weight:600;">${escapeHtml(q.sourceName)}</span>
+                    <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#e0f2fe;color:#0369a1;font-weight:600;">${escapeHtml(q.topic)}</span>
                   </div>
-                  <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">Band ${escapeHtml(q.band)}</span>
+                  <span style="font-size:0.875rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">Band ${escapeHtml(q.band)}</span>
                 </div>
 
                 <div style="font-size:1.02rem;color:#0f172a;line-height:1.55;margin-bottom:16px;">
@@ -738,19 +738,19 @@ export function mountChemistryCurriculum(
                     type="button"
                     data-action="toggle-hint"
                     data-qid="${escapeHtml(q.id)}"
-                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed ? '#e2e8f0' : '#047857'};color:${isHintRevealed ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;"
+                    style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${isHintRevealed ? '#e2e8f0' : '#047857'};color:${isHintRevealed ? '#1e293b' : '#ffffff'};border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;"
                   >
                     ${isHintRevealed ? 'Hide Hints & Steps' : '💡 Reveal Hints & Decisive Moves'}
                   </button>
 
-                  <span style="font-size:0.8rem;color:#64748b;font-family:monospace;">Fault N09: Key Isolated</span>
+                  <span style="font-size:0.875rem;color:#64748b;font-family:monospace;">Fault N09: Key Isolated</span>
                 </div>
 
                 ${isHintRevealed ? `
                   <div style="margin-top:12px;padding:14px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;">
                     ${q.hints.length > 0 ? `
                       <div style="margin-bottom:8px;">
-                        <strong style="color:#047857;font-size:0.85rem;text-transform:uppercase;">Conceptual Scaffolding:</strong>
+                        <strong style="color:#047857;font-size:0.875rem;text-transform:uppercase;">Conceptual Scaffolding:</strong>
                         <ul style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
                           ${q.hints.map(h => `<li>${escapeHtml(h)}</li>`).join('')}
                         </ul>
@@ -758,7 +758,7 @@ export function mountChemistryCurriculum(
                     ` : ''}
                     ${q.steps.length > 0 ? `
                       <div>
-                        <strong style="color:#0284c7;font-size:0.85rem;text-transform:uppercase;">Decisive Solution Steps:</strong>
+                        <strong style="color:#0284c7;font-size:0.875rem;text-transform:uppercase;">Decisive Solution Steps:</strong>
                         <ol style="margin:4px 0 0 0;padding-left:20px;font-size:0.9rem;color:#334155;line-height:1.45;">
                           ${q.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('')}
                         </ol>

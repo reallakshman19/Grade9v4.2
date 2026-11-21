@@ -110,7 +110,7 @@ export function mountFluidPressureWorkbench(
     const mode = ctrl.getActiveMode();
 
     root.innerHTML = `
-      <div class="fluid-pressure-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;color:#0f172a;">
+      <div class="fluid-pressure-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui,-apple-system,sans-serif);color:#0f172a;">
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem;">
           <div>
             <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
@@ -118,8 +118,8 @@ export function mountFluidPressureWorkbench(
               <span>Fluid Pressure &amp; Thrust</span>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
-              <span style="font-size:0.8rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">PHYSICS FLUID MECHANICS</span>
-              <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
+              <span style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">PHYSICS FLUID MECHANICS</span>
+              <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
             </div>
             <h1 style="margin:0.5rem 0 0;font-size:1.9rem;font-weight:800;color:#0f172a;">🌊 Thrust &amp; Hydrostatic Pressure Apparatus</h1>
           </div>
@@ -231,7 +231,7 @@ function renderHydrostaticTab(ctrl: FluidPressureController): string {
             Fluid Density ρ (kg/m³): <span style="color:#0284c7;">${density}</span>
           </label>
           <input type="range" id="slider-density" min="700" max="13600" step="100" value="${density}" style="width:100%;min-height:${HIT_TARGET_MIN_PX}px;" />
-          <div style="font-size:0.8rem;color:#64748b;margin-top:2px;">Gasoline (700), Water (1000), Seawater (1025), Mercury (13600)</div>
+          <div style="font-size:0.875rem;color:#64748b;margin-top:2px;">Gasoline (700), Water (1000), Seawater (1025), Mercury (13600)</div>
         </div>
 
         <div style="margin-bottom:1.5rem;">
@@ -263,7 +263,7 @@ function renderHydrostaticTab(ctrl: FluidPressureController): string {
             <!-- Water Body -->
             <rect x="82" y="40" width="156" height="158" fill="#0284c7" opacity="0.4" />
             <line x1="80" y1="40" x2="240" y2="40" stroke="#38bdf8" stroke-width="2" />
-            <text x="160" y="32" fill="#94a3b8" font-size="11" text-anchor="middle">Liquid Surface (P = P0)</text>
+            <text x="160" y="32" fill="#94a3b8" font-size="14" text-anchor="middle">Liquid Surface (P = P0)</text>
 
             <!-- Depth Marker -->
             ${(() => {
@@ -271,7 +271,7 @@ function renderHydrostaticTab(ctrl: FluidPressureController): string {
               return `
                 <line x1="82" y1="${y}" x2="238" y2="${y}" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4" />
                 <circle cx="160" cy="${y}" r="6" fill="#f43f5e" />
-                <text x="160" y="${Math.min(195, y + 18)}" fill="#f43f5e" font-size="12" font-weight="bold" text-anchor="middle">
+                <text x="160" y="${Math.min(195, y + 18)}" fill="#f43f5e" font-size="14" font-weight="bold" text-anchor="middle">
                   h = ${depth.toFixed(1)}m · P = ${(res.totalPressure / 1000).toFixed(1)} kPa
                 </text>
               `;
@@ -340,12 +340,12 @@ function renderPascalTab(ctrl: FluidPressureController): string {
             <!-- Left Piston -->
             <rect x="42" y="90" width="36" height="12" fill="#94a3b8" />
             <line x1="60" y1="50" x2="60" y2="88" stroke="#f43f5e" stroke-width="3" />
-            <text x="60" y="42" fill="#f43f5e" font-size="11" font-weight="bold" text-anchor="middle">F1 = ${f1}N</text>
+            <text x="60" y="42" fill="#f43f5e" font-size="14" font-weight="bold" text-anchor="middle">F1 = ${f1}N</text>
 
             <!-- Right Piston -->
             <rect x="202" y="80" width="116" height="14" fill="#94a3b8" />
             <line x1="260" y1="78" x2="260" y2="40" stroke="#4ade80" stroke-width="3" />
-            <text x="260" y="32" fill="#4ade80" font-size="12" font-weight="bold" text-anchor="middle">F2 = ${res.f2.toFixed(0)}N</text>
+            <text x="260" y="32" fill="#4ade80" font-size="14" font-weight="bold" text-anchor="middle">F2 = ${res.f2.toFixed(0)}N</text>
           </svg>
         </div>
       </div>
@@ -410,7 +410,7 @@ function renderBuoyancyTab(ctrl: FluidPressureController): string {
             <!-- Water Tank -->
             <rect x="60" y="40" width="200" height="150" fill="#0284c7" opacity="0.3" stroke="#475569" stroke-width="2" />
             <line x1="60" y1="80" x2="260" y2="80" stroke="#38bdf8" stroke-width="2" />
-            <text x="160" y="70" fill="#94a3b8" font-size="11" text-anchor="middle">Water Line (ρ = 1000 kg/m³)</text>
+            <text x="160" y="70" fill="#94a3b8" font-size="14" text-anchor="middle">Water Line (ρ = 1000 kg/m³)</text>
 
             <!-- Floating / Sinking Block -->
             ${(() => {
@@ -421,7 +421,7 @@ function renderBuoyancyTab(ctrl: FluidPressureController): string {
 
               return `
                 <rect x="125" y="${blockY}" width="${blockWidth}" height="${blockHeight}" fill="#fbbf24" stroke="#d97706" stroke-width="2" rx="4" />
-                <text x="160" y="${blockY + 34}" fill="#78350f" font-size="11" font-weight="bold" text-anchor="middle">
+                <text x="160" y="${blockY + 34}" fill="#78350f" font-size="14" font-weight="bold" text-anchor="middle">
                   ${m} kg
                 </text>
               `;

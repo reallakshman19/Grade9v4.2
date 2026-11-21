@@ -16,7 +16,7 @@
  * No academic approval inferred from software validation.
  */
 
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import type { Core2BTransferJourney, TransferDimension } from '../journeys/core2b.ts';
 import type { Ref, Response, WorkArtifact, Checkpoint } from '../runtime/types.ts';
@@ -186,16 +186,16 @@ export class Core2BTransferPageController {
     const t = s.task;
 
     return `
-      <main class="g9-transfer-changed-demand-page" data-role="CORE2B" data-orientation="${s.orientation}" style="display:flex;flex-direction:column;gap:1.5rem;font-family:system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.6;color:#0f172a;max-width:100%;box-sizing:border-box;">
+      <main class="g9-transfer-changed-demand-page" data-role="CORE2B" data-orientation="${s.orientation}" style="display:flex;flex-direction:column;gap:1.5rem;font-family:var(--g9-font-family, system-ui, -apple-system, sans-serif);font-size:17px;line-height:1.6;color:#0f172a;max-width:100%;box-sizing:border-box;">
         
         <!-- Slot: identity -->
         <section data-slot="identity" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:0.75rem;">
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                <span style="font-size:0.8rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">CORE2B</span>
-                <span style="font-size:0.8rem;font-weight:700;color:#7c3aed;background:#f3e8ff;padding:2px 8px;border-radius:4px;">TRANSFER: ${escapeHtml(t.dimension)}</span>
-                <span style="font-size:0.8rem;color:#64748b;">BP-CORE2B-TRANSFER@1.1.0</span>
+                <span style="font-size:0.875rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">CORE2B</span>
+                <span style="font-size:0.875rem;font-weight:700;color:#7c3aed;background:#f3e8ff;padding:2px 8px;border-radius:4px;">TRANSFER: ${escapeHtml(t.dimension)}</span>
+                <span style="font-size:0.875rem;color:#64748b;">BP-CORE2B-TRANSFER@1.1.0</span>
               </div>
               <h1 style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">${escapeHtml(t.title)}</h1>
             </div>
@@ -205,7 +205,7 @@ export class Core2BTransferPageController {
           <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;font-size:0.95rem;">
             <span style="color:#64748b;">Verified Prior Exposure Anchor:</span>
             <strong style="color:#0f172a;">${escapeHtml(t.priorAnchorTitle)}</strong>
-            <span style="font-size:0.8rem;background:#dcfce7;color:#15803d;padding:2px 6px;border-radius:4px;font-weight:700;">Anchor Attempt Committed</span>
+            <span style="font-size:0.875rem;background:#dcfce7;color:#15803d;padding:2px 6px;border-radius:4px;font-weight:700;">Anchor Attempt Committed</span>
           </div>
         </section>
 
@@ -216,13 +216,13 @@ export class Core2BTransferPageController {
           <section data-slot="attempt" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);display:flex;flex-direction:column;gap:1.25rem;">
             <div>
               <h2 style="margin:0 0 0.5rem;font-size:1.25rem;font-weight:700;color:#0f172a;">Changed Demand Stimulus</h2>
-              <p style="margin:0;color:#334155;line-height:1.6;">${escapeHtml(t.changedConditionPrompt)}</p>
+              <div style="margin:0;color:#334155;line-height:1.6;">${renderMathHtml(escapeHtml(t.changedConditionPrompt))}</div>
             </div>
 
             <!-- Governing Perturbation Formulation -->
             <div style="background:#f8fafc;border-left:4px solid #7c3aed;padding:1rem 1.25rem;border-radius:0 6px 6px 0;">
               <h3 style="margin:0 0 0.25rem;font-size:1rem;font-weight:700;color:#6b21a8;">Governing Dynamic Perturbation:</h3>
-              <p style="margin:0;font-family:monospace;font-size:1.05rem;color:#1e1b4b;">${escapeHtml(t.governingPerturbation)}</p>
+              <div style="margin:0;font-family:var(--g9-font-mono, monospace);font-size:1.05rem;color:#1e1b4b;">${renderMathHtml(escapeHtml(t.governingPerturbation))}</div>
             </div>
 
             <!-- Working Steps & Scratchpad -->
@@ -240,7 +240,7 @@ export class Core2BTransferPageController {
                   ${s.committed ? '✓ Transfer Committed' : 'Commit Transfer Attempt →'}
                 </button>
               </div>
-              <p style="margin:0.5rem 0 0;font-size:0.85rem;color:#64748b;">Irreversible submission. Solutions are sealed until transfer commitment is recorded.</p>
+              <p style="margin:0.5rem 0 0;font-size:0.875rem;color:#64748b;">Irreversible submission. Solutions are sealed until transfer commitment is recorded.</p>
             </div>
           </section>
 
@@ -248,7 +248,7 @@ export class Core2BTransferPageController {
           <section data-slot="post_attempt" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);display:flex;flex-direction:column;gap:1.25rem;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
               <h2 style="margin:0;font-size:1.25rem;font-weight:700;color:#0f172a;">Post-Attempt Review &amp; Rubric</h2>
-              <span style="font-size:0.85rem;color:#64748b;">TransferAuthority Gated</span>
+              <span style="font-size:0.875rem;color:#64748b;">TransferAuthority Gated</span>
             </div>
 
             ${!s.committed ? `
@@ -268,17 +268,17 @@ export class Core2BTransferPageController {
                 <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:1.25rem;">
                   <h3 style="margin:0 0 0.75rem;font-size:1.1rem;font-weight:700;color:#0f172a;">Verified Answer Rubric:</h3>
                   <ol style="margin:0;padding-left:1.25rem;display:flex;flex-direction:column;gap:8px;color:#334155;line-height:1.5;">
-                    ${t.verifiedRubricSteps.map(step => `<li>${escapeHtml(step)}</li>`).join('')}
+                    ${t.verifiedRubricSteps.map(step => `<li>${renderMathHtml(escapeHtml(step))}</li>`).join('')}
                   </ol>
                 </div>
 
                 <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:1.25rem;">
                   <h3 style="margin:0 0 0.5rem;font-size:1.05rem;font-weight:700;color:#166534;">Conceptual Transfer Takeaway</h3>
-                  <p style="margin:0;color:#14532d;line-height:1.6;">${escapeHtml(t.transferTakeaway)}</p>
+                  <div style="margin:0;color:#14532d;line-height:1.6;">${renderMathHtml(escapeHtml(t.transferTakeaway))}</div>
                 </div>
 
                 <div style="padding-top:8px;border-top:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                  <span style="font-size:0.85rem;color:#64748b;">Academic status: Diagnostic HOLD · Transfer Lineage Verified</span>
+                  <span style="font-size:0.875rem;color:#64748b;">Academic status: Diagnostic HOLD · Transfer Lineage Verified</span>
                   <button type="button" data-action="return-origin" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">Return to Question Deck</button>
                 </div>
               </div>

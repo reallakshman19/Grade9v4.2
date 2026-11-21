@@ -1,0 +1,145 @@
+{
+  "schema_version": "grade9v3-core1b-reconstruction/v1",
+  "package_id": "CORE1B-MATH-CIRCLES-GRADE9",
+  "topic": "Circles and Cyclic Quadrilaterals",
+  "subject": "MATHEMATICS",
+  "answer_before_attempt": "FORBIDDEN",
+  "structural_reconstruction_scenarios": [
+    {
+      "scenario_id": "SCENARIO-CIRCLES-01",
+      "focus": "Stage 1 Qualitative Commitment & Transfer",
+      "source_anchor_qid": "SOF-IMO-G09-CIRCLES-LOT1-Q01",
+      "stage_1_predict": {
+        "prompt": "Predict the behavior of Circles and Cyclic Quadrilaterals under continuous perturbation:",
+        "options": [
+          "Monotonically increases",
+          "Remains strictly invariant",
+          "Decreases quadratically"
+        ],
+        "expected_prediction_index": 1
+      },
+      "stage_2_attempt": {
+        "task_title": "Transfer Attempt 1 \u00b7 Circles Configuration 1: Chord Metric at D1",
+        "stem": "In a circle of radius $R = 5\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 3\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+        "conditions": [
+          "Boundary limit verified",
+          "Non-degenerate metric enforced"
+        ]
+      },
+      "stage_3_reconstruct": {
+        "dialog_steps": [
+          "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+          "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 5 * (sqrt(3)/2).",
+          "Step 3: Power of point evaluates to -16."
+        ],
+        "fallacy_refutation": "Assuming inscribed angle equals central angle directly (forgetting factor of 2)."
+      },
+      "stage_4_boundary_test": {
+        "perturbation_prompt": "Verify what occurs as parameter -> 0 in Circles and Cyclic Quadrilaterals:",
+        "limiting_case": "Reduces smoothly to Euclidean baseline without singularity."
+      }
+    },
+    {
+      "scenario_id": "SCENARIO-CIRCLES-02",
+      "focus": "Stage 2 Qualitative Commitment & Transfer",
+      "source_anchor_qid": "SOF-IMO-G09-CIRCLES-LOT1-Q11",
+      "stage_1_predict": {
+        "prompt": "Predict the behavior of Circles and Cyclic Quadrilaterals under continuous perturbation:",
+        "options": [
+          "Monotonically increases",
+          "Remains strictly invariant",
+          "Decreases quadratically"
+        ],
+        "expected_prediction_index": 1
+      },
+      "stage_2_attempt": {
+        "task_title": "Transfer Attempt 2 \u00b7 Circles Configuration 11: Chord Metric at D2",
+        "stem": "In a circle of radius $R = 15\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 13\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+        "conditions": [
+          "Boundary limit verified",
+          "Non-degenerate metric enforced"
+        ]
+      },
+      "stage_3_reconstruct": {
+        "dialog_steps": [
+          "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+          "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 15 * (sqrt(3)/2).",
+          "Step 3: Power of point evaluates to -56."
+        ],
+        "fallacy_refutation": "Assuming inscribed angle equals central angle directly (forgetting factor of 2)."
+      },
+      "stage_4_boundary_test": {
+        "perturbation_prompt": "Verify what occurs as parameter -> 0 in Circles and Cyclic Quadrilaterals:",
+        "limiting_case": "Reduces smoothly to Euclidean baseline without singularity."
+      }
+    },
+    {
+      "scenario_id": "SCENARIO-CIRCLES-03",
+      "focus": "Stage 3 Qualitative Commitment & Transfer",
+      "source_anchor_qid": "SOF-IMO-G09-CIRCLES-LOT1-Q21",
+      "stage_1_predict": {
+        "prompt": "Predict the behavior of Circles and Cyclic Quadrilaterals under continuous perturbation:",
+        "options": [
+          "Monotonically increases",
+          "Remains strictly invariant",
+          "Decreases quadratically"
+        ],
+        "expected_prediction_index": 1
+      },
+      "stage_2_attempt": {
+        "task_title": "Transfer Attempt 3 \u00b7 Circles Configuration 21: Chord Metric at D3",
+        "stem": "In a circle of radius $R = 25\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 23\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+        "conditions": [
+          "Boundary limit verified",
+          "Non-degenerate metric enforced"
+        ]
+      },
+      "stage_3_reconstruct": {
+        "dialog_steps": [
+          "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+          "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 25 * (sqrt(3)/2).",
+          "Step 3: Power of point evaluates to -96."
+        ],
+        "fallacy_refutation": "Assuming inscribed angle equals central angle directly (forgetting factor of 2)."
+      },
+      "stage_4_boundary_test": {
+        "perturbation_prompt": "Verify what occurs as parameter -> 0 in Circles and Cyclic Quadrilaterals:",
+        "limiting_case": "Reduces smoothly to Euclidean baseline without singularity."
+      }
+    },
+    {
+      "scenario_id": "SCENARIO-CIRCLES-04",
+      "focus": "Stage 4 Qualitative Commitment & Transfer",
+      "source_anchor_qid": "SOF-IMO-G09-CIRCLES-LOT1-Q29",
+      "stage_1_predict": {
+        "prompt": "Predict the behavior of Circles and Cyclic Quadrilaterals under continuous perturbation:",
+        "options": [
+          "Monotonically increases",
+          "Remains strictly invariant",
+          "Decreases quadratically"
+        ],
+        "expected_prediction_index": 1
+      },
+      "stage_2_attempt": {
+        "task_title": "Transfer Attempt 4 \u00b7 Circles Configuration 29: Chord Metric at D4",
+        "stem": "In a circle of radius $R = 33\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 31\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+        "conditions": [
+          "Boundary limit verified",
+          "Non-degenerate metric enforced"
+        ]
+      },
+      "stage_3_reconstruct": {
+        "dialog_steps": [
+          "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+          "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 33 * (sqrt(3)/2).",
+          "Step 3: Power of point evaluates to -128."
+        ],
+        "fallacy_refutation": "Assuming inscribed angle equals central angle directly (forgetting factor of 2)."
+      },
+      "stage_4_boundary_test": {
+        "perturbation_prompt": "Verify what occurs as parameter -> 0 in Circles and Cyclic Quadrilaterals:",
+        "limiting_case": "Reduces smoothly to Euclidean baseline without singularity."
+      }
+    }
+  ]
+}

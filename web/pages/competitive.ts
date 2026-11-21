@@ -149,11 +149,11 @@ export function mountCompetitiveExam(
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;">
             <div>
               <div style="display:flex;gap:8px;margin-bottom:0.5rem;flex-wrap:wrap;">
-                <span style="font-size:0.8rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;letter-spacing:0.5px;">${escapeHtml(exam.category)}</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#f1f5f9;color:#475569;padding:4px 10px;border-radius:4px;">Conducting Body: ${escapeHtml(exam.conductingBody)}</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD (Diagnostic Mode)</span>
+                <span style="font-size:0.875rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;letter-spacing:0.5px;">${escapeHtml(exam.category)}</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#f1f5f9;color:#475569;padding:4px 10px;border-radius:4px;">Conducting Body: ${escapeHtml(exam.conductingBody)}</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD (Diagnostic Mode)</span>
               </div>
-              <h1 style="margin:0 0 0.5rem;font-size:2.2rem;font-weight:800;color:#0f172a;">🏆 ${escapeHtml(exam.title)}</h1>
+              <h1 class="placeholder-title" style="margin:0 0 0.5rem;font-size:2.2rem;font-weight:800;color:#0f172a;">🏆 ${escapeHtml(exam.title)}</h1>
               <p style="margin:0;color:#475569;font-size:1.15rem;max-width:850px;line-height:1.5;">
                 First tier of the Indian Junior Science Olympiad programme conducted by IAPT and HBCSE leading to the International Junior Science Olympiad (IJSO).
               </p>
@@ -171,8 +171,8 @@ export function mountCompetitiveExam(
         <div style="background:linear-gradient(135deg, #091e3a 0%, #1e293b 100%);color:#ffffff;border-radius:12px;padding:2rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">
           <div style="max-width:750px;">
             <div style="display:flex;gap:8px;margin-bottom:0.5rem;">
-              <span style="background:#38bdf8;color:#0f172a;font-size:0.75rem;font-weight:800;padding:2px 8px;border-radius:4px;text-transform:uppercase;">Official Format Mock</span>
-              <span style="background:#334155;color:#f8fafc;font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:4px;">Diagnostic Assessment</span>
+              <span style="background:#38bdf8;color:#0f172a;font-size:0.875rem;font-weight:800;padding:2px 8px;border-radius:4px;text-transform:uppercase;">Official Format Mock</span>
+              <span style="background:#334155;color:#f8fafc;font-size:0.875rem;font-weight:600;padding:2px 8px;border-radius:4px;">Diagnostic Assessment</span>
             </div>
             <h2 style="margin:0 0 0.5rem;font-size:1.6rem;font-weight:800;color:#ffffff;">NSEJS 2-Hour Simulated Mock Paper 1</h2>
             <p style="margin:0 0 1rem;color:#cbd5e1;font-size:1rem;line-height:1.5;">
@@ -201,7 +201,7 @@ export function mountCompetitiveExam(
             <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;">
               <strong style="color:#0284c7;display:block;margin-bottom:4px;">Section 1: Physics</strong>
               <div style="font-size:0.9rem;color:#334155;">20 Questions · 60 Marks · Single Choice</div>
-              <p style="margin:6px 0 0;font-size:0.85rem;color:#64748b;">
+              <p style="margin:6px 0 0;font-size:0.875rem;color:#64748b;">
                 Covers 12 chapters (PH01 to PH12): Kinematics, Dynamics, Energy, Gravitation, Fluids, Heat, SHM, Circuits, and Ray Optics.
               </p>
             </div>
@@ -209,11 +209,11 @@ export function mountCompetitiveExam(
               <div>
                 <strong style="color:#047857;display:block;margin-bottom:4px;">Section 2: Chemistry</strong>
                 <div style="font-size:0.9rem;color:#334155;">20 Questions · 60 Marks · Single Choice</div>
-                <p style="margin:6px 0 0;font-size:0.85rem;color:#64748b;">
+                <p style="margin:6px 0 0;font-size:0.875rem;color:#64748b;">
                   Covers 14 topic adapters (C01 to C14): Chemical Bonding, Stoichiometry, Gas Laws, Redox Reactions, and Periodic Trends.
                 </p>
               </div>
-              <button type="button" onclick="window.location.hash='#/curriculum/chemistry'" style="margin-top:10px;min-height:${HIT_TARGET_MIN_PX}px;width:100%;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;">
+              <button type="button" onclick="window.location.hash='#/curriculum/chemistry'" style="margin-top:10px;min-height:${HIT_TARGET_MIN_PX}px;width:100%;background:#047857;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;">
                 Launch Chemistry Curriculum (C01–C14) →
               </button>
             </div>
@@ -221,11 +221,11 @@ export function mountCompetitiveExam(
               <div>
                 <strong style="color:#16a34a;display:block;margin-bottom:4px;">Section 3: Biology</strong>
                 <div style="font-size:0.9rem;color:#334155;">20 Questions · 60 Marks · Single Choice</div>
-                <p style="margin:6px 0 0;font-size:0.85rem;color:#64748b;">
+                <p style="margin:6px 0 0;font-size:0.875rem;color:#64748b;">
                   Covers 11 modules: Cytology, Physiology, Genetics, Immunology, Ecology, and Evolution. Reconciled Core 2 Question Bank mounted under diagnostic authorization.
                 </p>
               </div>
-              <button type="button" id="btn-launch-biology-core2" onclick="window.location.hash='#/competitive/core2'" style="margin-top:10px;min-height:${HIT_TARGET_MIN_PX}px;width:100%;background:#16a34a;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.85rem;cursor:pointer;">
+              <button type="button" id="btn-launch-biology-core2" onclick="window.location.hash='#/competitive/core2'" style="margin-top:10px;min-height:${HIT_TARGET_MIN_PX}px;width:100%;background:#16a34a;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.875rem;cursor:pointer;">
                 Launch Core 2 Bank (45 Modules, 302 Qs) →
               </button>
             </div>
@@ -242,7 +242,7 @@ export function mountCompetitiveExam(
             ${[2024, 2023, 2022, 2021, 2020, 2019, 2018].map(yr => `
               <div style="border:1px solid #cbd5e1;border-radius:8px;padding:10px 16px;background:#f8fafc;display:flex;align-items:center;gap:10px;">
                 <span style="font-weight:700;color:#0f172a;">NSEJS ${yr} Paper</span>
-                <span style="font-size:0.75rem;font-weight:800;background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:4px;">HOLD</span>
+                <span style="font-size:0.875rem;font-weight:800;background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:4px;">HOLD</span>
               </div>
             `).join('')}
           </div>
@@ -297,11 +297,11 @@ export function mountCompetitiveExam(
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;">
             <div>
               <div style="display:flex;gap:8px;margin-bottom:0.5rem;flex-wrap:wrap;">
-                <span style="font-size:0.8rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;letter-spacing:0.5px;">${escapeHtml(exam.category)}</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#f1f5f9;color:#475569;padding:4px 10px;border-radius:4px;">Conducting Body: ${escapeHtml(exam.conductingBody)}</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD (Diagnostic Mode)</span>
+                <span style="font-size:0.875rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;letter-spacing:0.5px;">${escapeHtml(exam.category)}</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#f1f5f9;color:#475569;padding:4px 10px;border-radius:4px;">Conducting Body: ${escapeHtml(exam.conductingBody)}</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD (Diagnostic Mode)</span>
               </div>
-              <h1 style="margin:0 0 0.5rem;font-size:2.2rem;font-weight:800;color:#0f172a;">🏆 ${escapeHtml(exam.title)}</h1>
+              <h1 class="placeholder-title" style="margin:0 0 0.5rem;font-size:2.2rem;font-weight:800;color:#0f172a;">🏆 ${escapeHtml(exam.title)}</h1>
               <p style="margin:0;color:#475569;font-size:1.15rem;max-width:850px;line-height:1.5;">
                 First tier of the Indian Mathematical Olympiad programme leading to the International Mathematical Olympiad (IMO).
               </p>
@@ -318,8 +318,8 @@ export function mountCompetitiveExam(
         <div style="background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);color:#ffffff;border-radius:12px;padding:2rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">
           <div style="max-width:750px;">
             <div style="display:flex;gap:8px;margin-bottom:0.5rem;">
-              <span style="background:#38bdf8;color:#0f172a;font-size:0.75rem;font-weight:800;padding:2px 8px;border-radius:4px;text-transform:uppercase;">Simulation Mode</span>
-              <span style="background:#334155;color:#f8fafc;font-size:0.75rem;font-weight:600;padding:2px 8px;border-radius:4px;">Authored Mock</span>
+              <span style="background:#38bdf8;color:#0f172a;font-size:0.875rem;font-weight:800;padding:2px 8px;border-radius:4px;text-transform:uppercase;">Simulation Mode</span>
+              <span style="background:#334155;color:#f8fafc;font-size:0.875rem;font-weight:600;padding:2px 8px;border-radius:4px;">Authored Mock</span>
             </div>
             <h2 style="margin:0 0 0.5rem;font-size:1.6rem;font-weight:800;color:#ffffff;">IOQM 3-Hour Challenge Paper A</h2>
             <p style="margin:0 0 1rem;color:#cbd5e1;font-size:1rem;line-height:1.5;">
@@ -348,7 +348,7 @@ export function mountCompetitiveExam(
             <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;">
               <strong style="color:#0284c7;display:block;margin-bottom:4px;">2024–2025 Format (Current)</strong>
               <div style="font-size:0.9rem;color:#334155;">30 Questions · 100 Marks · 3 Hours</div>
-              <ul style="margin:6px 0 0;padding-left:1.25rem;font-size:0.85rem;color:#64748b;">
+              <ul style="margin:6px 0 0;padding-left:1.25rem;font-size:0.875rem;color:#64748b;">
                 <li>Section A: 10 questions × 2 marks = 20 pts</li>
                 <li>Section B: 10 questions × 3 marks = 30 pts</li>
                 <li>Section C: 10 questions × 5 marks = 50 pts</li>
@@ -357,7 +357,7 @@ export function mountCompetitiveExam(
             <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;">
               <strong style="color:#0284c7;display:block;margin-bottom:4px;">2020–2021 Format</strong>
               <div style="font-size:0.9rem;color:#334155;">30 Questions · 100 Marks · 3 Hours</div>
-              <ul style="margin:6px 0 0;padding-left:1.25rem;font-size:0.85rem;color:#64748b;">
+              <ul style="margin:6px 0 0;padding-left:1.25rem;font-size:0.875rem;color:#64748b;">
                 <li>Section A: 8 questions × 2 marks = 16 pts</li>
                 <li>Section B: 13 questions × 3 marks = 39 pts</li>
                 <li>Section C: 9 questions × 5 marks = 45 pts</li>
@@ -366,7 +366,7 @@ export function mountCompetitiveExam(
             <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1rem;">
               <strong style="color:#0284c7;display:block;margin-bottom:4px;">2022 Format (PRMO Hybrid)</strong>
               <div style="font-size:0.9rem;color:#334155;">24 Questions · 100 Marks · 3 Hours</div>
-              <ul style="margin:6px 0 0;padding-left:1.25rem;font-size:0.85rem;color:#64748b;">
+              <ul style="margin:6px 0 0;padding-left:1.25rem;font-size:0.875rem;color:#64748b;">
                 <li>10 questions × 2 marks = 20 pts</li>
                 <li>12 questions × 5 marks = 60 pts</li>
                 <li>2 questions × 10 marks = 20 pts</li>
@@ -385,7 +385,7 @@ export function mountCompetitiveExam(
             ${[2024, 2023, 2022, 2021, 2020].map(yr => `
               <div style="border:1px solid #cbd5e1;border-radius:8px;padding:10px 16px;background:#f8fafc;display:flex;align-items:center;gap:10px;">
                 <span style="font-weight:700;color:#0f172a;">${yr} Past Paper</span>
-                <span style="font-size:0.75rem;font-weight:800;background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:4px;">HOLD</span>
+                <span style="font-size:0.875rem;font-weight:800;background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:4px;">HOLD</span>
               </div>
             `).join('')}
           </div>

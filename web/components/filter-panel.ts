@@ -21,8 +21,10 @@ export interface BankFilterCriteria {
   readonly topic?: string;
   readonly difficulty?: QuestionDifficulty;
   readonly role?: string;
+  readonly exam?: string;
   readonly query?: string;
   readonly includeWithdrawn?: boolean;
+  readonly sort?: string;
 }
 
 export interface FacetOption {
@@ -36,6 +38,7 @@ export interface AvailableFacets {
   readonly topics: readonly FacetOption[];
   readonly difficulties: readonly FacetOption[];
   readonly roles: readonly FacetOption[];
+  readonly exams?: readonly FacetOption[];
 }
 
 /**
@@ -48,8 +51,10 @@ export function serializeFilterToQueryParams(filter: BankFilterCriteria): URLSea
   if (filter.topic) params.set('topic', filter.topic);
   if (filter.difficulty) params.set('difficulty', filter.difficulty);
   if (filter.role) params.set('role', filter.role);
+  if (filter.exam) params.set('exam', filter.exam);
   if (filter.query) params.set('q', filter.query);
   if (filter.includeWithdrawn) params.set('withdrawn', '1');
+  if (filter.sort) params.set('sort', filter.sort);
 
   return params;
 }
@@ -63,8 +68,10 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
     topic?: string;
     difficulty?: QuestionDifficulty;
     role?: string;
+    exam?: string;
     query?: string;
     includeWithdrawn?: boolean;
+    sort?: string;
   } = {};
 
   const subject = params.get('subject');
@@ -83,6 +90,12 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
 
   const role = params.get('role');
   if (role) filter.role = role.toUpperCase();
+
+  const exam = params.get('exam');
+  if (exam) filter.exam = exam.trim();
+
+  const sort = params.get('sort');
+  if (sort) filter.sort = sort.trim();
 
   const query = params.get('q');
   if (query) filter.query = query.trim();

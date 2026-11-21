@@ -1,15 +1,56 @@
-import {escapeHtml as e} from '../runtime/rendering.ts';
+import {escapeHtml as e, renderMathHtml} from '../runtime/rendering.ts';
 import {Core1BTransferJourney,TRANSFER_ORDERED_STAGES,type Core1BTransferDefinition,type TransferBinding,type Core1BDraft,type TransferStage} from '../journeys/core1b.ts';
 import type {JsonObject,Response,WorkArtifact} from '../runtime/types.ts';
+import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
+import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
 export type DisplayOrientation='LANDSCAPE'|'PORTRAIT';
 export type TransferScreenState='loading'|'error'|'populated'|'pending review'|'stale origin'|'save blocked'|'stale event'|'assisted'|'boundary locked';
-export interface TransferPageConfig{readonly transferDefinition?:Core1BTransferDefinition;readonly binding?:TransferBinding;readonly orientation?:DisplayOrientation;readonly initialState?:TransferScreenState;readonly errorMessage?:string}
-const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: string): import('../runtime/types.ts').Ref<T> => ({type, id, revision: 1, sha256: 'a'.repeat(64)});
+export interface TransferPageConfig{readonly transferDefinition?:Core1BTransferDefinition;readonly topicCode?:string;readonly binding?:TransferBinding;readonly orientation?:DisplayOrientation;readonly initialState?:TransferScreenState;readonly errorMessage?:string}
+const ref = <T extends import('../runtime/types.ts').Ref['type']>(type: T, id: string, shaChar = 'a'): import('../runtime/types.ts').Ref<T> => ({type, id, revision: 1, sha256: shaChar.repeat(64)});
 
-export function createDefaultTransferDefinition(): Core1BTransferDefinition {
-  const origin = ref('LESSON', 'lesson:wpe-origin');
-  const taskA = ref('FRESH_TASK', 'fresh:wpe-task-a');
-  const taskB = ref('FRESH_TASK', 'fresh:wpe-task-b');
+export function createDefaultTransferDefinition(topicCode?: string): Core1BTransferDefinition {
+  if (topicCode) {
+    const matches = UNIFIED_QUESTION_DATABASE.query({ topic: topicCode, pageSize: 10 });
+    if (matches.items.length >= 2) {
+      const qA = matches.items[0];
+      const qB = matches.items[1];
+      return {
+        journeyId: `journey:${topicCode.toLowerCase()}-transfer`,
+        originRef: ref('LESSON', `lesson:${topicCode.toLowerCase()}-origin`, '0'),
+        freshTaskA: {
+          taskRef: ref('FRESH_TASK', `fresh:${qA.id}`, '1'),
+          title: `Fresh Transfer Task A — ${qA.title}`,
+          prompt: qA.stem,
+          conditions: qA.options ? qA.options.map(o => `${o.id}: ${o.text}`) : ['Standard boundary conditions apply'],
+          solutionRef: ref('SOLUTION', `solution:${qA.id}`),
+          solutionSteps: qA.steps && qA.steps.length > 0 ? qA.steps : ['Isolate governing principle and execute step derivation.'],
+          ...(qA.kind === 'NUMERIC_QUANTITY' || qA.kind === 'INTEGER' ? { targetNumeric: { value: 0, unit: 'arb', tolerance: 0.1 } } : {}),
+        },
+        boundaryTaskB: {
+          taskRef: ref('FRESH_TASK', `fresh:${qB.id}`, '2'),
+          title: `Boundary Transfer Task B — ${qB.title}`,
+          prompt: qB.stem,
+          conditions: qB.options ? qB.options.map(o => `${o.id}: ${o.text}`) : ['Changed cognitive demand boundary'],
+          solutionRef: ref('SOLUTION', `solution:${qB.id}`),
+          solutionSteps: qB.steps && qB.steps.length > 0 ? qB.steps : ['Verify asymptotic limit or boundary constraint.'],
+        },
+        hints: [
+          { level: 'H1', assetRef: ref('ASSET', `asset:${qA.id}-h1`), text: qA.hints?.[0] || 'Consider baseline physical law', guidance: 'Isolate initial and final state' },
+          { level: 'H2', assetRef: ref('ASSET', `asset:${qA.id}-h2`), text: qA.hints?.[1] || 'Apply energy or conservation theorem', guidance: 'Check boundary work ledger' },
+        ],
+        diagnosticRules: [
+          { code: `move:${topicCode.toLowerCase()}-check`, label: 'Conservation Verification', misconceptionDescription: qA.trapWarning || 'Omission of non-conservative work', correctiveGuidance: 'Account for all dissipations' },
+        ],
+        qualitativePredictionPrompt: `Predict the system response when parameter values are doubled in ${qA.title}`,
+        predictionOptions: ['Response increases', 'Response decreases', 'Response remains invariant'],
+        expectedPredictionIndex: 0,
+        status: 'SYNTHETIC',
+      };
+    }
+  }
+  const origin = ref('LESSON', 'lesson:wpe-origin', '0');
+  const taskA = ref('FRESH_TASK', 'fresh:wpe-task-a', '1');
+  const taskB = ref('FRESH_TASK', 'fresh:wpe-task-b', '2');
   const solA = ref('SOLUTION', 'solution:wpe-a');
   const solB = ref('SOLUTION', 'solution:wpe-b');
   return {
@@ -50,7 +91,7 @@ export class Core1BTransferPageController{
  private journey:Core1BTransferJourney|null=null;private orientation:DisplayOrientation='LANDSCAPE';
  constructor(c:TransferPageConfig = {}){
   this.setOrientation(c.orientation??'LANDSCAPE');
-  const def = c.transferDefinition ?? createDefaultTransferDefinition();
+  const def = c.transferDefinition ?? createDefaultTransferDefinition(c.topicCode);
   this.journey = new Core1BTransferJourney(def, c.binding);
  }
  getJourney(){if(!this.journey)throw Error('Transfer unavailable');return this.journey;}
@@ -72,13 +113,13 @@ export class Core1BTransferPageController{
  const control=(name:string)=>'<button type="button" data-action="'+name+'" style="min-height:48px;min-width:48px" '+(!s.ready?'disabled':'')+'>'+e(name)+'</button>';
  return '<main class="g9-transfer-page" data-role="CORE1B" data-stage="'+s.currentStage+'" data-orientation="'+s.orientation+'"><style>'+transferCss+'</style>'+
  '<section data-slot="identity"><h1>'+e(task.title)+'</h1><p>State: '+e(s.screenState)+'</p><nav aria-label="Transfer progression">'+TRANSFER_ORDERED_STAGES.map(x=>'<span aria-current="'+(x===s.currentStage?'step':'false')+'" style="display:inline-block;padding:8px;min-height:48px;">'+x+'</span>').join(' ')+'</nav></section>'+
- '<section data-slot="stage"><h2>Prompt & Conditions</h2><p>'+e(task.prompt)+'</p><p>'+e(task.conditions.join('; '))+'</p><div>'+ (s.currentStage==='PREDICT'?'<p>'+e(d.qualitativePredictionPrompt)+'</p><div style="display:flex;flex-direction:column;gap:8px;">'+d.predictionOptions.map((o,i)=>'<label style="display:flex;align-items:center;gap:8px;min-height:48px;"><input type="radio" name="prediction" value="'+i+'" '+(!s.ready?'disabled':'')+'><span>'+e(o)+'</span></label>').join('')+'</div>'+control('predict'):s.currentStage==='ATTEMPT'||s.currentStage==='BOUNDARY_TEST'?'<pre>'+e(JSON.stringify(j!.getResponses()))+'</pre><div style="display:flex;gap:8px;flex-wrap:wrap;">'+control('save-draft')+control(s.currentStage==='ATTEMPT'?'commit-first':s.isBoundaryCommitted?'boundary-feedback':'commit-boundary')+'</div>':control(s.currentStage==='RECONSTRUCT'?'compare':s.currentStage==='DIAGNOSE'?'diagnose':s.currentStage==='REPAIR'?'repair':'return-source'))+'</div></section>'+
+ '<section data-slot="stage"><h2>Prompt & Conditions</h2><p>'+renderMathHtml(e(task.prompt))+'</p><p>'+renderMathHtml(e(task.conditions.join('; ')))+'</p><div>'+ (s.currentStage==='PREDICT'?'<p>'+renderMathHtml(e(d.qualitativePredictionPrompt))+'</p><div style="display:flex;flex-direction:column;gap:8px;">'+d.predictionOptions.map((o,i)=>'<label style="display:flex;align-items:center;gap:8px;min-height:48px;"><input type="radio" name="prediction" value="'+i+'" '+(!s.ready?'disabled':'')+'><span>'+renderMathHtml(e(o))+'</span></label>').join('')+'</div>'+control('predict'):s.currentStage==='ATTEMPT'||s.currentStage==='BOUNDARY_TEST'?'<pre>'+e(JSON.stringify(j!.getResponses()))+'</pre><div style="display:gap:8px;flex-wrap:wrap;">'+control('save-draft')+control(s.currentStage==='ATTEMPT'?'commit-first':s.isBoundaryCommitted?'boundary-feedback':'commit-boundary')+'</div>':control(s.currentStage==='RECONSTRUCT'?'compare':s.currentStage==='DIAGNOSE'?'diagnose':s.currentStage==='REPAIR'?'repair':'return-source'))+'</div></section>'+
  '<section data-slot="route"><h2>Route & Verification</h2><p>Protected content requires a current reviewed read. No academic approval inferred.</p><p role="status" data-transfer-status></p></section></main>';}
 }
 export type TransferPageViewState=ReturnType<Core1BTransferPageController['getViewState']>;
 
 const transferCss=`
-.g9-transfer-page{box-sizing:border-box;width:100%;max-width:100%;min-width:0;display:flex;flex-direction:column;gap:16px;overflow-wrap:anywhere;font-family:system-ui,sans-serif}
+.g9-transfer-page{box-sizing:border-box;width:100%;max-width:100%;min-width:0;display:flex;flex-direction:column;gap:16px;overflow-wrap:anywhere;font-family:var(--g9-font-family, system-ui, sans-serif);font-size:17px;line-height:1.6;}
 .g9-transfer-page *{box-sizing:border-box;min-width:0}
 .g9-transfer-page [data-slot]{width:100%;padding:12px;border:1px solid #ccd7e1;border-radius:8px}
 .g9-transfer-page button,.g9-transfer-page input{min-height:48px;min-width:48px;max-width:100%;font:inherit}
@@ -89,7 +130,25 @@ const transferCss=`
 
 export function mountCore1BTransfer(root:HTMLElement,c:Core1BTransferPageController){
  let active=true;
- const render=()=>{if(!active)return;root.innerHTML=c.render();};
+ const syncLearnerSession = () => {
+  try {
+   const vs = c.getViewState();
+   const stageIdx = TRANSFER_ORDERED_STAGES.indexOf(vs.currentStage);
+   const progress = Math.min(100, Math.max(15, Math.round(((stageIdx + 1) / TRANSFER_ORDERED_STAGES.length) * 100)));
+   recordActiveLearnerSession({
+    sessionId: vs.journeyId || 'session:wpe-core1b',
+    subjectId: 'subject:physics',
+    topicId: 'topic:wpe',
+    title: 'Physics — Work, Power & Energy (Core 1B Transfer)',
+    route: '/learning/core1b',
+    progressPercent: progress,
+    lastActiveAt: new Date().toISOString(),
+    statusText: `Stage: ${vs.currentStage}`,
+    role: 'CORE1B',
+   });
+  } catch {}
+ };
+ const render=()=>{if(!active)return;root.innerHTML=c.render();syncLearnerSession();};
  const status=(msg:string)=>{const n=root.querySelector('[data-transfer-status]');if(n)n.textContent=msg;};
  const click=async(event:Event)=>{
   const b=event.target instanceof Element?event.target.closest<HTMLButtonElement>('button'):null;if(!active||!b||b.disabled||!root.contains(b))return;

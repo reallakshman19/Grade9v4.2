@@ -87,7 +87,7 @@ export class PortableWorkbenchController {
                       tabindex="0"
                       role="button"
                       aria-label="Projection: ${escapeHtml(String(p.label))} (${escapeHtml(String(p.representation))})"
-                      style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 12px; background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; border-radius: 6px; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer;"
+                      style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 12px; background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; border-radius: 6px; font-size:14px; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer;"
                     >
                       ${escapeHtml(String(p.label))}
                     </div>`
@@ -96,9 +96,9 @@ export class PortableWorkbenchController {
 
                 return `
                 <td style="padding: 8px; border: 1px solid #cbd5e1; background: #ffffff; vertical-align: top; min-width: 140px; min-height: ${HIT_TARGET_MIN_PX}px;">
-                  <div style="font-size: 10px; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase;">${escapeHtml(String(colName))}</div>
+                  <div style="font-size:14px; color: #94a3b8; margin-bottom: 4px; text-transform: uppercase;">${escapeHtml(String(colName))}</div>
                   <div style="display: flex; flex-direction: column; gap: 6px;">
-                    ${itemsHtml || '<span style="font-size: 11px; color: #cbd5e1;">(empty)</span>'}
+                    ${itemsHtml || '<span style="font-size:14px; color: #cbd5e1;">(empty)</span>'}
                   </div>
                 </td>`;
               })
@@ -106,7 +106,7 @@ export class PortableWorkbenchController {
 
             return `
             <tr>
-              <th scope="row" style="padding: 8px; border: 1px solid #cbd5e1; background: #f8fafc; font-size: 12px; color: #475569; width: 90px; text-align: left;">
+              <th scope="row" style="padding: 8px; border: 1px solid #cbd5e1; background: #f8fafc; font-size:14px; color: #475569; width: 90px; text-align: left;">
                 ${escapeHtml(String(rowName))}
               </th>
               ${colsHtml}
@@ -148,7 +148,7 @@ export class PortableWorkbenchController {
     if (this.lastOutcome) {
       const isOk = this.lastOutcome.outcome === 'ACCEPT';
       outcomeNotice = `
-        <div class="portable-outcome-notice" style="padding: 10px 14px; background: ${isOk ? '#ecfdf5' : '#fef2f2'}; border: 1px solid ${isOk ? '#a7f3d0' : '#fecaca'}; border-radius: 6px; font-size: 13px; color: ${isOk ? '#065f46' : '#991b1b'}; margin-bottom: 16px;">
+        <div class="portable-outcome-notice" style="padding: 10px 14px; background: ${isOk ? '#ecfdf5' : '#fef2f2'}; border: 1px solid ${isOk ? '#a7f3d0' : '#fecaca'}; border-radius: 6px; font-size:14px; color: ${isOk ? '#065f46' : '#991b1b'}; margin-bottom: 16px;">
           <strong>${this.lastOutcome.outcome}:</strong> ${escapeHtml(String(this.lastOutcome.summary || this.lastOutcome.reason))}
         </div>
       `;
@@ -159,7 +159,7 @@ export class PortableWorkbenchController {
         <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0;">
           <div>
             <h3 style="margin: 0; font-size: 18px; color: #0f172a;">${escapeHtml(String(pkg.title))}</h3>
-            <span style="font-size: 12px; color: #64748b;">Unverified diagnostic; declared provenance: <strong class="portable-provenance-badge">${escapeHtml(String(pkg.provenance.authority))}</strong> | Rotation: ${rotation}°</span>
+            <span style="font-size:14px; color: #64748b;">Unverified diagnostic; declared provenance: <strong class="portable-provenance-badge">${escapeHtml(String(pkg.provenance.authority))}</strong> | Rotation: ${rotation}°</span>
           </div>
           <button id="portable-rotate-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; cursor: pointer;">
             🔄 Rotate 90°
@@ -174,7 +174,7 @@ export class PortableWorkbenchController {
         </div>
 
         <div class="portable-transformations-toolbar" style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0;">
-          <h5 style="margin: 0 0 10px 0; font-size: 13px; color: #475569; text-transform: uppercase;">Available Semantic Transformations:</h5>
+          <h5 style="margin: 0 0 10px 0; font-size:14px; color: #475569; text-transform: uppercase;">Available Semantic Transformations:</h5>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             ${rulesButtons}
           </div>

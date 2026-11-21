@@ -244,9 +244,9 @@ export function mountNsejsChapterExplorer(
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem;">
             <div>
               <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
-                <span style="font-size: 0.8rem; font-weight: 800; background: #38bdf8; color: #0f172a; padding: 3px 8px; border-radius: 4px;">GRADE9 v4.1 RECONCILED</span>
-                <span style="font-size: 0.8rem; font-weight: 700; background: #334155; color: #f8fafc; padding: 3px 8px; border-radius: 4px;">IAPT Junior Science Olympiad</span>
-                <span style="font-size: 0.8rem; font-weight: 700; background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px;">Fault N09 Answer Isolation Active</span>
+                <span style="font-size:0.875rem; font-weight: 800; background: #38bdf8; color: #0f172a; padding: 3px 8px; border-radius: 4px;">GRADE9 v4.1 RECONCILED</span>
+                <span style="font-size:0.875rem; font-weight: 700; background: #334155; color: #f8fafc; padding: 3px 8px; border-radius: 4px;">IAPT Junior Science Olympiad</span>
+                <span style="font-size:0.875rem; font-weight: 700; background: #fee2e2; color: #991b1b; padding: 3px 8px; border-radius: 4px;">Fault N09 Answer Isolation Active</span>
               </div>
               <h1 style="margin: 0 0 0.5rem; font-size: 1.75rem; font-weight: 800; color: #ffffff;">⚛️ NSEJS Physics 12-Chapter Curriculum Navigator</h1>
               <p style="margin: 0; color: #cbd5e1; font-size: 1rem; max-width: 900px; line-height: 1.5;">
@@ -262,19 +262,19 @@ export function mountNsejsChapterExplorer(
           <!-- Quick Metrics Bar -->
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 12px; border-top: 1px solid #334155; padding-top: 1rem;">
             <div style="background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 6px;">
-              <span style="font-size: 0.8rem; color: #94a3b8; display: block;">Physics Chapters</span>
+              <span style="font-size:0.875rem; color: #94a3b8; display: block;">Physics Chapters</span>
               <strong style="font-size: 1.35rem; color: #38bdf8;">${stats.totalChapters} Official</strong>
             </div>
             <div style="background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 6px;">
-              <span style="font-size: 0.8rem; color: #94a3b8; display: block;">Syllabus Subtopics</span>
+              <span style="font-size:0.875rem; color: #94a3b8; display: block;">Syllabus Subtopics</span>
               <strong style="font-size: 1.35rem; color: #4ade80;">${stats.totalSubtopics} Catalogued</strong>
             </div>
             <div style="background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 6px;">
-              <span style="font-size: 0.8rem; color: #94a3b8; display: block;">Authentic Paper 51 Bank</span>
+              <span style="font-size:0.875rem; color: #94a3b8; display: block;">Authentic Paper 51 Bank</span>
               <strong style="font-size: 1.35rem; color: #f59e0b;">${stats.totalAuthenticQuestions} Questions</strong>
             </div>
             <div style="background: rgba(255,255,255,0.06); padding: 10px 14px; border-radius: 6px;">
-              <span style="font-size: 0.8rem; color: #94a3b8; display: block;">Circuit Practice Bank</span>
+              <span style="font-size:0.875rem; color: #94a3b8; display: block;">Circuit Practice Bank</span>
               <strong style="font-size: 1.35rem; color: #a78bfa;">${stats.totalCircuitQuestions} Modules</strong>
             </div>
           </div>
@@ -290,9 +290,9 @@ export function mountNsejsChapterExplorer(
                 <button type="button" class="btn-select-chapter" data-chapter-id="${ch.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 10px 12px; background: ${isSel ? '#0284c7' : '#f8fafc'}; color: ${isSel ? '#ffffff' : '#0f172a'}; border: 2px solid ${isSel ? '#0369a1' : '#e2e8f0'}; border-radius: 8px; cursor: pointer; text-align: left; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.15s ease;">
                   <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 4px;">
                     <strong style="font-size: 0.95rem;">${ch.id}</strong>
-                    <span style="font-size: 0.75rem; font-weight: 700; background: ${isSel ? '#0369a1' : '#e0f2fe'}; color: ${isSel ? '#ffffff' : '#0369a1'}; padding: 2px 6px; border-radius: 4px;">${ch.subtopicCount} subs</span>
+                    <span style="font-size:0.875rem; font-weight: 700; background: ${isSel ? '#0369a1' : '#e0f2fe'}; color: ${isSel ? '#ffffff' : '#0369a1'}; padding: 2px 6px; border-radius: 4px;">${ch.subtopicCount} subs</span>
                   </div>
-                  <div style="font-size: 0.85rem; font-weight: 600; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                  <div style="font-size:0.875rem; font-weight: 600; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
                     ${escapeHtml(ch.title)}
                   </div>
                 </button>
@@ -306,9 +306,9 @@ export function mountNsejsChapterExplorer(
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem;">
             <div>
               <div style="display: flex; gap: 8px; margin-bottom: 0.4rem;">
-                <span style="font-size: 0.8rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">${chapter.id}</span>
-                <span style="font-size: 0.8rem; font-weight: 700; background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px;">Domain: ${escapeHtml(chapter.domain)}</span>
-                <span style="font-size: 0.8rem; font-weight: 700; background: #f0fdf4; color: #166534; padding: 2px 8px; border-radius: 4px;">${chapter.subtopicCount} Syllabus Subtopics</span>
+                <span style="font-size:0.875rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">${chapter.id}</span>
+                <span style="font-size:0.875rem; font-weight: 700; background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px;">Domain: ${escapeHtml(chapter.domain)}</span>
+                <span style="font-size:0.875rem; font-weight: 700; background: #f0fdf4; color: #166534; padding: 2px 8px; border-radius: 4px;">${chapter.subtopicCount} Syllabus Subtopics</span>
               </div>
               <h3 style="margin: 0 0 0.5rem; font-size: 1.5rem; color: #0f172a; font-weight: 800;">${escapeHtml(chapter.title)}</h3>
               <p style="margin: 0; font-size: 1rem; color: #475569; max-width: 850px; line-height: 1.5;">${escapeHtml(chapter.description)}</p>
@@ -360,9 +360,9 @@ export function mountNsejsChapterExplorer(
                 </div>
 
                 <div style="display: flex; gap: 6px; align-items: center;">
-                  <span style="font-size: 0.85rem; font-weight: 700; color: #475569;">Priority Filter:</span>
+                  <span style="font-size:0.875rem; font-weight: 700; color: #475569;">Priority Filter:</span>
                   ${(['ALL', 'P0', 'P1', 'P2'] as const).map((f) => `
-                    <button type="button" class="btn-subtopic-filter" data-filter="${f}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: ${state.subtopicFilter === f ? '#0f172a' : '#f1f5f9'}; color: ${state.subtopicFilter === f ? '#ffffff' : '#334155'}; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem;">
+                    <button type="button" class="btn-subtopic-filter" data-filter="${f}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: ${state.subtopicFilter === f ? '#0f172a' : '#f1f5f9'}; color: ${state.subtopicFilter === f ? '#ffffff' : '#334155'}; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem;">
                       ${f}
                     </button>
                   `).join('')}
@@ -380,7 +380,7 @@ export function mountNsejsChapterExplorer(
                   <div class="subtopic-card-item" data-subtopic-id="${s.subtopicId}" style="display: flex; flex-direction: column; padding: 12px 16px; background: ${isSelected ? '#f0f9ff' : '#f8fafc'}; border: 1px solid ${isSelected ? '#0284c7' : '#e2e8f0'}; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
                       <div style="display: flex; gap: 12px; align-items: center;">
-                        <span style="font-family: monospace; font-size: 0.85rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; min-width: 80px; text-align: center;">
+                        <span style="font-family: monospace; font-size:0.875rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 4px; min-width: 80px; text-align: center;">
                           ${s.subtopicId}
                         </span>
                         <div>
@@ -389,11 +389,11 @@ export function mountNsejsChapterExplorer(
                       </div>
 
                       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                        <span style="font-size: 0.75rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ${s.priority === 'P0' ? '#fee2e2' : s.priority === 'P1' ? '#fef3c7' : '#f1f5f9'}; color: ${s.priority === 'P0' ? '#991b1b' : s.priority === 'P1' ? '#92400e' : '#475569'};">
+                        <span style="font-size:0.875rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: ${s.priority === 'P0' ? '#fee2e2' : s.priority === 'P1' ? '#fef3c7' : '#f1f5f9'}; color: ${s.priority === 'P0' ? '#991b1b' : s.priority === 'P1' ? '#92400e' : '#475569'};">
                           Tier ${s.priority}
                         </span>
                         ${s.qrtOperations.map((op) => `
-                          <span style="font-size: 0.7rem; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 3px;">
+                          <span style="font-size:0.875rem; font-weight: 700; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 3px;">
                             ${escapeHtml(op)}
                           </span>
                         `).join('')}
@@ -402,10 +402,10 @@ export function mountNsejsChapterExplorer(
 
                     ${isSelected ? `
                       <div class="subtopic-detail-drawer" style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #bae6fd; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                        <div style="font-size: 0.85rem; color: #0369a1;">
+                        <div style="font-size:0.875rem; color: #0369a1;">
                           <strong>Cognitive Focus:</strong> ${s.qrtOperations.join(', ')} · <strong>Priority Tier:</strong> ${s.priority}
                         </div>
-                        <button type="button" class="btn-jump-questions" data-chapter="${s.chapterId}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem;">
+                        <button type="button" class="btn-jump-questions" data-chapter="${s.chapterId}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #0284c7; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem;">
                           Jump to Chapter Questions →
                         </button>
                       </div>
@@ -436,10 +436,10 @@ export function mountNsejsChapterExplorer(
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
                         <div style="display: flex; gap: 8px; align-items: center;">
                           <strong style="color: #0284c7; font-size: 1.05rem;">${escapeHtml(q.id)}</strong>
-                          <span style="font-size: 0.75rem; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">${escapeHtml(q.topic)}</span>
-                          <span style="font-size: 0.75rem; font-weight: 700; background: #f1f5f9; color: #475569; padding: 2px 6px; border-radius: 4px;">${q.chapterId}</span>
+                          <span style="font-size:0.875rem; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 2px 6px; border-radius: 4px;">${escapeHtml(q.topic)}</span>
+                          <span style="font-size:0.875rem; font-weight: 700; background: #f1f5f9; color: #475569; padding: 2px 6px; border-radius: 4px;">${q.chapterId}</span>
                         </div>
-                        <span style="font-size: 0.75rem; font-weight: 800; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px;">
+                        <span style="font-size:0.875rem; font-weight: 800; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px;">
                           Key Withheld (Fault N09 Isolation)
                         </span>
                       </div>
@@ -457,17 +457,17 @@ export function mountNsejsChapterExplorer(
                       </div>
 
                       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button type="button" class="btn-toggle-hint" data-qid="${q.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; color: #0284c7;">
+                        <button type="button" class="btn-toggle-hint" data-qid="${q.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem; color: #0284c7;">
                           ${hintsOpen ? '▲ Hide Pedagogical Hints' : '▼ View Pedagogical Hints (' + q.hints.length + ')'}
                         </button>
-                        <button type="button" class="btn-toggle-step" data-qid="${q.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; color: #0f172a;">
+                        <button type="button" class="btn-toggle-step" data-qid="${q.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem; color: #0f172a;">
                           ${stepsOpen ? '▲ Hide Decisive Reasoning Steps' : '▼ View Decisive Reasoning Steps (' + q.steps.length + ')'}
                         </button>
                       </div>
 
                       ${hintsOpen ? `
                         <div style="margin-top: 10px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 14px;">
-                          <strong style="color: #1e40af; font-size: 0.85rem; display: block; margin-bottom: 6px;">Pedagogical Guidance &amp; Crux Hints:</strong>
+                          <strong style="color: #1e40af; font-size:0.875rem; display: block; margin-bottom: 6px;">Pedagogical Guidance &amp; Crux Hints:</strong>
                           <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #1e3a8a;">
                             ${q.hints.map((h) => `<li style="margin-bottom: 4px;">${escapeHtml(h)}</li>`).join('')}
                           </ul>
@@ -476,7 +476,7 @@ export function mountNsejsChapterExplorer(
 
                       ${stepsOpen ? `
                         <div style="margin-top: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 14px;">
-                          <strong style="color: #166534; font-size: 0.85rem; display: block; margin-bottom: 6px;">Decisive Reasoning Moves (No Direct Key):</strong>
+                          <strong style="color: #166534; font-size:0.875rem; display: block; margin-bottom: 6px;">Decisive Reasoning Moves (No Direct Key):</strong>
                           <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #14532d;">
                             ${q.steps.map((st) => `<li style="margin-bottom: 4px;">${escapeHtml(st)}</li>`).join('')}
                           </ol>
@@ -509,9 +509,9 @@ export function mountNsejsChapterExplorer(
                       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; flex-wrap: wrap; gap: 8px;">
                         <div style="display: flex; gap: 8px; align-items: center;">
                           <strong style="color: #7c3aed; font-size: 1.05rem;">${escapeHtml(c.id)}</strong>
-                          <span style="font-size: 0.75rem; font-weight: 700; background: #ede9fe; color: #6d28d9; padding: 2px 6px; border-radius: 4px;">PH11 Circuits</span>
+                          <span style="font-size:0.875rem; font-weight: 700; background: #ede9fe; color: #6d28d9; padding: 2px 6px; border-radius: 4px;">PH11 Circuits</span>
                         </div>
-                        <span style="font-size: 0.75rem; font-weight: 800; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px;">
+                        <span style="font-size:0.875rem; font-weight: 800; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px;">
                           Key Withheld (Fault N09)
                         </span>
                       </div>
@@ -529,17 +529,17 @@ export function mountNsejsChapterExplorer(
                       </div>
 
                       <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button type="button" class="btn-toggle-hint" data-qid="${c.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; color: #7c3aed;">
+                        <button type="button" class="btn-toggle-hint" data-qid="${c.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem; color: #7c3aed;">
                           ${hintsOpen ? '▲ Hide Circuit Hints' : '▼ View Circuit Hints (' + c.hints.length + ')'}
                         </button>
-                        <button type="button" class="btn-toggle-step" data-qid="${c.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.85rem; color: #0f172a;">
+                        <button type="button" class="btn-toggle-step" data-qid="${c.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 14px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; font-size:0.875rem; color: #0f172a;">
                           ${stepsOpen ? '▲ Hide Analysis Steps' : '▼ View Analysis Steps (' + c.steps.length + ')'}
                         </button>
                       </div>
 
                       ${hintsOpen ? `
                         <div style="margin-top: 10px; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 6px; padding: 10px 14px;">
-                          <strong style="color: #6b21a8; font-size: 0.85rem; display: block; margin-bottom: 6px;">Circuit Hints &amp; Crux Invariants:</strong>
+                          <strong style="color: #6b21a8; font-size:0.875rem; display: block; margin-bottom: 6px;">Circuit Hints &amp; Crux Invariants:</strong>
                           <ul style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #581c87;">
                             ${c.hints.map((h) => `<li style="margin-bottom: 4px;">${escapeHtml(h)}</li>`).join('')}
                           </ul>
@@ -548,7 +548,7 @@ export function mountNsejsChapterExplorer(
 
                       ${stepsOpen ? `
                         <div style="margin-top: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 14px;">
-                          <strong style="color: #166534; font-size: 0.85rem; display: block; margin-bottom: 6px;">Circuit Analysis Steps:</strong>
+                          <strong style="color: #166534; font-size:0.875rem; display: block; margin-bottom: 6px;">Circuit Analysis Steps:</strong>
                           <ol style="margin: 0; padding-left: 1.25rem; font-size: 0.9rem; color: #14532d;">
                             ${c.steps.map((st) => `<li style="margin-bottom: 4px;">${escapeHtml(st)}</li>`).join('')}
                           </ol>

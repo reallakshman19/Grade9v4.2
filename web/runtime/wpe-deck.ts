@@ -21,6 +21,7 @@ import type { AssessmentContract } from './assessment.ts';
 import type { TaskRef } from './types.ts';
 import { canonicalJson, computeSha256 } from './loader.ts';
 import type { AuthorizedQuestionEntry } from './question-session.ts';
+import { WPE_BANK_QUESTIONS } from './wpe-bank-data.generated.ts';
 
 export const PHYSICS_RELEASE_ID = 'rel:diagnostic:physics-core2-v1';
 export const WPE_RELEASE_ID = PHYSICS_RELEASE_ID;
@@ -578,12 +579,44 @@ export const PHYSICS_DIAGNOSTIC_DECK: readonly WorkspaceQuestionDescriptor[] = [
   DESCRIPTOR_GRAV_04,
 ];
 
-export const WPE_DIAGNOSTIC_DECK: readonly WorkspaceQuestionDescriptor[] = [
+export const WPE_FULL_QUESTION_BANK: readonly WorkspaceQuestionDescriptor[] = [
   DESCRIPTOR_WPE_01,
   DESCRIPTOR_WPE_02,
   DESCRIPTOR_WPE_03,
   DESCRIPTOR_WPE_04,
+  ...WPE_BANK_QUESTIONS.map(q => ({
+    id: q.id,
+    code: q.code,
+    title: q.title,
+    stemText: q.stemText,
+    kind: q.kind as WorkspaceQuestionDescriptor['kind'],
+    options: q.options ?? undefined,
+    figures: q.figures ? q.figures.map(f => ({
+      id: f.id,
+      caption: f.caption,
+      available: f.available,
+      sourceUrl: f.svgDataUri,
+    })) : undefined,
+    hints: q.hints ? q.hints.map(h => ({
+      id: h.id,
+      text: (h.prompt ? `${h.prompt}: ` : '') + h.text,
+      penaltyPercent: h.penaltyPercent,
+    })) : undefined,
+    status: 'HOLD' as const,
+    keyStatus: q.keyStatus,
+    maxPoints: q.maxPoints,
+    sourceProvenance: 'AUTHENTIC_SOURCE_PINNED' as const,
+    explanationHtml: q.answerHtml,
+    batch: q.batch,
+    band: q.band,
+    operation: q.operation,
+    sourceClaim: q.sourceClaim,
+    solutionSteps: q.solutionSteps,
+    limitingCheck: q.limitingCheck ?? undefined,
+  }))
 ];
+
+export const WPE_DIAGNOSTIC_DECK: readonly WorkspaceQuestionDescriptor[] = WPE_FULL_QUESTION_BANK;
 
 // Mapping contract pairs
 const ALL_CONTRACTS: Record<string, { task: TaskRef; contract: AssessmentContract; isReviewed: boolean }> = {
@@ -607,16 +640,47 @@ const ALL_CONTRACTS: Record<string, { task: TaskRef; contract: AssessmentContrac
 
 export async function getAuthorizedPhysicsEntry(questionId: string): Promise<AuthorizedQuestionEntry> {
   const item = ALL_CONTRACTS[questionId];
-  if (!item) {
-    throw new Error(`UNKNOWN_QUESTION_ID: ${questionId}`);
+  if (item) {
+    const sha256 = await computeSha256(canonicalJson(item.contract));
+    return {
+      task: item.task,
+      assessment: { type: 'ASSESSMENT', id: item.contract.id, revision: 1, sha256 },
+      contract: item.contract,
+      isReviewedForDisclosure: item.isReviewed,
+    };
   }
-  const sha256 = await computeSha256(canonicalJson(item.contract));
-  return {
-    task: item.task,
-    assessment: { type: 'ASSESSMENT', id: item.contract.id, revision: 1, sha256 },
-    contract: item.contract,
-    isReviewedForDisclosure: item.isReviewed,
-  };
+
+  const bankItem = WPE_BANK_QUESTIONS.find(q => q.id === questionId);
+  if (bankItem) {
+    const task: TaskRef = {
+      type: 'QUESTION',
+      id: bankItem.id,
+      revision: 1,
+      sha256: await computeSha256(canonicalJson({ id: bankItem.id, stem: bankItem.stemText })),
+    };
+    const contract: AssessmentContract = {
+      id: `asmt:${bankItem.id.toLowerCase()}`,
+      revision: 1,
+      task_ref: task,
+      response_kind: bankItem.kind,
+      max_points: bankItem.maxPoints,
+      evaluator: bankItem.canonicalValue ? {
+        mode: 'AUTOMATIC',
+        canonical_value: bankItem.canonicalValue as any,
+        allowed_options: bankItem.options ? bankItem.options.map(o => o.id) : undefined,
+      } : { mode: 'REVIEW_PENDING' },
+      status: 'HOLD',
+    };
+    const sha256 = await computeSha256(canonicalJson(contract));
+    return {
+      task,
+      assessment: { type: 'ASSESSMENT', id: contract.id, revision: 1, sha256 },
+      contract,
+      isReviewedForDisclosure: true,
+    };
+  }
+
+  throw new Error(`UNKNOWN_QUESTION_ID: ${questionId}`);
 }
 
 export async function getAuthorizedWpeEntry(questionId: string): Promise<AuthorizedQuestionEntry> {

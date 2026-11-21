@@ -132,7 +132,7 @@ export function mountMoleConceptWorkbench(
     const stoichRes = ctrl.getStoichiometryResults();
 
     root.innerHTML = `
-      <div class="mole-concept-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;color:#0f172a;">
+      <div class="mole-concept-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui,-apple-system,sans-serif);color:#0f172a;">
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem;">
           <div>
             <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
@@ -140,14 +140,19 @@ export function mountMoleConceptWorkbench(
               <span>Mole Concept &amp; Stoichiometry</span>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
-              <span style="font-size:0.8rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">CHEMISTRY QUANTITATIVE WORKBENCH</span>
-              <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
+              <span style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">CHEMISTRY QUANTITATIVE WORKBENCH</span>
+              <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
             </div>
             <h1 style="margin:0.5rem 0 0;font-size:1.9rem;font-weight:800;color:#0f172a;">⚖️ Mole Concept &amp; Stoichiometric Reactor</h1>
           </div>
-          <button type="button" id="btn-return-labs" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
-            ← Return to Labs Hub
-          </button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" id="btn-launch-v35-suite" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
+              ⚡ Launch Full Master Suite (Standalone) →
+            </button>
+            <button type="button" id="btn-return-labs" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
+              ← Return to Labs Hub
+            </button>
+          </div>
         </header>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 360px), 1fr));gap:2rem;">
@@ -157,7 +162,7 @@ export function mountMoleConceptWorkbench(
               <h3 style="margin:0 0 1rem;font-size:1.25rem;color:#0f172a;">Part 1: Mole &amp; Particle Converter</h3>
 
               <div style="margin-bottom:1rem;">
-                <label style="display:block;font-size:0.85rem;font-weight:700;margin-bottom:6px;color:#475569;">Select Chemical Substance:</label>
+                <label style="display:block;font-size:0.875rem;font-weight:700;margin-bottom:6px;color:#475569;">Select Chemical Substance:</label>
                 <div style="display:flex;flex-wrap:wrap;gap:6px;">
                   ${COMMON_COMPOUNDS.map(c => `
                     <button type="button" class="comp-btn ${c.formula === comp.formula ? 'active' : ''}" data-formula="${c.formula}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border-radius:6px;font-size:0.9rem;font-weight:700;cursor:pointer;background:${c.formula === comp.formula ? '#0284c7' : '#f1f5f9'};color:${c.formula === comp.formula ? 'white' : '#475569'};border:1px solid ${c.formula === comp.formula ? '#0284c7' : '#cbd5e1'};">
@@ -249,6 +254,10 @@ export function mountMoleConceptWorkbench(
   };
 
   const bindEvents = () => {
+    root.querySelector<HTMLButtonElement>('#btn-launch-v35-suite')?.addEventListener('click', () => {
+      window.location.href = './chemistry/some-basic-concepts/explorers/mole_concept/index.html';
+    });
+
     root.querySelector<HTMLButtonElement>('#btn-return-labs')?.addEventListener('click', () => {
       if (onNavigate) onNavigate('/labs');
       else window.location.hash = '#/labs';

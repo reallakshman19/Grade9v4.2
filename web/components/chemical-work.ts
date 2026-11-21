@@ -398,8 +398,8 @@ export class ChemicalWorkWorkspaceController {
               <strong>Step ${s.stepNumber}: ${escapeHtml(String(s.equation))}</strong>
               <button class="remove-step-btn" data-id="${escapeHtml(String(s.id))}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 12px; background: #fee2e2; border: 1px solid #f87171; border-radius: 6px;">Delete</button>
             </div>
-            ${s.reagents ? `<div style="font-size: 13px; color: #475569;">Reagents: ${escapeHtml(String(s.reagents))}</div>` : ''}
-            ${s.mechanismType ? `<div style="font-size: 13px; color: #2563eb;">Type: ${escapeHtml(String(s.mechanismType))}</div>` : ''}
+            ${s.reagents ? `<div style="font-size:14px; color: #475569;">Reagents: ${escapeHtml(String(s.reagents))}</div>` : ''}
+            ${s.mechanismType ? `<div style="font-size:14px; color: #2563eb;">Type: ${escapeHtml(String(s.mechanismType))}</div>` : ''}
           </li>`
         )
         .join('');
@@ -503,7 +503,7 @@ export class ChemicalWorkWorkspaceController {
           ${
             state.evaluation.rubricCriteria
               ? `
-            <div style="font-size: 13px; color: #713f12;">
+            <div style="font-size:14px; color: #713f12;">
               <strong>Rubric Assessment Bounds (Human Review Required):</strong>
               <ul style="margin: 4px 0 0 0; padding-left: 20px;">
                 ${state.evaluation.rubricCriteria.map((c) => `<li>${escapeHtml(String(c.name))} (Max ${c.maxPoints} pts) &mdash; Awarded: ${c.awardedPoints ?? 'Pending'}</li>`).join('')}
@@ -524,7 +524,7 @@ export class ChemicalWorkWorkspaceController {
       <section class="chemical-work-workspace" aria-label="Chemical Representation Workspace" data-archetype="${escapeHtml(String(state.archetype))}">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 8px; border-bottom: 1px solid #e2e8f0;">
           <h3 style="margin: 0; font-size: 1.25rem; color: #0f172a; font-weight: 700;">Chemical Representation Workspace (Workpack A28)</h3>
-          <span class="chem-archetype-badge" style="font-size: 0.85rem; font-weight: 800; color: #0284c7; background: #e0f2fe; padding: 4px 10px; border-radius: 6px; border: 1px solid #bae6fd;">Archetype: ${escapeHtml(String(state.archetype))}</span>
+          <span class="chem-archetype-badge" style="font-size:0.875rem; font-weight: 800; color: #0284c7; background: #e0f2fe; padding: 4px 10px; border-radius: 6px; border: 1px solid #bae6fd;">Archetype: ${escapeHtml(String(state.archetype))}</span>
         </div>
         ${tabsHtml}
         ${contentHtml}

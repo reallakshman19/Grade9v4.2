@@ -8,8 +8,8 @@ import { Core2BTransferPageController, mountCore2BTransfer } from '../pages/tran
 import { QuestionPageController, mountQuestionPage } from '../pages/question.ts';
 import { GcdrExplorerPageController, mountGcdrExplorer } from '../pages/explorer.ts';
 import { getExplorerConfig } from '../pages/explorer-catalog.ts';
-import { createTopicScreen, mountTopicWorkspace, WPE_PHYSICS_TOPIC, PHY_MOTION_PLANE_TOPIC, PHY_CIRCULAR_BANKING_TOPIC, PHY_GRAVITATION_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC, CHEM_REDOX_TOPIC, CHEM_BONDING_TOPIC, CHEM_STOICHIOMETRY_TOPIC } from '../pages/topic.ts';
-import { createSubjectScreen, mountSubjectScreen, CHEMISTRY_SUBJECT_DETAIL, PHYSICS_SUBJECT_DETAIL, type SubjectDetail } from '../pages/subject.ts';
+import { createTopicScreen, mountTopicWorkspace, type TopicDetail, WPE_PHYSICS_TOPIC, PHY_MOTION_PLANE_TOPIC, PHY_CIRCULAR_BANKING_TOPIC, PHY_GRAVITATION_TOPIC, PHY_FLUIDS_TOPIC, PHY_MOTION_1D_TOPIC, PHY_NLM_TOPIC, PHY_VECTORS_TOPIC, MATH_POLYNOMIALS_TOPIC, MATH_EUCLID_TOPIC, MATH_RIEMANN_TOPIC, MATH_COORD_GEOM_TOPIC, MATH_THEORY_EQUATIONS_TOPIC, MATH_VECTORS_TOPIC, MATH_LINEAR_EQ_TOPIC, MATH_IMO_GRADE9_TOPIC, CHEM_REDOX_TOPIC, CHEM_BONDING_TOPIC, CHEM_STOICHIOMETRY_TOPIC, CHEM_GASES_TOPIC, BIO_LIVING_WORLD_TOPIC, BIO_LIFE_PROCESSES_TOPIC, BIO_COORDINATION_TOPIC, BIO_GENETICS_TOPIC, BIO_ENVIRONMENT_TOPIC } from '../pages/topic.ts';
+import { createSubjectScreen, mountSubjectScreen, CHEMISTRY_SUBJECT_DETAIL, PHYSICS_SUBJECT_DETAIL, MATHEMATICS_SUBJECT_DETAIL, BIOLOGY_SUBJECT_DETAIL, type SubjectDetail } from '../pages/subject.ts';
 import { createCompetitiveExamScreen, mountCompetitiveExam } from '../pages/competitive.ts';
 import { PaperWorkspaceController, mountPaperWorkspace } from '../pages/paper.ts';
 import { createAuthorizedIoqmPaperSession } from '../runtime/ioqm-session.ts';
@@ -17,12 +17,17 @@ import { createAuthorizedNsejsPaperSession } from '../runtime/nsejs-session.ts';
 import { mountStandaloneLab } from '../pages/resources.ts';
 import { mountLabsHub } from '../pages/labs-hub.ts';
 import { mountChemistryCurriculum, ChemistryCurriculumController } from '../pages/chemistry-curriculum.ts';
+import { mountChemistryHub, ChemistryHubController } from '../pages/chemistry-hub.ts';
 import { mountNsejsChapterExplorer, NsejsCurriculumController } from '../pages/nsejs-curriculum.ts';
 import { mountPhysicsLibrary, PhysicsLibraryController } from '../pages/physics-library.ts';
 import { mountNsejsCore2Hub } from '../pages/nsejs-core2-hub.ts';
 import { UniversalSearchPageController } from '../pages/search.ts';
 import { createDiagnosticSearchEngineFactory } from '../runtime/search-factory.ts';
 import { mountArchitectureHub } from '../pages/architecture.ts';
+import { mountPersonalStudyPage, type PersonalTab } from '../pages/personal-study.ts';
+import { createQuestionBankScreen, mountQuestionBankScreen } from '../pages/bank.ts';
+import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
+import { getOrCreateUniversalSearchModal } from '../components/universal-search-modal.ts';
 import { Router } from './router.ts';
 import { DEFAULT_APP_REGISTRY } from '../runtime/registry/index.ts';
 import { escapeHtml } from '../runtime/rendering.ts';
@@ -37,7 +42,7 @@ interface DiagnosticReport {
 }
 
 export function initializeBuildShell(): DiagnosticReport {
-  const report: DiagnosticReport = {
+  return {
     version: '4.2.0',
     uiFreezeStatus: 'NOT_FROZEN',
     learnerUi: 'IMPLEMENTATION_AUTHORIZED',
@@ -45,61 +50,39 @@ export function initializeBuildShell(): DiagnosticReport {
     productionRelease: 'NONE',
     diagnosticScript: 'INITIALIZED',
   };
-  const diag = typeof document === 'undefined' ? null : document.getElementById('diagnostics');
-  if (diag) {
-    diag.textContent = `Diagnostic script: ${report.diagnosticScript}\nBuild shell version: ${report.version}\nUI freeze: ${report.uiFreezeStatus}\nLearner UI: ${report.learnerUi}\nAcademic admission: ${report.academicAdmission}\nProduction release: ${report.productionRelease}\nRuntime interfaces: compile-time only; not verified by this page.`;
-    diag.dataset.initialized = 'true';
-  }
-  return report;
 }
-
-const MATHEMATICS_SUBJECT_DETAIL: SubjectDetail = {
-  id: 'mathematics',
-  code: 'MATHEMATICS',
-  name: 'Mathematics',
-  description: 'Foundations of Mathematics, Algebra, Euclidean Geometry, and Real Analysis',
-  status: 'HOLD',
-  academicAdmission: 'HOLD',
-  diagnosticAuthorized: true,
-  topics: [
-    {
-      id: 'polynomials',
-      code: 'POLYNOMIALS',
-      title: 'Polynomials & Real Numbers',
-      strand: 'Algebra',
-      itemCount: 4,
-      status: 'HOLD',
-      academicAdmission: 'HOLD',
-      diagnosticAuthorized: true,
-      hasExplorer: true,
-    },
-    {
-      id: 'euclid-geometry',
-      code: 'EUCLID',
-      title: 'Euclidean Geometry & Proofs',
-      strand: 'Geometry',
-      itemCount: 4,
-      status: 'HOLD',
-      academicAdmission: 'HOLD',
-      diagnosticAuthorized: true,
-      hasExplorer: true,
-    },
-    {
-      id: 'riemann',
-      code: 'RIEMANN',
-      title: 'Foundations of Real Analysis & Calculus',
-      strand: 'Analysis',
-      itemCount: 3,
-      status: 'HOLD',
-      academicAdmission: 'HOLD',
-      diagnosticAuthorized: true,
-      hasExplorer: true,
-    },
-  ],
-};
 
 let activeDisposer: (() => void) | null = null;
 const appRouter = new Router({ useHash: true });
+
+export function buildGlobalNavigationHtml(clean: string, matchType: string): string {
+  const isHome = matchType === 'HOME' || !clean || clean === 'home';
+  const isBank = matchType === 'BANK' || clean === 'bank' || clean === 'question-bank';
+  const isMath = clean.startsWith('subject/mathematics') || clean.startsWith('subject/math') || clean.startsWith('mathematics') || clean.startsWith('math') || clean.includes('/mathematics/') || clean.includes('/math/');
+  const isPhys = clean.startsWith('subject/physics') || clean.startsWith('subject/phys') || clean.startsWith('physics') || clean.startsWith('phys') || clean.includes('/physics/') || clean.includes('/phys/') || clean === 'nsejs-physics';
+  const isChem = clean.startsWith('subject/chemistry') || clean.startsWith('subject/chem') || clean.startsWith('chemistry') || clean.startsWith('chem') || clean.includes('/chemistry/') || clean.includes('/chem/');
+  const isBio = clean.startsWith('subject/biology') || clean.startsWith('subject/bio') || clean.startsWith('biology') || clean.startsWith('bio') || clean.includes('/biology/') || clean.includes('/bio/');
+  const isExam = matchType === 'COMPETITIVE' || clean.includes('competitive');
+  const isLab = matchType === 'LAB' || matchType === 'LAB_HUB' || clean.includes('labs') || clean.includes('resources');
+  const isPersonal = matchType === 'PERSONAL' || clean.includes('personal');
+  const isArch = matchType === 'ARCHITECTURE' || clean.includes('architecture');
+  const isSearch = matchType === 'SEARCH' || clean.includes('search');
+
+  return `
+    <a href="#/home" class="header-brand" style="min-height:48px;min-width:48px;padding:0 8px;font-weight:800;font-size:1.15rem;color:#38bdf8;margin-right:12px;letter-spacing:-0.01em;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;">Grade9 STEM</a>
+    <button type="button" data-route="#/home" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isHome ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isHome ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">🏠 Home</button>
+    <button type="button" id="nav-btn-math" data-route="#/subject/mathematics" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isMath ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isMath ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">📐 Mathematics</button>
+    <button type="button" id="nav-btn-phys" data-route="#/subject/physics" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isPhys ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isPhys ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">⚛️ Physics</button>
+    <button type="button" id="nav-btn-chem" data-route="#/subject/chemistry" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isChem ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isChem ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">🧪 Chemistry</button>
+    <button type="button" id="nav-btn-bio" data-route="#/subject/biology" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isBio ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isBio ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">🧬 Biology</button>
+    <button type="button" data-route="#/bank" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isBank ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isBank ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">📋 Question Bank</button>
+    <button type="button" data-route="#/competitive/exam:nsejs" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isExam ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isExam ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">🏆 Competitive</button>
+    <button type="button" data-route="#/labs" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isLab ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isLab ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">🔬 Standalone Labs</button>
+    <button type="button" data-route="#/personal" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isPersonal ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isPersonal ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">📈 Personal Study</button>
+    <button type="button" data-route="#/architecture" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isArch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isArch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;">🧭 Architecture</button>
+    <button type="button" data-action="search-modal" data-route="#/search" style="min-height:48px;min-width:48px;padding:8px 14px;background:${isSearch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isSearch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.92rem;margin-left:auto;">🔍 Search <span style="font-size:0.75rem;opacity:0.8;margin-left:4px;border:1px solid rgba(255,255,255,0.3);border-radius:3px;padding:1px 5px;font-family:sans-serif;">Ctrl K</span></button>
+  `;
+}
 
 export function mountRoute(targetHash: string, root: HTMLElement): void {
   if (activeDisposer) {
@@ -107,46 +90,57 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     activeDisposer = null;
   }
 
-  // Remove top freeze banner on all application pages
-  const banner = document.getElementById('freeze-banner');
-  if (banner) {
-    banner.style.display = 'none';
-  }
-
   const match = appRouter.match(targetHash || '#/home');
   const clean = targetHash.replace(/^#\/?/, '').toLowerCase();
 
   const container = document.createElement('div');
   container.className = 'g9-runtime-container';
-  container.style.cssText = 'min-width:0;max-width:100%;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.6;color:#0f172a;';
+  container.style.cssText = 'min-width:0;max-width:100%;box-sizing:border-box;font-family:var(--g9-font-family,system-ui,-apple-system,sans-serif);font-size:17px;line-height:1.6;color:#0f172a;';
 
   const nav = document.createElement('nav');
   nav.setAttribute('aria-label', 'Global navigation');
   nav.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;padding:14px 20px;background:#0f172a;color:white;align-items:center;border-radius:8px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.15);';
   
   const isHome = match.type === 'HOME' || !clean || clean === 'home';
-  const isSubj = match.type === 'SUBJECT' || clean.includes('subject');
+  const isBank = match.type === 'BANK' || clean === 'bank' || clean === 'question-bank';
+  const isMath = clean.startsWith('subject/mathematics') || clean.startsWith('subject/math') || clean.startsWith('mathematics') || clean.startsWith('math') || clean.includes('/mathematics/') || clean.includes('/math/');
+  const isPhys = clean.startsWith('subject/physics') || clean.startsWith('subject/phys') || clean.startsWith('physics') || clean.startsWith('phys') || clean.includes('/physics/') || clean.includes('/phys/') || clean === 'nsejs-physics';
+  const isChem = clean.startsWith('subject/chemistry') || clean.startsWith('subject/chem') || clean.startsWith('chemistry') || clean.startsWith('chem') || clean.includes('/chemistry/') || clean.includes('/chem/');
+  const isBio = clean.startsWith('subject/biology') || clean.startsWith('subject/bio') || clean.startsWith('biology') || clean.startsWith('bio') || clean.includes('/biology/') || clean.includes('/bio/');
   const isExam = match.type === 'COMPETITIVE' || clean.includes('competitive');
   const isLab = match.type === 'LAB' || match.type === 'LAB_HUB' || clean.includes('labs') || clean.includes('resources');
   const isPersonal = match.type === 'PERSONAL' || clean.includes('personal');
   const isArch = match.type === 'ARCHITECTURE' || clean.includes('architecture');
   const isSearch = match.type === 'SEARCH' || clean.includes('search');
 
-  nav.innerHTML = `
-    <div class="header-brand" style="font-weight:800;font-size:1.15rem;color:#38bdf8;margin-right:12px;letter-spacing:-0.01em;">Grade9 STEM</div>
-    <button type="button" data-route="#/home" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isHome ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isHome ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🏠 Home</button>
-    <button type="button" data-route="#/subject/physics" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isSubj ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isSubj ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">📚 Subjects</button>
-    <button type="button" data-route="#/competitive/exam:nsejs" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isExam ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isExam ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🏆 Competitive Exams</button>
-    <button type="button" data-route="#/labs" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isLab ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isLab ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🔬 Standalone Labs</button>
-    <button type="button" data-route="#/personal" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isPersonal ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isPersonal ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">📈 Personal Study</button>
-    <button type="button" data-route="#/architecture" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isArch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isArch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;">🧭 Architecture</button>
-    <button type="button" data-route="#/search" style="min-height:48px;min-width:48px;padding:8px 16px;background:${isSearch ? '#0284c7' : '#1e293b'};color:white;border:1px solid ${isSearch ? '#38bdf8' : '#334155'};border-radius:6px;cursor:pointer;font-weight:700;font-size:0.95rem;margin-left:auto;">🔍 Search</button>
-  `;
+  // Update document title based on route
+  if (typeof document !== 'undefined') {
+    if (isHome) document.title = 'Grade9 STEM · Interactive Curriculum Hub';
+    else if (isBank) document.title = 'Question Bank · Grade9 STEM';
+    else if (isMath) document.title = 'Mathematics · Grade9 STEM';
+    else if (isPhys) document.title = 'Physics · Grade9 STEM';
+    else if (isChem) document.title = 'Chemistry Hub · Grade9 STEM';
+    else if (isBio) document.title = 'Biology · Grade9 STEM';
+    else if (isExam) document.title = 'Competitive Exams · Grade9 STEM';
+    else if (isLab) document.title = 'Standalone Labs · Grade9 STEM';
+    else if (isPersonal) document.title = 'Personal Study · Grade9 STEM';
+    else if (isArch) document.title = 'Architecture Hub · Grade9 STEM';
+    else document.title = 'Grade9 STEM Platform';
+  }
+
+  nav.innerHTML = buildGlobalNavigationHtml(clean, match.type);
 
   nav.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement)?.closest<HTMLButtonElement>('button');
-    if (btn && btn.dataset.route !== undefined) {
-      window.location.hash = btn.dataset.route;
+    if (btn) {
+      if (btn.dataset.action === 'search-modal') {
+        const modal = getOrCreateUniversalSearchModal();
+        modal.open();
+        return;
+      }
+      if (btn.dataset.route !== undefined) {
+        window.location.hash = btn.dataset.route;
+      }
     }
   });
 
@@ -163,48 +157,90 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     const activeTab = match.params.tab || 'questions';
 
     if (subjId === 'physics' || subjId === 'phys') {
-      let topicDetail = WPE_PHYSICS_TOPIC;
-      if (topId.includes('motion') || topId.includes('plane') || topId.includes('kin')) topicDetail = PHY_MOTION_PLANE_TOPIC;
+      let topicDetail: TopicDetail | null = null;
+      if (topId.includes('1d') || topId === 'motion-1d') topicDetail = PHY_MOTION_1D_TOPIC;
+      else if (topId.includes('fluid') || topId.includes('thrust') || topId.includes('pressure')) topicDetail = PHY_FLUIDS_TOPIC;
+      else if (topId.includes('nlm') || topId.includes('newton') || topId.includes('force')) topicDetail = PHY_NLM_TOPIC;
+      else if (topId.includes('vec')) topicDetail = PHY_VECTORS_TOPIC;
+      else if (topId.includes('motion') || topId.includes('plane') || topId.includes('kin')) topicDetail = PHY_MOTION_PLANE_TOPIC;
       else if (topId.includes('circular') || topId.includes('bank')) topicDetail = PHY_CIRCULAR_BANKING_TOPIC;
       else if (topId.includes('grav')) topicDetail = PHY_GRAVITATION_TOPIC;
-      else if (topId.includes('wpe') || topId.includes('work')) topicDetail = WPE_PHYSICS_TOPIC;
+      else if (topId.includes('wpe') || topId.includes('work') || topId.includes('energy')) topicDetail = WPE_PHYSICS_TOPIC;
 
-      const topicController = createTopicScreen(topicDetail);
-      const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
-        window.location.hash = '#' + route;
-      });
-      activeDisposer = () => m.dispose();
+      if (topicDetail) {
+        const topicController = createTopicScreen(topicDetail);
+        const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
+          window.location.hash = '#' + route;
+        });
+        activeDisposer = () => m.dispose();
+      } else {
+        renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
+      }
     } else if (subjId === 'mathematics' || subjId === 'math') {
-      let topicDetail = MATH_POLYNOMIALS_TOPIC;
-      if (topId.includes('euclid')) topicDetail = MATH_EUCLID_TOPIC;
-      else if (topId.includes('riemann')) topicDetail = MATH_RIEMANN_TOPIC;
-      else if (topId.includes('poly')) topicDetail = MATH_POLYNOMIALS_TOPIC;
+      let topicDetail: TopicDetail | null = null;
+      if (topId.includes('coord') || topId.includes('cartesian')) topicDetail = MATH_COORD_GEOM_TOPIC;
+      else if (topId.includes('euclid') || topId.includes('circle')) topicDetail = MATH_EUCLID_TOPIC;
+      else if (topId.includes('poly') || topId.includes('remainder')) topicDetail = MATH_POLYNOMIALS_TOPIC;
+      else if (topId.includes('theor') || (topId.includes('equation') && !topId.includes('linear'))) topicDetail = MATH_THEORY_EQUATIONS_TOPIC;
+      else if (topId.includes('vec')) topicDetail = MATH_VECTORS_TOPIC;
+      else if (topId.includes('linear')) topicDetail = MATH_LINEAR_EQ_TOPIC;
+      else if (topId.includes('imo') || topId.includes('olympiad')) topicDetail = MATH_IMO_GRADE9_TOPIC;
+      else if (topId.includes('riemann') || topId.includes('sum')) topicDetail = MATH_RIEMANN_TOPIC;
 
-      const topicController = createTopicScreen(topicDetail);
-      const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
-        window.location.hash = '#' + route;
-      });
-      activeDisposer = () => m.dispose();
+      if (topicDetail) {
+        const topicController = createTopicScreen(topicDetail);
+        const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
+          window.location.hash = '#' + route;
+        });
+        activeDisposer = () => m.dispose();
+      } else {
+        renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
+      }
     } else if (subjId === 'chemistry' || subjId === 'chem') {
-      let topicDetail = CHEM_REDOX_TOPIC;
+      let topicDetail: TopicDetail | null = null;
       if (topId.includes('redox')) topicDetail = CHEM_REDOX_TOPIC;
       else if (topId.includes('bond')) topicDetail = CHEM_BONDING_TOPIC;
-      else if (topId.includes('stoich') || topId.includes('titrat')) topicDetail = CHEM_STOICHIOMETRY_TOPIC;
+      else if (topId.includes('gases') || topId.includes('gas')) topicDetail = CHEM_GASES_TOPIC;
+      else if (topId.includes('stoich') || topId.includes('titrat') || topId.includes('mole')) topicDetail = CHEM_STOICHIOMETRY_TOPIC;
 
-      const topicController = createTopicScreen(topicDetail);
-      const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
-        window.location.hash = '#' + route;
-      });
-      activeDisposer = () => m.dispose();
+      if (topicDetail) {
+        const topicController = createTopicScreen(topicDetail);
+        const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
+          window.location.hash = '#' + route;
+        });
+        activeDisposer = () => m.dispose();
+      } else {
+        renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
+      }
+    } else if (subjId === 'biology' || subjId === 'bio') {
+      let topicDetail: TopicDetail | null = null;
+      if (topId.includes('living') || topId.includes('cell') || topId.includes('world') || topId.includes('organ')) topicDetail = BIO_LIVING_WORLD_TOPIC;
+      else if (topId.includes('process') || topId.includes('life') || topId.includes('nephron')) topicDetail = BIO_LIFE_PROCESSES_TOPIC;
+      else if (topId.includes('coord') || topId.includes('neuro') || topId.includes('immun')) topicDetail = BIO_COORDINATION_TOPIC;
+      else if (topId.includes('genet') || topId.includes('hered')) topicDetail = BIO_GENETICS_TOPIC;
+      else if (topId.includes('env') || topId.includes('ecol')) topicDetail = BIO_ENVIRONMENT_TOPIC;
+      else topicDetail = BIO_LIVING_WORLD_TOPIC;
+
+      if (topicDetail) {
+        const topicController = createTopicScreen(topicDetail);
+        const m = mountTopicWorkspace(content, topicController, activeTab, (route) => {
+          window.location.hash = '#' + route;
+        });
+        activeDisposer = () => m.dispose();
+      } else {
+        renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
+      }
     } else {
       renderTopicWorkspacePlaceholder(content, match.params.subjectId, match.params.topicId, match.params.tab);
     }
   } else if (clean.includes('core1a') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1A')) {
-    const controller = new Core1ALessonPageController();
+    const topicCode = match.query.topic || match.params.topicId;
+    const controller = new Core1ALessonPageController({ topicCode });
     const m = mountCore1ALesson(content, controller);
     activeDisposer = () => m.dispose();
   } else if (clean.includes('core1b') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1B')) {
-    const controller = new Core1BTransferPageController();
+    const topicCode = match.query.topic || match.params.topicId;
+    const controller = new Core1BTransferPageController({ topicCode });
     const m = mountCore1BTransfer(content, controller);
     activeDisposer = () => m.dispose();
   } else if ((clean.includes('core1') && !clean.includes('core1a') && !clean.includes('core1b')) || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE1')) {
@@ -224,8 +260,45 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       window.location.hash = '#' + route;
     });
     activeDisposer = () => m.dispose();
+  } else if (match.type === 'BANK' || clean === 'bank' || clean === 'question-bank') {
+    const controller = createQuestionBankScreen();
+    if (Object.keys(match.query).length > 0) {
+      const searchParams = new URLSearchParams(match.query);
+      controller.loadFromUrlParams(searchParams);
+    }
+    const m = mountQuestionBankScreen(content, controller, (route) => {
+      window.location.hash = '#' + route;
+    });
+    activeDisposer = () => m.dispose();
   } else if (match.type === 'QUESTION' || clean.startsWith('question/') || clean === 'question' || (clean.includes('core2') && !clean.includes('core2a') && !clean.includes('core2b')) || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'CORE2')) {
-    const controller = new QuestionPageController('phys', 'wpe');
+    const qid = match.params.questionId || (clean.startsWith('question/') ? clean.replace(/^question\//, '') : '');
+    const entry = qid ? UNIFIED_QUESTION_DATABASE.getById(qid) : undefined;
+    const controller = new QuestionPageController(
+      entry?.subjectCode ? String(entry.subjectCode).toLowerCase() : 'phys',
+      entry?.topicCode ? String(entry.topicCode).toLowerCase() : 'wpe'
+    );
+    if (entry) {
+      const qHints = (entry.hints && entry.hints.length > 0)
+        ? entry.hints.filter((h: string) => h && h.trim().length > 0).map((h: string, i: number) => ({ id: `hint-${i+1}`, text: h, penaltyPercent: 0 }))
+        : [];
+      controller.loadQuestion({
+        id: entry.id,
+        code: entry.code,
+        title: entry.title,
+        stemText: entry.stem,
+        kind: entry.kind === 'MULTIPLE_CHOICE' ? 'MULTIPLE_CHOICE' : (entry.kind === 'NUMERIC_QUANTITY' || entry.kind === 'INTEGER') ? 'NUMERIC_QUANTITY' : 'SINGLE_CHOICE',
+        options: entry.options ? entry.options.map(o => ({ id: o.id, text: o.text })) : undefined,
+        status: entry.status,
+        keyStatus: 'VERIFIED',
+        maxPoints: entry.maxPoints,
+        figures: entry.figures ? entry.figures.map(f => ({ id: f.id, caption: f.caption, available: f.available })) : [],
+        hints: qHints,
+        solutionSteps: entry.steps && entry.steps.length > 0 ? entry.steps : undefined,
+        explanationHtml: entry.steps && entry.steps.length > 0 ? entry.steps.join('<br>') : undefined,
+        limitingCheck: (entry as any).limitingCheck || (entry as any).check || undefined,
+        correctKey: (entry as any).correctKey || undefined,
+      });
+    }
     const m = mountQuestionPage(content, controller);
     activeDisposer = () => m.dispose();
   } else if (match.type === 'EXPLORER' || clean.includes('explorer') || (match.type === 'ROLE' && match.params.coreRole?.toUpperCase() === 'EXPLORER')) {
@@ -234,7 +307,13 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     const controller = new GcdrExplorerPageController(config);
     const m = mountGcdrExplorer(content, controller);
     activeDisposer = () => m.dispose();
-  } else if (clean.includes('curriculum/chemistry') || clean.includes('chemistry-curriculum') || clean === 'chemistry') {
+  } else if (clean === 'chemistry' || clean.includes('chemistry-hub') || clean.includes('hub/chemistry')) {
+    const controller = new ChemistryHubController();
+    const m = mountChemistryHub(content, controller, (route: string) => {
+      window.location.hash = '#' + route;
+    });
+    activeDisposer = () => m.dispose();
+  } else if (clean.includes('curriculum/chemistry') || clean.includes('chemistry-curriculum')) {
     const controller = new ChemistryCurriculumController();
     const m = mountChemistryCurriculum(content, controller, (route: string) => {
       window.location.hash = '#' + route;
@@ -276,6 +355,12 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       activeDisposer = () => m.dispose();
     } else if (sId === 'chemistry' || sId === 'chem') {
       const controller = createSubjectScreen(CHEMISTRY_SUBJECT_DETAIL);
+      const m = mountSubjectScreen(content, controller, (route) => {
+        window.location.hash = '#' + route;
+      });
+      activeDisposer = () => m.dispose();
+    } else if (sId === 'biology' || sId === 'bio') {
+      const controller = createSubjectScreen(BIOLOGY_SUBJECT_DETAIL);
       const m = mountSubjectScreen(content, controller, (route) => {
         window.location.hash = '#' + route;
       });
@@ -323,7 +408,17 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     });
     activeDisposer = () => m.dispose();
   } else if (match.type === 'PERSONAL') {
-    renderPersonalStudyPlaceholder(content, match.params.tab);
+    const tabParam = match.params.tab?.toLowerCase();
+    const validTab = (['overview', 'progress', 'mistakes', 'bookmarks', 'settings'].includes(tabParam || '')
+      ? tabParam
+      : 'overview') as PersonalTab;
+    mountPersonalStudyPage(content, validTab, (route) => {
+      window.location.hash = '#' + route;
+    }).then((m) => {
+      activeDisposer = () => m.dispose();
+    }).catch((err) => {
+      console.error('PERSONAL MOUNT ERROR:', err);
+    });
   } else if (match.type === 'ARCHITECTURE') {
     const m = mountArchitectureHub(content, match.params.docId, (route) => {
       window.location.hash = '#' + route;
@@ -368,7 +463,7 @@ function renderSubjectPlaceholder(root: HTMLElement, subjectId: string): void {
           ${topics.map(t => `
             <div style="border:1px solid #cbd5e1;border-radius:8px;padding:1.25rem;background:#f8fafc;display:flex;flex-direction:column;justify-content:space-between;">
               <div>
-                <span style="font-size:0.75rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">${escapeHtml(t.code)}</span>
+                <span style="font-size:0.875rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">${escapeHtml(t.code)}</span>
                 <h3 style="margin:0.5rem 0 0.25rem;font-size:1.15rem;color:#0f172a;">${escapeHtml(t.title)}</h3>
                 <p style="margin:0 0 1rem;font-size:0.9rem;color:#64748b;">${t.indexedQuestionCount} Indexed Practice Items ${t.hasExplorer ? '· 🔬 Explorer Available' : ''}</p>
               </div>
@@ -443,8 +538,8 @@ function renderCompetitiveExamPlaceholder(root: HTMLElement, examId: string): vo
         <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;">Home</a> &gt; <span>Competitive Exam: ${escapeHtml(title)}</span>
       </div>
       <div style="display:flex;gap:8px;margin-bottom:0.5rem;">
-        <span style="font-size:0.8rem;font-weight:800;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;">${escapeHtml(exam ? exam.category : 'OLYMPIAD')}</span>
-        <span style="font-size:0.8rem;font-weight:700;background:#f1f5f9;color:#64748b;padding:2px 8px;border-radius:4px;">Conducting Body: ${escapeHtml(exam ? exam.conductingBody : 'HBCSE')}</span>
+        <span style="font-size:0.875rem;font-weight:800;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;">${escapeHtml(exam ? exam.category : 'OLYMPIAD')}</span>
+        <span style="font-size:0.875rem;font-weight:700;background:#f1f5f9;color:#64748b;padding:2px 8px;border-radius:4px;">Conducting Body: ${escapeHtml(exam ? exam.conductingBody : 'HBCSE')}</span>
       </div>
       <h1 class="placeholder-title" style="margin:0 0 0.5rem;font-size:2rem;font-weight:800;color:#0f172a;">🏆 ${escapeHtml(title)}</h1>
       <p style="color:#475569;font-size:1.1rem;margin:0 0 1.5rem;">Authentic previous-year examination papers, problem decks, and multi-disciplinary challenges</p>
@@ -517,36 +612,6 @@ function renderStandaloneLabPlaceholder(root: HTMLElement, labId: string): void 
   `;
 }
 
-function renderPersonalStudyPlaceholder(root: HTMLElement, tabParam?: string): void {
-  const tab = tabParam || 'overview';
-  root.innerHTML = `
-    <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:2rem;max-width:100%;box-sizing:border-box;">
-      <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:1rem;">
-        <a href="#/home" style="color:#0284c7;text-decoration:none;font-weight:600;">Home</a> &gt; <span>Personal Study: ${escapeHtml(tab.toUpperCase())}</span>
-      </div>
-      <h1 class="placeholder-title" style="margin:0 0 0.5rem;font-size:2rem;font-weight:800;color:#0f172a;">📈 My Personal Study Hub</h1>
-      <p style="color:#475569;font-size:1.1rem;margin:0 0 1.5rem;">Review authenticated study history, recorded mistakes, saved problem bookmarks, and settings</p>
-
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;" role="tablist">
-        <button type="button" onclick="window.location.hash='#/personal/overview'" style="min-height:48px;padding:8px 16px;background:${tab === 'overview' ? '#0284c7' : '#f1f5f9'};color:${tab === 'overview' ? '#ffffff' : '#0f172a'};border:none;border-radius:6px;font-weight:700;cursor:pointer;">Overview</button>
-        <button type="button" onclick="window.location.hash='#/personal/progress'" style="min-height:48px;padding:8px 16px;background:${tab === 'progress' ? '#0284c7' : '#f1f5f9'};color:${tab === 'progress' ? '#ffffff' : '#0f172a'};border:none;border-radius:6px;font-weight:700;cursor:pointer;">Progress Tracker</button>
-        <button type="button" onclick="window.location.hash='#/personal/mistakes'" style="min-height:48px;padding:8px 16px;background:${tab === 'mistakes' ? '#0284c7' : '#f1f5f9'};color:${tab === 'mistakes' ? '#ffffff' : '#0f172a'};border:none;border-radius:6px;font-weight:700;cursor:pointer;">Mistakes Journal</button>
-        <button type="button" onclick="window.location.hash='#/personal/bookmarks'" style="min-height:48px;padding:8px 16px;background:${tab === 'bookmarks' ? '#0284c7' : '#f1f5f9'};color:${tab === 'bookmarks' ? '#ffffff' : '#0f172a'};border:none;border-radius:6px;font-weight:700;cursor:pointer;">Saved Bookmarks</button>
-        <button type="button" onclick="window.location.hash='#/personal/settings'" style="min-height:48px;padding:8px 16px;background:${tab === 'settings' ? '#0284c7' : '#f1f5f9'};color:${tab === 'settings' ? '#ffffff' : '#0f172a'};border:none;border-radius:6px;font-weight:700;cursor:pointer;">Settings</button>
-      </div>
-
-      <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;margin-bottom:2rem;">
-        <h3 style="margin:0 0 0.5rem;font-size:1.2rem;color:#0f172a;">Active Tool: ${escapeHtml(tab.toUpperCase())}</h3>
-        <p style="color:#64748b;margin:0;">
-          Authenticated personal data backed by IndexedDB persistence. Answers and notes are stored securely in local browser storage.
-        </p>
-      </div>
-
-      <button type="button" onclick="window.location.hash='#/home'" style="min-height:56px;padding:12px 24px;background:#0f172a;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-size:1rem;">← Return to Curriculum Home</button>
-    </div>
-  `;
-}
-
 function renderSearchPlaceholder(root: HTMLElement, query: string): void {
   root.innerHTML = `
     <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:2rem;max-width:100%;box-sizing:border-box;">
@@ -593,50 +658,23 @@ function renderNotFoundScreen(root: HTMLElement, failedPath: string): void {
 export function handleNavigation(): void {
   if (typeof window === 'undefined') return;
   const hash = window.location.hash;
-  const search = window.location.search;
   const app = document.getElementById('app');
   if (!app) return;
 
-  if (hash || search.includes('home') || search.includes('app') || search.includes('mode')) {
-    mountRoute(hash || '#/home', app);
-  } else {
-    if (activeDisposer) {
-      activeDisposer();
-      activeDisposer = null;
-    }
-    const banner = document.getElementById('freeze-banner');
-    if (banner) {
-      banner.style.display = '';
-    }
-    app.innerHTML = `
-      <h1>Grade9v4.2 Build Shell</h1>
-      <p>Local static toolchain diagnostics. This is not a learner application or an approved release.</p>
-      <div class="statuses" aria-label="Authority status">
-        <span class="status" id="badge-ui-freeze">UI: NOT_FROZEN</span>
-        <span class="status" id="badge-admission">ADMISSION: HOLD</span>
-        <span class="status" id="badge-release">RELEASE: NONE</span>
-      </div>
-      <div id="diagnostics" role="status" aria-live="polite" data-initialized="false">Diagnostic script has not initialized. No runtime or build verification is claimed.</div>
-    `;
-    initializeBuildShell();
+  const target = hash || '#/home';
+  if (!hash && window.location.hash !== '#/home') {
+    try {
+      history.replaceState(null, '', '#/home');
+    } catch {}
   }
+  mountRoute(target, app);
 }
 
 if (typeof document !== 'undefined') {
   initializeBuildShell();
   if (typeof window !== 'undefined') {
+    getOrCreateUniversalSearchModal();
     window.addEventListener('hashchange', () => handleNavigation());
-    const diag = document.getElementById('diagnostics');
-    if (diag) {
-      diag.style.cursor = 'pointer';
-      diag.addEventListener('click', () => {
-        window.location.hash = '#/home';
-      });
-    }
-    if (!navigator.webdriver && !window.location.hash && !window.location.search) {
-      window.location.hash = '#/home';
-    } else if (window.location.hash || window.location.search) {
-      handleNavigation();
-    }
+    handleNavigation();
   }
 }

@@ -281,9 +281,9 @@ export function renderStructureSvg(
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-label="${escapeHtml(accessibleText)}">
   <rect width="100%" height="100%" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2" rx="8"/>
   <text x="20" y="36" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#0f172a">${escapeHtml(formula)}</text>
-  <text x="20" y="64" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Format: ${escapeHtml(data.format)}</text>
+  <text x="20" y="64" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#64748b">Format: ${escapeHtml(data.format)}</text>
   <rect x="20" y="80" width="${width - 40}" height="70" fill="#ffffff" stroke="#e2e8f0" rx="4"/>
-  <text x="32" y="122" font-family="monospace" font-size="14" fill="#1e293b">${escapeHtml(data.data)}</text>
-  <text x="20" y="180" font-family="system-ui, sans-serif" font-size="11" fill="#475569">${escapeHtml(accessibleText.slice(0,60))}${accessibleText.length > 60 ? '...' : ''}</text>
+  <text x="32" y="122" font-family="var(--g9-font-mono,monospace)" font-size="14" fill="#1e293b">${escapeHtml(data.data)}</text>
+  <text x="20" y="180" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#475569">${escapeHtml(accessibleText.slice(0,60))}${accessibleText.length > 60 ? '...' : ''}</text>
 </svg>`;
 }

@@ -165,8 +165,8 @@ export class DataTableController {
         (col) => `
         <th scope="col" style="padding: 10px 14px; border: 1px solid #cbd5e1; background: #f8fafc; text-align: left; min-width: 120px;">
           <div style="font-weight: 600; color: #0f172a;">${escapeHtml(String(col.name))}</div>
-          <div style="font-size: 13px; color: #475569;">${escapeHtml(String(col.symbol))} (${escapeHtml(String(col.unit))})</div>
-          ${col.uncertainty !== undefined ? `<div style="font-size: 11px; color: #64748b;">± ${col.uncertainty} ${escapeHtml(String(col.unit))}</div>` : ''}
+          <div style="font-size:14px; color: #475569;">${escapeHtml(String(col.symbol))} (${escapeHtml(String(col.unit))})</div>
+          ${col.uncertainty !== undefined ? `<div style="font-size:14px; color: #64748b;">± ${col.uncertainty} ${escapeHtml(String(col.unit))}</div>` : ''}
         </th>`
       )
       .join('');
@@ -186,7 +186,7 @@ export class DataTableController {
 
         return `
           <tr>
-            <td style="padding: 8px; border: 1px solid #e2e8f0; text-align: center; color: #64748b; font-size: 13px;">${rIdx + 1}</td>
+            <td style="padding: 8px; border: 1px solid #e2e8f0; text-align: center; color: #64748b; font-size:14px;">${rIdx + 1}</td>
             ${cells}
             <td style="padding: 4px; border: 1px solid #e2e8f0; text-align: center;">
               <button class="table-del-row-btn" data-row="${rIdx}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px 10px; background: #fee2e2; border: 1px solid #f87171; border-radius: 4px;">✕</button>

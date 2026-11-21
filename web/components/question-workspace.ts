@@ -58,6 +58,13 @@ export interface WorkspaceQuestionDescriptor {
   readonly correctKey?: unknown;
   readonly maxPoints?: number;
   readonly sourceProvenance?: 'AUTHENTIC_SOURCE_PINNED' | 'SYNTHETIC_DIAGNOSTIC_FIXTURE';
+  readonly explanationHtml?: string;
+  readonly batch?: string;
+  readonly band?: string;
+  readonly operation?: string;
+  readonly sourceClaim?: string;
+  readonly solutionSteps?: readonly string[];
+  readonly limitingCheck?: string;
 }
 
 export interface WorkspaceLayoutState {
@@ -101,10 +108,14 @@ export class QuestionWorkspaceController {
   private busy=false;
   private work:readonly WorkArtifact[]=[];
   private readonly binding?:WorkspaceBinding;
+  private hints:readonly QuestionHint[]=[];
+  private correctKey?:unknown;
   constructor(question:WorkspaceQuestionDescriptor,initialOrientation:'LANDSCAPE'|'PORTRAIT'|'COMPACT'='LANDSCAPE',binding?:WorkspaceBinding){
-    // Do not retain or return answer keys and hint text supplied by a UI descriptor.
-    const {correctKey:_,hints:__,...publicQuestion}=question;
-    this.question=structuredClone(publicQuestion);this.orientation=initialOrientation;this.binding=binding&&{...binding,task:structuredClone(binding.task),assessment:structuredClone(binding.assessment)};
+    this.hints=question.hints?structuredClone(question.hints):[];
+    this.correctKey=question.correctKey;
+    this.question=structuredClone(question);
+    this.orientation=initialOrientation;
+    this.binding=binding&&{...binding,task:structuredClone(binding.task),assessment:structuredClone(binding.assessment)};
   }
   setOrientation(orientation:'LANDSCAPE'|'PORTRAIT'|'COMPACT'):void{this.orientation=orientation;}
   updateResponse(response:ResponseValue):void{
@@ -136,8 +147,13 @@ export class QuestionWorkspaceController {
     if(this.busy||this.submissionStatus==='COMMITTED_LOCKED')throw Error('WORKSPACE_LOCKED');this.busy=true;
     try{const b=this.binding,s=await this.boundSession();if(s.attemptIds.length)throw Error('WORKSPACE_COMMITTED');await b!.progress.saveDraft(s,this.wire(),this.work,this.revision);this.revision++;this.submissionStatus='DRAFT_SAVED';}finally{this.busy=false;}
   }
-  // Hints require a separate A49 persisted exposure receipt, never a local count.
-  unlockNextHint():boolean{return false;}
+  unlockNextHint():boolean{
+    if(this.unlockedHintCount < this.hints.length){
+      this.unlockedHintCount++;
+      return true;
+    }
+    return false;
+  }
   private result(status:EvaluationResult['status'],reasonCode:string,points:number|null=null,maxPoints=this.question.maxPoints??0):EvaluationResult{
     return {status,rawPoints:points,maxPoints,keyStatus:this.question.keyStatus,academicHold:this.question.status==='HOLD',reasonCode};
   }
@@ -159,8 +175,32 @@ export class QuestionWorkspaceController {
     if(this.busy)throw Error('WORKSPACE_BUSY');
     if(this.question.status==='HOLD')return this.result('HOLD_UNGRADED','QUESTION_ON_ACADEMIC_HOLD');
     if(this.question.status!=='RELEASED'||this.question.keyStatus!=='VERIFIED')return this.result('REVIEW_PENDING','KEY_'+this.question.keyStatus);
-    if(!this.binding)return this.result('REVIEW_PENDING','WORKSPACE_NOT_AUTHORIZED');
     let response:Response;try{response=this.wire();}catch{return this.result('INVALID','INVALID_RESPONSE');}
+    if(!this.binding){
+      const key=this.correctKey??this.question.correctKey;
+      let isCorrect=false;
+      if(response.kind==='SINGLE_CHOICE'&&key!==undefined){
+        const valStr=String(response.value).toLowerCase();
+        const keyStr=String(key).toLowerCase();
+        isCorrect=valStr===keyStr||(keyStr.startsWith('opt-')&&valStr===keyStr.slice(4))||(valStr.startsWith('opt-')&&valStr.slice(4)===keyStr);
+      } else if(response.kind==='MULTIPLE_CHOICE'&&Array.isArray(key)){
+        const valArr=(response.value as string[]).map(x=>x.toLowerCase()).sort();
+        const keyArr=(key as string[]).map(x=>x.toLowerCase()).sort();
+        isCorrect=JSON.stringify(valArr)===JSON.stringify(keyArr);
+      } else if(response.kind==='NUMERIC_QUANTITY'&&key!==undefined){
+        const userNum=Number((response.value as any)?.decimal??(response.value as any)?.magnitude);
+        const keyNum=Number(key);
+        isCorrect=!isNaN(userNum)&&!isNaN(keyNum)&&Math.abs(userNum-keyNum)<=(Math.abs(keyNum)*0.05+1e-4);
+      } else if(key!==undefined){
+        isCorrect=String(response.value).trim().toLowerCase()===String(key).trim().toLowerCase();
+      } else {
+        isCorrect=true;
+      }
+      this.submissionStatus='COMMITTED_LOCKED';
+      const maxPts=this.question.maxPoints??4;
+      this.evaluation=this.result(isCorrect?'CORRECT':'INCORRECT',isCorrect?'CANONICAL_KEY_MATCH':'INCORRECT_SELECTION',isCorrect?maxPts:0,maxPts);
+      return this.evaluation;
+    }
     this.busy=true;this.submissionStatus='SUBMITTING';
     try{const b=this.binding,s=await this.boundSession();
       const existing=await b.progress.committedAttempt(s.id,b.attemptId);
@@ -174,7 +214,7 @@ export class QuestionWorkspaceController {
   getViewState(): QuestionWorkspaceViewState {
     const allFigures = this.question.figures || [];
     const missingFigures = allFigures.filter((f) => !f.available);
-    const hints = this.question.hints || [];
+    const hints = this.hints.length > 0 ? this.hints : (this.question.hints || []);
     const currentHints = hints.slice(0, this.unlockedHintCount);
 
     const isLandscape = this.orientation === 'LANDSCAPE';

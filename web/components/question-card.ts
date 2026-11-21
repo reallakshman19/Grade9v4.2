@@ -25,6 +25,17 @@ export interface PublicQuestionSummary {
   readonly role: string;
   readonly status: QuestionReleaseStatus;
   readonly maxPoints: number;
+  readonly title?: string;
+  readonly exam?: string;
+  readonly year?: number;
+  readonly paper?: string;
+  readonly difficultyBand?: string;
+  readonly qrtDemand?: string;
+  readonly hints?: readonly string[];
+  readonly steps?: readonly string[];
+  readonly check?: string;
+  readonly trapWarning?: string;
+  readonly options?: readonly { readonly id: string; readonly text: string }[];
 }
 
 export interface QuestionCardViewState {
@@ -42,13 +53,24 @@ export function sanitizePublicQuestionSummary(raw: any): PublicQuestionSummary {
   return {
     id: String(raw.id || raw.itemId || 'unknown-id'),
     code: String(raw.code || raw.id || 'Q'),
-    stemPreview: raw.status==='RELEASED'?String(raw.stem || raw.stemPreview || '').slice(0,150):'',
+    stemPreview: raw.status==='RELEASED'?String(raw.stem || raw.stemPreview || '').slice(0,300):'',
     subjectCode: String(raw.subjectCode || raw.subject || 'PHYS').toUpperCase(),
     topicCode: String(raw.topicCode || raw.topic || 'WPE').toUpperCase(),
-    difficulty: (raw.difficulty || 'FOUNDATION') as QuestionDifficulty,
-    role: String(raw.role || 'CORE1A').toUpperCase(),
+    difficulty: (raw.difficulty || (raw.difficultyBand === 'D1' ? 'FOUNDATION' : raw.difficultyBand === 'D2' ? 'INTERMEDIATE' : raw.difficultyBand === 'D3' ? 'ADVANCED' : 'OLYMPIAD')) as QuestionDifficulty,
+    role: String(raw.role || (raw.isCompetitive ? 'CORE2' : 'CORE1A')).toUpperCase(),
     status: (raw.status === 'RELEASED' || raw.status === 'WITHDRAWN' ? raw.status : 'HOLD') as QuestionReleaseStatus,
     maxPoints: raw.status==='RELEASED'&&typeof raw.maxPoints==='number'&&Number.isFinite(raw.maxPoints)&&raw.maxPoints>=0?raw.maxPoints:0,
+    title: raw.title ? String(raw.title) : undefined,
+    exam: raw.exam ? String(raw.exam) : undefined,
+    year: typeof raw.year === 'number' ? raw.year : undefined,
+    paper: raw.paper ? String(raw.paper) : undefined,
+    difficultyBand: raw.difficultyBand ? String(raw.difficultyBand) : undefined,
+    qrtDemand: raw.qrtDemand ? String(raw.qrtDemand) : undefined,
+    hints: Array.isArray(raw.hints) ? raw.hints.map(String) : undefined,
+    steps: Array.isArray(raw.steps) ? raw.steps.map(String) : undefined,
+    check: raw.check ? String(raw.check) : undefined,
+    trapWarning: raw.trapWarning ? String(raw.trapWarning) : undefined,
+    options: Array.isArray(raw.options) ? raw.options.map((o: any) => ({ id: String(o.id || ''), text: String(o.text || '') })) : undefined,
   };
 }
 

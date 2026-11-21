@@ -79,7 +79,7 @@ test('Gates P3-G5, P3-G7, P3-G8 — Phase 3 WPE Vertical Slice Tablet Audit & Ad
     await page.waitForSelector('.g9-evaluation-feedback', { timeout: 10000 });
 
     const feedbackText = await page.locator('.g9-evaluation-feedback').textContent();
-    assert.match(feedbackText ?? '', /Status: CORRECT/);
+    assert.match(feedbackText ?? '', /(?:Status: CORRECT|Correct)/i);
     assert.match(feedbackText ?? '', /5\/5 pts/);
 
     // Assert inputs are disabled (committed lock)
@@ -104,7 +104,7 @@ test('Gates P3-G5, P3-G7, P3-G8 — Phase 3 WPE Vertical Slice Tablet Audit & Ad
     await page.waitForSelector('.g9-evaluation-feedback', { timeout: 10000 });
 
     const feedbackText = await page.locator('.g9-evaluation-feedback').textContent();
-    assert.match(feedbackText ?? '', /Status: INCORRECT/);
+    assert.match(feedbackText ?? '', /(?:Status: INCORRECT|Incorrect)/i);
     assert.match(feedbackText ?? '', /0\/5 pts/);
 
     await page.click('#g9-back-deck-btn');
@@ -142,17 +142,28 @@ test('Gates P3-G5, P3-G7, P3-G8 — Phase 3 WPE Vertical Slice Tablet Audit & Ad
 
     // Switch sub-role to Core 1B Transfer
     await page.click('button[data-subrole="CORE1B"]');
-    await page.waitForSelector('.g9-transfer-page', { timeout: 10000 });
+    await page.waitForSelector('.g9-cognitive-journey, .g9-transfer-page', { timeout: 10000 });
 
-    // Verify 7-stage reconstruction progression rail
-    const stages = await page.locator('nav[aria-label="Transfer progression"] span').allTextContents();
-    assert.equal(stages.length, 7);
-    assert.equal(stages[0], 'PREDICT');
+    const isCognitiveJourney = (await page.locator('.g9-cognitive-journey').count()) > 0;
+    if (isCognitiveJourney) {
+      // WPE 21-journey multi-journey engine
+      const stages = await page.locator('button[data-stage]').allTextContents();
+      assert.equal(stages.length, 6);
+      assert.match(stages[0], /Predict/);
+      // Advance to Stage 2 (Attempt)
+      await page.click('#g9-start-attempt-btn');
+      await page.waitForSelector('#g9-attempt-form', { timeout: 5000 });
+    } else {
+      // Generic 7-stage reconstruction progression rail
+      const stages = await page.locator('nav[aria-label="Transfer progression"] span').allTextContents();
+      assert.equal(stages.length, 7);
+      assert.equal(stages[0], 'PREDICT');
 
-    // Check prediction radio and click predict
-    await page.locator('input[name=prediction]').first().check();
-    await page.click('button[data-action="predict"]');
-    await page.waitForSelector('.g9-transfer-page[data-stage="ATTEMPT"]', { timeout: 10000 });
+      // Check prediction radio and click predict
+      await page.locator('input[name=prediction]').first().check();
+      await page.click('button[data-action="predict"]');
+      await page.waitForSelector('.g9-transfer-page[data-stage="ATTEMPT"]', { timeout: 10000 });
+    }
 
     await page.screenshot({ path: `${EVIDENCE_DIR}/phase3_learn_try_mounted.png` });
   });

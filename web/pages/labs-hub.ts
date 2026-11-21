@@ -46,13 +46,13 @@ export const STANDALONE_LABS_CATALOG: readonly StandaloneLabDescriptor[] = [
   {
     id: 'lab-linear-coordinates',
     labRouteId: 'lab:linear-coordinates',
-    title: 'Linear Systems & Coordinates',
-    subtitle: 'Cartesian Geometry & Determinant Analysis',
+    title: 'Polynomials & Coordinates Suite',
+    subtitle: 'Cartesian Projections, Remainder Theorem & Cubic Identities',
     discipline: 'MATHEMATICS',
     modality: 'EXPLORER',
-    icon: '📈',
-    formulaBadge: 'Δ = a₁b₂ - a₂b₁',
-    description: 'Interactive 2D Cartesian plane with draggable lines, system consistency solver, and intersection coordinates.',
+    icon: '📐',
+    formulaBadge: 'P(k) = R, a³+b³+c³-3abc',
+    description: 'Interactive 2D Cartesian plane, orthogonal axis projections, polynomial remainder calculator, and cubic identity visualizer.',
     status: 'HOLD',
   },
   {
@@ -271,12 +271,12 @@ export const RECONCILED_STANDALONE_LABS_CATALOG: readonly StandaloneLabDescripto
     id: 'mathematics-imo-grade9-master-suite',
     labRouteId: 'mathematics-imo-grade9-master-suite',
     title: 'Mathematics IMO Grade 9 Master Suite',
-    subtitle: 'Olympiad Proof & Combinatorial Geometry',
+    subtitle: '15 Curriculum Strands & 68 Authenticated References',
     discipline: 'MATHEMATICS',
     modality: 'PROOF',
     icon: '🏆',
     formulaBadge: 'IMO Grade 9 Core',
-    description: 'Championship-level problem solving workbench focusing on geometric loci, synthetic proofs, and polynomial roots.',
+    description: 'Championship-level problem solving workbench with 15 curriculum domains, 68 past-paper references, and interactive practice drafts.',
     status: 'HOLD',
   },
   {
@@ -572,9 +572,9 @@ export function mountLabsHub(
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;">
             <div>
               <div style="display:flex;gap:8px;margin-bottom:0.5rem;flex-wrap:wrap;">
-                <span style="font-size:0.8rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;">GRADE9 v3.5 PARITY</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:4px;">16 INTERACTIVE WORKBENCHES</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD</span>
+                <span style="font-size:0.875rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;">GRADE9 v3.5 PARITY</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#e0f2fe;color:#0369a1;padding:4px 10px;border-radius:4px;">16 INTERACTIVE WORKBENCHES</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD</span>
               </div>
               <h1 style="margin:0 0 0.5rem;font-size:2.2rem;font-weight:800;color:#0f172a;">
                 🔬 Standalone Labs &amp; STEM Workbenches
@@ -617,7 +617,7 @@ export function mountLabsHub(
 
           <!-- Modality Pills -->
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-            <span style="font-size:0.85rem;font-weight:700;color:#64748b;margin-right:4px;">Modality:</span>
+            <span style="font-size:0.875rem;font-weight:700;color:#64748b;margin-right:4px;">Modality:</span>
             ${(['ALL', 'EXPLORER', 'SIMULATOR', 'PROOF', 'EXPERIMENT'] as const).map(mod => `
               <button type="button" class="mod-btn ${currModality === mod ? 'active' : ''}" data-mod="${mod}" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 14px;border-radius:20px;font-size:0.9rem;font-weight:700;cursor:pointer;background:${currModality === mod ? '#0f172a' : '#e2e8f0'};color:${currModality === mod ? 'white' : '#475569'};border:none;">
                 ${mod === 'ALL' ? 'All Types' : mod}
@@ -636,13 +636,13 @@ export function mountLabsHub(
                     <div style="display:flex;align-items:center;gap:10px;">
                       <span style="font-size:2rem;">${lab.icon}</span>
                       <div>
-                        <span style="font-size:0.75rem;font-weight:800;color:${lab.discipline === 'PHYSICS' ? '#0284c7' : lab.discipline === 'CHEMISTRY' ? '#16a34a' : '#d97706'};letter-spacing:0.5px;">
+                        <span style="font-size:0.875rem;font-weight:800;color:${lab.discipline === 'PHYSICS' ? '#0284c7' : lab.discipline === 'CHEMISTRY' ? '#16a34a' : '#d97706'};letter-spacing:0.5px;">
                           ${lab.discipline} · ${lab.modality}
                         </span>
                         <h2 style="margin:2px 0 0;font-size:1.25rem;font-weight:800;color:#0f172a;">${escapeHtml(lab.title)}</h2>
                       </div>
                     </div>
-                    <span style="font-size:0.75rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:4px;">HOLD</span>
+                    <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:4px;">HOLD</span>
                   </div>
 
                   <p style="margin:0 0 0.5rem;font-size:0.95rem;font-weight:600;color:#334155;">
@@ -653,7 +653,7 @@ export function mountLabsHub(
                   </p>
 
                   <div style="margin-bottom:1.25rem;">
-                    <span style="display:inline-block;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:4px;padding:4px 8px;font-family:monospace;font-size:0.85rem;font-weight:700;color:#0f172a;">
+                    <span style="display:inline-block;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:4px;padding:4px 8px;font-family:monospace;font-size:0.875rem;font-weight:700;color:#0f172a;">
                       ${escapeHtml(lab.formulaBadge)}
                     </span>
                   </div>

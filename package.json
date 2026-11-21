@@ -9,7 +9,7 @@
     "npm": ">=10.9.2 <11"
   },
   "scripts": {
-    "build": "npm run typecheck && vite build",
+    "build": "npm run typecheck && vite build --emptyOutDir",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "browser:install": "playwright-core install chromium",

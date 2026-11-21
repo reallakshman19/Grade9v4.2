@@ -8,6 +8,7 @@ export type RouteType =
   | 'TOPIC'
   | 'TOPIC_TAB'
   | 'QUESTION'
+  | 'BANK'
   | 'ROLE'
   | 'SEARCH'
   | 'EXAM'
@@ -166,6 +167,17 @@ export class Router {
       };
     }
 
+    // 2b. Question Bank Route: "/bank" or "/question-bank"
+    if (pathPart === '/bank' || pathPart === '/question-bank') {
+      return {
+        type: 'BANK',
+        path: pathPart,
+        params: {},
+        query,
+        hash: hashPart,
+      };
+    }
+
     // 3. Question Route: "/question/:questionId"
     const questionMatch = pathPart.match(/^\/question\/([^/]+)$/);
     if (questionMatch) {
@@ -209,7 +221,20 @@ export class Router {
       };
     }
 
-    // 6. Subject Route: "/subject/:subjectId"
+    // 6. Subject Route: "/subject/:subjectId" or direct "/:subjectId"
+    const directSubjMatch = pathPart.match(/^\/(?:subject\/)?(mathematics|math|physics|phys|chemistry|chem|biology)$/i);
+    if (directSubjMatch) {
+      const raw = decodeURIComponent(directSubjMatch[1]).toLowerCase();
+      const sId = raw.startsWith('math') ? 'mathematics' : raw.startsWith('phys') ? 'physics' : raw.startsWith('chem') ? 'chemistry' : raw;
+      return {
+        type: 'SUBJECT',
+        path: pathPart,
+        params: { subjectId: sId },
+        query,
+        hash: hashPart,
+      };
+    }
+
     const subjectMatch = pathPart.match(/^\/subject\/([^/]+)$/);
     if (subjectMatch) {
       return {

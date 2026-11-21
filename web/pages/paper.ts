@@ -2,13 +2,14 @@
  * transaction are the only score/commit authority. Local snapshots are not receipts. */
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import {PartNavigationController,type QuestionPartDescriptor,type PaperSectionDescriptor} from '../components/part-navigation.ts';
-import {escapeHtml,sanitizeMarkup} from '../runtime/rendering.ts';
+import {escapeHtml,sanitizeMarkup,renderMathHtml} from '../runtime/rendering.ts';
 import {canonicalJson,computeSha256,sameRef} from '../runtime/loader.ts';
 import {validateResponse} from '../runtime/response.ts';
 import {StandardAssessmentEngine,SCORING_VERSION} from '../runtime/assessment.ts';
 import {DefaultProgressStore,refOk,timestamp} from '../runtime/progress.ts';
 import {Session} from '../runtime/session.ts';
 import type {Attempt,Ref,TaskRef,Response,Kind,WorkArtifact,Json,Session as SessionRecord,Grade} from '../runtime/types.ts';
+import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
 export type ExamAidKind='FORMULA_SHEET'|'PERIODIC_TABLE'|'CALCULATOR'|'SCRATCHPAD';
 const aidKinds:readonly ExamAidKind[]=['FORMULA_SHEET','PERIODIC_TABLE','CALCULATOR','SCRATCHPAD'];
 export interface SharedStimulus {readonly id:string;readonly title:string;readonly contentHtml:string;readonly mediaRef?:string}
@@ -155,7 +156,7 @@ export class PaperWorkspaceController{
     const aidsHtml = state.allowedAids
       .map(
         (aid) => `
-        <button class="aid-toggle-btn" data-aid="${aid}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 12px; background: ${state.activeAid === aid ? '#dbeafe' : '#f1f5f9'}; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-weight: 600;">
+        <button class="aid-toggle-btn" data-aid="${aid}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 12px; background: ${state.activeAid === aid ? '#dbeafe' : '#f1f5f9'}; border: 1px solid #cbd5e1; border-radius: 6px; font-size:14px; font-weight: 600;">
           ${aid.replace(/_/g, ' ')}
         </button>`
       )
@@ -173,7 +174,7 @@ export class PaperWorkspaceController{
         <header class="paper-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0;">
           <div>
             <h1 style="margin: 0; font-size: 20px; color: #0f172a;">${escapeHtml(String(this.paperTitle))}</h1>
-            <span style="font-size: 13px; color: #64748b;">Archetypes: ${escapeHtml(String(this.parts.map((p) => p.archetypeId).join(', ')))}</span>
+            <span style="font-size:14px; color: #64748b;">Archetypes: ${escapeHtml(String(this.parts.map((p) => p.archetypeId).join(', ')))}</span>
           </div>
           <div class="timer-badge" style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: ${state.timer.isExpired ? '#fee2e2' : '#f8fafc'}; border: 1px solid #cbd5e1; border-radius: 8px;">
             <span style="font-size: 14px; font-weight: 600; color: ${state.timer.isExpired ? '#991b1b' : '#1e293b'};">⏱ Time Remaining: ${timeDisplay}</span>
@@ -181,8 +182,8 @@ export class PaperWorkspaceController{
         </header>
 
         <div class="aids-bar" style="display: flex; gap: 8px; align-items: center;">
-          <span style="font-size: 13px; font-weight: 600; color: #475569;">Configured Aids:</span>
-          ${aidsHtml || '<span style="font-size: 13px; color: #94a3b8;">None permitted</span>'}
+          <span style="font-size:14px; font-weight: 600; color: #475569;">Configured Aids:</span>
+          ${aidsHtml || '<span style="font-size:14px; color: #94a3b8;">None permitted</span>'}
         </div>
 
         <div class="paper-layout" style="display: grid; grid-template-columns: 280px 1fr; gap: 20px;">
@@ -195,10 +196,10 @@ export class PaperWorkspaceController{
             <article class="question-part-pane" style="padding: 16px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h2 style="margin: 0; font-size: 18px;">Part ${escapeHtml(String(activePart?.partKey))}: ${escapeHtml(String(activePart?.label || ''))}</h2>
-                <span style="font-size: 13px; background: #f1f5f9; padding: 4px 8px; border-radius: 4px;">[${escapeHtml(String(activePart?.archetypeId))}] ${escapeHtml(String(activePart?.maxPoints))} pts</span>
+                <span style="font-size:14px; background: #f1f5f9; padding: 4px 8px; border-radius: 4px;">[${escapeHtml(String(activePart?.archetypeId))}] ${escapeHtml(String(activePart?.maxPoints))} pts</span>
               </div>
               <div class="part-prompt" style="font-size: 15px; margin-bottom: 16px;">
-                ${activePart?.promptHtml || '<p>No part selected.</p>'}
+                ${renderMathHtml(activePart?.promptHtml || '<p>No part selected.</p>')}
               </div>
             </article>
 
@@ -240,6 +241,24 @@ export function mountPaperWorkspace(
     const mins = Math.floor(state.timer.remainingSeconds / 60);
     const secs = state.timer.remainingSeconds % 60;
     const timeDisplay = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+
+    try {
+      const answered = parts.filter((p) => controller.getPartResponse(p.id) !== undefined).length;
+      const total = parts.length;
+      const progress = total > 0 ? Math.round((answered / total) * 100) : 0;
+      const pId = controller.getPaperId();
+      recordActiveLearnerSession({
+        sessionId: `session:paper:${pId}`,
+        subjectId: 'subject:competitive',
+        topicId: `paper:${pId}`,
+        title: `Competitive — ${controller.getPaperTitle()}`,
+        route: `/practice/${pId}`,
+        progressPercent: progress,
+        lastActiveAt: new Date().toISOString(),
+        statusText: `${answered}/${total} Parts Answered`,
+        role: 'EXAM',
+      });
+    } catch {}
 
     // Get current part response
     const currentResp = controller.getPartResponse(activePart?.id || '');
@@ -305,7 +324,7 @@ export function mountPaperWorkspace(
         <!-- Aids Bar -->
         <div class="aids-bar" style="display: flex; gap: 10px; align-items: center;">
           <span style="font-size: 14px; font-weight: 700; color: #475569;">Configured Aids:</span>
-          ${aidsHtml || '<span style="font-size: 13px; color: #94a3b8;">None permitted</span>'}
+          ${aidsHtml || '<span style="font-size:14px; color: #94a3b8;">None permitted</span>'}
         </div>
 
         <!-- Formula Sheet Drawer (Toggled) -->
@@ -355,7 +374,7 @@ export function mountPaperWorkspace(
             
             ${(controller as any).config.sections.map((sec: any) => `
               <div style="margin-bottom: 1rem;">
-                <div style="font-size: 0.85rem; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 4px 8px; border-radius: 4px; margin-bottom: 6px;">
+                <div style="font-size:0.875rem; font-weight: 700; color: #0284c7; background: #e0f2fe; padding: 4px 8px; border-radius: 4px; margin-bottom: 6px;">
                   ${escapeHtml(sec.title)}
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;">
@@ -383,7 +402,7 @@ export function mountPaperWorkspace(
             <article class="question-part-pane" style="padding: 1.5rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem;">
                 <div>
-                  <span style="font-size: 0.8rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">Part ${escapeHtml(String(activePart?.partKey))}</span>
+                  <span style="font-size:0.875rem; font-weight: 800; background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 4px;">Part ${escapeHtml(String(activePart?.partKey))}</span>
                   <h2 style="margin: 0.5rem 0 0; font-size: 1.35rem; color: #0f172a; font-weight: 700;">${escapeHtml(String(activePart?.label || ''))}</h2>
                 </div>
                 <span style="font-size: 0.95rem; font-weight: 700; background: #f1f5f9; padding: 6px 12px; border-radius: 6px; color: #334155;">
@@ -392,7 +411,7 @@ export function mountPaperWorkspace(
               </div>
 
               <div class="part-prompt" style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; color: #1e293b;">
-                ${activePart?.promptHtml || '<p>No part selected.</p>'}
+                ${renderMathHtml(activePart?.promptHtml || '<p>No part selected.</p>')}
               </div>
 
               <!-- Answer Entry Area: SINGLE_CHOICE (MCQ) or INTEGER -->
@@ -411,7 +430,7 @@ export function mountPaperWorkspace(
                       `;
                     }).join('')}
                     ${currentVal ? `
-                      <button type="button" id="btn-clear-choice" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600;">Clear</button>
+                      <button type="button" id="btn-clear-choice" ${state.isCommitted ? 'disabled' : ''} style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; color: #64748b; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-size:0.875rem; font-weight: 600;">Clear</button>
                     ` : ''}
                     <span id="choice-feedback-msg" style="font-size: 0.9rem; font-weight: 600; color: #15803d; margin-left: 8px;">
                       ${currentVal ? `✓ Option ${currentVal} selected` : 'Unanswered'}

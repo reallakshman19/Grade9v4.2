@@ -274,9 +274,9 @@ export function mountProofWorkspace(
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0;flex-wrap:wrap;gap:12px;">
           <div>
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-              <span class="proof-archetype-badge" style="font-size:0.8rem;font-weight:800;color:#7c3aed;background:#f3e8ff;padding:2px 8px;border-radius:4px;">${state.archetype}</span>
-              <span style="font-size:0.8rem;font-weight:600;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">HUMAN_RUBRIC_ONLY</span>
-              <span style="font-size:0.8rem;color:#64748b;">A27 Symbolic Proof Engine</span>
+              <span class="proof-archetype-badge" style="font-size:0.875rem;font-weight:800;color:#7c3aed;background:#f3e8ff;padding:2px 8px;border-radius:4px;">${state.archetype}</span>
+              <span style="font-size:0.875rem;font-weight:600;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">HUMAN_RUBRIC_ONLY</span>
+              <span style="font-size:0.875rem;color:#64748b;">A27 Symbolic Proof Engine</span>
             </div>
             <h2 style="margin:0;font-size:1.5rem;font-weight:800;color:#0f172a;">📐 Mathematical Proof &amp; Deductive Reasoning Workspace</h2>
           </div>
@@ -305,7 +305,7 @@ export function mountProofWorkspace(
             <h4 style="margin:0 0 0.5rem;font-size:0.95rem;color:#6b21a8;font-weight:700;">Available Registered Lemmas</h4>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
               ${state.availableLemmas.map(l => `
-                <span class="proof-lemma-pill" style="font-size:0.85rem;background:#ffffff;border:1px solid #d8b4fe;padding:4px 10px;border-radius:6px;color:#581c87;">
+                <span class="proof-lemma-pill" style="font-size:0.875rem;background:#ffffff;border:1px solid #d8b4fe;padding:4px 10px;border-radius:6px;color:#581c87;">
                   <strong>${l.name}</strong>: ${l.statement}
                 </span>
               `).join('')}
@@ -325,9 +325,9 @@ export function mountProofWorkspace(
               <div class="proof-step-row" data-step-id="${step.id}" style="display:flex;justify-content:space-between;align-items:center;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;gap:12px;box-shadow:0 1px 2px rgba(0,0,0,0.04);">
                 <div style="flex:1;">
                   <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-                    <span style="font-size:0.85rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">Step ${idx + 1}</span>
+                    <span style="font-size:0.875rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">Step ${idx + 1}</span>
                     ${step.lemmaRefs && step.lemmaRefs.length > 0 ? `
-                      <span style="font-size:0.75rem;background:#f1f5f9;color:#64748b;padding:2px 6px;border-radius:4px;">Lemmas: ${step.lemmaRefs.join(', ')}</span>
+                      <span style="font-size:0.875rem;background:#f1f5f9;color:#64748b;padding:2px 6px;border-radius:4px;">Lemmas: ${step.lemmaRefs.join(', ')}</span>
                     ` : ''}
                   </div>
                   <div style="font-family:'Courier New',monospace;font-size:1.05rem;font-weight:700;color:#0f172a;margin-bottom:2px;">
@@ -372,7 +372,7 @@ export function mountProofWorkspace(
             <div>
               <button type="button" id="submit-proof-btn" style="min-height:56px;padding:12px 28px;background:#0f172a;color:white;border:none;border-radius:8px;cursor:pointer;font-weight:800;font-size:1.05rem;">Submit Proof for Human Evaluation →</button>
             </div>
-            <span style="font-size:0.85rem;color:#64748b;">Strict Academic Invariant: Arbitrary proofs are never auto-graded.</span>
+            <span style="font-size:0.875rem;color:#64748b;">Strict Academic Invariant: Arbitrary proofs are never auto-graded.</span>
           </div>
 
           <!-- Evaluation Display -->

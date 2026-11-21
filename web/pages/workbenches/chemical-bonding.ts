@@ -128,7 +128,7 @@ export function mountChemicalBondingWorkbench(
     const mol = ctrl.getSelectedMolecule();
 
     root.innerHTML = `
-      <div class="chemical-bonding-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;color:#0f172a;">
+      <div class="chemical-bonding-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui,-apple-system,sans-serif);color:#0f172a;">
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem;">
           <div>
             <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
@@ -136,14 +136,19 @@ export function mountChemicalBondingWorkbench(
               <span>Chemical Bonding &amp; Molecular Atlas</span>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
-              <span style="font-size:0.8rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">CHEMISTRY INORGANIC WORKBENCH</span>
-              <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
+              <span style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">CHEMISTRY INORGANIC WORKBENCH</span>
+              <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
             </div>
             <h1 style="margin:0.5rem 0 0;font-size:1.9rem;font-weight:800;color:#0f172a;">🔬 Chemical Bonding &amp; Molecular Atlas</h1>
           </div>
-          <button type="button" id="btn-return-labs" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
-            ← Return to Labs Hub
-          </button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" id="btn-launch-v35-suite" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
+              ⚡ Launch 3D Master Suite (Standalone) →
+            </button>
+            <button type="button" id="btn-return-labs" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
+              ← Return to Labs Hub
+            </button>
+          </div>
         </header>
 
         <!-- Molecule Selection Pills -->
@@ -161,7 +166,7 @@ export function mountChemicalBondingWorkbench(
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
                 <h3 style="margin:0;font-size:1.4rem;color:#0f172a;">${escapeHtml(mol.formula)} — ${escapeHtml(mol.name)}</h3>
-                <span style="font-size:0.8rem;font-weight:800;background:#eff6ff;color:#1e40af;padding:4px 8px;border-radius:4px;">
+                <span style="font-size:0.875rem;font-weight:800;background:#eff6ff;color:#1e40af;padding:4px 8px;border-radius:4px;">
                   ${mol.bondingType.replace('_', ' ')}
                 </span>
               </div>
@@ -201,7 +206,7 @@ export function mountChemicalBondingWorkbench(
                 Molecular Diagram Representation
               </h4>
               ${renderMolecularSvg(mol)}
-              <div style="font-size:0.85rem;color:#94a3b8;margin-top:1rem;text-align:center;">
+              <div style="font-size:0.875rem;color:#94a3b8;margin-top:1rem;text-align:center;">
                 Octet rule satisfied. Stable electronic configuration achieved.
               </div>
             </div>
@@ -214,6 +219,10 @@ export function mountChemicalBondingWorkbench(
   };
 
   const bindEvents = () => {
+    root.querySelector<HTMLButtonElement>('#btn-launch-v35-suite')?.addEventListener('click', () => {
+      window.location.href = './chemistry/bonding/explorers/chemical_bonding/index.html';
+    });
+
     root.querySelector<HTMLButtonElement>('#btn-return-labs')?.addEventListener('click', () => {
       if (onNavigate) onNavigate('/labs');
       else window.location.hash = '#/labs';
@@ -252,13 +261,13 @@ function renderMolecularSvg(mol: MoleculeDescriptor): string {
         <!-- Hydrogens -->
         <line x1="102" y1="84" x2="65" y2="115" stroke="#94a3b8" stroke-width="4" />
         <circle cx="60" cy="120" r="16" fill="#38bdf8" />
-        <text x="60" y="125" fill="white" font-size="12" font-weight="bold" text-anchor="middle">H</text>
+        <text x="60" y="125" fill="white" font-size="14" font-weight="bold" text-anchor="middle">H</text>
 
         <line x1="138" y1="84" x2="175" y2="115" stroke="#94a3b8" stroke-width="4" />
         <circle cx="180" cy="120" r="16" fill="#38bdf8" />
-        <text x="180" y="125" fill="white" font-size="12" font-weight="bold" text-anchor="middle">H</text>
+        <text x="180" y="125" fill="white" font-size="14" font-weight="bold" text-anchor="middle">H</text>
 
-        <text x="120" y="145" fill="#94a3b8" font-size="11" text-anchor="middle">104.5°</text>
+        <text x="120" y="145" fill="#94a3b8" font-size="14" text-anchor="middle">104.5°</text>
       </svg>
     `;
   }
@@ -273,12 +282,12 @@ function renderMolecularSvg(mol: MoleculeDescriptor): string {
         <line x1="94" y1="76" x2="52" y2="76" stroke="#94a3b8" stroke-width="3" />
         <line x1="94" y1="84" x2="52" y2="84" stroke="#94a3b8" stroke-width="3" />
         <circle cx="40" cy="80" r="20" fill="#f43f5e" />
-        <text x="40" y="86" fill="white" font-size="13" font-weight="bold" text-anchor="middle">O</text>
+        <text x="40" y="86" fill="white" font-size="14" font-weight="bold" text-anchor="middle">O</text>
         <!-- Double Bonds Right -->
         <line x1="146" y1="76" x2="188" y2="76" stroke="#94a3b8" stroke-width="3" />
         <line x1="146" y1="84" x2="188" y2="84" stroke="#94a3b8" stroke-width="3" />
         <circle cx="200" cy="80" r="20" fill="#f43f5e" />
-        <text x="200" y="86" fill="white" font-size="13" font-weight="bold" text-anchor="middle">O</text>
+        <text x="200" y="86" fill="white" font-size="14" font-weight="bold" text-anchor="middle">O</text>
       </svg>
     `;
   }

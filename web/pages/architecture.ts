@@ -18,6 +18,7 @@
 
 import { escapeHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
+import { ARCHITECTURE_DOCS_CONTENT, ARCHITECTURE_DOCS_CSS } from '../data/architecture-docs-content.ts';
 
 export interface ArchitectureDocDescriptor {
   readonly id: string;
@@ -321,9 +322,9 @@ export function mountArchitectureHub(
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 1rem;">
             <div>
               <div style="display: flex; gap: 8px; margin-bottom: 0.5rem; flex-wrap: wrap;">
-                <span style="font-size: 0.8rem; font-weight: 800; background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px;">GRADE9 v4.1 PARITY</span>
-                <span style="font-size: 0.8rem; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 4px;">OPERATOR &amp; AUTHORING HUB</span>
-                <span style="font-size: 0.8rem; font-weight: 700; background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 4px;">Academic Status: HOLD</span>
+                <span style="font-size:0.875rem; font-weight: 800; background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 4px; letter-spacing: 0.5px;">GRADE9 v4.1 PARITY</span>
+                <span style="font-size:0.875rem; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 4px;">OPERATOR &amp; AUTHORING HUB</span>
+                <span style="font-size:0.875rem; font-weight: 700; background: #fee2e2; color: #991b1b; padding: 4px 10px; border-radius: 4px;">Academic Status: HOLD</span>
               </div>
               <h1 style="margin: 0 0 0.5rem; font-size: 2.2rem; font-weight: 800; color: #0f172a;">🧭 How Do Great Lessons Get Made?</h1>
               <p style="margin: 0; color: #475569; font-size: 1.15rem; max-width: 900px; line-height: 1.5;">
@@ -339,27 +340,37 @@ export function mountArchitectureHub(
 
         <!-- Active Document Viewer (Modal or Embedded) -->
         ${activeDoc ? `
-          <div style="background: #ffffff; border: 2px solid #0284c7; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.75rem;">
-              <div>
-                <span style="font-size: 0.8rem; font-weight: 800; background: #0284c7; color: white; padding: 2px 8px; border-radius: 4px;">${escapeHtml(activeDoc.category)}</span>
-                <h2 style="margin: 0.5rem 0 0.25rem; font-size: 1.5rem; color: #0f172a;">${escapeHtml(activeDoc.title)}</h2>
-                <p style="margin: 0; color: #64748b; font-size: 0.95rem;">${escapeHtml(activeDoc.subtitle)}</p>
+          <div id="active-doc-viewer" style="background: #ffffff; border: 2px solid #0284c7; border-radius: 12px; padding: 1.5rem; margin-bottom: 2.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.07);">
+            <style>${ARCHITECTURE_DOCS_CSS}</style>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 1rem; gap: 1rem; flex-wrap: wrap;">
+              <div style="flex: 1; min-width: 280px;">
+                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 0.5rem; flex-wrap: wrap;">
+                  <span style="font-size:0.875rem; font-weight: 800; background: #0284c7; color: white; padding: 3px 10px; border-radius: 4px; letter-spacing: 0.5px;">${escapeHtml(activeDoc.category)}</span>
+                  <span style="font-size:0.85rem; font-weight: 700; background: #e0f2fe; color: #0369a1; padding: 3px 10px; border-radius: 4px;">FULL DOCUMENT VIEWER</span>
+                  <span style="font-size:0.85rem; font-weight: 700; background: #ecfdf5; color: #047857; padding: 3px 10px; border-radius: 4px;">Zero Remote Link Required</span>
+                </div>
+                <h2 style="margin: 0.25rem 0; font-size: 1.65rem; color: #0f172a; font-weight: 800;">${escapeHtml(activeDoc.title)}</h2>
+                <p style="margin: 0; color: #64748b; font-size: 1rem;">${escapeHtml(activeDoc.subtitle)}</p>
               </div>
-              <button type="button" id="btn-close-doc" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 16px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700;">
-                ✕ Close Document
-              </button>
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" id="btn-scroll-doc-top" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; font-weight: 700; color: #475569;" title="Scroll to top of document">
+                  ↑ Top
+                </button>
+                <button type="button" id="btn-close-doc" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; border-radius: 6px; cursor: pointer; font-weight: 700;">
+                  ✕ Close Document
+                </button>
+              </div>
             </div>
-            <div style="line-height: 1.6; color: #334155; margin-bottom: 1.5rem;">
+
+            <!-- Executive Summary Callout -->
+            <aside class="callout" style="border-left: 4px solid #0284c7; background: #f0f9ff; padding: 14px 18px; border-radius: 6px; margin-bottom: 1.5rem; color: #0c4a6e; font-size: 0.95rem;">
+              <strong style="display: block; margin-bottom: 6px; font-size: 1rem; color: #0369a1;">📋 Executive Overview:</strong>
               ${activeDoc.summaryHtml}
-            </div>
-            <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-              <span style="font-size: 0.9rem; color: #64748b;">
-                Original v4.1 Source Path: <code>${escapeHtml(activeDoc.sourcePath)}</code>
-              </span>
-              <span style="font-size: 0.85rem; font-weight: 700; color: #0284c7;">
-                Preserved Losslessly in Local Staging (D:\\CodeD\\g9v42-local-compatibility-port)
-              </span>
+            </aside>
+
+            <!-- Complete Ingested Full-Fidelity Document Content -->
+            <div class="g9-arch-doc-container" style="max-height: 75vh; overflow-y: auto; padding: 1.25rem; border: 1px solid #e2e8f0; border-radius: 10px; background: #ffffff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+              ${ARCHITECTURE_DOCS_CONTENT[activeDoc.id] || '<p style="color: #64748b; font-style: italic;">Document contents unavailable.</p>'}
             </div>
           </div>
         ` : ''}
@@ -374,7 +385,7 @@ export function mountArchitectureHub(
               <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: box-shadow 0.2s;" class="doc-card">
                 <div>
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                    <span style="font-size: 0.75rem; font-weight: 800; background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px;">${escapeHtml(doc.category)}</span>
+                    <span style="font-size:0.875rem; font-weight: 800; background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 4px;">${escapeHtml(doc.category)}</span>
                   </div>
                   <h3 style="margin: 0 0 0.5rem; font-size: 1.2rem; font-weight: 700; color: #0f172a;">${escapeHtml(doc.title)}</h3>
                   <p style="margin: 0 0 1rem; color: #64748b; font-size: 0.95rem; line-height: 1.5;">${escapeHtml(doc.subtitle)}</p>
@@ -402,9 +413,9 @@ export function mountArchitectureHub(
                 <div>
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                     <span style="font-size: 1.4rem;">${b.icon}</span>
-                    <span style="font-size: 0.75rem; font-weight: 800; color: #94a3b8;">${b.num}</span>
+                    <span style="font-size:0.875rem; font-weight: 800; color: #94a3b8;">${b.num}</span>
                   </div>
-                  <div style="font-size: 0.75rem; font-weight: 800; color: #0284c7; letter-spacing: 0.5px;">${escapeHtml(b.title)}</div>
+                  <div style="font-size:0.875rem; font-weight: 800; color: #0284c7; letter-spacing: 0.5px;">${escapeHtml(b.title)}</div>
                   <h4 style="margin: 0.25rem 0 0.5rem; font-size: 1.1rem; color: #0f172a;">${escapeHtml(b.name)}</h4>
                   <p style="margin: 0; font-size: 0.9rem; color: #64748b; line-height: 1.45;">${escapeHtml(b.desc)}</p>
                 </div>
@@ -421,23 +432,23 @@ export function mountArchitectureHub(
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 1rem;">
             <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem;">
               <strong style="color: #0284c7;">1. Scope &amp; Intake</strong>
-              <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #64748b;">Verify syllabus, exact exam identity, figures, and rights custody.</p>
+              <p style="margin: 0.5rem 0 0; font-size:0.875rem; color: #64748b;">Verify syllabus, exact exam identity, figures, and rights custody.</p>
             </div>
             <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem;">
               <strong style="color: #0284c7;">2. Demands &amp; QRT</strong>
-              <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #64748b;">Score 7 operations, 5-factor rubric bounds, and shortest valid reasoning route.</p>
+              <p style="margin: 0.5rem 0 0; font-size:0.875rem; color: #64748b;">Score 7 operations, 5-factor rubric bounds, and shortest valid reasoning route.</p>
             </div>
             <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem;">
               <strong style="color: #0284c7;">3. Blueprint Binding</strong>
-              <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #64748b;">Bind subject Blueprint to topic adapter; ensure commit-first derivations.</p>
+              <p style="margin: 0.5rem 0 0; font-size:0.875rem; color: #64748b;">Bind subject Blueprint to topic adapter; ensure commit-first derivations.</p>
             </div>
             <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem;">
               <strong style="color: #0284c7;">4. Dual Construction</strong>
-              <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #64748b;">Build Core 1A sufficient teaching &amp; Core 1B fresh reconstruction with B1–B7 witnesses.</p>
+              <p style="margin: 0.5rem 0 0; font-size:0.875rem; color: #64748b;">Build Core 1A sufficient teaching &amp; Core 1B fresh reconstruction with B1–B7 witnesses.</p>
             </div>
             <div style="background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem;">
               <strong style="color: #0284c7;">5. Tablet QA &amp; Review</strong>
-              <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #64748b;">Run 12.7" multi-viewport headless audit and independent review receipt handoff.</p>
+              <p style="margin: 0.5rem 0 0; font-size:0.875rem; color: #64748b;">Run 12.7" multi-viewport headless audit and independent review receipt handoff.</p>
             </div>
           </div>
         </section>
@@ -459,6 +470,61 @@ export function mountArchitectureHub(
     root.querySelector<HTMLButtonElement>('#btn-close-doc')?.addEventListener('click', () => {
       controller.selectDoc(null);
       render();
+    });
+
+    // Scroll document to top
+    root.querySelector<HTMLButtonElement>('#btn-scroll-doc-top')?.addEventListener('click', () => {
+      const container = root.querySelector<HTMLElement>('.g9-arch-doc-container');
+      if (container) {
+        container.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // Intercept internal links and cross-doc links in the document container
+    root.querySelector('.g9-arch-doc-container')?.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement).closest('a');
+      if (!target) return;
+      const href = target.getAttribute('href');
+      if (!href) return;
+
+      // Internal anchor jumps (e.g. #start, #workflow, #intake)
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const targetId = href.slice(1);
+        if (targetId === 'top' || !targetId) {
+          const container = root.querySelector<HTMLElement>('.g9-arch-doc-container');
+          container?.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        const targetEl = root.querySelector<HTMLElement>(`#${CSS.escape(targetId)}`);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return;
+      }
+
+      // Inter-guide transitions (e.g. guidebook.html, review-guide.html)
+      const docLinkMatch = href.match(/(core1ab-agent-guide|guidebook|core2-source-to-learning-pipeline|production-checklist|review-guide|index|alpha-board)\.html/);
+      if (docLinkMatch) {
+        e.preventDefault();
+        const file = docLinkMatch[1];
+        const docMap: Record<string, string> = {
+          'core1ab-agent-guide': 'core1ab-guide',
+          'guidebook': 'guidebook',
+          'core2-source-to-learning-pipeline': 'pipeline-benchmarks',
+          'production-checklist': 'production-checklist',
+          'review-guide': 'review-guide',
+          'index': 'overview',
+          'alpha-board': 'preview-batches',
+        };
+        const targetDocId = docMap[file];
+        if (targetDocId) {
+          controller.selectDoc(targetDocId);
+          render();
+          root.querySelector('#active-doc-viewer')?.scrollIntoView({ behavior: 'smooth' });
+        }
+        return;
+      }
     });
 
     // Open document buttons

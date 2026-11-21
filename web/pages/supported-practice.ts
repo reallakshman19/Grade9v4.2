@@ -15,7 +15,7 @@
  * No academic approval inferred from software validation.
  */
 
-import { escapeHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 import type { SupportedPracticeWorkspace } from '../journeys/supported-practice.ts';
 import type { Ref, Response, WorkArtifact, Checkpoint } from '../runtime/types.ts';
@@ -211,16 +211,16 @@ export class Core2ASupportedPageController {
     const p = s.problem;
 
     return `
-      <main class="g9-supported-practice-page" data-role="CORE2A" data-orientation="${s.orientation}" style="display:flex;flex-direction:column;gap:1.5rem;font-family:system-ui,-apple-system,sans-serif;font-size:17px;line-height:1.6;color:#0f172a;max-width:100%;box-sizing:border-box;">
+      <main class="g9-supported-practice-page" data-role="CORE2A" data-orientation="${s.orientation}" style="display:flex;flex-direction:column;gap:1.5rem;font-family:var(--g9-font-family, system-ui, -apple-system, sans-serif);font-size:17px;line-height:1.6;color:#0f172a;max-width:100%;box-sizing:border-box;">
         
         <!-- Slot: identity -->
         <section data-slot="identity" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:0.75rem;">
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                <span style="font-size:0.8rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">CORE2A</span>
-                <span style="font-size:0.8rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">${escapeHtml(p.code)}</span>
-                <span style="font-size:0.8rem;color:#64748b;">BP-CORE2A-SUPPORTED-APPLICATION@1.1.0</span>
+                <span style="font-size:0.875rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">CORE2A</span>
+                <span style="font-size:0.875rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">${escapeHtml(p.code)}</span>
+                <span style="font-size:0.875rem;color:#64748b;">BP-CORE2A-SUPPORTED-APPLICATION@1.1.0</span>
               </div>
               <h1 style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">${escapeHtml(p.title)}</h1>
             </div>
@@ -236,7 +236,7 @@ export class Core2ASupportedPageController {
           <section data-slot="attempt" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);display:flex;flex-direction:column;gap:1.25rem;">
             <div>
               <h2 style="margin:0 0 0.5rem;font-size:1.25rem;font-weight:700;color:#0f172a;">Problem Stimulus</h2>
-              <p style="margin:0;color:#334155;line-height:1.6;">${escapeHtml(p.stemText)}</p>
+              <div style="margin:0;color:#334155;line-height:1.6;">${renderMathHtml(escapeHtml(p.stemText))}</div>
             </div>
 
             <!-- Intermediate Step Verification -->
@@ -248,7 +248,7 @@ export class Core2ASupportedPageController {
                   <button type="button" data-action="check-step" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${s.stepVerified ? '#047857' : '#0284c7'};color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.9rem;">
                     ${s.stepVerified ? '✓ Step Verified' : 'Check Intermediate Calculation'}
                   </button>
-                  ${s.stepVerified ? `<span style="font-size:0.95rem;font-weight:600;color:#047857;">${escapeHtml(p.intermediateCheckStep.expectedExpression)}</span>` : ''}
+                  ${s.stepVerified ? `<span style="font-size:0.95rem;font-weight:600;color:#047857;">${renderMathHtml(escapeHtml(p.intermediateCheckStep.expectedExpression))}</span>` : ''}
                 </div>
               </div>
             ` : ''}
@@ -278,7 +278,7 @@ export class Core2ASupportedPageController {
             <section data-slot="support" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
                 <h2 style="margin:0;font-size:1.25rem;font-weight:700;color:#0f172a;">Progressive Scaffolds</h2>
-                <span style="font-size:0.85rem;color:#64748b;">Audited HELP_EXPOSED ledger</span>
+                <span style="font-size:0.875rem;color:#64748b;">Audited HELP_EXPOSED ledger</span>
               </div>
               <p style="margin:0 0 1rem;font-size:0.95rem;color:#475569;">Request tiered hints as needed. Exposures are logged to your durable session attempt.</p>
 
@@ -290,13 +290,13 @@ export class Core2ASupportedPageController {
                       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:${exposed ? '8px' : '0'};">
                         <strong style="color:${exposed ? '#0369a1' : '#334155'};">${escapeHtml(scaffold.level)}: ${escapeHtml(scaffold.label)}</strong>
                         ${!exposed && !s.committed ? `
-                          <button type="button" data-action="request-hint" data-level="${scaffold.level}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.85rem;color:#0284c7;">Request Hint</button>
+                          <button type="button" data-action="request-hint" data-level="${scaffold.level}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 14px;background:#ffffff;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;font-size:0.875rem;color:#0284c7;">Request Hint</button>
                         ` : `
-                          <span style="font-size:0.8rem;font-weight:700;color:${exposed ? '#047857' : '#64748b'};">${exposed ? '✓ Unlocked' : 'Sealed'}</span>
+                          <span style="font-size:0.875rem;font-weight:700;color:${exposed ? '#047857' : '#64748b'};">${exposed ? '✓ Unlocked' : 'Sealed'}</span>
                         `}
                       </div>
                       ${exposed ? `
-                        <p style="margin:0;font-size:0.95rem;color:#0f172a;line-height:1.5;">${escapeHtml(scaffold.hintText)}</p>
+                        <div style="margin:0;font-size:0.95rem;color:#0f172a;line-height:1.5;">${renderMathHtml(escapeHtml(scaffold.hintText))}</div>
                       ` : ''}
                     </div>
                   `;

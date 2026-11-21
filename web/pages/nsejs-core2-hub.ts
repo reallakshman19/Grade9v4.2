@@ -300,10 +300,10 @@ export class NsejsCore2HubController {
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;">
             <div>
               <div style="display:flex;gap:8px;margin-bottom:0.5rem;flex-wrap:wrap;">
-                <span style="font-size:0.8rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;letter-spacing:0.5px;">AUTHENTIC CORE 2 RECONCILIATION</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD (Academic Admission: HOLD)</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#dcfce7;color:#166534;padding:4px 10px;border-radius:4px;">Diagnostic Mode: AUTHORIZED</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#f1f5f9;color:#334155;padding:4px 10px;border-radius:4px;">Fault N09 Answer Isolation: ACTIVE</span>
+                <span style="font-size:0.875rem;font-weight:800;background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:4px;letter-spacing:0.5px;">AUTHENTIC CORE 2 RECONCILIATION</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:4px 10px;border-radius:4px;">Academic Status: HOLD (Academic Admission: HOLD)</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#dcfce7;color:#166534;padding:4px 10px;border-radius:4px;">Diagnostic Mode: AUTHORIZED</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#f1f5f9;color:#334155;padding:4px 10px;border-radius:4px;">Fault N09 Answer Isolation: ACTIVE</span>
               </div>
               <h1 style="margin:0 0 0.5rem;font-size:2.1rem;font-weight:800;color:#0f172a;">🧬⚛️🧪 NSEJS Core 2 Multi-Disciplinary Question Bank</h1>
               <p style="margin:0;color:#475569;font-size:1.1rem;max-width:900px;line-height:1.5;">
@@ -326,24 +326,24 @@ export class NsejsCore2HubController {
         <!-- Metrics Overview Banner -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 200px), 1fr));gap:1rem;">
           <div style="background:#ffffff;border:1px solid #e2e8f0;border-left:4px solid #0284c7;border-radius:8px;padding:1rem;">
-            <div style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;">Section 1: Physics</div>
+            <div style="font-size:0.875rem;font-weight:700;color:#64748b;text-transform:uppercase;">Section 1: Physics</div>
             <div style="font-size:1.6rem;font-weight:800;color:#0284c7;margin:4px 0;">${physModules} Modules</div>
-            <div style="font-size:0.85rem;color:#475569;">${physQ} Questions (95 QM + 35 Comp)</div>
+            <div style="font-size:0.875rem;color:#475569;">${physQ} Questions (95 QM + 35 Comp)</div>
           </div>
           <div style="background:#ffffff;border:1px solid #e2e8f0;border-left:4px solid #047857;border-radius:8px;padding:1rem;">
-            <div style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;">Section 2: Chemistry</div>
+            <div style="font-size:0.875rem;font-weight:700;color:#64748b;text-transform:uppercase;">Section 2: Chemistry</div>
             <div style="font-size:1.6rem;font-weight:800;color:#047857;margin:4px 0;">${chemModules} Modules</div>
-            <div style="font-size:0.85rem;color:#475569;">${chemQ} Authentic Questions</div>
+            <div style="font-size:0.875rem;color:#475569;">${chemQ} Authentic Questions</div>
           </div>
           <div style="background:#ffffff;border:1px solid #e2e8f0;border-left:4px solid #16a34a;border-radius:8px;padding:1rem;">
-            <div style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;">Section 3: Biology</div>
+            <div style="font-size:0.875rem;font-weight:700;color:#64748b;text-transform:uppercase;">Section 3: Biology</div>
             <div style="font-size:1.6rem;font-weight:800;color:#16a34a;margin:4px 0;">${bioModules} Modules</div>
-            <div style="font-size:0.85rem;color:#475569;">${bioQ} Candidate Questions</div>
+            <div style="font-size:0.875rem;color:#475569;">${bioQ} Candidate Questions</div>
           </div>
           <div style="background:#ffffff;border:1px solid #e2e8f0;border-left:4px solid #9333ea;border-radius:8px;padding:1rem;">
-            <div style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;">Total Reconciled</div>
+            <div style="font-size:0.875rem;font-weight:700;color:#64748b;text-transform:uppercase;">Total Reconciled</div>
             <div style="font-size:1.6rem;font-weight:800;color:#9333ea;margin:4px 0;">45 Modules</div>
-            <div style="font-size:0.85rem;color:#475569;">302 Total Questions</div>
+            <div style="font-size:0.875rem;color:#475569;">302 Total Questions</div>
           </div>
         </div>
 
@@ -376,7 +376,7 @@ export class NsejsCore2HubController {
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
             <span style="font-size:0.9rem;font-weight:700;color:#334155;margin-right:4px;">Discipline:</span>
             ${(['ALL', 'PHYSICS', 'CHEMISTRY', 'BIOLOGY'] as const).map(subj => `
-              <button type="button" class="btn-subject-filter" data-subj="${subj}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 14px;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85rem;background:${this.state.subjectFilter === subj ? '#0284c7' : '#ffffff'};color:${this.state.subjectFilter === subj ? '#ffffff' : '#334155'};">
+              <button type="button" class="btn-subject-filter" data-subj="${subj}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 14px;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.875rem;background:${this.state.subjectFilter === subj ? '#0284c7' : '#ffffff'};color:${this.state.subjectFilter === subj ? '#ffffff' : '#334155'};">
                 ${subj === 'ALL' ? 'All Disciplines' : subj}
               </button>
             `).join('')}
@@ -385,7 +385,7 @@ export class NsejsCore2HubController {
           <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
             <span style="font-size:0.9rem;font-weight:700;color:#334155;margin-right:4px;">QRT Op:</span>
             ${(['ALL', 'MODEL', 'APPLY', 'EXPLAIN', 'JUSTIFY', 'REPRESENT', 'SYNTHESIZE', 'RETRIEVE'] as const).map(op => `
-              <button type="button" class="btn-qrt-filter" data-op="${op}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.8rem;background:${this.state.qrtFilter === op ? '#334155' : '#ffffff'};color:${this.state.qrtFilter === op ? '#ffffff' : '#475569'};">
+              <button type="button" class="btn-qrt-filter" data-op="${op}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:6px 12px;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.875rem;background:${this.state.qrtFilter === op ? '#334155' : '#ffffff'};color:${this.state.qrtFilter === op ? '#ffffff' : '#475569'};">
                 ${op}
               </button>
             `).join('')}
@@ -400,7 +400,7 @@ export class NsejsCore2HubController {
             </button>
           ` : ''}
           ${this.state.selectedModuleSlug ? `
-            <div style="display:flex;align-items:center;gap:8px;background:#e0f2fe;color:#0369a1;padding:6px 12px;border-radius:6px;font-size:0.85rem;font-weight:700;">
+            <div style="display:flex;align-items:center;gap:8px;background:#e0f2fe;color:#0369a1;padding:6px 12px;border-radius:6px;font-size:0.875rem;font-weight:700;">
               <span>Module: ${escapeHtml(this.state.selectedModuleSlug)}</span>
               <button type="button" id="btn-clear-module" style="background:none;border:none;cursor:pointer;font-weight:800;color:#0369a1;">✕</button>
             </div>
@@ -436,23 +436,23 @@ export class NsejsCore2HubController {
             <div class="core2-module-card" style="background:#ffffff;border:1px solid #e2e8f0;border-top:4px solid ${c.border};border-radius:8px;padding:1.25rem;display:flex;flex-direction:column;justify-content:space-between;gap:1rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
               <div>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-                  <span style="font-size:0.75rem;font-weight:800;background:${c.bg};color:${c.text};padding:3px 8px;border-radius:4px;text-transform:uppercase;">
+                  <span style="font-size:0.875rem;font-weight:800;background:${c.bg};color:${c.text};padding:3px 8px;border-radius:4px;text-transform:uppercase;">
                     ${m.subject} · ${escapeHtml(m.domain)}
                   </span>
-                  <span style="font-size:0.85rem;font-weight:700;color:#64748b;">
+                  <span style="font-size:0.875rem;font-weight:700;color:#64748b;">
                     ${m.questionCount} Questions
                   </span>
                 </div>
                 <h3 style="margin:0 0 0.5rem;font-size:1.15rem;font-weight:700;color:#0f172a;line-height:1.4;">
                   ${escapeHtml(m.title)}
                 </h3>
-                <div style="font-size:0.8rem;color:#64748b;font-family:monospace;word-break:break-all;">
+                <div style="font-size:0.875rem;color:#64748b;font-family:monospace;word-break:break-all;">
                   slug: ${escapeHtml(m.slug)}
                 </div>
               </div>
 
               <div style="display:flex;gap:8px;align-items:center;">
-                <button type="button" class="btn-inspect-module-q" data-slug="${escapeHtml(m.slug)}" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f8fafc;color:#0284c7;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85rem;">
+                <button type="button" class="btn-inspect-module-q" data-slug="${escapeHtml(m.slug)}" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f8fafc;color:#0284c7;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.875rem;">
                   Inspect Questions (${m.questionCount}) →
                 </button>
               </div>
@@ -497,28 +497,28 @@ export class NsejsCore2HubController {
               <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
                 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
                   <span style="font-weight:800;font-size:0.95rem;color:#0f172a;">#${idx + 1}</span>
-                  <span style="font-size:0.8rem;font-weight:800;background:${c.bg};color:${c.text};padding:3px 8px;border-radius:4px;">
+                  <span style="font-size:0.875rem;font-weight:800;background:${c.bg};color:${c.text};padding:3px 8px;border-radius:4px;">
                     ${q.subject}
                   </span>
-                  <span style="font-size:0.8rem;font-weight:700;background:#334155;color:#ffffff;padding:3px 8px;border-radius:4px;">
+                  <span style="font-size:0.875rem;font-weight:700;background:#334155;color:#ffffff;padding:3px 8px;border-radius:4px;">
                     QRT: ${q.qrtOp}
                   </span>
-                  <span style="font-size:0.8rem;font-weight:600;background:#f1f5f9;color:#475569;padding:3px 8px;border-radius:4px;">
+                  <span style="font-size:0.875rem;font-weight:600;background:#f1f5f9;color:#475569;padding:3px 8px;border-radius:4px;">
                     Crux: ${escapeHtml(q.cruxRef)}
                   </span>
                   ${q.isCompetitive ? `
-                    <span style="font-size:0.75rem;font-weight:800;background:#fae8ff;color:#86198f;padding:3px 8px;border-radius:4px;">
+                    <span style="font-size:0.875rem;font-weight:800;background:#fae8ff;color:#86198f;padding:3px 8px;border-radius:4px;">
                       PYQ ARCHIVE
                     </span>
                   ` : ''}
                 </div>
-                <div style="font-size:0.8rem;color:#64748b;font-family:monospace;">
+                <div style="font-size:0.875rem;color:#64748b;font-family:monospace;">
                   ID: ${escapeHtml(q.id)}
                 </div>
               </div>
 
               <!-- Question Topic & Origin -->
-              <div style="font-size:0.85rem;color:#64748b;margin-bottom:0.75rem;">
+              <div style="font-size:0.875rem;color:#64748b;margin-bottom:0.75rem;">
                 <strong>Topic:</strong> ${escapeHtml(q.topic)} · <strong>Origin:</strong> ${escapeHtml(q.sourceOrigin)}
               </div>
 
@@ -544,13 +544,13 @@ export class NsejsCore2HubController {
 
               <!-- Action Bar & Disclosures -->
               <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-top:1px solid #f1f5f9;padding-top:1rem;">
-                <button type="button" class="btn-toggle-core2-hints" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${hintsOpen ? '#fef3c7' : '#f8fafc'};color:${hintsOpen ? '#92400e' : '#334155'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85rem;">
+                <button type="button" class="btn-toggle-core2-hints" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${hintsOpen ? '#fef3c7' : '#f8fafc'};color:${hintsOpen ? '#92400e' : '#334155'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.875rem;">
                   💡 ${hintsOpen ? 'Hide Hints' : 'Show Diagnostic Hints'} (${q.hints.length})
                 </button>
-                <button type="button" class="btn-toggle-core2-steps" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${stepsOpen ? '#ede9fe' : '#f8fafc'};color:${stepsOpen ? '#5b21b6' : '#334155'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.85rem;">
+                <button type="button" class="btn-toggle-core2-steps" data-qid="${escapeHtml(q.id)}" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:${stepsOpen ? '#ede9fe' : '#f8fafc'};color:${stepsOpen ? '#5b21b6' : '#334155'};border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:700;font-size:0.875rem;">
                   🔍 ${stepsOpen ? 'Hide Solution Route' : 'Show Solution Route'} (${q.steps.length})
                 </button>
-                <span style="font-size:0.8rem;color:#64748b;margin-left:auto;display:flex;align-items:center;gap:4px;">
+                <span style="font-size:0.875rem;color:#64748b;margin-left:auto;display:flex;align-items:center;gap:4px;">
                   🛡️ <em>Key Withheld (Fault N09 Isolated)</em>
                 </span>
               </div>
@@ -573,7 +573,7 @@ export class NsejsCore2HubController {
                     ${q.steps.map(s => `<li style="margin-bottom:0.4rem;">${escapeHtml(s)}</li>`).join('')}
                   </ol>
                   ${q.check ? `
-                    <div style="margin-top:0.75rem;padding-top:0.5rem;border-top:1px dashed #d8b4fe;font-size:0.85rem;color:#6b21a8;">
+                    <div style="margin-top:0.75rem;padding-top:0.5rem;border-top:1px dashed #d8b4fe;font-size:0.875rem;color:#6b21a8;">
                       <strong>Sanity Check:</strong> ${escapeHtml(q.check)}
                     </div>
                   ` : ''}
@@ -620,7 +620,7 @@ export class NsejsCore2HubController {
         <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e2e8f0;padding-bottom:1rem;flex-wrap:wrap;gap:1rem;">
           <div style="display:flex;align-items:center;gap:1rem;">
             <span style="font-size:1.1rem;font-weight:800;color:#0f172a;">Question ${this.state.sprintIndex + 1} of ${totalCount}</span>
-            <span style="background:#0284c7;color:white;padding:3px 8px;border-radius:4px;font-size:0.8rem;font-weight:800;">${currentQ.subject}</span>
+            <span style="background:#0284c7;color:white;padding:3px 8px;border-radius:4px;font-size:0.875rem;font-weight:800;">${currentQ.subject}</span>
             <span style="color:#64748b;font-size:0.9rem;">Answered: <strong>${answeredCount} / ${totalCount}</strong></span>
           </div>
 
@@ -655,9 +655,9 @@ export class NsejsCore2HubController {
         <!-- Active Sprint Question Body -->
         <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:1.5rem;">
           <div style="display:flex;gap:8px;margin-bottom:0.75rem;align-items:center;">
-            <span style="font-size:0.8rem;font-weight:700;background:#e2e8f0;color:#334155;padding:2px 8px;border-radius:4px;">${currentQ.topic}</span>
-            <span style="font-size:0.8rem;font-weight:700;background:#e2e8f0;color:#334155;padding:2px 8px;border-radius:4px;">QRT: ${currentQ.qrtOp}</span>
-            <span style="font-size:0.8rem;color:#64748b;margin-left:auto;">${escapeHtml(currentQ.id)}</span>
+            <span style="font-size:0.875rem;font-weight:700;background:#e2e8f0;color:#334155;padding:2px 8px;border-radius:4px;">${currentQ.topic}</span>
+            <span style="font-size:0.875rem;font-weight:700;background:#e2e8f0;color:#334155;padding:2px 8px;border-radius:4px;">QRT: ${currentQ.qrtOp}</span>
+            <span style="font-size:0.875rem;color:#64748b;margin-left:auto;">${escapeHtml(currentQ.id)}</span>
           </div>
 
           <div style="font-size:1.1rem;line-height:1.6;color:#0f172a;margin-bottom:1.5rem;white-space:pre-wrap;">

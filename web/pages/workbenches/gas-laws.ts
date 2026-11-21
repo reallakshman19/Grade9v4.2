@@ -84,7 +84,7 @@ export function mountGasLawsWorkbench(
     const n = ctrl.getN();
 
     root.innerHTML = `
-      <div class="gas-laws-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;color:#0f172a;">
+      <div class="gas-laws-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui,-apple-system,sans-serif);color:#0f172a;">
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem;">
           <div>
             <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
@@ -92,14 +92,19 @@ export function mountGasLawsWorkbench(
               <span>Gas Laws &amp; PV Thermodynamics</span>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
-              <span style="font-size:0.8rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">CHEMISTRY PHYSICAL WORKBENCH</span>
-              <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
+              <span style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">CHEMISTRY PHYSICAL WORKBENCH</span>
+              <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
             </div>
             <h1 style="margin:0.5rem 0 0;font-size:1.9rem;font-weight:800;color:#0f172a;">🧪 Behaviour of Gases &amp; PV Thermodynamics</h1>
           </div>
-          <button type="button" id="btn-return-labs" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
-            ← Return to Labs Hub
-          </button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" id="btn-launch-v35-suite" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
+              ⚡ Launch Full Master Suite (Standalone) →
+            </button>
+            <button type="button" id="btn-return-labs" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 18px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
+              ← Return to Labs Hub
+            </button>
+          </div>
         </header>
 
         <!-- Mode Selectors -->
@@ -128,6 +133,10 @@ export function mountGasLawsWorkbench(
   };
 
   const bindEvents = () => {
+    root.querySelector<HTMLButtonElement>('#btn-launch-v35-suite')?.addEventListener('click', () => {
+      window.location.href = './chemistry/gases/explorers/behaviour_of_gases/index.html';
+    });
+
     root.querySelector<HTMLButtonElement>('#btn-return-labs')?.addEventListener('click', () => {
       if (onNavigate) onNavigate('/labs');
       else window.location.hash = '#/labs';
@@ -225,7 +234,7 @@ function renderThermodynamicsTab(
             <span style="color:#64748b;">P = nRT / V:</span>
             <strong style="color:#0284c7;font-size:1.15rem;">${pKPa.toFixed(1)} kPa (${(pKPa / 101.325).toFixed(2)} atm)</strong>
           </div>
-          <div style="font-size:0.85rem;color:#64748b;margin-top:4px;">
+          <div style="font-size:0.875rem;color:#64748b;margin-top:4px;">
             Standard 1 atm = 101.325 kPa
           </div>
         </div>
@@ -238,15 +247,15 @@ function renderThermodynamicsTab(
             <!-- Axes -->
             <line x1="50" y1="180" x2="300" y2="180" stroke="#475569" stroke-width="2" />
             <line x1="50" y1="20" x2="50" y2="180" stroke="#475569" stroke-width="2" />
-            <text x="300" y="200" fill="#94a3b8" font-size="11" text-anchor="end">Volume V (L)</text>
-            <text x="30" y="30" fill="#94a3b8" font-size="11">Pressure P (kPa)</text>
+            <text x="300" y="200" fill="#94a3b8" font-size="14" text-anchor="end">Volume V (L)</text>
+            <text x="30" y="30" fill="#94a3b8" font-size="14">Pressure P (kPa)</text>
 
             <!-- Curve -->
             <polyline fill="none" stroke="#38bdf8" stroke-width="3" points="${points.join(' ')}" />
 
             <!-- Current State Point -->
             <circle cx="${currX}" cy="${currY}" r="6" fill="#f43f5e" />
-            <text x="${currX}" y="${Math.max(20, currY - 10)}" fill="#f43f5e" font-size="11" font-weight="bold" text-anchor="middle">
+            <text x="${currX}" y="${Math.max(20, currY - 10)}" fill="#f43f5e" font-size="14" font-weight="bold" text-anchor="middle">
               (${V}L, ${pKPa.toFixed(0)}kPa)
             </text>
           </svg>

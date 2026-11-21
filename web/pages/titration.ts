@@ -345,7 +345,7 @@ export class TitrationSimulatorController {
       const y = mapY(ph);
       gridLines += `
         <line x1="${padLeft}" y1="${y}" x2="${width - padRight}" y2="${y}" stroke="#e2e8f0" stroke-width="1" />
-        <text x="${padLeft - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="#64748b" font-family="monospace">${ph}</text>
+        <text x="${padLeft - 8}" y="${y + 4}" text-anchor="end" font-size="14" fill="#64748b" font-family="monospace">${ph}</text>
       `;
     }
 
@@ -354,7 +354,7 @@ export class TitrationSimulatorController {
       const x = mapX(v);
       gridLines += `
         <line x1="${x}" y1="${padTop}" x2="${x}" y2="${height - padBottom}" stroke="#e2e8f0" stroke-width="1" />
-        <text x="${x}" y="${height - padBottom + 16}" text-anchor="middle" font-size="11" fill="#64748b" font-family="monospace">${v}</text>
+        <text x="${x}" y="${height - padBottom + 16}" text-anchor="middle" font-size="14" fill="#64748b" font-family="monospace">${v}</text>
       `;
     }
 
@@ -367,8 +367,8 @@ export class TitrationSimulatorController {
         ${gridLines}
 
         <!-- Axis Labels -->
-        <text x="${width / 2}" y="${height - 8}" text-anchor="middle" font-size="12" font-weight="700" fill="#334155">Titrant Volume Added (mL)</text>
-        <text x="16" y="${height / 2}" text-anchor="middle" transform="rotate(-90, 16, ${height / 2})" font-size="12" font-weight="700" fill="#334155">pH</text>
+        <text x="${width / 2}" y="${height - 8}" text-anchor="middle" font-size="14" font-weight="700" fill="#334155">Titrant Volume Added (mL)</text>
+        <text x="16" y="${height / 2}" text-anchor="middle" transform="rotate(-90, 16, ${height / 2})" font-size="14" font-weight="700" fill="#334155">pH</text>
 
         <!-- Titration Curve Path -->
         <path d="${pathData}" fill="none" stroke="#0284c7" stroke-width="3" stroke-linecap="round" />
@@ -376,14 +376,14 @@ export class TitrationSimulatorController {
         <!-- Equivalence Marker (V = 25.0 mL) -->
         <line x1="${mapX(25)}" y1="${padTop}" x2="${mapX(25)}" y2="${height - padBottom}" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4" />
         <circle cx="${mapX(25)}" cy="${mapY(calculateTitrationPh(25, this.config))}" r="4" fill="#f59e0b" />
-        <text x="${mapX(25) + 6}" y="${mapY(calculateTitrationPh(25, this.config)) - 6}" font-size="10" font-weight="700" fill="#d97706">Equivalence (25 mL)</text>
+        <text x="${mapX(25) + 6}" y="${mapY(calculateTitrationPh(25, this.config)) - 6}" font-size="14" font-weight="700" fill="#d97706">Equivalence (25 mL)</text>
 
         <!-- Current Operating Point Crosshair -->
         ${this.currentVolumeAddedMl <= 50 ? `
           <line x1="${curX}" y1="${padTop}" x2="${curX}" y2="${height - padBottom}" stroke="#ef4444" stroke-width="1" stroke-dasharray="2" />
           <line x1="${padLeft}" y1="${curY}" x2="${width - padRight}" y2="${curY}" stroke="#ef4444" stroke-width="1" stroke-dasharray="2" />
           <circle cx="${curX}" cy="${curY}" r="6" fill="#ef4444" stroke="#ffffff" stroke-width="2" />
-          <text x="${curX + 8}" y="${curY - 8}" font-size="11" font-weight="800" fill="#dc2626">pH: ${this.getCurrentPh().toFixed(2)}</text>
+          <text x="${curX + 8}" y="${curY - 8}" font-size="14" font-weight="800" fill="#dc2626">pH: ${this.getCurrentPh().toFixed(2)}</text>
         ` : ''}
       </svg>
     `;
@@ -399,7 +399,7 @@ export class TitrationSimulatorController {
     const estStatus = this.getEstimationStatus();
 
     return `
-      <div class="titration-simulator-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;">
+      <div class="titration-simulator-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui, sans-serif);">
         
         <!-- Header -->
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1rem;border-bottom:2px solid #e2e8f0;">
@@ -414,7 +414,7 @@ export class TitrationSimulatorController {
           </div>
           
           <div style="display:flex;gap:12px;align-items:center;">
-            <span style="font-size:0.85rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
+            <span style="font-size:0.875rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
               [Formative Self-Check · Diagnostic Exploration (HOLD)]
             </span>
             <button type="button" id="btn-back-chem" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">← Back</button>
@@ -581,7 +581,7 @@ export function mountTitrationSimulator(
     const estStatus = ctrl.getEstimationStatus();
 
     root.innerHTML = `
-      <div class="titration-simulator-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;">
+      <div class="titration-simulator-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui, sans-serif);">
         
         <!-- Header -->
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1rem;border-bottom:2px solid #e2e8f0;">
@@ -596,7 +596,7 @@ export function mountTitrationSimulator(
           </div>
           
           <div style="display:flex;gap:12px;align-items:center;">
-            <span style="font-size:0.85rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
+            <span style="font-size:0.875rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
               [Formative Self-Check · Diagnostic Exploration (HOLD)]
             </span>
             <button type="button" id="btn-back-chem" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">← Back</button>
@@ -705,7 +705,7 @@ export function mountTitrationSimulator(
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
               <h3 style="margin:0 0 0.75rem;font-size:1.15rem;color:#0f172a;">Accessible Titration Volume Log</h3>
               <div style="max-height:180px;overflow-y:auto;border:1px solid #e2e8f0;border-radius:6px;">
-                <table style="width:100%;border-collapse:collapse;font-size:0.85rem;" role="table" aria-label="Titration Steps Log">
+                <table style="width:100%;border-collapse:collapse;font-size:0.875rem;" role="table" aria-label="Titration Steps Log">
                   <thead>
                     <tr style="background:#f8fafc;text-align:left;position:sticky;top:0;">
                       <th style="padding:6px 10px;border-bottom:1px solid #cbd5e1;">Step</th>

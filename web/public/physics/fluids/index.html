@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en" data-g9-shell>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thrust & Hydrostatic Pressure Workspace · Grade9V3.5</title>
+  <link rel="stylesheet" href="../../css/modern-learner.css">
+  <style>
+    .study-unit-card {
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: var(--radius-md, 14px);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .study-unit-header {
+      border-bottom: 2px solid var(--bg-soft, #f1f5f9);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .unit-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-learn-bg, #eef2ff);
+      color: var(--accent-learn, #4f46e5);
+    }
+    .unit-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main, #0f172a);
+      margin: 0.35rem 0 0;
+    }
+    .key-step-box {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 10px 10px 0;
+      padding: 12px 16px;
+      margin: 1rem 0;
+      color: #1e3a8a;
+    }
+    [data-theme="dark"] .key-step-box {
+      background: #172554;
+      border-left-color: #60a5fa;
+      color: #dbeafe;
+    }
+    .key-step-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: #2563eb;
+    }
+    [data-theme="dark"] .key-step-title {
+      color: #93c5fd;
+    }
+    .derivation-steps {
+      display: grid;
+      gap: 10px;
+      margin: 1.25rem 0;
+    }
+    .step-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 12px;
+      background: var(--bg-soft, #f8fafc);
+      border-radius: 8px;
+      border: 1px solid var(--border, #e2e8f0);
+    }
+    .step-badge {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-learn, #4f46e5);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .step-content strong {
+      color: var(--text-main, #0f172a);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .step-content em {
+      font-style: normal;
+      color: var(--text-muted, #64748b);
+      font-size: 0.9rem;
+      display: block;
+    }
+    .worked-box {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 1.25rem;
+      background: var(--bg-soft, #f8fafc);
+      margin: 1.25rem 0;
+    }
+    .worked-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .trap-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #9a3412;
+      margin: 1rem 0;
+    }
+    [data-theme="dark"] .trap-box {
+      background: #2a1b0e;
+      border-color: #7c2d12;
+      color: #fdba74;
+    }
+    .trap-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .check-card {
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 8px;
+      padding: 10px 14px;
+      background: var(--bg-card, #ffffff);
+    }
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 1.25rem 0 2rem;
+      position: sticky;
+      top: 60px;
+      z-index: 20;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border, #e2e8f0);
+    }
+    [data-theme="dark"] .jump-nav {
+      background: rgba(13, 17, 23, 0.95);
+    }
+    .jump-chip {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border, #e2e8f0);
+      background: var(--bg-card, #ffffff);
+      color: var(--text-main, #0f172a);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .jump-chip:hover {
+      border-color: #38bdf8;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .formula-tag {
+      font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: var(--bg-soft, #f1f5f9);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #0284c7;
+      display: inline-block;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="g9-shell-header">
+    <div class="g9-header-inner">
+      <a class="g9-brand" href="../../index.html">
+        <span class="logo-icon">⚡</span>
+        <span class="brand-title">Grade9V3.5</span>
+        <span class="g9-brand-badge">Learner Platform</span>
+      </a>
+      <nav class="g9-header-nav" aria-label="Portal Navigation">
+        <a href="../../index.html">Home</a>
+        <a href="../../physics/index.html">Physics</a>
+        <a href="../../chemistry/index.html">Chemistry</a>
+        <a href="../../mathematics/index.html">Mathematics</a>
+        <a href="../../question-bank/index.html">Question Bank</a>
+      </nav>
+      <div class="g9-header-actions">
+        <button type="button" class="g9-header-btn g9-search-btn" data-g9-action="search" title="Search Grade9V3 (Ctrl/⌘ K)" aria-label="Search">
+          <span class="g9-btn-icon">🔍</span>
+          <span class="g9-btn-text">Search</span>
+        </button>
+        <button type="button" class="g9-header-btn g9-display-btn" data-g9-action="display" title="Display & Theme Settings" aria-label="Display & Theme">
+          <span class="g9-btn-icon">🌙 / ☀️</span>
+          <span class="g9-btn-text">Display</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <nav class="g9-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="g9-breadcrumbs">
+      <a href="../../index.html">Home</a> <span>/</span> <a href="../../physics/index.html">Physics</a> <span>/</span> <span>Thrust & Hydrostatic Pressure</span>
+    </div>
+  </nav>
+
+  <main class="g9-container">
+    
+    <!-- Hero Workspace Header -->
+    <div class="g9-hero" style="margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+            <span class="unit-tag" style="background:#e0f2fe;color:#0284c7;">Physics · Fluid Mechanics</span>
+            <span class="unit-tag" style="background:#dcfce7;color:#166534;">Core 1A Structured Theory</span>
+            <span class="unit-tag" style="background:#fef3c7;color:#b45309;">6 Complete Learning Units</span>
+          </div>
+          <h1 class="g9-hero-title" style="margin:0 0 6px;">Thrust &amp; Hydrostatic Pressure Workspace</h1>
+          <p class="g9-hero-subtitle" style="margin:0;">Complete structured study curriculum: normal thrust definitions, perpendicular equilibrium dynamics, pressure quotients, geometric scaling laws, surface orientation, and hydrostatic pressure coupled to gas laws.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Launch Bar -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;padding:12px 16px;background:var(--bg-soft, #f8fafc);border:1px solid var(--border, #e2e8f0);border-radius:12px;">
+      <a class="g9-btn-action g9-btn-qb" href="../../question-bank/index.html?subject=Physics&topic=fluids&mode=study" style="font-weight:700;">
+        🎯 Practice in Question Bank (Core 2) &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-learn" href="../../standalone/practice/core1a-physics-thrust-pressure-tablet.html" style="font-weight:700;">
+        📱 Dedicated Fullscreen Tablet App &rarr;
+      </a>
+    </div>
+
+    <!-- Sticky Concept Jump Navigation -->
+    <div class="jump-nav" aria-label="Quick Jump to Study Units">
+      <span style="font-size:0.85rem;font-weight:800;color:var(--text-muted);align-self:center;margin-right:4px;">Jump to Unit:</span>
+      <a href="#unit-1" class="jump-chip">1. Interface Thrust</a>
+      <a href="#unit-2" class="jump-chip">2. N = mg Conditions</a>
+      <a href="#unit-3" class="jump-chip">3. Average Pressure (P = F/A)</a>
+      <a href="#unit-4" class="jump-chip">4. Scaling Laws (P ∝ L)</a>
+      <a href="#unit-5" class="jump-chip">5. Surface Orientation</a>
+      <a href="#unit-6" class="jump-chip">6. Hydrostatics &amp; Gas Laws</a>
+    </div>
+
+    <!-- STUDY UNIT 1 -->
+    <article class="study-unit-card" id="unit-1">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 1 of 6 · Core Concept</span>
+          <h2 class="unit-title">Thrust Belongs to a Chosen Interface, Not to an Isolated Force Arrow</h2>
+        </div>
+        <div class="formula-tag">R = √(N² + f²)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Thrust at a solid interface is the <strong>normal (perpendicular) component</strong> of the contact interaction on the chosen body. A rough surface may simultaneously exert tangential friction; the vector sum of those components is the <strong>total contact reaction</strong>, not the thrust alone.</p>
+      </div>
+
+      <!-- SVG Illustration -->
+      <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;margin:1rem 0;text-align:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 220" style="max-width:100%;height:auto;max-height:220px;">
+          <defs><marker id="arr1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="currentColor"/></marker></defs>
+          <rect width="440" height="220" fill="#f8fafc" rx="8"/>
+          <!-- Table -->
+          <line x1="40" y1="160" x2="400" y2="160" stroke="#475569" stroke-width="4"/>
+          <text x="50" y="185" font-size="14" fill="#64748b" font-family="system-ui">Rough Table Interface</text>
+          <!-- Block -->
+          <rect x="160" y="80" width="120" height="80" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+          <text x="220" y="125" text-anchor="middle" font-size="16" font-weight="700" fill="#0369a1" font-family="system-ui">Block Q</text>
+          <!-- Normal Force N -->
+          <g color="#16a34a">
+            <line x1="220" y1="160" x2="220" y2="30" stroke="currentColor" stroke-width="4" marker-end="url(#arr1)"/>
+            <text x="230" y="45" font-size="16" font-weight="800" fill="currentColor" font-family="system-ui">N (Thrust)</text>
+          </g>
+          <!-- Friction Force f -->
+          <g color="#d97706">
+            <line x1="160" y1="140" x2="90" y2="140" stroke="currentColor" stroke-width="4" marker-end="url(#arr1)"/>
+            <text x="95" y="130" font-size="15" font-weight="800" fill="currentColor" font-family="system-ui">f (Friction)</text>
+          </g>
+          <!-- Resultant R -->
+          <g color="#7c3aed">
+            <line x1="220" y1="160" x2="135" y2="45" stroke="currentColor" stroke-width="4" stroke-dasharray="6 3" marker-end="url(#arr1)"/>
+            <text x="110" y="40" font-size="16" font-weight="800" fill="currentColor" font-family="system-ui">R (Total Reaction)</text>
+          </g>
+        </svg>
+        <div style="font-size:0.85rem;color:#64748b;margin-top:4px;">Figure 1: Decomposition of surface contact interaction into normal thrust N and tangential friction f.</div>
+      </div>
+
+      <h3 style="font-size:1.05rem;font-weight:700;margin:1.25rem 0 0.5rem;color:var(--text-main);">Construction Steps &amp; Theoretical Validation</h3>
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Identify Chosen Body &amp; Contact Interface</strong>
+            <em>Force ownership is body-specific. Always define the body before drawing interaction arrows to prevent mixing Newton's 3rd-law pairs.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Resolve Interface into Perpendicular &amp; Tangential Components</strong>
+            <em>Decompose contact reaction into normal component N (thrust) and tangential component f (friction). These directions are mutually orthogonal.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Distinguish Normal Thrust from Total Reaction</strong>
+            <em>Thrust is strictly the normal component N. The total reaction force R is the vector sum R = √(N² + f²).</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">4</span>
+          <div class="step-content">
+            <strong>Verify Third-Law Partner Reactions</strong>
+            <em>The equal-and-opposite reaction force acts on the table, not on the chosen body. Check: N_partner = -N on table.</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- Worked Olympiad Anchor -->
+      <div class="worked-box">
+        <div class="worked-title">🏆 Official Olympiad Anchor: INJSO 2016 · Q32A</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> Two cubical boxes P (4 kg) and Q (8 kg) are in contact on a rough horizontal table. Their kinetic friction coefficients are μ_P = 0.4 and μ_Q = 0.6. A horizontal force F pushes P so that both move at constant speed. Take g = 10 m/s². Find: (i) F, and (ii) the magnitude and direction of the resultant force exerted by the table on Q.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Step-by-step Solution:</strong><br>
+          1. Vertical equilibrium on Q: N_Q = m_Q · g = 8 × 10 = <strong>80 N</strong> (upward normal thrust).<br>
+          2. Kinetic friction on Q: f_Q = μ_Q · N_Q = 0.6 × 80 = <strong>48 N</strong> (backward).<br>
+          3. Total table reaction on Q: R_Q = √(N_Q² + f_Q²) = √(80² + 48²) = √(6400 + 2304) = √8704 ≈ <strong>93.3 N</strong>.<br>
+          4. Angle of reaction: θ = arctan(N_Q / f_Q) = arctan(80 / 48) = arctan(5/3) ≈ <strong>59.0°</strong> above horizontal.
+        </div>
+      </div>
+
+      <!-- Trap & Repair -->
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Assuming the table's total force on the sliding box is simply 80 N.<br>
+        <strong>Repair:</strong> 80 N is only the normal thrust component. When friction exists, the table exerts a 2D vector force whose resultant magnitude is √(N² + f²) = 93.3 N.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 2 -->
+    <article class="study-unit-card" id="unit-2">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 2 of 6 · Dynamics</span>
+          <h2 class="unit-title">N = mg is a Result with Conditions, Not the Definition of Thrust</h2>
+        </div>
+        <div class="formula-tag">ΣF⊥ = m · a⊥ ⇒ N = m(g ± a⊥) ∓ F_ext,⊥</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">A normal force is a <strong>constraint response</strong> determined by the full perpendicular equation ΣF⊥ = m·a⊥. N = mg appears <em>only</em> for a horizontal surface with no other vertical forces and zero vertical acceleration. When an external pull acts at angle θ, N = mg - F·sinθ.</p>
+      </div>
+
+      <h3 style="font-size:1.05rem;font-weight:700;margin:1.25rem 0 0.5rem;color:var(--text-main);">Perpendicular Dynamics &amp; Contact Loss Threshold</h3>
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Choose the Normal Coordinate Axis</strong>
+            <em>Assign a positive perpendicular direction normal to the contact interface before resolving forces.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Sum All Perpendicular External Forces</strong>
+            <em>Include the normal thrust N, gravitational weight component mg·cosα, and any external applied force components F·sinθ.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Apply Newton's Second Law: ΣF⊥ = m · a⊥</strong>
+            <em>For static equilibrium (a⊥ = 0): N + F·sinθ - mg = 0 ⇒ N = mg - F·sinθ.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">4</span>
+          <div class="step-content">
+            <strong>Enforce Unilateral Contact Constraint (N ≥ 0)</strong>
+            <em>Surfaces can only push, never pull. If algebra requires N &lt; 0, the body lifts off the surface, breaking contact (N = 0).</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Setting N = mg by default when a block is pulled obliquely upward.<br>
+        <strong>Repair:</strong> The vertical component of the pull F·sinθ shares the upward load, reducing the required normal reaction: N = mg - F·sinθ &lt; mg.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 3 -->
+    <article class="study-unit-card" id="unit-3">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 3 of 6 · Definition</span>
+          <h2 class="unit-title">Average Pressure Depends on Total Normal Thrust and Actual Loaded Area</h2>
+        </div>
+        <div class="formula-tag">P_avg = F⊥ / A_actual = N / A</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Pressure is defined strictly as the <strong>ratio of perpendicular compressive thrust to the actual contact area</strong>. SI unit: Pascal (1 Pa = 1 N/m²). Force is a vector with direction; pressure in a static fluid is a scalar quantity acting perpendicularly inward on every submerged surface.</p>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">🏆 Benchmark Example: INJSO 2013 · Q58 Contact Pressure</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A solid metal cylinder of mass M = 15 kg and radius r = 5 cm stands vertically on a flat horizontal floor. Take g = 9.8 m/s². Calculate the average pressure exerted on the floor.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Normal thrust: N = M · g = 15 × 9.8 = <strong>147 N</strong>.<br>
+          2. Contact area: A = π · r² = π · (0.05 m)² = 0.007854 m².<br>
+          3. Average pressure: P = N / A = 147 / 0.007854 = <strong>18,716 Pa ≈ 18.7 kPa</strong>.
+        </div>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 4 -->
+    <article class="study-unit-card" id="unit-4">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 4 of 6 · Dimensional Analysis</span>
+          <h2 class="unit-title">Similar Objects Make Weight and Contact Area Scale with Different Powers</h2>
+        </div>
+        <div class="formula-tag">Mass ∝ L³, Area ∝ L² ⇒ Pressure ∝ L</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">When an object is scaled up by a linear factor λ: volume and weight increase by λ³ (cube power), while contact area increases only by λ² (square power). Consequently, <strong>pressure scales linearly with size: P ∝ λ</strong>. Larger geometrically similar animals or structures exert substantially higher ground pressure!</p>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">🏆 Official Olympiad Anchor: INJSO 2012 · Q39 Scaling Proof</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> Cube 1 has side length L and exerts pressure P₁ on the floor. Cube 2 is made of the same uniform material but has side length 2L. Determine the ratio of pressure P₂ / P₁.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Dimensional Derivation:</strong><br>
+          • Weight W₁ = ρ · L³ · g, Base Area A₁ = L² ⇒ P₁ = W₁ / A₁ = ρ · g · L.<br>
+          • Weight W₂ = ρ · (2L)³ · g = 8 · W₁, Base Area A₂ = (2L)² = 4 · A₁.<br>
+          • Pressure P₂ = W₂ / A₂ = 8·W₁ / (4·A₁) = 2 · P₁.<br>
+          • Therefore: <strong>P₂ / P₁ = 2</strong>. The pressure directly doubles.
+        </div>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 5 -->
+    <article class="study-unit-card" id="unit-5">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 5 of 6 · Vector Geometry</span>
+          <h2 class="unit-title">Pressure is Scalar; The Surface Normal Gives the Force Direction</h2>
+        </div>
+        <div class="formula-tag">dF_vector = P · dA · n_hat</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Pressure has no intrinsic direction: it is an isotropic scalar state within a fluid. The vector direction of the resulting hydrostatic force is entirely defined by the <strong>outward normal unit vector n_hat</strong> of the contacting surface.</p>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">🏆 Official Olympiad Anchor: INJSO 2013 · Q62 Tilted Surface Analysis</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A rectangular hatch of area A is inclined at angle θ to the horizontal at average depth h in water of density ρ. Find the magnitude and direction of the hydrostatic force on the hatch.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Derivation:</strong><br>
+          • Scalar hydrostatic pressure at depth h: P = ρ · g · h.<br>
+          • Total normal force magnitude: F = P · A = <strong>ρ · g · h · A</strong>.<br>
+          • Direction: Perpendicular to the hatch face (at angle 90° - θ to horizontal).
+        </div>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 6 -->
+    <article class="study-unit-card" id="unit-6">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 6 of 6 · Fluid Statics &amp; Thermodynamics</span>
+          <h2 class="unit-title">Depth Adds Gauge Pressure; Gas Laws Need Absolute Pressure</h2>
+        </div>
+        <div class="formula-tag">P_abs = P_atm + ρ·g·h &nbsp;|&nbsp; P₁V₁ = P₂V₂</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">At depth h in a liquid with free surface exposed to atmospheric pressure P_atm: <strong>Gauge pressure = ρ·g·h</strong>, while <strong>Absolute pressure P_abs = P_atm + ρ·g·h</strong>. Whenever hydrostatics is coupled to the ideal gas law (e.g. rising air bubbles), you <em>must use absolute pressure P_abs</em>. Substituting gauge pressure creates complete algebraic failure.</p>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Classic Application: Air Bubble Rising from Lake Bottom</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> An air bubble of volume V₁ forms at depth h = 20 m in fresh water (ρ = 1000 kg/m³, g = 10 m/s²). Atmospheric pressure P_atm = 10⁵ Pa. Assuming isothermal conditions, find its volume V₂ just as it reaches the surface.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Gauge pressure at depth: P_gauge = ρ · g · h = 1000 × 10 × 20 = 2 × 10⁵ Pa.<br>
+          2. Absolute pressure at depth: P₁ = P_atm + P_gauge = 10⁵ + 2 × 10⁵ = <strong>3 × 10⁵ Pa</strong>.<br>
+          3. Absolute pressure at surface: P₂ = P_atm = <strong>1 × 10⁵ Pa</strong>.<br>
+          4. Isothermal Boyle's Law: P₁ · V₁ = P₂ · V₂ ⇒ V₂ = (P₁ / P₂) · V₁ = (3 × 10⁵ / 10⁵) · V₁ = <strong>3 · V₁</strong>.<br>
+          The bubble volume triples.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Using P₁ = ρ·g·h = 2 × 10⁵ Pa without adding atmospheric pressure P_atm.<br>
+        <strong>Repair:</strong> Gas volume depends on the total collisions with the bubble wall (absolute pressure). Never omit P_atm when applying Boyle's Law!</p>
+      </div>
+    </article>
+
+    <!-- Bottom Return & Practice Navigation -->
+    <div style="text-align:center;margin:3rem 0 1rem;padding:2rem;background:var(--bg-soft, #f8fafc);border-radius:14px;border:1px solid var(--border, #e2e8f0);">
+      <h3 style="margin:0 0 0.5rem;font-size:1.3rem;font-weight:800;color:var(--text-main);">Ready to Test Your Mastery?</h3>
+      <p style="color:var(--text-muted);margin:0 0 1.25rem;">Apply these 6 foundational concepts to authentic Olympiad &amp; JEE past-paper questions in the Question Bank.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="g9-btn-action g9-btn-qb" href="../../question-bank/index.html?subject=Physics&topic=fluids&mode=study" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          🎯 Practice 339 Questions in Question Bank &rarr;
+        </a>
+        <a class="g9-btn-action g9-btn-learn" href="../../physics/index.html" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          ← Return to Physics Hub
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="g9-footer">
+    <p>Grade9V3.5 Concept-Centred Learner Platform · Authentic Question Bank &amp; Complete Core Study Modules</p>
+  </footer>
+<script src="../../js/display-controls.js"></script>
+<script src="../../js/site-header.js" data-site-root="../../"></script>
+</body>
+</html>

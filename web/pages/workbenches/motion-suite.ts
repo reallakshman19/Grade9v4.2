@@ -110,7 +110,7 @@ export function mountMotionSuite(
     const tab = ctrl.getActiveTab();
 
     root.innerHTML = `
-      <div class="motion-suite-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;color:#0f172a;">
+      <div class="motion-suite-container" style="max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui,-apple-system,sans-serif);color:#0f172a;">
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1.25rem;border-bottom:2px solid #e2e8f0;margin-bottom:1.5rem;">
           <div>
             <div style="display:flex;gap:8px;font-size:0.9rem;color:#64748b;margin-bottom:0.25rem;">
@@ -118,8 +118,8 @@ export function mountMotionSuite(
               <span>Motion in 1D &amp; 2D Suite</span>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
-              <span style="font-size:0.8rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">PHYSICS WORKBENCH</span>
-              <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
+              <span style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">PHYSICS WORKBENCH</span>
+              <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD</span>
             </div>
             <h1 style="margin:0.5rem 0 0;font-size:1.9rem;font-weight:800;color:#0f172a;">🚀 Motion in 1D &amp; 2D Kinematics Master Suite</h1>
           </div>
@@ -276,7 +276,7 @@ function render1DTab(ctrl: MotionSuiteController): string {
             <!-- Coordinate Track -->
             <line x1="40" y1="100" x2="460" y2="100" stroke="#475569" stroke-width="3" />
             <line x1="250" y1="90" x2="250" y2="110" stroke="#94a3b8" stroke-width="2" />
-            <text x="250" y="130" fill="#94a3b8" font-size="12" text-anchor="middle">Origin (s = 0)</text>
+            <text x="250" y="130" fill="#94a3b8" font-size="14" text-anchor="middle">Origin (s = 0)</text>
 
             <!-- Object Marker -->
             ${(() => {
@@ -284,11 +284,11 @@ function render1DTab(ctrl: MotionSuiteController): string {
               return `
                 <circle cx="${cx}" cy="100" r="14" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
                 <line x1="${cx}" y1="100" x2="${cx + res.velocity * 1.5}" y2="100" stroke="#f43f5e" stroke-width="3" marker-end="url(#arrow)" />
-                <text x="${cx}" y="70" fill="#38bdf8" font-size="12" font-weight="bold" text-anchor="middle">s = ${res.displacement.toFixed(1)}m</text>
+                <text x="${cx}" y="70" fill="#38bdf8" font-size="14" font-weight="bold" text-anchor="middle">s = ${res.displacement.toFixed(1)}m</text>
               `;
             })()}
           </svg>
-          <div style="font-size:0.85rem;color:#94a3b8;margin-top:8px;">
+          <div style="font-size:0.875rem;color:#94a3b8;margin-top:8px;">
             Red vector represents velocity arrow <span style="color:#f43f5e;">v = ${res.velocity.toFixed(1)} m/s</span>
           </div>
         </div>
@@ -361,8 +361,8 @@ function renderProjectileTab(ctrl: MotionSuiteController): string {
             <!-- Axes -->
             <line x1="50" y1="180" x2="470" y2="180" stroke="#475569" stroke-width="2" />
             <line x1="50" y1="20" x2="50" y2="180" stroke="#475569" stroke-width="2" />
-            <text x="470" y="200" fill="#94a3b8" font-size="12" text-anchor="end">x (Range)</text>
-            <text x="30" y="30" fill="#94a3b8" font-size="12">y (Height)</text>
+            <text x="470" y="200" fill="#94a3b8" font-size="14" text-anchor="end">x (Range)</text>
+            <text x="30" y="30" fill="#94a3b8" font-size="14">y (Height)</text>
 
             <!-- Parabolic Trajectory -->
             <polyline fill="none" stroke="#38bdf8" stroke-width="3" points="${points.join(' ')}" />
@@ -375,7 +375,7 @@ function renderProjectileTab(ctrl: MotionSuiteController): string {
               return `<line x1="50" y1="180" x2="${vx}" y2="${vy}" stroke="#f43f5e" stroke-width="3" />`;
             })()}
           </svg>
-          <div style="font-size:0.85rem;color:#94a3b8;margin-top:8px;text-align:center;">
+          <div style="font-size:0.875rem;color:#94a3b8;margin-top:8px;text-align:center;">
             Simulated in gravity g = ${p.gravity} m/s². Air resistance neglected.
           </div>
         </div>

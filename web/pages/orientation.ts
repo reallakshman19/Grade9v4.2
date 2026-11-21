@@ -143,9 +143,9 @@ export class Core1OrientationPageController {
           <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:0.75rem;">
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                <span style="font-size:0.8rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">CORE1</span>
-                <span style="font-size:0.8rem;font-weight:700;color:#b45309;background:#fef3c7;padding:2px 8px;border-radius:4px;">DIAGNOSTIC (HOLD)</span>
-                <span style="font-size:0.8rem;color:#64748b;">BP-CORE1-ORIENTATION@1.1.0</span>
+                <span style="font-size:0.875rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">CORE1</span>
+                <span style="font-size:0.875rem;font-weight:700;color:#b45309;background:#fef3c7;padding:2px 8px;border-radius:4px;">DIAGNOSTIC (HOLD)</span>
+                <span style="font-size:0.875rem;color:#64748b;">BP-CORE1-ORIENTATION@1.1.0</span>
               </div>
               <h1 style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">Reading Orientation Workspace</h1>
             </div>

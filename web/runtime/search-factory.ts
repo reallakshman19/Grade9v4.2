@@ -6,7 +6,7 @@
 
 import { SearchEngine, type SearchOpen, type SearchPins } from './search.ts';
 import { ManifestLoader } from './loader.ts';
-import wireData from './diagnostic-search-wire.json';
+import wireData from './diagnostic-search-wire.json' with { type: 'json' };
 
 export interface WirePayload {
   readonly release: string;

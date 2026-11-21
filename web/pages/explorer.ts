@@ -186,7 +186,7 @@ export class GcdrExplorerPageController {
           class="gcdr-stage-step ${isCurrent ? 'active' : ''}"
           data-stage="${st}"
           data-index="${idx}"
-          style="min-height: ${HIT_TARGET_MIN_PX}px; min-width:48px; padding: 6px 12px; background: ${badgeBg}; color: ${badgeFg}; border: 1px solid ${border}; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;"
+          style="min-height: ${HIT_TARGET_MIN_PX}px; min-width:48px; padding: 6px 12px; background: ${badgeBg}; color: ${badgeFg}; border: 1px solid ${border}; border-radius: 6px; font-size:14px; font-weight: 600; cursor: pointer; white-space: nowrap;"
           aria-current="${isCurrent ? 'step' : 'false'}" ${contextEntry||idx>Math.min(this.journey.exportDraft().evidence.length,9)?'disabled':''}
         >
           ${isPast ? '✓ ' : ''}${st}
@@ -202,7 +202,7 @@ export class GcdrExplorerPageController {
     // 6. Truthful Exactness Badge
     const badge = state.exactnessBadge;
     const badgeHtml = `
-      <div class="gcdr-exactness-badge" style="padding: 8px 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 11px; color: #475569; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div class="gcdr-exactness-badge" style="padding: 8px 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; font-size:14px; color: #475569; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
         <div>
           Fidelity: <strong>${escapeHtml(String(badge.fidelity))}</strong> | Binding: <strong style="color: ${badge.binding === 'CANONICAL_BINDING' ? '#059669' : '#d97706'};">${escapeHtml(String(badge.binding))}</strong>
         </div>
@@ -223,7 +223,7 @@ export class GcdrExplorerPageController {
         <section data-slot="identity"><header class="gcdr-identity">
           <div>
             <h1 style="margin: 0; font-size: 20px; color: #0f172a;">${escapeHtml(String(this.title))}</h1>
-            <span style="font-size: 13px; color: #64748b;">${escapeHtml(String(this.subject.toUpperCase()))} / ${escapeHtml(String(this.topic.toUpperCase()))} (GCDR Blueprint)</span>
+            <span style="font-size:14px; color: #64748b;">${escapeHtml(String(this.subject.toUpperCase()))} / ${escapeHtml(String(this.topic.toUpperCase()))} (GCDR Blueprint)</span>
           </div>
           <div style="display: flex; gap: 8px;">
             <button id="gcdr-orientation-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; cursor: pointer;">

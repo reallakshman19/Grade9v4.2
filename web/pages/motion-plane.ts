@@ -301,8 +301,8 @@ export function mountMotionPlane(
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;">
             <div>
               <div style="display:flex;gap:8px;align-items:center;margin-bottom:0.5rem;">
-                <span style="font-size:0.8rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">A69 PILOT 3 · NATIVE FUNCTIONAL PARITY</span>
-                <span style="font-size:0.8rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD (Diagnostic Mode Authorized)</span>
+                <span style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:3px 8px;border-radius:4px;">A69 PILOT 3 · NATIVE FUNCTIONAL PARITY</span>
+                <span style="font-size:0.875rem;font-weight:700;background:#fee2e2;color:#991b1b;padding:3px 8px;border-radius:4px;">Academic Status: HOLD (Diagnostic Mode Authorized)</span>
               </div>
               <h1 style="margin:0 0 0.5rem;font-size:2.2rem;font-weight:800;color:#0f172a;">🚀 Motion in a Plane Interactive Suite</h1>
               <p style="margin:0;color:#475569;font-size:1.15rem;max-width:900px;line-height:1.5;">
@@ -311,8 +311,8 @@ export function mountMotionPlane(
             </div>
             
             <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:8px 16px;text-align:right;">
-              <span style="font-size:0.85rem;font-weight:800;color:#1e40af;">[Formative Self-Check · Diagnostic Practice (HOLD)]</span>
-              <div style="font-size:0.8rem;color:#64748b;">Not a Summative Examination</div>
+              <span style="font-size:0.875rem;font-weight:800;color:#1e40af;">[Formative Self-Check · Diagnostic Practice (HOLD)]</span>
+              <div style="font-size:0.875rem;color:#64748b;">Not a Summative Examination</div>
             </div>
           </div>
         </header>
@@ -374,34 +374,34 @@ export function mountMotionPlane(
           <!-- Live Analytical Telemetry Grid -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 220px), 1fr));gap:1rem;">
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Flight Time (T)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Flight Time (T)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0f172a;"><span id="telemT">${projTelem.T.toFixed(2)}</span> s</div>
-              <div style="font-size:0.75rem;color:#64748b;">T = 2u sin(θ)/g</div>
+              <div style="font-size:0.875rem;color:#64748b;">T = 2u sin(θ)/g</div>
             </div>
 
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Max Apex Height (H)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Max Apex Height (H)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0f172a;"><span id="telemH">${projTelem.H.toFixed(2)}</span> m</div>
-              <div style="font-size:0.75rem;color:#64748b;">H = u² sin²(θ)/(2g)</div>
+              <div style="font-size:0.875rem;color:#64748b;">H = u² sin²(θ)/(2g)</div>
             </div>
 
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Horizontal Range (R)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Horizontal Range (R)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0f172a;"><span id="telemR">${projTelem.R.toFixed(2)}</span> m</div>
-              <div style="font-size:0.75rem;color:#64748b;">R = u² sin(2θ)/g</div>
+              <div style="font-size:0.875rem;color:#64748b;">R = u² sin(2θ)/g</div>
             </div>
 
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Horizontal Velocity (ux)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Horizontal Velocity (ux)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0f172a;"><span id="telemUx">${projTelem.ux.toFixed(2)}</span> m/s</div>
-              <div style="font-size:0.75rem;color:#64748b;">ux = u cos(θ)</div>
+              <div style="font-size:0.875rem;color:#64748b;">ux = u cos(θ)</div>
             </div>
           </div>
 
           <!-- Canvas Visualizer -->
           <div style="background:#0f172a;border-radius:12px;padding:1rem;position:relative;">
             <canvas id="projCanvas" width="1000" height="400" style="width:100%;height:auto;display:block;border-radius:8px;background:#090d16;"></canvas>
-            <div style="position:absolute;bottom:20px;left:25px;color:#94a3b8;font-size:0.85rem;">
+            <div style="position:absolute;bottom:20px;left:25px;color:#94a3b8;font-size:0.875rem;">
               Ground Level (y = 0) · Invariant Range under Complementary Launch Angles
             </div>
           </div>
@@ -459,31 +459,31 @@ export function mountMotionPlane(
           <!-- Banking Telemetry Grid -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 220px), 1fr));gap:1rem;">
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Optimum Speed (v_opt)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Optimum Speed (v_opt)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0284c7;"><span id="telemOptSpeed">${bankTelem.vOpt.toFixed(1)}</span> m/s</div>
-              <div style="font-size:0.75rem;color:#64748b;">v_opt = sqrt(R g tan(θ))</div>
+              <div style="font-size:0.875rem;color:#64748b;">v_opt = sqrt(R g tan(θ))</div>
             </div>
 
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Normal Force (N)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Normal Force (N)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0f172a;"><span id="telemNormal">${bankTelem.normalForce.toFixed(1)}</span> kN</div>
-              <div style="font-size:0.75rem;color:#64748b;">m(g cosθ + v²/R sinθ)</div>
+              <div style="font-size:0.875rem;color:#64748b;">m(g cosθ + v²/R sinθ)</div>
             </div>
 
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Lateral Tire Friction (f)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Lateral Tire Friction (f)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0f172a;">
                 <span id="telemFriction">${bankTelem.frictionForce.toFixed(2)} kN ${bankTelem.isFrictionUpward ? '(Up)' : '(Down)'}</span>
               </div>
-              <div style="font-size:0.75rem;color:#64748b;">f = m(g sinθ - v²/R cosθ)</div>
+              <div style="font-size:0.875rem;color:#64748b;">f = m(g sinθ - v²/R cosθ)</div>
             </div>
 
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;padding:1rem;">
-              <div style="font-size:0.8rem;font-weight:700;color:#64748b;">Max Safe Speed (v_max)</div>
+              <div style="font-size:0.875rem;font-weight:700;color:#64748b;">Max Safe Speed (v_max)</div>
               <div style="font-size:1.6rem;font-weight:800;color:#0f172a;">
                 <span id="telemMaxSpeed">${bankTelem.vMax === Infinity ? 'No limit' : bankTelem.vMax.toFixed(1) + ' m/s'}</span>
               </div>
-              <div style="font-size:0.75rem;color:#64748b;">sqrt(R g (tanθ + μ)/(1 - μ tanθ))</div>
+              <div style="font-size:0.875rem;color:#64748b;">sqrt(R g (tanθ + μ)/(1 - μ tanθ))</div>
             </div>
           </div>
         </div>
@@ -494,7 +494,7 @@ export function mountMotionPlane(
           <!-- CORE1B Reconstruction Active Recall -->
           <section class="core-block" data-core="CORE1B" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:1.5rem;">
             <div style="display:flex;gap:8px;margin-bottom:0.5rem;">
-              <span class="core-tag" style="font-size:0.75rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;">CORE1B · RECONSTRUCTION</span>
+              <span class="core-tag" style="font-size:0.875rem;font-weight:800;background:#e0f2fe;color:#0369a1;padding:2px 8px;border-radius:4px;">CORE1B · RECONSTRUCTION</span>
             </div>
             <h2 style="margin:0 0 0.5rem;font-size:1.4rem;color:#0f172a;">Active Recall Task: The Independent Velocity Principle</h2>
             <p style="margin:0 0 1rem;color:#475569;font-size:1.05rem;">
@@ -524,7 +524,7 @@ export function mountMotionPlane(
           <!-- CORE2 Practice Problem with Progressive Hint Ladder -->
           <section class="core-block" data-core="CORE2" style="background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:1.5rem;">
             <div style="display:flex;gap:8px;margin-bottom:0.5rem;">
-              <span class="core-tag" style="font-size:0.75rem;font-weight:800;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;">CORE2 · PRACTICE</span>
+              <span class="core-tag" style="font-size:0.875rem;font-weight:800;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;">CORE2 · PRACTICE</span>
             </div>
             <h2 style="margin:0 0 0.5rem;font-size:1.4rem;color:#0f172a;">Practice Problem with Progressive Hint Ladder</h2>
             <p style="margin:0 0 1rem;color:#475569;font-size:1.05rem;">

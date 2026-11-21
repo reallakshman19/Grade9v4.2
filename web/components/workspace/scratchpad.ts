@@ -208,17 +208,17 @@ export function mountScratchpadWorkspace(
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
           <div>
             <div style="display:flex;align-items:center;gap:8px;">
-              <span style="font-size:0.8rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">Workpack A26</span>
-              <span style="font-size:0.75rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 8px;border-radius:4px;">REVIEW_PENDING · Points: null</span>
+              <span style="font-size:0.875rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">Workpack A26</span>
+              <span style="font-size:0.875rem;font-weight:700;color:#92400e;background:#fef3c7;padding:2px 8px;border-radius:4px;">REVIEW_PENDING · Points: null</span>
             </div>
             <h2 style="margin:4px 0 0;font-size:1.25rem;font-weight:700;color:#0f172a;">Stylus Digital Ink &amp; Mathematical Scratchpad</h2>
           </div>
           <div style="display:flex;gap:8px;align-items:center;">
-            <button type="button" id="btn-export-ink-artifact" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 14px;background:#0284c7;color:#ffffff;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.85rem;">Save Work Artifact</button>
+            <button type="button" id="btn-export-ink-artifact" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 14px;background:#0284c7;color:#ffffff;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.875rem;">Save Work Artifact</button>
           </div>
         </div>
 
-        <p style="margin:0;font-size:0.85rem;color:#64748b;line-height:1.4;">
+        <p style="margin:0;font-size:0.875rem;color:#64748b;line-height:1.4;">
           Freehand mathematical derivations and free-body diagrams (FBD). Complex geometric or mathematical freehand entries remain in formative mode and require human instructor verification.
         </p>
 
@@ -268,7 +268,7 @@ export function mountScratchpadWorkspace(
         </div>
 
         <!-- Telemetry & Verification Footer -->
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:0.85rem;color:#64748b;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:0.875rem;color:#64748b;">
           <span>Strokes Recorded: <strong>${vs.strokeCount}</strong> | Mode: <strong>${vs.mode}</strong></span>
           <span id="ink-artifact-status" style="font-weight:600;color:#047857;">Durable memory active · Zero data loss on orientation switch</span>
         </div>

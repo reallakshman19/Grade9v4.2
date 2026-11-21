@@ -280,7 +280,7 @@ export class RedoxAdaptiveController {
     const node = (x: number, y: number, label: string, sub: string, fill: string) =>
       `<circle cx="${x}" cy="${y}" r="34" fill="${fill}" />
        <text x="${x}" y="${y + 4}" text-anchor="middle" font-size="16" font-family="monospace" font-weight="800" fill="#f8fafc">${label}</text>
-       ${sub ? `<text x="${x}" y="${y + 22}" text-anchor="middle" font-size="12" font-family="monospace" font-weight="700" fill="#94a3b8">${sub}</text>` : ''}`;
+       ${sub ? `<text x="${x}" y="${y + 22}" text-anchor="middle" font-size="14" font-family="monospace" font-weight="700" fill="#94a3b8">${sub}</text>` : ''}`;
 
     const line = (x1: number, y1: number, x2: number, y2: number, color: string, w: number = 3) =>
       `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w}" stroke-linecap="round" />`;
@@ -289,14 +289,14 @@ export class RedoxAdaptiveController {
       `${line(x1, y1, x2, y2, color, 3)}
        <polygon points="${x2},${y2} ${x2 - 13},${y2 - 7} ${x2 - 13},${y2 + 7}" fill="${color}" />`;
 
-    let inner = `<text x="18" y="24" font-size="12" font-family="monospace" font-weight="700" fill="#94a3b8">VISUAL DEPTH V${d} · ${b.kicker.toUpperCase()}</text>`;
+    let inner = `<text x="18" y="24" font-size="14" font-family="monospace" font-weight="700" fill="#94a3b8">VISUAL DEPTH V${d} · ${b.kicker.toUpperCase()}</text>`;
 
     if (this.currentBlockIndex === 0) {
       inner += `<text x="320" y="58" text-anchor="middle" font-size="18" font-family="monospace" font-weight="800" fill="#f8fafc">CrO₅</text>`;
       inner += node(320, 125, 'Cr', '?', '#7c3aed');
       if (d === 0) {
         inner += `<text x="52" y="215" font-size="16" font-family="monospace" font-weight="800" fill="#f8fafc">Blanket O = −2  ⇒  Cr = +10 ?</text>`;
-        inner += `<text x="52" y="246" font-size="13" font-family="sans-serif" fill="#94a3b8">Arithmetic can close while the model is wrong.</text>`;
+        inner += `<text x="52" y="246" font-size="14" font-family="sans-serif" fill="#94a3b8">Arithmetic can close while the model is wrong.</text>`;
       } else {
         inner += node(320, 50, 'O', d >= 3 ? '−2' : '', '#0284c7');
         inner += node(190, 135, 'O', d >= 2 ? '−1' : '', '#d97706');
@@ -318,7 +318,7 @@ export class RedoxAdaptiveController {
         }
         if (d >= 3) {
           inner += `<text x="48" y="315" font-size="14" font-family="monospace" font-weight="800" fill="#6ee7b7">x + 4(−1) + (−2) = 0</text>`;
-          inner += `<text x="48" y="338" font-size="13" font-family="sans-serif" fill="#94a3b8">Structure changes assignments; charge conservation still governs.</text>`;
+          inner += `<text x="48" y="338" font-size="14" font-family="sans-serif" fill="#94a3b8">Structure changes assignments; charge conservation still governs.</text>`;
         }
       }
     } else if (this.currentBlockIndex === 1) {
@@ -340,7 +340,7 @@ export class RedoxAdaptiveController {
           }
         });
         if (d >= 2) {
-          inner += `<text x="52" y="310" font-size="13" font-family="sans-serif" fill="#94a3b8">Different product ⇒ different final Mn oxidation state.</text>`;
+          inner += `<text x="52" y="310" font-size="14" font-family="sans-serif" fill="#94a3b8">Different product ⇒ different final Mn oxidation state.</text>`;
         }
         if (d >= 3) {
           inner += `<text x="52" y="336" font-size="14" font-family="monospace" font-weight="800" fill="#6ee7b7">product → ΔO.S. → electrons → n-factor</text>`;
@@ -358,7 +358,7 @@ export class RedoxAdaptiveController {
         inner += node(105, 155, 'Fe²⁺', d >= 2 ? '1 e⁻' : '', '#0284c7');
         inner += node(240, 155, 'C₂O₄²⁻', d >= 2 ? '2 e⁻' : '', '#d97706');
         if (d >= 1) {
-          inner += `<text x="52" y="230" font-size="13" font-family="sans-serif" fill="#94a3b8">Count both redox-active parts of the formula unit.</text>`;
+          inner += `<text x="52" y="230" font-size="14" font-family="sans-serif" fill="#94a3b8">Count both redox-active parts of the formula unit.</text>`;
         }
         if (d >= 2) {
           inner += `<text x="52" y="270" font-size="14" font-family="monospace" font-weight="800" fill="#6ee7b7">1 e⁻ + 2 e⁻ = 3 e⁻ per FeC₂O₄</text>`;
@@ -367,7 +367,7 @@ export class RedoxAdaptiveController {
           inner += node(500, 155, 'Cr₂O₇²⁻', '6 e⁻', '#7c3aed');
           inner += arrow(290, 155, 448, 155, '#8b5cf6');
           inner += `<text x="52" y="312" font-size="14" font-family="monospace" font-weight="800" fill="#6ee7b7">2 × 3 e⁻ = 1 × 6 e⁻</text>`;
-          inner += `<text x="52" y="336" font-size="13" font-family="sans-serif" fill="#94a3b8">Stoichiometric ratio emerges from electron matching.</text>`;
+          inner += `<text x="52" y="336" font-size="14" font-family="sans-serif" fill="#94a3b8">Stoichiometric ratio emerges from electron matching.</text>`;
         }
       }
     }
@@ -398,7 +398,7 @@ export class RedoxAdaptiveController {
     }
 
     return `
-      <div class="redox-adaptive-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;">
+      <div class="redox-adaptive-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui, sans-serif);">
         
         <!-- Header -->
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1rem;border-bottom:2px solid #e2e8f0;">
@@ -412,8 +412,11 @@ export class RedoxAdaptiveController {
             <p style="margin:0.25rem 0 0;color:#475569;font-size:1rem;">A69 Pilot 2 · Hard-Concept Diagnosis &amp; Electron Equivalence</p>
           </div>
           
-          <div style="display:flex;gap:12px;align-items:center;">
-            <span style="font-size:0.85rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+            <button type="button" id="btn-launch-v35-suite" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0284c7;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">
+              ⚡ Launch Redox Master Suite →
+            </button>
+            <span style="font-size:0.875rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
               [Formative Self-Check · Diagnostic Practice (HOLD)]
             </span>
             <button type="button" id="btn-back-chem" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">← Back</button>
@@ -443,8 +446,8 @@ export class RedoxAdaptiveController {
           <!-- Left Column: Visual Representation & Advisory -->
           <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
-              <span style="font-size:0.8rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">${escapeHtml(b.kicker)}</span>
-              <span style="font-size:0.85rem;color:#64748b;">Visual Depth: <strong>V${p.hintDepth} / V3</strong></span>
+              <span style="font-size:0.875rem;font-weight:800;color:#0284c7;background:#e0f2fe;padding:2px 8px;border-radius:4px;">${escapeHtml(b.kicker)}</span>
+              <span style="font-size:0.875rem;color:#64748b;">Visual Depth: <strong>V${p.hintDepth} / V3</strong></span>
             </div>
             
             <h2 style="margin:0 0 0.5rem;font-size:1.35rem;font-weight:700;color:#0f172a;">${escapeHtml(b.title)}</h2>
@@ -457,7 +460,7 @@ export class RedoxAdaptiveController {
 
             <!-- Route Advisory Box -->
             <div id="route" style="border:1px solid transparent;border-radius:8px;padding:12px 16px;${routeClass}">
-              <div style="font-size:0.85rem;font-weight:800;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.02em;">
+              <div style="font-size:0.875rem;font-weight:800;text-transform:uppercase;margin-bottom:4px;letter-spacing:0.02em;">
                 CHECKPOINT: <strong>${escapeHtml(state)}</strong>
               </div>
               <div style="font-size:0.9rem;line-height:1.4;">${escapeHtml(routeCopy)}</div>
@@ -471,7 +474,7 @@ export class RedoxAdaptiveController {
             <div style="padding-bottom:1.25rem;border-bottom:1px solid #e2e8f0;">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                 <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Demand 1 · Core Concept</h3>
-                <span style="font-size:0.8rem;font-weight:700;color:${p.conceptSolved ? '#047857' : '#64748b'};background:${p.conceptSolved ? '#d1fae5' : '#f1f5f9'};padding:2px 8px;border-radius:4px;">
+                <span style="font-size:0.875rem;font-weight:700;color:${p.conceptSolved ? '#047857' : '#64748b'};background:${p.conceptSolved ? '#d1fae5' : '#f1f5f9'};padding:2px 8px;border-radius:4px;">
                   ${p.conceptSolved ? '✓ Solved' : 'Unsolved'}
                 </span>
               </div>
@@ -494,7 +497,7 @@ export class RedoxAdaptiveController {
             <div style="padding-bottom:1.25rem;border-bottom:1px solid #e2e8f0;">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                 <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Demand 2 · Implementation</h3>
-                <span style="font-size:0.8rem;font-weight:700;color:${p.implSolved ? '#047857' : '#64748b'};background:${p.implSolved ? '#d1fae5' : '#f1f5f9'};padding:2px 8px;border-radius:4px;">
+                <span style="font-size:0.875rem;font-weight:700;color:${p.implSolved ? '#047857' : '#64748b'};background:${p.implSolved ? '#d1fae5' : '#f1f5f9'};padding:2px 8px;border-radius:4px;">
                   ${p.implSolved ? '✓ Solved' : 'Unsolved'}
                 </span>
               </div>
@@ -582,7 +585,7 @@ export function mountRedoxAdaptive(
     }
 
     root.innerHTML = `
-      <div class="redox-adaptive-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;">
+      <div class="redox-adaptive-hub" style="display:flex;flex-direction:column;gap:1.5rem;max-width:1400px;margin:0 auto;padding:1.5rem;box-sizing:border-box;font-family:var(--g9-font-family, system-ui, sans-serif);">
         
         <!-- Header -->
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;padding-bottom:1rem;border-bottom:2px solid #e2e8f0;">
@@ -597,7 +600,7 @@ export function mountRedoxAdaptive(
           </div>
           
           <div style="display:flex;gap:12px;align-items:center;">
-            <span style="font-size:0.85rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
+            <span style="font-size:0.875rem;font-weight:700;background:#fef3c7;color:#92400e;padding:6px 12px;border-radius:6px;border:1px solid #fde68a;">
               [Formative Self-Check · Diagnostic Practice (HOLD)]
             </span>
             <button type="button" id="btn-back-chem" style="min-height:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#0f172a;color:white;border:none;border-radius:6px;cursor:pointer;font-weight:700;">← Back</button>
@@ -628,7 +631,7 @@ export function mountRedoxAdaptive(
                   <strong style="color:#0f172a;font-size:1rem;">${idx + 1} · ${escapeHtml(blk.kicker.split('·')[1]?.trim() || blk.kicker)}</strong>
                   <span class="status-dot" style="width:12px;height:12px;border-radius:50%;background:${dotColor};display:inline-block;"></span>
                 </div>
-                <div style="font-size:0.85rem;color:#64748b;">${escapeHtml(blk.title)}</div>
+                <div style="font-size:0.875rem;color:#64748b;">${escapeHtml(blk.title)}</div>
               </button>
             `;
           }).join('')}
@@ -640,13 +643,13 @@ export function mountRedoxAdaptive(
           <!-- Left Column: Challenge Cards -->
           <div style="display:flex;flex-direction:column;gap:16px;">
             <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:12px;padding:1.5rem;box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-              <div style="font-size:0.8rem;font-weight:800;color:#0284c7;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">${escapeHtml(b.kicker)}</div>
+              <div style="font-size:0.875rem;font-weight:800;color:#0284c7;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;">${escapeHtml(b.kicker)}</div>
               <h2 style="margin:0 0 0.5rem;font-size:1.35rem;color:#0f172a;font-weight:700;">${escapeHtml(b.title)}</h2>
               <p style="margin:0 0 1.25rem;color:#64748b;font-size:0.95rem;line-height:1.5;">${escapeHtml(b.why)}</p>
 
               <!-- Demand 1: Concept Challenge -->
               <div style="border:1px solid #c7d2fe;border-radius:8px;padding:1rem;background:#f5f3ff;margin-bottom:1rem;">
-                <div style="font-size:0.8rem;font-weight:800;color:#6366f1;text-transform:uppercase;margin-bottom:6px;">1. Conceptual Pivot</div>
+                <div style="font-size:0.875rem;font-weight:800;color:#6366f1;text-transform:uppercase;margin-bottom:6px;">1. Conceptual Pivot</div>
                 <div style="font-size:1rem;color:#1e1b4b;font-weight:600;margin-bottom:12px;">${escapeHtml(b.conceptPrompt)}</div>
                 
                 <div style="display:flex;flex-direction:column;gap:8px;">
@@ -663,7 +666,7 @@ export function mountRedoxAdaptive(
 
               <!-- Demand 2: Implementation Input -->
               <div style="border:1px solid #bae6fd;border-radius:8px;padding:1rem;background:#f0f9ff;margin-bottom:1rem;">
-                <div style="font-size:0.8rem;font-weight:800;color:#0284c7;text-transform:uppercase;margin-bottom:6px;">2. Quantitative Implementation</div>
+                <div style="font-size:0.875rem;font-weight:800;color:#0284c7;text-transform:uppercase;margin-bottom:6px;">2. Quantitative Implementation</div>
                 <div style="font-size:1rem;color:#0c4a6e;font-weight:600;margin-bottom:12px;">${escapeHtml(b.implementationPrompt)}</div>
 
                 <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
@@ -674,7 +677,7 @@ export function mountRedoxAdaptive(
 
               <!-- Route Advisory State -->
               <div id="route" class="route-advisory-box" style="padding:14px;border-radius:8px;border:1px solid;font-size:0.95rem;line-height:1.5;${routeClass}">
-                <div style="font-weight:800;font-size:0.85rem;margin-bottom:4px;text-transform:uppercase;">Routing Status: <strong>${state}</strong></div>
+                <div style="font-weight:800;font-size:0.875rem;margin-bottom:4px;text-transform:uppercase;">Routing Status: <strong>${state}</strong></div>
                 <div>${escapeHtml(routeCopy)}</div>
               </div>
 
@@ -737,6 +740,11 @@ export function mountRedoxAdaptive(
   };
 
   const bindEvents = () => {
+    // Launch Redox Master Suite top-level
+    root.querySelector<HTMLButtonElement>('#btn-launch-v35-suite')?.addEventListener('click', () => {
+      window.location.href = './chemistry/redox/explorers/redox_reactions/index.html';
+    });
+
     // Back navigation
     root.querySelector<HTMLButtonElement>('#btn-back-chem')?.addEventListener('click', () => {
       if (onNavigate) onNavigate('/subject/chemistry');
