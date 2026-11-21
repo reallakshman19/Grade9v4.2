@@ -10,7 +10,6 @@ import {DefaultProgressStore,refOk,timestamp} from '../runtime/progress.ts';
 import {Session} from '../runtime/session.ts';
 import type {Attempt,Ref,TaskRef,Response,Kind,WorkArtifact,Json,Session as SessionRecord,Grade} from '../runtime/types.ts';
 import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
-import { createStorageDriver } from '../runtime/storage.ts';
 export type ExamAidKind='FORMULA_SHEET'|'PERIODIC_TABLE'|'CALCULATOR'|'SCRATCHPAD';
 const aidKinds:readonly ExamAidKind[]=['FORMULA_SHEET','PERIODIC_TABLE','CALCULATOR','SCRATCHPAD'];
 export interface SharedStimulus {readonly id:string;readonly title:string;readonly contentHtml:string;readonly mediaRef?:string}
@@ -360,12 +359,12 @@ export function mountPaperWorkspace(
             <div style="display: flex; align-items: center; gap: 12px; color: #991b1b;">
               <span style="font-size: 1.4rem;">⏱️</span>
               <div>
-                <strong style="font-size: 0.95rem;">Exam Duration Elapsed (120-Minute Countdown Expired)</strong>
+                <strong style="font-size: 0.95rem;">Exam Duration Elapsed (${Math.round(state.timer.durationSeconds / 60)}-Minute Countdown Expired)</strong>
                 <div style="font-size: 0.85rem; color: #b91c1c;">Editing answers is locked. You can review your questions or start a new timed attempt with a fresh 2-hour timer.</div>
               </div>
             </div>
             <button type="button" id="btn-retake-from-banner" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
-              🔄 Retake Mock Paper (Fresh 2h Timer)
+              🔄 Retake Mock Paper (Fresh ${Math.round(state.timer.durationSeconds / 60)}-Minute Timer)
             </button>
           </div>
         ` : ''}
@@ -531,7 +530,7 @@ export function mountPaperWorkspace(
               <!-- Submission Bar -->
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-wrap: wrap; gap: 10px;">
                 <span style="font-size: 0.9rem; color: #64748b;">
-                  Parts Attempted: <strong>${Object.keys((controller as any).responses).length}</strong> of ${parts.length}
+                  Parts Attempted: <strong>${parts.filter(p => controller.getPartResponse(p.id) !== undefined).length}</strong> of ${parts.length}
                 </span>
 
                 <button type="button" id="submit-paper-btn" ${!state.ready || state.busy || state.isCommitted || state.timer.isExpired ? 'disabled' : ''} style="min-height: ${HIT_TARGET_PRIMARY_PX}px; padding: 12px 28px; background: ${state.isCommitted ? '#94a3b8' : '#16a34a'}; color: #ffffff; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 700; cursor: ${state.isCommitted ? 'default' : 'pointer'};">
@@ -559,25 +558,19 @@ export function mountPaperWorkspace(
     // Retake Exam handlers
     const handleRetake = async () => {
       const confirmed = window.confirm(
-        'Reset Mock Exam?\n\nThis will clear current draft answers and start a fresh 120-minute timed attempt.'
+        `Start a fresh ${Math.round(controller.getViewState().timer.durationSeconds / 60)}-minute mock exam attempt?\n\nYour previous draft or submitted attempt will be retained in local storage; the new attempt starts blank.`
       );
       if (!confirmed) return;
-      if (onRetake) {
-        await onRetake();
+      if (!onRetake) {
+        window.alert('Retake is unavailable in this host. Your saved work has not been erased.');
         return;
       }
       try {
-        const isNsejsPaper = controller.getPaperId().includes('nsejs');
-        const dbName = isNsejsPaper ? 'grade9_nsejs_runtime' : 'grade9_ioqm_runtime';
-        const driver = createStorageDriver({ dbName });
-        await driver.clear('sessions').catch(() => {});
-        await driver.clear('drafts').catch(() => {});
-        await driver.clear('attempts').catch(() => {});
-        await driver.clear('artifacts').catch(() => {});
+        await onRetake();
       } catch (err) {
-        console.error('Storage clear error on retake:', err);
+        console.error('Unable to start a new exam attempt:', err);
+        window.alert('Could not create a new attempt. Existing answers were kept. Retry or export your learner data.');
       }
-      window.location.reload();
     };
 
     root.querySelector<HTMLButtonElement>('#btn-retake-paper')?.addEventListener('click', handleRetake);
