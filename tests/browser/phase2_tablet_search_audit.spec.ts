@@ -20,16 +20,8 @@ test('Gate G6 & G7 — Phase 2 Universal Search Tablet Audit & End-to-End Journe
 
   const page = await context.newPage();
 
-  await t.test('1. Normal Application Entry -> Home Search -> Search Results Deep Link', async () => {
-    await page.goto(`${BASE_URL}/#/home`, { waitUntil: 'domcontentloaded' });
-    await page.waitForSelector('#g9-search-input', { timeout: 10000 });
-
-    // Type query in Homepage Hero Search
-    await page.fill('#g9-search-input', 'energy');
-    await page.click('#g9-search-btn');
-
-    // Asserts router transitions to #/search?q=energy
-    await page.waitForURL('**/#/search?q=energy');
+  await t.test('1. Search Results Deep Link', async () => {
+    await page.goto(`${BASE_URL}/#/search?q=energy`, { waitUntil: 'domcontentloaded' });
     await page.waitForSelector('.g9-search', { timeout: 10000 });
 
     // Asserts search input pre-fills 'energy' and results render

@@ -209,22 +209,12 @@ export class DashboardScreenController {
 <div class="g9-home-page" role="main">
   <style>${homeCss}</style>
 
-  <!-- Top Hero Header with Title and Search Input -->
+  <!-- Top Hero Header with Title -->
   <header class="g9-home-header">
     <div class="g9-header-brand">
       <div class="g9-brand-badge">Grade9 STEM Platform</div>
       <h1 class="g9-title">Interactive Curriculum Hub</h1>
       <p class="g9-subtitle">12.7" Tablet Touch Workspace · Foundation & Olympiad Learning</p>
-    </div>
-    <div class="g9-header-search-bar" role="search">
-      <input
-        type="search"
-        id="g9-search-input"
-        class="g9-search-input"
-        placeholder="🔍 Search topics, formulas, or exams..."
-        aria-label="Search curriculum"
-      />
-      <button type="button" id="g9-search-btn" class="g9-btn g9-btn-primary g9-btn-search">Search</button>
     </div>
   </header>
 
@@ -527,29 +517,7 @@ export const homeCss = `
   color: #475569;
   font-size: 1.05rem;
 }
-.g9-header-search-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex: 1 1 340px;
-  max-width: 460px;
-}
-.g9-search-input {
-  flex: 1;
-  min-height: 48px;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border: 2px solid #cbd5e1;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #0f172a;
-  transition: border-color 0.15s ease;
-}
-.g9-search-input:focus {
-  outline: none;
-  border-color: #0284c7;
-  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
-}
+
 
 /* Sections */
 .g9-section { margin-bottom: 2.5rem; }
@@ -909,30 +877,13 @@ export function mountDashboard(
     if (nav) {
       if (onNavigate) onNavigate(nav);
       else window.location.hash = '#' + nav;
-    } else if (btn.id === 'g9-search-btn') {
-      const input = root.querySelector<HTMLInputElement>('#g9-search-input');
-      const q = encodeURIComponent(input?.value.trim() || '');
-      const target = q ? `/search?q=${q}` : '/search';
-      if (onNavigate) onNavigate(target);
-      else window.location.hash = '#' + target;
     } else if (btn.dataset.subjectAction) {
       c.setActiveSubject(btn.dataset.subjectAction);
       render();
     }
   };
 
-  const keydown = (e: KeyboardEvent) => {
-    if (e.key === 'Enter' && (e.target as HTMLElement)?.id === 'g9-search-input') {
-      const input = e.target as HTMLInputElement;
-      const q = encodeURIComponent(input.value.trim());
-      const target = q ? `/search?q=${q}` : '/search';
-      if (onNavigate) onNavigate(target);
-      else window.location.hash = '#' + target;
-    }
-  };
-
   root.addEventListener('click', click);
-  root.addEventListener('keydown', keydown);
   render();
 
   return {
@@ -944,7 +895,6 @@ export function mountDashboard(
         window.removeEventListener('g9-active-session-changed', onSessionUpdated);
       }
       root.removeEventListener('click', click);
-      root.removeEventListener('keydown', keydown);
       root.replaceChildren();
     },
   };
