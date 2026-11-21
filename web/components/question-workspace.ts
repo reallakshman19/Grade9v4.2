@@ -96,6 +96,9 @@ export interface QuestionWorkspaceViewState {
 export interface WorkspaceBinding {
   readonly releaseId:string; readonly task:TaskRef;readonly assessment:Ref<'ASSESSMENT'>;
   readonly attemptId:string;readonly session:Session;readonly progress:DefaultProgressStore;readonly engine:StandardAssessmentEngine;
+  // Only a trusted release binding can authorize an individual precommit hint.
+  // Absence of reviewed hint authority must not reveal content or claim a penalty.
+  readonly authorizeHint?: (hintId:string,task:TaskRef)=>boolean;
 }
 export class QuestionWorkspaceController {
   private question:WorkspaceQuestionDescriptor;
@@ -113,7 +116,8 @@ export class QuestionWorkspaceController {
     this.hints=question.hints?structuredClone(question.hints):[];
     // A client-supplied answer key is not an assessment authority and must never
     // escape into public view-state snapshots.
-    const {correctKey: _untrustedKey, ...publicQuestion}=question;
+    const {correctKey: _untrustedKey,hints: _protectedHints,solutionSteps: _protectedSteps,explanationHtml: _protectedExplanation,limitingCheck: _protectedCheck,...publicQuestion}=question;
+    // Answer-adjacent material is not part of the precommit public view state.
     this.question=structuredClone(publicQuestion);
     this.orientation=initialOrientation;
     this.binding=binding&&{...binding,task:structuredClone(binding.task),assessment:structuredClone(binding.assessment)};
@@ -159,11 +163,11 @@ export class QuestionWorkspaceController {
     try{const b=this.binding,s=await this.boundSession();if(s.attemptIds.length)throw Error('WORKSPACE_COMMITTED');await b!.progress.saveDraft(s,this.wire(),this.work,this.revision);this.revision++;this.submissionStatus='DRAFT_SAVED';}finally{this.busy=false;}
   }
   unlockNextHint():boolean{
-    if(this.unlockedHintCount < this.hints.length){
-      this.unlockedHintCount++;
-      return true;
-    }
-    return false;
+    const next=this.hints[this.unlockedHintCount],b=this.binding;
+    if(!next||!b?.authorizeHint||this.question.status!=='RELEASED'||this.question.keyStatus!=='VERIFIED'||this.submissionStatus==='COMMITTED_LOCKED')return false;
+    try{if(b.authorizeHint(next.id,structuredClone(b.task))!==true)return false;}catch{return false;}
+    this.unlockedHintCount++;
+    return true;
   }
   private result(status:EvaluationResult['status'],reasonCode:string,points:number|null=null,maxPoints=this.question.maxPoints??0):EvaluationResult{
     return {status,rawPoints:points,maxPoints,keyStatus:this.question.keyStatus,academicHold:this.question.status==='HOLD',reasonCode};
@@ -203,7 +207,9 @@ export class QuestionWorkspaceController {
   getViewState(): QuestionWorkspaceViewState {
     const allFigures = this.question.figures || [];
     const missingFigures = allFigures.filter((f) => !f.available);
-    const hints = this.hints.length > 0 ? this.hints : (this.question.hints || []);
+    // Never expose hint bodies or even offer disclosure without an exact
+    // reviewed binding. The callback is evaluated for each reveal attempt.
+    const hints = this.binding?.authorizeHint&&this.question.status==='RELEASED'&&this.question.keyStatus==='VERIFIED' ? this.hints : [];
     const currentHints = hints.slice(0, this.unlockedHintCount);
 
     const isLandscape = this.orientation === 'LANDSCAPE';
