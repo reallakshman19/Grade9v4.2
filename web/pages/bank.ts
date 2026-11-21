@@ -152,11 +152,26 @@ export class QuestionBankScreenController {
       if (!this.filter.includeWithdrawn && q.status === 'WITHDRAWN') {
         return false;
       }
-      if (this.filter.subject && q.subjectCode !== this.filter.subject) {
-        return false;
+      if (this.filter.subject) {
+        const fs = this.filter.subject.toUpperCase().trim();
+        const qs = (q.subject || '').toUpperCase();
+        const matchesSubj = q.subjectCode === fs ||
+          qs === fs ||
+          (fs === 'MATH' && (q.subjectCode === 'MATH' || qs === 'MATHEMATICS')) ||
+          (fs === 'PHYS' && (q.subjectCode === 'PHYS' || qs === 'PHYSICS')) ||
+          (fs === 'CHEM' && (q.subjectCode === 'CHEM' || qs === 'CHEMISTRY')) ||
+          (fs === 'BIO' && (q.subjectCode === 'BIO' || qs === 'BIOLOGY'));
+        if (!matchesSubj) return false;
       }
-      if (this.filter.topic && q.topicCode !== this.filter.topic) {
-        return false;
+      if (this.filter.topic) {
+        const ft = this.filter.topic.toUpperCase().replace(/[-_\s]+/g, '_').trim();
+        const qt = q.topicCode.toUpperCase().replace(/[-_\s]+/g, '_').trim();
+        const qtn = (q.topic || '').toUpperCase().replace(/[-_\s]+/g, '_').trim();
+        const matchesTopic = qt === ft ||
+          (qt.length > 0 && ft.includes(qt)) ||
+          (ft.length > 0 && qt.includes(ft)) ||
+          (qtn.length > 0 && (qtn === ft || qtn.includes(ft) || ft.includes(qtn)));
+        if (!matchesTopic) return false;
       }
       if (this.filter.exam && q.exam && !q.exam.toLowerCase().includes(this.filter.exam.toLowerCase())) {
         return false;

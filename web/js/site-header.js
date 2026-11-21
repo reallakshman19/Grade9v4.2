@@ -212,7 +212,7 @@
       list.push({
         id: q.id,
         title: (q.exam || '') + ' ' + (q.year || '') + ' - ' + (q.topic || ''),
-        url: 'question-bank/index.html?q=' + encodeURIComponent(q.id) + '#' + encodeURIComponent(q.id),
+        url: 'index.html#/question/' + encodeURIComponent(q.id),
         type: 'QUESTION',
         search_text: [q.id, q.subject, q.topic, q.stem].join(' ')
       });
@@ -402,7 +402,7 @@
     const createBridge = () => {
       const bridge = document.createElement('a');
       bridge.className = 'g9-search-qb-bridge';
-      bridge.href = effectiveRoot + 'question-bank/index.html?q=' + encodeURIComponent(input.value.trim());
+      bridge.href = effectiveRoot + 'index.html#/bank?q=' + encodeURIComponent(input.value.trim());
       const leftText = document.createElement('span');
       leftText.textContent = `View all ${countQuestions} questions in Question Bank`;
       const rightArrow = document.createElement('span');

@@ -260,10 +260,18 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       window.location.hash = '#' + route;
     });
     activeDisposer = () => m.dispose();
-  } else if (match.type === 'BANK' || clean === 'bank' || clean === 'question-bank') {
+  } else if (match.type === 'BANK' || clean === 'bank' || clean.startsWith('bank?') || clean === 'question-bank' || clean.startsWith('question-bank?')) {
     const controller = createQuestionBankScreen();
-    if (Object.keys(match.query).length > 0) {
-      const searchParams = new URLSearchParams(match.query);
+    const searchParams = new URLSearchParams(match.query);
+    if (typeof window !== 'undefined' && window.location.search) {
+      const windowParams = new URLSearchParams(window.location.search);
+      for (const [key, value] of windowParams) {
+        if (!searchParams.has(key)) {
+          searchParams.set(key, value);
+        }
+      }
+    }
+    if ([...searchParams.keys()].length > 0) {
       controller.loadFromUrlParams(searchParams);
     }
     const m = mountQuestionBankScreen(content, controller, (route) => {

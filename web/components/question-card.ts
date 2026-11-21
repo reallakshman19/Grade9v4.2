@@ -20,7 +20,9 @@ export interface PublicQuestionSummary {
   readonly code: string;
   readonly stemPreview: string;
   readonly subjectCode: string;
+  readonly subject?: string;
   readonly topicCode: string;
+  readonly topic?: string;
   readonly difficulty: QuestionDifficulty;
   readonly role: string;
   readonly status: QuestionReleaseStatus;
@@ -55,7 +57,9 @@ export function sanitizePublicQuestionSummary(raw: any): PublicQuestionSummary {
     code: String(raw.code || raw.id || 'Q'),
     stemPreview: raw.status==='RELEASED'?String(raw.stem || raw.stemPreview || '').slice(0,300):'',
     subjectCode: String(raw.subjectCode || raw.subject || 'PHYS').toUpperCase(),
+    subject: raw.subject ? String(raw.subject) : (raw.subjectCode === 'MATH' ? 'Mathematics' : raw.subjectCode === 'CHEM' ? 'Chemistry' : raw.subjectCode === 'BIO' ? 'Biology' : 'Physics'),
     topicCode: String(raw.topicCode || raw.topic || 'WPE').toUpperCase(),
+    topic: raw.topic ? String(raw.topic) : undefined,
     difficulty: (raw.difficulty || (raw.difficultyBand === 'D1' ? 'FOUNDATION' : raw.difficultyBand === 'D2' ? 'INTERMEDIATE' : raw.difficultyBand === 'D3' ? 'ADVANCED' : 'OLYMPIAD')) as QuestionDifficulty,
     role: String(raw.role || (raw.isCompetitive ? 'CORE2' : 'CORE1A')).toUpperCase(),
     status: (raw.status === 'RELEASED' || raw.status === 'WITHDRAWN' ? raw.status : 'HOLD') as QuestionReleaseStatus,

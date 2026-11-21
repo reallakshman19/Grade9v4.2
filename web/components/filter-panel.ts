@@ -74,11 +74,18 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
     sort?: string;
   } = {};
 
-  const subject = params.get('subject');
-  if (subject) filter.subject = subject.toUpperCase();
+  const subject = params.get('subject') || params.get('subj');
+  if (subject) {
+    const s = subject.toUpperCase().trim();
+    if (s === 'MATHEMATICS' || s === 'MATH') filter.subject = 'MATH';
+    else if (s === 'PHYSICS' || s === 'PHYS') filter.subject = 'PHYS';
+    else if (s === 'CHEMISTRY' || s === 'CHEM') filter.subject = 'CHEM';
+    else if (s === 'BIOLOGY' || s === 'BIO') filter.subject = 'BIO';
+    else filter.subject = s;
+  }
 
   const topic = params.get('topic');
-  if (topic) filter.topic = topic.toUpperCase();
+  if (topic) filter.topic = topic.toUpperCase().trim();
 
   const difficulty = params.get('difficulty');
   if (difficulty) {
@@ -97,7 +104,7 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
   const sort = params.get('sort');
   if (sort) filter.sort = sort.trim();
 
-  const query = params.get('q');
+  const query = params.get('q') || params.get('query');
   if (query) filter.query = query.trim();
 
   const withdrawn = params.get('withdrawn');

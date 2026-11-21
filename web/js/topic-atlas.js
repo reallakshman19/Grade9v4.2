@@ -1138,14 +1138,14 @@
                         <div style="margin-bottom:6px;padding:6px 8px;background:var(--bg);border:1px solid var(--border);border-radius:4px;">
                           <div style="display:flex;justify-content:space-between;align-items:center;">
                             <strong style="font-size:11px;font-family:var(--font-mono);color:var(--accent);">${escapeHtml(q.id)}</strong>
-                            <a href="../../question-bank/index.html?q=${encodeURIComponent(q.id)}#${encodeURIComponent(q.id)}" style="font-size:11px;color:var(--accent);text-decoration:none;" target="_blank">Open in Question Bank &nearr;</a>
+                            <a href="../../index.html#/question/${encodeURIComponent(q.id)}" style="font-size:11px;color:var(--accent);text-decoration:none;">Open in Question Bank &nearr;</a>
                           </div>
                           ${q.stem ? `<div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${escapeHtml(q.stem)}</div>` : ''}
                         </div>
                       `).join('')}
                     </div>
                   ` : ''}
-                  <a href="../../question-bank/index.html?subject=${encodeURIComponent(state.matrix.subject || '')}&mode=study" class="btn outline" style="display:inline-block;font-size:11px;padding:4px 8px;color:var(--accent);border:1px solid var(--border);border-radius:4px;text-decoration:none;">
+                  <a href="../../index.html#/bank?subject=${encodeURIComponent(state.matrix.subject || '')}" class="btn outline" style="display:inline-block;font-size:11px;padding:4px 8px;color:var(--accent);border:1px solid var(--border);border-radius:4px;text-decoration:none;">
                     🎯 Practice Topic in Question Bank &rarr;
                   </a>
                 </div>

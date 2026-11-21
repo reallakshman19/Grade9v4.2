@@ -142,4 +142,27 @@ describe('Question Bank Screen Controller & Native DOM Mounting', () => {
     controller.setPage(2);
     assert.equal(controller.getViewState().currentPage, 2);
   });
+
+  it('directly filters URL parameters: ?subject=Mathematics&topic=vectors yields 13 JEE Main questions', () => {
+    const controller = createQuestionBankScreen();
+    controller.loadFromUrlParams(new URLSearchParams('subject=Mathematics&topic=vectors'));
+    const state = controller.getViewState();
+
+    assert.equal(state.status, 'POPULATED');
+    assert.equal(state.totalMatchingCount, 13, 'Expected 13 JEE Main Vector Algebra questions');
+    assert.equal(state.pageItems[0].id, 'VEC-Q01');
+    assert.match(state.pageItems[0].title || '', /Vector Algebra/);
+  });
+
+  it('directly filters URL parameters: ?subject=Physics&topic=fluids', () => {
+    const controller = createQuestionBankScreen();
+    controller.loadFromUrlParams(new URLSearchParams('subject=Physics&topic=fluids'));
+    const state = controller.getViewState();
+
+    assert.equal(state.status, 'POPULATED');
+    assert.ok(state.totalMatchingCount > 0, 'Expected matching Physics Fluids questions');
+    for (const item of state.pageItems) {
+      assert.equal(item.subjectCode, 'PHYS');
+    }
+  });
 });
