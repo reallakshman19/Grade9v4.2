@@ -440,11 +440,394 @@ function createGravitationLesson(): Core1ALessonDefinition {
   };
 }
 
+
+function createNlmLesson(): Core1ALessonDefinition {
+  const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
+    A1: {
+      title: 'Phenomenon: Force, Inertia & Acceleration Balance',
+      summary: 'Newton First & Second Laws: F_net = m * a.',
+      bodyText: 'Every body persists in its state of rest or uniform rectilinear motion unless acted upon by a non-zero resultant external force. Force is the rate of change of linear momentum: F = dp/dt = m(dv/dt) = m a for constant mass systems.'
+    },
+    A2: {
+      title: 'Prerequisite Conventions: Free-Body Diagrams & Axis Resolution',
+      summary: 'Sign conventions, normal reaction contact vectors, and orthogonal projection.',
+      bodyText: 'We isolate the physical body as a point mass at its center of mass. All forces are drawn originating from the body. Coordinate axes are aligned with the direction of acceleration whenever possible to minimize cross-coupled components.'
+    },
+    A3: {
+      title: 'Representation Bridge: Free-Body Diagram to Component Equations',
+      summary: 'Resolving vectors into orthogonal algebraic constraints: Σ F_x = m a_x, Σ F_y = m a_y.',
+      bodyText: 'By resolving all applied, gravitational, normal, and frictional forces along coordinate axes, vector Newton laws decompose into independent scalar algebraic balances.'
+    },
+    A4: {
+      title: 'Law & Conditions: Third Law Pairs & Action-Reaction Isolation',
+      summary: 'F_AB = -F_BA acts on distinct bodies and never cancel on a single isolated system.',
+      bodyText: 'Newton Third Law states that whenever body A exerts force on body B, body B simultaneously exerts an equal and opposite force on body A. Because these two forces act on different bodies, they never cancel within a single free-body diagram.'
+    },
+    A5: {
+      title: 'Scientific Simulation: Atwood Machine & Pulley Constraints',
+      summary: 'Tension transmission in ideal massless inextensible strings over frictionless pulleys.',
+      bodyText: 'For two connected masses m₁ and m₂ over a light frictionless pulley, the string constraint requires identical magnitude of acceleration: a = |m₂ - m₁| g / (m₁ + m₂). String tension T = 2 m₁ m₂ g / (m₁ + m₂).'
+    },
+    A6: {
+      title: 'Reasoning Construction: Two-Block Tension & Acceleration Worked Example',
+      summary: 'Step-by-step resolution of coupled acceleration and string tension.',
+      bodyText: 'Two blocks m₁ = 3 kg and m₂ = 5 kg are suspended over a light frictionless pulley. Net unbalanced gravity is (5 - 3)(9.8) = 19.6 N. Total accelerated mass is 8 kg. Acceleration a = 19.6 / 8 = 2.45 m/s². Tension T = 3(9.8 + 2.45) = 36.75 N.'
+    },
+    A7: {
+      title: 'Misconception Alert: Normal Force vs Gravity Action-Reaction',
+      summary: 'Normal force is NOT the reaction to gravity; both act on the block!',
+      bodyText: 'A common mistake is claiming normal force N and gravity mg are an action-reaction pair. They both act on the book! The reaction to Earth gravity on the book is the book gravitational attraction on Earth.'
+    },
+    A8: {
+      title: 'Boundary & Changed Demand: Static vs Kinetic Friction Transition',
+      summary: 'Static friction is self-adjusting up to f_max = μ_s N; kinetic friction is constant f_k = μ_k N.',
+      bodyText: 'Static friction matches applied force up to the impending slip threshold f_s,max = μ_s N. Once motion initiates, friction drops to the kinetic value f_k = μ_k N, which is independent of relative velocity over moderate speed ranges.'
+    },
+    A9: {
+      title: 'Synthesis: Coupled Multi-Body Systems & Internal Force Elimination',
+      summary: 'Treating connected blocks as a single compound system to eliminate internal tension.',
+      bodyText: 'When analyzing connected multi-mass assemblies, choosing the entire assembly as the system eliminates internal string tensions and contact reactions from the external force ledger, directly yielding system acceleration.'
+    }
+  };
+
+  return {
+    lessonRef: ref('LESSON', 'lesson:physics-nlm'),
+    constructionRef: ref('CONSTRUCTION', 'construction:physics-nlm'),
+    title: 'Newton\'s Laws of Motion & Dynamics: Concept Construction (9 Units)',
+    subject: 'PHYSICS',
+    topicId: 'topic:nlm',
+    depthBadge: 'MEDIUM',
+    status: 'HOLD',
+    units: CORE1A_ORDERED_ROLES.map(role => ({
+      role,
+      title: roleTitles[role].title,
+      summary: roleTitles[role].summary,
+      bodyText: roleTitles[role].bodyText,
+      blockRefs: [ref('SOURCE', 'source:' + role)],
+      evidenceRefs: [ref('WARRANT', 'warrant:' + role)]
+    })),
+    anchors: [
+      {
+        level: 'FOUNDATION',
+        taskRef: ref('QUESTION', 'question:anchor:nlm-foundation'),
+        title: 'Foundation Anchor: Unbalanced Net Force & Acceleration',
+        prompt: 'Calculate the acceleration of a 5 kg mass subjected to a net horizontal force of 25 N on a frictionless surface.',
+        solutionRef: ref('SOLUTION', 'solution:anchor:nlm-foundation'),
+        solutionSteps: [
+          '1. Apply Newton\'s Second Law: F_net = m * a.',
+          '2. Solve for acceleration: a = F_net / m = 25 N / 5 kg = 5.0 m/s².'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:foundation')]
+      },
+      {
+        level: 'CONNECTED',
+        taskRef: ref('QUESTION', 'question:anchor:nlm-connected'),
+        title: 'Connected Anchor: Atwood Machine Acceleration',
+        prompt: 'An Atwood machine connects masses m₁ = 3 kg and m₂ = 5 kg over a frictionless pulley (g = 9.8 m/s²). Find the acceleration.',
+        solutionRef: ref('SOLUTION', 'solution:anchor:nlm-connected'),
+        solutionSteps: [
+          '1. Equation of motion for system: (m₂ - m₁) g = (m₁ + m₂) a.',
+          '2. a = (5 - 3) * 9.8 / (5 + 3) = 19.6 / 8 = 2.45 m/s².'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:connected')]
+      },
+      {
+        level: 'ADVANCED',
+        taskRef: ref('QUESTION', 'question:anchor:nlm-advanced'),
+        title: 'Advanced Anchor: Friction Slip Threshold',
+        prompt: 'A 10 kg block rests on a rough floor with μ_s = 0.4 and μ_k = 0.3. Find the minimum force to initiate motion and acceleration under 50 N (g = 9.8 m/s²).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:nlm-advanced'),
+        solutionSteps: [
+          '1. Normal force: N = mg = 10 * 9.8 = 98 N.',
+          '2. Threshold force: F_slip = μ_s * N = 0.4 * 98 = 39.2 N.',
+          '3. Under F = 50 N: Kinetic friction f_k = μ_k * N = 0.3 * 98 = 29.4 N.',
+          '4. Net force: F_net = 50 - 29.4 = 20.6 N => a = 20.6 / 10 = 2.06 m/s².'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:advanced')]
+      }
+    ],
+    modelConfig: {
+      modelId: 'PHYS-MODEL-NLM',
+      modelName: 'Newton Dynamics & Atwood Machine Model',
+      defaultParameters: { m1: 3, m2: 5 },
+      parameterBounds: { m1: { min: 1, max: 10 }, m2: { min: 1, max: 10 } },
+      qualitativePredictionPrompt: 'Predict whether acceleration increases or decreases when mass m₂ is increased while m₁ remains constant.',
+      predictionOptions: [
+        'Acceleration increases because the gravitational imbalance increases faster than total system mass',
+        'Acceleration remains constant because gravitational acceleration g is fixed',
+        'Acceleration decreases due to higher inertial mass'
+      ],
+      expectedPredictionIndex: 0,
+      observationNote: 'a = (m₂ - m₁)g / (m₁ + m₂). As m₂ >> m₁, a approaches g asymptotically.'
+    },
+    synthesisTaskRef: ref('QUESTION', 'question:synthesis:nlm'),
+    synthesisTaskPrompt: 'Synthesize Newton\'s Second Law with rotational inertia of the pulley to find acceleration when pulley mass M is non-negligible.',
+    freshTaskRef: ref('FRESH_TASK', 'fresh:nlm-01')
+  };
+}
+
+function createCircularBankingLesson(): Core1ALessonDefinition {
+  const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
+    A1: {
+      title: 'Phenomenon: Centripetal Acceleration & Directional Turning',
+      summary: 'Kinematics of uniform circular motion: a_c = v² / R directed radially inward.',
+      bodyText: 'Even at constant scalar speed v, a body traveling in a circular path undergoes continuous acceleration because its velocity direction vector continuously changes. This centripetal acceleration always points radially inward toward the instantaneous center of curvature.'
+    },
+    A2: {
+      title: 'Prerequisite Conventions: Radial-Tangential Coordinates',
+      summary: 'Polar unit vectors r̂ (outward) and θ̂ (tangential counterclockwise).',
+      bodyText: 'We decompose dynamics into radial (centripetal) and tangential directions. Centripetal acceleration is a_r = -v²/R r̂. Tangential acceleration a_t = dv/dt θ̂ governs speed changes.'
+    },
+    A3: {
+      title: 'Representation Bridge: Banked Incline Free-Body Decomposition',
+      summary: 'Resolving normal contact reaction N into horizontal centripetal component N sin θ and vertical balance N cos θ.',
+      bodyText: 'On a roadway banked at angle θ, the normal force tilts toward the turn center. The horizontal component N sin θ supplies centripetal acceleration without requiring tire friction.'
+    },
+    A4: {
+      title: 'Law & Conditions: Design Banking Angle Formula',
+      summary: 'tan θ = v² / (R g) eliminates reliance on lateral tire friction.',
+      bodyText: 'Balancing vertical forces: N cos θ = mg. Supplying horizontal centripetal force: N sin θ = m v² / R. Dividing the two equations yields tan θ = v² / (R g).'
+    },
+    A5: {
+      title: 'Scientific Simulation: Safe Velocity Envelope with Friction',
+      summary: 'Maximum and minimum speeds on banked turns with static friction coefficient μ.',
+      bodyText: 'When tire friction is included, the vehicle can travel within a safe velocity window [v_min, v_max]. Impending outward slip yields v_max = √[R g (tan θ + μ) / (1 - μ tan θ)].'
+    },
+    A6: {
+      title: 'Reasoning Construction: Highway Curve Design Worked Example',
+      summary: 'Step-by-step evaluation of banking angle for R = 200 m and v = 20 m/s.',
+      bodyText: 'Given curve radius R = 200 m, design speed v = 20 m/s (72 km/h), g = 9.8 m/s². tan θ = v² / (Rg) = 400 / (200 * 9.8) = 400 / 1960 ≈ 0.2041. Banking angle θ = arctan(0.2041) ≈ 11.5°.'
+    },
+    A7: {
+      title: 'Misconception Alert: Centrifugal Force is NOT a Real Force',
+      summary: 'Centrifugal force is an apparent inertial effect in rotating frames, not a physical interaction.',
+      bodyText: 'In an inertial reference frame, there is NO outward centrifugal force. The outward sensation is merely the body\'s own inertia attempting to continue along a straight tangential path.'
+    },
+    A8: {
+      title: 'Boundary & Changed Demand: Flat Curve Friction Limit',
+      summary: 'When banking angle θ = 0°, maximum speed is determined purely by friction: v_max = √(μ g R).',
+      bodyText: 'On an unbanked flat roadway (θ = 0), centripetal force must be supplied entirely by lateral friction: f_s = m v² / R ≤ μ_s mg => v_max = √(μ_s g R).'
+    },
+    A9: {
+      title: 'Synthesis: Vertical Loop Dynamics & Minimum Apex Speed',
+      summary: 'Centripetal dynamics in vertical circles where gravity assists at the crest: v_top ≥ √(g R).',
+      bodyText: 'In vertical loops, normal force and gravity both point downward at the crest: N + mg = m v² / R. To prevent detachment, normal force N ≥ 0 => minimum apex speed is v_min = √(g R).'
+    }
+  };
+
+  return {
+    lessonRef: ref('LESSON', 'lesson:physics-circular-banking'),
+    constructionRef: ref('CONSTRUCTION', 'construction:physics-circular-banking'),
+    title: 'Circular Motion & Roadway Banking: Concept Construction (9 Units)',
+    subject: 'PHYSICS',
+    topicId: 'topic:circular-banking',
+    depthBadge: 'MEDIUM',
+    status: 'HOLD',
+    units: CORE1A_ORDERED_ROLES.map(role => ({
+      role,
+      title: roleTitles[role].title,
+      summary: roleTitles[role].summary,
+      bodyText: roleTitles[role].bodyText,
+      blockRefs: [ref('SOURCE', 'source:' + role)],
+      evidenceRefs: [ref('WARRANT', 'warrant:' + role)]
+    })),
+    anchors: [
+      {
+        level: 'FOUNDATION',
+        taskRef: ref('QUESTION', 'question:anchor:circ-foundation'),
+        title: 'Foundation Anchor: Ideal Banking Angle',
+        prompt: 'Calculate the ideal banking angle for a highway curve of radius R = 200 m designed for speed v = 20 m/s (g = 9.8 m/s²).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:circ-foundation'),
+        solutionSteps: [
+          '1. Formula: tan θ = v² / (R * g).',
+          '2. tan θ = (20)² / (200 * 9.8) = 400 / 1960 ≈ 0.2041.',
+          '3. θ = arctan(0.2041) ≈ 11.5°.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:foundation')]
+      },
+      {
+        level: 'CONNECTED',
+        taskRef: ref('QUESTION', 'question:anchor:circ-connected'),
+        title: 'Connected Anchor: Centripetal Acceleration Magnitude',
+        prompt: 'Find the centripetal acceleration of a car negotiating a curve of radius 50 m at speed 15 m/s.',
+        solutionRef: ref('SOLUTION', 'solution:anchor:circ-connected'),
+        solutionSteps: [
+          '1. a_c = v² / R.',
+          '2. a_c = (15)² / 50 = 225 / 50 = 4.5 m/s².'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:connected')]
+      },
+      {
+        level: 'ADVANCED',
+        taskRef: ref('QUESTION', 'question:anchor:circ-advanced'),
+        title: 'Advanced Anchor: Maximum Safe Speed with Friction',
+        prompt: 'A curve of radius R = 100 m is banked at θ = 20° with friction coefficient μ = 0.3 (g = 9.8 m/s²). Calculate the maximum safe speed without skidding.',
+        solutionRef: ref('SOLUTION', 'solution:anchor:circ-advanced'),
+        solutionSteps: [
+          '1. v_max = √[R * g * (tan θ + μ) / (1 - μ * tan θ)].',
+          '2. tan 20° ≈ 0.3640.',
+          '3. Numerator: 100 * 9.8 * (0.3640 + 0.3) = 980 * 0.6640 = 650.72.',
+          '4. Denominator: 1 - 0.3 * 0.3640 = 1 - 0.1092 = 0.8908.',
+          '5. v_max = √(650.72 / 0.8908) = √730.49 ≈ 27.0 m/s (97.3 km/h).'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:advanced')]
+      }
+    ],
+    modelConfig: {
+      modelId: 'PHYS-MODEL-CIRCULAR',
+      modelName: 'Banked Turn & Centripetal Dynamics Model',
+      defaultParameters: { radius: 100, speed: 20 },
+      parameterBounds: { radius: { min: 20, max: 500 }, speed: { min: 5, max: 50 } },
+      qualitativePredictionPrompt: 'Predict how required banking angle changes if turn radius is doubled while maintaining constant vehicle speed.',
+      predictionOptions: [
+        'Required banking angle decreases because required centripetal acceleration a_c = v²/R is halved',
+        'Required banking angle increases because the turn is longer',
+        'Required banking angle remains unchanged'
+      ],
+      expectedPredictionIndex: 0,
+      observationNote: 'tan θ = v² / (R g). Doubling R halves tan θ, reducing required tilt.'
+    },
+    synthesisTaskRef: ref('QUESTION', 'question:synthesis:circ'),
+    synthesisTaskPrompt: 'Synthesize conical pendulum dynamics with banked curves to prove the formal mathematical identity of their equilibrium angles.',
+    freshTaskRef: ref('FRESH_TASK', 'fresh:circ-01')
+  };
+}
+
+function createBiologyLesson(topicCode?: string): Core1ALessonDefinition {
+  const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
+    A1: {
+      title: 'Phenomenon: Cellular Energy & Biological Inheritance',
+      summary: 'Principles of biological systems: Genetic inheritance and cellular metabolism.',
+      bodyText: 'Living organisms maintain homeostatic order through continuous metabolic flux and transmit evolutionary information across generations via nucleic acid sequences governed by Mendelian and molecular genetics.'
+    },
+    A2: {
+      title: 'Prerequisite Conventions: Allelic Notation & Punnett Coordinates',
+      summary: 'Dominant (capital) vs recessive (lowercase) alleles and chromosome ploidy.',
+      bodyText: 'In diploid genetics, uppercase letters represent dominant alleles while lowercase letters denote recessive alleles. Homozygous organisms possess identical alleles (AA, aa) while heterozygotes possess distinct alleles (Aa).'
+    },
+    A3: {
+      title: 'Representation Bridge: Punnett Square to Phenotypic Ratios',
+      summary: 'Mapping gametic independent assortment to probability quadrants.',
+      bodyText: 'The Punnett square organizes gametic combinations into a Cartesian product grid, demonstrating how equal segregation of homologous chromosomes yields precise phenotypic distributions.'
+    },
+    A4: {
+      title: 'Law & Conditions: Mendel\'s Laws of Segregation & Independent Assortment',
+      summary: 'First Law (Segregation) and Second Law (Independent Assortment of unlinked genes).',
+      bodyText: 'During gametogenesis, allele pairs separate so each gamete carries only one allele. Alleles of different genes assort independently during meiosis provided they reside on different chromosomes.'
+    },
+    A5: {
+      title: 'Scientific Simulation: Monohybrid & Dihybrid Cross Frequency',
+      summary: 'Stochastic gamete union predicting 3:1 monohybrid and 9:3:3:1 dihybrid ratios.',
+      bodyText: 'In large populations, crossing Aa x Aa yields 1/4 AA, 1/2 Aa, and 1/4 aa genotypic frequency, manifesting as a 3:1 dominant to recessive phenotypic ratio under complete dominance.'
+    },
+    A6: {
+      title: 'Reasoning Construction: Monohybrid Test Cross Worked Example',
+      summary: 'Step-by-step derivation of phenotypic frequencies in heterozygous crosses.',
+      bodyText: 'Crossing heterozygous pea plants (Tt x Tt): Gametes are 1/2 T and 1/2 t. Offspring genotypes: 1/4 TT, 2/4 Tt, 1/4 tt. Phenotypes: 3/4 Tall (75%), 1/4 Dwarf (25%).'
+    },
+    A7: {
+      title: 'Misconception Alert: Dominance Does NOT Mean More Common',
+      summary: 'Dominant alleles do not necessarily increase in frequency or represent the wild-type norm.',
+      bodyText: 'A common misconception is that dominant traits are automatically more prevalent in a population. Allele frequency is governed by natural selection and genetic drift (Hardy-Weinberg equilibrium), not dominance.'
+    },
+    A8: {
+      title: 'Boundary & Changed Demand: Incomplete Dominance & Codominance',
+      summary: 'When alleles do not exhibit complete dominance: 1:2:1 phenotypic ratios.',
+      bodyText: 'In incomplete dominance (e.g. snapdragon flower color), heterozygotes exhibit an intermediate phenotype (pink from red x white), so genotypic and phenotypic ratios coincide at 1:2:1.'
+    },
+    A9: {
+      title: 'Synthesis: Hardy-Weinberg Population Equilibrium',
+      summary: 'Algebraic equilibrium p² + 2pq + q² = 1 under random mating without evolutionary forces.',
+      bodyText: 'In an infinite, randomly mating population without mutation, migration, or selection, allele frequencies p and q remain constant across generations: p² + 2pq + q² = 1.'
+    }
+  };
+
+  return {
+    lessonRef: ref('LESSON', 'lesson:biology-core'),
+    constructionRef: ref('CONSTRUCTION', 'construction:biology-core'),
+    title: 'Biology & Living Systems: Concept Construction (9 Units)',
+    subject: 'BIOLOGY',
+    topicId: 'topic:genetics',
+    depthBadge: 'MEDIUM',
+    status: 'HOLD',
+    units: CORE1A_ORDERED_ROLES.map(role => ({
+      role,
+      title: roleTitles[role].title,
+      summary: roleTitles[role].summary,
+      bodyText: roleTitles[role].bodyText,
+      blockRefs: [ref('SOURCE', 'source:' + role)],
+      evidenceRefs: [ref('WARRANT', 'warrant:' + role)]
+    })),
+    anchors: [
+      {
+        level: 'FOUNDATION',
+        taskRef: ref('QUESTION', 'question:anchor:bio-foundation'),
+        title: 'Foundation Anchor: Monohybrid Phenotypic Ratio',
+        prompt: 'In a monohybrid cross between two heterozygous tall pea plants (Tt x Tt), what percentage of offspring will be tall?',
+        solutionRef: ref('SOLUTION', 'solution:anchor:bio-foundation'),
+        solutionSteps: [
+          '1. Punnett square combinations: TT, Tt, Tt, tt.',
+          '2. Tall genotypes (dominant T): TT (1) + Tt (2) = 3 out of 4.',
+          '3. Percentage = (3/4) * 100% = 75%.'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:foundation')]
+      },
+      {
+        level: 'CONNECTED',
+        taskRef: ref('QUESTION', 'question:anchor:bio-connected'),
+        title: 'Connected Anchor: Test Cross Proportion',
+        prompt: 'In a test cross between a heterozygous plant (Aa) and a homozygous recessive plant (aa), what fraction of offspring inherit the recessive phenotype?',
+        solutionRef: ref('SOLUTION', 'solution:anchor:bio-connected'),
+        solutionSteps: [
+          '1. Cross: Aa x aa.',
+          '2. Gametes: Parent 1 (A, a), Parent 2 (a).',
+          '3. Offspring: 1/2 Aa (dominant), 1/2 aa (recessive).',
+          '4. Proportion = 0.5 (50%).'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:connected')]
+      },
+      {
+        level: 'ADVANCED',
+        taskRef: ref('QUESTION', 'question:anchor:bio-advanced'),
+        title: 'Advanced Anchor: Dihybrid Recessive Frequency',
+        prompt: 'In an unlinked dihybrid cross (AaBb x AaBb), calculate the fraction of progeny that will be homozygous recessive for both traits (aabb).',
+        solutionRef: ref('SOLUTION', 'solution:anchor:bio-advanced'),
+        solutionSteps: [
+          '1. Probability of aa = 1/4.',
+          '2. Probability of bb = 1/4.',
+          '3. By independent assortment: P(aabb) = (1/4) * (1/4) = 1/16 ≈ 0.0625 (6.25%).'
+        ],
+        warrantRefs: [ref('WARRANT', 'warrant:advanced')]
+      }
+    ],
+    modelConfig: {
+      modelId: 'BIO-MODEL-PUNNETT',
+      modelName: 'Mendelian Genetics & Inheritance Model',
+      defaultParameters: { sampleSize: 100 },
+      parameterBounds: { sampleSize: { min: 10, max: 1000 } },
+      qualitativePredictionPrompt: 'Predict whether increasing sample size from 10 to 1000 trials moves observed phenotypic ratio closer to or farther from the theoretical 3:1 ratio.',
+      predictionOptions: [
+        'Closer to 3:1 due to the Law of Large Numbers reducing statistical sampling variance',
+        'Farther from 3:1 due to cumulative experimental error',
+        'Sample size has no effect on stochastic convergence'
+      ],
+      expectedPredictionIndex: 0,
+      observationNote: 'Law of Large Numbers guarantees empirical frequency converges to theoretical probability as trials increase.'
+    },
+    synthesisTaskRef: ref('QUESTION', 'question:synthesis:bio'),
+    synthesisTaskPrompt: 'Synthesize the chromosomal basis of inheritance with meiotic crossover to model genetic linkage mapping.',
+    freshTaskRef: ref('FRESH_TASK', 'fresh:bio-01')
+  };
+}
+
 export function createDefaultLesson(topicCode?: string): Core1ALessonDefinition {
   const code = (topicCode || '').toLowerCase();
   if (code.includes('grav')) return createGravitationLesson();
+  if (code.includes('circular') || code.includes('bank')) return createCircularBankingLesson();
+  if (code.includes('nlm') || code.includes('newton')) return createNlmLesson();
   if (code.includes('plane') || code.includes('projectile')) return createMotionPlaneLesson();
   if (code.includes('fluid') || code.includes('thrust') || code.includes('pressure')) return createFluidsLesson();
+  if (code.includes('bio') || code.includes('living') || code.includes('life') || code.includes('genet') || code.includes('ecol')) return createBiologyLesson(code);
   const roleTitles: Record<Core1ARole, { title: string; summary: string; bodyText: string }> = {
     A1: {
       title: 'Phenomenon: Work, Direction & Energy Transfer',
@@ -663,9 +1046,14 @@ export class Core1ALessonPageController {
   private modelObserved = false;
   private selectedPrediction: number | null = null;
   private modelParams: Record<string, number> = { x: 0 };
+  private topicCode: string = '';
+  private anchorAnswers: Map<AnchorLevel, string> = new Map();
+  private anchorFeedback: Map<AnchorLevel, { correct: boolean; message: string }> = new Map();
+  private anchorParams: Map<AnchorLevel, Record<string, number>> = new Map();
 
   constructor(config: LessonPageConfig = {}) {
     this.setOrientation(config.orientation ?? 'LANDSCAPE');
+    this.topicCode = config.topicCode || '';
     const def = config.lessonDefinition ?? createDefaultLesson(config.topicCode);
     this.rawDefinition = def ?? null;
 
@@ -775,6 +1163,33 @@ export class Core1ALessonPageController {
     return { position: x, potentialEnergy: u, kineticEnergy: k, totalEnergy: totalE, force: f, velocity: v, dynamicState: state };
   }
 
+  setAnchorAnswer(level: AnchorLevel, ans: string): void {
+    this.anchorAnswers.set(level, ans);
+  }
+
+  setAnchorAnswerFeedback(level: AnchorLevel, feedback: { correct: boolean; message: string } | null): void {
+    if (feedback) this.anchorFeedback.set(level, feedback);
+    else this.anchorFeedback.delete(level);
+  }
+
+  setAnchorParam(level: AnchorLevel, param: string, value: number): void {
+    const current = this.anchorParams.get(level) || {};
+    current[param] = value;
+    this.anchorParams.set(level, current);
+  }
+
+  checkAnchorAnswer(level: AnchorLevel, input: string): { correct: boolean; message: string } {
+    const rawAnchors = this.rawDefinition?.anchors || this.journey?.getLesson().anchors || [];
+    const a = new Core1AAnchorViewController({
+      anchors: rawAnchors,
+      synthesisTaskRef: this.journey!.getLesson().synthesisTaskRef,
+      synthesisTaskPrompt: this.journey!.getLesson().synthesisTaskPrompt,
+      initialLevel: level,
+      topicCode: this.topicCode,
+    });
+    return a.checkAnswer(level, input);
+  }
+
   selectAnchorTab(level: AnchorLevel) {
     if (!ANCHOR_LEVELS.includes(level)) throw Error('Invalid anchor');
     this.anchor = level;
@@ -857,7 +1272,11 @@ export class Core1ALessonPageController {
       synthesisTaskRef: l.synthesisTaskRef,
       synthesisTaskPrompt: l.synthesisTaskPrompt,
       initialLevel: this.anchor,
-      allowCandidateSolutions: true
+      allowCandidateSolutions: true,
+      studentAnswers: this.anchorAnswers,
+      feedback: this.anchorFeedback,
+      interactiveParams: this.anchorParams,
+      topicCode: this.topicCode
     });
     for (const rev of this.revealedSolutions) {
       if (!a.isSolutionRevealed(rev)) a.toggleSolution(rev);
@@ -1001,15 +1420,21 @@ export function mountCore1ALesson(root: HTMLElement, c: Core1ALessonPageControll
     if (!active || !b || b.disabled || !root.contains(b)) return;
 
     try {
-      if (b.dataset.role) {
-        c.actionSection(b.dataset.role as Core1ARole);
-        render({ key: 'data-role', value: b.dataset.role });
-      } else if (b.dataset.level) {
-        c.selectAnchorTab(b.dataset.level as AnchorLevel);
-        render({ key: 'data-level', value: b.dataset.level });
-      } else if (b.dataset.depth) {
-        c.actionDepth(b.dataset.depth as IntrinsicDepthBadge);
-        render({ key: 'data-depth', value: b.dataset.depth });
+      if (b.dataset.action === 'check-anchor-answer') {
+        const level = (b.dataset.level || 'FOUNDATION') as AnchorLevel;
+        const inputEl = root.querySelector<HTMLInputElement>(`input[data-anchor-answer-input="${level}"]`);
+        const ans = inputEl ? inputEl.value : '';
+        c.setAnchorAnswer(level, ans);
+        const fb = c.checkAnchorAnswer(level, ans);
+        c.setAnchorAnswerFeedback(level, fb);
+        render();
+        status(fb.correct ? 'Anchor challenge passed!' : 'Review the governing warrant and try again.');
+      } else if (b.dataset.action === 'reset-anchor-answer') {
+        const level = (b.dataset.level || 'FOUNDATION') as AnchorLevel;
+        c.setAnchorAnswer(level, '');
+        c.setAnchorAnswerFeedback(level, null);
+        render();
+        status('Anchor answer reset.');
       } else if (b.dataset.action === 'toggle-anchor-solution') {
         c.toggleAnchorSolution(b.dataset.level as AnchorLevel);
         render();
@@ -1026,6 +1451,15 @@ export function mountCore1ALesson(root: HTMLElement, c: Core1ALessonPageControll
       } else if (b.dataset.action === 'fresh-transfer') {
         const route = c.getFreshTransferRoute();
         window.location.hash = '#' + route;
+      } else if (b.dataset.role) {
+        c.actionSection(b.dataset.role as Core1ARole);
+        render({ key: 'data-role', value: b.dataset.role });
+      } else if (b.dataset.level) {
+        c.selectAnchorTab(b.dataset.level as AnchorLevel);
+        render({ key: 'data-level', value: b.dataset.level });
+      } else if (b.dataset.depth) {
+        c.actionDepth(b.dataset.depth as IntrinsicDepthBadge);
+        render({ key: 'data-depth', value: b.dataset.depth });
       }
     } catch {
       status('Invalid diagnostic control.');

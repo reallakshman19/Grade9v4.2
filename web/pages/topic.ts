@@ -1645,6 +1645,226 @@ function mountGravitationLabsWorkbench(container: HTMLElement): { dispose: () =>
 
 
 
+
+export function mountGeneticsLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  let parent1 = 'Bb';
+  let parent2 = 'Bb';
+  let trials = 100;
+
+  const render = () => {
+    // Punnett 2x2
+    const g1 = [parent1[0], parent1[1]];
+    const g2 = [parent2[0], parent2[1]];
+    const combos = [
+      g1[0] + g2[0], g1[0] + g2[1],
+      g1[1] + g2[0], g1[1] + g2[1]
+    ].map(s => s.split('').sort().join('')); // e.g. BB, Bb, bb
+
+    const bbCount = combos.filter(c => c === 'BB').length;
+    const hetCount = combos.filter(c => c === 'Bb' || c === 'bB').length;
+    const recCount = combos.filter(c => c === 'bb').length;
+    const domRatio = ((bbCount + hetCount) / 4) * 100;
+    const recRatio = (recCount / 4) * 100;
+
+    container.innerHTML = `
+      <div class="g9-labs-workbench" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">Mendelian Genetics &amp; Punnett Square Simulator</h2>
+            <p style="margin:2px 0 0;font-size:0.95rem;color:#64748b;">Allele Segregation &amp; Dihybrid Transmission | Dominant (B) vs Recessive (b)</p>
+          </div>
+          <span style="font-size:0.875rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">A50 / A54 Model</span>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Punnett Cross: ${parent1} × ${parent2}</h3>
+            <div style="display:flex;gap:12px;font-size:0.875rem;font-weight:600;">
+              <span style="color:#047857;">● Dominant Phenotype: ${domRatio.toFixed(0)}%</span>
+              <span style="color:#d97706;">● Recessive Phenotype: ${recRatio.toFixed(0)}%</span>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 600 240" style="width:100%;max-height:260px;background:#0f172a;border-radius:6px;display:block;">
+            <!-- Grid Lines -->
+            <rect x="180" y="40" width="240" height="160" fill="#1e293b" stroke="#334155" stroke-width="2" rx="6"/>
+            <line x1="300" y1="40" x2="300" y2="200" stroke="#475569" stroke-width="2"/>
+            <line x1="180" y1="120" x2="420" y2="120" stroke="#475569" stroke-width="2"/>
+
+            <!-- Parent 1 Gametes (Top) -->
+            <text x="240" y="30" fill="#38bdf8" font-size="16" font-weight="800" text-anchor="middle" font-family="sans-serif">${g1[0]}</text>
+            <text x="360" y="30" fill="#38bdf8" font-size="16" font-weight="800" text-anchor="middle" font-family="sans-serif">${g1[1]}</text>
+
+            <!-- Parent 2 Gametes (Left) -->
+            <text x="160" y="85" fill="#f43f5e" font-size="16" font-weight="800" text-anchor="middle" font-family="sans-serif">${g2[0]}</text>
+            <text x="160" y="165" fill="#f43f5e" font-size="16" font-weight="800" text-anchor="middle" font-family="sans-serif">${g2[1]}</text>
+
+            <!-- Four Quadrants -->
+            <rect x="185" y="45" width="110" height="70" fill="${combos[0] === 'bb' ? '#78350f' : '#065f46'}" rx="4"/>
+            <text x="240" y="88" fill="#ffffff" font-size="18" font-weight="800" text-anchor="middle" font-family="sans-serif">${g1[0]}${g2[0]}</text>
+
+            <rect x="305" y="45" width="110" height="70" fill="${combos[1] === 'bb' ? '#78350f' : '#065f46'}" rx="4"/>
+            <text x="360" y="88" fill="#ffffff" font-size="18" font-weight="800" text-anchor="middle" font-family="sans-serif">${g1[1]}${g2[0]}</text>
+
+            <rect x="185" y="125" width="110" height="70" fill="${combos[2] === 'bb' ? '#78350f' : '#065f46'}" rx="4"/>
+            <text x="240" y="168" fill="#ffffff" font-size="18" font-weight="800" text-anchor="middle" font-family="sans-serif">${g1[0]}${g2[1]}</text>
+
+            <rect x="305" y="125" width="110" height="70" fill="${combos[3] === 'bb' ? '#78350f' : '#065f46'}" rx="4"/>
+            <text x="360" y="168" fill="#ffffff" font-size="18" font-weight="800" text-anchor="middle" font-family="sans-serif">${g1[1]}${g2[1]}</text>
+          </svg>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-bottom:1.5rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;color:#0f172a;margin-bottom:10px;">
+              Parent 1 Genotype:
+              <select id="sel-p1" style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;">
+                <option value="BB" ${parent1 === 'BB' ? 'selected' : ''}>BB (Homozygous Dominant)</option>
+                <option value="Bb" ${parent1 === 'Bb' ? 'selected' : ''}>Bb (Heterozygous)</option>
+                <option value="bb" ${parent1 === 'bb' ? 'selected' : ''}>bb (Homozygous Recessive)</option>
+              </select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;color:#0f172a;">
+              Parent 2 Genotype:
+              <select id="sel-p2" style="min-height:48px;padding:8px 12px;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;">
+                <option value="BB" ${parent2 === 'BB' ? 'selected' : ''}>BB (Homozygous Dominant)</option>
+                <option value="Bb" ${parent2 === 'Bb' ? 'selected' : ''}>Bb (Heterozygous)</option>
+                <option value="bb" ${parent2 === 'bb' ? 'selected' : ''}>bb (Homozygous Recessive)</option>
+              </select>
+            </label>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <h4 style="margin:0 0 8px 0;font-size:1rem;color:#0f172a;">Genotypic Frequency Ledger</h4>
+            <div style="font-size:0.95rem;line-height:1.6;color:#334155;">
+              <div>• BB Frequency: <strong>${bbCount}/4 (${(bbCount * 25).toFixed(0)}%)</strong></div>
+              <div>• Bb Frequency: <strong>${hetCount}/4 (${(hetCount * 25).toFixed(0)}%)</strong></div>
+              <div>• bb Frequency: <strong>${recCount}/4 (${(recCount * 25).toFixed(0)}%)</strong></div>
+              <div style="margin-top:6px;padding-top:6px;border-top:1px dashed #cbd5e1;color:#047857;font-weight:700;">
+                ✓ Classical Mendelian Expectation: ${bbCount}:${hetCount}:${recCount}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#sel-p1')?.addEventListener('change', (e: Event) => {
+      parent1 = (e.target as HTMLSelectElement).value;
+      render();
+    });
+    container.querySelector('#sel-p2')?.addEventListener('change', (e: Event) => {
+      parent2 = (e.target as HTMLSelectElement).value;
+      render();
+    });
+  };
+
+  render();
+  return { dispose: () => {} };
+}
+
+export function mountLifeProcessesLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  let lightIntensity = 60;
+  let tempC = 25;
+
+  const render = () => {
+    // Photosynthesis rate: Michaelis-Menten light curve * bell-shaped temperature curve
+    const lightFactor = lightIntensity / (30 + lightIntensity);
+    const tempFactor = Math.max(0, 1 - Math.pow((tempC - 30) / 20, 2));
+    const rate = 100 * lightFactor * tempFactor;
+    const bubbleCount = Math.round(rate / 5);
+
+    container.innerHTML = `
+      <div class="g9-labs-workbench" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:1.5rem;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px;">
+          <div>
+            <h2 style="margin:0;font-size:1.35rem;font-weight:700;color:#0f172a;">Photosynthesis &amp; Enzyme Kinetics Simulator</h2>
+            <p style="margin:2px 0 0;font-size:0.95rem;color:#64748b;">Light-Dependent Phase &amp; Thermal Denaturation | Rate = f(Light, Temp, CO₂)</p>
+          </div>
+          <span style="font-size:0.875rem;font-weight:700;color:#047857;background:#d1fae5;padding:2px 8px;border-radius:4px;">A50 / A54 Model</span>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;margin-bottom:1.5rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;flex-wrap:wrap;gap:8px;">
+            <h3 style="margin:0;font-size:1.15rem;font-weight:700;color:#0f172a;">Hydrilla Plant Oxygen Production Chamber</h3>
+            <div style="display:flex;gap:12px;font-size:0.875rem;font-weight:600;">
+              <span style="color:#0284c7;">● O₂ Bubble Rate: ${bubbleCount} bubbles/min</span>
+              <span style="color:#10b981;">▲ Photosynthetic Output: ${rate.toFixed(1)}%</span>
+            </div>
+          </div>
+
+          <svg viewBox="0 0 600 240" style="width:100%;max-height:260px;background:#0f172a;border-radius:6px;display:block;">
+            <!-- Beaker with Water -->
+            <rect x="180" y="50" width="240" height="160" fill="#0284c7" fill-opacity="0.25" stroke="#38bdf8" stroke-width="2" rx="4"/>
+            <!-- Funnel & Test Tube -->
+            <polygon points="260,190 340,190 310,120 290,120" fill="#047857" fill-opacity="0.4" stroke="#10b981" stroke-width="2"/>
+            <rect x="290" y="40" width="20" height="90" fill="#ffffff" fill-opacity="0.2" stroke="#e2e8f0" stroke-width="2"/>
+
+            <!-- Oxygen Bubbles -->
+            ${Array.from({ length: Math.min(15, bubbleCount) }).map((_, i) => `
+              <circle cx="${295 + (i % 3) * 5}" cy="${110 - i * 5}" r="3" fill="#38bdf8" fill-opacity="0.8"/>
+            `).join('')}
+
+            <!-- Light Source Lamp -->
+            <circle cx="80" cy="70" r="25" fill="#facc15" fill-opacity="${lightIntensity / 100}" stroke="#facc15" stroke-width="3"/>
+            <text x="80" y="115" fill="#facc15" font-size="11" font-weight="700" text-anchor="middle" font-family="sans-serif">Lamp (${lightIntensity}%)</text>
+            <line x1="110" y1="70" x2="180" y2="100" stroke="#facc15" stroke-width="2" stroke-dasharray="4,3" stroke-opacity="${lightIntensity / 100}"/>
+          </svg>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;">
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:0.9rem;font-weight:700;color:#0f172a;margin-bottom:12px;">
+              <span>Light Intensity: <strong style="color:#d97706;">${lightIntensity}%</strong></span>
+              <input type="range" id="rng-light" min="0" max="100" step="5" value="${lightIntensity}" style="min-height:48px;"/>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:0.9rem;font-weight:700;color:#0f172a;">
+              <span>Temperature: <strong style="color:#0284c7;">${tempC}°C</strong> (Optimum: 30°C)</span>
+              <input type="range" id="rng-temp" min="10" max="50" step="1" value="${tempC}" style="min-height:48px;"/>
+            </label>
+          </div>
+
+          <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:1.25rem;">
+            <h4 style="margin:0 0 8px 0;font-size:1rem;color:#0f172a;">Biochemical Law Ledger</h4>
+            <div style="font-size:0.95rem;line-height:1.6;color:#334155;">
+              <div>• Limiting Factor: <strong>${lightIntensity < 40 ? 'Light Intensity' : tempC > 40 ? 'Thermal Denaturation' : 'CO₂ Substrate'}</strong></div>
+              <div>• Enzyme State: <strong>${tempC > 42 ? 'Denatured (Inactive)' : tempC < 15 ? 'Sub-optimal (Slow)' : 'Active Conformation'}</strong></div>
+              <div style="margin-top:6px;padding-top:6px;border-top:1px dashed #cbd5e1;color:#047857;font-weight:700;">
+                ✓ Net Photosynthesis Equation: 6CO₂ + 6H₂O ➔ C₆H₁₂O₆ + 6O₂
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.querySelector('#rng-light')?.addEventListener('input', (e: Event) => {
+      lightIntensity = Number((e.target as HTMLInputElement).value);
+      render();
+    });
+    container.querySelector('#rng-temp')?.addEventListener('input', (e: Event) => {
+      tempC = Number((e.target as HTMLInputElement).value);
+      render();
+    });
+  };
+
+  render();
+  return { dispose: () => {} };
+}
+
+export function mountGeneralBioLabsWorkbench(container: HTMLElement): { dispose: () => void } {
+  return mountGeneticsLabsWorkbench(container);
+}
+
+export function mountGeneralChemistryWorkbench(container: HTMLElement): { dispose: () => void } {
+  return mountGasLawsWorkbench(container);
+}
+
+export function mountGeneralMathematicsWorkbench(container: HTMLElement, onNavigate?: (href: string) => void): { dispose: () => void } {
+  const cc = new CirclesMasterController();
+  return mountCirclesMaster(container, cc, onNavigate);
+}
+
 export function mountFluidsLabsWorkbench(container: HTMLElement): { dispose: () => void } {
   let depthM = 5.0;
   let density = 1000; // kg/m3 (Fresh Water)
@@ -3646,6 +3866,24 @@ export function mountTopicWorkspace(
     const topic = controller.getViewState().topic || WPE_PHYSICS_TOPIC;
     const isMathTopic = topic.subjectCode.toUpperCase() === 'MATHEMATICS' || topic.subjectId.toLowerCase() === 'mathematics';
     const isChemTopic = topic.subjectCode.toUpperCase() === 'CHEMISTRY' || topic.subjectId.toLowerCase() === 'chemistry';
+    const isBioTopic = topic.subjectCode.toUpperCase() === 'BIOLOGY' || topic.subjectCode.toUpperCase() === 'BIO' || topic.subjectId.toLowerCase() === 'biology';
+
+    // 0. Biology Labs
+    if (isBioTopic) {
+      if (topic.code === 'BIO_GENETICS' || topic.id?.includes('genet')) {
+        const w = mountGeneticsLabsWorkbench(container);
+        activeSubDisposer = () => w.dispose();
+        return;
+      }
+      if (topic.code === 'BIO_LIFE_PROCESSES' || topic.id?.includes('life')) {
+        const w = mountLifeProcessesLabsWorkbench(container);
+        activeSubDisposer = () => w.dispose();
+        return;
+      }
+      const w = mountGeneralBioLabsWorkbench(container);
+      activeSubDisposer = () => w.dispose();
+      return;
+    }
 
     // 1. Chemistry Labs
     if (isChemTopic) {
@@ -3671,6 +3909,9 @@ export function mountTopicWorkspace(
         activeSubDisposer = () => m.dispose();
         return;
       }
+      const w = mountGeneralChemistryWorkbench(container);
+      activeSubDisposer = () => w.dispose();
+      return;
     }
 
     // 2. Mathematics Labs
@@ -3711,6 +3952,9 @@ export function mountTopicWorkspace(
         activeSubDisposer = () => m.dispose();
         return;
       }
+      const m = mountGeneralMathematicsWorkbench(container, onNavigate);
+      activeSubDisposer = () => m.dispose();
+      return;
     }
 
     // 3. Physics Labs

@@ -228,6 +228,40 @@ export class Router {
       };
     }
 
+    // 5b. Direct Topic Route: "/topic/:topicId" or "/topic/:topicId/:tab"
+    const directTopicTabMatch = pathPart.match(/^\/topic\/([^/]+)\/([^/]+)$/);
+    if (directTopicTabMatch) {
+      const top = decodeURIComponent(directTopicTabMatch[1]);
+      const sId = top.includes('chem') ? 'chemistry' : (top.includes('bio') || top.includes('genet') || top.includes('life')) ? 'biology' : (top.includes('circle') || top.includes('riemann') || top.includes('poly') || top.includes('math')) ? 'mathematics' : 'physics';
+      return {
+        type: 'TOPIC_TAB',
+        path: pathPart,
+        params: {
+          subjectId: sId,
+          topicId: top,
+          tab: decodeURIComponent(directTopicTabMatch[2]),
+        },
+        query,
+        hash: hashPart,
+      };
+    }
+
+    const directTopicMatch = pathPart.match(/^\/topic\/([^/]+)$/);
+    if (directTopicMatch) {
+      const top = decodeURIComponent(directTopicMatch[1]);
+      const sId = top.includes('chem') ? 'chemistry' : (top.includes('bio') || top.includes('genet') || top.includes('life')) ? 'biology' : (top.includes('circle') || top.includes('riemann') || top.includes('poly') || top.includes('math')) ? 'mathematics' : 'physics';
+      return {
+        type: 'TOPIC',
+        path: pathPart,
+        params: {
+          subjectId: sId,
+          topicId: top,
+        },
+        query,
+        hash: hashPart,
+      };
+    }
+
     // 6. Subject Route: "/subject/:subjectId" or direct "/:subjectId"
     const directSubjMatch = pathPart.match(/^\/(?:subject\/)?(mathematics|math|physics|phys|chemistry|chem|biology)$/i);
     if (directSubjMatch) {
