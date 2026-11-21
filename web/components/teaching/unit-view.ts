@@ -131,7 +131,7 @@ export class Core1AUnitViewController {
 
     const list = (xs: readonly string[]) =>
       xs.length > 0
-        ? `<ul style="margin:8px 0 12px 20px;padding:0;line-height:1.6;color:#1e293b;">${xs.map(x => `<li>${e(x)}</li>`).join('')}</ul>`
+        ? `<ul style="margin:8px 0 12px 20px;padding:0;line-height:1.6;color:#1e293b;">${xs.map(x => `<li>${renderMathHtml(e(x))}</li>`).join('')}</ul>`
         : '';
 
     return `
@@ -145,9 +145,9 @@ export class Core1AUnitViewController {
           </span>
         </div>
 
-        <h2 style="margin:0 0 8px 0;font-size:1.35rem;color:#0f172a;">${e(u.title)}</h2>
-        <p style="font-size:1.02rem;font-weight:500;color:#0369a1;line-height:1.5;margin:0 0 12px 0;">${e(u.summary)}</p>
-        <p style="font-size:0.95rem;color:#334155;line-height:1.6;white-space:pre-wrap;margin:0 0 16px 0;">${e(u.bodyText)}</p>
+        <h2 style="margin:0 0 8px 0;font-size:1.35rem;color:#0f172a;">${renderMathHtml(e(u.title))}</h2>
+        <p style="font-size:1.02rem;font-weight:500;color:#0369a1;line-height:1.5;margin:0 0 12px 0;">${renderMathHtml(e(u.summary))}</p>
+        <p style="font-size:0.95rem;color:#334155;line-height:1.6;white-space:pre-wrap;margin:0 0 16px 0;">${renderMathHtml(e(u.bodyText))}</p>
 
         ${u.conventions ? `
           <div style="margin:12px 0;padding:12px;background:#f8fafc;border-left:3px solid #0284c7;border-radius:4px;">
@@ -161,7 +161,7 @@ export class Core1AUnitViewController {
             <strong style="color:#0f172a;font-size:0.9rem;">Representation Bridge (Diagram ➔ Symbols ➔ Equations):</strong>
             <ul style="margin:8px 0 0 20px;padding:0;line-height:1.6;">
               ${u.representationBridge.map(x => `
-                <li><strong>${e(x.pictureElement)}</strong> <span style="color:#059669;font-family:monospace;">[${e(x.symbol)}]</span>: ${e(x.inWords)}</li>
+                <li><strong>${renderMathHtml(e(x.pictureElement))}</strong> <span style="color:#059669;font-family:monospace;">[${renderMathHtml(e(x.symbol))}]</span>: ${renderMathHtml(e(x.inWords))}</li>
               `).join('')}
             </ul>
           </div>
@@ -223,10 +223,10 @@ export class Core1AUnitViewController {
               Misconception Alert &amp; Diagnostic Contrast
             </div>
             <p style="font-size:0.95rem;color:#78350f;margin:0 0 8px 0;font-weight:600;">
-              Common Pitfall: ${e(misc.wrongIdea)}
+              Common Pitfall: ${renderMathHtml(e(misc.wrongIdea))}
             </p>
             <p style="font-size:0.92rem;color:#1e293b;margin:0 0 12px 0;">
-              <strong>Diagnostic Check:</strong> ${e(misc.diagnosticPrompt)}
+              <strong>Diagnostic Check:</strong> ${renderMathHtml(e(misc.diagnosticPrompt))}
             </p>
             <button type="button" data-action="toggle-diagnostic-repair" style="min-height:48px;padding:8px 18px;border-radius:6px;border:1px solid #d97706;background:#d97706;color:#ffffff;font-weight:700;cursor:pointer;">
               ${this.isRepairOpen ? 'Hide Conceptual Repair' : 'Reveal Conceptual Repair & Proof'}
@@ -240,12 +240,12 @@ export class Core1AUnitViewController {
           </div>
         ` : u.misconception ? `
           <div style="margin:16px 0;padding:12px;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;">
-            <p style="margin:0;">${e(u.misconception.diagnosticPrompt)}</p>
+            <p style="margin:0;">${renderMathHtml(e(u.misconception.diagnosticPrompt))}</p>
           </div>
         ` : ''}
 
         ${u.selfCheckPrompt ? `
-          <p style="font-size:0.92rem;color:#475569;font-style:italic;margin-top:12px;">${e(u.selfCheckPrompt)}</p>
+          <p style="font-size:0.92rem;color:#475569;font-style:italic;margin-top:12px;">${renderMathHtml(e(u.selfCheckPrompt))}</p>
         ` : ''}
 
         ${this.renderWarrantsSection(u.evidenceRefs)}

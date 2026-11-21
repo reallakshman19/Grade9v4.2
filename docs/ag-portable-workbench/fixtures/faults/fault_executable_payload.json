@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "portable-workbench-package",
+  "packageVersion": "1.0.0",
+  "componentApiVersion": "0.1.0",
+  "transformationIrVersion": "0.1.0",
+  "adapterApiVersion": "0.2.0",
+  "scenePackageVersion": "1.0.0",
+  "id": "fault-executable-payload",
+  "title": "Fault Injected: Executable Script in Package",
+  "sourceRefs": ["test"],
+  "sceneRefs": ["scene"],
+  "representationRefs": ["rep"],
+  "assetRefs": [],
+  "accessibilityRefs": [],
+  "questionBindings": [],
+  "provenance": {
+    "authority": "NON_CANONICAL_COMPILED_PROOF",
+    "sourceRefs": ["test"]
+  },
+  "scene": {
+    "id": "scene",
+    "apiVersion": "0.1.0",
+    "sceneVersion": "1.0.0",
+    "grids": [
+      {
+        "id": "grid",
+        "label": "Grid",
+        "rows": ["r1"],
+        "columns": ["c1"]
+      }
+    ],
+    "entities": [
+      {
+        "id": "e1",
+        "label": "Entity 1",
+        "script": "alert('malicious_payload')"
+      }
+    ],
+    "projections": [
+      {
+        "id": "p1",
+        "entityRef": "e1",
+        "label": "P1",
+        "representation": "rep",
+        "placement": {
+          "grid": "grid",
+          "row": "r1",
+          "column": "c1"
+        }
+      }
+    ],
+    "targets": [],
+    "canonicalTransformations": []
+  },
+  "adapter": {
+    "id": "declarative-transfer-v1",
+    "apiVersion": "0.2.0",
+    "rules": []
+  }
+}

@@ -391,7 +391,7 @@ export class Router {
       return {
         type: 'ARCHITECTURE',
         path: pathPart,
-        params: { docId: archMatch[1] ? decodeURIComponent(archMatch[1]) : '' },
+        params: { docId: archMatch[1] ? decodeURIComponent(archMatch[1]) : (query.doc ? decodeURIComponent(query.doc) : '') },
         query,
         hash: hashPart,
       };

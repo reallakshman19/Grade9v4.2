@@ -27,9 +27,21 @@
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
     }
-    math, .g9-math {
+    math, .g9-math, math * {
       font-family: var(--g9-font-math);
+    }
+    math {
       font-size: 1.05em;
+    }
+    math mi {
+      font-style: italic;
+    }
+    math mn, math mo {
+      font-style: normal;
+    }
+    math mtext {
+      font-family: var(--g9-font-family);
+      font-style: normal;
     }
     .math-block-container {
       font-family: var(--g9-font-math);

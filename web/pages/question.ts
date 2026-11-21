@@ -140,7 +140,7 @@ export class QuestionPageController {
     const q = ws.question;
     const isLandscape = ws.layout.orientation === 'LANDSCAPE';
 
-    let stimulusHtml = `<div class="g9-stimulus-content"><h2 style="margin:0 0 8px 0;font-size:18px;">${escapeHtml(q.title)}</h2><div style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;font-size:16px;">${renderMathHtml(q.stemText)}</div>`;
+    let stimulusHtml = `<div class="g9-stimulus-content"><h2 style="margin:0 0 8px 0;font-size:18px;">${renderMathHtml(escapeHtml(q.title))}</h2><div style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;font-size:16px;">${renderMathHtml(q.stemText)}</div>`;
     if (q.figures && q.figures.length > 0) {
       stimulusHtml += `<div class="g9-stimulus-figures" style="margin-top:12px;">` + q.figures.map(f => {
         const imgHtml = f.available && f.sourceUrl ? `<img src="${f.sourceUrl}" alt="${escapeHtml(f.caption)}" style="max-width:100%;max-height:360px;object-fit:contain;display:block;margin:auto;background:#ffffff;border-radius:4px;padding:8px;" />` : (f.available ? `<span>Figure: ${escapeHtml(f.id)}</span>` : `<span style="color:#ef4444;">[Figure unavailable / withheld]</span>`);
@@ -216,7 +216,7 @@ export class QuestionPageController {
 
     return `<main class="g9-question-page" data-role="CORE2" data-orientation="${ws.layout.orientation}"><style>${questionCss}</style>
       <section data-slot="identity">
-        <h1 style="margin:0 0 4px 0;font-size:20px;">${escapeHtml(q.title)}</h1>
+        <h1 style="margin:0 0 4px 0;font-size:20px;">${renderMathHtml(escapeHtml(q.title))}</h1>
         <div style="font-size:14px;color:#64748b;">Code: ${escapeHtml(q.code)} | Status: ${escapeHtml(q.status)} | Key: ${escapeHtml(q.keyStatus)}</div>
       </section>
       <div class="g9-workspace-split">

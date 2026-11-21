@@ -503,8 +503,25 @@ export function mountArchitectureHub(
       const href = target.getAttribute('href');
       if (!href) return;
 
-      // Internal anchor jumps (e.g. #start, #workflow, #intake)
-      if (href.startsWith('#')) {
+      // Handle external links safely
+      if (href.startsWith('http://') || href.startsWith('https://')) {
+        target.target = '_blank';
+        target.rel = 'noopener noreferrer';
+        return;
+      }
+
+      // Explicit doc-id selection or #/architecture routes
+      const directDocId = target.dataset.docId || (href.startsWith('#/architecture') ? (new URL(href, 'http://dummy.com').searchParams.get('doc') || href.split('/')[2]) : null);
+      if (directDocId) {
+        e.preventDefault();
+        controller.selectDoc(directDocId);
+        render();
+        root.querySelector('#active-doc-viewer')?.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+
+      // In-document anchor jumps (e.g. #start, #workflow, #intake) - NOT SPA routes (#/...)
+      if (href.startsWith('#') && !href.startsWith('#/')) {
         e.preventDefault();
         const targetId = href.slice(1);
         if (targetId === 'top' || !targetId) {
@@ -520,7 +537,7 @@ export function mountArchitectureHub(
       }
 
       // Inter-guide transitions (e.g. guidebook.html, review-guide.html)
-      const docLinkMatch = href.match(/(core1ab-agent-guide|guidebook|core2-source-to-learning-pipeline|production-checklist|review-guide|index|alpha-board)\.html/);
+      const docLinkMatch = href.match(/(core1ab-agent-guide|guidebook|core2-source-to-learning-pipeline|production-checklist|review-guide|portable-workbenches|index|alpha-board)\.html/);
       if (docLinkMatch) {
         e.preventDefault();
         const file = docLinkMatch[1];
@@ -530,6 +547,7 @@ export function mountArchitectureHub(
           'core2-source-to-learning-pipeline': 'pipeline-benchmarks',
           'production-checklist': 'production-checklist',
           'review-guide': 'review-guide',
+          'portable-workbenches': 'portable-workbenches',
           'index': 'overview',
           'alpha-board': 'preview-batches',
         };

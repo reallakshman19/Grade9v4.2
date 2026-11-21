@@ -259,9 +259,9 @@ export class Core1AAnchorViewController {
             ${e(warrant.id)}
           </span>
         </div>
-        <h4 style="margin:0 0 6px 0;font-size:1.05rem;color:#0f172a;">${e(warrant.title)}</h4>
+        <h4 style="margin:0 0 6px 0;font-size:1.05rem;color:#0f172a;">${renderMathHtml(e(warrant.title))}</h4>
         <div style="font-weight:600;font-size:0.92rem;color:#334155;margin-bottom:8px;">
-          <em>Governing Model:</em> ${e(warrant.lawOrModel)}
+          <em>Governing Model:</em> ${renderMathHtml(e(warrant.lawOrModel))}
         </div>
         <div style="padding:10px 14px;background:#ffffff;border:1px solid #e2e8f0;border-radius:6px;font-family:var(--g9-font-math,serif);font-size:1.15rem;color:#0369a1;margin:8px 0;">
           ${formatLatexMath(warrant.mathematicalFormula, true)}
@@ -274,12 +274,12 @@ export class Core1AAnchorViewController {
             Physical Assumptions, Validity Domain &amp; Sign Conventions
           </summary>
           <div style="margin-top:8px;padding:10px;background:#f1f5f9;border-radius:4px;">
-            <p style="margin:0 0 4px 0;"><strong>Validity Domain:</strong> ${e(warrant.validityDomain)}</p>
-            <p style="margin:0 0 4px 0;"><strong>Sign Convention:</strong> ${e(warrant.signConventions)}</p>
-            <p style="margin:0 0 4px 0;"><strong>Fails When / Boundary Witness:</strong> ${e(warrant.counterexampleWitness)}</p>
+            <p style="margin:0 0 4px 0;"><strong>Validity Domain:</strong> ${renderMathHtml(e(warrant.validityDomain))}</p>
+            <p style="margin:0 0 4px 0;"><strong>Sign Convention:</strong> ${renderMathHtml(e(warrant.signConventions))}</p>
+            <p style="margin:0 0 4px 0;"><strong>Fails When / Boundary Witness:</strong> ${renderMathHtml(e(warrant.counterexampleWitness))}</p>
             <strong>Key Assumptions:</strong>
             <ul style="margin:4px 0 0 18px;padding:0;">
-              ${warrant.assumptions.map(a => `<li>${e(a)}</li>`).join('')}
+              ${warrant.assumptions.map(a => `<li>${renderMathHtml(e(a))}</li>`).join('')}
             </ul>
           </div>
         </details>
@@ -468,12 +468,12 @@ export class Core1AAnchorViewController {
         </nav>
         <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
-            <h3 style="margin:0;font-size:1.15rem;color:#0f172a;">${e(a.title)}</h3>
+            <h3 style="margin:0;font-size:1.15rem;color:#0f172a;">${renderMathHtml(e(a.title))}</h3>
             <span style="font-size:0.75rem;padding:2px 8px;border-radius:4px;background:#fef3c7;color:#92400e;font-weight:700;">
               ANCHOR LEVEL: ${this.level}
             </span>
           </div>
-          <p style="font-size:1rem;line-height:1.6;color:#1e293b;margin:8px 0 12px 0;">${e(a.prompt)}</p>
+          <p style="font-size:1rem;line-height:1.6;color:#1e293b;margin:8px 0 12px 0;">${renderMathHtml(e(a.prompt))}</p>
 
           ${this.renderWarrantCard(warrantId)}
 
@@ -566,7 +566,7 @@ export class Core1AAnchorViewController {
           Unassisted Capstone Synthesis
         </div>
         <h3 style="margin:0 0 8px 0;font-size:1.1rem;color:#0f172a;">Distinct unassisted synthesis</h3>
-        <p style="font-size:0.95rem;color:#334155;line-height:1.5;margin:0 0 12px 0;">${e(this.prompt)}</p>
+        <p style="font-size:0.95rem;color:#334155;line-height:1.5;margin:0 0 12px 0;">${renderMathHtml(e(this.prompt))}</p>
         <div style="font-size:0.85rem;color:#64748b;font-style:italic;">
           Requirement: Combine the conservative potential gradient with dissipative frictional work into a single unified energy conservation equation.
         </div>
