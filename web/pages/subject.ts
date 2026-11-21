@@ -990,7 +990,7 @@ export function mountSubjectScreen(
                 </div>
                 <div style="display:flex;gap:8px;border-top:1px solid #f1f5f9;padding-top:0.75rem;">
                   <button type="button" class="btn-math-launch" data-href="#/labs/lab:circles-master" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#2563eb;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;text-align:center;">Launch Suite →</button>
-                  <a href="./public/circles-master.html" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
+                  <a href="./standalone/core2-mathematics-circles-grade9-master.html" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
                 </div>
               </div>
 
@@ -1022,7 +1022,7 @@ export function mountSubjectScreen(
                 </div>
                 <div style="display:flex;gap:8px;border-top:1px solid #f1f5f9;padding-top:0.75rem;">
                   <button type="button" class="btn-math-launch" data-href="#/labs/mathematics-imo-grade9-master-suite" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#ea580c;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;text-align:center;">Launch Suite →</button>
-                  <a href="./mathematics-imo-grade9-master-suite (2).html" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
+                  <a href="./standalone/mathematics-imo-grade9-master-suite (2).html" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
                 </div>
               </div>
 
@@ -1054,7 +1054,7 @@ export function mountSubjectScreen(
                 </div>
                 <div style="display:flex;gap:8px;border-top:1px solid #f1f5f9;padding-top:0.75rem;">
                   <button type="button" class="btn-math-launch" data-href="#/labs/lab:riemann-sums" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#0d9488;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;text-align:center;">Launch Suite →</button>
-                  <a href="./portable/portable-integration-riemann/index.html" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
+                  <a href="./portable-workbench/index.html?pkg=portable-integration-riemann" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
                 </div>
               </div>
 
@@ -1070,7 +1070,7 @@ export function mountSubjectScreen(
                 </div>
                 <div style="display:flex;gap:8px;border-top:1px solid #f1f5f9;padding-top:0.75rem;">
                   <button type="button" class="btn-math-launch" data-href="#/labs/lab:long-division" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#c2410c;color:white;border:none;border-radius:6px;font-weight:700;font-size:0.9rem;cursor:pointer;text-align:center;">Launch Suite →</button>
-                  <a href="./portable/portable-division-scaffold/index.html" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
+                  <a href="./portable-workbench/index.html?pkg=portable-long-division" style="flex:1;min-height:${HIT_TARGET_MIN_PX}px;padding:8px 12px;background:#f1f5f9;color:#0f172a;text-decoration:none;border:1px solid #cbd5e1;border-radius:6px;font-weight:700;font-size:0.9rem;text-align:center;display:flex;align-items:center;justify-content:center;">Standalone v3.5</a>
                 </div>
               </div>
 

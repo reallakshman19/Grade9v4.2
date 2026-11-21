@@ -245,9 +245,15 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
     const rawId = match.params.transferId || (clean.startsWith('transfer/') ? clean.slice('transfer/'.length) : '');
     const topicCode = match.query.topic || match.params.topicId || (rawId ? rawId.replace(/^lesson:/, '').replace(/-origin$/, '').replace(/^physics-/, '') : undefined);
     
-    const fallbackCtrl = new Core1BTransferPageController({ topicCode });
-    let m = mountCore1BTransfer(content, fallbackCtrl);
-    activeDisposer = () => m.dispose();
+    content.innerHTML = `
+      <div style="background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:3rem;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">⚡</div>
+        <h2 style="margin:0 0 0.5rem;font-size:1.35rem;font-weight:700;color:#0f172a;">Preparing Cognitive Transfer Session...</h2>
+        <p style="color:#64748b;font-size:0.95rem;margin:0;">Initializing 7-stage learning journey and telemetry ledger.</p>
+      </div>
+    `;
+    let m: { dispose: () => void } | null = null;
+    activeDisposer = () => { if (m) m.dispose(); };
 
     void (async () => {
       try {
@@ -270,9 +276,12 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
           activeDisposer();
         }
         m = mountCore1BTransfer(content, controller);
-        activeDisposer = () => m.dispose();
+        activeDisposer = () => m?.dispose();
       } catch (err) {
         console.warn('Transfer session fallback:', err);
+        const fallbackCtrl = new Core1BTransferPageController({ topicCode });
+        m = mountCore1BTransfer(content, fallbackCtrl);
+        activeDisposer = () => m?.dispose();
       }
     })();
   } else if (
