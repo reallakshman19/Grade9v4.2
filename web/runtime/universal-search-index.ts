@@ -1,7 +1,7 @@
 /**
  * web/runtime/universal-search-index.ts
  * Grade9 STEM Universal Search Index & Engine
- * Full 1114-item offline indexed corpus: 976 Questions, 93 Tablets & Explorers, 44 Topics & Concepts.
+ * Full 1114-record offline search corpus: 812 exact question routes, 164 collection-bound question references, 93 tablets, 44 curriculum and 1 other.
  * Sub-50ms instant fuzzy token search with multi-tier relevance scoring and Fault N09 answer isolation.
  */
 
@@ -40,7 +40,7 @@ export function normalizeSearchTerm(v: string): string {
 /**
  * Full 1114-Item Unified STEM Corpus
  */
-export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze([
+const RAW_UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze([
   {
     "id": "CONCEPT-CHEM-REDOX-OX",
     "title": "Redox Reactions & Oxidation States",
@@ -12296,6 +12296,26 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "search_text": "M2D-Q25 JEE Main Motion in a Plane Projectile Q25 trajectory angle velocity components range physics"
   }
 ]);
+
+/**
+ * Discovery truthfulness guard: these legacy search records point only to a
+ * topic or lab, not to their named question. Preserve lookup by item ID, but
+ * never advertise an exact question deep link or count it as directly openable.
+ * Exact redirects require verified question-content identity in the target.
+ */
+export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze(
+  RAW_UNIVERSAL_SEARCH_CORPUS.map((item):UniversalSearchDoc=>{
+    if(item.category!=='question'||/^#\\/question\\/[^/?#]+$/.test(item.route))return item;
+    return Object.freeze({
+      ...item,
+      category:'curriculum',
+      type:'QUESTION_COLLECTION',
+      badge:'COLLECTION',
+      subtitle:item.subtitle+' · Topic collection',
+      breadcrumb:item.breadcrumb+' · Opens collection, not individual question',
+    });
+  })
+);
 
 function scoreItem(item: UniversalSearchDoc, tokens: string[], term: string): number {
   let score = 1000;
