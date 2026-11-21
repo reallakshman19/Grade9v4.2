@@ -79,6 +79,22 @@ export const ARCHITECTURE_DOCS: readonly ArchitectureDocDescriptor[] = [
     `,
   },
   {
+    id: 'portable-workbenches',
+    title: 'Declarative Portable Workbenches & Interactive STEM Explorers (DEC-A59 / A64)',
+    subtitle: 'Fail-closed declarative semantic grids, state transformations, live telemetry, and kid-friendly visual simulations',
+    category: 'GUIDE',
+    sourcePath: 'architecture/portable-workbenches.html',
+    summaryHtml: `
+      <p>Operational specification for declarative portable workbenches and STEM explorers:</p>
+      <ul>
+        <li><strong>DEC-A59 Fail-Closed Architecture:</strong> 15 immutable rejection rules, zero pixel placements, zero executable fields.</li>
+        <li><strong>Cognitive State Transitions:</strong> Semantic grids, entities, projections, targets, and declarative rule adapters.</li>
+        <li><strong>Kid-Accessible Visual Simulations:</strong> Reactive SVGs, live Squeeze-O-Meter gauges, arithmetic brackets, and electron balance bridges.</li>
+        <li><strong>Ergonomics &amp; Invariants:</strong> Zero iframes, no absolute coordinates, &ge; 48px touch targets, and lossless 90&deg; rotation.</li>
+      </ul>
+    `,
+  },
+  {
     id: 'production-checklist',
     title: 'Production Checklist · Core2 Tablet QA',
     subtitle: '12.7-inch tablet acceptance criteria, touch target ergonomics, and viewport audits',
