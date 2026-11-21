@@ -251,7 +251,7 @@ export function wrapMathInAccessibleContainer(formula: MathFormulaDescriptor): s
   // Sanitation preserves a restricted subset of inert, attribute-free markup.
   // Pass that markup through unchanged; parsing an existing <p> or <math> tag
   // as LaTeX would destroy the semantic element and can hide safe content.
-  const hasSafeMarkup = /<\\/?(?:p|em|strong|b|i|sub|sup|br|ul|ol|li|span|div|pre|code|table|thead|tbody|tr|td|th|blockquote|h3|h4|math|mrow|mi|mn|mo|msup|msub|msubsup|mfrac|msqrt|mroot|mtext|mstyle|mspace)>/i.test(sanitized);
+  const hasSafeMarkup = new RegExp('<(?:p|em|strong|b|i|sub|sup|br|ul|ol|li|span|div|pre|code|table|thead|tbody|tr|td|th|blockquote|h3|h4|math|mrow|mi|mn|mo|msup|msub|msubsup|mfrac|msqrt|mroot|mtext|mstyle|mspace)>','i').test(sanitized);
   const mathml = hasSafeMarkup ? sanitized : formatLatexMath(sanitized, formula.isBlock);
 
   return (
