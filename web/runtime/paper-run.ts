@@ -25,6 +25,17 @@ export async function acquireAuthorizedPaperRun(o:Request):Promise<{session:Sess
   return o.driver.transaction(['paper_active_runs','sessions'],'readwrite',async tx=>{
     const ptr=await tx.get<ActiveRun>('paper_active_runs',o.legacySessionId);
     if(ptr&&(ptr.schema!=='g9-paper-active-run/1'||!Number.isSafeInteger(ptr.sequence)||ptr.sequence<1||ptr.sessionId!==`${o.legacySessionId}:run:${ptr.sequence}`))throw Error('PAPER_RUN_POINTER_INVALID');
+    // Progress archives intentionally preserve historical exam sessions but
+    // do not transfer live active-run authority across browsers. If a run:n
+    // history exists without its local pointer, silently selecting the old
+    // legacy session would reopen the WRONG timed attempt. Fail closed and
+    // require the user to explicitly create a new attempt (history retained).
+    if(!ptr&&!o.forceNewAttempt){
+      const history=await tx.getAll<SessionRecord>('sessions');
+      if(history.some(s=>s.id.startsWith(o.legacySessionId+':run:'))){
+        throw Error('PAPER_ARCHIVED_HISTORY_RETAKE_REQUIRED');
+      }
+    }
     let sessionId=ptr?.sessionId??o.legacySessionId;
     let ses=await tx.get<SessionRecord>('sessions',sessionId);
     const expiry=ses?.deadlineAt?Date.parse(ses.deadlineAt):NaN;
