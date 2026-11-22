@@ -111,6 +111,27 @@ test('NSEJS browser: timed mock exam routes, captures answers and seals submissi
 
       const postSubmit = await page.locator('.paper-workspace').textContent();
       assert.match(postSubmit || '', /Paper Submitted Successfully|Paper Durably Committed/);
+
+      // Post-commit review is an inventory, NOT a second answer-key/grading engine.
+      const review=page.locator('.paper-scorecard-section');
+      await review.waitFor({timeout:10000});
+      assert.match((await review.textContent())||'',/Attempt Review · Results Pending/);
+      assert.match((await review.textContent())||'',/3 \/ 60/);
+      assert.match((await review.textContent())||'',/57/);
+      assert.match((await review.textContent())||'',/Withheld · Max 180/);
+      assert.equal(await page.locator('.part-solution-drawer').count(),0);
+      assert.doesNotMatch((await page.locator('.paper-workspace').textContent())||'',/Official Answer:|Score: 9 \/ 180|100.0% Accuracy|✓ EVALUATED/);
+      assert.match((await page.locator('.part-select-btn').first().getAttribute('aria-label'))||'',/answer recorded/);
+      assert.match((await page.locator('.part-select-btn').nth(1).getAttribute('aria-label'))||'',/unanswered/);
+      await page.locator('.part-select-btn').nth(1).click();
+      assert.match((await page.locator('.part-review-status').textContent())||'',/Unanswered/);
+      assert.match((await page.locator('.part-review-status').textContent())||'',/Correctness: review pending/);
+      // Real reload should reopen the same durable committed run without
+      // silently re-scoring or surfacing source solution material.
+      await page.reload({waitUntil:'domcontentloaded'});
+      await page.locator('.paper-scorecard-section').waitFor({timeout:10000});
+      assert.match((await page.locator('.paper-scorecard-section').textContent())||'',/3 \/ 60/);
+      assert.equal(await page.locator('.part-solution-drawer').count(),0);
     } finally {
       await browser.close();
       await server.close();
