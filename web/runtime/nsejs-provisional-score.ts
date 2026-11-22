@@ -80,6 +80,7 @@ export function calculateNsejsDiagnostic(
    // Refuse to grade an unrelated, reordered, tampered or re-keyed paper.
    if(!q||!p||!r||q.partNumber!==num||q.correctOption!==KEYS[i]||
       q.subject!==subject.toUpperCase()||q.sectionId!==expectedSection||
+      q.id!=='mock-nsejs-'+prefix+String(i%20+1).padStart(2,'0')||
       p.id!==expectedId||p.partKey!==String(num)||p.sectionId!==expectedSection||
       p.archetypeId!==expectedArchetype||p.maxPoints!==3||
       r.partId!==p.id||r.sectionId!==p.sectionId||r.partKey!==p.partKey||
