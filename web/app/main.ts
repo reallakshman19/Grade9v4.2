@@ -29,6 +29,7 @@ import { mountArchitectureHub } from '../pages/architecture.ts';
 import { mountPersonalStudyPage, type PersonalTab } from '../pages/personal-study.ts';
 import { createQuestionBankScreen, mountQuestionBankScreen } from '../pages/bank.ts';
 import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
+import { projectQuestionAdmission } from '../runtime/question-admission.ts';
 import { getOrCreateUniversalSearchModal } from '../components/universal-search-modal.ts';
 import { Router } from './router.ts';
 import { DEFAULT_APP_REGISTRY } from '../runtime/registry/index.ts';
@@ -356,6 +357,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       entry?.topicCode ? String(entry.topicCode).toLowerCase() : 'wpe'
     );
     if (entry) {
+      const admission = projectQuestionAdmission(entry); // No authenticated release receipt in this diagnostic shell.
       const qHints = (entry.hints && entry.hints.length > 0)
         ? entry.hints.filter((h: string) => h && h.trim().length > 0).map((h: string, i: number) => ({ id: `hint-${i+1}`, text: h, penaltyPercent: 0 }))
         : [];
@@ -366,16 +368,14 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
         stemText: entry.stem,
         kind: entry.kind === 'MULTIPLE_CHOICE' ? 'MULTIPLE_CHOICE' : (entry.kind === 'NUMERIC_QUANTITY' || entry.kind === 'INTEGER') ? 'NUMERIC_QUANTITY' : 'SINGLE_CHOICE',
         options: entry.options ? entry.options.map(o => ({ id: o.id, text: o.text })) : undefined,
-        status: entry.status,
-        // A source withheld/HOLD key cannot be relabeled VERIFIED by the UI.
-        keyStatus: entry.keyState === 'VERIFIED' ? 'VERIFIED' : 'UNVERIFIED',
+        status: admission.status,
+        keyStatus: admission.keyStatus,
         maxPoints: entry.maxPoints,
         figures: entry.figures ? entry.figures.map(f => ({ id: f.id, caption: f.caption, available: f.available })) : [],
         hints: qHints,
         solutionSteps: entry.steps && entry.steps.length > 0 ? entry.steps : undefined,
         explanationHtml: entry.steps && entry.steps.length > 0 ? entry.steps.join('<br>') : undefined,
         limitingCheck: (entry as any).limitingCheck || (entry as any).check || undefined,
-        correctKey: (entry as any).correctKey || undefined,
       });
     } else {
       controller.setError('Requested question is not available in the current admitted content index.');
