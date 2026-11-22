@@ -238,6 +238,15 @@ export function renderMathHtml(content: string): string {
   return result;
 }
 
+/** Render source question text with inert formatting and accessible math.
+ * All imported user/source HTML must cross the same sanitizer before we
+ * generate our own trusted MathML/scrolling wrappers. Never call the raw
+ * renderMathHtml helper on untrusted source fields.
+ */
+export function renderSafeQuestionMarkup(source: string): string {
+  return renderMathHtml(sanitizeMarkup(String(source ?? '')).html);
+}
+
 /**
  * Wraps math formulas into an accessible, non-clipping horizontally scrollable container.
  */
