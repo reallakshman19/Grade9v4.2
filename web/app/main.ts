@@ -377,6 +377,8 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
         limitingCheck: (entry as any).limitingCheck || (entry as any).check || undefined,
         correctKey: (entry as any).correctKey || undefined,
       });
+    } else {
+      controller.setError('Requested question is not available in the current admitted content index.');
     }
     const m = mountQuestionPage(content, controller);
     activeDisposer = () => m.dispose();
