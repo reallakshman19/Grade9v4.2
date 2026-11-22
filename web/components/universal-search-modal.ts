@@ -354,7 +354,9 @@ export class UniversalSearchModalController {
 
   private createCard(item: UniversalSearchDoc): HTMLElement {
     const card = document.createElement('a');
-    card.href = resolveUniversalSearchHref(item.route, window.location.href);
+    const unavailable = item.type === 'QUESTION_UNAVAILABLE';
+    if(!unavailable)card.href = resolveUniversalSearchHref(item.route, window.location.href);
+    else {card.setAttribute('aria-disabled','true');card.setAttribute('aria-label',item.title+' — target not installed');card.tabIndex=-1;}
     card.className = 'g9-search-card';
     card.style.cssText = `
       display: flex;
@@ -372,6 +374,7 @@ export class UniversalSearchModalController {
       transition: all 0.15s ease;
       box-sizing: border-box;
     `;
+    if(unavailable){card.style.opacity='0.7';card.style.cursor='not-allowed';}
 
     card.addEventListener('mouseenter', () => {
       card.style.background = '#f0f9ff';
@@ -384,6 +387,7 @@ export class UniversalSearchModalController {
 
     card.addEventListener('click', (e) => {
       e.preventDefault();
+      if(unavailable)return; // Inert catalog reference, never navigate to a non-existent question.
       this.close();
       const href = resolveUniversalSearchHref(item.route, window.location.href);
       if (item.route.startsWith('#/')) window.location.hash = item.route;
