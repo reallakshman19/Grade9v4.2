@@ -205,7 +205,7 @@ export class QuestionPageController {
         <button type="button" id="g9-reset-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:15px;color:#0f172a;font-weight:700;">🔄 Reset &amp; Try Again</button>
       ` : ''}
       <button type="button" id="g9-hint-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:15px;color:#0f172a;font-weight:600;" ${(ws.totalHintsCount === 0 || ws.unlockedHintCount >= ws.totalHintsCount) ? 'disabled' : ''}>💡 Get Hint (${ws.unlockedHintCount}/${ws.totalHintsCount})</button>
-      <button type="button" id="g9-solution-toggle-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#ffffff;border:1px solid #0284c7;border-radius:6px;cursor:pointer;font-size:15px;color:#0284c7;font-weight:600;">📖 ${this.showSolution ? 'Hide Solution' : 'View Worked Solution'}</button>
+      ${q.explanationHtml || (q.solutionSteps && q.solutionSteps.length > 0) ? `<button type="button" id="g9-solution-toggle-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#ffffff;border:1px solid #0284c7;border-radius:6px;cursor:pointer;font-size:15px;color:#0284c7;font-weight:600;">📖 ${this.showSolution ? 'Hide Solution' : 'View Worked Solution'}</button>` : `<span role="status" data-solution-review-status style="padding:8px 12px;color:#475569;font-size:14px;">Worked solution awaiting reviewed release</span>`}
     </div>`;
 
     if (s.evaluation) {
