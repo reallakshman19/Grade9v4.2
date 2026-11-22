@@ -367,7 +367,8 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
         kind: entry.kind === 'MULTIPLE_CHOICE' ? 'MULTIPLE_CHOICE' : (entry.kind === 'NUMERIC_QUANTITY' || entry.kind === 'INTEGER') ? 'NUMERIC_QUANTITY' : 'SINGLE_CHOICE',
         options: entry.options ? entry.options.map(o => ({ id: o.id, text: o.text })) : undefined,
         status: entry.status,
-        keyStatus: 'VERIFIED',
+        // A source withheld/HOLD key cannot be relabeled VERIFIED by the UI.
+        keyStatus: entry.keyState === 'VERIFIED' ? 'VERIFIED' : 'UNVERIFIED',
         maxPoints: entry.maxPoints,
         figures: entry.figures ? entry.figures.map(f => ({ id: f.id, caption: f.caption, available: f.available })) : [],
         hints: qHints,
