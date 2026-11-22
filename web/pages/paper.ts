@@ -11,6 +11,7 @@ import {Session} from '../runtime/session.ts';
 import type {Attempt,Ref,TaskRef,Response,Kind,WorkArtifact,Json,Session as SessionRecord,Grade} from '../runtime/types.ts';
 import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
 import {deriveSealedPaperReview} from '../runtime/sealed-paper-review.ts';
+import {calculateNsejsDiagnostic} from '../runtime/nsejs-provisional-score.ts';
 export type ExamAidKind='FORMULA_SHEET'|'PERIODIC_TABLE'|'CALCULATOR'|'SCRATCHPAD';
 const aidKinds:readonly ExamAidKind[]=['FORMULA_SHEET','PERIODIC_TABLE','CALCULATOR','SCRATCHPAD'];
 export interface SharedStimulus {readonly id:string;readonly title:string;readonly contentHtml:string;readonly mediaRef?:string}
@@ -60,7 +61,7 @@ function exactMax(parts:readonly PublicPart[]):number{
 }
 export class PaperWorkspaceController{
  private readonly config:ReturnType<typeof definition>;private readonly paperId:string;private readonly paperTitle:string;private readonly parts:readonly PublicPart[];private readonly navigation:PartNavigationController;private readonly binding?:PaperBinding;
- private timer:ExamTimer;private sessionRecord:SessionRecord|null=null;private responses=new Map<string,Response>();private work:readonly WorkArtifact[]=[];private activeAid:ExamAidKind|null=null;private evaluationResult:PaperEvaluationResult|null=null;private committed=false;private ready=false;private busy=false;private dirty=false;private revision=0;private readonly maxPoints:number;
+ private timer:ExamTimer;private sessionRecord:SessionRecord|null=null;private responses=new Map<string,Response>();private work:readonly WorkArtifact[]=[];private activeAid:ExamAidKind|null=null;private evaluationResult:PaperEvaluationResult|null=null;private committed=false;private submittedAt:string|null=null;private ready=false;private busy=false;private dirty=false;private revision=0;private readonly maxPoints:number;
  constructor(config:PaperWorkspaceConfig,binding?:PaperBinding){
   this.config=definition(config);this.paperId=this.config.paperId;this.paperTitle=this.config.paperTitle;this.parts=this.config.parts;this.maxPoints=exactMax(this.parts);
   this.navigation=new PartNavigationController({sections:this.config.sections,parts:this.parts});
@@ -73,6 +74,13 @@ export class PaperWorkspaceController{
  getTimer(){return this.timer;}
  /** Public review contains no answer keys, correctness or solution data. */
  getSealedReview(){return deriveSealedPaperReview(this.getViewState(),this.parts,this.config.sections);}
+ /** Authored-key practice estimate only. Does not modify durable assessment grade. */
+ getProvisionalNsejsDiagnostic(){return this.committed&&this.binding?calculateNsejsDiagnostic(this.getSealedReview(),this.parts,id=>this.getPartResponse(id)):null;}
+ getCommittedDurationSeconds():number|null{
+  if(!this.committed||!this.submittedAt||!this.sessionRecord?.deadlineAt)return null;
+  const end=Date.parse(this.submittedAt),start=Date.parse(this.sessionRecord.deadlineAt)-this.timer.getDurationSeconds()*1000;
+  return Number.isFinite(end)&&Number.isFinite(start)&&end>=start?Math.min(this.timer.getDurationSeconds(),Math.round((end-start)/1000)):null;
+ }
  private async bound():Promise<SessionRecord>{
   const b=this.binding;if(!b||!refOk(b.paper)||b.paper.type!=='PAPER'||b.paper.id!==this.paperId||!refOk(b.task)||!refOk(b.assessment)||b.definitionSha256!==await computeSha256(canonicalJson(this.config))||!b.attemptId.trim())throw Error('PAPER_NOT_AUTHORIZED');
   const s=await b.session.snapshot();
@@ -122,11 +130,11 @@ export class PaperWorkspaceController{
  private async recover(s:SessionRecord):Promise<boolean>{
   if(!s.attemptIds.length)return false;const b=this.binding!,a=await b.progress.committedAttempt(s.id,b.attemptId);
   if(!a||a.id!==b.attemptId||!a.assessmentRef||!sameRef(a.assessmentRef,b.assessment)||a.scoringVersion!==SCORING_VERSION||a.cognitive!==null||a.hintIds.length)throw Error('UNQUALIFIED_PAPER_COMMIT');
-  try{await this.hydrate(s,a.response,a.work);this.committed=true;this.activeAid=null;this.evaluationResult=this.sealed();this.dirty=false;return true;}catch(err:any){if(err?.message==='PAPER_STATE_MISMATCH')return false;throw err;}
+  try{await this.hydrate(s,a.response,a.work);this.committed=true;this.submittedAt=a.submittedAt;this.activeAid=null;this.evaluationResult=this.sealed();this.dirty=false;return true;}catch(err:any){if(err?.message==='PAPER_STATE_MISMATCH')return false;throw err;}
  }
  async restore():Promise<void>{
   if(this.busy)throw Error('PAPER_BUSY');this.busy=true;this.ready=false;
-  try{const s=await this.bound();if(!await this.recover(s)){const d=await this.binding!.progress.loadDraft(s.id);if(d){if(d.cognitive||d.session.id!==s.id||d.session.releaseId!==s.releaseId||!sameRef(d.session.item,s.item)||d.session.deadlineAt!==s.deadlineAt)throw Error('FOREIGN_PAPER_DRAFT');try{await this.hydrate(s,d.response,d.artifacts);this.revision=d.revision;}catch(err:any){if(err?.message==='PAPER_STATE_MISMATCH'){this.responses.clear();this.work=[];this.revision=0;}else{throw err;}}}else{this.responses.clear();this.work=[];this.revision=0;}this.committed=false;this.evaluationResult=null;this.dirty=false;}this.ready=true;}finally{this.busy=false;}
+  try{const s=await this.bound();if(!await this.recover(s)){const d=await this.binding!.progress.loadDraft(s.id);if(d){if(d.cognitive||d.session.id!==s.id||d.session.releaseId!==s.releaseId||!sameRef(d.session.item,s.item)||d.session.deadlineAt!==s.deadlineAt)throw Error('FOREIGN_PAPER_DRAFT');try{await this.hydrate(s,d.response,d.artifacts);this.revision=d.revision;}catch(err:any){if(err?.message==='PAPER_STATE_MISMATCH'){this.responses.clear();this.work=[];this.revision=0;}else{throw err;}}}else{this.responses.clear();this.work=[];this.revision=0;}this.committed=false;this.submittedAt=null;this.evaluationResult=null;this.dirty=false;}this.ready=true;}finally{this.busy=false;}
  }
  async saveDraft():Promise<void>{
   if(!this.editable())throw Error('PAPER_LOCKED');this.busy=true;
@@ -142,7 +150,7 @@ export class PaperWorkspaceController{
    // no total is inferred and the examination UI does not expose private part grades.
    const art=await this.stateArtifact(s,response);
    const attempt:Attempt={id:b.attemptId,sessionId:s.id,releaseId:s.releaseId,item:b.task,response,work:[...this.work,art],hintIds:[],submittedAt:new Date().toISOString(),grade,assessmentRef:b.assessment,scoringVersion:SCORING_VERSION,cognitive:null};
-   const committed=await b.session.appendAttempt(attempt,this.revision);await this.hydrate(s,committed.response,committed.work);this.committed=true;this.activeAid=null;this.evaluationResult=this.sealed();this.dirty=false;return structuredClone(this.evaluationResult);
+   const committed=await b.session.appendAttempt(attempt,this.revision);await this.hydrate(s,committed.response,committed.work);this.committed=true;this.submittedAt=committed.submittedAt;this.activeAid=null;this.evaluationResult=this.sealed();this.dirty=false;return structuredClone(this.evaluationResult);
   }finally{this.busy=false;}
  }
  /** Diagnostic snapshot only. Cannot restore a commitment or deadline from caller bytes. */
@@ -247,7 +255,11 @@ export function mountPaperWorkspace(
     const answeredCount = parts.filter(p=>controller.getPartResponse(p.id)!==undefined).length;
     const isNsejs = controller.getPaperId().includes('nsejs');
     const sealedReview = controller.getSealedReview();
+    const diagnostic = controller.getProvisionalNsejsDiagnostic();
+    const activeDiagnostic = diagnostic?.questions.find(q=>q.partId===state.activePartId);
     const activeReview = sealedReview?.parts.find(p=>p.partId===state.activePartId);
+    const committedDuration=controller.getCommittedDurationSeconds();
+    const durationLabel=committedDuration===null?'Unavailable':`${Math.floor(committedDuration/60)}m ${committedDuration%60}s`;
 
     const mins = Math.floor(state.timer.remainingSeconds / 60);
     const secs = state.timer.remainingSeconds % 60;
@@ -355,7 +367,60 @@ export function mountPaperWorkspace(
           </div>
         </header>
 
-        ${sealedReview ? `
+        ${diagnostic ? `
+          <section id="mock-results" class="paper-diagnostic-scorecard" tabindex="-1" aria-label="NSEJS provisional practice results" style="background:#ffffff;border:2px solid #93c5fd;border-radius:14px;padding:clamp(14px,2vw,24px);display:flex;flex-direction:column;gap:16px;scroll-margin-top:12px;">
+            <div>
+              <h2 style="margin:0 0 4px;color:#0f172a;font-size:1.35rem;">NSEJS Practice Results — Provisional</h2>
+              <p style="margin:0;color:#475569;font-size:0.92rem;">Authored-key estimate after a saved submission. Not an official or academically verified examination result. Three defective questions are excluded from scoring; solutions and official keys remain sealed.</p>
+            </div>
+            <div class="diagnostic-stat-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr));gap:10px;">
+              ${[
+                ['Net practice score',String(diagnostic.netScore)+' / '+diagnostic.scorableMax],
+                ['Provisional correct',String(diagnostic.correct)],
+                ['Provisional incorrect',String(diagnostic.incorrect)],
+                ['Attempted',diagnostic.attempted+' / '+diagnostic.totalQuestions],
+                ['Unanswered',String(diagnostic.unanswered)],
+                ['Key on hold',String(diagnostic.held)],
+                ['Accuracy',diagnostic.scoreAccuracyPercent===null?'N/A':diagnostic.scoreAccuracyPercent+'%'],
+                ['Time used',durationLabel],
+              ].map(([label,value])=>`<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:11px;min-width:0;">
+                <div style="font-size:0.77rem;color:#475569;font-weight:650;">${escapeHtml(label)}</div>
+                <strong style="display:block;color:#0f172a;font-size:1.3rem;font-variant-numeric:tabular-nums;">${escapeHtml(value)}</strong>
+              </div>`).join('')}
+            </div>
+            <p style="margin:0;font-size:0.87rem;color:#854d0e;background:#fffbeb;padding:10px;border:1px solid #fde68a;border-radius:8px;">Scoring policy: +3 correct, −1 incorrect, 0 unanswered. Paper maximum 180; provisional eligible maximum ${diagnostic.scorableMax}. Q1, Q3 and Q16 are on key HOLD and contribute no positive or negative marks. Authored keys have not received independent academic approval.</p>
+            <div style="overflow-x:auto;">
+              <h3 style="margin:0 0 8px;color:#0f172a;font-size:1rem;">Subject performance</h3>
+              <table class="diagnostic-subject-table" style="border-collapse:collapse;width:100%;min-width:600px;text-align:left;font-size:0.88rem;">
+                <thead><tr style="background:#e2e8f0;">
+                  <th scope="col" style="padding:9px;">Subject</th><th scope="col" style="padding:9px;">Attempted</th>
+                  <th scope="col" style="padding:9px;">Correct*</th><th scope="col" style="padding:9px;">Incorrect*</th>
+                  <th scope="col" style="padding:9px;">Held</th><th scope="col" style="padding:9px;">Score*</th>
+                </tr></thead>
+                <tbody>${diagnostic.sections.map(sec=>`<tr style="border-bottom:1px solid #e2e8f0;">
+                  <td style="padding:9px;">${escapeHtml(sec.title)}</td><td style="padding:9px;">${sec.attempted}</td>
+                  <td style="padding:9px;">${sec.correct}</td><td style="padding:9px;">${sec.incorrect}</td>
+                  <td style="padding:9px;">${sec.held}</td><td style="padding:9px;">${sec.points} / ${sec.eligibleMax}</td>
+                </tr>`).join('')}</tbody>
+              </table>
+              <p style="font-size:0.75rem;color:#64748b;">*All correctness and scores are provisional authored-key estimates, not verified academic grades.</p>
+            </div>
+            <div>
+              <h3 style="margin:0 0 8px;color:#0f172a;font-size:1rem;">Question-by-question review</h3>
+              <div class="diagnostic-question-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:7px;">
+                ${diagnostic.questions.map(q=>{
+                  const status=q.status==='KEY_HOLD'?'Key hold':q.status==='UNANSWERED'?'Not answered':q.status==='PROVISIONAL_CORRECT'?'Provisionally correct':'Provisionally incorrect';
+                  return `<button type="button" class="diagnostic-question-btn" data-review-part="${escapeHtml(q.partId)}" style="text-align:left;padding:10px;min-height:48px;border:1px solid #cbd5e1;background:${q.status==='KEY_HOLD'?'#fffbeb':'#f8fafc'};color:#0f172a;border-radius:8px;cursor:pointer;">
+                    <strong style="display:block;">Q${q.number} · ${escapeHtml(status)}</strong>
+                    <small style="display:block;color:#475569;">${escapeHtml(q.topic)}</small>
+                  </button>`;
+                }).join('')}
+              </div>
+            </div>
+            <div style="font-size:0.83rem;color:#64748b;">Result basis: ${escapeHtml(diagnostic.revision)}. Existing durable answers are preserved; this estimate is recalculated from the current revision and is not a saved official grade.</div>
+          </section>
+        ` : ''}
+        ${sealedReview && !diagnostic ? `
           <section class="paper-scorecard-section" aria-label="Sealed examination attempt review" style="background:#ffffff;border:1px solid #94a3b8;border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:14px;">
             <div>
               <h2 style="margin:0 0 5px;font-size:1.3rem;color:#0f172a;">Attempt Review · Results Pending</h2>
@@ -387,7 +452,7 @@ export function mountPaperWorkspace(
         <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
           <span style="font-size:1.25rem;">ℹ️</span>
           <div style="font-size:0.95rem;color:#1e40af;">
-            <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — ${isNsejs ? 'Official NSEJS single-choice questions (+3 correct, -1 incorrect). Solutions sealed.' : 'Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed.'} Submission yields diagnostic sealed evaluation.
+            <strong>Simulated Examination Mode · Academic Status: HOLD</strong> — ${isNsejs ? 'Authored NSEJS practice questions (+3/-1/0). Only eligible questions receive provisional grading; official solutions sealed.' : 'Official IOQM integer answers [00..99]. Pre-commitment solutions are sealed.'} Submission yields diagnostic sealed evaluation.
           </div>
         </div>
 
@@ -513,7 +578,13 @@ export function mountPaperWorkspace(
               </div>
 
 
-              ${sealedReview && activeReview ? `
+              ${diagnostic && activeDiagnostic ? `
+                <div class="diagnostic-active-result" role="status" style="padding:12px 14px;margin-bottom:14px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc;">
+                  <strong style="color:#0f172a;">Q${activeDiagnostic.number}: ${activeDiagnostic.status==='KEY_HOLD'?'Key under review':activeDiagnostic.status==='UNANSWERED'?'Unanswered':activeDiagnostic.status==='PROVISIONAL_CORRECT'?'Provisionally correct':'Provisionally incorrect'}</strong>
+                  <p style="margin:5px 0 0;color:#475569;font-size:0.9rem;">Recorded choice: ${activeDiagnostic.selected??'None'}. ${activeDiagnostic.issue?escapeHtml(activeDiagnostic.issue):'Practice marking is provisional; official answers and worked solutions are not released.'}</p>
+                </div>
+              ` : ''}
+              ${!diagnostic && sealedReview && activeReview ? `
                 <div class="part-review-status" role="status" style="padding:12px 14px;margin-bottom:14px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc;">
                   <strong style="color:#0f172a;">Part ${escapeHtml(String(activeReview.partKey))}: ${activeReview.responseState==='RECORDED'?'Answer recorded':'Unanswered'}</strong>
                   <p style="margin:5px 0 0;color:#475569;font-size:0.9rem;">Correctness: review pending. Model solution and official answer are sealed by the simulated-exam policy.</p>
@@ -646,6 +717,15 @@ export function mountPaperWorkspace(
     root.querySelector<HTMLButtonElement>('#btn-retake-from-banner')?.addEventListener('click', handleRetake);
     root.querySelector<HTMLButtonElement>('#btn-retake-from-committed')?.addEventListener('click', handleRetake);
 
+    root.querySelectorAll<HTMLButtonElement>('.diagnostic-question-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.dataset.reviewPart;
+        if(!id)return;
+        controller.getNavigation().goToPart(id);
+        render();
+        root.querySelector('.diagnostic-active-result')?.scrollIntoView({block:'center',behavior:'smooth'});
+      });
+    });
     // Part select buttons
     root.querySelectorAll<HTMLButtonElement>('.part-select-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -752,6 +832,9 @@ export function mountPaperWorkspace(
       try {
         await controller.submitPaper();
         render();
+        const destination=root.querySelector<HTMLElement>('.paper-diagnostic-scorecard, .paper-scorecard-section');
+        destination?.scrollIntoView({block:'start',behavior:'smooth'});
+        destination?.focus({preventScroll:true});
       } catch (err: any) {
         alert('Submission failed: ' + (err?.message || String(err)));
       }
