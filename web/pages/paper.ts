@@ -244,6 +244,44 @@ export function mountPaperWorkspace(
   let timerInterval: ReturnType<typeof setInterval> | null = null;
   let scratchpadOpen = false;
   let formulaSheetOpen = false;
+  let restoreError: string | null = null;
+  let submitFailure: string | null = null;
+  let submitting = false;
+
+  // Keep the actual disabled state and its explanation synchronized with
+  // async draft persistence. A full render during save can otherwise strand
+  // the Submit button disabled after the save has finished.
+  const submitUi = () => {
+    const state = controller.getViewState();
+    const enabled = state.ready && !state.busy && !state.isCommitted && !state.timer.isExpired && !submitting;
+    const label = state.isCommitted ? 'Paper Durably Committed (Sealed)'
+      : submitting ? 'Submitting paper…'
+      : state.busy ? 'Saving latest answer…'
+      : 'Submit Complete Paper →';
+    const message = state.isCommitted ? 'This attempt is sealed. Review your results above, or start a separate retake.'
+      : !state.ready ? (restoreError
+        ? 'Exam session could not be restored (' + restoreError + '). Existing saved attempts were not deleted. Reload or use Retake to start a separate attempt.'
+        : 'Preparing the exam session. Submission is not available yet.')
+      : state.timer.isExpired ? 'The exam deadline has passed. Submission is locked; use Retake for a new timed attempt.'
+      : submitting ? 'Submitting and durably committing your paper…'
+      : state.busy ? 'Saving your latest answer before submission…'
+      : submitFailure ? 'Submission failed (' + submitFailure + '). Your current answers remain on this page; retry submission.' : '';
+    return {enabled, label, message};
+  };
+  const syncSubmitUi = () => {
+    if (!active) return;
+    const {enabled, label, message} = submitUi();
+    const button = root.querySelector<HTMLButtonElement>('#submit-paper-btn');
+    if (button) {
+      button.disabled = !enabled;
+      button.textContent = label;
+      button.style.background = enabled ? '#16a34a' : '#94a3b8';
+      button.style.cursor = enabled ? 'pointer' : 'not-allowed';
+      button.title = message;
+    }
+    const status = root.querySelector<HTMLElement>('#paper-submit-status');
+    if (status) status.textContent = message;
+  };
 
   const render = () => {
     if (!active) return;
@@ -651,6 +689,7 @@ export function mountPaperWorkspace(
 
               <!-- Submission Bar -->
               <p id="paper-draft-status" role="status" aria-live="polite" style="margin:0;font-size:0.9rem;color:#475569;"></p>
+              <p id="paper-submit-status" role="status" aria-live="polite" style="margin:0;font-size:0.9rem;color:#854d0e;"></p>
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-wrap: wrap; gap: 10px;">
                 <span style="font-size: 0.9rem; color: #64748b;">
                   Parts Attempted: <strong>${answeredCount}</strong> of ${parts.length}
@@ -667,6 +706,7 @@ export function mountPaperWorkspace(
     `;
 
     bindEvents();
+    syncSubmitUi();
   };
 
   const persistDraft = () => {
@@ -675,6 +715,7 @@ export function mountPaperWorkspace(
     void controller.saveDraft().then(() => {
       const status = root.querySelector<HTMLElement>('#paper-draft-status');
       if (status) { status.textContent = 'Latest answer saved locally.'; status.style.color = '#166534'; }
+      syncSubmitUi();
     }).catch(err => {
       console.error('Paper draft persistence failed:', err);
       const status = root.querySelector<HTMLElement>('#paper-draft-status');
@@ -682,6 +723,7 @@ export function mountPaperWorkspace(
         status.textContent = 'Warning: latest answer was NOT saved locally. Do not exit; retry the answer after checking available storage.';
         status.style.color = '#b91c1c';
       }
+      syncSubmitUi();
     });
   };
 
@@ -829,14 +871,23 @@ export function mountPaperWorkspace(
 
     // Submit Complete Paper
     root.querySelector<HTMLButtonElement>('#submit-paper-btn')?.addEventListener('click', async () => {
+      if (submitting) return;
       try {
-        await controller.submitPaper();
+        submitFailure = null;
+        submitting = true;
+        const pending = controller.submitPaper();
+        syncSubmitUi();
+        await pending;
+        submitting = false;
         render();
         const destination=root.querySelector<HTMLElement>('.paper-diagnostic-scorecard, .paper-scorecard-section');
         destination?.scrollIntoView({block:'start',behavior:'smooth'});
         destination?.focus({preventScroll:true});
       } catch (err: any) {
-        alert('Submission failed: ' + (err?.message || String(err)));
+        submitting = false;
+        submitFailure = err?.message || String(err);
+        syncSubmitUi();
+        alert('Submission failed: ' + submitFailure);
       }
     });
   };
@@ -847,7 +898,9 @@ export function mountPaperWorkspace(
       if (!controller.getViewState().ready) {
         await controller.restore();
       }
-    } catch (err) {
+      restoreError = null;
+    } catch (err: any) {
+      restoreError = err?.message || String(err);
       console.warn('Paper workspace restore warning:', err);
     }
     render();

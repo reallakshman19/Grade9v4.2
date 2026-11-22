@@ -104,8 +104,17 @@ test('NSEJS browser: timed mock exam routes, captures answers and seals submissi
       assert.match(formulaContent || '', /Chemistry Constants/);
       assert.match(formulaContent || '', /Hardy-Weinberg/);
 
-      // Submit paper
+      // Re-save the FINAL response without navigating or toggling any aid
+      // afterward. The old implementation leaves Submit permanently disabled:
+      // render() executes while saveDraft() is busy, with no redraw on resolve.
+      await optA.click();
+      await page.waitForFunction(() =>
+        document.querySelector('#paper-draft-status')?.textContent?.includes('Latest answer saved locally.')
+      );
       const submitBtn = page.locator('#submit-paper-btn');
+      assert.equal(await submitBtn.isDisabled(), false,
+        'Submit must re-enable after final answer saves without any extra navigation');
+      assert.match((await submitBtn.textContent()) || '', /Submit Complete Paper/);
       await submitBtn.click();
       await page.waitForTimeout(500);
 
