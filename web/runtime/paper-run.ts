@@ -32,7 +32,7 @@ export async function acquireAuthorizedPaperRun(o:Request):Promise<{session:Sess
     // require the user to explicitly create a new attempt (history retained).
     if(!ptr&&!o.forceNewAttempt){
       const history=await tx.getAll<SessionRecord>('sessions');
-      if(history.some(s=>s.id.startsWith(o.legacySessionId+':run:'))){
+      if(history.some(s=>typeof s?.id==='string'&&s.id.startsWith(o.legacySessionId+':run:'))){
         throw Error('PAPER_ARCHIVED_HISTORY_RETAKE_REQUIRED');
       }
     }
