@@ -1,0 +1,130 @@
+name: Deploy Grade9v4.2 to GitHub Pages
+
+# Merges into main cause a push. Every main push publishes the exact built tree.
+# On PRs affecting the site, build and browser-smoke only; never deploy a PR.
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/deploy-pages.yml'
+      - 'vite.config.ts'
+      - 'web/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tests/browser/smoke.spec.ts'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: grade9v42-github-pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build public Pages artifact
+    if: github.repository == 'reallakshman19/Grade9v4.2'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Check out exact main commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+
+      - name: Verify trusted publication ref
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$GITHUB_EVENT_NAME" = 'push' ]; then
+            test "$GITHUB_REF" = 'refs/heads/main'
+          elif [ "$GITHUB_EVENT_NAME" = 'pull_request' ]; then
+            test "$GITHUB_BASE_REF" = 'main'
+          else
+            echo "Disallowed event: $GITHUB_EVENT_NAME" >&2
+            exit 1
+          fi
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code HEAD
+
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Strict typecheck and static production build
+        run: npm run build
+
+      - name: Install Chromium for real browser smoke
+        run: npm exec --no -- playwright-core install chromium
+
+      - name: Validate mounted app in Chromium
+        run: node --experimental-strip-types --test tests/browser/smoke.spec.ts
+
+      - name: Validate project-site artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s dist/index.html
+          test -d dist/assets
+          test -n "$(find dist/assets -maxdepth 1 -type f -name '*.js' -print -quit)"
+
+          # Vite's base './' is required for the /Grade9v4.2/ project subpath.
+          # Check every relative entrypoint asset referenced by built HTML exists.
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import {existsSync, readFileSync} from 'node:fs';
+          import {resolve} from 'node:path';
+          const html = readFileSync('dist/index.html', 'utf8');
+          const paths = [...html.matchAll(/(?:src|href)="(\.\/[^"]+)"/g)].map(m => m[1].split('?')[0]);
+          assert(paths.some(p => p.startsWith('./assets/')), 'Missing bundled relative app entrypoint');
+          for(const path of paths) {
+            assert(!path.includes('..'), 'Unexpected path traversal in public asset reference');
+            assert(existsSync(resolve('dist', path)), `Missing built asset ${path}`);
+          }
+          assert(!html.includes('src="/assets/'), 'Root-relative Vite assets break project Pages URLs');
+          console.log('Project-subpath build entrypoints verified:', paths.length);
+          NODE
+
+          # Publish only the Vite output, never the repository or private custody.
+          if find dist -type f \( -name '.env' -o -name '.env.*' -o -name '*.pem' -o -name '*.key' -o -name '*.p12' \) | grep -q .; then
+            echo 'Prohibited secret-like file in public artifact' >&2
+            exit 1
+          fi
+          touch dist/.nojekyll
+
+      - name: Configure GitHub Pages
+        if: github.event_name == 'push'
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
+      - name: Upload validated Pages output
+        if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: dist
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: build
+    if: github.event_name == 'push' && github.repository == 'reallakshman19/Grade9v4.2' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy exact built artifact
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
