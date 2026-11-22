@@ -112,25 +112,31 @@ test('NSEJS browser: timed mock exam routes, captures answers and seals submissi
       const postSubmit = await page.locator('.paper-workspace').textContent();
       assert.match(postSubmit || '', /Paper Submitted Successfully|Paper Durably Committed/);
 
-      // Post-commit review is an inventory, NOT a second answer-key/grading engine.
-      const review=page.locator('.paper-scorecard-section');
+      // The result is always visible after submit, including when some authored
+      // answer keys are demonstrably wrong. Do not invent official accuracy.
+      const review=page.locator('.paper-diagnostic-scorecard');
       await review.waitFor({timeout:10000});
-      assert.match((await review.textContent())||'',/Attempt Review · Results Pending/);
+      assert.match((await review.textContent())||'',/NSEJS Practice Results — Provisional/);
+      assert.match((await review.textContent())||'',/6 \/ 171/);
       assert.match((await review.textContent())||'',/3 \/ 60/);
       assert.match((await review.textContent())||'',/57/);
-      assert.match((await review.textContent())||'',/Withheld · Max 180/);
+      assert.match((await review.textContent())||'',/Key on hold/);
+      assert.match((await review.textContent())||'',/Q1.*Key hold/);
+      assert.match((await review.textContent())||'',/Q3.*Key hold/);
+      assert.match((await review.textContent())||'',/Q16.*Key hold/);
       assert.equal(await page.locator('.part-solution-drawer').count(),0);
-      assert.doesNotMatch((await page.locator('.paper-workspace').textContent())||'',/Official Answer:|Score: 9 \/ 180|100.0% Accuracy|✓ EVALUATED/);
+      assert.doesNotMatch((await page.locator('.paper-workspace').textContent())||'',/Official Answer:|100.0% Official|✓ EVALUATED/);
       assert.match((await page.locator('.part-select-btn').first().getAttribute('aria-label'))||'',/answer recorded/);
       assert.match((await page.locator('.part-select-btn').nth(1).getAttribute('aria-label'))||'',/unanswered/);
-      await page.locator('.part-select-btn').nth(1).click();
-      assert.match((await page.locator('.part-review-status').textContent())||'',/Unanswered/);
-      assert.match((await page.locator('.part-review-status').textContent())||'',/Correctness: review pending/);
-      // Real reload should reopen the same durable committed run without
-      // silently re-scoring or surfacing source solution material.
+      await page.locator('.diagnostic-question-btn').nth(1).click();
+      assert.match((await page.locator('.diagnostic-active-result').textContent())||'',/Unanswered/);
+      assert.match((await page.locator('.diagnostic-active-result').textContent())||'',/Recorded choice: None/);
+      // Real reload must restore the same committed responses, provisional
+      // revision, and held questions, without opening a new exam session.
       await page.reload({waitUntil:'domcontentloaded'});
-      await page.locator('.paper-scorecard-section').waitFor({timeout:10000});
-      assert.match((await page.locator('.paper-scorecard-section').textContent())||'',/3 \/ 60/);
+      await page.locator('.paper-diagnostic-scorecard').waitFor({timeout:10000});
+      assert.match((await page.locator('.paper-diagnostic-scorecard').textContent())||'',/6 \/ 171/);
+      assert.match((await page.locator('.paper-diagnostic-scorecard').textContent())||'',/authored-key-v1-provisional/);
       assert.equal(await page.locator('.part-solution-drawer').count(),0);
     } finally {
       await browser.close();
