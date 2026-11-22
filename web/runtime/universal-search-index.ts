@@ -1,9 +1,11 @@
 /**
  * web/runtime/universal-search-index.ts
  * Grade9 STEM Universal Search Index & Engine
- * Full 1114-record offline search corpus: 812 exact question routes, 164 collection-bound question references, 93 tablets, 44 curriculum and 1 other.
+ * 1114 search records: 737 installed-target question routes, 164 collection references, 75 unavailable targets, 93 tablets, 44 original curriculum and 1 other. Source academic admission remains separate.
  * Sub-50ms instant fuzzy token search with multi-tier relevance scoring and Fault N09 answer isolation.
  */
+
+import {CANONICAL_UNIFIED_QUESTIONS} from '../data/unified-questions.generated.ts';
 
 export interface UniversalSearchDoc {
   readonly id: string;
@@ -12303,17 +12305,32 @@ const RAW_UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze
  * never advertise an exact question deep link or count it as directly openable.
  * Exact redirects require verified question-content identity in the target.
  */
+const INSTALLED_QUESTION_IDS = new Set(CANONICAL_UNIFIED_QUESTIONS.map(q=>q.id));
 export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze(
   RAW_UNIVERSAL_SEARCH_CORPUS.map((item):UniversalSearchDoc=>{
-    if(item.category!=='question'||new RegExp('^#/question/[^/?#]+$').test(item.route))return item;
-    return Object.freeze({
-      ...item,
-      category:'curriculum',
-      type:'QUESTION_COLLECTION',
-      badge:'COLLECTION',
-      subtitle:item.subtitle+' · Topic collection',
-      breadcrumb:item.breadcrumb+' · Opens collection, not individual question',
-    });
+    if(item.category!=='question')return item;
+    const exact = /^#\/question\/([^/?#]+)$/.exec(item.route);
+    if(!exact){
+      return Object.freeze({
+        ...item,
+        category:'curriculum',
+        type:'QUESTION_COLLECTION',
+        badge:'COLLECTION',
+        subtitle:item.subtitle+' · Topic collection',
+        breadcrumb:item.breadcrumb+' · Opens collection, not individual question',
+      });
+    }
+    if(!INSTALLED_QUESTION_IDS.has(decodeURIComponent(exact[1]))){
+      return Object.freeze({
+        ...item,
+        category:'curriculum',
+        type:'QUESTION_UNAVAILABLE',
+        badge:'NOT READY',
+        subtitle:item.subtitle+' · Target not installed',
+        breadcrumb:item.breadcrumb+' · No question target in installed database',
+      });
+    }
+    return item;
   })
 );
 
