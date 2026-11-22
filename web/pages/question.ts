@@ -140,7 +140,9 @@ export class QuestionPageController {
   }
 
   render(): string {
-    if (!this.workspace) {
+    if (!this.workspace && this.status === 'LOADING') {
+      // Diagnostic-only default for an unconfigured controller; an explicitly
+      // missing route must not silently show another question.
       this.loadQuestion(createDefaultQuestion());
     }
     const s = this.getViewState();
