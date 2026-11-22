@@ -605,7 +605,7 @@ function renderTopicWorkspacePlaceholder(root: HTMLElement, subjectId: string, t
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0;">
         <div>
           <h1 class="placeholder-title" style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">Topic Workspace: ${escapeHtml(topicId.toUpperCase())}</h1>
-          <p style="margin:0.25rem 0 0;color:#64748b;">Subject: ${escapeHtml(subjectId.toUpperCase())} · Progress: 42% Completed</p>
+          <p style="margin:0.25rem 0 0;color:#64748b;">Subject: ${escapeHtml(subjectId.toUpperCase())} · Progress: Not yet measured</p>
         </div>
         <button type="button" onclick="window.location.hash='#/subject/${encodeURIComponent(subjectId)}'" style="min-height:48px;padding:8px 16px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">← Back to ${escapeHtml(subjectId.toUpperCase())}</button>
       </div>
