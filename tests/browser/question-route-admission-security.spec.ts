@@ -72,3 +72,29 @@ test('actual question route does not invent VERIFIED key for corpus HOLD, nor su
   await page.close();
  }finally{await browser.close();await server.close();}
 });
+
+
+test('global-search modal keeps missing installed question routes visible but inert',{timeout:60000},async()=>{
+  const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});
+  await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');
+  const browser=await chromium.launch({headless:true});
+  try{
+    const page=await browser.newPage();await page.goto('http://127.0.0.1:'+addr.port+'/test-host.html');
+    const result=await page.evaluate(async()=>{
+      const {UNIVERSAL_SEARCH_CORPUS}=await import('/runtime/universal-search-index.ts' as string);
+      const {UniversalSearchModalController}=await import('/components/universal-search-modal.ts' as string);
+      const unavailable=UNIVERSAL_SEARCH_CORPUS.find((q:any)=>q.id==='Q-PHY-WPE-B1-01');
+      if(!unavailable)throw Error('missing test search item');
+      const modal=new UniversalSearchModalController();
+      const card=(modal as any).createCard(unavailable) as HTMLAnchorElement;
+      const root=document.getElementById('app')!;root.append(card);
+      const before=window.location.hash;
+      card.click();
+      return {category:unavailable.category,type:unavailable.type,href:card.hasAttribute('href'),
+        disabled:card.getAttribute('aria-disabled'),hashChanged:window.location.hash!==before,
+        badge:card.textContent?.includes('NOT READY')};
+    });
+    assert.deepEqual(result,{category:'curriculum',type:'QUESTION_UNAVAILABLE',href:false,
+      disabled:'true',hashChanged:false,badge:true});
+  }finally{await browser.close();await server.close();}
+});
