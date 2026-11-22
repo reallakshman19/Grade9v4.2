@@ -40,7 +40,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$GITHUB_REF" = 'refs/heads/main'
+          if [ "$GITHUB_EVENT_NAME" = 'push' ]; then
+            test "$GITHUB_REF" = 'refs/heads/main'
+          elif [ "$GITHUB_EVENT_NAME" = 'pull_request' ]; then
+            test "$GITHUB_BASE_REF" = 'main'
+          else
+            echo "Disallowed event: $GITHUB_EVENT_NAME" >&2
+            exit 1
+          fi
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           git diff --exit-code HEAD
 
