@@ -113,9 +113,7 @@ export function calculateNsejsDiagnostic(
    };
  });
  if(sections.length!==3||sections.reduce((n,s)=>n+s.attempted,0)!==review.recordedCount||
-    sections.reduce((n,s)=>n+s.unanswered,0)+sections.reduce((n,s)=>n+s.held,0)-
-    questions.filter(q=>q.status==='KEY_HOLD'&&q.selected!==null).length!==review.unansweredCount+
-    questions.filter(q=>q.status==='KEY_HOLD'&&q.selected===null).length)return null;
+    questions.filter(q=>q.selected===null).length!==review.unansweredCount)return null;
  const correct=questions.filter(q=>q.status==='PROVISIONAL_CORRECT').length;
  const incorrect=questions.filter(q=>q.status==='PROVISIONAL_INCORRECT').length;
  const attempted=questions.filter(q=>q.selected!==null).length;
