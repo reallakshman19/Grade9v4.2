@@ -1,0 +1,51 @@
+name: Mock paper submit regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/mock-paper-submit-regression.yml'
+      - 'web/pages/paper.ts'
+      - 'web/runtime/**'
+      - 'tests/browser/verify_mock_paper_browser.spec.ts'
+      - 'package.json'
+      - 'package-lock.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/mock-paper-submit-regression.yml'
+      - 'web/pages/paper.ts'
+      - 'web/runtime/**'
+      - 'tests/browser/verify_mock_paper_browser.spec.ts'
+      - 'package.json'
+      - 'package-lock.json'
+
+permissions:
+  contents: read
+
+jobs:
+  exact-submission:
+    name: Final-answer save and submit (Chromium)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Verify candidate checkout
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code HEAD
+      - name: Set up pinned Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.16.0'
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Strict typecheck and build
+        run: npm run build
+      - name: Install Chromium
+        run: npm exec --no -- playwright-core install chromium
+      - name: Exercise mounted mock paper through submission and reload
+        run: node --experimental-strip-types --test --test-concurrency=1 --test-force-exit tests/browser/verify_mock_paper_browser.spec.ts
