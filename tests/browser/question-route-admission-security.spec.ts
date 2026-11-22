@@ -33,7 +33,8 @@ test('actual Chromium question page rejects hostile HTML and suppresses unapprov
   assert.equal(await page.getByText('PRIVATE-HINT').count(),0);
   assert.match(await page.locator('[data-slot=identity]').innerText(),/Key: UNVERIFIED/);
   assert.equal(await page.locator('#g9-hint-btn').isDisabled(),true);
-  await page.locator('#g9-solution-toggle-btn').click();
+  assert.equal(await page.locator('#g9-solution-toggle-btn').count(),0);
+  await page.getByText('Worked solution awaiting reviewed release').waitFor();
   assert.equal(await page.getByText('PRIVATE-EXPLANATION').count(),0);
   await page.evaluate(()=>(window as any).__mounted?.dispose());
   await page.close();
