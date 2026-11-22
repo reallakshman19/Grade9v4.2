@@ -1,17 +1,27 @@
 name: Deploy Grade9v4.2 to GitHub Pages
 
-# A merge into main creates a push to main. PR builds do not publish.
-# Intentionally no paths filter: every change to main republishes that exact tree.
+# Merges into main cause a push. Every main push publishes the exact built tree.
+# On PRs affecting the site, build and browser-smoke only; never deploy a PR.
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/deploy-pages.yml'
+      - 'vite.config.ts'
+      - 'web/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tests/browser/smoke.spec.ts'
 
 permissions:
   contents: read
 
 concurrency:
-  group: grade9v42-github-pages-main
+  group: grade9v42-github-pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -46,6 +56,12 @@ jobs:
       - name: Strict typecheck and static production build
         run: npm run build
 
+      - name: Install Chromium for real browser smoke
+        run: npm exec --no -- playwright-core install chromium
+
+      - name: Validate mounted app in Chromium
+        run: node --experimental-strip-types --test tests/browser/smoke.spec.ts
+
       - name: Validate project-site artifact
         shell: bash
         run: |
@@ -79,9 +95,11 @@ jobs:
           touch dist/.nojekyll
 
       - name: Configure GitHub Pages
+        if: github.event_name == 'push'
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
       - name: Upload validated Pages output
+        if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           path: dist
@@ -89,7 +107,7 @@ jobs:
   deploy:
     name: Publish to GitHub Pages
     needs: build
-    if: github.repository == 'reallakshman19/Grade9v4.2' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.repository == 'reallakshman19/Grade9v4.2' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
