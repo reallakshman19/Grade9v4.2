@@ -202,7 +202,7 @@ describe('A50 Model Registry & Policy-Filtered Disclosure', () => {
   });
 });
 
-it('rejects invalid oracle regimes, vector truncation and duplicate registry identity',()=>{for(const [family,p] of [['INSTANTANEOUS_POWER',{force:[1,2],velocity:[1]}],['SPRING_CONTACT',{k:1,x:1,m:1,friction:0,distance:1}],['DISSIPATIVE_BOUNCES',{mass:1,impact_speed:1,restitution:2}],['CONSTANT_POWER',{mass:0,initial_speed:1,power:1,time:1}] ] as const)assert.throws(()=>evaluateWpeModel(family,p));const r=new ModelRegistry();assert.equal(r.getByFamily('POTENTIAL_WELLS')?.id,'PHYS-MODEL-ENERGY-WELL');assert.throws(()=>r.register(new HarmonicEnergyWellAdapter()));});
+it('rejects invalid oracle regimes, vector truncation and duplicate registry identity',()=>{for(const [family,p] of [['INSTANTANEOUS_POWER',{force:[1,2],velocity:[1]}],['SPRING_CONTACT',{k:1,x:1,m:1,friction:-1,distance:1}],['DISSIPATIVE_BOUNCES',{mass:1,impact_speed:1,restitution:2}],['CONSTANT_POWER',{mass:0,initial_speed:1,power:1,time:1}] ] as const)assert.throws(()=>evaluateWpeModel(family,p));const r=new ModelRegistry();assert.equal(r.getByFamily('POTENTIAL_WELLS')?.id,'PHYS-MODEL-ENERGY-WELL');assert.throws(()=>r.register(new HarmonicEnergyWellAdapter()));});
 
 import {MemoryStorageDriver} from '../../web/runtime/storage.ts';
 import {DefaultCognitiveStore} from '../../web/runtime/cognitive-store.ts';

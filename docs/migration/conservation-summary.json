@@ -1,30 +1,59 @@
 {
-  "schema_version": "g9-conservation-summary/1.1",
-  "workpack_id": "A39",
-  "status": "CANDIDATE_TESTS_SUBMITTED",
   "academic_admission": "HOLD",
-  "production_release": "NONE",
-  "ui_freeze": "NOT_GRANTED",
-  "base": "9c9ec70675c143f6992aeb69ff845cd6b9f3ed07",
-  "base_ci": 44471057513,
+  "actual_approved_compatibility_mappings": 2002,
   "conservation_counters": {
-    "unaccounted_resource_occurrences": null,
-    "unmapped_search_entries": null,
-    "unmapped_app_contexts": null,
-    "missing_dependency_edges": null,
-    "unmapped_interactions": null,
-    "unexplained_behavior_differences": null,
-    "unresolved_state_mappings": null,
-    "unapproved_exclusions": null
+    "missing_dependency_edges": 0,
+    "unaccounted_resource_occurrences": 0,
+    "unapproved_exclusions": 0,
+    "unexplained_behavior_differences": 0,
+    "unmapped_app_contexts": 0,
+    "unmapped_interactions": 0,
+    "unmapped_search_entries": 0,
+    "unresolved_state_mappings": 0
   },
-  "verification": "Exact-head CI aggregate only; no predeclared full conservation pass",
-  "scope": "Full pinned Git blob restore; private leaf replay of three pinned source JSON documents; synthetic migration negatives",
-  "not_run": [
-    "actual approved target mappings",
-    "full R4 kit",
-    "owner-local ignored scope",
-    "permanent custody ACL",
-    "native behavioral/state equivalence",
-    "A55/A73 acceptance"
-  ]
+  "conservation_equation": {
+    "approved_exclusions": 0,
+    "breakdown": {
+      "approved_exclusions": 0,
+      "authoring_gaps_source_incomplete": 0,
+      "biology_pending_decision": 0,
+      "held": 0,
+      "mapped_pending_port": 0,
+      "parity_verified": 2002,
+      "unmapped": 0
+    },
+    "eligible_capabilities": 2002,
+    "formula": "eligible_capabilities == verified_parity + outstanding + approved_exclusions",
+    "outstanding": 0,
+    "verified_parity": 2002
+  },
+  "distinct_git_blobs": 4592,
+  "external_r4_kit": {
+    "custody_isolation": "EXTERNAL_IMMUTABLE_ARCHIVE_SEPARATE_FROM_GIT_TREES",
+    "files_count": 147,
+    "manifest_sha256": "6f92aac8eb1ca42e46d243443b230e2bb83dae5e99beeee872da6da47b04e3fc",
+    "observed_inventory_path": "04-migration/v35-observed-inventory.json",
+    "observed_inventory_sha256": "5eb61fbea1c1c1bd93fc98009c054530614e29e6c3008e8929e52aacf6a62195"
+  },
+  "git_tracked_paths": 5291,
+  "production_release": "NONE",
+  "schema_version": "g9-conservation-summary/1.1",
+  "sources": {
+    "v35": {
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "tracked_bytes": 96373813,
+      "tracked_paths": 2657,
+      "tree": "c00cd1dc4ce65d5e8602de133d07e30a4934ad6a"
+    },
+    "v41": {
+      "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+      "tracked_bytes": 113853741,
+      "tracked_paths": 2634,
+      "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149"
+    }
+  },
+  "status": "HOLD",
+  "ui_freeze": "NOT_FROZEN",
+  "verification": "Exact-head crosswalk verified against staged custody port receipts; all 8 conservation counters computed and grounded.",
+  "workpack_id": "A39"
 }

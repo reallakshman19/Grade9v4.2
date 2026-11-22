@@ -312,9 +312,9 @@ export class ExperimentWorkspaceController {
           (a) => `
           <li style="padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 8px;">
             <div style="font-weight: 600; color: #0f172a;">${escapeHtml(String(a.name))} (${escapeHtml(String(a.type))})</div>
-            ${a.specifications ? `<div style="font-size: 13px; color: #475569;">Specs: ${escapeHtml(String(a.specifications))}</div>` : ''}
-            ${a.uncertaintyResolution ? `<div style="font-size: 13px; color: #2563eb;">Resolution: ${escapeHtml(String(a.uncertaintyResolution))}</div>` : ''}
-            <div style="font-size: 12px; color: #64748b; margin-top: 4px;">${escapeHtml(String(a.accessibleDescription))}</div>
+            ${a.specifications ? `<div style="font-size:14px; color: #475569;">Specs: ${escapeHtml(String(a.specifications))}</div>` : ''}
+            ${a.uncertaintyResolution ? `<div style="font-size:14px; color: #2563eb;">Resolution: ${escapeHtml(String(a.uncertaintyResolution))}</div>` : ''}
+            <div style="font-size:14px; color: #64748b; margin-top: 4px;">${escapeHtml(String(a.accessibleDescription))}</div>
           </li>`
         )
         .join('');
@@ -333,7 +333,7 @@ export class ExperimentWorkspaceController {
           <li style="padding: 12px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 8px;">
             <div style="font-weight: 600;">Step ${o.stepNumber} (${new Date(o.timestamp).toLocaleTimeString()})</div>
             <p style="margin: 6px 0; color: #1e293b;">${escapeHtml(String(o.notes))}</p>
-            ${o.qualitativeObservations ? `<div style="font-size: 13px; color: #475569;">Qualitative: ${escapeHtml(String(o.qualitativeObservations))}</div>` : ''}
+            ${o.qualitativeObservations ? `<div style="font-size:14px; color: #475569;">Qualitative: ${escapeHtml(String(o.qualitativeObservations))}</div>` : ''}
           </li>`
         )
         .join('');
@@ -348,7 +348,7 @@ export class ExperimentWorkspaceController {
     }
 
     const disclaimerBanner = `
-      <div class="lab-competence-disclaimer" style="margin-top: 20px; padding: 12px 16px; background: #fffbeb; border: 1px solid #fef08a; border-radius: 6px; font-size: 12px; color: #854d0e;">
+      <div class="lab-competence-disclaimer" style="margin-top: 20px; padding: 12px 16px; background: #fffbeb; border: 1px solid #fef08a; border-radius: 6px; font-size:14px; color: #854d0e;">
         <strong>Safety & Competence Notice:</strong> ${escapeHtml(String(state.labCompetenceDisclaimer))}
       </div>
     `;

@@ -181,7 +181,7 @@ export class GraphController {
       const sx = toScreenX(val);
       xTicksSvg.push(`
         <line x1="${sx.toFixed(1)}" y1="${(padding.top + plotH).toFixed(1)}" x2="${sx.toFixed(1)}" y2="${(padding.top + plotH + 6).toFixed(1)}" stroke="#64748b" />
-        <text x="${sx.toFixed(1)}" y="${(padding.top + plotH + 20).toFixed(1)}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#475569">${val.toFixed(1)}</text>
+        <text x="${sx.toFixed(1)}" y="${(padding.top + plotH + 20).toFixed(1)}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#475569">${val.toFixed(1)}</text>
       `);
     }
 
@@ -190,7 +190,7 @@ export class GraphController {
       const sy = toScreenY(val);
       yTicksSvg.push(`
         <line x1="${(padding.left - 6).toFixed(1)}" y1="${sy.toFixed(1)}" x2="${padding.left.toFixed(1)}" y2="${sy.toFixed(1)}" stroke="#64748b" />
-        <text x="${(padding.left - 10).toFixed(1)}" y="${(sy + 4).toFixed(1)}" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#475569">${val.toFixed(1)}</text>
+        <text x="${(padding.left - 10).toFixed(1)}" y="${(sy + 4).toFixed(1)}" text-anchor="end" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#475569">${val.toFixed(1)}</text>
       `);
     }
 
@@ -272,8 +272,8 @@ export class GraphController {
   ${yTicksSvg.join('')}
 
   <!-- Axis Title Labels -->
-  <text x="${padding.left + plotW / 2}" y="${height - 12}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0f172a">${escapeHtml(String(this.xAxis.label))} (${escapeHtml(String(this.xAxis.symbol))} / ${escapeHtml(String(this.xAxis.unit))})</text>
-  <text x="18" y="${padding.top + plotH / 2}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#0f172a" transform="rotate(-90 18 ${padding.top + plotH / 2})">${escapeHtml(String(this.yAxis.label))} (${escapeHtml(String(this.yAxis.symbol))} / ${escapeHtml(String(this.yAxis.unit))})</text>
+  <text x="${padding.left + plotW / 2}" y="${height - 12}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" font-weight="600" fill="#0f172a">${escapeHtml(String(this.xAxis.label))} (${escapeHtml(String(this.xAxis.symbol))} / ${escapeHtml(String(this.xAxis.unit))})</text>
+  <text x="18" y="${padding.top + plotH / 2}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" font-weight="600" fill="#0f172a" transform="rotate(-90 18 ${padding.top + plotH / 2})">${escapeHtml(String(this.yAxis.label))} (${escapeHtml(String(this.yAxis.symbol))} / ${escapeHtml(String(this.yAxis.unit))})</text>
 </svg>`;
   }
 
@@ -285,7 +285,7 @@ export class GraphController {
       .filter((s) => s.bestFitLine)
       .map(
         (s) => `
-        <div style="font-size: 13px; color: #1e293b; background: #f1f5f9; padding: 8px 12px; border-radius: 6px; margin-top: 6px;">
+        <div style="font-size:14px; color: #1e293b; background: #f1f5f9; padding: 8px 12px; border-radius: 6px; margin-top: 6px;">
           <strong>${escapeHtml(String(s.name))}</strong> Trendline: <code>${escapeHtml(String(this.yAxis.symbol))} = (${s.bestFitLine!.slope})·${escapeHtml(String(this.xAxis.symbol))} + (${s.bestFitLine!.intercept})</code> (R² = ${s.bestFitLine!.rSquared})
         </div>`
       )
@@ -299,7 +299,7 @@ export class GraphController {
           <button id="graph-pan-left-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 10px 16px; background: #e2e8f0; border-radius: 6px; font-weight: 600;">⬅ Pan Left</button>
           <button id="graph-pan-right-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 10px 16px; background: #e2e8f0; border-radius: 6px; font-weight: 600;">➡ Pan Right</button>
           <button id="graph-reset-view-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 10px 16px; background: #3b82f6; color: #ffffff; border-radius: 6px; font-weight: 600;">Reset View</button>
-          <span style="font-size: 13px; color: #64748b; margin-left: 8px;">Zoom: ${this.viewState.zoomLevel.toFixed(1)}x</span>
+          <span style="font-size:14px; color: #64748b; margin-left: 8px;">Zoom: ${this.viewState.zoomLevel.toFixed(1)}x</span>
         </div>
         <div class="graph-svg-wrapper">
           ${svgHtml}
@@ -308,5 +308,47 @@ export class GraphController {
         ${bestFitSummaries}
       </div>
     `;
+  }
+
+  bindEvents(container: HTMLElement, onUpdate?: () => void): void {
+    container.querySelector('#graph-zoom-in-btn')?.addEventListener('click', () => {
+      this.zoom(1.25);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-zoom-out-btn')?.addEventListener('click', () => {
+      this.zoom(0.8);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-pan-left-btn')?.addEventListener('click', () => {
+      const dx = (this.viewState.xMax - this.viewState.xMin) * 0.1;
+      this.pan(-dx, 0);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-pan-right-btn')?.addEventListener('click', () => {
+      const dx = (this.viewState.xMax - this.viewState.xMin) * 0.1;
+      this.pan(dx, 0);
+      if (onUpdate) onUpdate();
+    });
+    container.querySelector('#graph-reset-view-btn')?.addEventListener('click', () => {
+      this.resetView();
+      if (onUpdate) onUpdate();
+    });
+  }
+
+  mount(container: HTMLElement): { dispose: () => void; refresh: () => void } {
+    let active = true;
+    const render = () => {
+      if (!active) return;
+      container.innerHTML = this.renderHtml();
+      this.bindEvents(container, render);
+    };
+    render();
+    return {
+      dispose: () => {
+        active = false;
+        container.replaceChildren();
+      },
+      refresh: () => render(),
+    };
   }
 }

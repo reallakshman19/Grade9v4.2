@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "portable-workbench-package",
+  "packageVersion": "1.0.0",
+  "componentApiVersion": "0.1.0",
+  "transformationIrVersion": "0.1.0",
+  "adapterApiVersion": "0.2.0",
+  "scenePackageVersion": "1.0.0",
+  "id": "portable-integration-riemann",
+  "title": "Riemann Sum — Partition Refinement and Area Bound",
+  "sourceRefs": [
+    "issue:163:integration-cross-subject-proof"
+  ],
+  "sceneRefs": [
+    "riemann-scene"
+  ],
+  "representationRefs": [
+    "rep-darboux-box"
+  ],
+  "assetRefs": [],
+  "accessibilityRefs": [
+    "Darboux lower and upper sums provide strictly bounding numeric intervals",
+    "Subinterval width Delta x is stated explicitly in text and table markup"
+  ],
+  "questionBindings": [],
+  "provenance": {
+    "authority": "NON_CANONICAL_COMPILED_PROOF",
+    "sourceRefs": [
+      "issue:163:integration-cross-subject-proof"
+    ]
+  },
+  "scene": {
+    "id": "riemann-scene",
+    "apiVersion": "0.1.0",
+    "sceneVersion": "1.0.0",
+    "grids": [
+      {
+        "id": "darboux-grid",
+        "label": "Riemann Partition Refinement Grid",
+        "rows": [
+          "interval-0-1"
+        ],
+        "columns": [
+          "col-n2",
+          "col-n4",
+          "col-n8",
+          "col-n16"
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "id": "ent-p2",
+        "label": "Partition P_2 (n=2, Δx=0.5): L=0.1250, U=0.6250"
+      }
+    ],
+    "projections": [
+      {
+        "id": "proj-p2",
+        "entityRef": "ent-p2",
+        "label": "P_2: [0.1250 ≤ ∫ x² dx ≤ 0.6250]",
+        "representation": "rep-darboux-box",
+        "placement": {
+          "grid": "darboux-grid",
+          "row": "interval-0-1",
+          "column": "col-n2"
+        }
+      }
+    ],
+    "targets": [
+      {
+        "id": "target-refine-n4",
+        "operation": "subdivide"
+      },
+      {
+        "id": "target-refine-n8",
+        "operation": "subdivide"
+      },
+      {
+        "id": "target-refine-n16",
+        "operation": "subdivide"
+      }
+    ],
+    "canonicalTransformations": [
+      {
+        "id": "tx-refine-n4",
+        "sourceEntityRefs": [
+          "ent-p2"
+        ],
+        "targetRef": "target-refine-n4"
+      },
+      {
+        "id": "tx-refine-n8",
+        "sourceEntityRefs": [
+          "ent-p2"
+        ],
+        "targetRef": "target-refine-n8"
+      }
+    ]
+  },
+  "adapter": {
+    "id": "declarative-transfer-v1",
+    "apiVersion": "0.2.0",
+    "rules": [
+      {
+        "id": "rule-refine-n4",
+        "outcome": "ACCEPT",
+        "transformationRef": "tx-refine-n4",
+        "sourceEntityRef": "ent-p2",
+        "targetRef": "target-refine-n4",
+        "operation": "subdivide",
+        "summary": "Refine partition to n=4 subintervals",
+        "patch": {
+          "addEntities": [
+            {
+              "id": "ent-p4",
+              "label": "Partition P_4 (n=4, Δx=0.25): L=0.2188, U=0.4688"
+            }
+          ],
+          "addProjections": [
+            {
+              "id": "proj-p4",
+              "entityRef": "ent-p4",
+              "label": "P_4: [0.2188 ≤ ∫ x² dx ≤ 0.4688]",
+              "representation": "rep-darboux-box",
+              "placement": {
+                "grid": "darboux-grid",
+                "row": "interval-0-1",
+                "column": "col-n4"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "rule-refine-n8",
+        "outcome": "ACCEPT",
+        "transformationRef": "tx-refine-n8",
+        "sourceEntityRef": "ent-p2",
+        "targetRef": "target-refine-n8",
+        "operation": "subdivide",
+        "summary": "Refine partition to n=8 subintervals",
+        "patch": {
+          "addEntities": [
+            {
+              "id": "ent-p8",
+              "label": "Partition P_8 (n=8, Δx=0.125): L=0.2734, U=0.3984"
+            }
+          ],
+          "addProjections": [
+            {
+              "id": "proj-p8",
+              "entityRef": "ent-p8",
+              "label": "P_8: [0.2734 ≤ ∫ x² dx ≤ 0.3984]",
+              "representation": "rep-darboux-box",
+              "placement": {
+                "grid": "darboux-grid",
+                "row": "interval-0-1",
+                "column": "col-n8"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

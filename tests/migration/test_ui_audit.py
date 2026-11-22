@@ -264,6 +264,30 @@ class UIAuditTests(unittest.TestCase):
             self.engine.validate_audit_row(self.audit[0], self.scope[0],
                 self.evidence_dir, source_root=self.source_dir)
 
+    def test_reject_blocked_row_submitted_as_audited(self):
+        # A context with disposition BLOCKED must fail if validated as audited
+        blocked_row = copy.deepcopy(self.audit[0])
+        blocked_row["disposition"] = "BLOCKED"
+        with self.assertRaises(UIAuditError):
+            self.engine.validate_audit_row(blocked_row, self.scope[0],
+                self.evidence_dir, source_root=self.source_dir)
+
+    def test_a58_71_context_enumeration_against_r4_inventory(self):
+        from grade9build.r4_loader import ExternalR4DiscoveryLoader
+        kit = os.environ.get("G9_R4_KIT")
+        if kit and Path(kit).is_dir():
+            loader = ExternalR4DiscoveryLoader(Path(kit))
+            occurrences = loader.extract_discovered_resource_occurrences()
+            self.assertEqual(len(occurrences), 71)
+
+        summary_path = ROOT / "docs/migration/ui-audit-summary.json"
+        summary = json.loads(summary_path.read_text(encoding="utf-8"))
+        self.assertEqual(summary["contexts_total"], 71)
+        self.assertEqual(summary["contexts_audited"], 0)
+        self.assertEqual(summary["contexts_blocked"], 71)
+        self.assertEqual(summary["status"], "BLOCKED")
+        self.assertEqual(summary["evidence_status"], "NOT_PROVIDED")
+
     def test_rule13_invariant_software_validation_not_academic_approval(self):
         disclaimer = "No academic approval inferred from software validation."
         self.assertIn("No academic approval inferred from software validation.", disclaimer)

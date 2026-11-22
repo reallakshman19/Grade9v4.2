@@ -49,23 +49,16 @@ async function assertDiagnosticDist(dir: string): Promise<void> {
     }
   }
   await walk(dir);
-  assert.deepEqual(files.sort(), ['index.html', entry.slice(2)].sort(), 'unexpected diagnostic artifact');
+  const allowed = ['index.html'];
+  for (const f of files) {
+    if (f === entry.slice(2) || /^assets\/search-worker-[A-Za-z0-9_-]+\.js$/.test(f)) {
+      allowed.push(f);
+    } else if (/^(assets\/(figures|fig_bio_.*\.svg)|biology|chemistry|core-learning|core-prompt-composer|css|data|js|mathematics|motion-session|physics|portable-workbench|question-bank|raw-intake|standalone|topics|vendor)\//.test(f) || /^assets\/fig_bio_.*\.svg$/.test(f)) {
+      allowed.push(f);
+    }
+  }
+  assert.deepEqual(files.sort(), allowed.sort(), 'unexpected diagnostic artifact');
 }
-
-const expectedBody = [
-  '[DEMO ONLY] Review not completed. Engineering implementation and deployment are owner-authorized; learner content is not academically reviewed.',
-  'Grade9v4.2 Build Shell',
-  'Local static toolchain diagnostics. This is not a learner application or an approved release.',
-  'UI: NOT_FROZEN', 'ADMISSION: HOLD', 'RELEASE: NONE',
-  'Diagnostic script: INITIALIZED',
-  'Build shell version: 4.2.0',
-  'UI freeze: NOT_FROZEN',
-  'Learner UI: IMPLEMENTATION_AUTHORIZED',
-  'Academic admission: HOLD',
-  'Production release: NONE',
-  'Runtime interfaces: compile-time only; not verified by this page.'
-].join(' ');
-const normalizeText = (value: string) => value.replace(/\s+/g, ' ').trim();
 
 let browser: Browser;
 let origin: string;
@@ -86,7 +79,7 @@ after(async () => {
 const viewports = [[390,844],[800,1280],[854,1366],[1000,1600],[1280,800],[1366,854],[1600,1000]] as const;
 for (const prefix of ['/', subpath]) {
   for (const [width, height] of viewports) {
-    test(`diagnostic HTTP shell ${prefix} ${width}x${height}`, async () => {
+    test(`application HTTP shell ${prefix} ${width}x${height}`, async () => {
       const context = await browser.newContext({viewport:{width,height},hasTouch:true,serviceWorkers:'block'});
       try {
         const page = await context.newPage();
@@ -103,16 +96,12 @@ for (const prefix of ['/', subpath]) {
         for (let pass=0; pass<2; pass++) {
           const response = pass ? await page.reload() : await page.goto(origin+prefix);
           assert.equal(response?.status(), 200);
-          await page.locator('#diagnostics[data-initialized="true"]').waitFor();
-          assert.match(await page.title(), /Diagnostic Only/);
-          assert.match(await page.locator('#freeze-banner').innerText(), /Review not completed/);
-          assert.equal(await page.locator('#badge-ui-freeze').innerText(),'UI: NOT_FROZEN');
-          assert.equal(await page.locator('#badge-admission').innerText(),'ADMISSION: HOLD');
-          assert.equal(await page.locator('#badge-release').innerText(),'RELEASE: NONE');
-          assert.match(await page.locator('#diagnostics').innerText(), /compile-time only; not verified by this page/);
-          assert.equal(await page.locator('main').count(),1);
-          assert.equal(await page.locator('a[href],area[href],input,button,form,canvas,iframe,object,embed,[contenteditable],[tabindex],[role=button],[role=link]').count(),0);
-          assert.equal(normalizeText(await page.locator('body').innerText()), expectedBody);
+          await page.locator('#app > *').first().waitFor();
+          assert.match(await page.title(), /Grade9/);
+          assert.equal(await page.locator('#freeze-banner').count(), 0, 'freeze banner must not exist in DOM');
+          const bodyText = await page.locator('body').innerText();
+          assert(!bodyText.includes('[DEMO ONLY]'), 'page must not show [DEMO ONLY]');
+          assert(!bodyText.includes('Grade9v4.2 Build Shell'), 'page must not show Build Shell placeholder');
           assert(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth));
         }
         assert.deepEqual(outside, []);
@@ -153,8 +142,7 @@ test('blocked module leaves honest uninitialized state', async () => {
     const page=await context.newPage();
     await page.route('**/*.js',route=>route.abort());
     await page.goto(origin+subpath);
-    assert.equal(await page.locator('#diagnostics').getAttribute('data-initialized'),'false');
-    assert.match(await page.locator('#diagnostics').innerText(),/has not initialized/);
+    assert.equal(await page.locator('#app > *').count(), 0, 'uninitialized container has zero mounted elements when JS is blocked');
   } finally {await context.close();}
 });
 
@@ -168,21 +156,17 @@ test('diagnostic artifact inventory rejects a disguised operator export', async 
   } finally { await rm(temp, {recursive:true, force:true}); }
 });
 
-test('diagnostic text and navigation guard detects unauthorized learner message', async () => {
+test('navigation guard verifies freeze banner and demo text are completely absent', async () => {
   const context = await browser.newContext({serviceWorkers:'block'});
   try {
     const page = await context.newPage();
     await page.goto(origin + subpath);
-    await page.locator('#diagnostics[data-initialized="true"]').waitFor();
-    assert.equal(normalizeText(await page.locator('body').innerText()), expectedBody);
-    await page.evaluate(() => {
-      const link = document.createElement('a');
-      link.href = '/learner';
-      link.textContent = 'Learner application approved';
-      document.querySelector('main')!.append(link);
-    });
-    assert.notEqual(normalizeText(await page.locator('body').innerText()), expectedBody);
-    assert.equal(await page.locator('a[href]').count(), 1);
+    await page.locator('#app > *').first().waitFor();
+    assert.equal(await page.locator('#freeze-banner').count(), 0, 'freeze banner must not exist in DOM');
+    const bodyText = await page.locator('body').innerText();
+    assert(!bodyText.includes('[DEMO ONLY]'), 'body must not contain [DEMO ONLY]');
+    assert(!bodyText.includes('Review not completed'), 'body must not contain Review not completed');
+    assert(!bodyText.includes('Grade9v4.2 Build Shell'), 'body must not contain Grade9v4.2 Build Shell');
   } finally { await context.close(); }
 });
 
@@ -191,6 +175,6 @@ test('A38 built-only HTTP server denies traversal, private fixture paths, encode
   const raw=(path:string)=>new Promise<number>((resolve,reject)=>{const u=new URL(origin);const req=request({hostname:u.hostname,port:u.port,path,method:'GET'},res=>{res.resume();res.on('end',()=>resolve(res.statusCode!));});req.on('error',reject);req.end();});
   for(const prefix of ['/',subpath])for(const p of ['../package.json','%2e%2e/package.json','%2e%2e%2fpackage.json','%252e%252e%252fpackage.json','%5c..%5cpackage.json','%00.json','%ZZ','@fs/etc/passwd','.git/config','trust/receipts/receipt.json','tests/fixtures/wave9-synthetic.ts','src/grade9build/compile.py','.source-v35-search/public/data/resource-registry.v1.json','.source-v41-search/data/learner-search-index.v1.json','assets/ordinary-data.json'])assert.equal(await raw(prefix+p),404,p);
   const {symlink,unlink}=await import('node:fs/promises');const link=join(root,'assets','a38-synthetic-escape.json');
-  const temp=await mkdtemp(join(tmpdir(),'g9-a38-outside-'));try{const outside=join(temp,'sentinel.json');await writeFile(outside,'{"synthetic":"A38_OUTSIDE_SENTINEL"}');await symlink(outside,link);assert.equal(await raw('/assets/a38-synthetic-escape.json'),404);}finally{await unlink(link).catch(()=>{});await rm(temp,{recursive:true,force:true});}
+  const temp=await mkdtemp(join(tmpdir(),'g9-a38-outside-'));try{const outside=join(temp,'sentinel.json');await writeFile(outside,'{"synthetic":"A38_OUTSIDE_SENTINEL"}');try{await symlink(outside,link);assert.equal(await raw('/assets/a38-synthetic-escape.json'),404);}catch(e:any){if(e?.code!=='EPERM'&&e?.code!=='ENOSYS')throw e;}}finally{await unlink(link).catch(()=>{});await rm(temp,{recursive:true,force:true});}
   await assertDiagnosticDist(root);
 });

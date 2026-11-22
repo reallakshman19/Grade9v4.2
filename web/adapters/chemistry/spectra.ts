@@ -128,7 +128,7 @@ export function renderSpectrumSvg(
       return `
         <line x1="${x.toFixed(1)}" y1="${baselineY.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#2563eb" stroke-width="2.5" />
         <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3" fill="#1d4ed8" />
-        <text x="${x.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#1e293b">${escapeHtml(labelText)}</text>
+        <text x="${x.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#1e293b">${escapeHtml(labelText)}</text>
       `;
     })
     .join('');
@@ -142,8 +142,8 @@ export function renderSpectrumSvg(
   <line x1="${padding.left}" y1="${baselineY}" x2="${width - padding.right}" y2="${baselineY}" stroke="#64748b" stroke-width="1.5"/>
   <line x1="${padding.left}" y1="${padding.top}" x2="${padding.left}" y2="${baselineY}" stroke="#64748b" stroke-width="1.5"/>
   <!-- Axis Labels -->
-  <text x="${width / 2}" y="${height - 8}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Position (${escapeHtml(spectrum.unit)})</text>
-  <text x="12" y="${padding.top + plotHeight / 2}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#475569" transform="rotate(-90 12 ${padding.top + plotHeight / 2})">Relative Intensity</text>
+  <text x="${width / 2}" y="${height - 8}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#475569">Position (${escapeHtml(spectrum.unit)})</text>
+  <text x="12" y="${padding.top + plotHeight / 2}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#475569" transform="rotate(-90 12 ${padding.top + plotHeight / 2})">Relative Intensity</text>
   <!-- Peak content -->
   ${peakSvgLines}
 </svg>`;

@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="en" data-g9-shell>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion in a Plane (2D) Workspace · Grade9V3.5</title>
+  <link rel="stylesheet" href="../../css/modern-learner.css">
+  <style>
+    .study-unit-card {
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: var(--radius-md, 14px);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .study-unit-header {
+      border-bottom: 2px solid var(--bg-soft, #f1f5f9);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .unit-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-learn-bg, #eef2ff);
+      color: var(--accent-learn, #4f46e5);
+    }
+    .unit-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main, #0f172a);
+      margin: 0.35rem 0 0;
+    }
+    .key-step-box {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 10px 10px 0;
+      padding: 12px 16px;
+      margin: 1rem 0;
+      color: #1e3a8a;
+    }
+    [data-theme="dark"] .key-step-box {
+      background: #172554;
+      border-left-color: #60a5fa;
+      color: #dbeafe;
+    }
+    .key-step-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: #2563eb;
+    }
+    [data-theme="dark"] .key-step-title {
+      color: #93c5fd;
+    }
+    .derivation-steps {
+      display: grid;
+      gap: 10px;
+      margin: 1.25rem 0;
+    }
+    .step-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 12px;
+      background: var(--bg-soft, #f8fafc);
+      border-radius: 8px;
+      border: 1px solid var(--border, #e2e8f0);
+    }
+    .step-badge {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-learn, #4f46e5);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .step-content strong {
+      color: var(--text-main, #0f172a);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .step-content em {
+      font-style: normal;
+      color: var(--text-muted, #64748b);
+      font-size: 0.9rem;
+      display: block;
+    }
+    .worked-box {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 1.25rem;
+      background: var(--bg-soft, #f8fafc);
+      margin: 1.25rem 0;
+    }
+    .worked-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .trap-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #9a3412;
+      margin: 1rem 0;
+    }
+    [data-theme="dark"] .trap-box {
+      background: #2a1b0e;
+      border-color: #7c2d12;
+      color: #fdba74;
+    }
+    .trap-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .check-card {
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 8px;
+      padding: 10px 14px;
+      background: var(--bg-card, #ffffff);
+    }
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 1.25rem 0 2rem;
+      position: sticky;
+      top: 60px;
+      z-index: 20;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border, #e2e8f0);
+    }
+    [data-theme="dark"] .jump-nav {
+      background: rgba(13, 17, 23, 0.95);
+    }
+    .jump-chip {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border, #e2e8f0);
+      background: var(--bg-card, #ffffff);
+      color: var(--text-main, #0f172a);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .jump-chip:hover {
+      border-color: #38bdf8;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .formula-tag {
+      font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: var(--bg-soft, #f1f5f9);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #0284c7;
+      display: inline-block;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="g9-shell-header">
+    <div class="g9-header-inner">
+      <a class="g9-brand" href="../../index.html#/home">
+        <span class="logo-icon">⚡</span>
+        <span class="brand-title">Grade9V3.5</span>
+        <span class="g9-brand-badge">Learner Platform</span>
+      </a>
+      <nav class="g9-header-nav" aria-label="Portal Navigation">
+        <a href="../../index.html#/home">Home</a>
+        <a href="../../index.html#/subject/physics">Physics</a>
+        <a href="../../chemistry/index.html">Chemistry</a>
+        <a href="../../index.html#/subject/mathematics">Mathematics</a>
+        <a href="../../index.html#/bank">Question Bank</a>
+      </nav>
+      <div class="g9-header-actions">
+        <button type="button" class="g9-header-btn g9-search-btn" data-g9-action="search" title="Search Grade9V3 (Ctrl/⌘ K)" aria-label="Search">
+          <span class="g9-btn-icon">🔍</span>
+          <span class="g9-btn-text">Search</span>
+        </button>
+        <button type="button" class="g9-header-btn g9-display-btn" data-g9-action="display" title="Display & Theme Settings" aria-label="Display & Theme">
+          <span class="g9-btn-icon">🌙 / ☀️</span>
+          <span class="g9-btn-text">Display</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <nav class="g9-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="g9-breadcrumbs">
+      <a href="../../index.html#/home">Home</a> <span>/</span> <a href="../../index.html#/subject/physics">Physics</a> <span>/</span> <span>Motion in a Plane (2D)</span>
+    </div>
+  </nav>
+
+  <main class="g9-container">
+    <!-- Hero Workspace Header -->
+    <div class="g9-hero" style="margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+            <span class="unit-tag" style="background:#e0f2fe;color:#0284c7;">Physics · 2D Kinematics</span>
+            <span class="unit-tag" style="background:#dcfce7;color:#166534;">Core 1A Structured Theory</span>
+            <span class="unit-tag" style="background:#fef3c7;color:#b45309;">6 Complete Learning Units</span>
+          </div>
+          <h1 class="g9-hero-title" style="margin:0 0 6px;">Motion in a Plane (2D) Workspace</h1>
+          <p class="g9-hero-subtitle" style="margin:0;">Complete structured study curriculum: orthogonal vector decomposition, ground-to-ground projectile invariants, parabolic trajectory equations, elevated clifftop launches, relative 2D velocity (rain-man & river-boat), and uniform circular motion kinematics.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Launch Bar -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;padding:12px 16px;background:var(--bg-soft, #f8fafc);border:1px solid var(--border, #e2e8f0);border-radius:12px;">
+      <a class="g9-btn-action g9-btn-explore" href="../../physics/motion-2d/explorers/motion-in-a-plane/index.html" style="font-weight:700;">
+        ⚡ Motion in a Plane Research Suite &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-explore" href="../../physics/motion-in-2d/explorers/motions_in_2d/index.html" style="font-weight:700;">
+        ⚡ 2D Master Kinematic Engine &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-learn" href="../../physics/motion-2d/core1a.html" style="font-weight:700;">
+        📖 Core Study (Core 1A) &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-qb" href="../../index.html#/bank?subject=Physics&topic=motion-2d" style="font-weight:700;">
+        🎯 Practice in Question Bank (Core 2) &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-learn" href="../../standalone/practice/core1a-physics-motion-2d-ncert-tablet.html" style="font-weight:700;">
+        📱 Dedicated Fullscreen Tablet App &rarr;
+      </a>
+    </div>
+
+    <!-- Sticky Concept Jump Navigation -->
+    <div class="jump-nav" aria-label="Quick Jump to Study Units">
+      <span style="font-size:0.85rem;font-weight:800;color:var(--text-muted);align-self:center;margin-right:4px;">Jump to Unit:</span>
+      <a href="#unit-1" class="jump-chip">1. Orthogonal Independence</a>
+      <a href="#unit-2" class="jump-chip">2. Canonical Invariants</a>
+      <a href="#unit-3" class="jump-chip">3. Trajectory Parabola</a>
+      <a href="#unit-4" class="jump-chip">4. Elevated Clifftop Launch</a>
+      <a href="#unit-5" class="jump-chip">5. Relative 2D Motion</a>
+      <a href="#unit-6" class="jump-chip">6. Circular Kinematics</a>
+    </div>
+
+    <!-- STUDY UNIT 1 -->
+    <article class="study-unit-card" id="unit-1">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 1 of 6 · Kinematic Decomposition</span>
+          <h2 class="unit-title">Orthogonal Independence &amp; The Shared Clock</h2>
+        </div>
+        <div class="formula-tag">x(t) = (u cosθ)t &nbsp;|&nbsp; y(t) = (u sinθ)t - ½gt²</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">In projectile motion, horizontal motion (x) and vertical motion (y) are <strong>completely uncoupled, independent one-dimensional motions</strong>. The horizontal acceleration is strictly zero (<strong>a_x = 0</strong>), while vertical acceleration is constant gravitational free fall (<strong>a_y = -g</strong>). They are linked solely by one scalar parameter: <strong>time t (the shared clock)</strong>.</p>
+      </div>
+
+      <!-- SVG Illustration -->
+      <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;margin:1rem 0;text-align:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 220" style="max-width:100%;height:auto;max-height:220px;">
+          <defs>
+            <marker id="arr-blue" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0284c7"/></marker>
+            <marker id="arr-red" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#dc2626"/></marker>
+            <marker id="arr-green" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#16a34a"/></marker>
+          </defs>
+          <!-- Axes -->
+          <line x1="40" y1="180" x2="420" y2="180" stroke="#475569" stroke-width="2"/>
+          <line x1="40" y1="180" x2="40" y2="20" stroke="#475569" stroke-width="2"/>
+          <text x="420" y="200" fill="#64748b" font-size="14" font-weight="700" font-family="system-ui">x (Horizontal)</text>
+          <text x="15" y="25" fill="#64748b" font-size="14" font-weight="700" font-family="system-ui">y</text>
+          <!-- Parabola Path -->
+          <path d="M 40 180 Q 220 20 400 180" fill="none" stroke="#0284c7" stroke-width="3"/>
+          <!-- Launch Vector -->
+          <line x1="40" y1="180" x2="110" y2="105" stroke="#0284c7" stroke-width="3" marker-end="url(#arr-blue)"/>
+          <text x="115" y="100" fill="#0284c7" font-size="15" font-weight="800" font-family="system-ui">u</text>
+          <!-- Components -->
+          <line x1="40" y1="180" x2="110" y2="180" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)"/>
+          <text x="75" y="198" fill="#16a34a" font-size="13" font-weight="700" font-family="system-ui">u_x = u cosθ</text>
+          <line x1="40" y1="180" x2="40" y2="105" stroke="#ca8a04" stroke-width="2.5"/>
+          <text x="46" y="145" fill="#ca8a04" font-size="13" font-weight="700" font-family="system-ui">u_y = u sinθ</text>
+          <!-- Apex Marker -->
+          <circle cx="220" cy="100" r="5" fill="#0284c7"/>
+          <line x1="220" y1="100" x2="270" y2="100" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arr-green)"/>
+          <text x="275" y="105" fill="#16a34a" font-size="13" font-weight="700" font-family="system-ui">v_x = u cosθ</text>
+          <line x1="220" y1="100" x2="220" y2="145" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arr-red)"/>
+          <text x="228" y="135" fill="#dc2626" font-size="13" font-weight="700" font-family="system-ui">g (down)</text>
+          <text x="220" y="80" fill="#0f172a" font-size="14" font-weight="800" text-anchor="middle" font-family="system-ui">Apex: v_y = 0, but v_x ≠ 0!</text>
+        </svg>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Horizontal Kinematic Channel (No Force)</strong>
+            <em>Σ F_x = 0 ⇒ a_x = 0. Velocity is invariant: v_x(t) = u cosθ. Position: x(t) = (u cosθ)t.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Vertical Kinematic Channel (Uniform Gravity)</strong>
+            <em>Σ F_y = -mg ⇒ a_y = -g. Velocity: v_y(t) = u sinθ - gt. Position: y(t) = (u sinθ)t - ½gt².</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>The Shared Parameter</strong>
+            <em>Solve t from the constraint of one channel and substitute into the other channel.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 The Bullet Paradox: Dropped vs. Fired Horizontally</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A high-velocity bullet is fired horizontally at 500 m/s from a height of 19.6 m above level ground. At the exact same microsecond, a second bullet is dropped from rest from the same height. Which bullet strikes the ground first?</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Vertical motion equation for both bullets: y = ½gt² (since initial vertical velocity u_y = 0 for both).<br>
+          2. Time to reach ground: t = √(2h / g) = √(2 × 19.6 / 9.8) = √4 = <strong>2.00 s</strong>.<br>
+          3. <strong>Both bullets strike the ground at the EXACT same instant!</strong> The fired bullet travels 500 × 2 = 1000 m horizontally, but its vertical descent is completely unaffected by its horizontal speed.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Believing that horizontal velocity "carries" or lifts the projectile, delaying its landing time.<br>
+        <strong>Repair:</strong> Gravity acts only vertically and is blind to horizontal motion. Orthogonal independence is strict and absolute.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 2 -->
+    <article class="study-unit-card" id="unit-2">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 2 of 6 · Canonical Invariants</span>
+          <h2 class="unit-title">The Three Ground-to-Ground Projectile Invariants</h2>
+        </div>
+        <div class="formula-tag">T = 2u sinθ / g &nbsp;|&nbsp; H_max = u² sin²θ / (2g) &nbsp;|&nbsp; R = u² sin 2θ / g</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">For ground-to-ground level flight, all three canonical metrics derive directly from the vertical channel: <strong>Time of Flight (T)</strong> comes from y = 0; <strong>Maximum Height (H_max)</strong> comes from v_y = 0; and <strong>Horizontal Range (R)</strong> is the horizontal distance covered during total flight time T: <strong>R = u_x · T</strong>.</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Time of Flight T</strong>
+            <em>Set y = 0 ⇒ t(u sinθ - ½gt) = 0 ⇒ <strong>T = (2u sinθ)/g</strong>. Note: t_apex = T/2 = (u sinθ)/g.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Maximum Height H_max</strong>
+            <em>At peak, v_y = 0 ⇒ 0 = (u sinθ)² - 2g H_max ⇒ <strong>H_max = (u² sin²θ)/(2g)</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Horizontal Range R</strong>
+            <em>R = u_x · T = (u cosθ) · (2u sinθ / g) = u² (2 sinθ cosθ) / g = <strong>u² sin(2θ) / g</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">4</span>
+          <div class="step-content">
+            <strong>Maximum Range Condition</strong>
+            <em>sin(2θ) reaches its mathematical maximum of 1 when 2θ = 90° ⇒ <strong>θ = 45°</strong>. R_max = u²/g = 4 H_max.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: The 45° Range-to-Height Relation</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> Prove that when a projectile is launched at θ = 45° to achieve maximum range, its maximum height is exactly one-fourth of the range: R_max = 4 H_max.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. At θ = 45°: R_max = u² sin(90°) / g = <strong>u²/g</strong>.<br>
+          2. At θ = 45°: H_max = u² sin²(45°) / (2g) = u² (1/√2)² / (2g) = u²(1/2)/(2g) = <strong>u² / (4g)</strong>.<br>
+          3. Dividing: R_max / H_max = (u²/g) / (u² / 4g) = <strong>4</strong>.<br>
+          Therefore: <strong>R = 4 H cotθ</strong> for any launch angle θ! At θ = 45°, cot(45°) = 1 ⇒ R = 4H.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ The Apex Fallacy</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Stating that velocity is zero at the highest point of projectile flight.<br>
+        <strong>Repair:</strong> Only the VERTICAL velocity component v_y vanishes! The horizontal component v_x = u cosθ is at full speed. Net velocity at apex is (u cosθ) î, NEVER zero.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 3 -->
+    <article class="study-unit-card" id="unit-3">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 3 of 6 · Trajectory Geometry</span>
+          <h2 class="unit-title">Trajectory Parabola &amp; Complementary Angle Invariance</h2>
+        </div>
+        <div class="formula-tag">y = x tanθ - gx²/(2u² cos²θ) &nbsp;|&nbsp; R(θ) = R(90° - θ)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Eliminating time t = x / (u cosθ) reveals that the spatial path y(x) is an inverted <strong>Cartesian parabola</strong> of the form y = Ax - Bx². Furthermore, any two complementary launch angles <strong>θ and (90° - θ)</strong> produce the <strong>EXACT same horizontal range R</strong> for the same initial speed u!</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Trajectory Equation Derivation</strong>
+            <em>From x = (u cosθ)t ⇒ t = x / (u cosθ). Substitute into y = (u sinθ)t - ½gt² ⇒ <strong>y = x tanθ - [g / (2u² cos²θ)] x²</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Range Form of Trajectory</strong>
+            <em>Factor out x tanθ: y = x tanθ [1 - x / R], where R = u² sin 2θ / g.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Proof of Complementary Angle Range Equality</strong>
+            <em>Replace θ with (90° - θ): R(90° - θ) = u² sin(2(90° - θ)) / g = u² sin(180° - 2θ) / g. Since sin(180° - φ) = sin φ, R(90° - θ) = <strong>u² sin 2θ / g = R(θ)</strong>.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Classic Olympiad Problem: Flight Times of Complementary Arcs</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> Two projectiles are fired with the same speed u at complementary angles θ₁ = θ and θ₂ = 90° - θ, covering the same range R. Let their times of flight be T₁ and T₂. Find the relationship between T₁·T₂ and R.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. T₁ = 2u sinθ / g.<br>
+          2. T₂ = 2u sin(90° - θ) / g = 2u cosθ / g.<br>
+          3. Multiply: T₁ · T₂ = (2u sinθ / g) × (2u cosθ / g) = (2/g) × [u² (2 sinθ cosθ) / g] = <strong>(2/g) · R</strong>.<br>
+          Therefore: <strong>R = ½ g T₁ T₂</strong> (Independent of launch velocity and angle!).
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Assuming the complementary paths have equal heights or flight times.<br>
+        <strong>Repair:</strong> Only the range R is equal! The steeper angle (e.g. 60° vs 30°) reaches a much higher peak (H₂ / H₁ = tan²θ) and stays in the air longer (T₂ / T₁ = tanθ).</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 4 -->
+    <article class="study-unit-card" id="unit-4">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 4 of 6 · Asymmetric Flight</span>
+          <h2 class="unit-title">Elevated Clifftop Launches &amp; Impact Telemetry</h2>
+        </div>
+        <div class="formula-tag">y(t) = h + (u sinθ)t - ½gt² = 0 &nbsp;|&nbsp; v_impact = √(u² + 2gh)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">When launched from an elevated cliff of height <strong>h</strong> above ground, landing occurs below the launch plane (y = -h). The canonical range formula fails completely. Flight time must be solved via the quadratic formula. By <strong>Conservation of Mechanical Energy</strong>, the final impact speed is <strong>v = √(u² + 2gh)</strong>, completely invariant of launch angle θ!</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Vertical Quadratic for Time of Flight</strong>
+            <em>Take launch position as origin (0, 0). Ground level is at y = -h. Equation: -h = (u sinθ)t - ½gt² ⇒ <strong>½gt² - (u sinθ)t - h = 0</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Horizontal Drift Range</strong>
+            <em>Horizontal velocity is constant: x_drift = (u cosθ) · t_land.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Impact Velocity &amp; Direction Angle</strong>
+            <em>v_x = u cosθ, v_y = u sinθ - g t_land. Impact angle below horizontal: tan φ = |v_y| / v_x. Speed: v = √(v_x² + v_y²) = √(u² + 2gh).</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Horizontal Cliff Launch</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A rock is kicked horizontally off a clifftop of height h = 45 m with initial speed u = 20 m/s (g = 10 m/s²). Find (a) time of flight, (b) horizontal drift, and (c) impact speed and angle.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Initial vertical velocity u_y = 0 ⇒ 45 = ½(10)t² ⇒ 5t² = 45 ⇒ t = <strong>3.0 s</strong>.<br>
+          2. Horizontal drift: x = u_x · t = 20 × 3 = <strong>60 m</strong>.<br>
+          3. Final velocity components: v_x = 20 m/s, v_y = 0 - 10(3) = -30 m/s.<br>
+          4. Impact speed: v = √(20² + (-30)²) = √(400 + 900) = √1300 = <strong>36.06 m/s</strong>.<br>
+          5. Impact angle: tan φ = 30 / 20 = 1.5 ⇒ φ = <strong>56.3° below horizontal</strong>.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Blindly applying R = u² sin 2θ / g for clifftop or trench problems.<br>
+        <strong>Repair:</strong> That formula holds ONLY when launch elevation and landing elevation are identical (Δy = 0). For any height difference, use the full kinematic equations.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 5 -->
+    <article class="study-unit-card" id="unit-5">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 5 of 6 · Multi-Body Kinematics</span>
+          <h2 class="unit-title">Relative Velocity in Two Dimensions (Rain-Man &amp; River-Boat)</h2>
+        </div>
+        <div class="formula-tag">v_rel = v_A - v_B &nbsp;|&nbsp; t_cross = d / (v_b sinθ) &nbsp;|&nbsp; drift = (v_r + v_b cosθ)t</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Relative velocity in 2D is the vector subtraction: <strong>v_A/B = v_A - v_B</strong>. In river crossing, the time required to cross the river depends EXCLUSIVELY on the component of velocity perpendicular to the banks: <strong>t = width / v_perpendicular</strong>. Downstream water current affects only the horizontal drift, NEVER the crossing time!</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Shortest Time River Crossing</strong>
+            <em>Steer perpendicular to banks (θ = 90°). Time t_min = d / v_b (minimum possible). Drift = v_river · t_min.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Shortest Path (Zero Drift) Crossing</strong>
+            <em>Resultant ground velocity must be perpendicular to bank: v_bx + v_river = 0 ⇒ v_b cosθ = -v_r ⇒ <strong>cosθ = -v_r / v_b</strong>. (Possible only if swimmer speed v_b > river speed v_r).</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Rain-Man Umbrella Tilt Angle</strong>
+            <em>Rain falls at v_r ĵ. Man runs at v_m î. Relative velocity of rain to man: v_rel = -v_m î - v_r ĵ. Umbrella tilt angle from vertical: <strong>tan θ = v_m / v_r (tilted forward)</strong>.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: River Crossing Speed &amp; Drift</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A river of width d = 500 m flows east at v_r = 3 m/s. A motorboat can travel at v_b = 5 m/s in still water. (a) Find minimum time to cross. (b) Find direction to steer to land directly opposite on the other bank (zero drift).</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Minimum time: Head directly North across stream (θ = 90°).<br>
+          t_min = d / v_b = 500 m / 5 m/s = <strong>100 s</strong>. Downstream drift = 3 m/s × 100 s = 300 m.<br>
+          2. Zero drift: Need net horizontal velocity = 0 ⇒ 5 cosθ + 3 = 0 ⇒ cosθ = -3/5 ⇒ θ = <strong>126.87° from river flow (36.87° upstream)</strong>.<br>
+          Net crossing speed = √(5² - 3²) = 4 m/s. Crossing time for zero drift = 500 / 4 = 125 s.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Thinking river current slows down the perpendicular crossing time when steering directly across.<br>
+        <strong>Repair:</strong> The crossing time is exactly the same whether the river flows at 1 m/s or 100 m/s, because orthogonal components do not interfere.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 6 -->
+    <article class="study-unit-card" id="unit-6">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 6 of 6 · Rotational Kinematics</span>
+          <h2 class="unit-title">Uniform Circular Motion: Tangential Speed &amp; Centripetal Acceleration</h2>
+        </div>
+        <div class="formula-tag">v = ω·r &nbsp;|&nbsp; a_c = v²/r = ω²r &nbsp;|&nbsp; T = 2π/ω</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">In Uniform Circular Motion (UCM), <strong>speed |v| is strictly constant</strong>, yet <strong>acceleration is NON-ZERO</strong>! Velocity is a vector; because its direction continuously rotates tangent to the circle, the rate of change of direction produces an inward-directed <strong>centripetal acceleration a_c = v²/r</strong>. Centripetal acceleration is strictly perpendicular to velocity at every instant (hence doing zero work).</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Angular &amp; Linear Velocity Relation</strong>
+            <em>Arc length s = r θ ⇒ differentiating with respect to time: ds/dt = r (dθ/dt) ⇒ <strong>v = ω r</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Centripetal Acceleration Proof</strong>
+            <em>Position r(t) = r(cos ωt î + sin ωt ĵ). Velocity v(t) = dr/dt = ωr(-sin ωt î + cos ωt ĵ). Acceleration a(t) = dv/dt = -ω²r(cos ωt î + sin ωt ĵ) = <strong>-ω² r</strong> (directed strictly opposite radius vector, i.e. radially inward).</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Work Done in UCM is Zero</strong>
+            <em>Since a_c is strictly perpendicular to instantaneous displacement (a_c · v = 0), the power P = F · v = 0. Kinetic energy is strictly conserved.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: High-Speed Centrifuge Acceleration</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A laboratory centrifuge spins test tubes in a circle of radius r = 10 cm at 6000 rpm. Determine the centripetal acceleration experienced by the sample in terms of g (take g = 9.8 m/s²).</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Angular speed ω = 6000 × (2π / 60) = 200π rad/s ≈ 628.32 rad/s.<br>
+          2. Radius r = 0.10 m.<br>
+          3. Centripetal acceleration: a_c = ω² r = (200π)² × 0.10 = 40000π² × 0.10 = 4000π² ≈ <strong>39,478 m/s²</strong>.<br>
+          4. In units of g: 39,478 / 9.8 = <strong>4,028 g</strong>!
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Confusing constant speed with zero acceleration in circular motion.<br>
+        <strong>Repair:</strong> Acceleration measures the vector rate of change of velocity (dv/dt). Even when speed is constant, rotating the direction of the vector produces centripetal acceleration.</p>
+      </div>
+    </article>
+
+    <!-- Bottom Return & Practice Navigation -->
+    <div style="text-align:center;margin:3rem 0 1rem;padding:2rem;background:var(--bg-soft, #f8fafc);border-radius:14px;border:1px solid var(--border, #e2e8f0);">
+      <h3 style="margin:0 0 0.5rem;font-size:1.3rem;font-weight:800;color:var(--text-main);">Ready to Test Your Mastery?</h3>
+      <p style="color:var(--text-muted);margin:0 0 1.25rem;">Apply these 6 foundational concepts to authentic Olympiad &amp; JEE past-paper questions in the Question Bank.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="g9-btn-action g9-btn-qb" href="../../index.html#/bank?subject=Physics&topic=motion-2d" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          🎯 Practice Motion 2D in Question Bank &rarr;
+        </a>
+        <a class="g9-btn-action g9-btn-learn" href="../../index.html#/subject/physics" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          ← Return to Physics Hub
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="g9-footer">
+    <p>Grade9V3.5 Concept-Centred Learner Platform · Authentic Question Bank &amp; Complete Core Study Modules</p>
+  </footer>
+<script src="../../js/display-controls.js"></script>
+<script src="../../js/site-header.js" data-site-root="../../"></script>
+</body>
+</html>

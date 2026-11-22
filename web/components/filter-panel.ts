@@ -19,10 +19,13 @@ export type QuestionDifficulty = 'FOUNDATION' | 'INTERMEDIATE' | 'ADVANCED' | 'O
 export interface BankFilterCriteria {
   readonly subject?: string;
   readonly topic?: string;
+  readonly capability?: string;
   readonly difficulty?: QuestionDifficulty;
   readonly role?: string;
+  readonly exam?: string;
   readonly query?: string;
   readonly includeWithdrawn?: boolean;
+  readonly sort?: string;
 }
 
 export interface FacetOption {
@@ -36,6 +39,7 @@ export interface AvailableFacets {
   readonly topics: readonly FacetOption[];
   readonly difficulties: readonly FacetOption[];
   readonly roles: readonly FacetOption[];
+  readonly exams?: readonly FacetOption[];
 }
 
 /**
@@ -46,10 +50,13 @@ export function serializeFilterToQueryParams(filter: BankFilterCriteria): URLSea
 
   if (filter.subject) params.set('subject', filter.subject);
   if (filter.topic) params.set('topic', filter.topic);
+  if (filter.capability) params.set('capability', filter.capability);
   if (filter.difficulty) params.set('difficulty', filter.difficulty);
   if (filter.role) params.set('role', filter.role);
+  if (filter.exam) params.set('exam', filter.exam);
   if (filter.query) params.set('q', filter.query);
   if (filter.includeWithdrawn) params.set('withdrawn', '1');
+  if (filter.sort) params.set('sort', filter.sort);
 
   return params;
 }
@@ -61,17 +68,30 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
   const filter: {
     subject?: string;
     topic?: string;
+    capability?: string;
     difficulty?: QuestionDifficulty;
     role?: string;
+    exam?: string;
     query?: string;
     includeWithdrawn?: boolean;
+    sort?: string;
   } = {};
 
-  const subject = params.get('subject');
-  if (subject) filter.subject = subject.toUpperCase();
+  const subject = params.get('subject') || params.get('subj');
+  if (subject) {
+    const s = subject.toUpperCase().trim();
+    if (s === 'MATHEMATICS' || s === 'MATH') filter.subject = 'MATH';
+    else if (s === 'PHYSICS' || s === 'PHYS') filter.subject = 'PHYS';
+    else if (s === 'CHEMISTRY' || s === 'CHEM') filter.subject = 'CHEM';
+    else if (s === 'BIOLOGY' || s === 'BIO') filter.subject = 'BIO';
+    else filter.subject = s;
+  }
 
   const topic = params.get('topic');
-  if (topic) filter.topic = topic.toUpperCase();
+  if (topic) filter.topic = topic.toUpperCase().trim();
+
+  const capability = params.get('capability');
+  if (capability) filter.capability = capability.trim();
 
   const difficulty = params.get('difficulty');
   if (difficulty) {
@@ -84,7 +104,13 @@ export function deserializeFilterFromQueryParams(params: URLSearchParams): BankF
   const role = params.get('role');
   if (role) filter.role = role.toUpperCase();
 
-  const query = params.get('q');
+  const exam = params.get('exam');
+  if (exam) filter.exam = exam.trim();
+
+  const sort = params.get('sort');
+  if (sort) filter.sort = sort.trim();
+
+  const query = params.get('q') || params.get('query');
   if (query) filter.query = query.trim();
 
   const withdrawn = params.get('withdrawn');

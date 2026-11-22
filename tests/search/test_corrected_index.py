@@ -170,3 +170,60 @@ def test_exact_route_grant_and_withdrawal(inputs):
     with pytest.raises(SearchReconciliationError):bind(catalog,[bad])
     c=copy.deepcopy(catalog);c["withdrawn_ids"]=[target["id"]];bind(c,[grant])
     assert r.resolve_route("v35_search","question.html?x=1#part")["reason"]=="WITHDRAWN"
+
+
+def test_external_r4_loader_digest_verification(tmp_path):
+    import os
+    from grade9build.r4_loader import (
+        ExternalR4DiscoveryLoader,
+        ExternalR4LoaderError,
+        EXPECTED_KIT_MANIFEST_SHA256,
+        EXPECTED_OBSERVED_INVENTORY_SHA256,
+        OBSERVED_INVENTORY_REL_PATH,
+    )
+    kit_env = os.environ.get("G9_R4_KIT")
+    if kit_env and Path(kit_env).is_dir():
+        loader = ExternalR4DiscoveryLoader(Path(kit_env))
+        items = loader.extract_discovered_resource_occurrences()
+        assert len(items) == 71
+        assert all(item["origin"] == "EXTERNAL_R4_KIT" for item in items)
+        assert all(item["manifest_sha256"] == EXPECTED_KIT_MANIFEST_SHA256 for item in items)
+
+    # Test tampered manifest fails closed
+    fake_kit = tmp_path / "fake_r4_kit"
+    fake_kit.mkdir()
+    fake_manifest = fake_kit / "MANIFEST.sha256.json"
+    fake_manifest.write_text(json.dumps({"algorithm": "SHA256", "files": {}}), encoding="utf-8")
+    with pytest.raises(ExternalR4LoaderError, match="R4_MANIFEST_DIGEST_MISMATCH"):
+        ExternalR4DiscoveryLoader(fake_kit)
+
+
+def test_search_reconciler_with_r4_discovered_input():
+    r, *_ = inventory()
+    # Create 71 synthetic R4 items matching schema
+    r4_items = [
+        {
+            "source_path": f"standalone/suite_{i:02d}.html",
+            "kind": "STANDALONE_HTML",
+            "origin": "EXTERNAL_R4_KIT",
+            "manifest_sha256": "6f92aac8" + "0" * 56,
+            "entrypoint": f"/standalone/suite_{i:02d}.html",
+        }
+        for i in range(71)
+    ]
+    r.ingest_r4_discovered(r4_items)
+    summary = r.build_summary()
+    assert summary["external_r4_discovered_inventory"] == "AUTHENTICATED_INPUT_LOADED"
+    assert summary["discovered_resource_occurrences"] == 71
+    # 8 (from synthetic inventory fixture) + 71 = 79
+    assert summary["candidate_extended_occurrences"] == 79
+
+    # Reject duplicate ingestion
+    with pytest.raises(SearchReconciliationError, match="R4_DISCOVERED_ALREADY_INGESTED"):
+        r.ingest_r4_discovered(r4_items)
+
+    # Reject invalid count
+    r2, *_ = inventory()
+    with pytest.raises(SearchReconciliationError, match="INVALID_R4_DISCOVERED_INPUT"):
+        r2.ingest_r4_discovered(r4_items[:70])
+

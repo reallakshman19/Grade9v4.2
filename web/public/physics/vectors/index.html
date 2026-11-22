@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en" data-g9-shell>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vector Methods in Physics Workspace · Grade9V3.5</title>
+  <link rel="stylesheet" href="../../css/modern-learner.css">
+  <style>
+    .study-unit-card {
+      background: var(--bg-card, #ffffff);
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: var(--radius-md, 14px);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .study-unit-header {
+      border-bottom: 2px solid var(--bg-soft, #f1f5f9);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .unit-tag {
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--accent-learn-bg, #eef2ff);
+      color: var(--accent-learn, #4f46e5);
+    }
+    .unit-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main, #0f172a);
+      margin: 0.35rem 0 0;
+    }
+    .key-step-box {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: 0 10px 10px 0;
+      padding: 12px 16px;
+      margin: 1rem 0;
+      color: #1e3a8a;
+    }
+    [data-theme="dark"] .key-step-box {
+      background: #172554;
+      border-left-color: #60a5fa;
+      color: #dbeafe;
+    }
+    .key-step-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: #2563eb;
+    }
+    [data-theme="dark"] .key-step-title {
+      color: #93c5fd;
+    }
+    .derivation-steps {
+      display: grid;
+      gap: 10px;
+      margin: 1.25rem 0;
+    }
+    .step-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      align-items: baseline;
+      padding: 10px 12px;
+      background: var(--bg-soft, #f8fafc);
+      border-radius: 8px;
+      border: 1px solid var(--border, #e2e8f0);
+    }
+    .step-badge {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent-learn, #4f46e5);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+    .step-content strong {
+      color: var(--text-main, #0f172a);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .step-content em {
+      font-style: normal;
+      color: var(--text-muted, #64748b);
+      font-size: 0.9rem;
+      display: block;
+    }
+    .worked-box {
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 1.25rem;
+      background: var(--bg-soft, #f8fafc);
+      margin: 1.25rem 0;
+    }
+    .worked-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0369a1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .trap-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #9a3412;
+      margin: 1rem 0;
+    }
+    [data-theme="dark"] .trap-box {
+      background: #2a1b0e;
+      border-color: #7c2d12;
+      color: #fdba74;
+    }
+    .trap-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quick-check-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    .check-card {
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: 8px;
+      padding: 10px 14px;
+      background: var(--bg-card, #ffffff);
+    }
+    .jump-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 1.25rem 0 2rem;
+      position: sticky;
+      top: 60px;
+      z-index: 20;
+      background: rgba(248, 250, 252, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border, #e2e8f0);
+    }
+    [data-theme="dark"] .jump-nav {
+      background: rgba(13, 17, 23, 0.95);
+    }
+    .jump-chip {
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border, #e2e8f0);
+      background: var(--bg-card, #ffffff);
+      color: var(--text-main, #0f172a);
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .jump-chip:hover {
+      border-color: #38bdf8;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+    .formula-tag {
+      font-family: ui-monospace, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      background: var(--bg-soft, #f1f5f9);
+      padding: 3px 8px;
+      border-radius: 6px;
+      color: #0284c7;
+      display: inline-block;
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="g9-shell-header">
+    <div class="g9-header-inner">
+      <a class="g9-brand" href="../../index.html#/home">
+        <span class="logo-icon">⚡</span>
+        <span class="brand-title">Grade9V3.5</span>
+        <span class="g9-brand-badge">Learner Platform</span>
+      </a>
+      <nav class="g9-header-nav" aria-label="Portal Navigation">
+        <a href="../../index.html#/home">Home</a>
+        <a href="../../index.html#/subject/physics">Physics</a>
+        <a href="../../chemistry/index.html">Chemistry</a>
+        <a href="../../index.html#/subject/mathematics">Mathematics</a>
+        <a href="../../index.html#/bank">Question Bank</a>
+      </nav>
+      <div class="g9-header-actions">
+        <button type="button" class="g9-header-btn g9-search-btn" data-g9-action="search" title="Search Grade9V3 (Ctrl/⌘ K)" aria-label="Search">
+          <span class="g9-btn-icon">🔍</span>
+          <span class="g9-btn-text">Search</span>
+        </button>
+        <button type="button" class="g9-header-btn g9-display-btn" data-g9-action="display" title="Display & Theme Settings" aria-label="Display & Theme">
+          <span class="g9-btn-icon">🌙 / ☀️</span>
+          <span class="g9-btn-text">Display</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <nav class="g9-breadcrumb-bar" aria-label="Breadcrumb">
+    <div class="g9-breadcrumbs">
+      <a href="../../index.html#/home">Home</a> <span>/</span> <a href="../../index.html#/subject/physics">Physics</a> <span>/</span> <span>Vector Methods in Physics</span>
+    </div>
+  </nav>
+
+  <main class="g9-container">
+    <!-- Hero Workspace Header -->
+    <div class="g9-hero" style="margin-bottom:1.5rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+            <span class="unit-tag" style="background:#e0f2fe;color:#0284c7;">Physics · Vector Algebra</span>
+            <span class="unit-tag" style="background:#dcfce7;color:#166534;">Core 1A Structured Theory</span>
+            <span class="unit-tag" style="background:#fef3c7;color:#b45309;">6 Complete Learning Units</span>
+          </div>
+          <h1 class="g9-hero-title" style="margin:0 0 6px;">Vector Methods in Physics Workspace</h1>
+          <p class="g9-hero-subtitle" style="margin:0;">Complete structured study curriculum: scalars vs vectors, triangle & parallelogram addition laws, Cartesian component resolution, vector subtraction & relative velocity, scalar dot product invariants, and vector cross product right-hand rules.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Launch Bar -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1.5rem;padding:12px 16px;background:var(--bg-soft, #f8fafc);border:1px solid var(--border, #e2e8f0);border-radius:12px;">
+      <a class="g9-btn-action g9-btn-explore" href="../../standalone/practice/vector-algebra-3d-master-suite.html" style="font-weight:700;">
+        ⚡ 3D Vector Algebra Master Suite &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-learn" href="../../standalone/practice/core1a-vector-add-sub-tablet.html" style="font-weight:700;">
+        📐 Vector Add &amp; Subtract Tablet &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-qb" href="../../index.html#/bank?subject=Physics&topic=vectors" style="font-weight:700;">
+        🎯 Practice in Question Bank (Core 2) &rarr;
+      </a>
+      <a class="g9-btn-action g9-btn-learn" href="../../standalone/practice/core1a-physics-vectors-tablet.html" style="font-weight:700;">
+        📱 Dedicated Fullscreen Tablet App &rarr;
+      </a>
+    </div>
+
+    <!-- Sticky Concept Jump Navigation -->
+    <div class="jump-nav" aria-label="Quick Jump to Study Units">
+      <span style="font-size:0.85rem;font-weight:800;color:var(--text-muted);align-self:center;margin-right:4px;">Jump to Unit:</span>
+      <a href="#unit-1" class="jump-chip">1. Scalars vs Vectors</a>
+      <a href="#unit-2" class="jump-chip">2. Vector Addition Laws</a>
+      <a href="#unit-3" class="jump-chip">3. Cartesian Resolution</a>
+      <a href="#unit-4" class="jump-chip">4. Vector Subtraction</a>
+      <a href="#unit-5" class="jump-chip">5. Dot Product &amp; Work</a>
+      <a href="#unit-6" class="jump-chip">6. Cross Product &amp; Torque</a>
+    </div>
+
+    <!-- STUDY UNIT 1 -->
+    <article class="study-unit-card" id="unit-1">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 1 of 6 · Geometric Foundation</span>
+          <h2 class="unit-title">Scalars, Vectors &amp; Geometric Translation Invariance</h2>
+        </div>
+        <div class="formula-tag">A = |A| · u_A &nbsp;|&nbsp; Parallel Transport Preserves Invariance</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">A physical quantity is a <strong>vector</strong> only if it possesses magnitude, a specified directional orientation, AND obeys the <strong>parallelogram law of vector addition</strong>. (Quantities like electric current have direction, but add algebraically, so they are scalars!). A free vector in Euclidean space is completely invariant under parallel translation (shifting position without rotating preserves the vector).</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>The Three Vector Tests</strong>
+            <em>1. Has real positive magnitude.<br>2. Has unambiguous spatial direction.<br>3. Obeys the triangle / parallelogram addition law.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Unit Vector Definition</strong>
+            <em>A vector of magnitude 1 pointing along A: u_A = A / |A|. Any vector is its magnitude times its unit vector: A = |A| u_A.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Concept Counter-Example: Is Electric Current a Vector?</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Question:</strong> Current has both magnitude (e.g. 5 A) and direction (along a copper wire). Why is electric current classified as a scalar rather than a vector?</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Answer:</strong><br>
+          If two wires meet at an angle θ carrying 3 A and 4 A, the combined junction current is ALWAYS 3 + 4 = <strong>7 A</strong> (Kirchhoff's Current Law), regardless of whether the wire angle is 30°, 90°, or 180°! If current were a vector, the junction current at 90° would be √(3² + 4²) = 5 A. Because current does not obey vector addition, it is a <strong>scalar</strong>.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Assuming that "having a direction" is sufficient to make a physical quantity a vector.<br>
+        <strong>Repair:</strong> The defining test of a vector is adherence to the vector addition law under coordinate rotations.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 2 -->
+    <article class="study-unit-card" id="unit-2">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 2 of 6 · Composition of Vectors</span>
+          <h2 class="unit-title">Vector Addition: Triangle &amp; Parallelogram Laws</h2>
+        </div>
+        <div class="formula-tag">R = √(A² + B² + 2AB cosθ) &nbsp;|&nbsp; tan α = (B sinθ) / (A + B cosθ)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">The resultant magnitude of two vectors A and B acting at angle θ ranges between <strong>|A - B| (when antiparallel, θ = 180°)</strong> and <strong>A + B (when collinear, θ = 0°)</strong>. Direct algebraic sum (A + B) is valid ONLY when θ = 0°. For perpendicular vectors (θ = 90°), the formula reduces directly to the Pythagorean theorem: <strong>R = √(A² + B²)</strong>.</p>
+      </div>
+
+      <!-- SVG Illustration -->
+      <div style="background:#ffffff;border:1px solid #cbd5e1;border-radius:10px;padding:12px;margin:1rem 0;text-align:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 200" style="max-width:100%;height:auto;max-height:200px;">
+          <defs>
+            <marker id="arr-v1" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#0284c7"/></marker>
+            <marker id="arr-v2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#16a34a"/></marker>
+            <marker id="arr-res" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#dc2626"/></marker>
+          </defs>
+          <!-- Vector A -->
+          <line x1="60" y1="150" x2="260" y2="150" stroke="#0284c7" stroke-width="3" marker-end="url(#arr-v1)"/>
+          <text x="160" y="172" fill="#0284c7" font-size="15" font-weight="800" font-family="system-ui">Vector A</text>
+          <!-- Vector B -->
+          <line x1="60" y1="150" x2="160" y2="50" stroke="#16a34a" stroke-width="3" marker-end="url(#arr-v2)"/>
+          <text x="90" y="90" fill="#16a34a" font-size="15" font-weight="800" font-family="system-ui">Vector B</text>
+          <!-- Dashed Parallelogram Sides -->
+          <line x1="260" y1="150" x2="360" y2="50" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+          <line x1="160" y1="50" x2="360" y2="50" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4,4"/>
+          <!-- Diagonal Resultant R -->
+          <line x1="60" y1="150" x2="360" y2="50" stroke="#dc2626" stroke-width="3.5" marker-end="url(#arr-res)"/>
+          <text x="230" y="85" fill="#dc2626" font-size="16" font-weight="800" font-family="system-ui">Resultant R = A + B</text>
+          <!-- Angle arc -->
+          <path d="M 110,150 A 50,50 0 0,0 95,115" fill="none" stroke="#ca8a04" stroke-width="2"/>
+          <text x="115" y="130" fill="#ca8a04" font-size="14" font-weight="700" font-family="system-ui">θ</text>
+        </svg>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Resultant of Equal Forces at 120°</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> Two forces of equal magnitude F act at an angle θ = 120° to each other. Find the magnitude and direction of their resultant.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Apply resultant formula: R = √(F² + F² + 2·F·F·cos 120°).<br>
+          2. Since cos 120° = -0.5: R = √(2F² + 2F²(-0.5)) = √(2F² - F²) = √F² = <strong>F</strong>.<br>
+          3. Direction: tan α = (F sin 120°) / (F + F cos 120°) = (F · √3/2) / (F - F/2) = (√3/2) / (1/2) = √3 ⇒ α = <strong>60°</strong>.<br>
+          The resultant of two equal forces at 120° has magnitude EXACTLY EQUAL to each force, bisecting the angle!</p>
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Adding vector magnitudes algebraically (e.g. 5 N + 5 N = 10 N) regardless of angle.<br>
+        <strong>Repair:</strong> 5 N + 5 N can produce any value from 0 N (at 180°) to 10 N (at 0°). Always use the cosine addition law.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 3 -->
+    <article class="study-unit-card" id="unit-3">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 3 of 6 · Cartesian Analysis</span>
+          <h2 class="unit-title">Cartesian Resolution &amp; Orthogonal Unit Vectors</h2>
+        </div>
+        <div class="formula-tag">A = A_x î + A_y ĵ + A_z k̂ &nbsp;|&nbsp; A_x = A cosθ, A_y = A sinθ</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Any vector in 2D or 3D can be uniquely decomposed into mutually perpendicular projections along the standard Cartesian unit vectors (î, ĵ, k̂). To add N arbitrary vectors, simply resolve each vector into components, sum the components independently (<strong>R_x = Σ A_ix, R_y = Σ A_iy</strong>), and reassemble the final resultant magnitude via Pythagoras: <strong>|R| = √(R_x² + R_y²)</strong>.</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Trigonometric Projections</strong>
+            <em>Adjacent component = Magnitude × cos(angle). Opposite component = Magnitude × sin(angle).</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Component-Wise Addition Rule</strong>
+            <em>A + B = (A_x + B_x) î + (A_y + B_y) ĵ. This reduces complex multi-angle geometry into elementary arithmetic.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Angle Recovery with Quadrant Awareness</strong>
+            <em>tan θ = R_y / R_x. Check the signs of R_x and R_y to position θ in the correct Cartesian quadrant (I, II, III, or IV).</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Resultant of Three Concurrent Forces</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> Three forces act on a particle: F₁ = 10 N along +x axis, F₂ = 20 N along +y axis, F₃ = 10 N along -x axis. Find the net resultant force.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Resolve into components:<br>
+          • F₁ = 10 î + 0 ĵ.<br>
+          • F₂ = 0 î + 20 ĵ.<br>
+          • F₃ = -10 î + 0 ĵ.<br>
+          2. Sum components: R_x = 10 + 0 - 10 = 0 N; R_y = 0 + 20 + 0 = 20 N.<br>
+          3. Reassemble: R = 0 î + 20 ĵ ⇒ <strong>|R| = 20 N, pointing strictly along +y direction (90°)</strong>.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Blindly using cos for the horizontal axis when the problem gives the angle relative to the vertical axis.<br>
+        <strong>Repair:</strong> The cosine component ALWAYS belongs to the axis adjacent to the reference angle θ.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 4 -->
+    <article class="study-unit-card" id="unit-4">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 4 of 6 · Kinematic Transformations</span>
+          <h2 class="unit-title">Vector Subtraction &amp; Change in State Vectors</h2>
+        </div>
+        <div class="formula-tag">A - B = A + (-B) &nbsp;|&nbsp; |Δv| = 2v sin(Δθ / 2) &nbsp;(UCM)</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">Vector subtraction is defined as the addition of the negative vector: <strong>A - B = A + (-B)</strong>. In physics, acceleration is defined by change in velocity: <strong>a = Δv / Δt = (v_final - v_initial) / Δt</strong>. Even if speed is constant, rotating a velocity vector produces a non-zero subtraction difference vector Δv directed inward!</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Geometric Construction of -B</strong>
+            <em>Reverse the arrowhead of vector B by exactly 180° while keeping its length unchanged. Add A and -B head-to-tail.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Change in Velocity for Equal Speed v at Angle θ</strong>
+            <em>|Δv| = √(v² + v² - 2v² cosθ) = √(2v²(1 - cosθ)) = √(2v² · 2 sin²(θ/2)) = <strong>2v sin(θ/2)</strong>.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Car Turning a Right-Angle Corner</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A car travels east at speed v = 20 m/s and turns north onto a crossroad, continuing at the same speed v = 20 m/s. Calculate the change in velocity vector Δv and its direction.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Initial velocity: v_i = +20 î m/s (East).<br>
+          2. Final velocity: v_f = +20 ĵ m/s (North).<br>
+          3. Change in velocity: Δv = v_f - v_i = <strong>-20 î + 20 ĵ m/s</strong>.<br>
+          4. Magnitude: |Δv| = √((-20)² + 20²) = √(400 + 400) = √800 = <strong>28.28 m/s</strong>.<br>
+          5. Direction: tan θ = 20 / (-20) = -1 ⇒ <strong>North-West (135° from East)</strong>.<br>
+          Notice: Even though speed did not change by a single m/s, the velocity change is 28.28 m/s!
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Claiming Δv = 0 because speed remained 20 m/s before and after the turn.<br>
+        <strong>Repair:</strong> Speed is a scalar (|v|); velocity is a vector. Direction change requires non-zero acceleration.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 5 -->
+    <article class="study-unit-card" id="unit-5">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 5 of 6 · Energy &amp; Projections</span>
+          <h2 class="unit-title">Scalar (Dot) Product: Geometric Projections &amp; Work Done</h2>
+        </div>
+        <div class="formula-tag">A · B = |A||B| cosθ = A_x B_x + A_y B_y + A_z B_z &nbsp;|&nbsp; A ⊥ B ⇔ A · B = 0</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">The scalar (dot) product multiplies the magnitude of one vector by the <strong>collinear projection of the second vector onto the first</strong>: <strong>A · B = A (B cosθ)</strong>. The result is a pure SCALAR. In physics, Work is the dot product of force and displacement: <strong>W = F · d</strong>. If force is perpendicular to displacement (θ = 90°), the work done is STRICTLY ZERO.</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Orthonormal Basis Identities</strong>
+            <em>î · î = ĵ · ĵ = k̂ · k̂ = 1. Cross-terms: î · ĵ = ĵ · k̂ = k̂ · î = 0.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Orthogonality Test</strong>
+            <em>Two non-zero vectors A and B are perpendicular if and only if their dot product vanishes: <strong>A · B = 0</strong>.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Scalar Projection Formula</strong>
+            <em>Projection of B onto A = B cosθ = <strong>(A · B) / |A|</strong>.</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Work Done by a 3D Force</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A force F = (3 î + 4 ĵ - 2 k̂) N displaces an object from point P(1, 2, 0) m to point Q(4, 6, 2) m. Evaluate the work done by the force and determine the angle between force and displacement.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Displacement vector: d = (4 - 1) î + (6 - 2) ĵ + (2 - 0) k̂ = 3 î + 4 ĵ + 2 k̂ m.<br>
+          2. Work done: W = F · d = (3)(3) + (4)(4) + (-2)(2) = 9 + 16 - 4 = <strong>21.00 J</strong>.<br>
+          3. Magnitudes: |F| = √(3² + 4² + (-2)²) = √(9 + 16 + 4) = √29 ≈ 5.385 N.<br>
+          |d| = √(3² + 4² + 2²) = √(9 + 16 + 4) = √29 ≈ 5.385 m.<br>
+          4. Angle: cos θ = (F · d) / (|F||d|) = 21 / (√29 × √29) = 21 / 29 ≈ 0.7241 ⇒ θ = <strong>43.6°</strong>.
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Assigning a unit vector direction (î, ĵ, k̂) to the output of a dot product.<br>
+        <strong>Repair:</strong> The dot product is a SCALAR; its result has magnitude and sign, but zero spatial direction.</p>
+      </div>
+    </article>
+
+    <!-- STUDY UNIT 6 -->
+    <article class="study-unit-card" id="unit-6">
+      <div class="study-unit-header">
+        <div>
+          <span class="unit-tag">Unit 6 of 6 · Rotational Vectors</span>
+          <h2 class="unit-title">Vector (Cross) Product: Torque &amp; Right-Hand Rules</h2>
+        </div>
+        <div class="formula-tag">A × B = (|A||B| sinθ) n̂ &nbsp;|&nbsp; A × B = -(B × A) &nbsp;|&nbsp; τ = r × F</div>
+      </div>
+
+      <div class="key-step-box">
+        <div class="key-step-title">⚡ The Crucial Inferential Step</div>
+        <p style="margin:0;font-size:0.95rem;line-height:1.5;">The vector (cross) product produces a <strong>new vector strictly perpendicular to the plane containing A and B</strong>, whose orientation is determined by the <strong>Right-Hand Screw Rule</strong>. Its magnitude equals the geometric area of the parallelogram spanned by A and B: <strong>|A × B| = AB sinθ</strong>. Unlike regular multiplication, the cross product is <strong>anti-commutative: A × B = -(B × A)</strong>!</p>
+      </div>
+
+      <div class="derivation-steps">
+        <div class="step-item">
+          <span class="step-badge">1</span>
+          <div class="step-content">
+            <strong>Right-Hand Screw Rule</strong>
+            <em>Point right-hand fingers along vector A and curl them toward vector B through the smaller angle θ. Your extended thumb points along the unit normal vector n̂.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">2</span>
+          <div class="step-content">
+            <strong>Collinear &amp; Parallel Vectors Vanish</strong>
+            <em>If A and B are parallel or antiparallel (θ = 0° or 180°), sin θ = 0 ⇒ <strong>A × B = 0</strong>. In particular, A × A = 0.</em>
+          </div>
+        </div>
+        <div class="step-item">
+          <span class="step-badge">3</span>
+          <div class="step-content">
+            <strong>Determinant Matrix Evaluation</strong>
+            <em>A × B = det [î, ĵ, k̂; A_x, A_y, A_z; B_x, B_y, B_z] = î(A_y B_z - A_z B_y) - ĵ(A_x B_z - A_z B_x) + k̂(A_x B_y - A_y B_x).</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="worked-box">
+        <div class="worked-title">💡 Worked Problem: Rotational Torque on a Wrench</div>
+        <p style="margin:0 0 8px;font-size:0.92rem;line-height:1.5;"><strong>Problem:</strong> A position vector r = (0.4 î + 0.2 ĵ) m locates a bolt. A force F = (-20 î + 50 ĵ) N is applied at the end of the wrench. Evaluate the torque vector τ = r × F acting about the origin.</p>
+        <div style="background:var(--bg-card, #fff);border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;font-size:0.9rem;line-height:1.5;">
+          <strong>Solution:</strong><br>
+          1. Apply 2D cross product: r × F = (r_x F_y - r_y F_x) k̂.<br>
+          2. r_x F_y = (0.4) × (50) = +20 N·m.<br>
+          3. r_y F_x = (0.2) × (-20) = -4 N·m.<br>
+          4. τ = (20 - (-4)) k̂ = <strong>+24 k̂ N·m</strong>.<br>
+          The torque vector has magnitude <strong>24 N·m</strong> pointing strictly out of the page (+z direction, counter-clockwise rotation).
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Common Trap &amp; Error Prevention</div>
+        <p style="margin:0;font-size:0.92rem;"><strong>Trap:</strong> Commuting the order of terms: writing r × F = F × r.<br>
+        <strong>Repair:</strong> Swapping the cross-product operands reverses the vector direction: F × r = -24 k̂ N·m (clockwise). Order matters strictly.</p>
+      </div>
+    </article>
+
+    <!-- Bottom Return & Practice Navigation -->
+    <div style="text-align:center;margin:3rem 0 1rem;padding:2rem;background:var(--bg-soft, #f8fafc);border-radius:14px;border:1px solid var(--border, #e2e8f0);">
+      <h3 style="margin:0 0 0.5rem;font-size:1.3rem;font-weight:800;color:var(--text-main);">Ready to Test Your Mastery?</h3>
+      <p style="color:var(--text-muted);margin:0 0 1.25rem;">Apply these 6 foundational concepts to authentic Olympiad &amp; JEE past-paper questions in the Question Bank.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+        <a class="g9-btn-action g9-btn-qb" href="../../index.html#/bank?subject=Physics&topic=vectors" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          🎯 Practice Vectors in Question Bank &rarr;
+        </a>
+        <a class="g9-btn-action g9-btn-learn" href="../../index.html#/subject/physics" style="font-weight:800;font-size:1rem;padding:12px 24px;">
+          ← Return to Physics Hub
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="g9-footer">
+    <p>Grade9V3.5 Concept-Centred Learner Platform · Authentic Question Bank &amp; Complete Core Study Modules</p>
+  </footer>
+<script src="../../js/display-controls.js"></script>
+<script src="../../js/site-header.js" data-site-root="../../"></script>
+</body>
+</html>

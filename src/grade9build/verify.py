@@ -114,8 +114,15 @@ def run_public_git_audit(v35,v41,*,temp_parent):
                 leaf_total+=result["preserved_private"]
         require(len(blobs)==EXPECTED_DISTINCT_BLOBS,"DISTINCT_BLOB_COUNT_MISMATCH")
         reconciler=SearchRouteReconciler();reconciler.ingest(documents)
+        r4_kit=os.environ.get("G9_R4_KIT")
+        if r4_kit and Path(r4_kit).is_dir():
+            from .r4_loader import ExternalR4DiscoveryLoader
+            loader=ExternalR4DiscoveryLoader(Path(r4_kit))
+            r4_items=loader.extract_discovered_resource_occurrences()
+            reconciler.ingest_r4_discovered(r4_items)
         summary=reconciler.build_summary()
-        require(summary["total_occurrences"]==1493 and summary["unaccounted_in_supplied_collections"]==0,"SEARCH_OCCURRENCE_MISMATCH")
+        expected_total = 1564 if r4_kit and Path(r4_kit).is_dir() else 1493
+        require(summary["total_occurrences"]==expected_total and summary["unaccounted_in_supplied_collections"]==0,"SEARCH_OCCURRENCE_MISMATCH")
         # Separate identity check over exact A03 occurrence witnesses; no logical-ID collapse.
         inventory=RecordInventoryEngine();records=[]
         for pin in SOURCE_PINS:
@@ -134,9 +141,13 @@ def run_public_git_audit(v35,v41,*,temp_parent):
              "private_restore":"EPHEMERAL_GIT_BYTES_VERIFIED","private_source_document_leaves":leaf_total,
              "field_scope":"THREE_PINNED_JSON_DOCUMENTS_ONLY_PRIVATE_RESTORE_NOT_MIGRATED_TARGET",
              "supplied_occurrence_accounting":bounded,"search_disposition_counts":summary["disposition_counts"],
+             "source_ledger_unaccounted_within_verified_inputs":bounded["unaccounted"],
+             "supplied_search_occurrences":summary["supplied_search_occurrences"],
+             "discovered_resource_occurrences":summary["discovered_resource_occurrences"],
+             "candidate_extended_occurrences":summary["candidate_extended_occurrences"],
              "conservation_counters":{k:None for k in CONSERVATION_COUNTERS},
              "actual_approved_compatibility_mappings":0,
-             "owner_local_ignored_scope":"NOT_RUN","external_r4":"NOT_RUN","permanent_custody_acl":"NOT_VERIFIED",
+             "owner_local_ignored_scope":"NOT_RUN","external_r4":summary["external_r4_discovered_inventory"],"permanent_custody_acl":"NOT_VERIFIED",
              "native_behavior_state_equivalence":"NOT_RUN","full_target_field_conservation":"NOT_RUN"}
     return {**payload,"summary_digest":canonical_json_digest(payload)}
 

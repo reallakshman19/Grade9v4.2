@@ -259,7 +259,7 @@ export class PartNavigationController {
 
         return `
         <div class="part-nav-section" style="margin-bottom: 12px;">
-          <h4 style="margin: 0 0 6px 0; font-size: 13px; color: #475569; text-transform: uppercase;">${escapeHtml(String(sec.title))}</h4>
+          <h4 style="margin: 0 0 6px 0; font-size:14px; color: #475569; text-transform: uppercase;">${escapeHtml(String(sec.title))}</h4>
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             ${partsButtons}
           </div>
@@ -269,7 +269,7 @@ export class PartNavigationController {
 
     return `
       <nav class="part-navigation-panel" aria-label="Examination Part Navigation" style="padding: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
-        <div class="part-nav-counters" style="display: flex; gap: 12px; font-size: 12px; color: #475569; margin-bottom: 12px; flex-wrap: wrap;">
+        <div class="part-nav-counters" style="display: flex; gap: 12px; font-size:14px; color: #475569; margin-bottom: 12px; flex-wrap: wrap;">
           <span>Total: <strong>${counts.total}</strong></span>
           <span>Attempted: <strong style="color: #059669;">${counts.attempted + counts.completed}</strong></span>
           <span>Flagged: <strong style="color: #d97706;">${counts.flagged}</strong></span>
@@ -283,5 +283,43 @@ export class PartNavigationController {
         </div>
       </nav>
     `;
+  }
+
+  bindEvents(container: HTMLElement, onUpdate?: () => void): void {
+    container.querySelector('#part-nav-prev-btn')?.addEventListener('click', () => {
+      if (this.goToPreviousPart() && onUpdate) onUpdate();
+    });
+    container.querySelector('#part-nav-flag-btn')?.addEventListener('click', () => {
+      if (this.activePartId) {
+        this.toggleFlag(this.activePartId);
+        if (onUpdate) onUpdate();
+      }
+    });
+    container.querySelector('#part-nav-next-btn')?.addEventListener('click', () => {
+      if (this.goToNextPart() && onUpdate) onUpdate();
+    });
+    container.querySelectorAll<HTMLButtonElement>('.part-nav-item').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pid = btn.dataset.partId;
+        if (pid && this.goToPart(pid) && onUpdate) onUpdate();
+      });
+    });
+  }
+
+  mount(container: HTMLElement): { dispose: () => void; refresh: () => void } {
+    let active = true;
+    const render = () => {
+      if (!active) return;
+      container.innerHTML = this.renderHtml();
+      this.bindEvents(container, render);
+    };
+    render();
+    return {
+      dispose: () => {
+        active = false;
+        container.replaceChildren();
+      },
+      refresh: () => render(),
+    };
   }
 }

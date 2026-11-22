@@ -1,0 +1,42 @@
+{
+  "schema_version": "g9-wpe-parity/1.1",
+  "workpack_id": "A54",
+  "status": "CANDIDATE_TESTS_SUBMITTED",
+  "academic_admission": "HOLD",
+  "production_release": "NONE",
+  "independent_acceptance": "NOT_GRANTED",
+  "base": "11f9cdb14b36a392cba812e717b61d5b77ad6bc5",
+  "source": {
+    "commit": "564ad2a07fddc0fdd30d103674b3eca61235a54b",
+    "tree": "703ee4d6ffcd0021a1dc1f8fda1cec61e149d149",
+    "bridge_blob": "255683fa36b2df733838f23a8b86b804aa812b8e",
+    "scope": "13 author packs; 8+5; no native admissions"
+  },
+  "verification": "Exact-head CI required. New variants preserve earlier synthetic output shapes; no predeclared PASS counts.",
+  "synthetic": {
+    "models": "13 fixtures, seven stage masks, invalid domains",
+    "journey": "Actual A48/A49 boundary rollback and source return",
+    "teaching": "A1-A9 and distinct anchors",
+    "browser": "Actual Chromium seven viewports and IndexedDB reload"
+  },
+  "legacy_numeric": {
+    "scope": "Thirteen-family bounded pinned-author-pack numerical overlap; source extraction for ledger, spring and graph; explicit two-region spring diagnostics",
+    "not_full_parity": [
+      "MULTIFORCE_LEDGER endpoint feasibility does not establish intermediate path reachability or static contact dynamics",
+      "SPRING_CONTACT ideal unattached smooth launch and constant opposing post-release friction only",
+      "GRAPH_OPERATION selected signed linear segments only; mounted graph manipulation and original exam assets not established",
+      "POTENTIAL_WELLS sampled peak consistency and equality handled; continuous connected intervals and arbitrary potential reachability not proved",
+      "CONVEYOR_MOMENTUM_POWER steady same-direction pickup with incoming speed no greater than belt speed",
+      "DISSIPATIVE_BOUNCES ideal first/later constant retention only; arbitrary sequences and dissipative contact dynamics not modelled",
+      "No native browser behavior comparison or actual academic QRT"
+    ]
+  },
+  "remaining": [
+    "actual R4 custody",
+    "all 13 author pack native semantic parity",
+    "A55 physical tablet",
+    "A69 legacy functional pilots",
+    "A73 complete audit"
+  ],
+  "integration_correction": "Wave9 host open restores existing journey only after EVENT_ID_COLLISION; exact authority, identity and replay still required. Browser reload exercises actual fix."
+}

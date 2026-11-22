@@ -14,7 +14,7 @@ it('A72 preserves exact authorized bytes, maps only history and is idempotent',a
 });
 it('A72 observed native key families quarantine unmapped data rather than invent evidence',async()=>{
  const d=new MemoryStorageDriver(),i=new LegacyStateImporter(d,auth);
- const keys=['gx1:/path:digest','grade9v3_atlas_matrix','grade9v3_prompt_composer_handoff_v1','g9-theme','G9V41:PHYSICS:R2:uid:rev:hash','G9V41:PHYSICS:QUALITY-R2:STUDY:u:r','g9-physics-agent2-core1b-v1:q','g9:nsejs:iapt-link-note:v1:r:s:2024:CODE51:Q01','g9:nsejs:author-core1b:v1:s:d:u:h'];
+ const keys=['gx1:/path:digest','grade9v3_atlas_matrix','grade9v3_prompt_composer_handoff_v1','g9-theme','imo_grade9_circles_master_v1','imo_theme_pref','tablet12_theme','G9V41:PHYSICS:R2:uid:rev:hash','G9V41:PHYSICS:QUALITY-R2:STUDY:u:r','g9-physics-agent2-core1b-v1:q','g9:nsejs:iapt-link-note:v1:r:s:2024:CODE51:Q01','g9:nsejs:author-core1b:v1:s:d:u:h'];
  for(const key of keys)assert(classifyNativeKey(key));
  const raw=JSON.stringify({...envelope,rawStorageDump:Object.fromEntries(keys.map(k=>[k,'{}']))});const report=await i.importBundle(raw);assert.equal(report.disposition,'QUARANTINED');assert.equal(report.rows.length,0);assert.equal((await d.get<{raw:string}>('legacy_raw_exports',await computeSha256(raw)))?.raw,raw);assert.equal((await d.getAll('attempts')).length,0);
 });

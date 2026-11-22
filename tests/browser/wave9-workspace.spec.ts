@@ -6,7 +6,7 @@ it('W9-INT-03 actual Chromium: pinned routes, native slots, print hold, durable 
  const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');
  const browser=await chromium.launch({headless:true});
  try{
-  const page=await browser.newPage({viewport:{width:390,height:844}});await page.goto('http://127.0.0.1:'+addr.port+'/');
+  const page=await browser.newPage({viewport:{width:390,height:844}});await page.goto('http://127.0.0.1:'+addr.port+'/test-host.html');
   const fixturePath='/@fs/'+process.cwd()+'/tests/fixtures/wave9-synthetic.ts';
   const init=async(role:string)=>page.evaluate(async({fixturePath,role})=>{
    const {fixture}=await import(fixturePath);const {createWave9WorkspaceHost}=await import('/pages/wave9-workspace.ts' as string);const {Router}=await import('/app/router.ts' as string);
@@ -68,7 +68,7 @@ it('W9-INT-06 two actual Chromium tabs: one CAS commit, stale reader denied, res
  const server=await createServer({server:{host:'127.0.0.1',port:0,strictPort:true}});await server.listen();const addr=server.httpServer!.address();assert(addr&&typeof addr!=='string');
  const browser=await chromium.launch({headless:true});try{
   const ctx=await browser.newContext(),one=await ctx.newPage(),two=await ctx.newPage(),url='http://127.0.0.1:'+addr.port+'/',name='w9-cross-tab-'+Date.now(),path='/@fs/'+process.cwd()+'/tests/fixtures/wave9-synthetic.ts';
-  await one.goto(url);await two.goto(url);
+  await one.goto(url+'test-host.html');await two.goto(url+'test-host.html');
   const prepare=(page:typeof one,initialize:boolean)=>page.evaluate(async({path,name,initialize})=>{
    const {fixture}=await import(path),{IndexedDBStorageDriver}=await import('/runtime/storage.ts' as string),{SupportedPracticeWorkspace}=await import('/journeys/supported-practice.ts' as string);
    const driver=new IndexedDBStorageDriver({dbName:name}),x=await fixture('CORE2A','5',driver,initialize),a=await x.compose(),p=new SupportedPracticeWorkspace(a.controller,x.progress,x.f.binding.engine,x.f.binding.assessmentA,x.load,{driver,sessionId:x.f.bs.id,assessment:x.f.binding.assessmentB});

@@ -7,7 +7,8 @@
   "production_release": "NONE",
   "core_roles_covered": [],
   "capabilities": [],
+  "contexts_cataloged": 71,
   "native_blueprint_registry": "docs/architecture/native-blueprint-map.json",
-  "mapping_status": "NOT_VERIFIED_AGAINST_ACTUAL_LEGACY_UI",
-  "notes": "A57 has seven proposed native role definitions. No actual legacy UI capability is independently observed/mapped. The synthetic demo.slider fixture is limited to tests."
+  "mapping_status": "INVENTORY_ENUMERATED_BROWSER_TRACES_PENDING",
+  "notes": "71 execution contexts cataloged from external R4 kit inventory. Traces, multi-viewport screenshots, and interaction logs remain unavailable; core_roles_covered and capabilities remain empty (BLOCKED) until actual browser traces are validated under Workpack A61."
 }

@@ -37,6 +37,7 @@ export interface ExplorerPageConfig {
   readonly helpers: GcdrHelperStates;
   readonly initialParameters?: Record<string, number>;
   readonly orientation?: DisplayOrientation;
+  readonly standaloneUrl?: string;
 }
 
 export interface ExplorerPageViewState {
@@ -64,11 +65,13 @@ export class GcdrExplorerPageController {
   private topic: string;
   private orientation: DisplayOrientation = 'LANDSCAPE';
   private activeHelperDrawer: 'CHALKBOARD' | 'TRAP_ALERT' | 'INDEPENDENT_CHECK' | 'TAKEAWAY' | null = null;
+  private standaloneUrl?: string;
 
   constructor(config: ExplorerPageConfig) {
     this.title = config.title;
     this.subject = config.subject;
     this.topic = config.topic;
+    this.standaloneUrl = config.standaloneUrl;
     this.orientation=config.orientation||'LANDSCAPE';if(!['LANDSCAPE','PORTRAIT'].includes(this.orientation))throw Error('Invalid orientation');
 
     this.journey = new GcdrExplorerJourney(
@@ -156,7 +159,7 @@ export class GcdrExplorerPageController {
     };
   }
 
-  renderHtml(): string {
+  renderHtml(contextEntry=false): string {
     const state = this.getViewState();
     const stageDef = this.journey.getCurrentStageDefinition();
     const currentStage = this.journey.getCurrentStage();
@@ -165,7 +168,7 @@ export class GcdrExplorerPageController {
     // 1. Stage Progress Rail
     const stagesRailHtml = GCDR_ORDERED_STAGES.map((st, idx) => {
       const isPast=this.journey.isStageCompleted(st);
-      const isCurrent = idx === state.currentStageIndex;
+      const isCurrent = !contextEntry&&idx === state.currentStageIndex;
 
       let badgeBg = '#f1f5f9';
       let badgeFg = '#64748b';
@@ -186,8 +189,8 @@ export class GcdrExplorerPageController {
           class="gcdr-stage-step ${isCurrent ? 'active' : ''}"
           data-stage="${st}"
           data-index="${idx}"
-          style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 6px 12px; background: ${badgeBg}; color: ${badgeFg}; border: 1px solid ${border}; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;"
-          aria-current="${isCurrent ? 'step' : 'false'}" ${idx>Math.min(this.journey.exportDraft().evidence.length,9)?'disabled':''}
+          style="min-height: ${HIT_TARGET_MIN_PX}px; min-width:48px; padding: 6px 12px; background: ${badgeBg}; color: ${badgeFg}; border: 1px solid ${border}; border-radius: 6px; font-size:14px; font-weight: 600; cursor: pointer; white-space: nowrap;"
+          aria-current="${isCurrent ? 'step' : 'false'}" ${contextEntry||idx>Math.min(this.journey.exportDraft().evidence.length,9)?'disabled':''}
         >
           ${isPast ? '✓ ' : ''}${st}
         </button>
@@ -202,7 +205,7 @@ export class GcdrExplorerPageController {
     // 6. Truthful Exactness Badge
     const badge = state.exactnessBadge;
     const badgeHtml = `
-      <div class="gcdr-exactness-badge" style="padding: 8px 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 11px; color: #475569; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div class="gcdr-exactness-badge" style="padding: 8px 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; font-size:14px; color: #475569; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
         <div>
           Fidelity: <strong>${escapeHtml(String(badge.fidelity))}</strong> | Binding: <strong style="color: ${badge.binding === 'CANONICAL_BINDING' ? '#059669' : '#d97706'};">${escapeHtml(String(badge.binding))}</strong>
         </div>
@@ -213,17 +216,17 @@ export class GcdrExplorerPageController {
     `;
 
     // 7. Responsive Layout (Landscape Split vs Portrait Stacked)
-    const isLandscape = this.orientation === 'LANDSCAPE';
-    const mainLayoutGrid = isLandscape
-      ? 'display: grid; grid-template-columns: 1fr 1fr; gap: 20px;'
-      : 'display: flex; flex-direction: column; gap: 16px;';
+    // Native expanded stage/support split, with an explicit portrait override.
+    // The canonical 72:28 specialized profile is a separate unimplemented surface.
+    const editable=!contextEntry&&!this.journey.isStageCompleted(currentStage);
+    const manipulation=editable&&currentStage==='MANIPULATE';
 
     return `
-      <div class="gcdr-explorer-page" data-orientation="${this.orientation}" style="max-width: 1200px; margin: 0 auto; padding: 16px; font-family: system-ui, sans-serif;">
-        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0;">
+      <main class="gcdr-explorer-page" data-role="EXPLORER" data-orientation="${this.orientation}"><style>${explorerCss}</style>
+        <section data-slot="identity"><header class="gcdr-identity">
           <div>
             <h1 style="margin: 0; font-size: 20px; color: #0f172a;">${escapeHtml(String(this.title))}</h1>
-            <span style="font-size: 13px; color: #64748b;">${escapeHtml(String(this.subject.toUpperCase()))} / ${escapeHtml(String(this.topic.toUpperCase()))} (GCDR Blueprint)</span>
+            <span style="font-size:14px; color: #64748b;">${escapeHtml(String(this.subject.toUpperCase()))} / ${escapeHtml(String(this.topic.toUpperCase()))} (GCDR Blueprint)</span>
           </div>
           <div style="display: flex; gap: 8px;">
             <button id="gcdr-orientation-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 14px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 600; cursor: pointer;">
@@ -233,17 +236,18 @@ export class GcdrExplorerPageController {
         </header>
 
         <!-- Stage Progression Rail -->
-        <nav class="gcdr-stages-rail" aria-label="GCDR Stages" style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 16px;">
-          ${stagesRailHtml}
-        </nav>
+        <nav class="gcdr-stages-rail" aria-label="GCDR Stages" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;">
+          <span class="gcdr-context-step" aria-current="${contextEntry?'step':'false'}">CONTEXT</span>${stagesRailHtml}
+        </nav></section>
 
+        <div class="gcdr-role-grid"><section data-slot="stage">
         <!-- Current Stage Briefing -->
         <section class="gcdr-stage-card" style="padding: 16px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; margin-bottom: 16px;">
-          <h2 style="margin: 0 0 6px 0; font-size: 16px; color: #1e293b;">${escapeHtml(String(stageDef.title))}</h2>
-          <p style="margin: 0 0 12px 0; font-size: 14px; color: #475569;">${escapeHtml(String(stageDef.instructions))}</p>
-          <div class="gcdr-learner-input-container" style="display: flex; gap: 8px;">
+          <h2 style="margin: 0 0 6px 0; font-size: 16px; color: #1e293b;">${contextEntry?'Context entry':escapeHtml(String(stageDef.title))}</h2>
+          <p style="margin: 0 0 12px 0; font-size: 14px; color: #475569;">${contextEntry?'Local diagnostic context; no verified native source question is bound.':escapeHtml(String(stageDef.instructions))}</p>
+          ${contextEntry?'<button type="button" id="gcdr-context-start">Begin prediction</button>':`<div class="gcdr-learner-input-container">
             <input
-              id="gcdr-stage-input"
+              id="gcdr-stage-input" aria-label="Stage response" ${editable?'':'readonly'}
               type="text"
               placeholder="Record your derivation / observation for stage ${currentStage}..."
               value="${escapeHtml(String(this.journey.getStageResponse(currentStage) || ''))}"
@@ -252,11 +256,13 @@ export class GcdrExplorerPageController {
             <button id="gcdr-advance-stage-btn" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 10px 20px; background: #2563eb; color: #ffffff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
               ${this.journey.isCompleted()?'Local transcript complete':'Advance Stage →'}
             </button>
-          </div>
+          </div>`}
+          ${manipulation?`<label>Model parameter x <input type="range" id="gcdr-parameter-x" aria-label="Model parameter x" min="-.5" max=".5" step=".01" value="${state.parameters.x}"></label>`:''}
+          <p role="status" data-gcdr-status></p>
         </section>
 
         <!-- Dual Views Container -->
-        <div class="gcdr-dual-views" style="${mainLayoutGrid} margin-bottom: 16px;">
+        <div class="gcdr-dual-views">
           <div class="gcdr-primary-scene-wrapper">
             <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #1e293b;">Interactive Primary Scene</h4>
             ${primarySceneSvg}
@@ -266,6 +272,18 @@ export class GcdrExplorerPageController {
           </div>
         </div>
 
+        </section><aside data-slot="route">
+        <h2>Route and support</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px; margin: 12px 0;">
+          <a href="#/bank?subject=${encodeURIComponent(this.subject)}&topic=${encodeURIComponent(this.topic)}" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; padding: 8px 14px; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none;">
+            📖 Open in Unified Question Bank
+          </a>
+          ${this.standaloneUrl ? `
+          <a href="${this.standaloneUrl}" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; padding: 8px 14px; background: #f8fafc; color: #0284c7; border: 1px solid #cbd5e1; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none;">
+            🚀 Open Standalone Suite
+          </a>` : ''}
+        </div>
+        <p>Local transcript; native source return and reviewed telemetry are available.</p>
         <!-- Helper Drawers Bar -->
         <div class="gcdr-helpers-bar" style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
           ${helperButtons}
@@ -276,7 +294,57 @@ export class GcdrExplorerPageController {
         <div style="margin-top: 20px;">
           ${badgeHtml}
         </div>
-      </div>
+      </aside></div></main>
     `;
   }
+}
+
+const explorerCss=`
+.gcdr-explorer-page{box-sizing:border-box;width:100%;max-width:100%;min-width:0;padding:12px;overflow-wrap:anywhere;font-family:system-ui,sans-serif}
+.gcdr-explorer-page *{box-sizing:border-box;min-width:0}
+.gcdr-explorer-page .gcdr-identity{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.gcdr-explorer-page .gcdr-stages-rail{margin:8px 0;max-width:100%}
+.gcdr-explorer-page .gcdr-stages-rail>*{flex-shrink:0}
+.gcdr-context-step{display:inline-flex;align-items:center;padding:8px;min-height:48px}
+.gcdr-explorer-page .gcdr-role-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.gcdr-explorer-page [data-slot=stage],.gcdr-explorer-page [data-slot=route]{border:1px solid #ccd7e1;border-radius:8px;padding:12px}
+.gcdr-explorer-page .gcdr-dual-views{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.gcdr-explorer-page svg{width:100%;height:auto;display:block}
+.gcdr-explorer-page .gcdr-learner-input-container{display:flex;flex-wrap:wrap;gap:8px}
+.gcdr-explorer-page .gcdr-learner-input-container input{flex:1 1 180px}
+.gcdr-explorer-page button,.gcdr-explorer-page input{min-height:48px;min-width:48px;max-width:100%;font:inherit}
+.gcdr-explorer-page input[type=range]{width:100%;display:block}
+.gcdr-explorer-page :focus-visible{outline:3px solid #125d82;outline-offset:2px}
+@media(min-width:1100px){.gcdr-explorer-page[data-orientation=LANDSCAPE] .gcdr-role-grid{grid-template-columns:minmax(0,66fr) minmax(0,34fr);align-items:start}
+.gcdr-explorer-page[data-orientation=LANDSCAPE] [data-slot=route]{position:sticky;top:8px;max-height:calc(100vh - 16px);overflow:auto}}
+`;
+// Local mounted diagnostic only. CONTEXT is an entry view, not an invented
+// reviewed evidence stage; the ten-stage transcript wire format stays unchanged.
+export function mountGcdrExplorer(root:HTMLElement,c:GcdrExplorerPageController){
+ let active=true;
+ const j=c.getJourney();
+ let contextEntry=j.exportDraft().evidence.length===0&&j.getStageResponse('PREDICT')===null;
+ const render=(selector?:string)=>{if(!active)return;root.innerHTML=c.renderHtml(contextEntry);if(selector)root.querySelector<HTMLElement>(selector)?.focus({preventScroll:true});};
+ const status=(message:string)=>{const n=root.querySelector('[data-gcdr-status]');if(n)n.textContent=message;};
+ const click=(event:Event)=>{
+  const b=event.target instanceof Element?event.target.closest<HTMLButtonElement>('button'):null;if(!active||!b||b.disabled||!root.contains(b))return;
+  if(b.id==='gcdr-context-start'){contextEntry=false;render('#gcdr-stage-input');return;}
+  if(b.id==='gcdr-orientation-btn'){c.setOrientation(c.getOrientation()==='LANDSCAPE'?'PORTRAIT':'LANDSCAPE');render('#gcdr-orientation-btn');return;}
+  if(contextEntry)return;
+  if(b.id==='gcdr-advance-stage-btn'){
+   const stage=j.getCurrentStage(),field=root.querySelector<HTMLInputElement>('#gcdr-stage-input');
+   if(!j.isStageCompleted(stage)&&(!field||!j.setStageResponse(stage,field.value))){status('Record a nonempty stage response.');return;}
+   const result=j.advance();if(!result.success){status(result.error??'Stage unavailable.');return;}
+   render('#gcdr-stage-input');return;
+  }
+  if(b.dataset.stage){const stage=b.dataset.stage as GcdrStage;if(!j.goToStage(stage)){status('Finish the current local response before navigating.');return;}render('#gcdr-stage-input');return;}
+  if(b.dataset.helper==='CHALKBOARD'){c.toggleHelperDrawer('CHALKBOARD');render('.gcdr-helper-btn');}
+ };
+ const input=(event:Event)=>{
+  const n=event.target;if(!active||contextEntry||!(n instanceof HTMLInputElement))return;
+  if(n.id==='gcdr-parameter-x'){if(!j.setModelParameter('x',Number(n.value)))status('Parameter change unavailable.');}
+  else if(n.id==='gcdr-stage-input'&&!n.readOnly&&n.value.trim())j.setStageResponse(j.getCurrentStage(),n.value);
+ };
+ root.addEventListener('click',click);root.addEventListener('input',input);render();
+ return {refresh:()=>render(),dispose(){if(!active)return;active=false;root.removeEventListener('click',click);root.removeEventListener('input',input);root.replaceChildren();}};
 }

@@ -66,6 +66,27 @@
         "g9:nsejs:author-core1b:v1:${subject}:${sourceDigest}:${uid}:${revision_sha256}"
       ],
       "mapping": "raw preservation; exact task/source mapping needed"
+    },
+    {
+      "source": "Grade9v3.5",
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "path": "standalone/core2-mathematics-circles-grade9-master.html",
+      "blob": "ffdedb8c28d0285a5caf6307e2ca057406ca74e0",
+      "keys": [
+        "imo_grade9_circles_master_v1",
+        "imo_theme_pref"
+      ],
+      "mapping": "Raw preservation and quarantine; mutable latest selection is not immutable first-attempt or protected evidence."
+    },
+    {
+      "source": "Grade9v3.5",
+      "commit": "8a02a8eb23ea37a7d8acb74d1bc193dd17657e5b",
+      "path": "public/standalone/practice/physics-motion-in-a-plane-interactive-suite.html",
+      "blob": "53c9072865945170568b5e4c55af114eca958920",
+      "keys": [
+        "tablet12_theme"
+      ],
+      "mapping": "Raw preference preservation and quarantine; no mastery or protected evidence."
     }
   ],
   "supported_envelope": "g9-legacy-import/1.0",

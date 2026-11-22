@@ -1,6 +1,6 @@
 /**
  * web/adapters/physics/models/wpe-oracles.ts
- * A50 — Thirteen WPE synthetic oracle model adapters matching exact R3/R4 parity.
+ * A50/A54 — Bounded WPE diagnostic model adapters; not complete R3/R4 parity.
  *
  * Implements:
  * - 1. MULTIFORCE_LEDGER: Signed work terms and net work calculation.
@@ -30,6 +30,12 @@ function calculate(
   if (family === 'MULTIFORCE_LEDGER') {
     const works: number[] = params['works'] || [];
     const net = works.reduce((acc, w) => acc + w, 0);
+    if(Object.hasOwn(params,'mass')){
+      const endpoint = .5*params.mass*params.initial_speed**2+net;
+      // Endpoint energy is necessary, not sufficient for intermediate path reachability.
+      if(endpoint<0)return {net,endpoint_energy_feasible:false,energy_deficit:-endpoint};
+      return {net,endpoint_energy_feasible:true,final_kinetic:endpoint,final_speed:Math.sqrt(2*endpoint/params.mass)};
+    }
     return { net };
   }
 
@@ -40,8 +46,19 @@ function calculate(
     const distance: number = params['distance'];
     const release_energy = 0.5 * k * x * x;
     const final_energy = Math.max(0, release_energy - friction * distance);
-    const boundary_distance = release_energy / friction;
-    return { release_energy, final_energy, boundary_distance };
+    // A smooth track has no finite friction-induced stop. Never emit Infinity.
+    const stopping=release_energy===0||friction>0;
+    const boundary_distance=release_energy===0?0:friction>0?release_energy/friction:null;
+    if(params.mode==='TWO_REGION'){
+      const travelled=boundary_distance===null?distance:Math.min(distance,boundary_distance);
+      const reaches_end=boundary_distance===null||distance<=boundary_distance;
+      const friction_work=travelled===0||friction===0?0:-friction*travelled;
+      const final_kinetic=Math.max(0,release_energy+friction_work);
+      const phase={release_energy,release_speed:Math.sqrt(2*release_energy/params.m),friction_work,final_energy:final_kinetic,final_speed:Math.sqrt(2*final_kinetic/params.m),travelled,reaches_end};
+      return stopping?{...phase,boundary_distance}:{...phase,stops:false};
+    }
+    if(boundary_distance===null)return {release_energy,final_energy,stops:false};
+    return {release_energy,final_energy,boundary_distance};
   }
 
   if (family === 'CONSTANT_POWER') {
@@ -64,6 +81,17 @@ function calculate(
   }
 
   if (family === 'GRAPH_OPERATION') {
+    if(Object.hasOwn(params,'operation')){
+      const {operation,span,start,end}=params;
+      // Linear segment, signed ordinates; span is positive along the selected axis.
+      switch(operation){
+        case 'FORCE_POSITION_AREA':return {work:span*(start+end)/2};
+        case 'FORCE_TIME_AREA':return {impulse:span*(start+end)/2};
+        case 'POTENTIAL_POSITION_SLOPE':return {force:-(end-start)/span};
+        case 'DISPLACEMENT_TIME_SLOPE':return {velocity:(end-start)/span};
+      }
+      throw new ValueError('Unknown graph axis operation');
+    }
     const base: number = params['base'];
     const height: number = params['height'];
     const potential_delta: number = params['potential_delta'];
@@ -94,7 +122,9 @@ function calculate(
         accessible_indices.push(i);
       }
     }
-    const crossing = energy >= barrier;
+    // The sampled two-well model reports energetic crossing above the barrier.
+    // Equality at a smooth unstable maximum is not a traversing trajectory.
+    const crossing = energy > barrier;
     return { accessible_indices, crossing };
   }
 
@@ -137,15 +167,26 @@ function calculate(
   }
 
   if (family === 'CONVEYOR_MOMENTUM_POWER') {
-    const mass_rate: number = params['mass_rate'];
     const speed: number = params['speed'];
-    const force = mass_rate * speed;
-    const kinetic_rate = 0.5 * mass_rate * speed * speed;
-    const motor_power = mass_rate * speed * speed;
-    return { force, kinetic_rate, motor_power };
+    const extended=Object.hasOwn(params,'incoming_speed');
+    const incoming=extended?params.incoming_speed:0;
+    const mass_rate=Object.hasOwn(params,'flow_coefficient')?params.flow_coefficient*speed:params.mass_rate;
+    const delta=speed-incoming;
+    const force=mass_rate*delta;
+    const kinetic_rate=.5*mass_rate*delta*(speed+incoming);
+    const motor_power=force*speed;
+    const heat_rate=.5*mass_rate*delta*delta;
+    return extended?{mass_rate,force,kinetic_rate,motor_power,heat_rate}:{force,kinetic_rate,motor_power};
   }
 
   if (family === 'DISSIPATIVE_BOUNCES') {
+    if(Object.hasOwn(params,'initial_height')){
+      const {initial_height,first_retention,later_retention}=params;
+      const first=initial_height*first_retention;
+      const heights=[first,first*later_retention,first*later_retention**2];
+      // A non-decaying positive tail has no finite total distance and is rejected in validation.
+      return {rebound_heights:heights,total_distance:initial_height+2*(first===0?0:first/(1-later_retention)),first_speed_ratio:Math.sqrt(first_retention)};
+    }
     const mass: number = params['mass'];
     const impact_speed: number = params['impact_speed'];
     const restitution: number = params['restitution'];
@@ -176,7 +217,7 @@ function calculate(
 
 // Engineering domains deliberately follow the pinned oracle assumptions.
 const specs:Record<string,Record<string,'signed'|'positive'|'nonnegative'|'ratio'|'vector'>>={
- MULTIFORCE_LEDGER:{works:'vector'},SPRING_CONTACT:{k:'positive',x:'nonnegative',m:'positive',friction:'positive',distance:'nonnegative'},
+ MULTIFORCE_LEDGER:{works:'vector'},SPRING_CONTACT:{k:'positive',x:'nonnegative',m:'positive',friction:'nonnegative',distance:'nonnegative'},
  CONSTANT_POWER:{mass:'positive',initial_speed:'nonnegative',power:'nonnegative',time:'nonnegative'},
  DISTRIBUTED_MASS:{density:'positive',g:'positive',initial:'nonnegative',final:'nonnegative'},
  GRAPH_OPERATION:{base:'positive',height:'signed',potential_delta:'signed',distance:'positive'},
@@ -190,14 +231,43 @@ const specs:Record<string,Record<string,'signed'|'positive'|'nonnegative'|'ratio
 };
 const finite=(x:unknown):x is number=>typeof x==='number'&&Number.isFinite(x)&&Math.abs(x)<=1e100;
 export function validateWpeModel(family:string,p:Record<string,any>):ModelValidationResult{
- const spec=Object.hasOwn(specs,family)?specs[family]:null;
+ let spec=Object.hasOwn(specs,family)?specs[family]:null;
  const fail=(error:string)=>({isValid:false,errors:[error]});
- if(!spec||!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).length!==Object.keys(spec).length||Object.keys(spec).some(k=>!Object.hasOwn(p,k)))return fail('Unknown family or incorrect parameter keys');
+ if(!spec||!p||typeof p!=='object'||Array.isArray(p))return fail('Unknown family or incorrect parameter keys');
+ // Explicit disjoint variants preserve original synthetic wire shapes. No generic optional-key bypass.
+ const exact=(keys:string[])=>Object.keys(p).length===keys.length&&keys.every(k=>Object.hasOwn(p,k));
+ if(family==='GRAPH_OPERATION'&&Object.hasOwn(p,'operation')){
+  if(!exact(['operation','span','start','end'])||!['FORCE_POSITION_AREA','FORCE_TIME_AREA','POTENTIAL_POSITION_SLOPE','DISPLACEMENT_TIME_SLOPE'].includes(p.operation)||!finite(p.span)||p.span<=0||!finite(p.start)||!finite(p.end))return fail('Invalid graph axes or linear segment');
+  return {isValid:true,errors:[]};
+ }
+ if(family==='SPRING_CONTACT'&&Object.hasOwn(p,'mode')){
+  if(p.mode!=='TWO_REGION'||!exact(['mode','k','x','m','friction','distance']))return fail('Invalid two-region spring parameters');
+  const {mode,...numeric}=p;
+  return validateWpeModel(family,numeric);
+ }
+ if(family==='MULTIFORCE_LEDGER'&&Object.hasOwn(p,'mass'))spec={works:'vector',mass:'positive',initial_speed:'nonnegative'};
+ if(family==='CONVEYOR_MOMENTUM_POWER'&&Object.hasOwn(p,'incoming_speed')){
+  spec=Object.hasOwn(p,'flow_coefficient')?{speed:'nonnegative',incoming_speed:'nonnegative',flow_coefficient:'nonnegative'}:{mass_rate:'nonnegative',speed:'nonnegative',incoming_speed:'nonnegative'};
+ }
+ if(family==='DISSIPATIVE_BOUNCES'&&Object.hasOwn(p,'initial_height'))spec={initial_height:'nonnegative',first_retention:'ratio',later_retention:'ratio'};
+ if(!exact(Object.keys(spec)))return fail('Unknown family or incorrect parameter keys');
  for(const [k,t] of Object.entries(spec)){const v=p[k];if(t==='vector'){if(!Array.isArray(v)||!v.length||v.length>4096||!Array.from(v).every(finite))return fail('Invalid vector: '+k);}
  else if(!finite(v)||t==='positive'&&v<=0||t==='nonnegative'&&v<0||t==='ratio'&&(v<0||v>1))return fail('Invalid domain: '+k);}
  if(family==='DISTRIBUTED_MASS'&&p.final>p.initial||family==='RADIAL_FORCE_POTENTIAL'&&p.r<p.break_radius||family==='SPRING_PROJECTILE_TRANSITION'&&.5*p.k*p.x*p.x-p.friction*p.x<=0)return fail('Unsupported physical regime');
+ if(family==='CONVEYOR_MOMENTUM_POWER'&&Object.hasOwn(p,'incoming_speed')&&p.incoming_speed>p.speed)return fail('Incoming material must not exceed belt speed in pickup model');
+ if(family==='DISSIPATIVE_BOUNCES'&&Object.hasOwn(p,'initial_height')&&p.later_retention===1&&p.initial_height>0&&p.first_retention>0)return fail('Non-decaying rebounds have no finite total distance');
  if(family==='INSTANTANEOUS_POWER'&&(p.force.length!==p.velocity.length||p.force.length>3))return fail('Vector dimensions differ or exceed 3');
- if(family==='POTENTIAL_WELLS'&&(p.positions.length!==p.potential.length||p.positions.some((x:number,i:number)=>i>0&&x<=p.positions[i-1])))return fail('Invalid sampled potential coordinates');
+ if(family==='POTENTIAL_WELLS'){
+  if(p.positions.length!==p.potential.length||p.positions.length<3||p.positions.some((x:number,i:number)=>i>0&&x<=p.positions[i-1]))return fail('Invalid sampled potential coordinates');
+  // One separating sampled peak (including a plateau) must be present. Do not
+  // infer a continuous potential or accept caller-selected barrier metadata.
+  const u=p.potential as number[],peaks:number[]=[];
+  for(let i=1;i<u.length-1;){let j=i;while(j+1<u.length&&u[j+1]===u[i])j++;
+   if(j<u.length-1&&u[i]!>u[i-1]!&&u[j]!>u[j+1]!)peaks.push(u[i]!);
+   i=j+1;
+  }
+  if(peaks.length!==1||peaks[0]!==p.barrier)return fail('Unsupported or inconsistent sampled separating barrier');
+ }
  return {isValid:true,errors:[]};
 }
 export function evaluateWpeModel(family:string,p:Record<string,any>):Record<string,any>{

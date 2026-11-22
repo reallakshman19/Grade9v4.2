@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NSEJS Biology — Topics &amp; Core Learning Modules · Grade9 v4.1</title>
+  <meta name="description" content="NSEJS Biology Topics & Core Learning Modules. Optimized for 12.7 inch tablet ergonomics. All questions labeled {Unvalidated}.">
+  <link rel="stylesheet" href="../css/site.css">
+  <link rel="stylesheet" href="../css/tablet-12-7.css">
+  <link rel="stylesheet" href="../css/tablet-12-7.css">
+  <style>
+    /* 12.7" Tablet Specific Ergonomics & Modern UI */
+    :root {
+      --tab-max-w: 1380px;
+      --tab-ink: #102a43;
+      --tab-card-bg: #ffffff;
+      --tab-border: #d9e2ec;
+      --tab-accent: #16a34a;
+      --tab-accent-hover: #15803d;
+      --unval-bg: #f0f9ff;
+      --unval-text: #0369a1;
+      --unval-border: #0284c7;
+      --success-bg: #ecfdf5;
+      --success-text: #065f46;
+      --review-bg: #f8fafc;
+      --review-text: #475569;
+    }
+    body {
+      background: #f0f4f8;
+      color: var(--tab-ink);
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .tablet-container {
+      max-width: var(--tab-max-w);
+      margin: 0 auto;
+      padding: 24px 32px 60px;
+    }
+
+    /* Unified Hero with Embedded Governance Badge */
+    .tablet-hero-unified {
+      background: linear-gradient(135deg, #14532d 0%, #166534 60%, #15803d 100%);
+      color: white;
+      padding: 32px 36px;
+      border-radius: 18px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px -5px rgba(20,83,45,0.18);
+      position: relative;
+    }
+    .hero-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .hero-kicker {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #86efac;
+    }
+    .hero-gov-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(254, 240, 138, 0.95);
+      color: #854d0e;
+      border: 1.5px solid #eab308;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+    }
+    .tablet-hero-unified h1 {
+      font-size: clamp(24px, 3.2vw, 34px);
+      margin: 4px 0 10px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+    .tablet-hero-unified p {
+      font-size: 16px;
+      max-width: 950px;
+      margin: 0 0 16px;
+      color: #dcfce7;
+      line-height: 1.55;
+    }
+    .hero-breadcrumbs {
+      font-size: 13px;
+      color: #bbf7d0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .hero-breadcrumbs a {
+      color: #ffffff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* 4-Cell Metrics & Status Strip */
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    @media (max-width: 900px) {
+      .metrics-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 520px) {
+      .metrics-strip {
+        grid-template-columns: 1fr;
+      }
+    }
+    .metric-card {
+      background: white;
+      border: 1px solid var(--tab-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 8px rgba(16,42,67,0.03);
+    }
+    .metric-num {
+      font-size: 24px;
+      font-weight: 850;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+    .metric-label {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: #16a34a;
+      font-weight: 700;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Filter Pills Bar (Ergonomic Tablet Touch Targets >= 44px) */
+    .filter-bar-wrapper {
+      background: white;
+      border: 1px solid var(--tab-border);
+      border-radius: 14px;
+      padding: 12px 18px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-bar-label {
+      font-size: 13px;
+      font-weight: 800;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-right: 6px;
+    }
+    .filter-pill {
+      min-height: 44px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 1.5px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+    }
+    .filter-pill:hover {
+      border-color: #16a34a;
+      background: #f0fdf4;
+      color: #16a34a;
+    }
+    .filter-pill.active {
+      background: #16a34a;
+      border-color: #16a34a;
+      color: white;
+      box-shadow: 0 4px 12px rgba(22,163,74,0.25);
+    }
+    .filter-pill .pill-count {
+      font-size: 11px;
+      background: rgba(0,0,0,0.08);
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+    .filter-pill.active .pill-count {
+      background: rgba(255,255,255,0.25);
+      color: white;
+    }
+
+    /* 12.7" Tablet Topic Cards Grid */
+    .topics-grid-12-7 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(430px, 1fr));
+      gap: 26px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 900px) {
+      .topics-grid-12-7 {
+        grid-template-columns: 1fr;
+      }
+    }
+    .topic-card-tab {
+      background: var(--tab-card-bg);
+      border: 1.5px solid var(--tab-border);
+      border-radius: 18px;
+      padding: 24px 26px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 14px rgba(16,42,67,0.04);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .topic-card-tab:hover {
+      border-color: var(--tab-accent);
+      box-shadow: 0 8px 24px rgba(22,163,74,0.12);
+    }
+    .topic-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .topic-icon-box {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: #dcfce7;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .topic-title-group {
+      flex: 1;
+    }
+    .topic-top-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+    .topic-meta-tag {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #16a34a;
+    }
+    .q-count-badge {
+      font-size: 11px;
+      font-weight: 800;
+      background: #dcfce7;
+      color: #15803d;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+    .topic-title-group h2 {
+      font-size: 20px;
+      font-weight: 800;
+      margin: 2px 0 0;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+    .topic-desc {
+      font-size: 14.5px;
+      color: #475569;
+      margin: 8px 0 18px;
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    /* 3-Stage Progression Deck */
+    .progression-deck {
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .prog-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13.5px;
+      gap: 10px;
+    }
+    .prog-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .prog-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+    }
+    .dot-ready { background: #10b981; }
+    .dot-review { background: #94a3b8; }
+    .prog-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+    }
+    .badge-ready {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .badge-review {
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+
+    /* Primary Topic Practice Action Button */
+    .primary-topic-btn {
+      min-height: 48px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: #16a34a;
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(22,163,74,0.2);
+      transition: background 0.15s, transform 0.1s;
+      touch-action: manipulation;
+    }
+    .primary-topic-btn:hover {
+      background: #15803d;
+      transform: translateY(-1px);
+    }
+
+    /* Collapsible Source Drawer */
+    .source-drawer {
+      margin-top: 14px;
+      border-top: 1px dashed #e2e8f0;
+      padding-top: 10px;
+      font-size: 13px;
+    }
+    .source-drawer summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #15803d;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .source-drawer summary:hover {
+      text-decoration: underline;
+    }
+    .source-drawer ul {
+      margin: 6px 0 0 16px;
+      padding: 0;
+      color: #475569;
+      line-height: 1.6;
+    }
+    .source-drawer li a {
+      color: #16a34a;
+      text-decoration: none;
+    }
+    .source-drawer li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Bottom 3-Card Resource Hub */
+    .bottom-resource-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 36px;
+    }
+    @media (max-width: 900px) {
+      .bottom-resource-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .resource-box {
+      background: white;
+      border: 1px solid var(--tab-border);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+    }
+    .resource-box h3 {
+      font-size: 17px;
+      margin: 0 0 8px;
+      color: #0f172a;
+    }
+    .resource-box p {
+      font-size: 13.5px;
+      color: #475569;
+      margin: 0 0 16px;
+      flex: 1;
+    }
+    .resource-btn {
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 750;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+    }
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .tab-footer {
+      border-top: 1px solid #cbd5e1;
+      padding: 24px 0 10px;
+      margin-top: 40px;
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+    <header class="mast">
+    <div class="container top">
+      <a class="logo" href="../index.html#/home"><i>G9</i>Grade9 STEM</a>
+      <nav class="tabs" aria-label="STEM subject navigation">
+        <a href="../index.html#/home">🏠 Home</a>
+        <a href="../index.html#/subject/physics">⚛ Physics</a>
+        <a href="../index.html#/subject/chemistry">🧪 Chemistry</a>
+        <a href="index.html" aria-current="page" style="font-weight:800;color:#16a34a;">🧬 Biology</a>
+        <a href="../index.html#/subject/mathematics">📐 Mathematics</a>
+        <a href="../index.html#/bank">📋 Question Bank</a>
+        <a href="../index.html#/competitive/exam:nsejs">🏆 Competitive</a>
+        <a href="../index.html#/architecture">🧭 Architecture</a>
+      </nav>
+    </div>
+  </header>
+  <div style="background:#fef3c7;border-bottom:1px solid #fde68a;padding:8px 16px;text-align:center;font-size:0.875rem;color:#92400e;font-weight:600;">
+    Academic Status: HOLD · Formative Exploration Mode (Grade9 v4.1 Parity Candidate) · No academic approval inferred from software validation.
+  </div>
+
+  <main class="tablet-container">
+
+    <!-- Unified Hero Banner with Embedded Governance Badge -->
+    <div class="tablet-hero-unified">
+      <div class="hero-top-row">
+        <span class="hero-kicker">NSEJS · Junior Science Olympiad</span>
+        <span class="hero-gov-badge">
+          <span>🛡️</span> {Core 2: Reviewed} · Peer-Audited Curriculum
+        </span>
+      </div>
+      <h1>NSEJS Biology — Topics &amp; Core Learning Modules</h1>
+      <p>Explore candidate question banks across 5 competitive biology domains. Built for 12.7" tablets with Mendelian genetics, viral replication mechanisms, endocrine feedback loops, and marine trophic dynamics under strict Rule 13 fail-closed governance.</p>
+      <div class="hero-breadcrumbs">
+        <a href="../index.html#/home">Home</a> / <a href="../index.html#/subject/biology">Subjects</a> / <span>Biology Topics</span>
+      </div>
+    </div>
+
+        <!-- 4-Cell Metrics & Status Strip -->
+    <section class="metrics-strip" aria-label="Biology curriculum metrics">
+      <div class="metric-card">
+        <span class="metric-num">5</span>
+        <span class="metric-label">Biology Topics</span>
+        <span class="metric-sub">Cell to Ecology</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-num">119</span>
+        <span class="metric-label">Candidate Questions</span>
+        <span class="metric-sub">All Topics Indexed</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-num">3</span>
+        <span class="metric-label">Core 1A/1B Journeys</span>
+        <span class="metric-sub">Authored &amp; Verified</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-num">Rule 13</span>
+        <span class="metric-label">Academic Status</span>
+        <a href="../index.html#/subject/biology" class="metric-sub" style="text-decoration:underline;">Browse 119 IDs Map →</a>
+      </div>
+    </section>
+
+    <!-- Single Master Topic Navigation Bar -->
+    <nav id="topicNav" class="master-topic-nav" aria-label="Biology curriculum topics"></nav>
+
+    <!-- In-Page Question Bank Search & Filter Bar (Search 2) -->
+    <section class="qb-filter-panel" id="qbFilters" role="search" aria-label="Biology Question Bank Search and Filter">
+      <div class="qb-search-field">
+        <span class="qb-search-icon" aria-hidden="true">🔍</span>
+        <input type="search" id="qbSearch" name="q" placeholder="Filter biology questions by stem, ID, term, or concept…" autocomplete="off" aria-label="Filter biology questions">
+      </div>
+      <div class="qb-filter-controls">
+        <select id="qbTopicSelect" aria-label="Filter by Topic">
+          <option value="all">★ All Topics Overview</option>
+        </select>
+        <select id="qbDifficulty" aria-label="Filter by Demand Band">
+          <option value="">All Demand Bands</option>
+          <option value="D1">D1 · Foundational</option>
+          <option value="D2">D2 · Standard Core</option>
+          <option value="D3">D3 · Olympiad Challenge</option>
+        </select>
+        <select id="qbExam" aria-label="Filter by Exam Year">
+          <option value="">All Exams / Years</option>
+        </select>
+        <select id="qbSort" aria-label="Sort order">
+          <option value="canonical">Canonical Order</option>
+          <option value="id">Question ID</option>
+          <option value="demand-asc">Demand: D1 → D3</option>
+          <option value="demand-desc">Demand: D3 → D1</option>
+        </select>
+        <button type="button" class="qb-clear" id="qbClear" title="Clear search and filters">✕ Clear</button>
+      </div>
+      <div class="qb-result-count" id="qbResultCount" aria-live="polite">Showing 119 candidate questions</div>
+    </section>
+
+    <!-- 5 Biology Topic Cards (12.7" Tablet Ergonomic Grid) -->
+        <!-- Active Topic Deep-Dive Workspace (shown when a topic is selected) -->
+    <section id="topicWorkspace" class="topic-workspace" style="display:none; margin: 20px 0 36px; padding: 28px 26px; border: 2px solid #86efac; border-radius: 18px; background: #ffffff; box-shadow: 0 4px 16px rgba(22,163,74,0.06);">
+      <div id="topic-view"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+        <div>
+          <span style="font-size:12px;font-weight:800;text-transform:uppercase;color:#16a34a;letter-spacing:0.07em;">Topic Deep-Dive &amp; Practice</span>
+          <h2 id="workspace-title" style="font-size:24px;font-weight:800;margin:4px 0;color:#0f172a;"></h2>
+        </div>
+        <button type="button" onclick="window.selectBiologyTopic('all')" style="min-height:44px;padding:8px 16px;border-radius:8px;background:#f1f5f9;color:#334155;border:1.5px solid #cbd5e1;font-weight:750;font-size:13.5px;cursor:pointer;">
+          ← Back to All Topics Overview
+        </button>
+      </div>
+      <p id="status" role="status" style="font-size:14px;color:#64748b;margin:10px 0;">Loading candidate questions…</p>
+      <section id="questions" aria-label="Biology candidate questions"></section>
+    </section>
+
+    <div class="topics-grid-12-7" id="topicsGrid">
+      
+      <!-- TOPIC 1: CELL BIOLOGY & GENETICS -->
+      <article class="topic-card-tab" data-topic="cell">
+        <div class="topic-head">
+          <div class="topic-icon-box">🧬</div>
+          <div class="topic-title-group">
+            <div class="topic-top-meta">
+              <span class="topic-meta-tag">Biology · Topic 1</span>
+              <span class="q-count-badge">Authored Lesson Live</span>
+            </div>
+            <h2>Cell Biology &amp; Molecular Genetics</h2>
+          </div>
+        </div>
+        <p class="topic-desc">Endomembrane systems, mitochondria, nucleic acid architecture, central dogma of molecular genetics, viral capsids, envelope glycoproteins, and Baltimore replication schemes.</p>
+        
+        <div class="progression-deck">
+          <button type="button" class="prog-item prog-item-link" onclick="window.selectBiologyTopic('living_world')" style="text-align:left;background:none;border:none;width:100%;font:inherit;cursor:pointer;padding:0;">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 2 Question Bank</span>
+            <span class="prog-badge badge-ready">2 Modules Indexed →</span>
+          </button>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 1A Master Lesson</span>
+            <span class="prog-badge badge-ready">Authored Lesson Live</span>
+          </div>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 1B Fresh Transfer</span>
+            <span class="prog-badge badge-ready">Authored Lesson Live</span>
+          </div>
+        </div>
+
+        <a class="primary-topic-btn" href="core1/bio-viral-genetics-d3-r1/index.html">
+          ▶ Open Viral Genetics Lesson →
+        </a>
+
+        <details class="source-drawer">
+          <summary>▾ View 2 underlying source modules</summary>
+          <ul>
+            <li><a href="../index.html#/subject/biology">bio organisation living world r1</a></li>
+            <li><a href="../index.html#/subject/biology">bio viral genetics d3 r1</a></li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- TOPIC 2: LIFE PROCESSES -->
+      <article class="topic-card-tab" data-topic="life">
+        <div class="topic-head">
+          <div class="topic-icon-box">🌱</div>
+          <div class="topic-title-group">
+            <div class="topic-top-meta">
+              <span class="topic-meta-tag">Biology · Topic 2</span>
+              <span class="q-count-badge">Authored Lesson Live</span>
+            </div>
+            <h2>Life Processes &amp; Physiology</h2>
+          </div>
+        </div>
+        <p class="topic-desc">C3/C4 photosynthesis pathways, cellular respiration (glycolysis, Krebs), xylem/phloem vascular transport, human cardiac cycles, and nephron excretion.</p>
+        
+        <div class="progression-deck">
+          <button type="button" class="prog-item prog-item-link" onclick="window.selectBiologyTopic('life_processes')" style="text-align:left;background:none;border:none;width:100%;font:inherit;cursor:pointer;padding:0;">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 2 Question Bank</span>
+            <span class="prog-badge badge-ready">2 Modules Indexed →</span>
+          </button>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 1A Master Lesson</span>
+            <span class="prog-badge badge-ready">Authored Lesson Live</span>
+          </div>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 1B Fresh Transfer</span>
+            <span class="prog-badge badge-ready">Authored Lesson Live</span>
+          </div>
+        </div>
+
+        <a class="primary-topic-btn" href="core1/bio-immunology-defense-d3-r1/index.html">
+          ▶ Open Immunology &amp; Defence Lesson →
+        </a>
+
+        <details class="source-drawer">
+          <summary>▾ View 2 underlying source modules</summary>
+          <ul>
+            <li><a href="../index.html#/subject/biology">bio life processes r1</a></li>
+            <li><a href="../index.html#/subject/biology">bio immunology defense d3 r1</a></li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- TOPIC 3: CONTROL & COORDINATION -->
+      <article class="topic-card-tab" data-topic="coordination">
+        <div class="topic-head">
+          <div class="topic-icon-box">🧠</div>
+          <div class="topic-title-group">
+            <div class="topic-top-meta">
+              <span class="topic-meta-tag">Biology · Topic 3</span>
+              <span class="q-count-badge">Authored Lesson Live</span>
+            </div>
+            <h2>Control &amp; Endocrine Coordination</h2>
+          </div>
+        </div>
+        <p class="topic-desc">Action potentials, synaptic transmission, reflex arcs, plant phytohormones (auxin, gibberellin, ABA), and pituitary-hypothalamic endocrine feedback axes.</p>
+        
+        <div class="progression-deck">
+          <button type="button" class="prog-item prog-item-link" onclick="window.selectBiologyTopic('coordination')" style="text-align:left;background:none;border:none;width:100%;font:inherit;cursor:pointer;padding:0;">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 2 Question Bank</span>
+            <span class="prog-badge badge-ready">Candidate Record →</span>
+          </button>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 1A Master Lesson</span>
+            <span class="prog-badge badge-ready">Authored Lesson Live</span>
+          </div>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 1B Fresh Transfer</span>
+            <span class="prog-badge badge-ready">Authored Lesson Live</span>
+          </div>
+        </div>
+
+        <a class="primary-topic-btn" href="core1/bio-genetics-coordination-r1/index.html">
+          ▶ Open Biological Coordination Lesson →
+        </a>
+
+        <details class="source-drawer">
+          <summary>▾ View underlying source module</summary>
+          <ul>
+            <li><a href="../index.html#/subject/biology">bio genetics coordination r1</a></li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- TOPIC 4: REPRODUCTION & HEREDITY -->
+      <article class="topic-card-tab" data-topic="heredity">
+        <div class="topic-head">
+          <div class="topic-icon-box">🥚</div>
+          <div class="topic-title-group">
+            <div class="topic-top-meta">
+              <span class="topic-meta-tag">Biology · Topic 4</span>
+              <span class="q-count-badge">Core 2 Candidate</span>
+            </div>
+            <h2>Reproduction &amp; Mendelian Heredity</h2>
+          </div>
+        </div>
+        <p class="topic-desc">Mitosis, meiosis, Mendel's monohybrid/dihybrid ratios, law of segregation, sex determination, sex-linked recessive traits, and pedigree charting.</p>
+        
+        <div class="progression-deck">
+          <button type="button" class="prog-item prog-item-link" onclick="window.selectBiologyTopic('genetics')" style="text-align:left;background:none;border:none;width:100%;font:inherit;cursor:pointer;padding:0;">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 2 Question Bank</span>
+            <span class="prog-badge badge-ready">Candidate Record →</span>
+          </button>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-review"></span> Core 1A Master Lesson</span>
+            <span class="prog-badge badge-review">⏳ Academic Review</span>
+          </div>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-review"></span> Core 1B Fresh Transfer</span>
+            <span class="prog-badge badge-review">⏳ Academic Review</span>
+          </div>
+        </div>
+
+        <button type="button" class="primary-topic-btn" onclick="window.selectBiologyTopic('genetics')">
+          ▶ Open Genetics &amp; Heredity Questions (23 Qs) →
+        </button>
+
+        <details class="source-drawer">
+          <summary>▾ View historical-year subject records</summary>
+          <ul>
+            <li><a href="../index.html#/subject/biology">Browse historical-year biology records in 267 Q-Map</a></li>
+          </ul>
+        </details>
+      </article>
+
+      <!-- TOPIC 5: ECOLOGY & ENVIRONMENT -->
+      <article class="topic-card-tab" data-topic="ecology">
+        <div class="topic-head">
+          <div class="topic-icon-box">🌍</div>
+          <div class="topic-title-group">
+            <div class="topic-top-meta">
+              <span class="topic-meta-tag">Biology · Topic 5</span>
+              <span class="q-count-badge">Core 2 Candidate</span>
+            </div>
+            <h2>Ecology &amp; Ecosystem Resources</h2>
+          </div>
+        </div>
+        <p class="topic-desc">Food chains, 10% ecological efficiency, inverted marine biomass pyramids, biomagnification, biogeochemical carbon/nitrogen cycles, and biodiversity conservation.</p>
+        
+        <div class="progression-deck">
+          <button type="button" class="prog-item prog-item-link" onclick="window.selectBiologyTopic('environment')" style="text-align:left;background:none;border:none;width:100%;font:inherit;cursor:pointer;padding:0;">
+            <span class="prog-left"><span class="prog-dot dot-ready"></span> Core 2 Question Bank</span>
+            <span class="prog-badge badge-ready">Candidate Record →</span>
+          </button>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-review"></span> Core 1A Master Lesson</span>
+            <span class="prog-badge badge-review">⏳ Academic Review</span>
+          </div>
+          <div class="prog-item">
+            <span class="prog-left"><span class="prog-dot dot-review"></span> Core 1B Fresh Transfer</span>
+            <span class="prog-badge badge-review">⏳ Academic Review</span>
+          </div>
+        </div>
+
+        <button type="button" class="primary-topic-btn" onclick="window.selectBiologyTopic('environment')">
+          ▶ Open Ecology &amp; Environment Questions (20 Qs) →
+        </button>
+
+        <details class="source-drawer">
+          <summary>▾ View underlying source module</summary>
+          <ul>
+            <li><a href="../index.html#/subject/biology">bio environment resources r1</a></li>
+          </ul>
+        </details>
+      </article>
+
+    </div>
+
+            
+    </section>
+
+    <!-- Bottom 3-Card Supplementary Resources Deck -->
+    <section class="bottom-resource-grid" aria-label="Supplementary learning and official source links">
+      <div class="resource-box">
+        <h3>Disciplinary Biology Curriculum</h3>
+        <p>Explore all 5 biology domains structured hierarchically: Subject → Topic → Questions (Core 2) &amp; Core 1A/1B Lessons.</p>
+        <a class="resource-btn btn-secondary" href="#topicsGrid">Browse All 5 Topics ↑</a>
+      </div>
+      <div class="resource-box">
+        <h3>Core 2 Question Map</h3>
+        <p>Comprehensive 267-item cross-subject question map with provenance verification, SHA-256 digests, and cognitive demand classifications.</p>
+        <a class="resource-btn btn-secondary" href="../index.html#/subject/biology">View Biology Question Map →</a>
+      </div>
+      <div class="resource-box">
+        <h3>Official IAPT Exam Papers</h3>
+        <p>10 official examination papers and publisher answer keys downloaded, SHA-256 verified, and archived in local custody.</p>
+        <a class="resource-btn btn-secondary" href="../index.html#/architecture">View IAPT Source Downloads →</a>
+      </div>
+    </section>
+
+    <footer class="tab-footer">
+      Rule 13 Invariant: No academic approval inferred from software validation. Green CI means automatic tests passed; it never means student release is authorized. All questions labeled {Unvalidated}.
+    </footer>
+  </main>
+
+  <script>
+    function filterTopics(topicKey) {
+      const cards = document.querySelectorAll('.topic-card-tab');
+      const pills = document.querySelectorAll('.filter-pill');
+      
+      pills.forEach(pill => {
+        if (pill.dataset.filter === topicKey) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+
+      cards.forEach(card => {
+        if (topicKey === 'all' || card.dataset.topic === topicKey) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+  <script>
+    window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]},svg:{fontCache:'global'}};
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <script defer src="./js/core2-biology-reader.js"></script>
+  
+
+</body>
+</html>

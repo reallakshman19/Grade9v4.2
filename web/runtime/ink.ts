@@ -354,6 +354,31 @@ export class InkEngine {
       `</svg>`
     );
   }
+
+  exportIsotropicSvg(): string {
+    const s = Math.min(this.viewport.width, this.viewport.height);
+    const offsetX = (this.viewport.width - s) / 2;
+    const offsetY = (this.viewport.height - s) / 2;
+    const w = this.viewport.width;
+    const h = this.viewport.height;
+
+    const strokePaths = this.strokes.map((stroke) => {
+      if (stroke.points.length === 0) return '';
+      const d = stroke.points.reduce((acc, pt, idx) => {
+        const px = offsetX + pt.x * s;
+        const py = offsetY + pt.y * s;
+        return idx === 0 ? `M ${px} ${py}` : `${acc} L ${px} ${py}`;
+      }, '');
+      const opacity = stroke.tool === 'highlighter' ? 0.4 : 1.0;
+      return `<path d="${d}" fill="none" stroke="${stroke.color}" stroke-width="${stroke.width}" stroke-opacity="${opacity}" stroke-linecap="round" stroke-linejoin="round" />`;
+    });
+
+    return (
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">` +
+      strokePaths.join('\n') +
+      `</svg>`
+    );
+  }
 }
 
 export function createInkEngine(width?: number, height?: number): InkEngine {

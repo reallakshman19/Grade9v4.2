@@ -186,7 +186,7 @@ export class ScientificModelController {
   <rect width="100%" height="100%" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" rx="8" />
   <!-- Total Energy Line E = 12.5 J -->
   <line x1="${padding.left}" y1="${totalEnergyY.toFixed(1)}" x2="${padding.left + plotW}" y2="${totalEnergyY.toFixed(1)}" stroke="#10b981" stroke-width="2" stroke-dasharray="6,4" />
-  <text x="${padding.left + plotW - 4}" y="${(totalEnergyY - 6).toFixed(1)}" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#047857">Total E = 12.5 J</text>
+  <text x="${padding.left + plotW - 4}" y="${(totalEnergyY - 6).toFixed(1)}" text-anchor="end" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#047857">Total E = 12.5 J</text>
 
   <!-- Potential Curve U(x) -->
   <polyline fill="none" stroke="#2563eb" stroke-width="3" points="${curvePoints.join(' ')}" />
@@ -194,15 +194,15 @@ export class ScientificModelController {
   <!-- Classical Turning Point Bounds -->
   <line x1="${toScreenX(-0.5).toFixed(1)}" y1="${padding.top}" x2="${toScreenX(-0.5).toFixed(1)}" y2="${padding.top + plotH}" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,4" />
   <line x1="${toScreenX(0.5).toFixed(1)}" y1="${padding.top}" x2="${toScreenX(0.5).toFixed(1)}" y2="${padding.top + plotH}" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,4" />
-  <text x="${toScreenX(-0.5).toFixed(1)}" y="${padding.top + plotH + 20}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#dc2626">-0.5m (TP)</text>
-  <text x="${toScreenX(0.5).toFixed(1)}" y="${padding.top + plotH + 20}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="10" fill="#dc2626">+0.5m (TP)</text>
+  <text x="${toScreenX(-0.5).toFixed(1)}" y="${padding.top + plotH + 20}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#dc2626">-0.5m (TP)</text>
+  <text x="${toScreenX(0.5).toFixed(1)}" y="${padding.top + plotH + 20}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#dc2626">+0.5m (TP)</text>
 
   <!-- Particle Marker -->
   <circle cx="${particleX.toFixed(1)}" cy="${particleY.toFixed(1)}" r="7" fill="#dc2626" stroke="#ffffff" stroke-width="2" />
 
   <!-- Axes -->
   <line x1="${padding.left}" y1="${padding.top + plotH}" x2="${padding.left + plotW}" y2="${padding.top + plotH}" stroke="#334155" stroke-width="1.5" />
-  <text x="${padding.left + plotW / 2}" y="${height - 6}" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#475569">Position x (m)</text>
+  <text x="${padding.left + plotW / 2}" y="${height - 6}" text-anchor="middle" font-family="var(--g9-font-family,system-ui,sans-serif)" font-size="14" fill="#475569">Position x (m)</text>
 </svg>`;
     }
 
@@ -254,7 +254,7 @@ export class ScientificModelController {
             <label for="param-input-${escapeHtml(String(p.id))}" style="font-weight: 600; color: #1e293b;">
               ${escapeHtml(String(p.name))} (${escapeHtml(String(p.symbol))}): <strong>${val} ${escapeHtml(String(p.unit))}</strong>
             </label>
-            <span style="font-size: 12px; color: #64748b;">[${p.min} to ${p.max}]</span>
+            <span style="font-size:14px; color: #64748b;">[${p.min} to ${p.max}]</span>
           </div>
           <div style="display: flex; gap: 8px; align-items: center;">
             <button class="param-step-btn" data-param="${escapeHtml(String(p.id))}" data-dir="DOWN" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 8px 12px; background: #e2e8f0; border-radius: 6px; font-weight: 600;">−</button>
@@ -279,7 +279,7 @@ export class ScientificModelController {
     let outputsHtml = '';
     if (state.evaluation.isMasked) {
       outputsHtml = `
-        <div class="model-outputs-masked" style="padding: 12px 16px; background: #fef3c7; border: 1px solid #fde047; border-radius: 6px; font-size: 13px; color: #854d0e;">
+        <div class="model-outputs-masked" style="padding: 12px 16px; background: #fef3c7; border: 1px solid #fde047; border-radius: 6px; font-size:14px; color: #854d0e;">
           🔒 <strong>Pre-Commit Masking:</strong> Automatic model calculation outputs are withheld in stage <em>${escapeHtml(String(state.stage))}</em> to support learner derivation.
         </div>
       `;
@@ -305,7 +305,7 @@ export class ScientificModelController {
     return `
       <section class="scientific-model-panel" aria-label="${escapeHtml(String(this.adapter.name))}" style="padding: 16px; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px;">
         <h3 style="margin-top: 0; font-size: 18px; color: #0f172a;">${escapeHtml(String(this.adapter.name))}</h3>
-        <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">${escapeHtml(String(this.adapter.description))}</p>
+        <p style="font-size:14px; color: #64748b; margin-bottom: 16px;">${escapeHtml(String(this.adapter.description))}</p>
         <div class="model-diagram" style="margin-bottom: 16px;">
           ${state.diagramSvg}
         </div>

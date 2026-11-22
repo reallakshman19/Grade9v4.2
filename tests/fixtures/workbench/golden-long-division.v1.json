@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "portable-workbench-package",
+  "packageVersion": "1.0.0",
+  "componentApiVersion": "0.1.0",
+  "transformationIrVersion": "0.1.0",
+  "adapterApiVersion": "0.2.0",
+  "scenePackageVersion": "1.0.0",
+  "id": "portable-long-division",
+  "title": "Long Division — Multi-Step Arithmetic Scaffold",
+  "sourceRefs": [
+    "tests/fixtures/workbench/arithmetic-division.json"
+  ],
+  "sceneRefs": [
+    "division-scene"
+  ],
+  "representationRefs": [
+    "rep-tableau-step"
+  ],
+  "assetRefs": [],
+  "accessibilityRefs": [
+    "Each place value step is structured into quotient, dividend, subtrahend, and remainder rows",
+    "Columns represent hundreds, tens, and units places"
+  ],
+  "questionBindings": [],
+  "provenance": {
+    "authority": "NON_CANONICAL_COMPILED_PROOF",
+    "sourceRefs": [
+      "tests/fixtures/workbench/arithmetic-division.json"
+    ]
+  },
+  "scene": {
+    "id": "division-scene",
+    "apiVersion": "0.1.0",
+    "sceneVersion": "1.0.0",
+    "grids": [
+      {
+        "id": "tableau-grid",
+        "label": "Division Tableau: 492 / 4",
+        "rows": [
+          "row-quotient",
+          "row-dividend",
+          "row-subtract",
+          "row-remainder"
+        ],
+        "columns": [
+          "col-hundreds",
+          "col-tens",
+          "col-units"
+        ]
+      }
+    ],
+    "entities": [
+      {
+        "id": "ent-setup",
+        "label": "Dividend 492 with Divisor 4: Ready for Hundreds Digit"
+      }
+    ],
+    "projections": [
+      {
+        "id": "proj-setup",
+        "entityRef": "ent-setup",
+        "label": "492 ÷ 4 [Step 0]",
+        "representation": "rep-tableau-step",
+        "placement": {
+          "grid": "tableau-grid",
+          "row": "row-dividend",
+          "column": "col-hundreds"
+        }
+      }
+    ],
+    "targets": [
+      {
+        "id": "target-step1",
+        "operation": "derive-digit"
+      },
+      {
+        "id": "target-step2",
+        "operation": "derive-digit"
+      }
+    ],
+    "canonicalTransformations": [
+      {
+        "id": "tx-step1",
+        "sourceEntityRefs": [
+          "ent-setup"
+        ],
+        "targetRef": "target-step1"
+      },
+      {
+        "id": "tx-step2",
+        "sourceEntityRefs": [
+          "ent-setup"
+        ],
+        "targetRef": "target-step2"
+      }
+    ]
+  },
+  "adapter": {
+    "id": "declarative-transfer-v1",
+    "apiVersion": "0.2.0",
+    "rules": [
+      {
+        "id": "rule-first-quotient-digit",
+        "outcome": "ACCEPT",
+        "transformationRef": "tx-step1",
+        "sourceEntityRef": "ent-setup",
+        "targetRef": "target-step1",
+        "operation": "derive-digit",
+        "summary": "Step 1: 4 hundreds ÷ 4 = 1 hundred (quotient digit = 1, remainder = 0)",
+        "patch": {
+          "addEntities": [
+            {
+              "id": "ent-q-hundreds",
+              "label": "Quotient Hundreds: 1 (1 × 4 = 4, 4 - 4 = 0)"
+            }
+          ],
+          "addProjections": [
+            {
+              "id": "proj-q1",
+              "entityRef": "ent-q-hundreds",
+              "label": "Q: 1 _ _",
+              "representation": "rep-tableau-step",
+              "placement": {
+                "grid": "tableau-grid",
+                "row": "row-quotient",
+                "column": "col-hundreds"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "rule-second-quotient-digit",
+        "outcome": "ACCEPT",
+        "transformationRef": "tx-step2",
+        "sourceEntityRef": "ent-setup",
+        "targetRef": "target-step2",
+        "operation": "derive-digit",
+        "summary": "Step 2: Bring down 9; 9 tens ÷ 4 = 2 tens (quotient digit = 2, remainder = 1)",
+        "patch": {
+          "addEntities": [
+            {
+              "id": "ent-q-tens",
+              "label": "Quotient Tens: 2 (2 × 4 = 8, 9 - 8 = 1 ten)"
+            }
+          ],
+          "addProjections": [
+            {
+              "id": "proj-q2",
+              "entityRef": "ent-q-tens",
+              "label": "Q: 1 2 _",
+              "representation": "rep-tableau-step",
+              "placement": {
+                "grid": "tableau-grid",
+                "row": "row-quotient",
+                "column": "col-tens"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

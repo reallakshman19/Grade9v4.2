@@ -57,6 +57,14 @@ export interface WorkspaceQuestionDescriptor {
   readonly keyStatus: KeyEvaluationStatus;
   readonly correctKey?: unknown;
   readonly maxPoints?: number;
+  readonly sourceProvenance?: 'AUTHENTIC_SOURCE_PINNED' | 'SYNTHETIC_DIAGNOSTIC_FIXTURE';
+  readonly explanationHtml?: string;
+  readonly batch?: string;
+  readonly band?: string;
+  readonly operation?: string;
+  readonly sourceClaim?: string;
+  readonly solutionSteps?: readonly string[];
+  readonly limitingCheck?: string;
 }
 
 export interface WorkspaceLayoutState {
@@ -88,6 +96,9 @@ export interface QuestionWorkspaceViewState {
 export interface WorkspaceBinding {
   readonly releaseId:string; readonly task:TaskRef;readonly assessment:Ref<'ASSESSMENT'>;
   readonly attemptId:string;readonly session:Session;readonly progress:DefaultProgressStore;readonly engine:StandardAssessmentEngine;
+  // Only a trusted release binding can authorize an individual precommit hint.
+  // Absence of reviewed hint authority must not reveal content or claim a penalty.
+  readonly authorizeHint?: (hintId:string,task:TaskRef)=>boolean;
 }
 export class QuestionWorkspaceController {
   private question:WorkspaceQuestionDescriptor;
@@ -100,10 +111,23 @@ export class QuestionWorkspaceController {
   private busy=false;
   private work:readonly WorkArtifact[]=[];
   private readonly binding?:WorkspaceBinding;
+  private hints:readonly QuestionHint[]=[];
   constructor(question:WorkspaceQuestionDescriptor,initialOrientation:'LANDSCAPE'|'PORTRAIT'|'COMPACT'='LANDSCAPE',binding?:WorkspaceBinding){
-    // Do not retain or return answer keys and hint text supplied by a UI descriptor.
-    const {correctKey:_,hints:__,...publicQuestion}=question;
-    this.question=structuredClone(publicQuestion);this.orientation=initialOrientation;this.binding=binding&&{...binding,task:structuredClone(binding.task),assessment:structuredClone(binding.assessment)};
+    this.hints=question.hints?structuredClone(question.hints):[];
+    // A client-supplied answer key is not an assessment authority and must never
+    // escape into public view-state snapshots.
+    const {correctKey: _untrustedKey,hints: _protectedHints,solutionSteps: _protectedSteps,explanationHtml: _protectedExplanation,limitingCheck: _protectedCheck,...publicQuestion}=question;
+    // Answer-adjacent material is not part of the precommit public view state.
+    this.question=structuredClone(publicQuestion);
+    this.orientation=initialOrientation;
+    this.binding=binding&&{...binding,task:structuredClone(binding.task),assessment:structuredClone(binding.assessment)};
+  }
+  reset(): void {
+    if (this.busy) return;
+    this.submissionStatus = 'UNANSWERED';
+    this.currentResponse = null;
+    this.evaluation = null;
+    this.unlockedHintCount = 0;
   }
   setOrientation(orientation:'LANDSCAPE'|'PORTRAIT'|'COMPACT'):void{this.orientation=orientation;}
   updateResponse(response:ResponseValue):void{
@@ -122,6 +146,9 @@ export class QuestionWorkspaceController {
       if(!x.selectedOptionIds.every(id=>options.some(o=>o.id===id)))throw Error('INVALID_OPTION');
       return validateResponse({kind:x.kind,value:x.selectedOptionIds});
     }
+    if(x.kind==='INTEGER'){
+      return validateResponse({kind:x.kind,value:String(x.value ?? '')});
+    }
     if(!x.quantity?.decimal||!x.quantity.unit||this.question.allowedUnits&&!this.question.allowedUnits.includes(x.quantity.unit))throw Error('INVALID_QUANTITY');
     return validateResponse({kind:x.kind,value:{decimal:x.quantity.decimal,unit:x.quantity.unit}});
   }
@@ -135,8 +162,13 @@ export class QuestionWorkspaceController {
     if(this.busy||this.submissionStatus==='COMMITTED_LOCKED')throw Error('WORKSPACE_LOCKED');this.busy=true;
     try{const b=this.binding,s=await this.boundSession();if(s.attemptIds.length)throw Error('WORKSPACE_COMMITTED');await b!.progress.saveDraft(s,this.wire(),this.work,this.revision);this.revision++;this.submissionStatus='DRAFT_SAVED';}finally{this.busy=false;}
   }
-  // Hints require a separate A49 persisted exposure receipt, never a local count.
-  unlockNextHint():boolean{return false;}
+  unlockNextHint():boolean{
+    const next=this.hints[this.unlockedHintCount],b=this.binding;
+    if(!next||!b?.authorizeHint||this.question.status!=='RELEASED'||this.question.keyStatus!=='VERIFIED'||this.submissionStatus==='COMMITTED_LOCKED')return false;
+    try{if(b.authorizeHint(next.id,structuredClone(b.task))!==true)return false;}catch{return false;}
+    this.unlockedHintCount++;
+    return true;
+  }
   private result(status:EvaluationResult['status'],reasonCode:string,points:number|null=null,maxPoints=this.question.maxPoints??0):EvaluationResult{
     return {status,rawPoints:points,maxPoints,keyStatus:this.question.keyStatus,academicHold:this.question.status==='HOLD',reasonCode};
   }
@@ -150,16 +182,18 @@ export class QuestionWorkspaceController {
     if(this.busy)throw Error('WORKSPACE_BUSY');this.busy=true;
     try{const b=this.binding,s=await this.boundSession();if(s.attemptIds.length){const a=await b!.progress.committedAttempt(s.id,s.attemptIds[0]);if(!a||a.id!==b!.attemptId||!a.assessmentRef||!sameRef(a.assessmentRef,b!.assessment))throw Error('UNQUALIFIED_COMMIT');this.evaluation=await this.displayCommitted(a);return;}
       const d=await b!.progress.loadDraft(s.id);if(!d)return;if(d.cognitive||!sameRef(d.session.item,s.item)||d.session.releaseId!==s.releaseId)throw Error('FOREIGN_DRAFT');
-      const v=d.response;if(v.kind==='SINGLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionId:v.value};else if(v.kind==='MULTIPLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionIds:v.value};else if(v.kind==='NUMERIC_QUANTITY')this.currentResponse={kind:v.kind,quantity:{decimal:v.value.decimal,magnitude:Number(v.value.decimal),unit:v.value.unit}};else throw Error('INVALID_DRAFT_KIND');this.wire();this.work=structuredClone(d.artifacts);this.revision=d.revision;this.submissionStatus='DRAFT_SAVED';
+      const v=d.response;if(v.kind==='SINGLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionId:v.value};else if(v.kind==='MULTIPLE_CHOICE')this.currentResponse={kind:v.kind,selectedOptionIds:v.value};else if(v.kind==='NUMERIC_QUANTITY')this.currentResponse={kind:v.kind,quantity:{decimal:v.value.decimal,magnitude:Number(v.value.decimal),unit:v.value.unit}};else if(v.kind==='INTEGER')this.currentResponse={kind:v.kind,value:v.value};else throw Error('INVALID_DRAFT_KIND');this.wire();this.work=structuredClone(d.artifacts);this.revision=d.revision;this.submissionStatus='DRAFT_SAVED';
     }finally{this.busy=false;}
   }
   async submit():Promise<EvaluationResult>{
     if(this.submissionStatus==='COMMITTED_LOCKED'&&this.evaluation)return this.evaluation;
     if(this.busy)throw Error('WORKSPACE_BUSY');
+    let response:Response;try{response=this.wire();}catch{return this.result('INVALID','INVALID_RESPONSE');}
     if(this.question.status==='HOLD')return this.result('HOLD_UNGRADED','QUESTION_ON_ACADEMIC_HOLD');
     if(this.question.status!=='RELEASED'||this.question.keyStatus!=='VERIFIED')return this.result('REVIEW_PENDING','KEY_'+this.question.keyStatus);
-    if(!this.binding)return this.result('REVIEW_PENDING','WORKSPACE_NOT_AUTHORIZED');
-    let response:Response;try{response=this.wire();}catch{return this.result('INVALID','INVALID_RESPONSE');}
+    // Only a server/release-bound assessment may grant points or finality.
+    // Never score with caller-provided keys or invent correctness when a key is missing.
+    if(!this.binding)return this.result('REVIEW_PENDING','UNBOUND_ASSESSMENT');
     this.busy=true;this.submissionStatus='SUBMITTING';
     try{const b=this.binding,s=await this.boundSession();
       const existing=await b.progress.committedAttempt(s.id,b.attemptId);
@@ -173,7 +207,9 @@ export class QuestionWorkspaceController {
   getViewState(): QuestionWorkspaceViewState {
     const allFigures = this.question.figures || [];
     const missingFigures = allFigures.filter((f) => !f.available);
-    const hints = this.question.hints || [];
+    // Never expose hint bodies or even offer disclosure without an exact
+    // reviewed binding. The callback is evaluated for each reveal attempt.
+    const hints = this.binding?.authorizeHint&&this.question.status==='RELEASED'&&this.question.keyStatus==='VERIFIED' ? this.hints : [];
     const currentHints = hints.slice(0, this.unlockedHintCount);
 
     const isLandscape = this.orientation === 'LANDSCAPE';
@@ -185,7 +221,7 @@ export class QuestionWorkspaceController {
     };
 
     const isLocked = this.submissionStatus === 'COMMITTED_LOCKED';
-    const canSubmit = !this.busy&&!isLocked&&!!this.binding&&this.currentResponse!==null&&this.question.status==='RELEASED';
+    const canSubmit = !this.busy&&!isLocked&&this.currentResponse!==null;
 
     return {
       question: structuredClone(this.question),

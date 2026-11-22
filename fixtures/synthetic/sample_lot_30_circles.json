@@ -1,0 +1,1573 @@
+{
+  "lot_id": "SOF-IMO-G09-CIRCLES-LOT01",
+  "subject": "MATHEMATICS",
+  "subject_code": "MATH",
+  "topic": "Circles and Cyclic Quadrilaterals",
+  "topic_code": "CIRCLES",
+  "exam_target": "SOF IMO",
+  "year": 2024,
+  "paper": "Achievers & Reasoning",
+  "batch_size": 30,
+  "questions": [
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q01",
+      "title": "Circles Configuration 1: Chord Metric at D1",
+      "stem": "In a circle of radius $R = 5\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 3\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D1",
+      "difficulty_score": 3,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "MODEL",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 2"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 3"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 5"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 3"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 5 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -16."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q02",
+      "title": "Circles Configuration 2: Chord Metric at D1",
+      "stem": "In a circle of radius $R = 6\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 4\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D1",
+      "difficulty_score": 3,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "MODEL",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 4"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 5"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 7"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 6"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 6 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -20."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q03",
+      "title": "Circles Configuration 3: Chord Metric at D1",
+      "stem": "In a circle of radius $R = 7\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 5\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D1",
+      "difficulty_score": 3,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "MODEL",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 6"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 7"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 9"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 9"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 7 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -24."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q04",
+      "title": "Circles Configuration 4: Chord Metric at D1",
+      "stem": "In a circle of radius $R = 8\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 6\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D1",
+      "difficulty_score": 3,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "MODEL",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 8"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 9"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 11"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 12"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 8 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -28."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q05",
+      "title": "Circles Configuration 5: Chord Metric at D1",
+      "stem": "In a circle of radius $R = 9\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 7\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D1",
+      "difficulty_score": 3,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "MODEL",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 10"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 11"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 13"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 15"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 9 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -32."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q06",
+      "title": "Circles Configuration 6: Chord Metric at D1",
+      "stem": "In a circle of radius $R = 10\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 8\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D1",
+      "difficulty_score": 3,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "MODEL",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 12"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 13"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 15"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 18"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 10 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -36."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q07",
+      "title": "Circles Configuration 7: Chord Metric at D1",
+      "stem": "In a circle of radius $R = 11\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 9\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D1",
+      "difficulty_score": 3,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 0,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "MODEL",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 14"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 15"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 17"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 21"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 11 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -40."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q08",
+      "title": "Circles Configuration 8: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 12\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 10\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 16"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 17"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 19"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 24"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 12 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -44."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q09",
+      "title": "Circles Configuration 9: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 13\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 11\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 18"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 19"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 21"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 27"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 13 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -48."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q10",
+      "title": "Circles Configuration 10: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 14\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 12\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 20"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 21"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 23"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 30"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 14 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -52."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q11",
+      "title": "Circles Configuration 11: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 15\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 13\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 22"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 23"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 25"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 33"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 15 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -56."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q12",
+      "title": "Circles Configuration 12: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 16\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 14\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 24"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 25"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 27"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 36"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 16 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -60."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q13",
+      "title": "Circles Configuration 13: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 17\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 15\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 26"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 27"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 29"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 39"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 17 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -64."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q14",
+      "title": "Circles Configuration 14: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 18\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 16\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 28"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 29"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 31"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 42"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 18 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -68."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q15",
+      "title": "Circles Configuration 15: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 19\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 17\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 30"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 31"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 33"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 45"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 19 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -72."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q16",
+      "title": "Circles Configuration 16: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 20\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 18\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 32"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 33"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 35"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 48"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 20 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -76."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q17",
+      "title": "Circles Configuration 17: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 21\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 19\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 34"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 35"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 37"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 51"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 21 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -80."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q18",
+      "title": "Circles Configuration 18: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 22\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 20\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 36"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 37"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 39"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 54"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 22 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -84."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q19",
+      "title": "Circles Configuration 19: Chord Metric at D2",
+      "stem": "In a circle of radius $R = 23\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 21\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D2",
+      "difficulty_score": 4,
+      "cognitive_components": {
+        "concept_model_selection": 1,
+        "representation_translation": 1,
+        "reasoning_chain_length": 1,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "JUSTIFY",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 38"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 39"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 41"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 57"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 23 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -88."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q20",
+      "title": "Circles Configuration 20: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 24\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 22\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 40"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 41"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 43"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 60"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 24 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -92."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q21",
+      "title": "Circles Configuration 21: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 25\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 23\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 42"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 43"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 45"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 63"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 25 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -96."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q22",
+      "title": "Circles Configuration 22: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 26\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 24\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 44"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 45"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 47"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 66"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 26 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -100."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q23",
+      "title": "Circles Configuration 23: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 27\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 25\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 46"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 47"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 49"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 69"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 27 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -104."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q24",
+      "title": "Circles Configuration 24: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 28\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 26\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 48"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 49"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 51"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 72"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 28 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -108."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q25",
+      "title": "Circles Configuration 25: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 29\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 27\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 50"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 51"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 53"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 75"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 29 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -112."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q26",
+      "title": "Circles Configuration 26: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 30\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 28\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 52"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 53"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 55"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 78"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 30 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -116."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q27",
+      "title": "Circles Configuration 27: Chord Metric at D3",
+      "stem": "In a circle of radius $R = 31\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 29\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D3",
+      "difficulty_score": 6,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 1,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 0
+      },
+      "qrt_demand": "SYNTHESIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 54"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 55"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 57"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 81"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 31 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -120."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q28",
+      "title": "Circles Configuration 28: Chord Metric at D4",
+      "stem": "In a circle of radius $R = 32\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 30\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D4",
+      "difficulty_score": 8,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "qrt_demand": "GENERALIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 56"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 57"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 59"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 84"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 32 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -124."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q29",
+      "title": "Circles Configuration 29: Chord Metric at D4",
+      "stem": "In a circle of radius $R = 33\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 31\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D4",
+      "difficulty_score": 8,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "qrt_demand": "GENERALIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 58"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 59"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 61"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 87"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 33 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -128."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    },
+    {
+      "id": "SOF-IMO-G09-CIRCLES-LOT1-Q30",
+      "title": "Circles Configuration 30: Chord Metric at D4",
+      "stem": "In a circle of radius $R = 34\\text{ cm}$, chord $AB$ subtends an angle $\\theta = 60^\\circ$ at the circumference. If point $P$ lies on the minor arc, determine the distance metric $d = 32\\text{ cm}$ and evaluate the governing Power of Point $P$.",
+      "difficulty_band": "D4",
+      "difficulty_score": 8,
+      "cognitive_components": {
+        "concept_model_selection": 2,
+        "representation_translation": 2,
+        "reasoning_chain_length": 2,
+        "algebra_computational_load": 1,
+        "trap_exception_sensitivity": 1
+      },
+      "qrt_demand": "GENERALIZE",
+      "kind": "SINGLE_CHOICE",
+      "options": [
+        {
+          "id": "A",
+          "text": "Option A: Metric value equals 60"
+        },
+        {
+          "id": "B",
+          "text": "Option B: Metric value equals 61"
+        },
+        {
+          "id": "C",
+          "text": "Option C: Metric value equals 63"
+        },
+        {
+          "id": "D",
+          "text": "Option D: Metric value equals 90"
+        }
+      ],
+      "distractor_diagnostics": {
+        "A": "Correct metric application.",
+        "B": "Neglecting chord bisection factor.",
+        "C": "Using diameter instead of radius.",
+        "D": "Arithmetic accumulation error."
+      },
+      "trap_warning": "Assuming inscribed angle equals central angle directly (forgetting factor of 2).",
+      "hint_ladder": [
+        "Tier 1 (Conceptual Nudge): Apply the Inscribed Angle Theorem relating central and subtended angles.",
+        "Tier 2 (Tactical Step): Set up the isosceles triangle with vertices at the circle center and chord endpoints.",
+        "Tier 3 (Crux Move): Solve the trigonometric chord relation $L = 2R \\sin(\\theta)$."
+      ],
+      "reasoning_steps": [
+        "Step 1: The central angle subtended by chord AB is 2 * 60\u00b0 = 120\u00b0.",
+        "Step 2: Chord length L = 2 * R * sin(60\u00b0) = 2 * 34 * (sqrt(3)/2).",
+        "Step 3: Power of point evaluates to -132."
+      ],
+      "independent_check": "Verified via analytic Cartesian coordinate geometry."
+    }
+  ]
+}
