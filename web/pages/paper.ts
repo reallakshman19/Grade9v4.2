@@ -10,6 +10,7 @@ import {DefaultProgressStore,refOk,timestamp} from '../runtime/progress.ts';
 import {Session} from '../runtime/session.ts';
 import type {Attempt,Ref,TaskRef,Response,Kind,WorkArtifact,Json,Session as SessionRecord,Grade} from '../runtime/types.ts';
 import { recordActiveLearnerSession } from '../runtime/learner-activity.ts';
+import {deriveSealedPaperReview} from '../runtime/sealed-paper-review.ts';
 export type ExamAidKind='FORMULA_SHEET'|'PERIODIC_TABLE'|'CALCULATOR'|'SCRATCHPAD';
 const aidKinds:readonly ExamAidKind[]=['FORMULA_SHEET','PERIODIC_TABLE','CALCULATOR','SCRATCHPAD'];
 export interface SharedStimulus {readonly id:string;readonly title:string;readonly contentHtml:string;readonly mediaRef?:string}
@@ -70,6 +71,8 @@ export class PaperWorkspaceController{
  getPaperId(){return this.paperId;}getPaperTitle(){return this.paperTitle;}
  getNavigation(){return this.navigation;}
  getTimer(){return this.timer;}
+ /** Public review contains no answer keys, correctness or solution data. */
+ getSealedReview(){return deriveSealedPaperReview(this.getViewState(),this.parts,this.config.sections);}
  private async bound():Promise<SessionRecord>{
   const b=this.binding;if(!b||!refOk(b.paper)||b.paper.type!=='PAPER'||b.paper.id!==this.paperId||!refOk(b.task)||!refOk(b.assessment)||b.definitionSha256!==await computeSha256(canonicalJson(this.config))||!b.attemptId.trim())throw Error('PAPER_NOT_AUTHORIZED');
   const s=await b.session.snapshot();
@@ -243,6 +246,8 @@ export function mountPaperWorkspace(
     const navState = nav.exportState();
     const answeredCount = parts.filter(p=>controller.getPartResponse(p.id)!==undefined).length;
     const isNsejs = controller.getPaperId().includes('nsejs');
+    const sealedReview = controller.getSealedReview();
+    const activeReview = sealedReview?.parts.find(p=>p.partId===state.activePartId);
 
     const mins = Math.floor(state.timer.remainingSeconds / 60);
     const secs = state.timer.remainingSeconds % 60;
@@ -350,6 +355,34 @@ export function mountPaperWorkspace(
           </div>
         </header>
 
+        ${sealedReview ? `
+          <section class="paper-scorecard-section" aria-label="Sealed examination attempt review" style="background:#ffffff;border:1px solid #94a3b8;border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <h2 style="margin:0 0 5px;font-size:1.3rem;color:#0f172a;">Attempt Review · Results Pending</h2>
+              <p style="margin:0;color:#475569;font-size:0.93rem;">Submission is saved. This is a response inventory, not an academic scorecard. Correct/incorrect marks, official answer keys and step-by-step solutions require separate reviewed authorization.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:10px;">
+              <div style="padding:12px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe;">
+                <div style="font-weight:700;color:#1e40af;font-size:0.8rem;">Answers Recorded</div>
+                <strong style="font-size:1.5rem;color:#1e3a8a;">${sealedReview.recordedCount} / ${sealedReview.parts.length}</strong>
+              </div>
+              <div style="padding:12px;background:#f8fafc;border-radius:8px;border:1px solid #cbd5e1;">
+                <div style="font-weight:700;color:#475569;font-size:0.8rem;">Unanswered</div>
+                <strong style="font-size:1.5rem;color:#334155;">${sealedReview.unansweredCount}</strong>
+              </div>
+              <div style="padding:12px;background:#fffbeb;border-radius:8px;border:1px solid #fcd34d;">
+                <div style="font-weight:700;color:#92400e;font-size:0.8rem;">Total Marks</div>
+                <strong style="font-size:1rem;color:#92400e;">Withheld · Max ${sealedReview.maxMarks}</strong>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;" aria-label="Subject response coverage">
+              ${sealedReview.sections.map(sec=>`<div style="flex:1 1 180px;padding:10px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;">
+                <strong style="display:block;color:#0f172a;font-size:0.9rem;">${escapeHtml(sec.title)}</strong>
+                <span style="color:#475569;font-size:0.84rem;">${sec.recordedCount} recorded · ${sec.unansweredCount} unanswered</span>
+              </div>`).join('')}
+            </div>
+          </section>
+        ` : ''}
         <!-- Unreviewed Diagnostic Banner -->
         <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.75rem 1.25rem;display:flex;align-items:center;gap:12px;">
           <span style="font-size:1.25rem;">ℹ️</span>
@@ -445,10 +478,16 @@ export function mountPaperWorkspace(
                     const p = parts.find((x: any) => x.id === pid)!;
                     const isAct = p.id === activePart.id;
                     const st = navState.statuses[p.id] || 'UNVISITED';
-                    const hasAns = controller.getPartResponse(p.id) !== undefined;
+                    const hasAns = sealedReview
+                      ? sealedReview.parts.some(r=>r.partId===p.id&&r.responseState==='RECORDED')
+                      : controller.getPartResponse(p.id) !== undefined;
+                    const background = isAct ? '#0284c7' : sealedReview&&hasAns ? '#dbeafe' : hasAns ? '#dcfce7' : '#f8fafc';
+                    const foreground = isAct ? '#ffffff' : sealedReview&&hasAns ? '#1e40af' : hasAns ? '#15803d' : '#0f172a';
+                    const borderColor = isAct ? '#0369a1' : sealedReview&&hasAns ? '#93c5fd' : hasAns ? '#86efac' : '#cbd5e1';
+                    const reviewLabel = sealedReview ? (hasAns ? 'answer recorded' : 'unanswered') : (hasAns ? 'answered' : 'not answered');
                     return `
-                      <button type="button" class="part-select-btn" data-part-id="${p.id}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px; background: ${isAct ? '#0284c7' : hasAns ? '#dcfce7' : '#f8fafc'}; color: ${isAct ? '#ffffff' : hasAns ? '#15803d' : '#0f172a'}; border: 2px solid ${isAct ? '#0369a1' : hasAns ? '#86efac' : '#cbd5e1'}; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
-                        ${p.partKey}
+                      <button type="button" class="part-select-btn" data-part-id="${escapeHtml(p.id)}" aria-label="Part ${escapeHtml(String(p.partKey))}: ${reviewLabel}" style="min-height: ${HIT_TARGET_MIN_PX}px; min-width: ${HIT_TARGET_MIN_PX}px; padding: 6px; background: ${background}; color: ${foreground}; border: 2px solid ${borderColor}; border-radius: 6px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
+                        ${escapeHtml(String(p.partKey))}${sealedReview && hasAns ? ' ·' : ''}
                       </button>
                     `;
                   }).join('')}
@@ -473,6 +512,13 @@ export function mountPaperWorkspace(
                 </span>
               </div>
 
+
+              ${sealedReview && activeReview ? `
+                <div class="part-review-status" role="status" style="padding:12px 14px;margin-bottom:14px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc;">
+                  <strong style="color:#0f172a;">Part ${escapeHtml(String(activeReview.partKey))}: ${activeReview.responseState==='RECORDED'?'Answer recorded':'Unanswered'}</strong>
+                  <p style="margin:5px 0 0;color:#475569;font-size:0.9rem;">Correctness: review pending. Model solution and official answer are sealed by the simulated-exam policy.</p>
+                </div>
+              ` : ''}
               <div class="part-prompt" style="font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; color: #1e293b;">
                 ${renderMathHtml(activePart?.promptHtml || '<p>No part selected.</p>')}
               </div>
