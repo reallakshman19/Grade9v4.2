@@ -365,7 +365,7 @@ export function mountPaperWorkspace(
               <span style="font-size: 1.4rem;">⏱️</span>
               <div>
                 <strong style="font-size: 0.95rem;">Exam Duration Elapsed (${Math.round(state.timer.durationSeconds / 60)}-Minute Countdown Expired)</strong>
-                <div style="font-size: 0.85rem; color: #b91c1c;">Editing answers is locked. You can review your questions or start a new timed attempt with a fresh 2-hour timer.</div>
+                <div style="font-size: 0.85rem; color: #b91c1c;">Editing answers is locked. You can review your questions or start a new timed attempt with a fresh ${Math.round(state.timer.durationSeconds / 60)}-minute timer.</div>
               </div>
             </div>
             <button type="button" id="btn-retake-from-banner" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
