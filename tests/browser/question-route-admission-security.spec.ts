@@ -59,7 +59,7 @@ test('actual question route does not invent VERIFIED key for corpus HOLD, nor su
     } as any);
     mountRoute('#/question/q-hold-sim',document.getElementById('app')!);
   });
-  await page.getByText('Academic source on HOLD').waitFor();
+  await page.locator('[data-slot=identity] h1').getByText('Academic source on HOLD').waitFor();
   const identity=await page.locator('[data-slot=identity]').innerText();
   assert.match(identity,/Status: HOLD/);
   assert.match(identity,/Key: UNVERIFIED/);
