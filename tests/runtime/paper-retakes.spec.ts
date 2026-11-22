@@ -78,6 +78,37 @@ for(const [name,factory] of [
     assert.notEqual(old.id,fresh.id);
   });
 }
+for(const [name,factory] of [
+  ['NSEJS',createAuthorizedNsejsPaperSession],
+  ['IOQM',createAuthorizedIoqmPaperSession],
+] as const){
+  test(`${name}: progress archive preserves historical exam runs but never fabricates current-run authority`,async()=>{
+    const driver=createStorageDriver({preferMemory:true});
+    const first=await factory('archive-user',driver),s0=await first.binding.session.snapshot();
+    const response=name==='NSEJS'
+      ? {kind:'SINGLE_CHOICE' as const,value:'A'}
+      : {kind:'INTEGER' as const,value:'07'};
+    await first.binding.progress.saveDraft(s0,response,[],0);
+    const next=await factory('archive-user',driver,true),s1=await next.binding.session.snapshot();
+    await next.binding.progress.saveDraft(s1,response,[],0);
+    const archive=await next.binding.progress.exportAll();
+
+    const importedDriver=createStorageDriver({preferMemory:true});
+    const {DefaultProgressStore}=await import('../../web/runtime/progress.ts');
+    const imported=new DefaultProgressStore(importedDriver);
+    await imported.importVerified(archive);
+    assert.equal(await importedDriver.get('paper_active_runs',s0.id),undefined,
+      'Historical archive cannot forge a new active-run authorization');
+    assert(await imported.loadDraft(s0.id));
+    assert(await imported.loadDraft(s1.id));
+    await assert.rejects(factory('archive-user',importedDriver),/PAPER_ARCHIVED_HISTORY_RETAKE_REQUIRED/,
+      'Reopening imported history must not silently pick a different prior run');
+    const resumed=await factory('archive-user',importedDriver,true),s2=await resumed.binding.session.snapshot();
+    assert.notEqual(s2.id,s0.id);assert.notEqual(s2.id,s1.id);
+    assert(await imported.loadDraft(s0.id));assert(await imported.loadDraft(s1.id));
+    assert.equal((await (await factory('archive-user',importedDriver)).binding.session.snapshot()).id,s2.id);
+  });
+}
 test('clearing a selected answer changes dirty status without private state access',async()=>{
   const driver=createStorageDriver({preferMemory:true});
   const {config,binding}=await createAuthorizedNsejsPaperSession('learner',driver);
