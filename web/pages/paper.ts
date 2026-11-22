@@ -364,12 +364,12 @@ export function mountPaperWorkspace(
             <div style="display: flex; align-items: center; gap: 12px; color: #991b1b;">
               <span style="font-size: 1.4rem;">⏱️</span>
               <div>
-                <strong style="font-size: 0.95rem;">Exam Duration Elapsed (120-Minute Countdown Expired)</strong>
-                <div style="font-size: 0.85rem; color: #b91c1c;">Editing answers is locked. You can review your questions or start a new timed attempt with a fresh 2-hour timer.</div>
+                <strong style="font-size: 0.95rem;">Exam Duration Elapsed (${Math.round(state.timer.durationSeconds / 60)}-Minute Countdown Expired)</strong>
+                <div style="font-size: 0.85rem; color: #b91c1c;">Editing answers is locked. You can review your questions or start a new timed attempt with a fresh ${Math.round(state.timer.durationSeconds / 60)}-minute timer.</div>
               </div>
             </div>
             <button type="button" id="btn-retake-from-banner" style="min-height: ${HIT_TARGET_MIN_PX}px; padding: 8px 18px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 0.9rem;">
-              🔄 Retake Mock Paper (Fresh 2h Timer)
+              🔄 Retake Mock Paper (Fresh ${Math.round(state.timer.durationSeconds / 60)}-Minute Timer)
             </button>
           </div>
         ` : ''}
@@ -533,6 +533,7 @@ export function mountPaperWorkspace(
               ` : ''}
 
               <!-- Submission Bar -->
+              <p id="paper-draft-status" role="status" aria-live="polite" style="margin:0;font-size:0.9rem;color:#475569;"></p>
               <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #e2e8f0; padding-top: 1rem; flex-wrap: wrap; gap: 10px;">
                 <span style="font-size: 0.9rem; color: #64748b;">
                   Parts Attempted: <strong>${answeredCount}</strong> of ${parts.length}
@@ -549,6 +550,22 @@ export function mountPaperWorkspace(
     `;
 
     bindEvents();
+  };
+
+  const persistDraft = () => {
+    const target = root.querySelector<HTMLElement>('#paper-draft-status');
+    if (target) { target.textContent = 'Saving latest answer locally…'; target.style.color = '#475569'; }
+    void controller.saveDraft().then(() => {
+      const status = root.querySelector<HTMLElement>('#paper-draft-status');
+      if (status) { status.textContent = 'Latest answer saved locally.'; status.style.color = '#166534'; }
+    }).catch(err => {
+      console.error('Paper draft persistence failed:', err);
+      const status = root.querySelector<HTMLElement>('#paper-draft-status');
+      if (status) {
+        status.textContent = 'Warning: latest answer was NOT saved locally. Do not exit; retry the answer after checking available storage.';
+        status.style.color = '#b91c1c';
+      }
+    });
   };
 
   const bindEvents = () => {
@@ -568,7 +585,7 @@ export function mountPaperWorkspace(
         window.alert('Retake needs an authorized session factory. Existing exam data was preserved.');
         return;
       }
-      if (!window.confirm('Start a new timed attempt? Previous submissions and drafts will remain saved.')) return;
+      if (!window.confirm(`Start a new ${Math.round(controller.getViewState().timer.durationSeconds / 60)}-minute timed attempt? Previous submissions and drafts will remain saved.`)) return;
       retakePending = true;
       try {
         await onRetake();
@@ -629,7 +646,7 @@ export function mountPaperWorkspace(
         const activePartId = controller.getViewState().activePartId;
         const ok = controller.setPartResponse(activePartId, { kind: 'SINGLE_CHOICE', value: choice });
         if (ok) {
-          void controller.saveDraft().catch(() => {});
+          persistDraft();
           render();
         } else {
           const vs = controller.getViewState();
@@ -646,7 +663,7 @@ export function mountPaperWorkspace(
     root.querySelector<HTMLButtonElement>('#btn-clear-choice')?.addEventListener('click', () => {
       const activePartId = controller.getViewState().activePartId;
       if (!controller.clearPartResponse(activePartId)) return;
-      void controller.saveDraft().catch(err=>console.error('Paper draft save failed:',err));
+      persistDraft();
       render();
     });
 
@@ -669,7 +686,7 @@ export function mountPaperWorkspace(
       const formatted = val.toString().padStart(2, '0');
       const ok = controller.setPartResponse(activePartId, { kind: 'INTEGER', value: formatted });
       if (ok) {
-        void controller.saveDraft().catch(() => {});
+        persistDraft();
         feedback.style.color = '#15803d';
         feedback.textContent = `✓ Response saved: ${formatted}`;
         render();

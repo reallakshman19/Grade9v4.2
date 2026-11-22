@@ -16,6 +16,7 @@ import {
   type UniversalSearchDoc,
   type UniversalSearchResponse,
 } from '../runtime/universal-search-index.ts';
+import {resolveUniversalSearchHref} from '../runtime/search-route.ts';
 
 export class UniversalSearchModalController {
   private dialog: HTMLDialogElement | null = null;
@@ -353,7 +354,9 @@ export class UniversalSearchModalController {
 
   private createCard(item: UniversalSearchDoc): HTMLElement {
     const card = document.createElement('a');
-    card.href = item.route;
+    const unavailable = item.type === 'QUESTION_UNAVAILABLE';
+    if(!unavailable)card.href = resolveUniversalSearchHref(item.route, window.location.href);
+    else {card.setAttribute('aria-disabled','true');card.setAttribute('aria-label',item.title+' — target not installed');card.tabIndex=-1;}
     card.className = 'g9-search-card';
     card.style.cssText = `
       display: flex;
@@ -371,6 +374,7 @@ export class UniversalSearchModalController {
       transition: all 0.15s ease;
       box-sizing: border-box;
     `;
+    if(unavailable){card.style.opacity='0.7';card.style.cursor='not-allowed';}
 
     card.addEventListener('mouseenter', () => {
       card.style.background = '#f0f9ff';
@@ -383,12 +387,11 @@ export class UniversalSearchModalController {
 
     card.addEventListener('click', (e) => {
       e.preventDefault();
+      if(unavailable)return; // Inert catalog reference, never navigate to a non-existent question.
       this.close();
-      if (item.route.startsWith('#')) {
-        window.location.hash = item.route;
-      } else {
-        window.location.href = item.route;
-      }
+      const href = resolveUniversalSearchHref(item.route, window.location.href);
+      if (item.route.startsWith('#/')) window.location.hash = item.route;
+      else window.location.assign(href);
     });
 
     // Left info column
@@ -462,7 +465,9 @@ export class UniversalSearchModalController {
     if (this.selectedIndex >= 0 && this.selectedIndex < this.currentResults.length) {
       const selected = this.currentResults[this.selectedIndex];
       this.close();
-      window.location.hash = selected.route;
+      const href = resolveUniversalSearchHref(selected.route, window.location.href);
+      if (selected.route.startsWith('#/')) window.location.hash = selected.route;
+      else window.location.assign(href);
     }
   }
 }

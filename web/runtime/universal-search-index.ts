@@ -1,9 +1,11 @@
 /**
  * web/runtime/universal-search-index.ts
  * Grade9 STEM Universal Search Index & Engine
- * Full 1114-item offline indexed corpus: 976 Questions, 93 Tablets & Explorers, 44 Topics & Concepts.
+ * 1114 search records: 737 installed-target question routes, 164 collection references, 75 unavailable targets, 93 tablets, 44 original curriculum and 1 other. Source academic admission remains separate.
  * Sub-50ms instant fuzzy token search with multi-tier relevance scoring and Fault N09 answer isolation.
  */
+
+import {CANONICAL_UNIFIED_QUESTIONS} from '../data/unified-questions.generated.ts';
 
 export interface UniversalSearchDoc {
   readonly id: string;
@@ -40,7 +42,7 @@ export function normalizeSearchTerm(v: string): string {
 /**
  * Full 1114-Item Unified STEM Corpus
  */
-export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze([
+const RAW_UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze([
   {
     "id": "CONCEPT-CHEM-REDOX-OX",
     "title": "Redox Reactions & Oxidation States",
@@ -12296,6 +12298,41 @@ export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.fre
     "search_text": "M2D-Q25 JEE Main Motion in a Plane Projectile Q25 trajectory angle velocity components range physics"
   }
 ]);
+
+/**
+ * Discovery truthfulness guard: these legacy search records point only to a
+ * topic or lab, not to their named question. Preserve lookup by item ID, but
+ * never advertise an exact question deep link or count it as directly openable.
+ * Exact redirects require verified question-content identity in the target.
+ */
+const INSTALLED_QUESTION_IDS = new Set(CANONICAL_UNIFIED_QUESTIONS.map(q=>q.id));
+export const UNIVERSAL_SEARCH_CORPUS: readonly UniversalSearchDoc[] = Object.freeze(
+  RAW_UNIVERSAL_SEARCH_CORPUS.map((item):UniversalSearchDoc=>{
+    if(item.category!=='question')return item;
+    const exact = /^#\/question\/([^/?#]+)$/.exec(item.route);
+    if(!exact){
+      return Object.freeze({
+        ...item,
+        category:'curriculum',
+        type:'QUESTION_COLLECTION',
+        badge:'COLLECTION',
+        subtitle:item.subtitle+' · Topic collection',
+        breadcrumb:item.breadcrumb+' · Opens collection, not individual question',
+      });
+    }
+    if(!INSTALLED_QUESTION_IDS.has(decodeURIComponent(exact[1]))){
+      return Object.freeze({
+        ...item,
+        category:'curriculum',
+        type:'QUESTION_UNAVAILABLE',
+        badge:'NOT READY',
+        subtitle:item.subtitle+' · Target not installed',
+        breadcrumb:item.breadcrumb+' · No question target in installed database',
+      });
+    }
+    return item;
+  })
+);
 
 function scoreItem(item: UniversalSearchDoc, tokens: string[], term: string): number {
   let score = 1000;

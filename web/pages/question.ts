@@ -22,8 +22,19 @@ import type {
   QuestionWorkspaceViewState,WorkspaceBinding,
 } from '../components/question-workspace.ts';
 import type { EvaluationResult } from '../components/response/types.ts';
-import { escapeHtml, renderMathHtml } from '../runtime/rendering.ts';
+import { escapeHtml, renderMathHtml, renderSafeQuestionMarkup } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
+
+// Figure URLs are untrusted source metadata, not raw HTML attribute fragments.
+// Allow only HTTPS or a same-origin absolute/./ relative asset; escape every
+// accepted URL and withhold malformed, protocol-relative or executable links.
+function safeFigureSource(raw: unknown): string | null {
+  if (typeof raw !== 'string' || !raw.trim()) return null;
+  const path = raw.trim();
+  if (!(/^(?:https:\/\/[^\s\"'<>\\]+|\/(?!\/)[^\s\"'<>\\]+|\.\/[^\s\"'<>\\]+)$/i).test(path)) return null;
+  return escapeHtml(path);
+}
+
 
 export type QuestionPageStatus =
   | 'LOADING'
@@ -129,7 +140,9 @@ export class QuestionPageController {
   }
 
   render(): string {
-    if (!this.workspace) {
+    if (!this.workspace && this.status === 'LOADING') {
+      // Diagnostic-only default for an unconfigured controller; an explicitly
+      // missing route must not silently show another question.
       this.loadQuestion(createDefaultQuestion());
     }
     const s = this.getViewState();
@@ -140,10 +153,11 @@ export class QuestionPageController {
     const q = ws.question;
     const isLandscape = ws.layout.orientation === 'LANDSCAPE';
 
-    let stimulusHtml = `<div class="g9-stimulus-content"><h2 style="margin:0 0 8px 0;font-size:18px;">${renderMathHtml(escapeHtml(q.title))}</h2><div style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;font-size:16px;">${renderMathHtml(q.stemText)}</div>`;
+    let stimulusHtml = `<div class="g9-stimulus-content"><h2 style="margin:0 0 8px 0;font-size:18px;">${renderMathHtml(escapeHtml(q.title))}</h2><div style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;font-size:16px;">${renderSafeQuestionMarkup(q.stemText)}</div>`;
     if (q.figures && q.figures.length > 0) {
       stimulusHtml += `<div class="g9-stimulus-figures" style="margin-top:12px;">` + q.figures.map(f => {
-        const imgHtml = f.available && f.sourceUrl ? `<img src="${f.sourceUrl}" alt="${escapeHtml(f.caption)}" style="max-width:100%;max-height:360px;object-fit:contain;display:block;margin:auto;background:#ffffff;border-radius:4px;padding:8px;" />` : (f.available ? `<span>Figure: ${escapeHtml(f.id)}</span>` : `<span style="color:#ef4444;">[Figure unavailable / withheld]</span>`);
+        const source = safeFigureSource(f.sourceUrl);
+        const imgHtml = f.available && source ? `<img src="${source}" alt="${escapeHtml(f.caption)}" style="max-width:100%;max-height:360px;object-fit:contain;display:block;margin:auto;background:#ffffff;border-radius:4px;padding:8px;" />` : (f.available ? `<span>Figure: ${escapeHtml(f.id)}</span>` : `<span style="color:#ef4444;">[Figure unavailable / withheld]</span>`);
         return `<figure style="margin:0 0 8px 0;"><figcaption style="font-size:14px;margin-bottom:4px;color:#475569;">${escapeHtml(f.caption)}</figcaption><div style="padding:12px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:6px;min-height:64px;display:flex;align-items:center;justify-content:center;">${imgHtml}</div></figure>`;
       }).join('') + `</div>`;
     }
@@ -151,9 +165,9 @@ export class QuestionPageController {
 
     let responseHtml = `<div class="g9-response-content">`;
     if (q.kind === 'SINGLE_CHOICE' && q.options) {
-      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select an option:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="radio" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderMathHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
+      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select an option:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="radio" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderSafeQuestionMarkup(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
     } else if (q.kind === 'MULTIPLE_CHOICE' && q.options) {
-      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select all that apply:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="checkbox" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderMathHtml(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
+      responseHtml += `<fieldset style="border:none;padding:0;margin:0 0 16px 0;"><legend style="font-weight:600;margin-bottom:8px;font-size:15px;">Select all that apply:</legend>` + q.options.map((opt: any) => `<label style="display:flex;align-items:center;gap:8px;min-height:48px;padding:4px 0;"><input type="checkbox" name="response-option" value="${escapeHtml(opt.id)}" style="min-width:48px;min-height:48px;" ${ws.isLocked ? 'disabled' : ''}><span style="font-size:15px;">${renderSafeQuestionMarkup(opt.text || opt.label || opt.id)}</span></label>`).join('') + `</fieldset>`;
     } else if (q.kind === 'INTEGER') {
       responseHtml += `<div style="margin-bottom:16px;">
         <label style="display:block;margin-bottom:6px;font-weight:600;font-size:15px;">Your integer answer:</label>
@@ -191,7 +205,7 @@ export class QuestionPageController {
         <button type="button" id="g9-reset-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:15px;color:#0f172a;font-weight:700;">🔄 Reset &amp; Try Again</button>
       ` : ''}
       <button type="button" id="g9-hint-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-size:15px;color:#0f172a;font-weight:600;" ${(ws.totalHintsCount === 0 || ws.unlockedHintCount >= ws.totalHintsCount) ? 'disabled' : ''}>💡 Get Hint (${ws.unlockedHintCount}/${ws.totalHintsCount})</button>
-      <button type="button" id="g9-solution-toggle-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#ffffff;border:1px solid #0284c7;border-radius:6px;cursor:pointer;font-size:15px;color:#0284c7;font-weight:600;">📖 ${this.showSolution ? 'Hide Solution' : 'View Worked Solution'}</button>
+      ${q.explanationHtml || (q.solutionSteps && q.solutionSteps.length > 0) ? `<button type="button" id="g9-solution-toggle-btn" style="min-height:${HIT_TARGET_MIN_PX}px;min-width:${HIT_TARGET_MIN_PX}px;padding:8px 16px;background:#ffffff;border:1px solid #0284c7;border-radius:6px;cursor:pointer;font-size:15px;color:#0284c7;font-weight:600;">📖 ${this.showSolution ? 'Hide Solution' : 'View Worked Solution'}</button>` : `<span role="status" data-solution-review-status style="padding:8px 12px;color:#475569;font-size:14px;">Worked solution awaiting reviewed release</span>`}
     </div>`;
 
     if (s.evaluation) {
@@ -211,8 +225,8 @@ export class QuestionPageController {
       if (q.explanationHtml || (q.solutionSteps && q.solutionSteps.length > 0)) {
         responseHtml += `<div class="g9-worked-solution" style="margin-top:16px;padding:16px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;">
           <h4 style="margin:0 0 10px 0;font-size:16px;color:#1e293b;display:flex;align-items:center;gap:6px;"><span>📝</span> Worked Solution &amp; Model Derivation</h4>
-          ${q.solutionSteps && q.solutionSteps.length > 0 ? `<ol style="margin:0;padding-left:20px;font-size:15px;line-height:1.6;color:#334155;">${q.solutionSteps.map((st: string) => `<li style="margin-bottom:6px;">${renderMathHtml(st)}</li>`).join('')}</ol>` : ''}
-          ${q.explanationHtml && (!q.solutionSteps || q.solutionSteps.length === 0) ? `<div style="font-size:15px;line-height:1.6;margin-bottom:8px;color:#334155;">${renderMathHtml(q.explanationHtml)}</div>` : ''}
+          ${q.solutionSteps && q.solutionSteps.length > 0 ? `<ol style="margin:0;padding-left:20px;font-size:15px;line-height:1.6;color:#334155;">${q.solutionSteps.map((st: string) => `<li style="margin-bottom:6px;">${renderSafeQuestionMarkup(st)}</li>`).join('')}</ol>` : ''}
+          ${q.explanationHtml && (!q.solutionSteps || q.solutionSteps.length === 0) ? `<div style="font-size:15px;line-height:1.6;margin-bottom:8px;color:#334155;">${renderSafeQuestionMarkup(q.explanationHtml)}</div>` : ''}
           ${q.limitingCheck ? `<div style="margin-top:12px;padding:10px 12px;background:#e0f2fe;border:1px solid #bae6fd;border-radius:6px;font-size:14px;color:#0369a1;"><strong>🔍 Limiting Case &amp; Invariant Check:</strong> ${renderMathHtml(escapeHtml(q.limitingCheck))}</div>` : ''}
         </div>`;
       }

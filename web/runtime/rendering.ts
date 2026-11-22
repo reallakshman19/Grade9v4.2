@@ -238,6 +238,15 @@ export function renderMathHtml(content: string): string {
   return result;
 }
 
+/** Render source question text with inert formatting and accessible math.
+ * All imported user/source HTML must cross the same sanitizer before we
+ * generate our own trusted MathML/scrolling wrappers. Never call the raw
+ * renderMathHtml helper on untrusted source fields.
+ */
+export function renderSafeQuestionMarkup(source: string): string {
+  return renderMathHtml(sanitizeMarkup(String(source ?? '')).html);
+}
+
 /**
  * Wraps math formulas into an accessible, non-clipping horizontally scrollable container.
  */
@@ -248,7 +257,11 @@ export function wrapMathInAccessibleContainer(formula: MathFormulaDescriptor): s
   const ariaLabel = formula.label || (formula.isBlock ? 'Mathematical equation' : 'Inline formula');
   const scrollClass = formula.isBlock ? 'math-block-container scrollable-x' : 'math-inline-container';
 
-  const mathml = formatLatexMath(sanitized, formula.isBlock);
+  // Sanitation preserves a restricted subset of inert, attribute-free markup.
+  // Pass that markup through unchanged; parsing an existing <p> or <math> tag
+  // as LaTeX would destroy the semantic element and can hide safe content.
+  const hasSafeMarkup = new RegExp('<(?:p|em|strong|b|i|sub|sup|br|ul|ol|li|span|div|pre|code|table|thead|tbody|tr|td|th|blockquote|h3|h4|math|mrow|mi|mn|mo|msup|msub|msubsup|mfrac|msqrt|mroot|mtext|mstyle|mspace)>','i').test(sanitized);
+  const mathml = hasSafeMarkup ? sanitized : formatLatexMath(sanitized, formula.isBlock);
 
   return (
     `<${tag} class="${scrollClass}" role="${role}" aria-label="${escapeHtml(ariaLabel)}" tabindex="0" ` +

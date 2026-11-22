@@ -29,6 +29,7 @@ import { mountArchitectureHub } from '../pages/architecture.ts';
 import { mountPersonalStudyPage, type PersonalTab } from '../pages/personal-study.ts';
 import { createQuestionBankScreen, mountQuestionBankScreen } from '../pages/bank.ts';
 import { UNIFIED_QUESTION_DATABASE } from '../runtime/unified-question-database.ts';
+import { projectQuestionAdmission } from '../runtime/question-admission.ts';
 import { getOrCreateUniversalSearchModal } from '../components/universal-search-modal.ts';
 import { Router } from './router.ts';
 import { DEFAULT_APP_REGISTRY } from '../runtime/registry/index.ts';
@@ -356,6 +357,7 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
       entry?.topicCode ? String(entry.topicCode).toLowerCase() : 'wpe'
     );
     if (entry) {
+      const admission = projectQuestionAdmission(entry); // No authenticated release receipt in this diagnostic shell.
       const qHints = (entry.hints && entry.hints.length > 0)
         ? entry.hints.filter((h: string) => h && h.trim().length > 0).map((h: string, i: number) => ({ id: `hint-${i+1}`, text: h, penaltyPercent: 0 }))
         : [];
@@ -366,16 +368,17 @@ export function mountRoute(targetHash: string, root: HTMLElement): void {
         stemText: entry.stem,
         kind: entry.kind === 'MULTIPLE_CHOICE' ? 'MULTIPLE_CHOICE' : (entry.kind === 'NUMERIC_QUANTITY' || entry.kind === 'INTEGER') ? 'NUMERIC_QUANTITY' : 'SINGLE_CHOICE',
         options: entry.options ? entry.options.map(o => ({ id: o.id, text: o.text })) : undefined,
-        status: entry.status,
-        keyStatus: 'VERIFIED',
+        status: admission.status,
+        keyStatus: admission.keyStatus,
         maxPoints: entry.maxPoints,
         figures: entry.figures ? entry.figures.map(f => ({ id: f.id, caption: f.caption, available: f.available })) : [],
         hints: qHints,
         solutionSteps: entry.steps && entry.steps.length > 0 ? entry.steps : undefined,
         explanationHtml: entry.steps && entry.steps.length > 0 ? entry.steps.join('<br>') : undefined,
         limitingCheck: (entry as any).limitingCheck || (entry as any).check || undefined,
-        correctKey: (entry as any).correctKey || undefined,
       });
+    } else {
+      controller.setError('Requested question is not available in the current admitted content index.');
     }
     const m = mountQuestionPage(content, controller);
     activeDisposer = () => m.dispose();
@@ -604,7 +607,7 @@ function renderTopicWorkspacePlaceholder(root: HTMLElement, subjectId: string, t
       <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e2e8f0;">
         <div>
           <h1 class="placeholder-title" style="margin:0;font-size:1.85rem;font-weight:800;color:#0f172a;">Topic Workspace: ${escapeHtml(topicId.toUpperCase())}</h1>
-          <p style="margin:0.25rem 0 0;color:#64748b;">Subject: ${escapeHtml(subjectId.toUpperCase())} · Progress: 42% Completed</p>
+          <p style="margin:0.25rem 0 0;color:#64748b;">Subject: ${escapeHtml(subjectId.toUpperCase())} · Progress: Not yet measured</p>
         </div>
         <button type="button" onclick="window.location.hash='#/subject/${encodeURIComponent(subjectId)}'" style="min-height:48px;padding:8px 16px;background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:6px;cursor:pointer;font-weight:600;">← Back to ${escapeHtml(subjectId.toUpperCase())}</button>
       </div>

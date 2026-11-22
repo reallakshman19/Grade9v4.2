@@ -95,7 +95,7 @@ export async function renderSettings({ store, box, button, action }: PersonalCon
 
   const pBackup = el(
     'p',
-    'Private files contain personal study data. Store securely. Progress and profile backups are separate; restore requires an authorized empty target. Imported attempt history is not disclosure authority.'
+    'Private files contain personal study data. Store securely. Progress and profile backups are separate; restore requires an authorized empty target. Progress import preserves historical exam drafts and attempts, but does not transfer live exam-run authority: restart a timed attempt explicitly after restoration. Imported attempts never regain grading or solution-disclosure authority.'
   );
   pBackup.style.cssText = 'margin:0 0 1.25rem;font-size:0.95rem;color:#64748b;line-height:1.5;';
 
@@ -147,7 +147,7 @@ export async function renderSettings({ store, box, button, action }: PersonalCon
     const input = el('input');
     input.type = 'file';
     input.accept = 'application/json,.json';
-    input.style.cssText = 'margin-bottom:10px;font-size:0.9rem;';
+    input.style.cssText = 'display:block;width:100%;max-width:100%;min-width:48px;min-height:48px;box-sizing:border-box;padding:10px 8px;margin-bottom:10px;font-size:0.9rem;border:1px solid #94a3b8;border-radius:6px;background:#fff;color:#0f172a;';
     l.append(input);
     col.append(l);
 
