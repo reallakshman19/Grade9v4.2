@@ -25,6 +25,17 @@ import type { EvaluationResult } from '../components/response/types.ts';
 import { escapeHtml, renderMathHtml, renderSafeQuestionMarkup } from '../runtime/rendering.ts';
 import { HIT_TARGET_MIN_PX, HIT_TARGET_PRIMARY_PX } from '../styles/tokens.ts';
 
+// Figure URLs are untrusted source metadata, not raw HTML attribute fragments.
+// Allow only HTTPS or a same-origin absolute/./ relative asset; escape every
+// accepted URL and withhold malformed, protocol-relative or executable links.
+function safeFigureSource(raw: unknown): string | null {
+  if (typeof raw !== 'string' || !raw.trim()) return null;
+  const path = raw.trim();
+  if (!(/^(?:https:\/\/[^\s\"'<>\\]+|\/(?!\/)[^\s\"'<>\\]+|\.\/[^\s\"'<>\\]+)$/i).test(path)) return null;
+  return escapeHtml(path);
+}
+
+
 export type QuestionPageStatus =
   | 'LOADING'
   | 'INTERACTIVE'
@@ -143,7 +154,8 @@ export class QuestionPageController {
     let stimulusHtml = `<div class="g9-stimulus-content"><h2 style="margin:0 0 8px 0;font-size:18px;">${renderMathHtml(escapeHtml(q.title))}</h2><div style="white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6;font-size:16px;">${renderSafeQuestionMarkup(q.stemText)}</div>`;
     if (q.figures && q.figures.length > 0) {
       stimulusHtml += `<div class="g9-stimulus-figures" style="margin-top:12px;">` + q.figures.map(f => {
-        const imgHtml = f.available && f.sourceUrl ? `<img src="${f.sourceUrl}" alt="${escapeHtml(f.caption)}" style="max-width:100%;max-height:360px;object-fit:contain;display:block;margin:auto;background:#ffffff;border-radius:4px;padding:8px;" />` : (f.available ? `<span>Figure: ${escapeHtml(f.id)}</span>` : `<span style="color:#ef4444;">[Figure unavailable / withheld]</span>`);
+        const source = safeFigureSource(f.sourceUrl);
+        const imgHtml = f.available && source ? `<img src="${source}" alt="${escapeHtml(f.caption)}" style="max-width:100%;max-height:360px;object-fit:contain;display:block;margin:auto;background:#ffffff;border-radius:4px;padding:8px;" />` : (f.available ? `<span>Figure: ${escapeHtml(f.id)}</span>` : `<span style="color:#ef4444;">[Figure unavailable / withheld]</span>`);
         return `<figure style="margin:0 0 8px 0;"><figcaption style="font-size:14px;margin-bottom:4px;color:#475569;">${escapeHtml(f.caption)}</figcaption><div style="padding:12px;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:6px;min-height:64px;display:flex;align-items:center;justify-content:center;">${imgHtml}</div></figure>`;
       }).join('') + `</div>`;
     }
